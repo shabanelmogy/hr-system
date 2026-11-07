@@ -6,6 +6,21 @@ namespace ErpSystem.Modules.Platform.Infrastructure.Features.Platform.AuditTrail
 /// <summary>Resolves audit-trail user ids to "First Last" (or the user name).</summary>
 public sealed class AuditTrailUserDirectory(PlatformDbContext context) : IAuditTrailUserDirectory
 {
+    public async Task<IReadOnlyCollection<string>> GetMatchingIdsAsync(
+        IReadOnlyList<ErpSystem.BuildingBlocks.Application.Filtering.ColumnFilterGroup> filters,
+        CancellationToken cancellationToken = default)
+    {
+        var selectors = new Dictionary<string, System.Linq.Expressions.LambdaExpression>
+        {
+            ["userName"] = (System.Linq.Expressions.Expression<Func<Identity.PlatformApplicationUser, string>>)
+                (user => ((user.FirstName ?? "") + " " + (user.LastName ?? "")).Trim().Length > 0
+                    ? ((user.FirstName ?? "") + " " + (user.LastName ?? "")).Trim()
+                    : user.UserName ?? user.Id)
+        };
+        return await context.Users.IgnoreQueryFilters().AsNoTracking()
+            .Where(ErpSystem.BuildingBlocks.Application.Filtering.ColumnFilterSet.Predicate<Identity.PlatformApplicationUser>(filters, selectors))
+            .Select(user => user.Id).ToArrayAsync(cancellationToken).ConfigureAwait(false);
+    }
     public async Task<IReadOnlyDictionary<string, string>> GetDisplayNamesAsync(
         IReadOnlyCollection<string> userIds,
         CancellationToken cancellationToken = default)

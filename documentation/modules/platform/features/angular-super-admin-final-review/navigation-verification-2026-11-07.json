@@ -1,0 +1,75 @@
+{
+  "dateUtc": "2026-11-07T05:40:45.1036981Z",
+  "feature": "angular-super-admin-final-review",
+  "scope": "Settings navigation uniqueness, canonical system-text compatibility deep link and exact feature role/action guard",
+  "acceptance": "Bounded correction verified; whole Super Admin parity remains incomplete",
+  "regression": {
+    "redTests": 3,
+    "redLog": ".codex-tmp/super-admin-navigation-red.log",
+    "focusedGreenTests": 23,
+    "focusedGreenFiles": 6,
+    "greenLog": ".codex-tmp/super-admin-navigation-green.log"
+  },
+  "angular": {
+    "command": "npm run check",
+    "exitCode": 0,
+    "tests": 974,
+    "files": 191,
+    "architectureTests": 32,
+    "initialBundleKB": 581.92,
+    "existingWarning": "RISK-020",
+    "log": ".codex-tmp/super-admin-audit-angular-check.log"
+  },
+  "browser": {
+    "command": "node scripts/verify-language-translation-browser.mjs",
+    "exitCode": 0,
+    "fixtureOnly": true,
+    "cases": 12,
+    "executedAt": "2026-11-07T05:40:11.579Z",
+    "canonicalDeepLink": true,
+    "singleSettingsEntry": true,
+    "outerOverflow": false,
+    "priorTranslationFlows": "All 12 current cases also re-execute source/language/status/paging/search/save/reset/conflict/error/retry/read-only workflows",
+    "log": ".codex-tmp/super-admin-navigation-browser.log"
+  },
+  "sourceHashes": [
+    {
+      "path": "web-angular/src/app/platform/language-translation/language-translation-access.ts",
+      "sha256": "48abf373f1dd24aa0b7c7a32877daafaa518993eee41a16dcccbee30837b5721"
+    },
+    {
+      "path": "web-angular/src/app/platform/language-translation/policy.public-api.ts",
+      "sha256": "196986a737d57ce840030f5b1c7a1c173079d47eb7e41d456b0dfea740908aff"
+    },
+    {
+      "path": "web-angular/src/app/platform/language-translation/state/language-translation-state.ts",
+      "sha256": "d537f03759c987ae65a52f63c34266182790d3965cdc123b571d23a959b2cb94"
+    },
+    {
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.ts",
+      "sha256": "fae53d1b8640bf714310ad111eaed8e605f87b19e73a083f6728814ee93b2c57"
+    },
+    {
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.spec.ts",
+      "sha256": "b21adc3700ac9b651622bf9963f600135f92f2d28a97819d7945d1c3a201b788"
+    },
+    {
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.ts",
+      "sha256": "92323bb2c7809b9b5350107baeee5762bbd2c22fd30e7768054727d6e4ed79a3"
+    },
+    {
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.spec.ts",
+      "sha256": "24c3482d1db22c6f8ad45254656db1f69e370acc7e38affc72440d24144952e9"
+    },
+    {
+      "path": "web-angular/scripts/verify-language-translation-browser.mjs",
+      "sha256": "50d2482d46648d14f010158d363c7f42e443711abbe6938f0ba589ca9acc0dd6"
+    }
+  ],
+  "pending": [
+    "Own account profile/photo/password: exact S4-A7 contract registered, Phase00/runtime still required under FOLLOW-015",
+    "All-filtered export integrated acceptance",
+    "Production Countries route is still gated by canonical S3-A8 report acceptance",
+    "Real hosted/provider gates remain; no business deployment or live mutation performed"
+  ]
+}

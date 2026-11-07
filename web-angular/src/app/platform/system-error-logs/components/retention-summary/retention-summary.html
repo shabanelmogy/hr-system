@@ -1,0 +1,30 @@
+@if (settings(); as settings) {
+  <ng-template #editAction>
+    @if (editor.canEdit()) {
+      <erp-button
+        [label]="captions.text('edit')"
+        [disabled]="reads.pending()"
+        (activated)="editor.open()"
+      />
+    }
+  </ng-template>
+  <erp-metric-card
+    class="retention"
+    [label]="captions.text('retentionDays')"
+    [value]="captions.numeric(settings.retentionDays)"
+    icon="calendar"
+    size="large"
+    [description]="captions.text('helper')"
+    [footerTemplate]="editAction"
+  />
+  <div class="counters">
+    @for (metric of counters(); track metric.key) {
+      <erp-metric-card
+        [label]="metric.label"
+        [value]="metric.value"
+        [icon]="metric.icon"
+        [accent]="metric.accent"
+      />
+    }
+  </div>
+}

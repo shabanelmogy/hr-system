@@ -1,0 +1,73 @@
+<main>
+  <erp-page-header
+    [exportSource]="exportSource()"
+    variant="collection"
+    [title]="captions.systemTitle()"
+    [total]="reads.total()"
+    [views]="views()"
+    [view]="view()"
+    [filterVisible]="filtersVisible()"
+    (filterToggle)="filtersVisible.set(!filtersVisible())"
+    (viewChange)="selectView($event)"
+    (refresh)="reads.refresh()"
+  >
+    @if (exports.allowed() && !generalExport()) {
+      <erp-button
+        [label]="captions.text('export')"
+        [busy]="exports.pending()"
+        [disabled]="reads.invalid() !== null"
+        variant="outlined"
+        (activated)="exports.request()"
+      />
+    }
+  </erp-page-header>
+  @if (reads.pending() && reads.source().kind === 'ready') {
+    <erp-feedback-state kind="loading" layout="inline" [title]="captions.text('loading')" />
+  }
+  @if (reads.invalid()) {
+    <erp-feedback-state kind="error" layout="inline" [title]="captions.text('invalidRange')" />
+  }
+  @if (reads.pageError() && reads.source().kind === 'ready') {
+    <erp-feedback-state
+      kind="error"
+      layout="inline"
+      [title]="captions.text('loadFailed')"
+      [actionLabel]="captions.text('retry')"
+      (action)="reads.retry()"
+    />
+  }
+  @if (exports.failure()) {
+    <erp-feedback-state
+      kind="error"
+      layout="inline"
+      [title]="captions.text('exportFailed')"
+      [actionLabel]="captions.text('retry')"
+      (action)="exports.request()"
+    />
+  }
+  <div
+    class="workspace"
+    data-testid="system-error-logs"
+    [attr.data-kind]="reads.source().kind"
+    [attr.aria-busy]="reads.pending()"
+  >
+    @if (view() === 'report') {
+      <div class="report-panel">
+        @if (filtersVisible()) {
+          <erp-error-log-criteria />
+        }
+        @if (!reads.invalid() && reportAdapter; as adapter) {
+          <ng-container *ngComponentOutlet="adapter.component; inputs: reportInputs()" />
+        }
+      </div>
+    } @else {
+      <erp-error-log-collection
+        [filtersVisible]="filtersVisible()"
+        [view]="view() === 'cards' ? 'cards' : 'grid'"
+        [settingsAllowed]="canOpenSettings()"
+        (settingsRequested)="openSettings()"
+      />
+    }
+  </div>
+  <erp-error-log-details />
+</main>

@@ -1,0 +1,340 @@
+{
+  "status": "registered",
+  "executionMode": "implementation-preflight",
+  "runtimeAuthorized": true,
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S3-A10 \u2014 Districts complete Angular parity",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-districts-workspace.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-districts-workspace.md",
+  "instructions": "Merge these entries into recipe-manifest.json after Phase 00 has a final preflight required-files.json and all four initial applied implementation books. Extend the manifest/books with runtime evidence during implementation.",
+  "books": [
+    {
+      "id": "angular-districts-workspace-master",
+      "path": "../modules/platform/features/angular-districts-workspace/angular-districts-workspace-review.md",
+      "title": "Districts complete Angular parity cross-platform master review"
+    },
+    {
+      "id": "angular-districts-workspace-api",
+      "path": "../modules/platform/features/angular-districts-workspace/angular-districts-workspace-api.md",
+      "title": "Districts complete Angular parity API implementation profile"
+    },
+    {
+      "id": "angular-districts-workspace-web",
+      "path": "../modules/platform/features/angular-districts-workspace/angular-districts-workspace-web.md",
+      "title": "Districts complete Angular parity Next.js implementation profile"
+    },
+    {
+      "id": "angular-districts-workspace-mobile",
+      "path": "../modules/platform/features/angular-districts-workspace/angular-districts-workspace-mobile.md",
+      "title": "Districts complete Angular parity Expo implementation profile"
+    }
+  ],
+  "requiredFileManifest": "../modules/platform/features/angular-districts-workspace/required-files.json",
+  "recipes": [
+    {
+      "id": "angular-districts-workspace-phase-00-implementation-preflight",
+      "title": "Districts complete Angular parity Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-districts-workspace/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-districts-workspace-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-districts-workspace-phase-01-domain-api",
+      "title": "Districts complete Angular parity Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-districts-workspace/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-districts-workspace-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-districts-workspace-phase-02-web-client",
+      "title": "Districts complete Angular parity Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-districts-workspace/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-districts-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-districts-workspace-phase-03-mobile-client",
+      "title": "Districts complete Angular parity Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-districts-workspace/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-districts-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-districts-workspace-phase-04-domain-actions",
+      "title": "Districts complete Angular parity Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-districts-workspace/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-districts-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-districts-workspace-phase-05-integration-runtime",
+      "title": "Districts complete Angular parity Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-districts-workspace/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-districts-workspace-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-districts-workspace-phase-06-verification-acceptance",
+      "title": "Districts complete Angular parity Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-districts-workspace/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-districts-workspace-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-districts-workspace-phase-07-customer-education-closure",
+      "title": "Districts complete Angular parity Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-districts-workspace/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-districts-workspace-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    }
+  ]
+}

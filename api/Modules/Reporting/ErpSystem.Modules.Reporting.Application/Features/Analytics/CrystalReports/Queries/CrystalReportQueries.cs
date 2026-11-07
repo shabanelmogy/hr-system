@@ -147,7 +147,11 @@ public sealed class RenderGlobalCrystalReportQueryValidator
             .Must(value => value is "ar" or "en")
             .WithMessage("Language must be ar or en.");
         RuleFor(x => x.Filters)
-            .Must(RenderCrystalReportQueryValidator.AreValidFilters)
+            .Must((query, filters) => query.EntityKey == "system-error-logs"
+                ? filters is null || filters.Count <= 7 && filters.All(item =>
+                    new[] { "FromUtc", "ToUtc", "UserName", "Source", "StatusCode", "Search", "ColumnFilters" }.Contains(item.Key, StringComparer.Ordinal) &&
+                    (item.Value?.Length ?? 0) <= (item.Key == "ColumnFilters" ? 16384 : 200))
+                : RenderCrystalReportQueryValidator.AreValidFilters(filters))
             .WithMessage("Report filters must contain at most 16 safe keys with values up to 200 characters.");
     }
 }

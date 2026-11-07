@@ -1,0 +1,545 @@
+{
+  "schemaVersion": 1,
+  "status": "final",
+  "executionMode": "implemented-client-verification",
+  "runtimeAuthorized": true,
+  "feature": "angular-tenant-management-workspace",
+  "featureName": "Super Admin Tenant Management parity",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S4-A1 — Super Admin Tenant Management parity",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-tenant-management-workspace.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-tenant-management-workspace.md",
+  "purpose": "Current Tenant Management UI/state/shared/navigation source and executed client evidence; remaining Super Admin goal Active.",
+  "reviewArtifact": "documentation/modules/platform/features/angular-tenant-management-workspace/angular-tenant-management-workspace-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-tenant-management-workspace/angular-tenant-management-workspace-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-tenant-management-workspace/angular-tenant-management-workspace-review.md",
+    "api": "documentation/modules/platform/features/angular-tenant-management-workspace/angular-tenant-management-workspace-api.md",
+    "web": "documentation/modules/platform/features/angular-tenant-management-workspace/angular-tenant-management-workspace-web.md",
+    "mobile": "documentation/modules/platform/features/angular-tenant-management-workspace/angular-tenant-management-workspace-mobile.md"
+  },
+  "sourceCollections": [
+    {
+      "id": "next-tenant-source",
+      "path": "web-next/src/platform/tenants",
+      "minimumFiles": 20,
+      "layer": "web",
+      "purpose": "Actual Tenant aggregate/list/form/catalog helpers and tests"
+    },
+    {
+      "id": "api-tenant-source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Tenancy/Administration",
+      "minimumFiles": 3,
+      "layer": "api",
+      "purpose": "Retained contracts/commands/queries/policy/ports"
+    },
+    {
+      "id": "angular-tenant-management-client",
+      "path": "web-angular/src/app/platform/tenants/management",
+      "patterns": [
+        "*.ts",
+        "*.html",
+        "*.scss"
+      ],
+      "minimumFiles": 59,
+      "layer": "web",
+      "purpose": "Implemented typed Tenant Grid/Cards, five-tab editor, services/state/validation and tests"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/angular-tenant-management-workspace-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/angular-tenant-management-workspace-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "tenant-preflight-0",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/angular-tenant-management-workspace-api.md",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-2",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/angular-tenant-management-workspace-mobile.md",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-4",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/angular-tenant-management-workspace-review.md",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-5",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/angular-tenant-management-workspace-web.md",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-6",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-tenant-management-workspace.md",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-7",
+      "layer": "web",
+      "path": "web-next/src/config/api/tenants.ts",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-8",
+      "layer": "web",
+      "path": "web-next/src/config/api/modules.ts",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-9",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/tenants/public-api.ts",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-10",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/tenants/pages/dashboard-page/dashboard-page.ts",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-11",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/services/module-catalog-service.ts",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-12",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/types/module-contracts.ts",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-13",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-14",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.ts",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-15",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/navigation/content-tabs/content-tabs.ts",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-16",
+      "layer": "web",
+      "path": "web-next/src/locales/resources/platform-tenants/en.json",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-17",
+      "layer": "web",
+      "path": "web-next/src/locales/resources/platform-tenants/ar.json",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-18",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Tenancy/V1/TenantsController.cs",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-19",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Modules/V1/ModulesController.cs",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-20",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Identity/PlatformTenantAdministrationAdapters.cs",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-21",
+      "layer": "web",
+      "path": "mobile-react/src/platform/tenants/presentation/screens/TenantManagementScreen.tsx",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-22",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-api.md",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-23",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-evidence.md",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-24",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-mobile.md",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-25",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-request.md",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-26",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-review.md",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-preflight-27",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-web.md",
+      "purpose": "Verified current source/contract, not future runtime"
+    },
+    {
+      "id": "tenant-foundation-0",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/TENANT_FOUNDATION_2026-11-06.md",
+      "purpose": "Implemented bounded foundation and actual verification evidence"
+    },
+    {
+      "id": "tenant-foundation-1",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/TENANT_FOUNDATION_2026-11-06.json",
+      "purpose": "Implemented bounded foundation and actual verification evidence"
+    },
+    {
+      "id": "tenant-foundation-2",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/entitlements.public-api.ts",
+      "purpose": "Implemented bounded foundation and actual verification evidence"
+    },
+    {
+      "id": "tenant-foundation-3",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/services/tenant-entitlement-catalog-service.ts",
+      "purpose": "Implemented bounded foundation and actual verification evidence"
+    },
+    {
+      "id": "tenant-foundation-4",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/services/tenant-entitlement-catalog-service.spec.ts",
+      "purpose": "Implemented bounded foundation and actual verification evidence"
+    },
+    {
+      "id": "tenant-foundation-5",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-tenant-management-live-read.mjs",
+      "purpose": "Implemented bounded foundation and actual verification evidence"
+    },
+    {
+      "id": "tenant-foundation-6",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/types/tenant-entitlement-catalog.ts",
+      "purpose": "Implemented bounded foundation and actual verification evidence"
+    },
+    {
+      "id": "tenant-client-37",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/TENANT_WORKSPACE_2026-11-06.md",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-38",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/TENANT_WORKSPACE_2026-11-06.json",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-39",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-workspace-2026-11-06/browser-results.json",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-40",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-workspace-2026-11-06/negative-browser-results.json",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-41",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-workspace-2026-11-06/states-regression.json",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-42",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-workspace-2026-11-06/districts-regression.json",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-43",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-workspace-2026-11-06/country-import-regression.json",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-44",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-workspace-2026-11-06/ar-dark-390-editor.png",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-45",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-workspace-2026-11-06/en-light-1440-cards.png",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-46",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-workspace-2026-11-06/ar-dark-390-cards.png",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-47",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-workspace-2026-11-06/en-light-1440-editor.png",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-48",
+      "layer": "documentation",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-49",
+      "layer": "documentation",
+      "path": "documentation/guides/web/architecture/ANGULAR_SIGNAL_FORMS.md",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-50",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-field-registry.ts",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-51",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-section.ts",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-52",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-field-control.ts",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-53",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/public-api.ts",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-54",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.ts",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-55",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/cards/metric-card/metric-card.html",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-56",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/cards/metric-card/metric-card.scss",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-57",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/cards/metric-card/metric-card.ts",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-58",
+      "layer": "web",
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.html",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-59",
+      "layer": "web",
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.ts",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-60",
+      "layer": "web",
+      "path": "web-angular/src/app/composition/authenticated-routes/global-geography-navigation.spec.ts",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-61",
+      "layer": "web",
+      "path": "web-angular/src/app/composition/authenticated-routes/global-geography-navigation.ts",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-62",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/tenants/pages/dashboard-page/dashboard-page.html",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-63",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/tenants/pages/dashboard-page/dashboard-page.scss",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-64",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/tenants/pages/dashboard-page/dashboard-page.spec.ts",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-65",
+      "layer": "web",
+      "path": "web-angular/src/app/shell/context-slot.ts",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-66",
+      "layer": "web",
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.ts",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-67",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-tenant-management-browser.mjs",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-68",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-tenant-management-failures-browser.mjs",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-client-69",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-global-geography-navigation.mjs",
+      "purpose": "Current implemented source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-current-final-69",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-workspace-2026-11-06/navigation-results.json",
+      "purpose": "Executed navigation evidence or verified customer education"
+    },
+    {
+      "id": "tenant-current-final-70",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-tenant-management-workspace.md",
+      "purpose": "Executed navigation evidence or verified customer education"
+    },
+    {
+      "id": "tenant-header-spacing-verification",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/HEADER_SPACING_2026-11-06.json",
+      "purpose": "Current direct Countries/Tenant header measurements, full Angular gate and source hashes"
+    },
+    {
+      "id": "shared-collection-page-layout",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/_collection-page.scss",
+      "purpose": "Single shared collection-page shell prevents duplicate padding and header gaps"
+    },
+    {
+      "id": "shared-application-frame-spacing",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/application-frame/application-frame.scss",
+      "purpose": "Responsive shared outer inset and contained page layout"
+    },
+    {
+      "id": "shared-page-header-spacing",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/page-header/page-header.scss",
+      "purpose": "Responsive shared title-card separation"
+    },
+    {
+      "id": "tenant-navigation-tenant-navigation-ts",
+      "layer": "web",
+      "path": "web-angular/src/app/composition/authenticated-routes/tenant-navigation.ts",
+      "purpose": "Basic Data tenant branch ownership, existing access policy and active route selection"
+    },
+    {
+      "id": "tenant-navigation-tenant-navigation-spec-ts",
+      "layer": "web",
+      "path": "web-angular/src/app/composition/authenticated-routes/tenant-navigation.spec.ts",
+      "purpose": "Basic Data tenant branch ownership, existing access policy and active route selection"
+    },
+    {
+      "id": "tenant-navigation-verification-2026-11-06",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-navigation-2026-11-06.json",
+      "purpose": "Scoped Basic Data tenant navigation browser, source hashes and quality gate receipt"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-tenant-management-workspace-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-tenant-management-workspace-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-tenant-management-workspace/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

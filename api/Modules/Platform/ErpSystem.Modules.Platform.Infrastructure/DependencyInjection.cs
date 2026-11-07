@@ -133,7 +133,9 @@ public static class DependencyInjection
         services.AddScoped<ISecurityAuditRequestContextSource, HttpSecurityAuditRequestContextSource>();
         services.AddScoped<ISecurityAuditStore, SecurityAuditStore>();
         services.AddScoped<ISecurityAuditReadStore, SecurityAuditReadStore>();
-        services.AddScoped<IErrorLogStore, ErrorLogStore>();
+        services.AddScoped<ErrorLogStore>();
+        services.AddScoped<IErrorLogStore>(provider => provider.GetRequiredService<ErrorLogStore>());
+        services.AddScoped<IErrorLogReportReadStore>(provider => provider.GetRequiredService<ErrorLogStore>());
         services.AddSingleton<ErrorLogCaptureQueue>();
         services.AddSingleton<IErrorLogCaptureSink>(provider => provider.GetRequiredService<ErrorLogCaptureQueue>());
         services.AddHostedService<ErrorLogCaptureWorker>();

@@ -1,6 +1,7 @@
 using System.Text.Json;
 using ClosedXML.Excel;
 using ErpSystem.Modules.Platform.Application.Features.Platform.ErrorLogs;
+using ErpSystem.Modules.Platform.Contracts.ErrorLogs;
 using ErpSystem.Modules.Platform.Domain.Platform.ErrorLogs;
 using ErpSystem.Modules.Platform.Domain.Platform.SecurityAudits.Entities;
 using ErpSystem.Modules.Platform.Domain.Platform.SecurityAudits.Enums;
@@ -8,8 +9,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ErpSystem.Modules.Platform.Infrastructure.Features.Platform.ErrorLogs;
 
-public sealed class ErrorLogStore(PlatformDbContext db, ErrorLogCaptureQueue queue, TimeProvider clock) : IErrorLogStore
+public sealed class ErrorLogStore(PlatformDbContext db, ErrorLogCaptureQueue queue, TimeProvider clock)
+    : IErrorLogStore, IErrorLogReportReadStore
 {
+    public async Task<IReadOnlyList<SystemErrorLogReportRow>?> ReadReportAsync(ErrorLogCriteria criteria, CancellationToken token)
+    {
+        var entries = await Filter(criteria, true, null, null)
+            .Take(ISystemErrorLogReportSource.MaximumRows + 1)
+            .Select(entry => new SystemErrorLogReportRow(entry.Id, entry.OccurredOnUtc,
+                entry.Source, entry.Severity,
+                db.Users.Where(user => user.Id == entry.UserId).Select(user => user.UserName).FirstOrDefault(),
+                entry.Service, entry.Action, entry.StatusCode, entry.DurationMs, entry.CorrelationId,
+                entry.Summary, entry.Client, entry.Browser))
+            .ToListAsync(token);
+        return entries.Count > ISystemErrorLogReportSource.MaximumRows
+            ? null
+            : entries.Select(row => row with { OccurredOnUtc = DateTime.SpecifyKind(row.OccurredOnUtc, DateTimeKind.Utc) }).ToArray();
+    }
+
     public async Task<bool> HasCompanyScopeAsync(string? userId, string? tenantId, int? companyId, CancellationToken token)
     {
         if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(tenantId) || companyId is null or <= 0)
@@ -118,7 +135,8 @@ public sealed class ErrorLogStore(PlatformDbContext db, ErrorLogCaptureQueue que
                 (x.Service != null && x.Service.Contains(criteria.Search)) ||
                 (x.Action != null && x.Action.Contains(criteria.Search)) ||
                 (x.CorrelationId != null && x.CorrelationId.Contains(criteria.Search)));
-        return query.OrderByDescending(x => x.OccurredOnUtc).ThenByDescending(x => x.Id);
+        return ErrorLogFilterProjection.Apply(query, criteria.ColumnFilters, db)
+            .OrderByDescending(x => x.OccurredOnUtc).ThenByDescending(x => x.Id);
     }
 
     private async Task<IReadOnlyList<ErrorLogRow>> ReadRows(IQueryable<ErrorLogEntry> query, bool system, CancellationToken token)

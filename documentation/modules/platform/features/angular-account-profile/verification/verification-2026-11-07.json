@@ -1,0 +1,244 @@
+{
+  "dateUtc": "2026-11-07T08:20:19.9673608Z",
+  "feature": "angular-account-profile",
+  "plan": "web-angular-migration",
+  "slice": "S4-A7 — Own account profile and password parity",
+  "acceptance": "Verified for the bounded Angular own-account client; whole Super Admin and hosted release gates remain open",
+  "angular": {
+    "command": "npm run check",
+    "exitCode": 0,
+    "tests": 997,
+    "files": 195,
+    "architectureTests": 32,
+    "accountTests": 21,
+    "initialBundleKB": 581.99,
+    "warning": "RISK-020",
+    "log": "logs/account-final-gates.log",
+    "lastHarnessFormatExitCode": 0
+  },
+  "api": {
+    "buildExitCode": 0,
+    "buildErrors": 0,
+    "analyzerWarnings": 78,
+    "passed": 1331,
+    "skippedOptInBrowser": 3,
+    "reportingPassed": 252,
+    "reason": "Existing generated catalog and explicit account-label policy changed; no endpoint/domain/schema change",
+    "buildLog": "logs/account-catalog-final-build.log",
+    "testLog": "logs/account-catalog-final-tests.log"
+  },
+  "browser": {
+    "command": "node scripts/verify-account-profile-browser.mjs",
+    "exitCode": 0,
+    "fixtureOnly": true,
+    "cases": 12,
+    "date": "2026-11-07T08:19:01.709Z",
+    "languages": [
+      "en",
+      "ar"
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "widths": [
+      390,
+      900,
+      1440
+    ],
+    "shortWindow": "900x640",
+    "scenarios": [
+      "Invalid personal Save remains enabled and focuses first field",
+      "Confirmed personal save",
+      "Invalid photo shows under-field error without mutation",
+      "Native file selection and actual drag/drop",
+      "Photo preview, confirmed save/reload, removal and undo",
+      "Photo GET failure and retry",
+      "Dirty-tab Cancel and explicit discard",
+      "Real Identity PasswordMismatch mapped below current password",
+      "Confirmed password update clears sensitive fields and logs out",
+      "Dedicated password route without photo/info dependency",
+      "Actual TopBar profile action",
+      "Zero outer overflow"
+    ],
+    "results": "browser/results.json",
+    "log": "logs/account-accepted-browser.log",
+    "realAccountWrites": 0
+  },
+  "reference": {
+    "command": "node scripts/verify-account-profile-reference.mjs",
+    "exitCode": 0,
+    "cases": 8,
+    "date": "2026-11-07T07:54:52.763Z",
+    "currentNextSourceRendered": true,
+    "accountWrites": 0,
+    "auth": "One existing demo login reused in isolated contexts; owned logout; no credentials or cookies stored in receipts",
+    "results": "reference/results.json",
+    "log": "logs/account-reference-final.log",
+    "comparison": "Source fields/actions/security/photo workflow checked; shared Angular header/back arrow, compact card and inner scrolling intentionally follow later project-wide requester rules; no pixel-identical MUI claim"
+  },
+  "regression": {
+    "translationBrowserCases": 12,
+    "translationBrowserDate": "2026-11-07T08:18:27.266Z",
+    "translationLog": "logs/account-translation-regression.log",
+    "countriesFocusedTests": 8,
+    "countriesLog": "logs/account-country-regression.log",
+    "policyTests": 7,
+    "policyLog": "logs/account-localization-policy-green.log"
+  },
+  "catalog": {
+    "sources": 21,
+    "keys": 7516,
+    "webFingerprint": "42da90d56f25f240d0173026a1cc75d540b72cc1bd610582c061bd27fe959c34",
+    "accountPrefix": "platform-auth/accountProfile",
+    "owningScreenPermissions": [],
+    "globalEditorGrants": "super_admin plus SystemUiTexts View/Edit/Reset remain mandatory"
+  },
+  "previousAttempts": [
+    "Original state regressions reproduced dirty-on-open, lost independent draft, ambiguous replay, uncleared password and forbidden-read problems; corrected tests pass.",
+    "Actual browser reproduced tab activation before discard consent; shared external commit now keeps the original tab until approval.",
+    "An inherited Countries test hit its5000ms timeout once; focused8 passed and later full997 passed without changing its timeout or implementation.",
+    "Explicit maxLength template binding conflicted with FormField; validation metadata now owns the input limit.",
+    "Early reference harness repeated demo login per case and reached429; final harness uses one demo login and all8 pass.",
+    "Harness-only selectors were narrowed to distinguish dialog Cancel from close icon and inline error from summary; application validation behavior was retained."
+  ],
+  "pending": [
+    "PROD-019 coordinated catalog/client publication and real account persistence acceptance; no deployment or real profile/photo/password mutation performed.",
+    "The own-account API has no expectedRevision; client does not claim a server concurrency guarantee.",
+    "Whole Super Admin remains Active: retained export acceptance, production Countries gate and real host/provider checks are separate work."
+  ],
+  "sourceHashes": [
+    {
+      "path": "web-angular/src/app/platform/account-profile/public-api.ts",
+      "sha256": "8d0b6f8bf70a992e9911868893bf703123c5148980f9f8868656531e402e893a"
+    },
+    {
+      "path": "web-angular/src/app/platform/account-profile/validation/account-profile-forms.ts",
+      "sha256": "f352f4c4c3d5e2698599682652f324a06a5d33ac448b512d33adfab790e02f13"
+    },
+    {
+      "path": "web-angular/src/app/platform/account-profile/validation/account-profile-forms.spec.ts",
+      "sha256": "9ddf32df7ca35f3acb0b7d39a957c7e781776422b39cd9c555a752f4c17e6896"
+    },
+    {
+      "path": "web-angular/src/app/platform/account-profile/state/account-profile-state.ts",
+      "sha256": "26864902c4cc06baea98bdf4fae716c26d98ce38f76d304f223e26391611039a"
+    },
+    {
+      "path": "web-angular/src/app/platform/account-profile/state/account-profile-state.spec.ts",
+      "sha256": "0e0951779c7782220f8428daaf77f2207fc84907075c56e4213abd211a87d33c"
+    },
+    {
+      "path": "web-angular/src/app/platform/account-profile/types/account-profile.ts",
+      "sha256": "8401c46f7ed3264ca2158d8d451285081d5ca27ac28e77a675d15d0ad24a0f99"
+    },
+    {
+      "path": "web-angular/src/app/platform/account-profile/services/account-profile-service.ts",
+      "sha256": "1267d230eba0397b1136177e82ef903726e5be346aed3ea781b17db92ee70c21"
+    },
+    {
+      "path": "web-angular/src/app/platform/account-profile/services/account-profile-service.spec.ts",
+      "sha256": "14af6d37c98e7e51bd9381b5bd78290d639e17b65fecb02afe99b96e16672783"
+    },
+    {
+      "path": "web-angular/src/app/platform/account-profile/pages/account-profile-page/account-profile-page.ts",
+      "sha256": "74ad154c4b3bd3b967813657248f7dda42d15bb76fe21062352b7fde961bc452"
+    },
+    {
+      "path": "web-angular/src/app/platform/account-profile/components/photo-editor/photo-editor.ts",
+      "sha256": "ef496729fc58c200dbe734b49eb51856e10b2a8309c690981a10e77a788bb023"
+    },
+    {
+      "path": "web-angular/src/app/platform/account-profile/pages/account-profile-page/account-profile-page.scss",
+      "sha256": "b76628a71df1a183d501186d866f9d097644ed86f021133c505c33001982703e"
+    },
+    {
+      "path": "web-angular/src/app/platform/account-profile/components/photo-editor/photo-editor.scss",
+      "sha256": "754ecd84f52567ea29e18e2501b5689e1963bf3a9113cda3d510e2cc862472ad"
+    },
+    {
+      "path": "web-angular/src/app/platform/account-profile/pages/account-profile-page/account-profile-page.html",
+      "sha256": "c9c5ccbf77e1e5bf14706f06b9aa7eab17cc79c5b330d0f7cdf2c1b21b6f39aa"
+    },
+    {
+      "path": "web-angular/src/app/platform/account-profile/components/photo-editor/photo-editor.html",
+      "sha256": "57f136f0bd31255ce5e13becc7a95b934615208a84603e1f8d2fee5c532ef8c3"
+    },
+    {
+      "path": "web-angular/src/app/platform/account-profile/components/personal-info/personal-info.html",
+      "sha256": "316f25f70f89a3a6a9a21ea3bf2a14a716f029e0c94b154683af3e17875750c3"
+    },
+    {
+      "path": "web-angular/src/app/platform/account-profile/components/password-editor/password-editor.html",
+      "sha256": "3c3af8e913824edd0b5db0d3650afa192917d8c4f5849c59a968c8d5561cade8"
+    },
+    {
+      "path": "web-angular/src/app/platform/account-profile/components/password-editor/password-editor.scss",
+      "sha256": "2a6c904db4dea07f278453224c1a8fb915f89003665bb9cd1035b71aec3cfa90"
+    },
+    {
+      "path": "web-angular/src/app/platform/account-profile/components/password-editor/password-editor.ts",
+      "sha256": "5423f391aaa3a0aa6b9eee751af87a223f75c3a3a4aa55e3e55788e76d8d0a25"
+    },
+    {
+      "path": "web-angular/src/app/platform/account-profile/components/personal-info/personal-info.ts",
+      "sha256": "9a70ba3b60d41aa4e7d748c68f468a7a80b65593722effe7a8dedb9c100af38e"
+    },
+    {
+      "path": "web-angular/src/app/platform/account-profile/components/personal-info/personal-info.scss",
+      "sha256": "39fb8cff6fb3317bd04bd0a6217858e6c9d356326e379f7b5048488e28be3609"
+    },
+    {
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.ts",
+      "sha256": "63237b13bc3ae64e8fe941227a61106677b30de7fb616c9fbce8a0d0a70cb6f3"
+    },
+    {
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.ts",
+      "sha256": "9050da62c9456f70d15fcaaa921131e89f72e35464e4cf2777f2387e20514770"
+    },
+    {
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.html",
+      "sha256": "e95a5da1e0be4231d0715f3bc80f9b2277bc23bdf0b8acd97a12062e8246aa25"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/file-field/file-field.ts",
+      "sha256": "9abd0bd955bdcd863d68206046a98ed838a6a755f9d50890aef3aa50513db2d2"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/file-field/file-field.html",
+      "sha256": "e3c0720b6f405b59fb3079c4c43887e0233f33deb9061df9b8fae66583e950ff"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/navigation/content-tabs/content-tabs.ts",
+      "sha256": "47eb031c3a6fb81a33f4ab916bd8415434a68045b234da7d5cc86aa769aeebf7"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/navigation/content-tabs/content-tabs.html",
+      "sha256": "66a5f23f0e3ecfe47226d5cf90b8ef03b690efffc9352f8d48c6d66336afde07"
+    },
+    {
+      "path": "web-angular/scripts/verify-account-profile-browser.mjs",
+      "sha256": "4df6fa9febdcbc18ee5175421bff969b27b570eee5f6cf2f0bb707d6b2d409e4"
+    },
+    {
+      "path": "web-angular/scripts/verify-account-profile-reference.mjs",
+      "sha256": "e4d4fe4dcc4dc86144b2f178820d8c229b17b068107697b862b2e7cf327a3cc5"
+    },
+    {
+      "path": "scripts/system-ui-access-policy.json",
+      "sha256": "81d58797efddc67f39af18dc8484700d1d2f8153c64a1d0454a03814b75e6d86"
+    },
+    {
+      "path": "scripts/system-ui-access-policy.test.mjs",
+      "sha256": "940f8db33d496c9d475a84d48ee3f5064605be8eb9c3477d5b71320d28b4ec5f"
+    },
+    {
+      "path": "web-next/src/locales/resources/platform-auth/en.json",
+      "sha256": "17ffe5714f16a821a45c0bdcc0f1d7664f778d3fb481715c89d151f7cc2cb9f5"
+    },
+    {
+      "path": "web-next/src/locales/resources/platform-auth/ar.json",
+      "sha256": "07b93d34b5530623e3c5b7278f66dd433ceea742abf0b69b2cd4839b28c0586d"
+    }
+  ]
+}

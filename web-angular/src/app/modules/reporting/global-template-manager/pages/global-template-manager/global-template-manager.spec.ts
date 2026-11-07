@@ -1,5 +1,6 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of, Subject, throwError } from 'rxjs';
@@ -10,6 +11,9 @@ import { LocalizationRuntime } from '../../../../../platform/localization/public
 import { GlobalTemplateService } from '../../services/global-template-service';
 import type { GlobalTemplateDetail } from '../../types/global-template';
 import { GlobalTemplateManager } from './global-template-manager';
+import { GlobalReportTemplateEditor } from '../../components/global-report-template-editor/global-report-template-editor';
+import { GlobalTemplateList } from '../../components/global-template-list/global-template-list';
+import { globalReportFixture } from '../../../global-reports/report.fixture';
 
 describe('global versioned manager', () => {
   const hash = 'a'.repeat(64);
@@ -41,6 +45,12 @@ describe('global versioned manager', () => {
     createdOn: '2026-11-01T00:00:00Z',
   };
   const detail: GlobalTemplateDetail = { ...row, versions: [version] };
+  const viewerSource = {
+    id: '47ac6388610696d48cf340ef20a03dad79ece085f1579cb124bf6b91be479d52',
+    entityKey: 'countries' as const,
+    reportKey: row.reportKey,
+    rowVersion: 'bde14ba2a6ce8b232c5d3a7adb14de58780eedea1fdd769a794696345d712425',
+  };
   const replacementDetail = {
     ...detail,
     currentVersionNumber: 2,
@@ -91,16 +101,6 @@ describe('global versioned manager', () => {
     service.detail.mockReturnValue(of(saved));
     state.openDetail(row);
     await fixture.whenStable();
-    const metadata = fixture.componentInstance.overviewMetadata();
-    expect(metadata.find((item) => item.key === 'crystalReports.description')?.value).toBe(
-      'Shared directory description',
-    );
-    expect(metadata.find((item) => item.key === 'globalTemplates.subject')?.value).toBe(
-      'دليل الدول',
-    );
-    expect(metadata.find((item) => item.key === 'crystalReports.displayName')?.value).toBe(
-      'Directory',
-    );
     expect(document.body.textContent).toContain('Shared directory description');
     expect(document.body.textContent).not.toContain('Draft title');
     expect(service.upload).not.toHaveBeenCalled();
@@ -313,6 +313,40 @@ describe('global versioned manager', () => {
     TestBed.resetTestingModule();
     vi.unstubAllGlobals();
   });
+  it('keeps dropdown actions permission-scoped and blocks dispatch during an existing upload', async () => {
+    const { fixture, state, service, identity } = await setup();
+    const list = fixture.debugElement.query(By.directive(GlobalTemplateList))
+      .componentInstance as GlobalTemplateList;
+    expect(list.toolbarActions().map((action) => action.id)).toEqual([
+      'upload',
+      'register',
+      'design',
+      'schema',
+    ]);
+    list.toolbarAction('upload');
+    await fixture.whenStable();
+    expect(state.editorOpen()).toBe(true);
+    const pending = new Subject<typeof detail>();
+    service.upload.mockReturnValue(pending);
+    state.form.controls.file.setValue(new File(['fixture'], 'Countries.rpt'));
+    state.save();
+    await fixture.whenStable();
+    expect(state.pending()).toBe(true);
+    list.toolbarAction('register');
+    expect(service.candidates).not.toHaveBeenCalled();
+    identity.set({
+      ...identity(),
+      permissions: identity().permissions.filter(
+        (permission) => permission !== 'GlobalCrystalReports:Create',
+      ),
+    });
+    await fixture.whenStable();
+    expect(list.toolbarActions().map((action) => action.id)).toEqual(['schema']);
+    list.toolbarAction('register');
+    list.toolbarAction('upload');
+    expect(service.candidates).not.toHaveBeenCalled();
+    expect(state.editorOpen()).toBe(false);
+  });
   it('registers an existing server file without local upload and refreshes its registered state', async () => {
     const { fixture, state, service, root } = await setup();
     state.loadCandidates();
@@ -422,6 +456,116 @@ describe('global versioned manager', () => {
     expect(
       state.validationStatus({ ...version, validationContractFingerprint: 'b'.repeat(64) }),
     ).toBe('NeedsRevalidation');
+  });
+  it('resolves a viewer template by exact report key and published hash before opening its editor', async () => {
+    const { fixture, state, service } = await setup();
+    state.openViewerTemplate({
+      ...viewerSource,
+    });
+    await expect.poll(() => state.editor()?.reportId).toBe(row.id);
+    await fixture.whenStable();
+    expect(service.list).toHaveBeenCalledWith('countries', '', 0, 10, 'published', [
+      {
+        field: 'reportKey',
+        operator: 'and',
+        constraints: [{ matchMode: 'equals', value: row.reportKey }],
+      },
+    ]);
+    expect(state.detail()?.id).toBe(row.id);
+    expect(state.editorOpen()).toBe(true);
+    expect(state.editor()?.reportId).toBe(row.id);
+    expect(service.upload).not.toHaveBeenCalled();
+  });
+  it('rejects a stale viewer source and refuses a template without Upload permission', async () => {
+    const { fixture, state, service, identity } = await setup();
+    state.openViewerTemplate({
+      ...viewerSource,
+      rowVersion: 'b'.repeat(64),
+    });
+    await expect.poll(() => state.feedback()?.key).toBe('globalTemplates.conflict');
+    await fixture.whenStable();
+    expect(state.editorOpen()).toBe(false);
+    expect(state.feedback()?.key).toBe('globalTemplates.conflict');
+    service.list.mockClear();
+    identity.set({
+      ...identity(),
+      permissions: identity().permissions.filter(
+        (permission) => permission !== 'GlobalCrystalReports:Upload',
+      ),
+    });
+    await fixture.whenStable();
+    service.list.mockClear();
+    state.openViewerTemplate({
+      ...viewerSource,
+    });
+    await fixture.whenStable();
+    expect(service.list).not.toHaveBeenCalled();
+    expect(state.editorOpen()).toBe(false);
+  });
+  it('reuses the existing upload and version dialogs from the viewer and retains explicit publication', async () => {
+    const { service } = await setup();
+    const viewerEditor = TestBed.createComponent(GlobalReportTemplateEditor);
+    viewerEditor.componentRef.setInput('report', {
+      ...globalReportFixture,
+      ...viewerSource,
+    });
+    await viewerEditor.whenStable();
+    const state = viewerEditor.componentInstance.state;
+    await expect.poll(() => state.editor()?.reportId).toBe(row.id);
+    await viewerEditor.whenStable();
+    state.form.controls.file.setValue(new File(['fixture'], 'Countries.rpt'));
+    state.save();
+    await viewerEditor.whenStable();
+    expect(service.upload).toHaveBeenCalledWith('countries', expect.any(File), '', row.id);
+    expect(service.publish).not.toHaveBeenCalled();
+    expect(state.detailOpen()).toBe(true);
+    expect(document.body.querySelector('erp-global-template-versions')).not.toBeNull();
+    const closed = vi.fn();
+    viewerEditor.componentInstance.closed.subscribe(closed);
+    state.closeDetail();
+    await viewerEditor.whenStable();
+    expect(closed).toHaveBeenCalledTimes(1);
+    viewerEditor.destroy();
+  });
+  it('requires the report-specific Upload grant before opening a viewer upload', async () => {
+    const { fixture, state, service } = await setup();
+    service.access.mockReturnValue(
+      of({
+        access: [],
+        allowedRights: ['Run', 'Download'],
+        canView: true,
+        canEdit: false,
+        rowVersion: row.rowVersion,
+      }),
+    );
+    state.openViewerTemplate({
+      ...viewerSource,
+    });
+    await expect.poll(() => state.feedback()?.key).toBe('authorization.forbidden.title');
+    await fixture.whenStable();
+    expect(state.editorOpen()).toBe(false);
+    expect(state.feedback()?.key).toBe('authorization.forbidden.title');
+    expect(service.upload).not.toHaveBeenCalled();
+  });
+  it('rejects another immutable viewer identity even when the report key and source bytes match', async () => {
+    const { fixture, state, service } = await setup();
+    state.openViewerTemplate({ ...viewerSource, id: 'f'.repeat(64) });
+    await expect.poll(() => state.feedback()?.key).toBe('globalTemplates.conflict');
+    await fixture.whenStable();
+    expect(state.editorOpen()).toBe(false);
+    expect(state.feedback()?.key).toBe('globalTemplates.conflict');
+    expect(service.upload).not.toHaveBeenCalled();
+  });
+  it('rejects a replaced published version even when its RPT bytes have the same hash', async () => {
+    const { fixture, state, service } = await setup();
+    service.detail.mockReturnValue(
+      of({ ...detail, versions: [{ ...version, id: '204c0411-c988-449d-9a36-e27d2d7532f5' }] }),
+    );
+    state.openViewerTemplate(viewerSource);
+    await fixture.whenStable();
+    await expect.poll(() => state.feedback()?.key).toBe('globalTemplates.conflict');
+    expect(state.editorOpen()).toBe(false);
+    expect(service.upload).not.toHaveBeenCalled();
   });
   it('revokes UI state and cancels an outstanding mutation after authority changes', async () => {
     const { fixture, state, service, identity } = await setup();

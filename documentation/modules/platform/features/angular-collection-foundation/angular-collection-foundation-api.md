@@ -2,6 +2,11 @@
 
 ## 1. Ownership
 
+Header-selection maintenance2026-11-05 changes Angular Shared presentation only.
+Existing eligible current-page IDs still flow to the owner; there is no server
+select-all, new endpoint, permission, schema or migration. Exact executed checks
+and limits are recorded in HEADER_SELECTION_2026-11-05.md.
+
 Platform Web Shared owns a generic collection presentation kit, not entity data, permissions, API queries or business rules. MyDataGrid and CardList share toolbar/footer/feedback contracts. Root/feature callers retain scope and data ownership. No Next/native runtime is rewritten.
 
 ## 2. Current source

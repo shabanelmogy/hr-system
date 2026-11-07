@@ -14,6 +14,12 @@
 | Backend workflow | [API Feature Development Workflow](../../../../guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md) |
 | API profile | [Countries API Implementation Profile](countries-api.md) |
 
+Current Angular Import presentation/diagnostics maintenance2026-11-05 is recorded
+in documentation/modules/platform/features/angular-countries-import-view/IMPORT_WORKSPACE_2026-11-05.md.
+It retains the same six fields, Create authority, valid-subset bulk transaction,
+uncertainty/replay and actor-lifetime rules. No API/schema or Next/Mobile business
+runtime change; Web translation catalog synchronization retains PROD-019.
+
 This is the feature-specific review artifact for Countries. Its manifest,
 explicit contracts, platform profiles, findings, and reconciliation checklist
 let a developer or coding agent build the same capability for web and mobile

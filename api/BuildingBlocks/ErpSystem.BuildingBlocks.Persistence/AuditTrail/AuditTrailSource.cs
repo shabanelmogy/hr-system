@@ -47,6 +47,8 @@ public sealed class AuditTrailSource<TContext> : IAuditTrailSource
         if (filter.ToUtc is { } toUtc)
             query = query.Where(entry => entry.OccurredOnUtc <= toUtc);
 
+        query = AuditColumnFilterProjection.Apply(query, filter, ModuleCode);
+
         if (filter.After is { } after)
         {
             // Global order: OccurredOnUtc desc, ModuleCode asc, Id desc.

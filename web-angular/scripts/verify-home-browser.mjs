@@ -131,7 +131,7 @@ try {
           );
           await expect(p.locator('.status-counts>div')).toHaveCount(7);
           await expect(p.locator('.tenant-list li')).toHaveCount(16);
-          await expect(p.locator('p-tag')).toHaveCount(8);
+          await expect(p.locator('.dashboard-content p-tag')).toHaveCount(8);
           assert.equal(
             await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
             true,
@@ -139,9 +139,14 @@ try {
           assert.equal(state.requests, 1);
           const metric = await p.locator('erp-metric-card').first().boundingBox();
           const icon = await p.locator('erp-metric-card .metric-icon').first().boundingBox();
-          assert.ok(Math.abs(metric.width - (width === 390 ? 150 : 208)) <= 1);
-          assert.ok(Math.abs(metric.height - (width === 390 ? 82.09375 : 81.796875)) <= 1);
-          assert.equal(icon.width, 34);
+          const kpiGrid = await p.locator('.metrics').evaluate((element) => ({
+            columns: getComputedStyle(element).gridTemplateColumns.split(' ').length,
+            overflow: element.scrollWidth - element.clientWidth,
+          }));
+          assert.equal(kpiGrid.columns, width === 390 ? 2 : 6);
+          assert.ok(kpiGrid.overflow <= 1);
+          assert.ok(metric.width >= 130 && metric.height >= 60);
+          assert.equal(icon.width, 28);
           await p.evaluate(() => document.fonts.ready);
           await p.screenshot({
             path: path.join(output, `home-${language}-${mode}-${width}.png`),
@@ -154,8 +159,11 @@ try {
               true,
             );
             const rows = p.locator('.panel-row');
-            assert.equal(await rows.first().evaluate((e) => e.scrollHeight > e.clientHeight), true);
-            await rows.first().evaluate((e) => (e.scrollTop = e.scrollHeight));
+            assert.equal(
+              await rows.first().evaluate((e) => e.scrollHeight > e.clientHeight),
+              false,
+            );
+            await p.locator('.subscriptions').scrollIntoViewIfNeeded();
             await expect(p.locator('.subscriptions')).toBeInViewport();
           }
           await p.reload();

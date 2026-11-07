@@ -99,4 +99,4 @@ or feature-local document.
 | angular-application-shell-web | 13 | `0f31d57c1a04f5819829d63ecd548287884d582fa148b1f26eaee0f86a906590` |
 | angular-application-shell-mobile | 1 | `8420f91086a38d7869bb125bbf216e4334ec46e04700b4dfe8662f2e77609f95` |
 | angular-application-shell-mobile | 14 | `e71f5d6a2e12eb1fea6e3129fcdfbab05769cb4275c95c14a1e9d2888d88e057` |
-| angular-application-shell-mobile | 15 | `9decaf031292c3b4e868f05781846b96c45f7443d62d9fa6fd25d4e7cc89e431` |
+| angular-application-shell-mobile | 15 | `cf25e2d97d241378646c006de216628f374b7f32252b2eac1a8412a9a9388f8e` |

@@ -77,7 +77,7 @@ Regenerate feature-scoped packets; Phase 06 must be Verified before education.
 | global-crystal-template-manager-master | 37 | `a79c36efe60ac284e27acfb5c9a980a61479b5d2a9449629c0e97d11236d4e2f` |
 | global-crystal-template-manager-master | 38 | `d02b2b160aff790881be2aead2faed3e8103596027f40fc5d4e59b0c0cc2321e` |
 | global-crystal-template-manager-master | 39 | `a2e564da5d402ad1de9ab60dca78ac95acd385c2912eb989a68de38d35c0b739` |
-| global-crystal-template-manager-web | 1 | `363964a310eaa86338ce87d764060421b662e6513cff4cfa7032dc6365f704a5` |
+| global-crystal-template-manager-web | 1 | `d13283cf22dba9002e831c06a1785b1e0af1b6a4e2ce2123b86bb3979220512c` |
 | global-crystal-template-manager-web | 2 | `190585b22d029bdd1ed84673b03af3680eb8d61ad6bc047827ac54a80adfe85d` |
 | global-crystal-template-manager-web | 3 | `d8722e68d513c506df9f2731965a7158cf771746ff8bee1630a8686355842528` |
 | global-crystal-template-manager-web | 4 | `14f56080ec8fbdeeb470427a17a62aea7af37087380fec54f797089dd75e12eb` |
@@ -89,7 +89,7 @@ Regenerate feature-scoped packets; Phase 06 must be Verified before education.
 | global-crystal-template-manager-web | 10 | `b323da842f4aac08484becb9d7ec372a0086599e67539ba27bdf9325059339ff` |
 | global-crystal-template-manager-web | 11 | `c6de28e924db6583f6e8f458b1a50ba19443d927d860bd5f20f3390aee753ea9` |
 | global-crystal-template-manager-web | 12 | `c852338da83db8d6b5ee61a1f43826bc50cbd1b83e75dd20f4f0095b88f34488` |
-| global-crystal-template-manager-web | 13 | `feb2b4b105453f091f7439beaa4cc63bc5f778693920b095215c11f92b20fa7a` |
+| global-crystal-template-manager-web | 13 | `df8c55f8fd9efccf72639dcc8fdbe8666a68a82bdfe04768f14115ddceeb04d2` |
 | global-crystal-template-manager-web | 14 | `6bbdfd8dd2d2e8eb4059296724255c23c89a3452818f2f8851e7829900209300` |
 | global-crystal-template-manager-web | 20 | `7cce7bcd793c79160e4c86a3b8d08c750ebc39b2f2224474a73f858d671bfc68` |
 | global-crystal-template-manager-web | 21 | `d4c3cb230cc1b91ef63280157daf31ff73299f7ffe734e3457792977b7578109` |

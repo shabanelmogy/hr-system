@@ -1,4 +1,9 @@
-<router-outlet />
+@if (!preview.standalone) {
+  <router-outlet />
+}
+@defer (when preview.active() !== null) {
+  <erp-responsive-preview-host />
+}
 @defer (when drafts.prompt()) {
   <erp-unsaved-confirmation-host />
 }

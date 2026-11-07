@@ -10,6 +10,8 @@ public sealed record PublishGlobalCrystalReportVersionCommand(Guid ReportId, Gui
     : ICommand<Result<CrystalReportDetailResponse>>;
 public sealed record RevalidateGlobalCrystalReportVersionCommand(Guid ReportId, Guid VersionId)
     : ICommand<Result<CrystalReportDetailResponse>>;
+public sealed record VerifyDatabaseGlobalCrystalReportVersionCommand(Guid ReportId, Guid VersionId)
+    : ICommand<Result<CrystalReportDetailResponse>>;
 public sealed record InspectGlobalCrystalReportCommand(string EntityKey, FileUpload File)
     : ICommand<Result<CrystalReportInspection>>;
 public sealed record ImportGlobalCrystalReportCommand(string EntityKey, string SourceId, string ExpectedSha256)
@@ -19,7 +21,7 @@ public sealed class CreateGlobalCrystalReportCommandValidator : AbstractValidato
 {
     public CreateGlobalCrystalReportCommandValidator()
     {
-        RuleFor(x => x.EntityKey).NotEmpty().Must(key => key is "countries" or "states" or "districts");
+        RuleFor(x => x.EntityKey).NotEmpty().Must(key => key is "countries" or "states" or "districts" or "system-error-logs");
         RuleFor(x => x.Description).MaximumLength(500);
         RuleFor(x => x.File).NotNull();
     }
@@ -39,7 +41,7 @@ public sealed class ImportGlobalCrystalReportCommandValidator : AbstractValidato
 {
     public ImportGlobalCrystalReportCommandValidator()
     {
-        RuleFor(x => x.EntityKey).NotEmpty().Must(key => key is "countries" or "states" or "districts");
+        RuleFor(x => x.EntityKey).NotEmpty().Must(key => key is "countries" or "states" or "districts" or "system-error-logs");
         RuleFor(x => x.SourceId).NotEmpty().Matches("^[a-f0-9]{64}$");
         RuleFor(x => x.ExpectedSha256).NotEmpty().Matches("^[a-f0-9]{64}$");
     }

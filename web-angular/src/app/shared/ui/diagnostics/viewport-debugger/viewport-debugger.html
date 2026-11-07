@@ -1,0 +1,21 @@
+<output dir="ltr" aria-live="off" [attr.aria-label]="description()" [title]="description()">
+  <erp-popover-panel
+    #menu
+    [label]="openLabel()"
+    [triggerText]="visibleLabel()"
+    triggerAppearance="quiet"
+  >
+    <erp-icon popoverTrigger name="chevronDown" />
+    <div class="viewport-options">
+      <strong dir="ltr">{{ label() }}</strong>
+      <erp-option-select
+        [label]="presetLabel()"
+        [value]="selectedPreset()"
+        [options]="options()"
+        commitMode="external"
+        (valueChange)="preview.select($event); menu.close()"
+      />
+    </div>
+  </erp-popover-panel>
+</output>
+<erp-copy-button [content]="label" [label]="copyLabel()" iconOnly />

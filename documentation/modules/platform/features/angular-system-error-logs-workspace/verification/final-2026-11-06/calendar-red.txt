@@ -1,0 +1,61 @@
+
+> erp-angular@0.0.0 pretest
+> npm run configure:license
+
+
+> erp-angular@0.0.0 configure:license
+> node --env-file-if-exists=.env.local scripts/configure-license.mjs
+
+PrimeUI local license configured (value omitted).
+
+> erp-angular@0.0.0 test
+> node scripts/run-angular.mjs test --watch=false --include=src/app/platform/system-error-logs/types/error-log-filters.spec.ts
+
+API target: host (https://shabanhrms.runasp.net)
+> Building...
+√ Building...
+Application bundle generation complete. [3.417 seconds] - 2026-11-06T10:33:36.707Z
+
+
+ RUN  v5.0.5 F:/Portofolio Projects/ERPSYSTEM/web-angular
+
+ ❯ |erp-angular| src/app/platform/system-error-logs/types/error-log-filters.spec.ts (4 tests | 1 failed) 20ms
+   ❯ system error log criteria (4)
+     × preserves the full supported date-only range without the Date year offset 10ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |erp-angular| src/app/platform/system-error-logs/types/error-log-filters.spec.ts > system error log criteria > preserves the full supported date-only range without the Date year offset
+AssertionError: expected { valid: false, issue: 'range' } to deeply equal { valid: true, …(1) }
+
+- Expected
++ Received
+
+  {
+-   "criteria": {
+-     "fromUtc": "0001-01-01T00:00:00.000Z",
+-     "page": 1,
+-     "pageSize": 25,
+-     "toUtc": "0099-12-31T23:59:59.999Z",
+-   },
+-   "valid": true,
++   "issue": "range",
++   "valid": false,
+  }
+
+ ❯ src/app/platform/system-error-logs/types/error-log-filters.spec.ts:36:108
+     34|   });
+     35|   it('preserves the full supported date-only range without the Date ye…
+     36|     expect(resolveErrorLogCriteria({ ...emptyErrorLogFilters, from: '0…
+       |                                                                                                            ^
+     37|       valid: true,
+     38|       criteria: { page: 1, pageSize: 25, fromUtc: '0001-01-01T00:00:00…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  12:33:37
+   Duration  5.57s (environment 72%, setup 23%, transform 3%, worker 1%)
+

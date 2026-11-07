@@ -1,0 +1,52 @@
+{
+  "date": "2026-11-06",
+  "scope": "Corrective Health/Hangfire rendering, navigation deduplication, and Platform browser embedding security",
+  "status": "Source-and-local-checks-passed-hosted-acceptance-open",
+  "angular": {
+    "command": "npm run check",
+    "exitCode": 0,
+    "passedTests": 943,
+    "testFiles": 184,
+    "formatLintArchitectureTypesCatalogBuild": "passed",
+    "initialBundleKb": 579.71,
+    "existingBudgetWarning": "RISK-020"
+  },
+  "api": {
+    "artifactsPath": "api/.artifacts/operational-embedding",
+    "restoreExitCode": 0,
+    "releaseBuildExitCode": 0,
+    "finalCommand": "dotnet test ErpSystem.sln -c Release --no-build --no-restore --artifacts-path .artifacts/operational-embedding -m:1",
+    "finalExitCode": 0,
+    "passed": 1324,
+    "failed": 0,
+    "existingEnvironmentOptInSkips": 3,
+    "platformPassed": 386,
+    "focusedEmbeddingSecurityPassed": 14,
+    "attemptHistory": [
+      "An initial isolated output outside api caused 13 repository-root discovery test failures; outputs were regenerated beneath api without changing the tests.",
+      "A parallel full solution attempt had one MessageLogPersistenceTests bounded-write timeout; the unchanged test passed alone.",
+      "The final full solution run with serialized projects passed 1324 tests and retained the 3 opt-in browser skips."
+    ]
+  },
+  "retainedNextHangfireProxy": { "passed": 6, "files": 2, "exitCode": 0 },
+  "chromium": {
+    "script": "web-angular/scripts/verify-operational-tools-browser.mjs",
+    "exitCode": 0,
+    "cases": 8,
+    "languages": ["en", "ar"],
+    "themes": ["light", "dark"],
+    "viewportWidths": [390, 1440],
+    "healthValid503AndErrorRetry": true,
+    "iframeMountNestedNavigationRefreshRetryDenial": true,
+    "outerOverflowPixels": 0,
+    "syntheticDashboardDocuments": true,
+    "realHostedHangfireVerified": false,
+    "realJobActionsExecuted": false
+  },
+  "sourceReview": { "independentReviewer": true, "p1p2Findings": 0, "scopedDiffWhitespaceCheck": "passed" },
+  "documentation": { "recipesChecked": 532, "planningCheck": "passed-with-two-inherited-migration-warnings" },
+  "openProductionAcceptance": ["PROD-006", "PROD-007", "PROD-019"],
+  "hostedApiChanged": false,
+  "databaseModelChanged": false,
+  "comprehensiveSuperAdminClosure": false
+}

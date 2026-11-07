@@ -1,0 +1,21 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+span {
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+:host(.icon-only) .feedback {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

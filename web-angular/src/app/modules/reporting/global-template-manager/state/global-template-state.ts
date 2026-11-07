@@ -5,6 +5,7 @@ import {
   EMPTY,
   filter,
   finalize,
+  from,
   map,
   of,
   switchMap,
@@ -15,6 +16,12 @@ import {
 import { AuthSession } from '../../../../platform/auth/session.public-api';
 import { createScopedRead, downloadBlob, UnsavedChanges } from '../../../../shared/data/public-api';
 import type { GridFilters } from '../../../../shared/data/public-api';
+import {
+  pagedTabularSource,
+  exportRead,
+  type TabularColumn,
+  type TabularExportSource,
+} from '../../../../shared/data/public-api';
 import { parseGlobalTemplateFilters } from '../types/global-template-filters';
 import {
   applyServerFieldErrors,
@@ -23,6 +30,7 @@ import {
 } from '../../../../shared/ui/public-api';
 import { GlobalTemplateService, globalTemplateError } from '../services/global-template-service';
 import { GlobalTemplateAccessState } from './global-template-access-state';
+import { matchesGlobalTemplateViewer } from '../utils/global-template-viewer-identity';
 import {
   globalTemplateAllowed,
   globalTemplateFileError,
@@ -34,6 +42,7 @@ import {
   type GlobalTemplateRow,
   type GlobalTemplateVersion,
   type GlobalTemplateUploadTarget,
+  type GlobalTemplateViewerSource,
 } from '../types/global-template';
 
 interface GlobalTemplateEditorContext {
@@ -54,6 +63,39 @@ type SaveOutcome =
 
 @Injectable()
 export class GlobalTemplateState {
+  exportSource(
+    columns: readonly TabularColumn<GlobalTemplateRow>[],
+    culture: 'en' | 'ar',
+  ): TabularExportSource | null {
+    const spec = this.spec();
+    if (!spec || !this.allowed() || this.listing().kind !== 'ready') return null;
+    const criterion = () =>
+      JSON.stringify({
+        ...this.spec(),
+        actor: undefined,
+        pageIndex: undefined,
+        pageSize: undefined,
+        revision: undefined,
+      });
+    const criteriaKey = criterion();
+    return pagedTabularSource({
+      actor: spec.actor,
+      criteriaKey,
+      fileName: 'global-report-manager',
+      culture,
+      columns,
+      rowId: (row) => row.id,
+      isCurrent: () =>
+        this.identity() === spec.actor && this.allowed() && criterion() === criteriaKey,
+      read: async (page, signal) => {
+        const result = await exportRead(
+          this.service.list(spec.entity, spec.search, page - 1, 100, spec.status, spec.filters),
+          signal,
+        );
+        return { rows: result.items, total: result.totalCount };
+      },
+    });
+  }
   readonly access = inject(GlobalTemplateAccessState);
   private readonly auth = inject(AuthSession);
   private readonly service = inject(GlobalTemplateService);
@@ -250,6 +292,11 @@ export class GlobalTemplateState {
     }),
   });
   readonly draftRevision = signal(0);
+  private readonly viewerUpload = signal<{
+    readonly source: GlobalTemplateViewerSource;
+    readonly detail: GlobalTemplateDetail;
+    readonly fingerprint: string;
+  } | null>(null);
   private sequence = 0;
 
   constructor() {
@@ -258,6 +305,26 @@ export class GlobalTemplateState {
       if (detail) this.access.select(detail);
       else if (!this.detailOpen()) this.access.clear();
     });
+    effect(() => {
+      const target = this.viewerUpload(),
+        detail = this.detail();
+      if (!target) return;
+      if (this.detailState().kind === 'error' || this.access.access().kind === 'error') {
+        this.viewerUpload.set(null);
+        this.feedback.set({
+          key: this.access.readFailure()?.key ?? 'common.error',
+          message: '',
+          fields: {},
+        });
+        return;
+      }
+      if (!detail || this.access.access().kind !== 'ready' || this.pending()) return;
+      this.viewerUpload.set(null);
+      if (!this.matchesViewerTemplate(detail, target))
+        this.feedback.set({ key: 'globalTemplates.conflict', message: '', fields: {} });
+      else if (this.canVersion('Upload')) this.openEditor(detail);
+      else this.feedback.set({ key: 'authorization.forbidden.title', message: '', fields: {} });
+    });
     this.form.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => {
       this.draftRevision.update((revision) => revision + 1);
       this.inspection.set(null);
@@ -265,6 +332,7 @@ export class GlobalTemplateState {
     });
     effect(() => {
       this.identity();
+      this.viewerUpload.set(null);
       this.columnFilters.set([]);
       this.editor.set(null);
       this.selected.set(null);
@@ -390,6 +458,100 @@ export class GlobalTemplateState {
     this.feedback.set(null);
     this.inspection.set(null);
     this.editor.set({ actor, entity, reportId: report?.id ?? null, revision: ++this.sequence });
+  }
+  openViewerTemplate(target: GlobalTemplateViewerSource): void {
+    if (
+      !this.canAt(target.entityKey, 'View') ||
+      !this.canAt(target.entityKey, 'Upload') ||
+      this.pending() ||
+      this.editorOpen() ||
+      this.detailOpen() ||
+      target.reportKey.length > 128 ||
+      !/^[a-f0-9]{64}$/.test(target.id) ||
+      !/^[a-f0-9]{64}$/.test(target.rowVersion)
+    )
+      return;
+    const contract = this.contracts().find((item) => item.entityKey === target.entityKey);
+    if (!contract) return;
+    this.requestedEntity.set(target.entityKey);
+    this.viewerUpload.set(null);
+    this.run(
+      this.service
+        .list(target.entityKey, '', 0, 10, 'published', [
+          {
+            field: 'reportKey',
+            operator: 'and',
+            constraints: [{ matchMode: 'equals', value: target.reportKey }],
+          },
+        ])
+        .pipe(
+          switchMap((page) => {
+            const matches = page.items.filter(
+              (row) =>
+                row.entityKey === target.entityKey &&
+                row.reportKey === target.reportKey &&
+                row.isPublished &&
+                !row.isArchived,
+            );
+            const row = matches.length === 1 && page.totalCount === 1 ? matches[0] : null;
+            return row ? this.service.detail(row.id) : of(null);
+          }),
+          switchMap((detail) =>
+            detail
+              ? from(
+                  matchesGlobalTemplateViewer(detail, target, contract.contractFingerprint),
+                ).pipe(map((matches) => (matches ? detail : null)))
+              : of(null),
+          ),
+        ),
+      (detail) => {
+        if (!detail) {
+          this.feedback.set({ key: 'globalTemplates.conflict', message: '', fields: {} });
+          return;
+        }
+        const actor = this.identity();
+        if (actor) {
+          this.viewerUpload.set({
+            source: target,
+            detail,
+            fingerprint: contract.contractFingerprint,
+          });
+          this.selected.set({ actor, entity: detail.entityKey, id: detail.id });
+        }
+      },
+    );
+  }
+  private matchesViewerTemplate(
+    detail: GlobalTemplateDetail,
+    target: {
+      readonly source: GlobalTemplateViewerSource;
+      readonly detail: GlobalTemplateDetail;
+      readonly fingerprint: string;
+    },
+  ): boolean {
+    return (
+      detail.id === target.detail.id &&
+      detail.rowVersion === target.detail.rowVersion &&
+      detail.entityKey === target.source.entityKey &&
+      detail.reportKey === target.source.reportKey &&
+      this.contracts().find((contract) => contract.entityKey === detail.entityKey)
+        ?.contractFingerprint === target.fingerprint &&
+      detail.isPublished &&
+      !detail.isArchived &&
+      detail.versions.some(
+        (version) =>
+          version.isPublished &&
+          version.validationStatus === 'Valid' &&
+          version.versionNumber === detail.currentVersionNumber &&
+          target.detail.versions.some(
+            (validated) =>
+              validated.isPublished &&
+              validated.id === version.id &&
+              validated.sha256 === version.sha256 &&
+              version.validationContractFingerprint === target.fingerprint,
+          ),
+      )
+    );
   }
   selectEditorEntity(value: string): void {
     const editor = this.editor();
@@ -583,6 +745,22 @@ export class GlobalTemplateState {
       this.run(this.service.revalidate(detail.id, version.id), () => {
         this.refresh.update((value) => value + 1);
         this.notices.success('globalTemplates.revalidationCompleted', 'reporting');
+      });
+  }
+  verifyDatabase(version: GlobalTemplateVersion): void {
+    const detail = this.detail();
+    if (
+      detail &&
+      !detail.isArchived &&
+      !this.access.dirty() &&
+      this.can('Upload') &&
+      this.can('Publish') &&
+      this.access.has('Upload') &&
+      this.access.has('Publish')
+    )
+      this.run(this.service.verifyDatabase(detail.id, version.id), () => {
+        this.refresh.update((value) => value + 1);
+        this.notices.success('globalTemplates.databaseVerifiedAndPublished', 'reporting');
       });
   }
   download(version: GlobalTemplateVersion): void {

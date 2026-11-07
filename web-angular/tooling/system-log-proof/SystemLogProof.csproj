@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.9" />
+    <ProjectReference Include="../../../api/Modules/Platform/ErpSystem.Modules.Platform.Application/ErpSystem.Modules.Platform.Application.csproj" />
+    <ProjectReference Include="../../../api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/ErpSystem.Modules.Platform.Infrastructure.csproj" />
+    <ProjectReference Include="../../../api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/ErpSystem.Modules.Platform.Presentation.csproj" />
+  </ItemGroup>
+</Project>

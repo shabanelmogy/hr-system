@@ -6,6 +6,15 @@ Reviewed: 2026-09-27
 
 ## 1. Scope and outcome
 
+### Current evidence registration — 2026-11-05
+
+The requester-authorized [current Reporting evidence baseline](../../CURRENT_EVIDENCE_BASELINE_2026-11-05.md)
+registers existing sources and retained receipts only. Unavailable historical raw
+logs are preserved in an inventory, not claimed as recovered or replayable proof.
+FOLLOW-025 owns future reliance on those logs. This documentation-only correction
+does not re-run runtime tests, change platform scope or close release gates. Earlier
+verification statements below retain their original dates and bounded scope.
+
 This bounded child makes managed Crystal publication mean “compatible with the
 current entity contract.” It covers entity-aware `.rpt` inspection, persisted
 validation evidence, development revalidation migration, and publish/render gates.
@@ -69,6 +78,13 @@ makes stale publication non-renderable. Apply the migration to development and
 record non-development work under the plan/production notes.
 
 ## 9. Verification plan
+
+Current evidence-registration maintenance2026-11-05 inventories13unavailable raw
+historical logs outside current requiredFiles. All existing source and retained
+receipts remain required; the unchanged full documentation generator/check passes
+460recipes after this requester-authorized reconciliation. See the module current
+evidence-baseline report. This maintenance re-runs no API/Crystal tests and does not
+reclassify the dated child acceptance below as fresh runtime evidence.
 
 Verified evidence: Domain transition, append-only persistence and handler/store/client tests; 120/120 full
 Reporting tests; 59/59 architecture tests; Release x64 runtime and semantic

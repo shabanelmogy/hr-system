@@ -1,0 +1,40 @@
+<erp-confirmation-dialog
+  [open]="lifecycle.open()"
+  [pending]="lifecycle.pending()"
+  [title]="
+    (lifecycle.action() === 'bulk'
+      ? 'states.bulkArchiveTitle'
+      : lifecycle.action() === 'restore'
+        ? 'states.restoreTitle'
+        : 'states.archiveTitle'
+    ) | uiText: 'reference-states'
+  "
+  [description]="
+    (lifecycle.action() === 'bulk'
+      ? 'states.bulkArchiveDescription'
+      : lifecycle.action() === 'restore'
+        ? 'states.restoreDescription'
+        : 'states.archiveDescription'
+    ) | uiText: 'reference-states'
+  "
+  [cancelLabel]="'actions.cancel' | uiText"
+  [confirmLabel]="
+    lifecycle.action() === 'bulk'
+      ? locale.translate('states.bulkArchiveConfirm', 'reference-states', {
+          count: lifecycle.count(),
+        })
+      : text(lifecycle.action() === 'restore' ? 'actions.restore' : 'actions.archive')
+  "
+  [severity]="lifecycle.action() === 'restore' ? 'success' : 'warn'"
+  (confirmed)="lifecycle.confirm()"
+  (cancelled)="lifecycle.cancel()"
+>
+  @if (lifecycle.action() === 'bulk') {
+    <p>{{ 'states.selectedCount' | uiText: 'reference-states' : { count: lifecycle.count() } }}</p>
+  }
+  @for (row of lifecycle.targets(); track row.id) {
+    <p dir="auto">
+      {{ rowLabel(row) }} <bdi>({{ row.id }})</bdi>
+    </p>
+  }
+</erp-confirmation-dialog>

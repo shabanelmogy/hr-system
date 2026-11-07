@@ -1,0 +1,222 @@
+{
+  "dateUtc": "2026-11-07T08:19:01.709Z",
+  "fixtureOnly": true,
+  "cases": [
+    {
+      "language": "en",
+      "mode": "light",
+      "width": 390,
+      "height": 844,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "personalValidationSave": true,
+      "photoPreviewSaveRemoveUndo": true,
+      "photoReadFailureRetry": true,
+      "passwordFieldErrorLogout": true,
+      "dedicatedPasswordRoute": true,
+      "accountMenuProfile": true,
+      "nativeDropAndValidation": true,
+      "fixtureOnly": true
+    },
+    {
+      "language": "en",
+      "mode": "light",
+      "width": 900,
+      "height": 640,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "personalValidationSave": true,
+      "photoPreviewSaveRemoveUndo": true,
+      "photoReadFailureRetry": true,
+      "passwordFieldErrorLogout": true,
+      "dedicatedPasswordRoute": true,
+      "accountMenuProfile": true,
+      "nativeDropAndValidation": true,
+      "fixtureOnly": true
+    },
+    {
+      "language": "en",
+      "mode": "light",
+      "width": 1440,
+      "height": 844,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "personalValidationSave": true,
+      "photoPreviewSaveRemoveUndo": true,
+      "photoReadFailureRetry": true,
+      "passwordFieldErrorLogout": true,
+      "dedicatedPasswordRoute": true,
+      "accountMenuProfile": true,
+      "nativeDropAndValidation": true,
+      "fixtureOnly": true
+    },
+    {
+      "language": "en",
+      "mode": "dark",
+      "width": 390,
+      "height": 844,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "personalValidationSave": true,
+      "photoPreviewSaveRemoveUndo": true,
+      "photoReadFailureRetry": true,
+      "passwordFieldErrorLogout": true,
+      "dedicatedPasswordRoute": true,
+      "accountMenuProfile": true,
+      "nativeDropAndValidation": true,
+      "fixtureOnly": true
+    },
+    {
+      "language": "en",
+      "mode": "dark",
+      "width": 900,
+      "height": 640,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "personalValidationSave": true,
+      "photoPreviewSaveRemoveUndo": true,
+      "photoReadFailureRetry": true,
+      "passwordFieldErrorLogout": true,
+      "dedicatedPasswordRoute": true,
+      "accountMenuProfile": true,
+      "nativeDropAndValidation": true,
+      "fixtureOnly": true
+    },
+    {
+      "language": "en",
+      "mode": "dark",
+      "width": 1440,
+      "height": 844,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "personalValidationSave": true,
+      "photoPreviewSaveRemoveUndo": true,
+      "photoReadFailureRetry": true,
+      "passwordFieldErrorLogout": true,
+      "dedicatedPasswordRoute": true,
+      "accountMenuProfile": true,
+      "nativeDropAndValidation": true,
+      "fixtureOnly": true
+    },
+    {
+      "language": "ar",
+      "mode": "light",
+      "width": 390,
+      "height": 844,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "personalValidationSave": true,
+      "photoPreviewSaveRemoveUndo": true,
+      "photoReadFailureRetry": true,
+      "passwordFieldErrorLogout": true,
+      "dedicatedPasswordRoute": true,
+      "accountMenuProfile": true,
+      "nativeDropAndValidation": true,
+      "fixtureOnly": true
+    },
+    {
+      "language": "ar",
+      "mode": "light",
+      "width": 900,
+      "height": 640,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "personalValidationSave": true,
+      "photoPreviewSaveRemoveUndo": true,
+      "photoReadFailureRetry": true,
+      "passwordFieldErrorLogout": true,
+      "dedicatedPasswordRoute": true,
+      "accountMenuProfile": true,
+      "nativeDropAndValidation": true,
+      "fixtureOnly": true
+    },
+    {
+      "language": "ar",
+      "mode": "light",
+      "width": 1440,
+      "height": 844,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "personalValidationSave": true,
+      "photoPreviewSaveRemoveUndo": true,
+      "photoReadFailureRetry": true,
+      "passwordFieldErrorLogout": true,
+      "dedicatedPasswordRoute": true,
+      "accountMenuProfile": true,
+      "nativeDropAndValidation": true,
+      "fixtureOnly": true
+    },
+    {
+      "language": "ar",
+      "mode": "dark",
+      "width": 390,
+      "height": 844,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "personalValidationSave": true,
+      "photoPreviewSaveRemoveUndo": true,
+      "photoReadFailureRetry": true,
+      "passwordFieldErrorLogout": true,
+      "dedicatedPasswordRoute": true,
+      "accountMenuProfile": true,
+      "nativeDropAndValidation": true,
+      "fixtureOnly": true
+    },
+    {
+      "language": "ar",
+      "mode": "dark",
+      "width": 900,
+      "height": 640,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "personalValidationSave": true,
+      "photoPreviewSaveRemoveUndo": true,
+      "photoReadFailureRetry": true,
+      "passwordFieldErrorLogout": true,
+      "dedicatedPasswordRoute": true,
+      "accountMenuProfile": true,
+      "nativeDropAndValidation": true,
+      "fixtureOnly": true
+    },
+    {
+      "language": "ar",
+      "mode": "dark",
+      "width": 1440,
+      "height": 844,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "personalValidationSave": true,
+      "photoPreviewSaveRemoveUndo": true,
+      "photoReadFailureRetry": true,
+      "passwordFieldErrorLogout": true,
+      "dedicatedPasswordRoute": true,
+      "accountMenuProfile": true,
+      "nativeDropAndValidation": true,
+      "fixtureOnly": true
+    }
+  ]
+}

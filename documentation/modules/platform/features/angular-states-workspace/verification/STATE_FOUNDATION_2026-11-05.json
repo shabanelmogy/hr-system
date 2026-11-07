@@ -1,0 +1,60 @@
+{
+  "checkpoint": "States typed transport/Signal Forms/read/active Country foundation",
+  "implementationDate": "2026-11-05",
+  "featureStatus": "Active; complete customer UI, browser acceptance and Phase06 pending",
+  "angularCheck": {
+    "command": "npm run check",
+    "passed": true,
+    "testFiles": 105,
+    "tests": 607,
+    "architectureTests": 30,
+    "initialBundleKB": 574.5,
+    "remainingWarning": "RISK-020 initial 500kB budget"
+  },
+  "focusedCoverage": {
+    "readAndParent": 19,
+    "transportAndNativeForms": 13
+  },
+  "review": {
+    "scope": "Only implemented foundation, frozen API/authority/lifetime/lookup/native form contracts",
+    "result": "No actionable findings after integration fixes",
+    "readOnly": true
+  },
+  "browser": {
+    "statesExecuted": false,
+    "reason": "Customer workspace and required views not wired yet",
+    "sharedGrid": "Separately recorded header-selection verification"
+  },
+  "unchanged": [
+    "API/domain rules",
+    "database schema",
+    "web-next runtime",
+    "native Mobile runtime",
+    "dependencies"
+  ],
+  "requiredNext": [
+    "Editor and lifecycle UI/state",
+    "Grid/Cards/Chart/Report/Import composition",
+    "Country dependency realtime through owner lease",
+    "Routes and full feature browser acceptance",
+    "Phase06 then education/closure; Districts remains Queued"
+  ],
+  "sourceHashes": {
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/lookup.public-api.ts": "0a042d46b6fd4888a26074f021a474eadca85818c0a29e9130f68e44d53d38b0",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-lookup-service.spec.ts": "499d224e79e70873cb232e3b1ce7b5e6357f22b6c514d8856292a35ecba80f60",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-lookup-service.ts": "b7958cd2a37bd5d02e5db58282069761389d1ddeaf0b374e7a13b18a5165f7c0",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/types/country-lookup.ts": "98c2dfc80c235ebce9468f496b6f7fa76d3fa07d3252c9f582ecd413c1a822f9",
+    "web-angular/src/app/modules/reference-data/geographical-information/states/services/state-service.spec.ts": "76ece1f9780654ce153743dbc0959e6d074c577e5a5ce086cc8e6887cbcc658b",
+    "web-angular/src/app/modules/reference-data/geographical-information/states/services/state-service.ts": "8a5849d45eee5f7f128472ea5a5aff0ab396014d10d1366b1019bbaf2a43addb",
+    "web-angular/src/app/modules/reference-data/geographical-information/states/state.fixture.ts": "bb141cb6b25c7456d044dd3b44039026c7734312d84acec551a001b3cddb970b",
+    "web-angular/src/app/modules/reference-data/geographical-information/states/state/state-countries-state.spec.ts": "5b22d76fd9287752ab16d5679259695f244729ca523bd9c6011e7d59b62c90b1",
+    "web-angular/src/app/modules/reference-data/geographical-information/states/state/state-countries-state.ts": "c2eb058983a38b288f2f988b4c4461156845b0dea441b7610b9af2b830e371e9",
+    "web-angular/src/app/modules/reference-data/geographical-information/states/state/state-read-state.spec.ts": "9ef93efa0a75a562f4dc62b89f7ea2acab055656c14209a73c503fe391e695bb",
+    "web-angular/src/app/modules/reference-data/geographical-information/states/state/state-read-state.ts": "f834ef6a656e25d1383d0ae5c2ee1ae2b8f9d0edb76c8e5ec6af5d1d6cd585d8",
+    "web-angular/src/app/modules/reference-data/geographical-information/states/types/state-lifecycle.ts": "4fb894a826d236f19993209296daa36f4f084703e33c0d5516e70a80cfbbb4df",
+    "web-angular/src/app/modules/reference-data/geographical-information/states/types/state.spec.ts": "55d0a0807ced6c61627efcb9c59da901001adc2053ddc907b9364530259fcb31",
+    "web-angular/src/app/modules/reference-data/geographical-information/states/types/state.ts": "7f425850ec48d935729ab4fa6222ced7651f5397c6d35fbcd68a6243ab18f56a",
+    "web-angular/src/app/modules/reference-data/geographical-information/states/validation/state-mutation.spec.ts": "e0f04fad1b790016745fc17aaddd3b52496d3fd5cd5907177bc46d97f943b519",
+    "web-angular/src/app/modules/reference-data/geographical-information/states/validation/state-mutation.ts": "9d5eefc789b0676e20f097c677b1cae36559986eb4dd8a7417e00527e958eeb3"
+  }
+}

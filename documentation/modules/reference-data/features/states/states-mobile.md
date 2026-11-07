@@ -4,6 +4,8 @@ Status: applied Expo server-managed feature profile. Requires Expo SDK 57 conven
 
 ## 1. Source inventory
 
+Angular States client2026-11-06: the canonical /super-admin/geography/states workspace now implements the retained five-view and four-field lifecycle contract using Shared Angular controls and native Signal Forms. Current source/verification lives in documentation/modules/platform/features/angular-states-workspace/STATES_WORKSPACE_2026-11-06.md. The API/domain/database, Next runtime and native Mobile implementation remain unchanged; hosted States catalog200/empty and fixture PDF are classified separately from an actual deployed State RPT.
+
 The physical route is `app/(main)/basic-data/geographical-information/states.tsx`. The feature owns `src/modules/reference-data/geography/states/{domain,application,data,presentation,index.ts}` and uses only shared mobile primitives plus Countries’ deliberate public API for parent lookup.
 
 ## 2. Route and policy

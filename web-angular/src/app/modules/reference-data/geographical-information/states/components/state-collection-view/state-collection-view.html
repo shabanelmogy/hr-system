@@ -1,0 +1,131 @@
+<ng-template #bulkAction>
+  @if (lifecycle.selected().length) {
+    <erp-button
+      data-testid="archive-selected"
+      [label]="
+        'states.bulkArchiveAction'
+          | uiText: 'reference-states' : { count: lifecycle.selected().length }
+      "
+      severity="warn"
+      [disabled]="lifecycle.pending()"
+      (activated)="lifecycle.requestBulk()"
+      ><erp-icon buttonIcon name="archive"
+    /></erp-button>
+  }
+</ng-template>
+<div class="collection" data-testid="states" [attr.data-kind]="state.source().kind">
+  @if (kind() === 'grid') {
+    <erp-data-table
+      [recordRequest]="records.request()"
+      [selectionEnabled]="lifecycle.allowed()"
+      [selectable]="lifecycle.selectable"
+      (selectionChange)="lifecycle.select($event)"
+      [recordNavigation]="true"
+      appearance="reference"
+      toolbarLayout="single-row"
+      actionDisplay="inline"
+      [stickyActions]="true"
+      [contextActions]="actions"
+      (rowAction)="act($event)"
+      [toolbarVisible]="toolbarVisible()"
+      [display]="{ resizableColumns: 'fit', reorderableColumns: true, columnManagement: true }"
+      [source]="state.source()"
+      [label]="'states.viewTitle' | uiText: 'reference-states'"
+      [columns]="columns()"
+      [rowId]="id"
+      [rowLabel]="rowLabel"
+      [search]="search()"
+      [sort]="sort()"
+      (pageChange)="state.changePage($event)"
+      (searchChange)="state.changeSearch($event)"
+      (sortChange)="state.changeSort($event)"
+      (retry)="state.refresh()"
+      (rowActivated)="state.open($event.id)"
+    >
+      <div toolbarContent class="grid-actions">
+        <ng-container [ngTemplateOutlet]="bulkAction" /><erp-button
+          data-testid="reset"
+          [label]="'general.reset' | uiText"
+          variant="text"
+          (activated)="state.reset()"
+          ><erp-icon buttonIcon name="reset"
+        /></erp-button>
+      </div>
+      <div toolbarFilters class="filters"><erp-state-list-criteria /></div>
+      <ng-template [erpCollectionCell]="columns() | collectionColumn: 'nameAr'" let-row
+        ><span class="collection-cell-label"
+          ><erp-icon name="location" />{{ row.nameAr }}</span
+        ></ng-template
+      >
+      <ng-template [erpCollectionCell]="columns() | collectionColumn: 'nameEn'" let-row
+        ><span class="collection-cell-label"
+          ><erp-icon name="location" />{{ row.nameEn }}</span
+        ></ng-template
+      >
+      <ng-template [erpCollectionCell]="columns() | collectionColumn: 'code'" let-row
+        ><erp-status-badge [label]="row.code"
+      /></ng-template>
+      <ng-template [erpCollectionCell]="columns() | collectionColumn: 'country'" let-row
+        ><erp-status-badge appearance="outline" [label]="countryLabel(row)"
+      /></ng-template>
+      <ng-template [erpCollectionCell]="columns() | collectionColumn: 'districtsCount'" let-row
+        ><erp-status-badge
+          appearance="outline"
+          [label]="number(row.districtsCount)"
+          [accent]="row.districtsCount > 0 ? 'var(--success)' : 'var(--muted-foreground)'"
+      /></ng-template>
+      <ng-template [erpCollectionCell]="columns() | collectionColumn: 'isDeleted'" let-row
+        ><erp-status-badge
+          [label]="status(row)"
+          [accent]="row.isDeleted ? 'var(--destructive)' : 'var(--success)'"
+      /></ng-template>
+      <ng-template erpCollectionEmpty
+        ><erp-feedback-state
+          kind="empty"
+          [title]="'states.noStatesAvailable' | uiText: 'reference-states'"
+      /></ng-template>
+    </erp-data-table>
+  } @else if (kind() === 'cards') {
+    <erp-card-list
+      [searchMaxWidth]="400"
+      [toolbarVisible]="toolbarVisible()"
+      toolbarLayout="single-row"
+      [recordRequest]="records.request()"
+      [selectionEnabled]="lifecycle.allowed()"
+      [selectable]="lifecycle.selectable"
+      (selectionChange)="lifecycle.select($event)"
+      [recordNavigation]="true"
+      [source]="state.source()"
+      [label]="'states.viewTitle' | uiText: 'reference-states'"
+      [rowId]="id"
+      [rowLabel]="rowLabel"
+      [search]="search()"
+      layout="responsive"
+      appearance="entity"
+      (pageChange)="state.changePage($event)"
+      (searchChange)="state.changeSearch($event)"
+      (retry)="state.refresh()"
+      (rowActivated)="state.open($event.id)"
+    >
+      <div toolbarContent><ng-container [ngTemplateOutlet]="bulkAction" /></div>
+      <div toolbarFilters class="filters"><erp-state-list-criteria [showSort]="true" /></div>
+      <ng-template [erpCollectionCardHeader]="state.source()" let-row
+        ><erp-state-card-header [state]="row"
+      /></ng-template>
+      <ng-template [erpCollectionCard]="state.source()" let-row
+        ><erp-state-card-content [state]="row"
+      /></ng-template>
+      <ng-template [erpCollectionCardFooter]="state.source()" let-row
+        ><erp-row-actions
+          [actions]="actions(row)"
+          [rowKey]="row.id"
+          (activated)="act({ row: row, action: $event })"
+      /></ng-template>
+      <ng-template erpCollectionEmpty
+        ><erp-feedback-state
+          kind="empty"
+          [title]="'states.noStatesAvailable' | uiText: 'reference-states'"
+      /></ng-template>
+    </erp-card-list>
+  }
+</div>

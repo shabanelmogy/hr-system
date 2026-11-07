@@ -71,7 +71,7 @@ scenarios or an explicit `N/A` with a reason.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| master | 1 | `567bcbe8140a3780cad8a85d8c7666c6af5c668626b7c8863282dbdaead5af41` |
+| master | 1 | `9999233a21a4b6788ba5f4e4c7d2ffd850d70de5d8b924a3c91a296b470628f0` |
 | master | 2 | `0794481a43aa54cb296072e5a337fa49921243fe72d47443f2e40af16c493a1d` |
 | master | 5 | `c8c3b3bdf6614ff0b1275322bd5fdd5a96e55bb79a39c858e77805fe56d8ebf7` |
 | master | 8 | `d984d8e0337d1a27f16371f454b72ff6911422bf8832f69f73e2139a49490e96` |

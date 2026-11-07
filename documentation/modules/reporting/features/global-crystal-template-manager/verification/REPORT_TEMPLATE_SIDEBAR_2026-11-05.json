@@ -1,0 +1,342 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-05",
+  "scope": "Angular report sidebar RPT download and authorized upload/version workflow; current documentation evidence reconciliation",
+  "unitAndBuild": {
+    "command": "npm run check",
+    "exitCode": 0,
+    "testFiles": 98,
+    "testsPassed": 567,
+    "architectureTests": 30,
+    "initialRawKB": 574.45,
+    "warning": "Existing initial 500 kB budget warning RISK-020 retained; no budget change."
+  },
+  "sidebarBrowser": {
+    "date": "2026-11-05T18:01:08.615Z",
+    "source": "production build; all API writes intercepted",
+    "passed": 12,
+    "results": [
+      {
+        "language": "en",
+        "mode": "light",
+        "width": 390,
+        "policy": "admin",
+        "calls": {
+          "manage": 10,
+          "uploads": 1,
+          "publishes": 0,
+          "downloads": 1
+        },
+        "errors": []
+      },
+      {
+        "language": "en",
+        "mode": "light",
+        "width": 1440,
+        "policy": "admin",
+        "calls": {
+          "manage": 10,
+          "uploads": 1,
+          "publishes": 0,
+          "downloads": 1
+        },
+        "errors": []
+      },
+      {
+        "language": "en",
+        "mode": "dark",
+        "width": 390,
+        "policy": "admin",
+        "calls": {
+          "manage": 10,
+          "uploads": 1,
+          "publishes": 0,
+          "downloads": 1
+        },
+        "errors": []
+      },
+      {
+        "language": "en",
+        "mode": "dark",
+        "width": 1440,
+        "policy": "admin",
+        "calls": {
+          "manage": 10,
+          "uploads": 1,
+          "publishes": 0,
+          "downloads": 1
+        },
+        "errors": []
+      },
+      {
+        "language": "ar",
+        "mode": "light",
+        "width": 390,
+        "policy": "admin",
+        "calls": {
+          "manage": 10,
+          "uploads": 1,
+          "publishes": 0,
+          "downloads": 1
+        },
+        "errors": []
+      },
+      {
+        "language": "ar",
+        "mode": "light",
+        "width": 1440,
+        "policy": "admin",
+        "calls": {
+          "manage": 10,
+          "uploads": 1,
+          "publishes": 0,
+          "downloads": 1
+        },
+        "errors": []
+      },
+      {
+        "language": "ar",
+        "mode": "dark",
+        "width": 390,
+        "policy": "admin",
+        "calls": {
+          "manage": 10,
+          "uploads": 1,
+          "publishes": 0,
+          "downloads": 1
+        },
+        "errors": []
+      },
+      {
+        "language": "ar",
+        "mode": "dark",
+        "width": 1440,
+        "policy": "admin",
+        "calls": {
+          "manage": 10,
+          "uploads": 1,
+          "publishes": 0,
+          "downloads": 1
+        },
+        "errors": []
+      },
+      {
+        "language": "en",
+        "mode": "light",
+        "width": 1440,
+        "policy": "reader",
+        "calls": {
+          "manage": 0,
+          "uploads": 0,
+          "publishes": 0,
+          "downloads": 1
+        },
+        "errors": []
+      },
+      {
+        "language": "en",
+        "mode": "light",
+        "width": 1440,
+        "policy": "denied-acl",
+        "calls": {
+          "manage": 6,
+          "uploads": 0,
+          "publishes": 0,
+          "downloads": 1
+        },
+        "errors": []
+      },
+      {
+        "language": "en",
+        "mode": "light",
+        "width": 1440,
+        "policy": "stale",
+        "calls": {
+          "manage": 4,
+          "uploads": 0,
+          "publishes": 0,
+          "downloads": 1
+        },
+        "errors": []
+      },
+      {
+        "language": "en",
+        "mode": "light",
+        "width": 1440,
+        "policy": "different-id",
+        "calls": {
+          "manage": 4,
+          "uploads": 0,
+          "publishes": 0,
+          "downloads": 1
+        },
+        "errors": []
+      }
+    ]
+  },
+  "pdfLifecycleBrowser": {
+    "command": "node scripts/verify-reporting-browser.mjs --focused",
+    "exitCode": 0,
+    "passed": 8,
+    "results": [
+      {
+        "palette": "green",
+        "mode": "light",
+        "language": "en",
+        "width": 390,
+        "geometry": {
+          "width": 366,
+          "viewport": 390,
+          "page": 390
+        },
+        "focused": true,
+        "renders": 27,
+        "passed": true
+      },
+      {
+        "palette": "green",
+        "mode": "light",
+        "language": "en",
+        "width": 1440,
+        "geometry": {
+          "width": 1392,
+          "viewport": 1440,
+          "page": 1440
+        },
+        "focused": true,
+        "renders": 27,
+        "passed": true
+      },
+      {
+        "palette": "green",
+        "mode": "light",
+        "language": "ar",
+        "width": 390,
+        "geometry": {
+          "width": 366,
+          "viewport": 390,
+          "page": 390
+        },
+        "focused": true,
+        "renders": 27,
+        "passed": true
+      },
+      {
+        "palette": "green",
+        "mode": "light",
+        "language": "ar",
+        "width": 1440,
+        "geometry": {
+          "width": 1392,
+          "viewport": 1440,
+          "page": 1440
+        },
+        "focused": true,
+        "renders": 27,
+        "passed": true
+      },
+      {
+        "palette": "green",
+        "mode": "dark",
+        "language": "en",
+        "width": 390,
+        "geometry": {
+          "width": 366,
+          "viewport": 390,
+          "page": 390
+        },
+        "focused": true,
+        "renders": 27,
+        "passed": true
+      },
+      {
+        "palette": "green",
+        "mode": "dark",
+        "language": "en",
+        "width": 1440,
+        "geometry": {
+          "width": 1392,
+          "viewport": 1440,
+          "page": 1440
+        },
+        "focused": true,
+        "renders": 27,
+        "passed": true
+      },
+      {
+        "palette": "green",
+        "mode": "dark",
+        "language": "ar",
+        "width": 390,
+        "geometry": {
+          "width": 366,
+          "viewport": 390,
+          "page": 390
+        },
+        "focused": true,
+        "renders": 27,
+        "passed": true
+      },
+      {
+        "palette": "green",
+        "mode": "dark",
+        "language": "ar",
+        "width": 1440,
+        "geometry": {
+          "width": 1392,
+          "viewport": 1440,
+          "page": 1440
+        },
+        "focused": true,
+        "renders": 27,
+        "passed": true
+      }
+    ]
+  },
+  "sourceHashes": [
+    {
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.ts",
+      "sha256": "61311e02ba6b5f9655acd5afb9757bafc76c156469b8d4d42934167240d4b5fb"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.html",
+      "sha256": "e3897746f41682b4a8865d1772b2aabe0dfc4383fb0b747f6ee8b41450e8ee3b"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/state/global-template-state.ts",
+      "sha256": "153881d2090eb31e706838c6e0675ba977633be68655f3233d7b53d53e585922"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-report-template-editor/global-report-template-editor.ts",
+      "sha256": "f05cac242b4315483b097d1eae779e507542cbbb20c29909d249b80681f05b61"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-report-template-editor/global-report-template-editor.html",
+      "sha256": "90b0919bfd2761b2773722d2b9b4ac4bca46eed48098a817d7de12aebbe3a2d5"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-detail-dialog/global-template-detail-dialog.ts",
+      "sha256": "d8cde2274e10679a2ba66300946d4ecec0316ff97eba83cf54ee7977e43414ff"
+    },
+    {
+      "path": "web-angular/scripts/verify-report-template-sidebar-browser.mjs",
+      "sha256": "a72a02f35a6feac71bbcdbc1e94a86d43101000c3225f6278d7a45c60428807c"
+    },
+    {
+      "path": "web-angular/scripts/verify-reporting-browser.mjs",
+      "sha256": "93da2a20820e79046d3666d658656dc307e85d6b75c2ff313ddcf650d302a2a5"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/utils/global-template-viewer-identity.ts",
+      "sha256": "1483c65b364a2eab9f392b7622c73ea7e0763fd3935522b9e0de930e25075e48"
+    }
+  ],
+  "limitations": [
+    "All browser API requests and writes are intercepted fixtures; no live RPT/Crystal/hosted write acceptance.",
+    "Existing publication permissions and separate explicit publish are retained.",
+    "No API/schema/migration/Next/Mobile runtime changes.",
+    "Historical unavailable raw logs remain inventoried under FOLLOW-025; current proof does not restore them."
+  ],
+  "identityProtocol": "Existing backend SourceId and Token envelopes matched exactly; stale token, mismatched immutable identity and same-bytes changed-version cases rejected.",
+  "review": "Independent read-only re-review after correction: no actionable findings."
+}

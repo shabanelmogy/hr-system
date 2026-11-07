@@ -293,6 +293,13 @@ shared contract changed.
 
 - Draft manifests are planning aids and are never listed in `requiredFileManifests`.
 - Final manifests contain no placeholder paths; every file and source collection must exist.
+- When a requester authorizes aligning old evidence registration with the current
+  checkout, inventory unavailable historical receipts with their original IDs and
+  paths, register the inventory and owning report, and remove only those absent
+  receipts from current requiredFiles. Keep existing sources and receipts required.
+  Preserve historical claims as dated reports and retain any acceptance gap under
+  its central note. This does not waive runtime/release checks or restore missing
+  evidence. Do not add an ignore-missing option to the generator or fabricate logs.
 - A final manifest that declares `implementationRequest` must list that file
   exactly once in `requiredFiles`; check mode rejects unresolved angle-bracket
   placeholders in it.

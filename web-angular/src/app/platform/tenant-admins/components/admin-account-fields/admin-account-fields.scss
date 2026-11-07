@@ -1,0 +1,5 @@
+@use '../../../../shared/ui/forms/field-layout';
+@include field-layout.group;
+.wide {
+  grid-column: 1 / -1;
+}

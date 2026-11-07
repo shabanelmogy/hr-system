@@ -58,13 +58,13 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | --- | ---: | --- |
 | angular-managed-reporting-adapter-master | 3 | `0a8d888ba28cd7d35ccaaf15d92162d047c48a3482e973322396688b5d08e520` |
 | angular-managed-reporting-adapter-master | 4 | `0d75a0cc98ed3a106e8343d19526c34b38a8aa4ce019633d33510a6df070b725` |
-| angular-managed-reporting-adapter-master | 6 | `7ddf91640d39b54272167893efb83e1111050dce8b98d44d9b1a94e99b53523f` |
+| angular-managed-reporting-adapter-master | 6 | `06d8f06577f4e84c6027647d4beb9e7ffef745f41ec3424eb29cf6d408adcf4d` |
 | angular-managed-reporting-adapter-master | 7 | `a44d1692fdb21881f7be93156c32947a7512bb4ebda61fd6991de2106b999fe4` |
 | angular-managed-reporting-adapter-master | 8 | `ccd65bd62ffc69968dd25b5533dce7903889333438951fd55ff4f1fcf34a15a4` |
-| angular-managed-reporting-adapter-api | 6 | `7ddf91640d39b54272167893efb83e1111050dce8b98d44d9b1a94e99b53523f` |
+| angular-managed-reporting-adapter-api | 6 | `06d8f06577f4e84c6027647d4beb9e7ffef745f41ec3424eb29cf6d408adcf4d` |
 | angular-managed-reporting-adapter-api | 7 | `6cef15e087ca9135e2e920cff1c04ee79be87ad22f23806e486bd03344b31515` |
 | angular-managed-reporting-adapter-api | 8 | `ccd65bd62ffc69968dd25b5533dce7903889333438951fd55ff4f1fcf34a15a4` |
-| angular-managed-reporting-adapter-web | 6 | `7ddf91640d39b54272167893efb83e1111050dce8b98d44d9b1a94e99b53523f` |
+| angular-managed-reporting-adapter-web | 6 | `06d8f06577f4e84c6027647d4beb9e7ffef745f41ec3424eb29cf6d408adcf4d` |
 | angular-managed-reporting-adapter-web | 7 | `a44d1692fdb21881f7be93156c32947a7512bb4ebda61fd6991de2106b999fe4` |
 | angular-managed-reporting-adapter-web | 8 | `ccd65bd62ffc69968dd25b5533dce7903889333438951fd55ff4f1fcf34a15a4` |
 | angular-managed-reporting-adapter-web | 9 | `134f6c9e94fe56442f0bda990b5c3b4f33cdaf72115b8973b40c9ebec4fc79fa` |

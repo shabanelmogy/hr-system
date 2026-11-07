@@ -1,0 +1,13 @@
+@use '../../../../shared/ui/layout/collection-page';
+@include collection-page.shell;
+main {
+  gap: 12px;
+}
+.tool-frame {
+  flex: 1;
+  min-block-size: 0;
+  inline-size: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}

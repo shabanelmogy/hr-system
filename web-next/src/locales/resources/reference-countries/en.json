@@ -190,6 +190,18 @@
     "hasPhone": "Has Phone Code",
     "hasCurrency": "Has Currency",
     "import": {
+      "duplicateField": "This value duplicates row {{row}}. Use a unique value or remove the duplicate row.",
+      "duplicateOnServer": "A country name or code in this batch already exists. No records in this batch were saved. Compare the file with existing countries, correct duplicates, then select the corrected file. The server did not identify a specific row.",
+      "errors": {
+        "required": "Required field. Enter a country name.",
+        "minlength": "Use at least {{min}} characters.",
+        "maxlength": "Use no more than {{max}} characters.",
+        "invalidText": "Remove hidden control characters or line breaks from the name.",
+        "alpha2Code": "Use exactly 2 English letters, for example EG, or leave it empty.",
+        "alpha3Code": "Use exactly 3 English letters, for example EGY, or leave it empty.",
+        "currencyCode": "Use exactly 3 English letters, for example EGP, or leave it empty.",
+        "phoneCode": "Use up to 10 digits with an optional leading +, for example +20, or leave it empty."
+      },
       "duplicateInFile": "Duplicate of another country row in this file",
       "importSuccess": "{{count}} countries uploaded"
     },

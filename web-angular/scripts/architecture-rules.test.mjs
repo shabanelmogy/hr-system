@@ -266,6 +266,21 @@ test('AST distinguishes forbidden types and storage from innocent text and comme
     ),
   );
 });
+test('presentation persistence is restricted to its declared shared owner', () => {
+  const owner = 'src/app/shared/data/view-preference.ts';
+  const read = 'target.localStorage.getItem(storageKey);';
+  assert.deepEqual(inspectSource(owner, read), []);
+  assert.ok(
+    inspectSource('src/app/shared/data/other-preference.ts', read).includes(
+      'undeclared browser storage',
+    ),
+  );
+  assert.ok(
+    inspectSource(owner, 'target.sessionStorage.getItem("draft");').includes(
+      'undeclared browser storage',
+    ),
+  );
+});
 test('feature templates must compose shared form and fields', () => {
   for (const source of [
     'const template = `<form novalidate></form>`;',
@@ -337,6 +352,21 @@ test('composition can use the lightweight feedback public entry without importin
     inspectSource(
       'src/app/app.ts',
       'import { FeedbackNotifications } from "./shared/ui/feedback/feedback-notifications";',
+    ).includes('shared internals import; use the public API'),
+  );
+});
+test('bootstrap can import preview state through its narrow public contract while internals stay private', () => {
+  assert.deepEqual(
+    inspectSource(
+      'src/app/app.ts',
+      'import { ResponsivePreviewState } from "./shared/ui/diagnostics/state.public-api";',
+    ),
+    [],
+  );
+  assert.ok(
+    inspectSource(
+      'src/app/app.ts',
+      'import { ResponsivePreviewState } from "./shared/ui/diagnostics/responsive-preview-state";',
     ).includes('shared internals import; use the public API'),
   );
 });

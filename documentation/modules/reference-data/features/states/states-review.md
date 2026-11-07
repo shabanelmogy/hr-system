@@ -6,6 +6,8 @@ Countries is the architectural reference; States owns its own country and distri
 
 ## 1. Scope and ownership
 
+Angular States client2026-11-06: the canonical /super-admin/geography/states workspace now implements the retained five-view and four-field lifecycle contract using Shared Angular controls and native Signal Forms. Current source/verification lives in documentation/modules/platform/features/angular-states-workspace/STATES_WORKSPACE_2026-11-06.md. The API/domain/database, Next runtime and native Mobile implementation remain unchanged; hosted States catalog200/empty and fixture PDF are classified separately from an actual deployed State RPT.
+
 States is global Platform geographical reference data owned by `GeographicalInformation/States` in the API and reused by both clients. Its public routes are `/api/v1/states`, `/super-admin/geography/states` in Next.js, and `/basic-data/geographical-information/states` in Expo's super-admin-only geography module.
 
 ## 2. Discovery evidence

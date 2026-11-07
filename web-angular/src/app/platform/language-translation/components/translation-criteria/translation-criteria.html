@@ -1,0 +1,24 @@
+<erp-option-select
+  [label]="text('source')"
+  [value]="reads.sourceId()"
+  [options]="sources()"
+  (valueChange)="reads.patch({ source: $event })"
+/>
+<erp-option-select
+  [label]="text('baseLanguage')"
+  [value]="reads.query().baseLanguage"
+  [options]="languages()"
+  (valueChange)="language($event, false)"
+/>
+<erp-option-select
+  [label]="text('targetLanguage')"
+  [value]="reads.query().targetLanguage"
+  [options]="languages()"
+  (valueChange)="language($event, true)"
+/>
+<erp-option-select
+  [label]="text('status')"
+  [value]="reads.query().status"
+  [options]="statuses()"
+  (valueChange)="status($event)"
+/>

@@ -31,7 +31,9 @@ const detailsMode = process.argv.includes('--details');
 assert.ok(catalogVersion);
 const hash = 'a'.repeat(64);
 const cases = ['en', 'ar'].flatMap((language) =>
-  [1213, 780, 390].map((width) => ({ language, width, mode: 'light', palette: 'green' })),
+  ['light', 'dark'].flatMap((mode) =>
+    [1213, 780, 390].map((width) => ({ language, width, mode, palette: 'green' })),
+  ),
 );
 const results = [];
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
@@ -205,64 +207,103 @@ try {
           'globalTemplates.design.title',
           'globalTemplates.downloadSchema',
         ].map((key) => captions[key]);
-        assert.deepEqual(
-          await toolbar
-            .getByRole('button')
-            .allTextContents()
-            .then((labels) => labels.map((label) => label.trim())),
-          actionLabels,
-        );
-        assert.equal(await toolbar.locator('button erp-icon svg').count(), 4);
-        const group = toolbar.getByRole('group', {
-          name: captions['crystalReports.create'],
+        const trigger = toolbar.getByRole('button', {
+          name: core[scenario.language]['actions.buttons'],
           exact: true,
         });
-        await expect(group.getByRole('button')).toHaveCount(3);
-        const groupLayout = await group.evaluate((element) => {
-          const buttons = [...element.querySelectorAll('button')];
-          const vertical = innerWidth < 600;
+        await expect(toolbar.getByRole('button')).toHaveCount(1);
+        await expect(trigger).toHaveAttribute('aria-haspopup', 'menu');
+        await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+        const indicator = trigger.locator('.action-menu-indicator');
+        await expect(indicator).toBeVisible();
+        const indicatorLayout = await trigger.evaluate((element) => {
+          const label = element.querySelector('[pbuttonlabel]');
+          const indicator = element.querySelector('.action-menu-indicator');
+          if (!label || !indicator) throw new Error('Dropdown label and indicator are required.');
+          const text = label.getBoundingClientRect();
+          const icon = indicator.getBoundingClientRect();
           const rtl = getComputedStyle(element).direction === 'rtl';
-          const contiguous = buttons.every((button, index) => {
-            if (index === 0) return true;
-            const rect = button.getBoundingClientRect();
-            const previous = buttons[index - 1].getBoundingClientRect();
-            return (
-              Math.abs(
-                vertical
-                  ? rect.top - previous.bottom
-                  : rtl
-                    ? previous.left - rect.right
-                    : rect.left - previous.right,
-              ) < 1
+          return {
+            trailing: rtl ? icon.right <= text.left : icon.left >= text.right,
+            separator: Number.parseFloat(getComputedStyle(indicator).borderInlineStartWidth),
+            width: icon.width,
+          };
+        });
+        assert.equal(indicatorLayout.trailing, true, JSON.stringify(indicatorLayout));
+        assert.ok(indicatorLayout.separator >= 1 && indicatorLayout.width >= 20);
+        const toolbarLayout = await manager
+          .locator('.collection-toolbar')
+          .first()
+          .evaluate((element) => {
+            const nodes = [...element.querySelectorAll('input, [role="combobox"], button')].filter(
+              (node) => node.getBoundingClientRect().width > 0,
             );
+            const rects = nodes.map((node) => node.getBoundingClientRect());
+            const center = (rect) => rect.top + rect.height / 2;
+            return {
+              singleRow: Math.max(...rects.map(center)) - Math.min(...rects.map(center)) < 8,
+              locallyScrollable: getComputedStyle(element).overflowX === 'auto',
+              documentOverflow: document.documentElement.scrollWidth > innerWidth + 1,
+            };
           });
-          return { vertical, rtl, contiguous };
-        });
-        assert.equal(groupLayout.contiguous, true, JSON.stringify(groupLayout));
+        assert.equal(toolbarLayout.singleRow, true, JSON.stringify({ scenario, toolbarLayout }));
+        assert.equal(toolbarLayout.locallyScrollable, true);
+        assert.equal(toolbarLayout.documentOverflow, false);
         assert.equal(await manager.locator('.collection-filters button erp-icon').count(), 0);
-        const actionBounds = await toolbar.evaluate((element) => {
-          const nodes = [...element.querySelectorAll('button')].map((node) =>
-            node.getBoundingClientRect(),
-          );
-          return nodes.every(
-            (rect, i) =>
-              rect.left >= 0 &&
-              rect.right <= innerWidth &&
-              nodes.every(
-                (other, j) =>
-                  i === j ||
-                  rect.right <= other.left + 1 ||
-                  other.right <= rect.left + 1 ||
-                  rect.bottom <= other.top + 1 ||
-                  other.bottom <= rect.top + 1,
-              ),
-          );
+        await trigger.scrollIntoViewIfNeeded();
+        await trigger.focus();
+        await page.keyboard.press('Enter');
+        const menu = page.getByRole('menu', {
+          name: core[scenario.language]['actions.buttons'],
+          exact: true,
         });
-        assert.ok(actionBounds);
+        await expect(menu).toBeVisible();
+        await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+        await expect(indicator).toHaveClass(/expanded/);
+        assert.deepEqual(
+          (await menu.getByRole('menuitem').allTextContents()).map((label) => label.trim()),
+          actionLabels,
+        );
+        await expect(menu.locator('erp-icon svg')).toHaveCount(4);
+        const menuBounds = await menu.boundingBox();
+        assert.ok(
+          menuBounds && menuBounds.x >= 0 && menuBounds.x + menuBounds.width <= scenario.width + 1,
+        );
+        const menuAppearance = await menu.evaluate((element) => {
+          const root = element.closest('.p-menu');
+          const firstItem = element.querySelector('.p-menu-item-link');
+          if (!root || !firstItem) throw new Error('Menu root and item are required.');
+          const surface = getComputedStyle(root);
+          const item = getComputedStyle(firstItem);
+          return {
+            background: surface.backgroundColor,
+            border: Number.parseFloat(surface.borderTopWidth),
+            padding: Number.parseFloat(item.paddingTop),
+            shadow: surface.boxShadow,
+          };
+        });
+        assert.ok(
+          !['transparent', 'rgba(0, 0, 0, 0)'].includes(menuAppearance.background),
+          JSON.stringify(menuAppearance),
+        );
+        assert.ok(
+          menuAppearance.border >= 1 && menuAppearance.padding >= 10,
+          JSON.stringify(menuAppearance),
+        );
+        assert.notEqual(menuAppearance.shadow, 'none');
         await page.screenshot({
-          path: path.join(output, `manager-${scenario.language}-${scenario.width}.png`),
+          path: path.join(
+            output,
+            `manager-${scenario.language}-${scenario.mode}-${scenario.width}.png`,
+          ),
           fullPage: true,
         });
+        await page.keyboard.press('ArrowDown');
+        await page.keyboard.press('Escape');
+        await expect(menu).not.toBeVisible();
+        await expect(trigger).toBeFocused();
+        await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+        await expect(indicator).not.toHaveClass(/expanded/);
         await manager.locator('[data-collection-row]').first().dblclick();
         const dialog = page.getByRole('dialog');
         await expect(dialog.getByText('Saved report description', { exact: true })).toBeVisible();
@@ -275,12 +316,16 @@ try {
           await expect(dialog.getByText(value, { exact: true })).toBeVisible();
         await expect(dialog.locator('.surface-footer button erp-icon svg')).toHaveCount(2);
         await dialog.screenshot({
-          path: path.join(output, `metadata-${scenario.language}-${scenario.width}.png`),
+          path: path.join(
+            output,
+            `metadata-${scenario.language}-${scenario.mode}-${scenario.width}.png`,
+          ),
         });
         await dialog
           .getByRole('button', { name: core[scenario.language]['actions.close'], exact: true })
           .click();
-        await toolbar.getByRole('button', { name: actionLabels[0], exact: true }).click();
+        await trigger.click();
+        await menu.getByRole('menuitem', { name: actionLabels[0], exact: true }).click();
         await expect(
           dialog.getByRole('textbox', {
             name: captions['crystalReports.description'],
@@ -290,7 +335,10 @@ try {
         await expect(dialog.locator('button[type="submit"] erp-icon svg')).toHaveCount(1);
         await expect(dialog.locator('.form-tools button erp-icon svg')).toHaveCount(1);
         await dialog.screenshot({
-          path: path.join(output, `upload-${scenario.language}-${scenario.width}.png`),
+          path: path.join(
+            output,
+            `upload-${scenario.language}-${scenario.mode}-${scenario.width}.png`,
+          ),
         });
         await dialog
           .getByRole('button', { name: core[scenario.language]['actions.cancel'], exact: true })
@@ -323,7 +371,10 @@ try {
       assert.equal(layout.noOverlap, true);
       assert.equal(layout.documentOverflow, false);
       await footer.screenshot({
-        path: path.join(output, scenario.language + '-' + scenario.width + '.png'),
+        path: path.join(
+          output,
+          scenario.language + '-' + scenario.mode + '-' + scenario.width + '.png',
+        ),
       });
       const next = footer.locator('.p-paginator-next');
       const initialRequests = requests.length;
@@ -391,7 +442,10 @@ try {
         await expect(manager.locator('[data-collection-row]')).toHaveCount(6);
         await openFilter('status');
         await overlay.screenshot({
-          path: path.join(output, `filter-${scenario.language}-${scenario.width}.png`),
+          path: path.join(
+            output,
+            `filter-${scenario.language}-${scenario.mode}-${scenario.width}.png`,
+          ),
         });
         await overlay
           .locator('.p-datatable-filter-buttonbar')
@@ -416,6 +470,7 @@ try {
         sizeChangeResetsPage: true,
         columnFiltersAppliedAndCleared: filtersMode,
         managerActionsAndMetadata: detailsMode,
+        actionMenuAndSingleRow: detailsMode,
         errors,
       });
     } finally {

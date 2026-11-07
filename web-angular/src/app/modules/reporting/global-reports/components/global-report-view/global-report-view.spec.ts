@@ -67,10 +67,28 @@ describe('Managed report shared-form composition', () => {
     owner.form.nameEn().value.set('Countries draft');
     fixture.componentRef.setInput('entity', 'states');
     await fixture.whenStable();
-    expect(owner.form().value()).toEqual({ nameAr: '', nameEn: '' });
-    expect(owner.state.applied()).toEqual(owner.form().value());
+    expect(owner.form().value()).toEqual({ nameAr: '', nameEn: '', stateAr: '', stateEn: '' });
+    expect(owner.state.applied()).toEqual({ nameAr: '', nameEn: '' });
     expect(service.catalog).toHaveBeenLastCalledWith('states');
     expect(owner.fileName()).toBe('states-' + report.id.slice(0, 16) + '.pdf');
+  });
+  it('shows State criteria only for District reports and clears them when the entity changes', async () => {
+    const { fixture, owner, root, service } = await setup();
+    service.catalog.mockReturnValue(of([{ ...report, entityKey: 'districts' as const }]));
+
+    fixture.componentRef.setInput('entity', 'districts');
+    await fixture.whenStable();
+    expect(root.querySelector('[data-testid=stateAr]')).not.toBeNull();
+    expect(root.querySelector('[data-testid=stateEn]')).not.toBeNull();
+    owner.form.stateAr().value.set('القاهرة');
+    owner.form.stateEn().value.set('Cairo');
+
+    service.catalog.mockReturnValue(of([report]));
+    fixture.componentRef.setInput('entity', 'countries');
+    await fixture.whenStable();
+    expect(root.querySelector('[data-testid=stateAr]')).toBeNull();
+    expect(owner.form().value()).toEqual({ nameAr: '', nameEn: '', stateAr: '', stateEn: '' });
+    expect(owner.state.applied()).toEqual({ nameAr: '', nameEn: '' });
   });
   it('shows Summary Info Subject in English and Title in Arabic in the report selector', async () => {
     const { fixture, root, locale } = await setup();
@@ -108,6 +126,24 @@ describe('Managed report shared-form composition', () => {
     expect(owner.errorCaption()).toBe(message);
     expect(root.textContent).toContain(message);
   });
+  it('shows the sidebar upload entry only for an authorized global template administrator', async () => {
+    const { fixture, root, identity, owner } = await setup();
+    expect(root.querySelector('[data-testid=upload-source]')).toBeNull();
+    identity.set({
+      ...identity(),
+      permissions: ['GlobalCrystalReports:View', 'GlobalCrystalReports:Upload', 'Countries:Edit'],
+    });
+    await fixture.whenStable();
+    owner.sidebarTab.set('options');
+    await fixture.whenStable();
+    expect(
+      root.querySelector('aside [data-testid=upload-source] button')?.getAttribute('aria-haspopup'),
+    ).toBe('dialog');
+    expect(root.querySelector('erp-global-report-template-editor')).toBeNull();
+    identity.set({ ...identity(), roles: ['user'] });
+    await fixture.whenStable();
+    expect(root.querySelector('[data-testid=upload-source]')).toBeNull();
+  });
   it('keeps Search enabled and uses the shared error badge, field message, and first-error focus', async () => {
     const { fixture, owner, root, service } = await setup();
     expect(root.querySelector('form')?.noValidate).toBe(true);
@@ -133,7 +169,7 @@ describe('Managed report shared-form composition', () => {
     expect(service.render).toHaveBeenLastCalledWith(report, { nameAr: 'مصر', nameEn: '' }, 'ar');
     owner.reset();
     await fixture.whenStable();
-    expect(owner.form().value()).toEqual({ nameAr: '', nameEn: '' });
+    expect(owner.form().value()).toEqual({ nameAr: '', nameEn: '', stateAr: '', stateEn: '' });
     expect(service.render).toHaveBeenLastCalledWith(report, { nameAr: '', nameEn: '' }, 'ar');
   });
   it('renders owned server field errors beneath shared inputs and clears the old PDF', async () => {
@@ -247,6 +283,6 @@ describe('Managed report shared-form composition', () => {
     owner.form.nameEn().value.set('Private draft');
     identity.set({ ...identity(), companyId: 42 });
     await fixture.whenStable();
-    expect(owner.form().value()).toEqual({ nameAr: '', nameEn: '' });
+    expect(owner.form().value()).toEqual({ nameAr: '', nameEn: '', stateAr: '', stateEn: '' });
   });
 });

@@ -1,0 +1,9 @@
+@use '../../../../../../shared/ui/layout/collection-page';
+@include collection-page.shell;
+.workspace {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}

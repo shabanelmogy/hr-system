@@ -2,6 +2,7 @@ import { InjectionToken, signal, type Signal, type Type } from '@angular/core';
 import type { NavigationEntry } from '../shared/ui/public-api';
 export interface ShellNavigationContribution {
   readonly entries: Signal<readonly NavigationEntry[]>;
+  readonly dataEntries?: Signal<readonly NavigationEntry[]>;
   activate(id: string): boolean;
 }
 export const SHELL_ADDITIONAL_NAVIGATION = new InjectionToken<ShellNavigationContribution | null>(

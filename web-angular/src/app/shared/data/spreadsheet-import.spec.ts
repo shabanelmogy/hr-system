@@ -41,6 +41,12 @@ describe('Bounded spreadsheet import', () => {
     ]);
     value['B2'] = { t: 'n', v: 2, f: '1+1' };
     expect(() => spreadsheetRows(value, policy)).toThrow('formulaNotAllowed');
+    try {
+      spreadsheetRows(value, policy);
+    } catch (error) {
+      expect(error).toBeInstanceOf(SpreadsheetError);
+      expect((error as SpreadsheetError).details).toEqual({ row: 2, cell: 'B2' });
+    }
     expect(() =>
       spreadsheetRows(sheet([['first', 'second'], ['A'], ['B'], ['C']]), policy),
     ).toThrow('rowLimitExceeded');

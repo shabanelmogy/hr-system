@@ -30,6 +30,18 @@
       "path": "mobile-react/src/modules/reference-data/geography/districts",
       "minimumFiles": 23,
       "purpose": "Expo runtime schemas, API, list, Table/Card/Chart/Report/Import views, form, validation, and focused tests"
+    },
+    {
+      "id": "angular-districts-client",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/districts",
+      "patterns": [
+        "*.ts",
+        "*.html",
+        "*.scss"
+      ],
+      "minimumFiles": 57,
+      "purpose": "Current Angular client and meaningful tests; no change to retained Next/native domain"
     }
   ],
   "requiredFiles": [
@@ -614,6 +626,12 @@
       "layer": "api",
       "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Migrations/20261102143015_AddGlobalReferenceReportViews.Designer.cs",
       "purpose": "ReferenceData-owned schema-bound navigation reporting View and verification"
+    },
+    {
+      "id": "angular-districts-acceptance",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-districts-workspace/DISTRICTS_WORKSPACE_2026-11-06.md",
+      "purpose": "Current Angular migration acceptance and hosted/fixture boundaries"
     }
   ]
 }

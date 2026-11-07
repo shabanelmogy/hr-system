@@ -1,0 +1,6 @@
+@use '../../../../shared/ui/cards/entity-card';
+@include entity-card.header;
+.username {
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}

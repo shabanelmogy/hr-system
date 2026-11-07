@@ -1,0 +1,27 @@
+{
+  "origin": "https://localhost:4210",
+  "api": "https://shabanhrms.runasp.net",
+  "businessWrites": 0,
+  "results": [
+    {
+      "check": "Tenant server page and real concurrency/usage DTO",
+      "status": 200,
+      "rows": 1,
+      "total": 1
+    },
+    {
+      "check": "fresh Tenant detail with rowVersion",
+      "status": 200,
+      "hasEntitlements": true
+    },
+    {
+      "check": "independent assignable module/submodule catalog",
+      "status": 200,
+      "modules": 8
+    },
+    {
+      "check": "owned test session logout",
+      "status": 204
+    }
+  ]
+}

@@ -24,6 +24,40 @@ describe('global manager HTTP boundary', () => {
     http.verify();
     TestBed.resetTestingModule();
   });
+  it('verifies the stored version through the protected management route and consumes the published result', async () => {
+    const id = 'c6518e27-5e26-4790-932c-80d572099a32';
+    const versionId = '104c0411-c988-449d-9a36-e27d2d7532f5';
+    const result = firstValueFrom(service.verifyDatabase(id, versionId));
+    http.expectOne(origin + '/api/v1/browser-auth/csrf').flush({ requestToken: 'fixture-csrf' });
+    const request = await vi.waitFor(() =>
+      http.expectOne(
+        origin +
+          '/api/v1/global-crystal-reports/manage/' +
+          id +
+          '/versions/' +
+          versionId +
+          '/verify-database',
+      ),
+    );
+    expect(request.request.method).toBe('POST');
+    expect(request.request.withCredentials).toBe(true);
+    expect(request.request.headers.get('X-ERP-XSRF')).toBe('fixture-csrf');
+    expect(request.request.body).toEqual({});
+    request.flush({
+      id,
+      entityKey: 'countries',
+      reportKey: 'countries-directory',
+      displayName: 'Directory',
+      description: null,
+      updatedOn: '2026-11-07T00:00:00Z',
+      currentVersionNumber: 2,
+      isPublished: true,
+      isArchived: false,
+      rowVersion: 'AQEBAQEBAQE=',
+      versions: [],
+    });
+    expect(await result).toMatchObject({ currentVersionNumber: 2, isPublished: true });
+  });
   it('resolves filename identity within the entity using an authenticated non-null response', async () => {
     const result = firstValueFrom(service.uploadTarget('countries', 'Countries.Directory.rpt'));
     const request = http.expectOne((entry) => entry.url.endsWith('/upload-target'));

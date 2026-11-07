@@ -1,0 +1,42 @@
+<erp-text-field
+  [formField]="editor.form.firstName"
+  [label]="captions.text('firstName')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+/>
+<erp-text-field
+  [formField]="editor.form.lastName"
+  [label]="captions.text('lastName')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+/>
+<erp-text-field
+  [formField]="editor.form.userName"
+  [label]="captions.text('userName')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+/>
+<erp-text-field
+  type="email"
+  [formField]="editor.form.email"
+  [label]="captions.text('email')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+/>
+<erp-text-field
+  class="wide"
+  type="password"
+  [formField]="editor.form.password"
+  [label]="captions.text(editor.mode() === 'edit' ? 'newPassword' : 'password')"
+  [help]="captions.text(editor.mode() === 'edit' ? 'passwordKeepHint' : 'passwordHint')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+/>
+@if (editor.mode() === 'edit') {
+  <erp-boolean-field
+    kind="switch"
+    [formField]="editor.form.isDisabled"
+    [label]="captions.text('disableAccount')"
+    [readOnly]="editor.locked()"
+  />
+}

@@ -1,0 +1,43 @@
+<erp-option-select
+  data-testid="status"
+  [controlHeight]="36"
+  [label]="'states.status.label' | uiText: 'reference-states'"
+  [value]="state.query().status"
+  [options]="statuses()"
+  (valueChange)="state.changeStatus($event)"
+/>
+<erp-option-select
+  [controlHeight]="36"
+  [label]="'states.country' | uiText: 'reference-states'"
+  [value]="state.query().countryId === undefined ? '' : '' + state.query().countryId"
+  [options]="countryOptions()"
+  [disabled]="parents.view().kind !== 'ready'"
+  (valueChange)="chooseCountry($event)"
+/>
+<erp-option-select
+  [controlHeight]="36"
+  [label]="'states.districtsFilter' | uiText: 'reference-states'"
+  [value]="state.query().hasDistricts === undefined ? '' : '' + state.query().hasDistricts"
+  [options]="districtOptions()"
+  (valueChange)="chooseDistricts($event)"
+/>
+@if (showSort()) {
+  <erp-option-select
+    data-testid="sort"
+    [controlHeight]="36"
+    [label]="'general.sortBy' | uiText"
+    [value]="state.query().sortBy"
+    [options]="sorts()"
+    (valueChange)="chooseSort($event)"
+  />
+  <erp-sort-direction-button
+    [direction]="state.query().sortDirection"
+    (directionChange)="state.changeSort({ field: state.query().sortBy, direction: $event })"
+  />
+  <erp-button
+    data-testid="reset"
+    [label]="'general.reset' | uiText"
+    variant="text"
+    (activated)="state.reset()"
+  />
+}

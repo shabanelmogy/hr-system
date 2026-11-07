@@ -4,6 +4,7 @@ import {
   computed,
   DestroyRef,
   Directive,
+  ElementRef,
   inject,
   input,
   output,
@@ -16,6 +17,8 @@ import { FormField, type FormValueControl, type ValidationError } from '@angular
 import type { Subscription } from 'rxjs';
 import { UI_LOCALIZATION } from '../../localization/public-api';
 import { clearServerFieldError, type FieldMessages } from './form-errors';
+import { FormFieldRegistry } from './form-field-registry';
+import { FORM_SECTION } from './form-section';
 
 let sequence = 0;
 /** Internal query token and common form lifecycle for every shared data-entry field. */
@@ -42,6 +45,9 @@ export abstract class FormFieldControl<T>
   readonly ngControl = inject(NgControl, { self: true, optional: true });
   protected readonly runtime = inject(UI_LOCALIZATION);
   private readonly signalBinding = inject(FormField, { self: true, optional: true });
+  private readonly registry = inject(FormFieldRegistry, { optional: true });
+  private readonly section = inject(FORM_SECTION, { optional: true });
+  private readonly fieldHost = inject(ElementRef<HTMLElement>);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly revision = signal(0);
   private observedControl: AbstractControl | null = null;
@@ -50,10 +56,18 @@ export abstract class FormFieldControl<T>
   private touchedCallback: () => void = () => {};
   constructor() {
     if (this.ngControl && !this.signalBinding) this.ngControl.valueAccessor = this;
-    inject(DestroyRef).onDestroy(() => this.subscription?.unsubscribe());
+    const unregister = this.registry?.register(this, this.fieldHost.nativeElement as HTMLElement);
+    inject(DestroyRef).onDestroy(() => {
+      this.subscription?.unsubscribe();
+      unregister?.();
+    });
   }
   abstract writeValue(value: unknown): void;
   abstract focus(): void;
+  sectionId(): string | null {
+    const id = this.section?.id().trim();
+    return id || null;
+  }
   registerOnChange(callback: (value: T) => void) {
     this.changed = callback;
   }

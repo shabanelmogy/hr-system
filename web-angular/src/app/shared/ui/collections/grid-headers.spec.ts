@@ -47,6 +47,8 @@ const groups: readonly GridHeaderDefinition[] = [
   templateUrl: './grid-headers.spec.html',
 })
 class Fixture {
+  readonly showCustomHeader = signal(true);
+  readonly headerKey = signal('id');
   readonly columns = columns;
   readonly groups = groups;
   readonly id = (row: Row) => row.id;
@@ -155,6 +157,28 @@ describe('Typed shared header hierarchy and projection', () => {
     fixture.componentInstance.source.set({ query, kind: 'forbidden' });
     await fixture.whenStable();
     expect(element.querySelector('tfoot')).toBeNull();
+  });
+  it('updates projected template indexes when a key changes or a template is removed and restored', async () => {
+    const fixture = TestBed.createComponent(Fixture);
+    await fixture.whenStable();
+    const owner = fixture.componentInstance;
+    const element = fixture.nativeElement as HTMLElement;
+    owner.headerKey.set('name');
+    await fixture.whenStable();
+    expect(element.querySelector('th[data-column-key=id] [data-testid=custom-header]')).toBeNull();
+    expect(
+      element.querySelector('th[data-column-key=name] [data-testid=custom-header]')?.textContent,
+    ).toBe('Name custom');
+    owner.showCustomHeader.set(false);
+    await fixture.whenStable();
+    expect(element.querySelector('[data-testid=custom-header]')).toBeNull();
+    expect(element.querySelector('th[data-column-key=name]')?.textContent).toContain('Name');
+    owner.headerKey.set('id');
+    owner.showCustomHeader.set(true);
+    await fixture.whenStable();
+    expect(
+      element.querySelector('th[data-column-key=id] [data-testid=custom-header]')?.textContent,
+    ).toBe('ID custom');
   });
   it('discards a coalesced sort from a previous owner source before its callback runs', async () => {
     const fixture = TestBed.createComponent(Fixture);

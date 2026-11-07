@@ -1,0 +1,369 @@
+{
+  "schemaVersion": 1,
+  "status": "closed",
+  "executionMode": "verified-bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "angular-states-workspace",
+  "featureName": "States complete Angular parity",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S3-A9 — States complete Angular parity",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-states-workspace.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-states-workspace.md",
+  "purpose": "Complete authorized States Angular runtime and current source evidence; final acceptance recorded separately from hosted report/catalog release gates.",
+  "reviewArtifact": "documentation/modules/platform/features/angular-states-workspace/angular-states-workspace-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-states-workspace/angular-states-workspace-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-states-workspace/angular-states-workspace-review.md",
+    "api": "documentation/modules/platform/features/angular-states-workspace/angular-states-workspace-api.md",
+    "web": "documentation/modules/platform/features/angular-states-workspace/angular-states-workspace-web.md",
+    "mobile": "documentation/modules/platform/features/angular-states-workspace/angular-states-workspace-mobile.md"
+  },
+  "sourceCollections": [
+    {
+      "id": "states-current-runtime",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/states",
+      "patterns": [
+        "*.ts",
+        "*.html",
+        "*.scss"
+      ],
+      "minimumFiles": 48,
+      "layer": "web",
+      "purpose": "Current complete States client, owner states, component resources, validators, DTO/transport and tests"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-states-workspace/angular-states-workspace-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-states-workspace/angular-states-workspace-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "states-preflight-0",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-states-workspace/angular-states-workspace-review.md",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-1",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-states-workspace/angular-states-workspace-api.md",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-2",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-states-workspace/angular-states-workspace-web.md",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-3",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-states-workspace/angular-states-workspace-mobile.md",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-4",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-states-workspace.md",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-5",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/SUPER_ADMIN_PARITY_2026-11-05.md",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-6",
+      "layer": "documentation",
+      "path": "documentation/modules/reference-data/features/states/states-review.md",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-7",
+      "layer": "documentation",
+      "path": "documentation/modules/reference-data/features/states/states-api.md",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-8",
+      "layer": "documentation",
+      "path": "documentation/modules/reference-data/features/states/states-web.md",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-9",
+      "layer": "documentation",
+      "path": "documentation/modules/reference-data/features/states/states-mobile.md",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-10",
+      "layer": "web",
+      "path": "web-next/src/modules/reference-data/geographical-information/states/pages/StatesPage.tsx",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-11",
+      "layer": "web",
+      "path": "web-next/src/modules/reference-data/geographical-information/states/components/StatesMultiView.tsx",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-12",
+      "layer": "web",
+      "path": "web-next/src/modules/reference-data/geographical-information/states/components/StateForm.tsx",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-13",
+      "layer": "web",
+      "path": "web-next/src/modules/reference-data/geographical-information/states/components/import-data/stateImport.ts",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-14",
+      "layer": "web",
+      "path": "web-next/src/modules/reference-data/geographical-information/states/components/import-data/useImportStates.ts",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-15",
+      "layer": "web",
+      "path": "web-next/src/modules/reference-data/geographical-information/states/services/stateService.ts",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-16",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/States/V1/StatesController.cs",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-17",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/States/Contracts/StateManagementContracts.cs",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-18",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/States/Commands/StateCommands.cs",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-19",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-20",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-21",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-read-state.ts",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-22",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-editor-state.ts",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-23",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-import-state.ts",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-24",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-editor/country-editor.html",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-25",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/localization/localization-runtime.ts",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-preflight-26",
+      "layer": "web",
+      "path": "web-angular/src/locales/generated/reference-states.json",
+      "purpose": "Verified existing preflight source/reference; no future States runtime path"
+    },
+    {
+      "id": "states-foundation-0",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-states-workspace/STATE_FOUNDATION_2026-11-05.md",
+      "purpose": "Current States foundation and narrow active Country dependency evidence"
+    },
+    {
+      "id": "states-foundation-1",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/lookup.public-api.ts",
+      "purpose": "Current States foundation and narrow active Country dependency evidence"
+    },
+    {
+      "id": "states-foundation-2",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/types/country-lookup.ts",
+      "purpose": "Current States foundation and narrow active Country dependency evidence"
+    },
+    {
+      "id": "states-foundation-3",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-lookup-service.ts",
+      "purpose": "Current States foundation and narrow active Country dependency evidence"
+    },
+    {
+      "id": "states-foundation-4",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-lookup-service.spec.ts",
+      "purpose": "Current States foundation and narrow active Country dependency evidence"
+    },
+    {
+      "id": "states-foundation-verification",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/STATE_FOUNDATION_2026-11-05.json",
+      "purpose": "Bounded foundation final source hashes and full Angular gate; complete UI acceptance pending"
+    },
+    {
+      "id": "states-workspace-0",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-states-workspace/STATES_WORKSPACE_2026-11-06.md",
+      "purpose": "Current complete States implementation, cross-owner integration and meaningful acceptance evidence"
+    },
+    {
+      "id": "states-workspace-1",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-states-browser.mjs",
+      "purpose": "Current complete States implementation, cross-owner integration and meaningful acceptance evidence"
+    },
+    {
+      "id": "states-workspace-2",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-states-failures-browser.mjs",
+      "purpose": "Current complete States implementation, cross-owner integration and meaningful acceptance evidence"
+    },
+    {
+      "id": "states-workspace-3",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-states-live-read.mjs",
+      "purpose": "Current complete States implementation, cross-owner integration and meaningful acceptance evidence"
+    },
+    {
+      "id": "states-workspace-4",
+      "layer": "web",
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.ts",
+      "purpose": "Current complete States implementation, cross-owner integration and meaningful acceptance evidence"
+    },
+    {
+      "id": "states-workspace-5",
+      "layer": "web",
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.scss",
+      "purpose": "Current complete States implementation, cross-owner integration and meaningful acceptance evidence"
+    },
+    {
+      "id": "states-workspace-6",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/cards/_entity-card.scss",
+      "purpose": "Current complete States implementation, cross-owner integration and meaningful acceptance evidence"
+    },
+    {
+      "id": "states-workspace-7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-slots.scss",
+      "purpose": "Current complete States implementation, cross-owner integration and meaningful acceptance evidence"
+    },
+    {
+      "id": "states-workspace-8",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-reports/state/global-report-state.ts",
+      "purpose": "Current complete States implementation, cross-owner integration and meaningful acceptance evidence"
+    },
+    {
+      "id": "states-workspace-9",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-reports/state/global-report-state.spec.ts",
+      "purpose": "Current complete States implementation, cross-owner integration and meaningful acceptance evidence"
+    },
+    {
+      "id": "states-workspace-10",
+      "layer": "web",
+      "path": "web-next/src/locales/resources/reference-states/en.json",
+      "purpose": "Current complete States implementation, cross-owner integration and meaningful acceptance evidence"
+    },
+    {
+      "id": "states-workspace-11",
+      "layer": "web",
+      "path": "web-next/src/locales/resources/reference-states/ar.json",
+      "purpose": "Current complete States implementation, cross-owner integration and meaningful acceptance evidence"
+    },
+    {
+      "id": "states-customer-education",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-states-workspace.md",
+      "purpose": "Verified State customer workflow, produced after Phase06 Verified"
+    },
+    {
+      "id": "states-final-acceptance-receipt",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/STATES_WORKSPACE_2026-11-06.json",
+      "purpose": "Phase06 acceptance, portable evidence and final source hashes; hosted render acceptance remains external"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-states-workspace-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-states-workspace-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-states-workspace/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ],
+  "canonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-states-workspace/angular-states-workspace-review.md",
+    "api": "documentation/modules/platform/features/angular-states-workspace/angular-states-workspace-api.md",
+    "web": "documentation/modules/platform/features/angular-states-workspace/angular-states-workspace-web.md",
+    "mobile": "documentation/modules/platform/features/angular-states-workspace/angular-states-workspace-mobile.md"
+  }
+}

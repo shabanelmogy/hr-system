@@ -8,10 +8,12 @@
 | Business capability | Angular 22 and PrimeNG Web Migration |
 | Owning module | Platform |
 | Ownership coordination | Web Architecture; existing business module owners remain unchanged |
-| Active bounded slice | S3-A8 — Countries complete pilot acceptance |
-| Active bounded feature | angular-countries-pilot-acceptance |
-| Current execution | S3-A2..A7 Verified/Closed within their bounded contracts; S3-A8 non-report acceptance Verified2026-11-01 (253 fixture browser/7 actual hosted cases and full technical gate). Complete pilot Active/Phase06 Not Verified for hosted managed-report503 PROD-028 only; Phase07 not started/business route dev-only. S1-A14 optional extras Queued; production release owners separate. |
-| Status | `Draft` |
+| Active bounded slice | S4-A6 — Super Admin comprehensive final review |
+| Active bounded feature | angular-super-admin-final-review |
+| Preflight-only slice | N/A |
+| Preflight-only feature | N/A |
+| Current execution | Bounded Settings/Language/navigation, own-account and all-filtered export clients verified. Final whole-Super-Admin review is Active; production Countries and hosted/provider gates remain open. |
+| Status | Execution-ready for the final authorized Super Admin review; overall migration Draft |
 | Target milestone | Independent Angular client with verified current Web parity |
 | Primary owner | ERP owner + Web Architecture; API/Security for direct authentication |
 | Reference features | Countries, States, Cost Centers, Add Tenant, Role Permissions; exact shape only |
@@ -486,11 +488,39 @@ Overall migration remains Draft.
 
 ### Feature Decomposition Gate
 
+| S4-A6 — Super Admin comprehensive final review | Single feature | angular-super-admin-final-review | documentation/plans/business/web-angular-migration/decomposition/angular-super-admin-final-review.md | Current-source route/action/view audit, bounded navigation corrections and explicit remaining owner handoffs |
+| S4-A7 — Own account profile and password parity | Single feature | angular-account-profile | documentation/plans/business/web-angular-migration/decomposition/angular-account-profile.md | Actual own-user personal info/photo/password journeys and TopBar entry from web-next; existing self-service API, no domain/schema/native change |
+| S4-A4b — System log collection consistency | Single feature | angular-system-log-collection-consistency | documentation/plans/business/web-angular-migration/decomposition/angular-system-log-collection-consistency.md | Shared pagination/cards and real server-backed Audit/Error column filters; no new business entity/schema |
+| S4-A4c — System Error Logs managed reports | Single feature | angular-system-error-log-reports | documentation/plans/business/web-angular-migration/decomposition/angular-system-error-log-reports.md | Existing managed report workflow with Platform-owned safe summary source |
+
+Requester priority2026-11-06: the parent goal remains Paused, while the explicitly
+requested bounded collection correction proceeds independently. Prior export is
+Queued with its implementation preserved and acceptance pending. After collection
+consistency, complete a separate System Error Logs managed RPT/PDF contract, then
+one consolidated Settings workspace with searchable list tabs. These successors
+remain Required and need their own Phase00 contracts; no placeholder route/widget.
+
+| S4-A4a — Shared all-filtered Excel and CSV export | Single feature | angular-collection-export | documentation/plans/business/web-angular-migration/decomposition/angular-collection-export.md | Reuse Reporting file generation, global formatter grant, all-filtered shared PageHeader export across Grid/Cards |
+
+Requester2026-11-05 explicitly authorizes completion of remaining global geography
+(States, Districts), then every current Super Admin workflow with final comprehensive
+source/rendered review. D42 and SUPER_ADMIN_PARITY_2026-11-05.md record exact scope.
+States/Districts, Tenant Management, Tenant Administrators and System Audit Trail clients are Verified/Closed; System Error Logs and Settings source preflight is Active; later workflows remain Queued. Prior Countries hosted-report
+acceptance stays Deferred under PROD-028, not falsely closed or a semantic change
+to the new feature. G0-G3 for System Audit Trail are fixed in its execution contract; remaining
+G4 items are release-only PROD-019/028/025 and RISK-020. No schema or API change.
+
 Passed for the exact preflight and subsequent session-runtime increments below. The remaining workstreams still
 need decomposition; this table grants no blanket runtime readiness.
 
 | Authorized slice | Decision | Feature ID | Screen/Workflow Contract | Coherent boundary |
 | --- | --- | --- | --- | --- |
+| S4-A1 — Super Admin Tenant Management parity | Single feature | angular-tenant-management-workspace | documentation/plans/business/web-angular-migration/decomposition/angular-tenant-management-workspace.md | Current Next Tenant Grid/Cards and structured five-tab create/edit, independent entitlement catalog and real dashboard/sidebar entry; no API lifecycle expansion |
+| S4-A2 — Super Admin Tenant Administrators parity | Single feature | angular-tenant-admins-workspace | documentation/plans/business/web-angular-migration/decomposition/angular-tenant-admins-workspace.md | Current Next administrator Cards/create/edit/delete, multiple Tenant assignments/default, disabled/locked states; retained role-only API, no invented Grid/rowVersion or restore UI |
+| S4-A3 — Super Admin System Audit Trail parity | Single feature | angular-system-audit-workspace | documentation/plans/business/web-angular-migration/decomposition/angular-system-audit-workspace.md | Current Next system cursor-paged Grid, record-key search, module/entity/action/calendar filters and field-change detail; exact global grant, no audit writes/schema or invented CRUD |
+| S4-A4 — Super Admin System Error Logs and Settings parity | Single feature | angular-system-error-logs-workspace | documentation/plans/business/web-angular-migration/decomposition/angular-system-error-logs-workspace.md | Existing system-only Grid/Cards/detail/copy/XLSX and singleton retention settings; distinct exact grants/revision, no company/capture/API/schema/native expansion |
+| S3-A10 — Districts complete Angular parity | Single feature | angular-districts-workspace | documentation/plans/business/web-angular-migration/decomposition/angular-districts-workspace.md | Existing District collection, four-field State-parent form, lifecycle/bulk, all five views and exact grants; four-filter managed report and ambiguity-safe import |
+| S3-A9 — States complete Angular parity | Single feature | angular-states-workspace | documentation/plans/business/web-angular-migration/decomposition/angular-states-workspace.md | Existing States collection, four-field parent-aware forms, lifecycle/bulk, charts/import/report and exact grants; retained API/Next/Mobile, fixture and rendered parity |
 | S0-API-01 — API contract generation compatibility proof | Single feature | angular-api-contract-generation-proof | documentation/plans/business/web-angular-migration/decomposition/angular-api-contract-generation-proof.md | ERP-01 hosted schema/source audit and isolated generator compatibility; no API/business/native runtime change |
 | S1-A14 — Complete shared PrimeNG Table capabilities | Single feature | angular-grid-capabilities | documentation/plans/business/web-angular-migration/decomposition/angular-grid-capabilities.md | One coherent typed shared Table adapter and neutral harness, with exact Next appearance and complete installed capabilities; actual business API/host integration remains consumer-owned |
 | S3-A2 — Countries read workspace | Single feature | angular-countries-read-workspace | documentation/plans/business/web-angular-migration/decomposition/angular-countries-read-workspace.md | Global current-page reads, explicit status/search field/operator/sort, shared toolbar/options/footer/record navigation, detail-by-ID, scope loss and transport cancellation. No write or permission placeholders. |
@@ -670,3 +700,10 @@ Maintenance 2026-11-04 — D40: requester scope is existing Angular structure an
 
 
 Maintenance 2026-11-04 — D41: requester approved the component-structure findings and recurring-pattern documentation. This reuses the approved existing-foundation maintenance scope; no next business slice is activated. Shared controlled preferences, internal collection presentation/options, domain-local Countries composition and external Report files follow ANGULAR_COMPONENT_COMPOSITION.md. Source and verification: documentation/modules/platform/features/angular-collection-foundation/COMPONENT_COMPOSITION_REPORT.md. Existing production/parity gates retain their scope.
+
+Current checkpoint2026-11-06: S4-A4 Error Logs/Settings client and education Closed with907tests/177files,8+8+36Angular/8Next,5owner regressions,24navigation and hostedGET-only. User now requires general PageHeader Excel/CSV for Grid and Cards, exporting all matching filtered pages. This is the next exact shared-foundation slice; System UI texts/Settings host, operational tools and final whole-Super-Admin review remain Required. Global Report Manager stays standalone per latest reversal.
+
+S4-A4b closure2026-11-06: bounded local Phase06 Verified and Arabic Phase07 completed. Full Angular926/API1295, integrated browser16 and owner regressions pass; hosted SQL remains PROD-030. S4-A4c reports is the sole Active source preflight.
+
+S4-A4c closure2026-11-06: bounded managed report integration and responsive debugger Verified/Closed; PROD-031 owns real RPT/provider acceptance. S4-A5 Settings is Active.
+\nS4-A5 closure2026-11-06: Settings single entry, Appearance tab, separate Language/Translation and protected advanced-tool entries pass source gates; Angular930 final check. S4-A6 final comprehensive review is now the sole Active bounded contract.\n

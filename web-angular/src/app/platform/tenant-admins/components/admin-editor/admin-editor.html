@@ -1,0 +1,66 @@
+<erp-dialog-panel
+  [open]="editor.active()"
+  [title]="captions.text(editor.mode() === 'create' ? 'add' : 'edit')"
+  [description]="captions.text('formSubtitle')"
+  [closeLabel]="'actions.close' | uiText"
+  [pending]="editor.pending()"
+  [showFooter]="false"
+  (closeRequested)="guard().requestClose()"
+>
+  @if (editor.active()) {
+    @switch (editor.phase()) {
+      @case ('loading') {
+        <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
+      }
+      @case ('forbidden') {
+        <erp-feedback-state kind="forbidden" [title]="'authorization.forbidden.title' | uiText" />
+      }
+      @case ('error') {
+        <erp-feedback-state
+          kind="error"
+          [title]="captions.text('errors.detail')"
+          [actionLabel]="'actions.retry' | uiText"
+          (action)="editor.retry()"
+        />
+      }
+      @case ('ready') {
+        <erp-form
+          [form]="editor.form"
+          [title]="captions.text('title')"
+          [submitLabel]="'actions.save' | uiText"
+          appearance="dialog"
+          [hideHeader]="true"
+          [pending]="editor.pending()"
+          [readOnly]="editor.uncertain() || !editor.canWrite()"
+          [feedback]="
+            editor.feedback()
+              ? captions.locale.translate(
+                  editor.feedback(),
+                  editor.feedback().startsWith('tenantAdmins.') ? 'platform-tenants' : 'core'
+                )
+              : ''
+          "
+        >
+          <erp-admin-account-fields />
+          <erp-admin-assignment-fields />
+          <erp-icon formSubmitIcon name="check" />
+          <erp-button
+            formActions
+            [label]="'actions.cancel' | uiText"
+            variant="outlined"
+            [disabled]="editor.pending()"
+            (activated)="guard().requestClose()"
+          />
+        </erp-form>
+      }
+    }
+  }
+</erp-dialog-panel>
+<erp-form-close-guard
+  [identity]="editor.identity()"
+  [revision]="editor.revision()"
+  [active]="editor.active()"
+  [unsaved]="editor.unsaved()"
+  [pending]="editor.pending()"
+  (closed)="editor.close($event)"
+/>

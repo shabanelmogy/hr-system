@@ -2,6 +2,10 @@
 
 ## 1. Ownership
 
+Header-selection maintenance2026-11-05 is an Angular browser adaptation. Native
+Mobile remains unchanged and no native delivery is claimed. Compact browser
+checks belong to the Web profile and HEADER_SELECTION_2026-11-05.md.
+
 Platform Web Shared owns a generic collection presentation kit, not entity data, permissions, API queries or business rules. MyDataGrid and CardList share toolbar/footer/feedback contracts. Root/feature callers retain scope and data ownership. No Next/native runtime is rewritten.
 
 ## 2. Current source

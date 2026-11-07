@@ -1,0 +1,234 @@
+{
+  "date": "2026-11-07T08:18:27.266Z",
+  "fixtureOnly": true,
+  "cases": [
+    {
+      "language": "en",
+      "mode": "light",
+      "width": 390,
+      "height": 844,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "sourceDiscovery": true,
+      "serverSearchPaging": true,
+      "validation": true,
+      "saveReset": true,
+      "conflict": true,
+      "failureRetry": true,
+      "permissionReadOnly": true,
+      "canonicalDeepLink": true,
+      "singleSettingsEntry": true
+    },
+    {
+      "language": "en",
+      "mode": "light",
+      "width": 900,
+      "height": 640,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "sourceDiscovery": true,
+      "serverSearchPaging": true,
+      "validation": true,
+      "saveReset": true,
+      "conflict": true,
+      "failureRetry": true,
+      "permissionReadOnly": true,
+      "canonicalDeepLink": true,
+      "singleSettingsEntry": true
+    },
+    {
+      "language": "en",
+      "mode": "light",
+      "width": 1440,
+      "height": 844,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "sourceDiscovery": true,
+      "serverSearchPaging": true,
+      "validation": true,
+      "saveReset": true,
+      "conflict": true,
+      "failureRetry": true,
+      "permissionReadOnly": true,
+      "canonicalDeepLink": true,
+      "singleSettingsEntry": true
+    },
+    {
+      "language": "en",
+      "mode": "dark",
+      "width": 390,
+      "height": 844,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "sourceDiscovery": true,
+      "serverSearchPaging": true,
+      "validation": true,
+      "saveReset": true,
+      "conflict": true,
+      "failureRetry": true,
+      "permissionReadOnly": true,
+      "canonicalDeepLink": true,
+      "singleSettingsEntry": true
+    },
+    {
+      "language": "en",
+      "mode": "dark",
+      "width": 900,
+      "height": 640,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "sourceDiscovery": true,
+      "serverSearchPaging": true,
+      "validation": true,
+      "saveReset": true,
+      "conflict": true,
+      "failureRetry": true,
+      "permissionReadOnly": true,
+      "canonicalDeepLink": true,
+      "singleSettingsEntry": true
+    },
+    {
+      "language": "en",
+      "mode": "dark",
+      "width": 1440,
+      "height": 844,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "sourceDiscovery": true,
+      "serverSearchPaging": true,
+      "validation": true,
+      "saveReset": true,
+      "conflict": true,
+      "failureRetry": true,
+      "permissionReadOnly": true,
+      "canonicalDeepLink": true,
+      "singleSettingsEntry": true
+    },
+    {
+      "language": "ar",
+      "mode": "light",
+      "width": 390,
+      "height": 844,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "sourceDiscovery": true,
+      "serverSearchPaging": true,
+      "validation": true,
+      "saveReset": true,
+      "conflict": true,
+      "failureRetry": true,
+      "permissionReadOnly": true,
+      "canonicalDeepLink": true,
+      "singleSettingsEntry": true
+    },
+    {
+      "language": "ar",
+      "mode": "light",
+      "width": 900,
+      "height": 640,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "sourceDiscovery": true,
+      "serverSearchPaging": true,
+      "validation": true,
+      "saveReset": true,
+      "conflict": true,
+      "failureRetry": true,
+      "permissionReadOnly": true,
+      "canonicalDeepLink": true,
+      "singleSettingsEntry": true
+    },
+    {
+      "language": "ar",
+      "mode": "light",
+      "width": 1440,
+      "height": 844,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "sourceDiscovery": true,
+      "serverSearchPaging": true,
+      "validation": true,
+      "saveReset": true,
+      "conflict": true,
+      "failureRetry": true,
+      "permissionReadOnly": true,
+      "canonicalDeepLink": true,
+      "singleSettingsEntry": true
+    },
+    {
+      "language": "ar",
+      "mode": "dark",
+      "width": 390,
+      "height": 844,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "sourceDiscovery": true,
+      "serverSearchPaging": true,
+      "validation": true,
+      "saveReset": true,
+      "conflict": true,
+      "failureRetry": true,
+      "permissionReadOnly": true,
+      "canonicalDeepLink": true,
+      "singleSettingsEntry": true
+    },
+    {
+      "language": "ar",
+      "mode": "dark",
+      "width": 900,
+      "height": 640,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "sourceDiscovery": true,
+      "serverSearchPaging": true,
+      "validation": true,
+      "saveReset": true,
+      "conflict": true,
+      "failureRetry": true,
+      "permissionReadOnly": true,
+      "canonicalDeepLink": true,
+      "singleSettingsEntry": true
+    },
+    {
+      "language": "ar",
+      "mode": "dark",
+      "width": 1440,
+      "height": 844,
+      "geometry": {
+        "x": 0,
+        "y": 0
+      },
+      "sourceDiscovery": true,
+      "serverSearchPaging": true,
+      "validation": true,
+      "saveReset": true,
+      "conflict": true,
+      "failureRetry": true,
+      "permissionReadOnly": true,
+      "canonicalDeepLink": true,
+      "singleSettingsEntry": true
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+<erp-data-table
+  [source]="reads.source()"
+  [label]="locale.translate('systemUiTexts.title', 'platform-auth')"
+  [columns]="columns()"
+  [rowId]="reads.id"
+  [rowLabel]="reads.id"
+  dataKey="key"
+  [search]="search()"
+  [pageSizes]="reads.pageSizes"
+  [contextActions]="actions"
+  actionDisplay="inline"
+  [cellContextFilter]="false"
+  [recordNavigation]="true"
+  [display]="{ resizableColumns: 'fit', reorderableColumns: true, columnManagement: true }"
+  (pageChange)="reads.changePage($event)"
+  (searchChange)="reads.changeSearch($event)"
+  (retry)="reads.refresh()"
+  (rowAction)="action($event.row, $event.action)"
+>
+  <div toolbarFilters><erp-translation-criteria /></div>
+  <ng-template [erpCollectionCell]="columns() | collectionColumn: 'status'" let-row>
+    <erp-status-badge
+      [label]="text(row.isCustomized ? 'customized' : 'missing')"
+      [accent]="row.isCustomized ? 'var(--primary)' : 'var(--muted-foreground)'"
+      [pill]="true"
+    />
+  </ng-template>
+</erp-data-table>

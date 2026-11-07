@@ -119,3 +119,9 @@
 .scope-view[hidden] {
   display: none;
 }
+// The routed page fills the remaining workspace even when its content is short.
+:host ::ng-deep .scope-view > router-outlet + * {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}

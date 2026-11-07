@@ -1,0 +1,13 @@
+[
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "passed": true,
+    "queryCount": 10,
+    "writes": [
+      "create",
+      "edit"
+    ]
+  }
+]

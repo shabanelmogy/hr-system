@@ -1,0 +1,78 @@
+<erp-dialog-panel
+  [open]="editor.active() && !editor.target()?.reset"
+  [title]="text('edit')"
+  [closeLabel]="'actions.close' | uiText"
+  [pending]="editor.pending() || (container()?.checking() ?? false)"
+  [showFooter]="false"
+  (closeRequested)="closeGuard().requestClose()"
+>
+  @if (editor.target(); as target) {
+    @if (!target.reset) {
+      <erp-form
+        [form]="editor.form"
+        [title]="text('edit')"
+        [submitLabel]="'actions.save' | uiText"
+        appearance="dialog"
+        [hideHeader]="true"
+        [pending]="editor.pending()"
+        [readOnly]="editor.locked()"
+        [feedback]="feedback()"
+      >
+        <p>{{ target.source }} · {{ target.row.key }}</p>
+        <p>{{ text('baseValue') }}: {{ target.row.baseValue }}</p>
+        <p>{{ text('shippedValue') }}: {{ target.row.shippedValue }}</p>
+        <erp-text-field
+          [formField]="editor.form.value"
+          [label]="text('value')"
+          [multiline]="true"
+          [rows]="4"
+          [messages]="messages()"
+          [readOnly]="editor.locked()"
+        />
+        @if (editor.feedback()) {
+          <erp-button
+            [label]="text('reload')"
+            variant="text"
+            [disabled]="editor.pending()"
+            (activated)="editor.reload()"
+          />
+        }
+        <erp-button
+          formActions
+          [label]="'actions.cancel' | uiText"
+          variant="outlined"
+          [disabled]="editor.pending()"
+          (activated)="closeGuard().requestClose()"
+        />
+      </erp-form>
+    }
+  }
+</erp-dialog-panel>
+<erp-form-close-guard
+  [identity]="editor.identity()"
+  [revision]="editor.revision()"
+  [active]="editor.active() && !editor.target()?.reset"
+  [unsaved]="editor.unsaved()"
+  [pending]="editor.pending() || (container()?.checking() ?? false)"
+  (closed)="editor.close($event)"
+/>
+<erp-confirmation-dialog
+  [open]="editor.active() && !!editor.target()?.reset"
+  [title]="'systemUiTexts.resetTitle' | uiText: 'platform-auth'"
+  [description]="'systemUiTexts.resetDescription' | uiText: 'platform-auth'"
+  [confirmLabel]="text('reset')"
+  [cancelLabel]="'actions.cancel' | uiText"
+  [pending]="editor.pending()"
+  (confirmed)="editor.confirmReset()"
+  (cancelled)="editor.cancelReset()"
+>
+  @if (editor.feedback()) {
+    <p role="alert">{{ text('saveFailed') }}</p>
+    <erp-button
+      [label]="text('reload')"
+      variant="text"
+      [disabled]="editor.pending()"
+      (activated)="editor.cancelReset()"
+    />
+  }
+</erp-confirmation-dialog>

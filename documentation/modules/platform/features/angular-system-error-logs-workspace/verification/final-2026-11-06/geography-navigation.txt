@@ -1,0 +1,29 @@
+(node:21612) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/src/app/platform/auth/auth.fixture.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\F:\Portofolio Projects\ERPSYSTEM\web-angular\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Checking all/en/390
+Checking states/en/390
+Checking districts/en/390
+Checking none/en/390
+Checking non-super/en/390
+Checking templates/en/390
+Checking all/en/1440
+Checking states/en/1440
+Checking districts/en/1440
+Checking none/en/1440
+Checking non-super/en/1440
+Checking templates/en/1440
+Checking all/ar/390
+Checking states/ar/390
+Checking districts/ar/390
+Checking none/ar/390
+Checking non-super/ar/390
+Checking templates/ar/390
+Checking all/ar/1440
+Checking states/ar/1440
+Checking districts/ar/1440
+Checking none/ar/1440
+Checking non-super/ar/1440
+Checking templates/ar/1440
+Global geography navigation passed: 24 cases.

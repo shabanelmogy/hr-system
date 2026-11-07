@@ -36,7 +36,8 @@
       "stateShare": "State Share on This Page",
       "addressesByDistrict": "Top Districts by Address Count",
       "addressesByDistrictDescription": "Address totals for the loaded districts",
-      "noData": "No District Data Available"
+      "noData": "No District Data Available",
+      "pageScope": "Charts describe the loaded page; the matching total comes from the server."
     },
     "fetched": "District list fetched successfully",
     "title": "Districts",
@@ -174,8 +175,21 @@
         "empty": "No active States are available. Add or restore a State before importing Districts.",
         "forbidden": "District import requires States:View so State names can be validated. Ask an administrator for this permission.",
         "error": "The active State lookup could not be loaded. No rows have been validated as unknown. Retry the lookup."
-      }
+      },
+      "ambiguousState": "More than one active State matches this name. Use a unique Arabic or English name.",
+      "duplicateField": "Duplicate value for the same State in Excel row {{row}}.",
+      "duplicateOnServer": "A matching district already exists under this State. Review the names and code."
     },
-    "addFirstState": "Add the first district"
+    "addFirstState": "Add the first district",
+    "detailLoadError": "District details could not be loaded. Retry to get the current record.",
+    "mutationUncertain": "The save result could not be confirmed. Review the list before trying again.",
+    "lifecycleUncertain": "The archive or restore result could not be confirmed. Review the list before trying again.",
+    "invalidCode": "Use 2–10 letters, numbers or hyphens for the district code.",
+    "duplicate": "A district with the same Arabic name, English name or code already exists under this State.",
+    "stateUnavailable": "Select an active State from the available list.",
+    "allStates": "All States",
+    "addressesFilter": "Addresses",
+    "hasAddresses": "With Addresses",
+    "withoutAddresses": "Without Addresses"
   }
 }

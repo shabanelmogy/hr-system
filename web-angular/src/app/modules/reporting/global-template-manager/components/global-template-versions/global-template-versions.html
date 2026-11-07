@@ -1,0 +1,35 @@
+@if (state.detail(); as detail) {
+  <erp-data-table
+    [source]="source()"
+    [recordNavigation]="true"
+    [label]="'crystalReports.versions' | uiText: 'reporting'"
+    [columns]="columns()"
+    [rowId]="rowId"
+    [contextActions]="actions"
+    [display]="{ columnManagement: true }"
+    [pageSizes]="[source().query.pageSize]"
+    (rowAction)="action($event)"
+    ><ng-container toolbarContent>
+      @if (state.canVersion('Upload')) {
+        <erp-button
+          [label]="'crystalReports.selectNewVersion' | uiText: 'reporting'"
+          [disabled]="state.pending() || state.access.dirty()"
+          (activated)="state.openEditor(detail)"
+          ><erp-icon buttonIcon name="upload"
+        /></erp-button>
+      }</ng-container
+    ><ng-template [erpCollectionCell]="columns() | collectionColumn: 'validation'" let-version
+      ><erp-status-badge
+        [label]="
+          'globalTemplates.validation.' + state.validationStatus(version) | uiText: 'reporting'
+        "
+        [accent]="
+          state.validationStatus(version) === 'Valid'
+            ? 'var(--success)'
+            : state.validationStatus(version) === 'Invalid'
+              ? 'var(--destructive)'
+              : 'var(--warning)'
+        " /></ng-template
+  ></erp-data-table>
+  <p>{{ 'globalTemplates.publishHint' | uiText: 'reporting' }}</p>
+}

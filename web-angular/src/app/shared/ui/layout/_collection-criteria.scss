@@ -1,0 +1,9 @@
+@mixin responsive {
+  :host {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+    gap: 12px;
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+}

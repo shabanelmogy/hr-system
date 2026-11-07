@@ -6,6 +6,40 @@ style. Apply this rule to other recurring controls, feedback, spacing and colors
 extend the owning shared component or global theme first; feature pages supply
 business content and callbacks. AGENTS.md records this mandatory policy.
 
+## Primary workspace policy — requester rule2026-11-06
+
+Below900px width or820px height, apply the
+[responsive layout contract](ANGULAR_RESPONSIVE_LAYOUT.md), including actual
+container sizing after navigation opens and reachable last-card acceptance.
+
+Keep data-entry and collection workspaces within the available viewport. The
+document and primary workspace must not gain a vertical or horizontal page
+scrollbar. Keep the page title and primary form actions visible; place necessary
+scrolling inside the actual data/content area through the shared ScrollViewport.
+Do not obtain a scrollbar-free page by clipping fields, hiding feedback/actions,
+shrinking touch controls beyond their accessible size or disabling keyboard access.
+
+Composition routes declare `data.workspaceLayout='fill'` when the screen owns a
+bounded form/collection workspace. Shell reads this generic presentation contract
+and supplies ApplicationFrame.fillContent. Use `workspaceDensity='compact'` only
+when the reviewed layout needs the smaller shared frame inset; ApplicationFrame
+owns the inset so pages do not override Shell internals. New collection pages
+reuse the `shared/ui/layout/_collection-page.scss` shell mixin: ApplicationFrame
+owns the outside inset and PageHeader owns separation below its title card. Do not
+add feature page padding or another gap that doubles the Countries spacing.
+
+For routed forms, use FormContainer.appearance=`page` and fillContent=true. The
+shared container gives the form body its own ScrollViewport and reserves the
+action footer outside that scrolling body. Its existing summary/field registration
+and first-invalid focus remain authoritative. Lists use the existing Grid/CardList
+viewport. The compact-screen draft summary may move to the shared PopoverPanel so
+it remains available without competing with the main form height.
+
+Browser acceptance must measure document and primary workspace overflow, reachable
+first/last fields, persistent Save/Cancel, invalid-field focus and keyboard scrolling
+in EN/AR and compact/wide layouts. An overflow:hidden declaration alone proves none
+of those requirements. Earlier dated receipts remain historical after layout changes.
+
 ## Single source and automatic coverage
 
 `shared/ui/layout/_scrollbar.scss` defines the shared CSS variables and browser

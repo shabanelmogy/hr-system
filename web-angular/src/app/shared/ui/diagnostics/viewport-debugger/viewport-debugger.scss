@@ -1,0 +1,29 @@
+:host {
+  --action-icon-size: 2rem;
+  --action-quiet-background: transparent;
+  --p-button-text-primary-color: currentColor;
+  --action-font-size: 0.6875rem;
+  --action-min-height: 32px;
+  --action-padding-x: 4px;
+  --action-padding-y: 0;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0;
+}
+erp-icon {
+  inline-size: 12px;
+  block-size: 12px;
+}
+.viewport-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 8px;
+  color: var(--foreground);
+}
+
+output {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}

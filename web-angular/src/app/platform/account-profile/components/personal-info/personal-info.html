@@ -1,0 +1,61 @@
+<erp-form
+  [form]="state.profileForm"
+  [title]="text('personalInfo')"
+  [submitLabel]="'actions.save' | uiText"
+  appearance="page"
+  [hideHeader]="true"
+  [pending]="state.profileForm().submitting()"
+  [readOnly]="state.infoLocked()"
+  [showSubmit]="state.editingInfo()"
+  [feedback]="state.feedback() ? (state.feedback() | uiText: 'platform-auth') : ''"
+  [feedbackKind]="state.feedback() === 'accountProfile.saved' ? 'success' : 'error'"
+>
+  <div class="profile-fields">
+    <erp-text-field
+      [formField]="state.profileForm.userName"
+      [label]="text('userName')"
+      [messages]="messages()"
+      [readOnly]="state.infoLocked()"
+      autocomplete="username"
+    />
+    <erp-text-field
+      [formField]="state.profileForm.firstName"
+      [label]="text('firstName')"
+      [messages]="messages()"
+      [readOnly]="state.infoLocked()"
+      autocomplete="given-name"
+    />
+    <erp-text-field
+      [formField]="state.profileForm.lastName"
+      [label]="text('lastName')"
+      [messages]="messages()"
+      [readOnly]="state.infoLocked()"
+      autocomplete="family-name"
+    />
+  </div>
+  @if (!state.editingInfo()) {
+    <erp-button
+      formTools
+      [label]="text('edit')"
+      variant="outlined"
+      (activated)="state.editInfo()"
+      [disabled]="state.pending()"
+    />
+  } @else {
+    <erp-button
+      formActions
+      [label]="'actions.cancel' | uiText"
+      variant="outlined"
+      (activated)="state.cancelInfo()"
+      [disabled]="state.profileForm().submitting()"
+    />
+  }
+  @if (state.uncertain()) {
+    <erp-button
+      formTools
+      [label]="'actions.reload' | uiText"
+      variant="outlined"
+      (activated)="state.recover()"
+    />
+  }
+</erp-form>

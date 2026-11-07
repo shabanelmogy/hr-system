@@ -56,6 +56,15 @@ actor/company cancellation are Required. Reference: the existing Countries Repor
 This is the consumption surface of the same global-template lifecycle, not a second
 feature. Mobile receives no new administration; existing consumer policy is reconciled.
 
+Requester extension2026-11-05: the report sidebar also exposes the existing RPT
+upload/version dialog for actors who already satisfy management View/Upload/entity
+Edit and report ACL checks. It reuses the same manager workflow without new API
+authority or automatic publication. Resolve the exact entity/reportKey and current
+publication token before mapping the exact immutable consumer identity to a management GUID.
+No admin requests for ordinary readers. The existing shared form/close guard and
+version list own upload, validation, unsaved protection and explicit publication.
+Canonical evidence: global-crystal-template-manager/REPORT_TEMPLATE_SIDEBAR_2026-11-05.md.
+
 ## 4. Phase00 / gates / deployment / evidence
 
 This file is the revised Phase00 preflight: current Next/API/Angular source reviewed;

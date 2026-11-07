@@ -16,6 +16,10 @@ import {
   validateCountryImport,
   type CountryImportRow,
 } from '../validation/country-import';
+import {
+  countryImportDuplicate,
+  countryImportFailureRows,
+} from '../validation/country-import-feedback';
 
 @Injectable()
 export class CountryImportState {
@@ -152,20 +156,16 @@ export class CountryImportState {
             return;
           }
           const uncertain = e.outcome === 'uncertain';
-          this.data.update((rows) =>
-            rows.map((row) =>
-              row.status === 'submitted'
-                ? { ...row, status: uncertain ? 'uncertain' : 'failed' }
-                : row,
-            ),
-          );
+          this.data.update((rows) => countryImportFailureRows(rows, e));
           this.step.set(uncertain ? 'uncertain' : 'failed');
           this.feedback.set(
             uncertain
               ? 'imports.submissionUncertain'
-              : e.codes.some((code) => /CountryExists/i.test(code))
-                ? 'validation.duplicateValues'
-                : 'countries.createError',
+              : countryImportDuplicate(e)
+                ? 'countries.import.duplicateOnServer'
+                : e.outcome === 'not-sent'
+                  ? 'imports.notSent'
+                  : 'imports.batchRejected',
           );
           if (uncertain) this.reads.refresh();
         },
@@ -179,7 +179,7 @@ export class CountryImportState {
       return actor === this.auth.readIdentity() && this.allowed() ? blob : null;
     } catch {
       this.owner.set(actor);
-      this.feedback.set('imports.errors.parseFailed');
+      this.feedback.set('imports.errors.templateFailed');
       return null;
     }
   }

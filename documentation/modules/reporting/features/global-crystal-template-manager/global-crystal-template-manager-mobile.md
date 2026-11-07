@@ -4,6 +4,17 @@ Status: source and technical gates Verified for the expanded scope; integrated h
 
 ## 1. Disposition
 
+The 2026-11-07 Verify Database/auto-publication action is Angular administration only; Mobile manager remains Excluded. Consumer contracts and existing preview behavior are unchanged. See VERIFY_DATABASE_AUTOMATION_2026-11-07.md and FOLLOW-024/PROD-028 for native/host limits.
+
+### Current evidence registration — 2026-11-05
+
+The requester-authorized [current Reporting evidence baseline](../../CURRENT_EVIDENCE_BASELINE_2026-11-05.md)
+registers existing sources and retained receipts only. Unavailable historical raw
+logs are preserved in an inventory, not claimed as recovered or replayable proof.
+FOLLOW-025 owns future reliance on those logs. This documentation-only correction
+does not re-run runtime tests, change platform scope or close release gates. Earlier
+verification statements below retain their original dates and bounded scope.
+
 Global template administration is Excluded on Mobile by requester choice of Angular. No placeholder route or manager screen.
 
 ## 2. Existing consumption

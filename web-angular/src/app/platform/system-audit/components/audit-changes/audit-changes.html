@@ -1,0 +1,25 @@
+<erp-data-table
+  [source]="source()"
+  [label]="captions.text('changes')"
+  [rowId]="id"
+  [rowLabel]="label"
+  [columns]="columns()"
+  [pageSizes]="[10, 25, 50]"
+  [sort]="collection.sort()"
+  [recordNavigation]="true"
+  [selectionEnabled]="true"
+  [cellContextFilter]="false"
+  [display]="{ resizableColumns: 'fit', columnManagement: true }"
+  (pageChange)="changePage($event)"
+  (sortChange)="collection.changeSort($event)"
+>
+  <erp-collection-text-filter
+    toolbarContent
+    [columns]="filterColumns()"
+    [filter]="collection.filter()"
+    (filterChange)="collection.changeFilter($event)"
+  />
+  <ng-template erpCollectionEmpty
+    ><erp-feedback-state kind="empty" [title]="captions.text('noFieldChanges')"
+  /></ng-template>
+</erp-data-table>

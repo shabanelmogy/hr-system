@@ -10,7 +10,7 @@ namespace ErpSystem.Modules.Platform.Application.Features.Platform.ErrorLogs;
 public sealed record ErrorLogCriteria(
     DateTime? FromUtc = null, DateTime? ToUtc = null, string? UserName = null,
     string? Source = null, int? StatusCode = null, string? Search = null,
-    int Page = 1, int PageSize = 25);
+    int Page = 1, int PageSize = 25, string? ColumnFilters = null);
 
 public sealed record ErrorLogRow(Guid Id, DateTime OccurredOnUtc, string Source, string Severity,
     string? UserName, string? Service, string? Action, int? StatusCode, long? DurationMs,
@@ -62,7 +62,7 @@ public sealed class ErrorLogRequestHandler(IErrorLogStore store, ICurrentExecuti
 
     public async Task<Result<ErrorLogPage>> Handle(ListErrorLogsQuery request, CancellationToken token)
     {
-        if (!Valid(request.Criteria)) return Result.Failure<ErrorLogPage>(Invalid);
+        if (!ErrorLogCriteriaPolicy.IsValid(request.Criteria) || !ErrorLogColumnFilters.IsValid(request.Criteria.ColumnFilters, request.System)) return Result.Failure<ErrorLogPage>(Invalid);
         if (!await HasScope(request.System, token)) return Result.Failure<ErrorLogPage>(Forbidden);
         return Result.Success(await store.ListAsync(request.Criteria, request.System, actor.TenantId, actor.CompanyId, token));
     }
@@ -74,7 +74,7 @@ public sealed class ErrorLogRequestHandler(IErrorLogStore store, ICurrentExecuti
     }
     public async Task<Result<ErrorLogExport>> Handle(ExportErrorLogsQuery request, CancellationToken token)
     {
-        if (!Valid(request.Criteria)) return Result.Failure<ErrorLogExport>(Invalid);
+        if (!ErrorLogCriteriaPolicy.IsValid(request.Criteria) || !ErrorLogColumnFilters.IsValid(request.Criteria.ColumnFilters, request.System)) return Result.Failure<ErrorLogExport>(Invalid);
         if (!await HasScope(request.System, token)) return Result.Failure<ErrorLogExport>(Forbidden);
         var export = await store.ExportAsync(request.Criteria, request.System, actor.TenantId, actor.CompanyId, token);
         return export is null ? Result.Failure<ErrorLogExport>(Invalid) : Result.Success(export);
@@ -107,13 +107,7 @@ public sealed class ErrorLogRequestHandler(IErrorLogStore store, ICurrentExecuti
         return Result.Success();
     }
 
-    private static bool Valid(ErrorLogCriteria query) => query.Page is >= 1 and <= 100000 &&
-        query.PageSize is >= 1 and <= 100 && (query.Search?.Length ?? 0) <= 120 &&
-        (query.UserName?.Length ?? 0) <= 100 && query.Source is null or "api" or "job" or "web" or "mobile" &&
-        query.StatusCode is null or >= 400 and <= 599 &&
-        (!query.FromUtc.HasValue || query.FromUtc.Value.Kind == DateTimeKind.Utc) &&
-        (!query.ToUtc.HasValue || query.ToUtc.Value.Kind == DateTimeKind.Utc) &&
-        (!query.FromUtc.HasValue || !query.ToUtc.HasValue || query.FromUtc <= query.ToUtc);
+
 }
 
 public sealed class ListErrorLogsQueryValidator : AbstractValidator<ListErrorLogsQuery>
@@ -126,6 +120,7 @@ public sealed class ListErrorLogsQueryValidator : AbstractValidator<ListErrorLog
             RuleFor(x => x.Criteria.Page).InclusiveBetween(1, 100000);
             RuleFor(x => x.Criteria.PageSize).InclusiveBetween(1, 100);
             RuleFor(x => x.Criteria.Search).MaximumLength(120);
+            RuleFor(x => x.Criteria.ColumnFilters).Must((query, json) => ErrorLogColumnFilters.IsValid(json, query.System));
             RuleFor(x => x.Criteria.UserName).MaximumLength(100);
             RuleFor(x => x.Criteria.Source).Must(x => x is null or "api" or "job" or "web" or "mobile");
             RuleFor(x => x.Criteria.StatusCode).Must(x => x is null or >= 400 and <= 599);

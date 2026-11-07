@@ -3,11 +3,15 @@ import {
   booleanAttribute,
   Component,
   computed,
+  DestroyRef,
+  inject,
   input,
   model,
+  output,
+  viewChild,
   type TemplateRef,
 } from '@angular/core';
-import { TabsModule } from 'primeng/tabs';
+import { Tabs, TabsModule } from 'primeng/tabs';
 
 export interface ContentTab {
   readonly id: string;
@@ -24,6 +28,10 @@ export class ContentTabs {
   readonly tabs = input.required<readonly ContentTab[]>();
   readonly content = input.required<TemplateRef<{ $implicit: string }>>();
   readonly selected = model('');
+  readonly commitMode = input<'immediate' | 'external'>('immediate');
+  readonly selectionRequested = output<string>();
+  private readonly widget = viewChild(Tabs);
+  private readonly destroy = inject(DestroyRef);
   /** Preserve mounted forms and controls while another panel is selected. */
   readonly keepAlive = input(false, { transform: booleanAttribute });
   // A tab-owned border follows RTL, translated labels and late font loading
@@ -36,7 +44,21 @@ export class ContentTabs {
     () => this.tabs().find((tab) => tab.id === this.selected())?.id ?? this.tabs()[0]?.id ?? '',
   );
   select(value: string | number | undefined): void {
-    if (typeof value === 'string' && this.tabs().some((tab) => tab.id === value))
+    if (
+      typeof value !== 'string' ||
+      value === this.active() ||
+      !this.tabs().some((tab) => tab.id === value)
+    )
+      return;
+    if (this.commitMode() === 'immediate') {
       this.selected.set(value);
+      return;
+    }
+    this.selectionRequested.emit(value);
+    // PrimeNG writes its model before emitting the request. Restore the committed
+    // value while an asynchronous owner decision is pending, including rejection.
+    queueMicrotask(() => {
+      if (!this.destroy.destroyed) this.widget()?.value.set(this.active());
+    });
   }
 }

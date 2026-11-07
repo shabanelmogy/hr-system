@@ -8,6 +8,8 @@
     [canSubmit]="state.phase() === 'preview'"
     [failed]="state.phase() === 'failed' || state.uncertain()"
     [message]="message()"
+    [messageDetail]="messageDetail()"
+    [counts]="counts()"
     (fileSelected)="select($event)"
     (submitted)="state.submit()"
     (cleared)="state.clear()"

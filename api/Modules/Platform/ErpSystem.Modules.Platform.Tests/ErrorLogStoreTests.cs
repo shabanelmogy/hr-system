@@ -13,6 +13,27 @@ public sealed class ErrorLogStoreTests
     private static readonly DateTime Now = new(2026, 10, 17, 12, 0, 0, DateTimeKind.Utc);
 
     [Fact]
+    public async Task Column_filters_run_before_count_paging_and_dedicated_export()
+    {
+        await using var db = CreateDb();
+        db.Users.Add(new PlatformApplicationUser { Id = "actor", UserName = "operator" });
+        db.ErrorLogEntries.AddRange(Entry("tenant", 1), Entry("tenant", 1), Entry("foreign", 2));
+        await db.SaveChangesAsync();
+        var store = Store(db);
+        const string rules = """[{"field":"statusCode","operator":"and","constraints":[{"matchMode":"gte","value":500}]},{"field":"userName","operator":"and","constraints":[{"matchMode":"contains","value":"oper"}]}]""";
+        var criteria = new ErrorLogCriteria(PageSize: 1, ColumnFilters: rules);
+        var result = await store.ListAsync(criteria, false, "tenant", 1, default);
+        Assert.Equal(2, result.TotalCount);
+        Assert.Single(result.Items);
+        Assert.Empty((await store.ListAsync(criteria with { ColumnFilters = rules.Replace("500", "501", StringComparison.Ordinal) }, false, "tenant", 1, default)).Items);
+        var exported = await store.ExportAsync(criteria, false, "tenant", 1, default);
+        Assert.NotNull(exported);
+        using var workbook = new XLWorkbook(new MemoryStream(exported.Contents));
+        Assert.Equal(3, workbook.Worksheet(1).RowsUsed().Count());
+        Assert.False(ErrorLogColumnFilters.IsValid("""[{"field":"ipAddress","operator":"and","constraints":[{"matchMode":"contains","value":"127"}]}]""", false));
+    }
+
+    [Fact]
     public async Task Company_projection_cannot_read_foreign_or_system_records_and_hides_diagnostics_and_ip()
     {
         await using var db = CreateDb();

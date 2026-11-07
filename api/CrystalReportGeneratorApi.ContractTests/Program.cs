@@ -47,7 +47,7 @@ namespace CrystalReportGeneratorApi.ContractTests
 
                 var registry = CrystalReportProfileRegistry.CreateDefault();
                 Assert(registry.SchemaVersion == 1, "Schema version must be 1.");
-                Assert(registry.Count == 5, "Exactly five entity profiles are required.");
+                Assert(registry.Count == 6, "Exactly six entity profiles are required.");
                 Assert(registry.Fingerprint == ComputeSha256(sourceBytes),
                     "Registry fingerprint is not the SHA-256 of the exact artifact bytes.");
 
@@ -84,7 +84,7 @@ namespace CrystalReportGeneratorApi.ContractTests
                 Assert(CrystalReportTemplateContractValidator.Validate(validTemplate, countries).IsValid,
                     "Exact template metadata must pass validation.");
 
-                foreach (var key in new[] { "countries", "states", "districts", "addresstypes", "fiscalyears" })
+                foreach (var key in new[] { "countries", "states", "districts", "addresstypes", "fiscalyears", "system-error-logs" })
                 {
                     var contract = registry.GetRequired(key);
                     var template = CreateMetadata(contract);

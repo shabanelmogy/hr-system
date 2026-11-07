@@ -71,7 +71,7 @@ public sealed class UploadGlobalCrystalReportVersionCommandHandler(IGlobalCrysta
             return Result.Failure<CrystalReportDetailResponse>(errors.GlobalCrystalReportForbidden);
         var snapshot = await store.DetailAsync(request.ReportId, cancellationToken);
         if (snapshot is null || snapshot.IsArchived || !policy.Allows(snapshot.EntityKey, ReportingPermissions.UploadGlobalCrystalReports) ||
-            !policy.AccessAdministrator && !await access.HasRightAsync(snapshot.Id, CrystalReportRight.Upload, cancellationToken))
+            !policy.BypassesRoleGrants(snapshot.EntityKey) && !await access.HasRightAsync(snapshot.Id, CrystalReportRight.Upload, cancellationToken))
             return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportNotFound);
         var key = CrystalReportRules.FileStemToKey(request.File.FileName);
         if (!CrystalReportRules.MatchesEntityPrefix(key, snapshot.EntityKey))
@@ -90,7 +90,7 @@ public sealed class UploadGlobalCrystalReportVersionCommandHandler(IGlobalCrysta
                 {
                     var report = await store.FindAsync(request.ReportId, token);
                     if (report is null || report.IsDeleted || !policy.Allows(report.EntityKey, ReportingPermissions.UploadGlobalCrystalReports) ||
-                        !policy.AccessAdministrator && !await access.HasRightAsync(report.Id, CrystalReportRight.Upload, token)) return false;
+                        !policy.BypassesRoleGrants(report.EntityKey) && !await access.HasRightAsync(report.Id, CrystalReportRight.Upload, token)) return false;
                     var number = await store.NextVersionAsync(report.Id, token);
                     var version = CreateGlobalCrystalReportCommandHandler.NewVersion(report.Id, number, file);
                     report.AddVersion(version);

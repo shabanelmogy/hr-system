@@ -225,6 +225,36 @@
       "layer": "test",
       "path": "mobile-react/src/platform/tenants/domain/policies/tenant-entitlements.test.ts",
       "purpose": "Accounting selection preservation"
+    },
+    {
+      "id": "angular-tenant-entitlement-foundation-0",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/entitlements.public-api.ts",
+      "purpose": "Current separate Angular assignable catalog transport and bounded client evidence"
+    },
+    {
+      "id": "angular-tenant-entitlement-foundation-1",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/types/tenant-entitlement-catalog.ts",
+      "purpose": "Current separate Angular assignable catalog transport and bounded client evidence"
+    },
+    {
+      "id": "angular-tenant-entitlement-foundation-2",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/services/tenant-entitlement-catalog-service.ts",
+      "purpose": "Current separate Angular assignable catalog transport and bounded client evidence"
+    },
+    {
+      "id": "angular-tenant-entitlement-foundation-3",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/services/tenant-entitlement-catalog-service.spec.ts",
+      "purpose": "Current separate Angular assignable catalog transport and bounded client evidence"
+    },
+    {
+      "id": "angular-tenant-entitlement-foundation-4",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/TENANT_FOUNDATION_2026-11-06.md",
+      "purpose": "Current separate Angular assignable catalog transport and bounded client evidence"
     }
   ]
 }

@@ -2,7 +2,37 @@
 
 ## 1. Ownership
 
+Entity initialization correction2026-11-06: GlobalReportState starts catalog reads only after setEntity configures the consumer. A State workspace no longer issues an incidental Countries catalog request before its input effect. Existing entity switch, form reset, ACL and PDF semantics remain; the regression failed before the fix and27focused report tests pass afterward. Current full/client/browser evidence is owned by angular-states-workspace/STATES_WORKSPACE_2026-11-06.md. No Reporting API, native or provider deployment change.
+
+### Report sidebar version management — 2026-11-05
+
+Requester-authorized report sidebar actions retain the granted RPT source download
+and add a deferred entry to the existing template upload/version dialogs. Exact
+entity/reportKey resolution and immutable SourceId/version-token matching precede the existing
+management and report Upload ACL checks. A new version does not publish itself.
+The viewer refreshes after closing details; session/selection changes destroy the
+scoped editor and cancel pending work. No API, database, permission or other-client
+contract change is introduced. The [owning sidebar contract](../../../../modules/reporting/features/global-crystal-template-manager/REPORT_TEMPLATE_SIDEBAR_2026-11-05.md)
+records source, verification and acceptance limits.
+
+### Current structural maintenance — 2026-11-05
+
+The criteria UI is now the feature-owned GlobalReportCriteria component; native
+Signal Forms and request/authority ownership stay with GlobalReportView and its
+existing state/service. This is Angular-only maintenance with no API, Next.js,
+Mobile or database contract change. The [Angular profile](angular-managed-reporting-adapter-web.md)
+records exact checks and FOLLOW-026 (subsequently Verified: eight focused browser lifecycle cases).
+The bounded historical acceptance below is not promoted to a new complete release
+or browser acceptance by this structural work.
+
 Reporting owns global Countries catalog/auth/service/controller; Shared generic validated PDF resource/layout. No tenant/report-manager/designer/API business ownership transfer.
+
+Districts integration2026-11-06: the existing typed Reporting owner additionally
+supports exact StateAr/StateEn filters only for districts. Native Signal Forms
+retains200char bounds, beneath-field server alias mapping, reset/entity/actor
+cleanup and shared PDF lifecycle. Countries/States requests stay NameAr/NameEn.
+District labels load only when needed. Evidence is the District workspace report
+and receipt; fixture PDFs do not close PROD-028/025 real-provider acceptance.
 
 ## 2. Existing-System Relationship Review
 
@@ -22,7 +52,7 @@ Web P-001/C-01 dev/reports authenticated global proof Required; production Count
 
 ## 6. API and permission
 
-Exact global GET/catalog and POST/render, super_admin+GlobalCrystalReports:View, no tenant entitlement; expectedSha256 selected source hash, NameAr/NameEn200 and en/ar. HTTPS/cookie CSRF current middleware.
+Exact global GET/catalog and POST/render, super_admin+GlobalCrystalReports:View, no tenant entitlement; expectedSha256 selected source hash, NameAr/NameEn200 (plus StateAr/StateEn200 for districts only) and en/ar. HTTPS/cookie CSRF current middleware.
 
 ## 7. Business Rules Matrix
 

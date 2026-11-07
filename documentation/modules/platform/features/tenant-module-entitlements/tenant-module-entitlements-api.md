@@ -6,6 +6,13 @@ The Platform module exposes the installed and accessible catalogs and owns tenan
 entitlement persistence in `PlatformDbContext` under the `platform` schema.
 Module implementations own only their definitions and public Contracts.
 
+Angular Tenant foundation2026-11-06: a narrow owner-scoped client now reads the
+existing /modules/tenant-entitlements catalog independently of navigation's
+/modules/accessible. Typed module/submodule validation and native form grant-set
+helpers exist; no Angular Tenant customer editor or grant UI is accepted yet.
+Checkpoint: documentation/modules/platform/features/angular-tenant-management-workspace/
+TENANT_FOUNDATION_2026-11-06.md. API/domain/Next/native semantics remain unchanged.
+
 ## 2. Catalog endpoints
 
 GET /api/v1/modules/installed requires super_admin and returns module code,

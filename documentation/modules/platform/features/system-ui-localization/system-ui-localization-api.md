@@ -2,6 +2,8 @@
 
 ## 1. Ownership and authorization
 
+Angular correction 2026-11-07 reuses settings/texts/text/reset unchanged. No endpoint, DTO, domain, schema, audit or migration changes. The generated Web catalog adds bilingual navigation and system-success captions; deploy the matching embedded catalog with Angular (PROD-019). The separately recorded full ERP Release gate passes 1331 tests with 3 existing opt-in browser skips. See ../angular-super-admin-settings/angular-super-admin-settings-review.md.
+
 Platform owns global registered UI text configuration. SuperAdmin role is mandatory; SystemUiTexts:View/Edit/Reset are independent global grants. Every catalog key additionally requires its owning screen view authority. Unknown/company-private prefixes fail closed. No tenant/company identity is simulated.
 
 ## 2. Reviewed reference and shared screen pattern

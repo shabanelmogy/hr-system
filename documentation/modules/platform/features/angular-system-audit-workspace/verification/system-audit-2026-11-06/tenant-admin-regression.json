@@ -1,0 +1,39 @@
+[
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "passed": true,
+    "detailCalls": 1,
+    "listCalls": 4,
+    "writes": [
+      {
+        "action": "create",
+        "keys": [
+          "firstName",
+          "lastName",
+          "userName",
+          "email",
+          "password",
+          "tenantIds",
+          "defaultTenantId"
+        ]
+      },
+      {
+        "action": "update",
+        "keys": [
+          "firstName",
+          "lastName",
+          "userName",
+          "email",
+          "isDisabled",
+          "tenantIds",
+          "defaultTenantId"
+        ]
+      },
+      {
+        "action": "delete"
+      }
+    ]
+  }
+]

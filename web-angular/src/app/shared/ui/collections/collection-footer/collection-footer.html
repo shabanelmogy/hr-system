@@ -1,4 +1,5 @@
 <footer [class.with-record-navigation]="recordNavigation()">
+  <ng-content />
   <ng-template #recordControls>
     <div
       class="record-controls"
@@ -23,7 +24,6 @@
       >
     </div>
   </ng-template>
-  <ng-template #recordBalance><span aria-hidden="true"></span></ng-template>
   <ng-template #recordPageSize
     ><div class="size-settings">
       @if (controller().view().total !== null) {
@@ -42,25 +42,56 @@
       /></div
   ></ng-template>
   <div class="page-controls">
-    @if (controller().view().total !== null) {
+    @if (recordNavigation()) {
+      <div class="record-navigation-layout">
+        <div class="page-context">
+          @if (controller().view().total === null) {
+            <div
+              class="cursor-page-controls"
+              role="group"
+              [attr.aria-label]="'pagination.goToPage' | uiText"
+            >
+              @for (action of pageActions; track action.value) {
+                <erp-button
+                  appearance="icon"
+                  variant="text"
+                  [label]="action.label | uiText"
+                  [disabled]="
+                    blocked() ||
+                    (action.value === 'next'
+                      ? !controller().view().hasNextPage
+                      : controller().view().query.pageIndex === 0)
+                  "
+                  (activated)="unknownPage(action.value)"
+                >
+                  <span buttonIcon aria-hidden="true" [class.rtl]="locale.direction() === 'rtl'">{{
+                    action.icon
+                  }}</span>
+                </erp-button>
+              }
+              <span class="page-summary"
+                >{{ 'pagination.page' | uiText }}
+                {{ number(controller().view().query.pageIndex + 1) }}</span
+              >
+            </div>
+          }
+        </div>
+        <ng-container [ngTemplateOutlet]="recordControls" />
+        <ng-container [ngTemplateOutlet]="recordPageSize" />
+      </div>
+    } @else if (controller().view().total !== null) {
       <div
         class="native-page-controls"
         [attr.inert]="blocked() ? '' : null"
         [class.blocked]="blocked()"
       >
         <p-paginator
-          [templateLeft]="recordNavigation() ? recordBalance : undefined"
-          [templateRight]="recordNavigation() ? recordPageSize : undefined"
-          [first]="
-            recordNavigation()
-              ? Math.max(0, controller().activeIndex())
-              : controller().view().query.pageIndex * controller().view().query.pageSize
-          "
-          [rows]="recordNavigation() ? 1 : controller().view().query.pageSize"
+          [first]="controller().view().query.pageIndex * controller().view().query.pageSize"
+          [rows]="controller().view().query.pageSize"
           [totalRecords]="controller().view().total ?? 0"
-          [showPageLinks]="!recordNavigation()"
+          [showPageLinks]="true"
           [pageLinkSize]="3"
-          [rowsPerPageOptions]="recordNavigation() ? undefined : nativePageSizes()"
+          [rowsPerPageOptions]="nativePageSizes()"
           [showCurrentPageReport]="true"
           [currentPageReportTemplate]="pageReport()"
           appendTo="body"
@@ -71,30 +102,26 @@
         />
       </div>
     } @else {
-      @if (recordNavigation()) {
-        <ng-container [ngTemplateOutlet]="recordControls" />
-      } @else {
-        <span class="page-summary"
-          >{{ 'pagination.page' | uiText }} {{ number(controller().view().query.pageIndex + 1) }}
-          {{ 'pagination.of' | uiText }} {{ pageCount() }}</span
+      <span class="page-summary"
+        >{{ 'pagination.page' | uiText }} {{ number(controller().view().query.pageIndex + 1) }}
+        {{ 'pagination.of' | uiText }} {{ pageCount() }}</span
+      >
+      @for (action of pageActions; track action.value) {
+        <erp-button
+          appearance="icon"
+          variant="text"
+          [label]="action.label | uiText"
+          [disabled]="
+            blocked() ||
+            (action.value === 'next'
+              ? !controller().view().hasNextPage
+              : controller().view().query.pageIndex === 0)
+          "
+          (activated)="unknownPage(action.value)"
+          ><span buttonIcon aria-hidden="true" [class.rtl]="locale.direction() === 'rtl'">{{
+            action.icon
+          }}</span></erp-button
         >
-        @for (action of pageActions; track action.value) {
-          <erp-button
-            appearance="icon"
-            variant="text"
-            [label]="action.label | uiText"
-            [disabled]="
-              blocked() ||
-              (action.value === 'next'
-                ? !controller().view().hasNextPage
-                : controller().view().query.pageIndex === 0)
-            "
-            (activated)="unknownPage(action.value)"
-            ><span buttonIcon aria-hidden="true" [class.rtl]="locale.direction() === 'rtl'">{{
-              action.icon
-            }}</span></erp-button
-          >
-        }
       }
       <ng-container [ngTemplateOutlet]="recordPageSize" />
     }

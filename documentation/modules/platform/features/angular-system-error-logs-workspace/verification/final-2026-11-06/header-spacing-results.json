@@ -1,0 +1,61 @@
+{
+  "verifiedAt": "2026-11-06T10:27:54.482Z",
+  "results": [
+    {
+      "language": "en",
+      "width": 390,
+      "countries": {
+        "above": 12,
+        "below": 16,
+        "documentOverflow": 0
+      },
+      "tenants": {
+        "above": 12,
+        "below": 16,
+        "documentOverflow": 0
+      }
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "countries": {
+        "above": 24,
+        "below": 24,
+        "documentOverflow": 0
+      },
+      "tenants": {
+        "above": 24,
+        "below": 24,
+        "documentOverflow": 0
+      }
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "countries": {
+        "above": 12,
+        "below": 16,
+        "documentOverflow": 0
+      },
+      "tenants": {
+        "above": 12,
+        "below": 16,
+        "documentOverflow": 0
+      }
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "countries": {
+        "above": 24,
+        "below": 24,
+        "documentOverflow": 0
+      },
+      "tenants": {
+        "above": 24,
+        "below": 24,
+        "documentOverflow": 0
+      }
+    }
+  ]
+}

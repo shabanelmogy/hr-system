@@ -70,6 +70,38 @@ describe('Countries current actor and criteria read lifetime', () => {
     TestBed.resetTestingModule();
     vi.useRealTimers();
   });
+  it('exports every matching server page with captured filters while leaving visible paging unchanged', async () => {
+    const { state, pages, ready } = setup();
+    ready();
+    state.changeColumnFilters([
+      { field: 'statesCount', operator: 'and', constraints: [{ matchMode: 'equals', value: 4 }] },
+    ]);
+    TestBed.tick();
+    ready();
+    const visibleQuery = state.query();
+    const source = state.exportSource([{ key: 'id', header: 'ID', value: (row) => row.id }], 'en');
+    if (!source) throw Error('Expected authorized export source');
+    const exported = source.load(new AbortController().signal);
+    const first = pages.at(-1);
+    if (!first) throw Error('Expected first export page');
+    expect(first.query).toEqual({ ...visibleQuery, pageNumber: 1, pageSize: 200 });
+    first.subject.next(
+      countryPageFixture(
+        first.query,
+        Array.from({ length: 200 }, (_, index) => ({ ...countryFixture, id: index + 1 })),
+        201,
+      ),
+    );
+    await vi.waitFor(() => expect(pages.at(-1)).not.toBe(first));
+    const second = pages.at(-1);
+    if (!second || second === first) throw Error('Expected next export page');
+    expect(second.query).toEqual({ ...visibleQuery, pageNumber: 2, pageSize: 200 });
+    second.subject.next(countryPageFixture(second.query, [{ ...countryFixture, id: 201 }], 201));
+    const records = await exported;
+    expect(records).toHaveLength(201);
+    expect(records.at(-1)).toEqual({ ID: 201 });
+    expect(state.query()).toBe(visibleQuery);
+  });
   it('resets structured column filters by replacing criteria rather than merging absent optional defaults', () => {
     const { state, pages, ready } = setup();
     ready();

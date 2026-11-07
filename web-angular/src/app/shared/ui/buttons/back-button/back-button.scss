@@ -1,0 +1,13 @@
+:host {
+  display: inline-flex;
+  flex-shrink: 0;
+  --action-icon-size: 40px;
+}
+erp-icon {
+  inline-size: 22px;
+  block-size: 22px;
+  transform: rotate(180deg);
+}
+:host-context([dir='rtl']) erp-icon {
+  transform: none;
+}

@@ -15,7 +15,7 @@ public sealed class DownloadPublishedGlobalCrystalReportQueryValidator : Abstrac
     {
         RuleFor(x => x.SourceId).Matches("^[a-f0-9]{64}$");
         RuleFor(x => x.ExpectedSha256).Matches("^[a-f0-9]{64}$");
-        RuleFor(x => x.EntityKey).Must(key => key is "countries" or "states" or "districts");
+        RuleFor(x => x.EntityKey).Must(key => key is "countries" or "states" or "districts" or "system-error-logs");
     }
 }
 

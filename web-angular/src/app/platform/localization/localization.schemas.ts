@@ -21,3 +21,19 @@ export const companyRuntimeSchema = z.object({
 export const systemRuntimeSchema = z.strictObject(
   z.omit(companyRuntimeSchema, { tenantId: true, companyId: true, defaultLanguage: true }).shape,
 );
+export const systemLocalizationTextsSchema = z.object({
+  revision: z.int().check(z.nonnegative()),
+  items: z.array(
+    z.object({
+      key: z.string().check(z.minLength(1)),
+      baseValue: z.string(),
+      targetValue: z.string(),
+      shippedValue: z.string(),
+      isCustomized: z.boolean(),
+    }),
+  ),
+  totalCount: z.int().check(z.nonnegative()),
+  page: z.int().check(z.positive()),
+  pageSize: z.int().check(z.positive()),
+  catalogVersion: z.string().check(z.minLength(1)),
+});

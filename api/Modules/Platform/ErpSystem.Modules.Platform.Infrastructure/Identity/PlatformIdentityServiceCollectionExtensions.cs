@@ -35,6 +35,17 @@ public static class PlatformIdentityServiceCollectionExtensions
         // Preserve the shared ASP.NET Cookie/header contract used by Hangfire/Next.
         // BrowserAntiforgery maps its own transport pair onto this framework service.
         services.AddAntiforgery();
+        services.AddOptions<Microsoft.AspNetCore.Antiforgery.AntiforgeryOptions>()
+            .Configure<IOptions<BrowserAuthenticationOptions>>((options, browser) =>
+            {
+                // Hangfire's native token pair must accompany its embedded requests.
+                // Names and validation stay shared with the existing Next proxy.
+                if (browser.Value.UseCrossSiteCookies)
+                {
+                    options.Cookie.SameSite = SameSiteMode.None;
+                    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                }
+            });
         services.AddIdentity<PlatformApplicationUser, PlatformApplicationRole>(options =>
             {
                 options.Password.RequiredLength = 8;
@@ -84,7 +95,6 @@ public static class PlatformIdentityServiceCollectionExtensions
                             return Task.CompletedTask;
                         }
                         if (context.HttpContext.GetEndpoint()?.Metadata.GetMetadata<BearerOnlyAuthenticationAttribute>() is not null ||
-                            context.Request.Path.StartsWithSegments(Hangfire.PlatformHangfireSettings.DashboardPath) ||
                             context.Request.Path.StartsWithSegments("/hubs"))
                             return Task.CompletedTask;
                         if (context.HttpContext.RequestServices.GetRequiredService<IOptions<BrowserAuthenticationOptions>>().Value.AllowedOrigins.Count == 0)

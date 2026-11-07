@@ -1,0 +1,61 @@
+<erp-popover-panel [label]="'collections.filterMenu' | uiText" triggerAppearance="quiet">
+  <erp-icon popoverTrigger name="filter" />
+  <div class="filter-editor">
+    <erp-option-select
+      [label]="'collections.columns' | uiText"
+      [value]="draft().field"
+      [options]="choices()"
+      overlayTarget="self"
+      (valueChange)="chooseField($event)"
+    />
+    <erp-option-select
+      [label]="'collections.filterConstraint' | uiText"
+      [value]="draft().operator"
+      [options]="operatorChoices()"
+      overlayTarget="self"
+      (valueChange)="chooseOperator($event)"
+    />
+    @if (!unary()) {
+      <div class="filter-values">
+        @for (entry of draft().values; track entry.key; let index = $index) {
+          <div class="value-row">
+            <erp-text-field
+              [label]="
+                ('collections.filterValue' | uiText) +
+                (draft().operator === 'isAnyOf' ? ' ' + (index + 1) : '')
+              "
+              [value]="entry.value"
+              [maxLength]="valueLimit"
+              (valueChange)="changeValue(entry.key, $event)"
+            />
+            @if (draft().operator === 'isAnyOf') {
+              <erp-button
+                appearance="icon"
+                variant="text"
+                [label]="('collections.removeValue' | uiText) + ' ' + (index + 1)"
+                (activated)="removeValue(entry.key)"
+                ><erp-icon buttonIcon name="close"
+              /></erp-button>
+            }
+          </div>
+        }
+        @if (draft().operator === 'isAnyOf') {
+          <erp-button
+            variant="text"
+            [label]="'collections.addValue' | uiText"
+            [disabled]="draft().values.length >= listLimit"
+            (activated)="addValue()"
+            ><erp-icon buttonIcon name="add"
+          /></erp-button>
+        }
+      </div>
+    }
+    @if (invalid()) {
+      <p role="alert">{{ 'collections.invalidFilter' | uiText }}</p>
+    }
+    <div class="filter-actions">
+      <erp-button [label]="'collections.apply' | uiText" (activated)="apply()" />
+      <erp-button variant="text" [label]="'collections.clear' | uiText" (activated)="clear()" />
+    </div>
+  </div>
+</erp-popover-panel>

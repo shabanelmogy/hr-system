@@ -2,6 +2,15 @@
 
 ## 1. Boundary
 
+### Current evidence registration — 2026-11-05
+
+The requester-authorized [current Reporting evidence baseline](../../CURRENT_EVIDENCE_BASELINE_2026-11-05.md)
+registers existing sources and retained receipts only. Unavailable historical raw
+logs are preserved in an inventory, not claimed as recovered or replayable proof.
+FOLLOW-025 owns future reliance on those logs. This documentation-only correction
+does not re-run runtime tests, change platform scope or close release gates. Earlier
+verification statements below retain their original dates and bounded scope.
+
 No Next.js runtime implementation is authorized in this child. The existing Report
 Manager is a downstream consumer whose validation-state UX belongs to the next
 feature.

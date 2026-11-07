@@ -23,7 +23,7 @@ public sealed class GlobalCrystalReport : AuditableEntity
     {
         // Reuse the managed identity rules; global scope is deliberately not a tenant identifier.
         var identity = CrystalReport.Create(entityKey, reportKey, reportKey, description);
-        if (identity.EntityKey is not ("countries" or "states" or "districts"))
+        if (identity.EntityKey is not ("countries" or "states" or "districts" or "system-error-logs"))
             throw new ArgumentException("Only approved global report entities are supported.", nameof(entityKey));
         if (identity.ReportKey != identity.EntityKey &&
             !identity.ReportKey.StartsWith(identity.EntityKey + "-", StringComparison.Ordinal))

@@ -25,7 +25,20 @@ explicit cross-site mode uses Secure None consistently for auth/CSRF/deletion.
 HTTPS, origin, permissions and antiforgery authority are unchanged. The
 [repair record](verification/HOSTED_CONFIGURATION_REPAIR.md) owns current
 source-versus-host findings, rule/edge/impact matrices and verification limits.
+
+Maintenance2026-11-06 revalidates that boundary: hosted exact4210 CSRF is403 again;
+publish-owned local configuration was missing both the approved origin and browser
+section while Development had the origin. Local configuration is repaired and19
+Cookie regressions pass. No Angular/Next/native/domain behavior changed. PROD-019
+retains remote deployment and actual browser acceptance; see the repair record's
+dated regression section and portable receipt.
 ## 10. Persistence and side effects
+The 2026-11-06 [Hangfire corrective evidence](verification/HANGFIRE_EMBEDDING_REPAIR.md)
+supersedes the earlier exclusion of Hangfire from browser Cookie authentication.
+The real dashboard remains permission/host protected, gets a restricted ancestor
+policy, and retains native CSRF; Angular uses an iframe rather than a counters
+replacement. Hosted acceptance remains open under existing production note IDs.
+
 Existing PlatformDbContext. Three isolated feasibility proofs passed; selected limits and remaining runtime boundaries are in verification/PREFLIGHT_PROOF_REPORT.md.
 ## 11. Verification
 R1 eleven actual session SQL scenarios, R2 browser route/SQL scenario and 17 Cookie unit cases passed; retained Next 38/native 1 passed. Final gate and consumer limitations: verification/BROWSER_IMPLEMENTATION_REPORT.md.

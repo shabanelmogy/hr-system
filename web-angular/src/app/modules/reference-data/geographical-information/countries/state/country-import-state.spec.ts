@@ -86,12 +86,30 @@ describe('Country import actor and submission lifetime', () => {
     const { state, command, service } = setup();
     await state.select(file);
     state.submit();
-    command.error(new CommandFailure('rejected', 409, {}, ['Country.CountryExists']));
+    command.error(new CommandFailure('rejected', 409, {}, ['Country.Duplicated']));
     expect(state.phase()).toBe('failed');
     expect(fixtureItem(state.rows(), 0).status).toBe('failed');
-    expect(state.message()).toBe('validation.duplicateValues');
+    expect(state.message()).toBe('countries.import.duplicateOnServer');
+    expect(state.rows()[0]?.issues).toEqual([{ field: null, kind: 'batchRejected' }]);
     state.submit();
     expect(service.bulkCreate).toHaveBeenCalledOnce();
+  });
+  it('maps a server batch index to its submitted Excel row without blaming a skipped row', async () => {
+    const { state, command, files } = setup();
+    files.parse.mockResolvedValue([
+      { rowNumber: 2, values: ['', 'Invalid', '', '', '', ''] },
+      { rowNumber: 8, values: ['مصر', 'Egypt', '', '', '', ''] },
+    ]);
+    await state.select(file);
+    state.submit();
+    command.error(
+      new CommandFailure('rejected', 400, { 'countries[0].nameEn': 'Name is reserved.' }),
+    );
+    expect(state.rows()[0]?.status).toBe('invalid');
+    expect(state.rows()[1]?.rowNumber).toBe(8);
+    expect(state.rows()[1]?.issues).toEqual([
+      { field: 'nameEn', kind: 'server', message: 'Name is reserved.' },
+    ]);
   });
   it('latches permission rejection until immutable actor replacement', async () => {
     const { state, command, identity } = setup();

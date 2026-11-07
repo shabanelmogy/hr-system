@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
   "versions": {
-    "web": "13210765d2afb878148664cdfe80c76fd187a4c66b2d8e4160baf9d24be1e219",
+    "web": "42da90d56f25f240d0173026a1cc75d540b72cc1bd610582c061bd27fe959c34",
     "mobile": "509b1f3679ad0290fbffe08a8a971e06718fd568016abb7057817fa3617a357f"
   },
   "sources": [
@@ -25924,9 +25924,86 @@
           "systemPermissions": null
         },
         {
+          "key": "collectionExport.changed",
+          "en": "The data changed while the export was being prepared. Refresh and try again.",
+          "ar": "تغيّرت البيانات أثناء تجهيز التصدير. حدّث البيانات ثم أعد المحاولة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collectionExport.completed",
+          "en": "All matching filtered data was exported.",
+          "ar": "تم تصدير جميع البيانات المطابقة للفلاتر.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collectionExport.csv",
+          "en": "CSV (.csv)",
+          "ar": "CSV (.csv)",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collectionExport.empty",
+          "en": "No data matches the current filters. Adjust the filters and try again.",
+          "ar": "لا توجد بيانات مطابقة للفلاتر الحالية. عدّل الفلاتر ثم أعد المحاولة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collectionExport.excel",
+          "en": "Excel (.xlsx)",
+          "ar": "إكسل (.xlsx)",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collectionExport.failed",
+          "en": "The export could not be completed. Refresh the data and try again.",
+          "ar": "تعذر إكمال التصدير. حدّث البيانات ثم أعد المحاولة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collectionExport.forbidden",
+          "en": "You no longer have permission to export this data.",
+          "ar": "لم تعد لديك صلاحية تصدير هذه البيانات.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collectionExport.invalid",
+          "en": "A column or value cannot be exported in this format. Review the data and try again.",
+          "ar": "يوجد عمود أو قيمة لا يمكن تصديرها بهذه الصيغة. راجع البيانات ثم أعد المحاولة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collectionExport.limit",
+          "en": "The matching data exceeds this export limit. Narrow the filters and try again.",
+          "ar": "البيانات المطابقة تتجاوز الحد المسموح للتصدير. ضيّق الفلاتر ثم أعد المحاولة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collectionExport.preparing",
+          "en": "Preparing export…",
+          "ar": "جارٍ تجهيز التصدير…",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
           "key": "collections.addRule",
           "en": "Add rule",
           "ar": "إضافة شرط",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.addValue",
+          "en": "Add value",
+          "ar": "إضافة قيمة",
           "scope": "shared",
           "systemPermissions": null
         },
@@ -26176,6 +26253,27 @@
           "systemPermissions": null
         },
         {
+          "key": "collections.isAnyOf",
+          "en": "Is any of",
+          "ar": "أي قيمة من القائمة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.isEmpty",
+          "en": "Is empty",
+          "ar": "فارغ",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.isNotEmpty",
+          "en": "Is not empty",
+          "ar": "غير فارغ",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
           "key": "collections.lt",
           "en": "Less than",
           "ar": "أقل من",
@@ -26263,6 +26361,13 @@
           "key": "collections.removeRule",
           "en": "Remove rule",
           "ar": "حذف الشرط",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.removeValue",
+          "en": "Remove value",
+          "ar": "إزالة القيمة",
           "scope": "shared",
           "systemPermissions": null
         },
@@ -27170,6 +27275,27 @@
           "systemPermissions": null
         },
         {
+          "key": "development.viewport",
+          "en": "Viewport size in CSS pixels",
+          "ar": "مقاس نافذة العرض بوحدة CSS pixel",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "displayDebugger.actualSize",
+          "en": "Current browser size",
+          "ar": "مقاس المتصفح الحالي",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "displayDebugger.closePreview",
+          "en": "Close responsive preview",
+          "ar": "إغلاق معاينة التجاوب",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
           "key": "displayDebugger.copied",
           "en": "Dimensions copied",
           "ar": "تم نسخ الأبعاد",
@@ -27194,6 +27320,20 @@
           "key": "displayDebugger.pixelRatio",
           "en": "Pixel ratio",
           "ar": "نسبة كثافة البكسل",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "displayDebugger.preset",
+          "en": "Screen size",
+          "ar": "مقاس الشاشة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "displayDebugger.preview",
+          "en": "Responsive preview",
+          "ar": "معاينة التجاوب",
           "scope": "shared",
           "systemPermissions": null
         },
@@ -29053,6 +29193,34 @@
           "systemPermissions": null
         },
         {
+          "key": "imports.batchRejected",
+          "en": "The server rejected this import batch. No records in this batch were saved.",
+          "ar": "رفض الخادم دفعة الاستيراد، ولم تُحفظ سجلات هذه الدفعة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "imports.batchRejectedRow",
+          "en": "Not saved because the batch was rejected. Correct the reported errors, then select the corrected file.",
+          "ar": "لم يُحفظ الصف بسبب رفض الدفعة. صحح الأخطاء الموضحة، ثم اختر الملف المصحح.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "imports.cellLocation",
+          "en": "Check cell {{cell}} in the first worksheet.",
+          "ar": "راجع الخلية {{cell}} في ورقة العمل الأولى.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "imports.chooseFile",
+          "en": "Choose file",
+          "ar": "اختيار ملف",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
           "key": "imports.clearData",
           "en": "Clear Data Table",
           "ar": "افراغ بيانات الجدول",
@@ -29089,22 +29257,22 @@
         },
         {
           "key": "imports.errors.duplicateHeaders",
-          "en": "The header row contains duplicate columns.",
-          "ar": "يحتوي صف العناوين على أعمدة مكررة.",
+          "en": "Row 1 contains duplicate column names. Use each template header once in its original order.",
+          "ar": "يحتوي الصف الأول على عناوين مكررة. استخدم كل عنوان من القالب مرة واحدة بترتيبه الأصلي.",
           "scope": "shared",
           "systemPermissions": null
         },
         {
           "key": "imports.errors.emptyFile",
-          "en": "The workbook has no import rows.",
-          "ar": "لا يحتوي الملف على صفوف للاستيراد.",
+          "en": "No data rows were found in the first worksheet. Enter records below the template headers.",
+          "ar": "لا توجد صفوف بيانات في ورقة العمل الأولى. أدخل السجلات أسفل عناوين القالب.",
           "scope": "shared",
           "systemPermissions": null
         },
         {
           "key": "imports.errors.fileTooLarge",
-          "en": "The workbook exceeds the {{maxSizeMb}} MB size limit.",
-          "ar": "يتجاوز الملف الحد الأقصى للحجم وهو {{maxSizeMb}} ميجابايت.",
+          "en": "The workbook exceeds {{maxSizeMb}} MB. Remove unused sheets or split the data into smaller files.",
+          "ar": "يتجاوز الملف {{maxSizeMb}} ميجابايت. احذف الأوراق غير المستخدمة أو قسم البيانات إلى ملفات أصغر.",
           "scope": "shared",
           "systemPermissions": null
         },
@@ -29124,15 +29292,15 @@
         },
         {
           "key": "imports.errors.invalidWorkbook",
-          "en": "The selected file is not a valid XLSX workbook.",
-          "ar": "الملف المحدد ليس ملف XLSX صالحًا.",
+          "en": "This file is damaged or is not a valid XLSX workbook. Copy the data into a fresh downloaded template.",
+          "ar": "الملف تالف أو ليس XLSX صالحًا. انسخ البيانات إلى قالب جديد يتم تنزيله من الشاشة.",
           "scope": "shared",
           "systemPermissions": null
         },
         {
           "key": "imports.errors.missingWorksheet",
-          "en": "The workbook does not contain the required first worksheet.",
-          "ar": "لا يحتوي الملف على ورقة العمل الأولى المطلوبة.",
+          "en": "No first worksheet was found. Copy the data into a fresh downloaded template.",
+          "ar": "لم تُوجد ورقة العمل الأولى. انسخ البيانات إلى قالب جديد يتم تنزيله من الشاشة.",
           "scope": "shared",
           "systemPermissions": null
         },
@@ -29145,29 +29313,36 @@
         },
         {
           "key": "imports.errors.rowLimitExceeded",
-          "en": "The workbook exceeds the {{maxRows}}-row import limit.",
-          "ar": "يتجاوز الملف حد الاستيراد البالغ {{maxRows}} صفًا.",
+          "en": "The first worksheet exceeds {{maxRows}} data rows. Split the records into batches within this limit.",
+          "ar": "تتجاوز الورقة الأولى {{maxRows}} صف بيانات. قسم السجلات إلى دفعات ضمن هذا الحد.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "imports.errors.templateFailed",
+          "en": "The template could not be downloaded. Try Download Template again before preparing your file.",
+          "ar": "تعذر تنزيل القالب. حاول تنزيله مجددًا قبل تجهيز ملف البيانات.",
           "scope": "shared",
           "systemPermissions": null
         },
         {
           "key": "imports.errors.unexpectedColumns",
-          "en": "A data row contains values outside the documented columns.",
-          "ar": "يحتوي صف بيانات على قيم خارج الأعمدة الموثقة.",
+          "en": "A row contains data beyond the template columns. Remove the extra values or copy the records into a fresh template.",
+          "ar": "يحتوي صف على بيانات بعد أعمدة القالب. احذف القيم الزائدة أو انسخ السجلات إلى قالب جديد.",
           "scope": "shared",
           "systemPermissions": null
         },
         {
           "key": "imports.errors.unsupportedExtension",
-          "en": "Only .xlsx files are supported.",
-          "ar": "ملفات .xlsx فقط هي المدعومة.",
+          "en": "Only .xlsx files are supported. Save the workbook as Excel Workbook (.xlsx), then select it again.",
+          "ar": "ملفات .xlsx فقط هي المدعومة. احفظ الملف بصيغة Excel Workbook (.xlsx)، ثم اختره مجددًا.",
           "scope": "shared",
           "systemPermissions": null
         },
         {
           "key": "imports.errors.unsupportedMime",
-          "en": "The selected file is not recognized as an XLSX workbook.",
-          "ar": "الملف المحدد غير معروف كملف XLSX.",
+          "en": "The file is not recognized as an XLSX workbook. Open it in Excel and save a new .xlsx copy.",
+          "ar": "الملف غير معروف كملف XLSX. افتحه في Excel واحفظ نسخة جديدة بصيغة .xlsx.",
           "scope": "shared",
           "systemPermissions": null
         },
@@ -29200,6 +29375,20 @@
           "systemPermissions": null
         },
         {
+          "key": "imports.fileRequirements",
+          "en": "Use the downloaded template. Keep the header order unchanged and remove formulas before selecting the file.",
+          "ar": "استخدم القالب المنزّل، وحافظ على ترتيب العناوين، واحذف المعادلات قبل اختيار الملف.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "imports.fileRequirementsTitle",
+          "en": "File requirements",
+          "ar": "متطلبات الملف",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
           "key": "imports.fileTypeNotSupported",
           "en": "Only .xlsx files are supported",
           "ar": "ملفات .xlsx فقط هي المدعومة",
@@ -29228,6 +29417,13 @@
           "systemPermissions": null
         },
         {
+          "key": "imports.notSent",
+          "en": "The import request was not sent. Check your connection, then clear and select the file again.",
+          "ar": "لم يُرسل طلب الاستيراد. تحقق من الاتصال، ثم أفرغ المعاينة واختر الملف مجددًا.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
           "key": "imports.parsing",
           "en": "Parsing spreadsheet...",
           "ar": "جارٍ قراءة ملف البيانات...",
@@ -29238,6 +29434,20 @@
           "key": "imports.pending",
           "en": "Pending",
           "ar": "قيد الانتظار",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "imports.previewHint",
+          "en": "Rows with a problem stay visible here with the exact row and field that need attention.",
+          "ar": "تظل الصفوف التي بها مشكلة ظاهرة هنا مع تحديد الصف والحقل المطلوب تصحيحهما.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "imports.previewTitle",
+          "en": "Import preview",
+          "ar": "معاينة الاستيراد",
           "scope": "shared",
           "systemPermissions": null
         },
@@ -29266,6 +29476,20 @@
           "key": "imports.row",
           "en": "Row",
           "ar": "الصف",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "imports.rowsCount",
+          "en": "Rows: {{count}}",
+          "ar": "الصفوف: {{count}}",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "imports.rowsNeedAttention",
+          "en": "{{count}} rows need attention. See Validation details in the preview.",
+          "ar": "توجد {{count}} صفوف تحتاج إلى مراجعة. راجع عمود تفاصيل التحقق في المعاينة.",
           "scope": "shared",
           "systemPermissions": null
         },
@@ -29357,6 +29581,20 @@
           "key": "imports.uploading",
           "en": "Uploading countries...",
           "ar": "جارٍ رفع الدول...",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "imports.workspaceDescription",
+          "en": "Upload a prepared XLSX file, review every row, then submit only the valid records.",
+          "ar": "ارفع ملف XLSX مُجهزًا، وراجع كل صف، ثم أرسل السجلات الصالحة فقط.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "imports.workspaceTitle",
+          "en": "Spreadsheet import",
+          "ar": "استيراد من جدول بيانات",
           "scope": "shared",
           "systemPermissions": null
         },
@@ -29932,6 +30170,13 @@
           "key": "menu.kanbanBoards",
           "en": "Boards",
           "ar": "اللوحات",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "menu.languageTranslation",
+          "en": "Language and translation",
+          "ar": "اللغة والترجمة",
           "scope": "shared",
           "systemPermissions": null
         },
@@ -40639,6 +40884,24 @@
           ]
         },
         {
+          "key": "errorLogSettings.saveUncertain",
+          "en": "The server response was not received. Do not save again until you load the current value and verify the result.",
+          "ar": "لم يصل رد الخادم. لا تحفظ مرة أخرى قبل تحميل القيمة الحالية والتحقق من النتيجة.",
+          "scope": "system",
+          "systemPermissions": [
+            "ErrorLogSettings:View"
+          ]
+        },
+        {
+          "key": "errorLogSettings.saved",
+          "en": "The retention setting was saved.",
+          "ar": "تم حفظ مدة الاحتفاظ.",
+          "scope": "system",
+          "systemPermissions": [
+            "ErrorLogSettings:View"
+          ]
+        },
+        {
           "key": "errorLogSettings.subtitle",
           "en": "Global retention and capture queue status",
           "ar": "مدة الاحتفاظ العامة وحالة قائمة الالتقاط",
@@ -41429,6 +41692,223 @@
       "client": "web",
       "namespace": "platform-auth",
       "entries": [
+        {
+          "key": "accountProfile.changePassword",
+          "en": "Change password",
+          "ar": "تغيير كلمة المرور",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.choosePhoto",
+          "en": "Choose image",
+          "ar": "اختيار صورة",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.currentPassword",
+          "en": "Current password",
+          "ar": "كلمة المرور الحالية",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.currentPasswordInvalid",
+          "en": "The current password is incorrect.",
+          "ar": "كلمة المرور الحالية غير صحيحة.",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.dropPhoto",
+          "en": "Drop a JPG or PNG image here, or choose an image. Maximum 10 MB.",
+          "ar": "اسحب صورة JPG أو PNG هنا أو اختر صورة. الحد الأقصى 10 ميجابايت.",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.duplicateUserName",
+          "en": "This username is already in use.",
+          "ar": "اسم المستخدم مستخدم بالفعل.",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.edit",
+          "en": "Edit information",
+          "ar": "تعديل البيانات",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.editPhoto",
+          "en": "Change photo",
+          "ar": "تغيير الصورة",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.firstName",
+          "en": "First name",
+          "ar": "الاسم الأول",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.invalidImage",
+          "en": "Choose a JPG or PNG image up to 10 MB.",
+          "ar": "اختر صورة JPG أو PNG بحجم لا يتجاوز 10 ميجابايت.",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.lastName",
+          "en": "Last name",
+          "ar": "الاسم الأخير",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.loadFailed",
+          "en": "Could not load your account profile.",
+          "ar": "تعذر تحميل ملفك الشخصي.",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.newPassword",
+          "en": "New password",
+          "ar": "كلمة المرور الجديدة",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.otherDrafts",
+          "en": "Save or cancel your information and photo changes before changing your password.",
+          "ar": "احفظ أو ألغِ تغييرات البيانات والصورة قبل تغيير كلمة المرور.",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.overview",
+          "en": "Account profile",
+          "ar": "الملف الشخصي",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.password",
+          "en": "Password and security",
+          "ar": "كلمة المرور والأمان",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.passwordFailed",
+          "en": "Could not change your password.",
+          "ar": "تعذر تغيير كلمة المرور.",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.passwordMustDiffer",
+          "en": "The new password must differ from the current password.",
+          "ar": "يجب أن تختلف كلمة المرور الجديدة عن الحالية.",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.passwordPolicy",
+          "en": "Use at least 8 characters, including uppercase, lowercase, a number and a symbol.",
+          "ar": "استخدم 8 أحرف على الأقل، تشمل حرفًا كبيرًا وصغيرًا ورقمًا ورمزًا.",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.passwordSaved",
+          "en": "Password updated. You will be signed out.",
+          "ar": "تم تحديث كلمة المرور. سيتم تسجيل خروجك.",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.personalInfo",
+          "en": "Personal information",
+          "ar": "البيانات الشخصية",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.photo",
+          "en": "Profile photo",
+          "ar": "صورة الملف الشخصي",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.photoLoadFailed",
+          "en": "Could not load your profile photo.",
+          "ar": "تعذر تحميل صورة ملفك الشخصي.",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.photoRefreshFailed",
+          "en": "The photo was saved, but its preview could not be reloaded. Retry loading the photo.",
+          "ar": "تم حفظ الصورة، لكن تعذر تحميل معاينتها. أعد محاولة تحميل الصورة.",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.photoSaved",
+          "en": "Profile photo updated successfully.",
+          "ar": "تم تحديث صورة الملف الشخصي بنجاح.",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.removePhoto",
+          "en": "Remove photo",
+          "ar": "حذف الصورة",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.saveFailed",
+          "en": "Could not save your account profile.",
+          "ar": "تعذر حفظ بيانات ملفك الشخصي.",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.savePhoto",
+          "en": "Save photo",
+          "ar": "حفظ الصورة",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.saved",
+          "en": "Profile updated successfully.",
+          "ar": "تم تحديث الملف الشخصي بنجاح.",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.uncertain",
+          "en": "The result is unknown. Reload or sign in again before retrying.",
+          "ar": "نتيجة العملية غير مؤكدة. أعد التحميل أو سجّل الدخول قبل المحاولة مرة أخرى.",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "accountProfile.userName",
+          "en": "Username",
+          "ar": "اسم المستخدم",
+          "scope": "shared",
+          "systemPermissions": []
+        },
         {
           "key": "accountSecurity",
           "en": "Account security",
@@ -43940,6 +44420,13 @@
           "systemPermissions": null
         },
         {
+          "key": "roles.permissionResources.GlobalDataExports",
+          "en": "Global data exports",
+          "ar": "تصدير البيانات العامة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
           "key": "roles.permissionResources.Hangfire",
           "en": "Background jobs",
           "ar": "المهام الخلفية",
@@ -44397,6 +44884,15 @@
           "key": "systemUiTexts.resetTitle",
           "en": "Restore the original system text?",
           "ar": "استعادة نص النظام الأصلي؟",
+          "scope": "system",
+          "systemPermissions": [
+            "SystemUiTexts:View"
+          ]
+        },
+        {
+          "key": "systemUiTexts.saved",
+          "en": "System UI text updated successfully.",
+          "ar": "تم تحديث نص واجهة النظام بنجاح.",
           "scope": "system",
           "systemPermissions": [
             "SystemUiTexts:View"
@@ -47307,6 +47803,13 @@
           "systemPermissions": []
         },
         {
+          "key": "tenantAdmins.assignmentHint",
+          "en": "Choose one or more enabled tenants, then select the default tenant.",
+          "ar": "اختر منشأة مفعلة أو أكثر، ثم حدد المنشأة الافتراضية.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
           "key": "tenantAdmins.default",
           "en": "Default",
           "ar": "افتراضي",
@@ -47317,6 +47820,27 @@
           "key": "tenantAdmins.defaultTenant",
           "en": "Default tenant",
           "ar": "المنشأة الافتراضية",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.deleteHint",
+          "en": "This account will be archived and its active sessions revoked. Continue with",
+          "ar": "ستتم أرشفة هذا الحساب وإبطال جلساته النشطة. هل تريد المتابعة مع",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.deleteTitle",
+          "en": "Remove tenant administrator",
+          "ar": "إزالة مسؤول المنشأة",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.deleted",
+          "en": "Tenant administrator removed successfully.",
+          "ar": "تمت إزالة مسؤول المنشأة بنجاح.",
           "scope": "system",
           "systemPermissions": []
         },
@@ -47352,6 +47876,132 @@
           "key": "tenantAdmins.empty",
           "en": "No tenant administrators found",
           "ar": "لا يوجد مديرو منشآت",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.errors.archived",
+          "en": "This administrator has been archived and cannot be edited here.",
+          "ar": "تمت أرشفة هذا المسؤول ولا يمكن تعديله من هنا.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.errors.delete",
+          "en": "The administrator could not be removed. Refresh its details and retry.",
+          "ar": "تعذرت إزالة المسؤول. حدّث بياناته ثم أعد المحاولة.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.errors.detail",
+          "en": "The administrator details could not be loaded.",
+          "ar": "تعذر تحميل بيانات المسؤول.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.errors.duplicateEmail",
+          "en": "This email address belongs to another account. Choose a different email.",
+          "ar": "هذا البريد الإلكتروني مرتبط بحساب آخر. اختر بريدًا مختلفًا.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.errors.duplicateUserName",
+          "en": "This username belongs to another account. Choose a different username.",
+          "ar": "اسم المستخدم مرتبط بحساب آخر. اختر اسمًا مختلفًا.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.errors.invalidDefault",
+          "en": "Choose the default tenant from the assigned tenants.",
+          "ar": "اختر المنشأة الافتراضية من المنشآت المسندة.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.errors.invalidEmail",
+          "en": "Enter a valid email address.",
+          "ar": "أدخل عنوان بريد إلكتروني صحيحًا.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.errors.invalidTenants",
+          "en": "Select available, enabled tenants. Remove or replace any unavailable selection.",
+          "ar": "اختر منشآت متاحة ومفعلة، وأزل أو استبدل أي اختيار غير متاح.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.errors.invalidUserName",
+          "en": "Enter a valid username using the characters allowed by the server.",
+          "ar": "أدخل اسم مستخدم صحيحًا بالأحرف التي يسمح بها الخادم.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.errors.lookup",
+          "en": "The tenant choices could not be loaded. Retry before changing assignments.",
+          "ar": "تعذر تحميل المنشآت المتاحة. أعد المحاولة قبل تعديل الإسناد.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.errors.notFound",
+          "en": "This administrator is no longer available. Refresh the list.",
+          "ar": "لم يعد هذا المسؤول متاحًا. حدّث القائمة.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.errors.passwordLength",
+          "en": "Use a password of at least 8 characters.",
+          "ar": "استخدم كلمة مرور من ٨ أحرف على الأقل.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.errors.passwordRequirements",
+          "en": "The password does not meet the account policy. Include uppercase and lowercase letters and a number, and check the required length.",
+          "ar": "كلمة المرور لا تحقق سياسة الحساب. استخدم أحرفًا كبيرة وصغيرة ورقمًا، وتحقق من الطول المطلوب.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.errors.save",
+          "en": "The administrator could not be saved. Review any field messages, then retry.",
+          "ar": "تعذر حفظ المسؤول. راجع رسائل الحقول ثم أعد المحاولة.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.errors.seatLimit",
+          "en": "One of the selected tenants has reached its administrator limit. Increase its limit or choose another tenant.",
+          "ar": "بلغت إحدى المنشآت المختارة الحد الأقصى للمديرين. ارفع الحد أو اختر منشأة أخرى.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.errors.tooLong",
+          "en": "Use no more than 256 characters.",
+          "ar": "استخدم ٢٥٦ حرفًا كحد أقصى.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.errors.uncertain",
+          "en": "The request was sent, but its result could not be confirmed. Close this form and review the refreshed list before trying again.",
+          "ar": "أُرسل الطلب، لكن تعذر تأكيد نتيجته. أغلق النموذج وراجع القائمة المحدثة قبل المحاولة مجددًا.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.errors.uncertainDelete",
+          "en": "The removal request was sent, but its result could not be confirmed. Close this message and review the refreshed list before trying again.",
+          "ar": "أُرسل طلب الإزالة، لكن تعذر تأكيد نتيجته. أغلق الرسالة وراجع القائمة المحدثة قبل المحاولة مجددًا.",
           "scope": "system",
           "systemPermissions": []
         },
@@ -47394,6 +48044,27 @@
           "key": "tenantAdmins.password",
           "en": "Password",
           "ar": "كلمة المرور",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.passwordHint",
+          "en": "Use at least 8 characters. The server applies the account password policy.",
+          "ar": "استخدم ٨ أحرف على الأقل. يطبق الخادم سياسة كلمات المرور الخاصة بالحسابات.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.passwordKeepHint",
+          "en": "Leave blank to keep the current password.",
+          "ar": "اترك الحقل فارغًا للاحتفاظ بكلمة المرور الحالية.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.saved",
+          "en": "Tenant administrator saved successfully.",
+          "ar": "تم حفظ مسؤول المنشأة بنجاح.",
           "scope": "system",
           "systemPermissions": []
         },
@@ -47447,6 +48118,13 @@
           "systemPermissions": []
         },
         {
+          "key": "tenantManagement.archivedRequiresRestore",
+          "en": "This tenant is archived and cannot be edited.",
+          "ar": "هذا المستأجر مؤرشف ولا يمكن تعديله.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
           "key": "tenantManagement.billingEmail",
           "en": "Billing email",
           "ar": "بريد الفوترة",
@@ -47454,9 +48132,37 @@
           "systemPermissions": []
         },
         {
+          "key": "tenantManagement.catalogCompatibility",
+          "en": "The saved application grants do not match the available catalog. Reload the catalog before saving; no grants have been removed.",
+          "ar": "لا تتطابق التطبيقات المحفوظة مع الكتالوج المتاح. أعد تحميل الكتالوج قبل الحفظ؛ لم نحذف أي منح محفوظة.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.catalogEmpty",
+          "en": "No assignable applications are available.",
+          "ar": "لا تتوفر تطبيقات قابلة للمنح حاليًا.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.catalogLoadError",
+          "en": "The assignable application catalog could not be loaded. Retry before creating or editing a tenant.",
+          "ar": "تعذر تحميل التطبيقات القابلة للمنح. أعد المحاولة قبل إضافة مستأجر أو تعديله.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
           "key": "tenantManagement.companies",
           "en": "Companies",
           "ar": "الشركات",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.concurrencyConflict",
+          "en": "This tenant changed on the server. Your draft is preserved. Reload the current record before trying again.",
+          "ar": "تغيرت بيانات المستأجر على الخادم. احتفظنا بتعديلاتك؛ أعد تحميل السجل الحالي قبل إعادة المحاولة.",
           "scope": "system",
           "systemPermissions": []
         },
@@ -47475,9 +48181,37 @@
           "systemPermissions": []
         },
         {
+          "key": "tenantManagement.createIntro",
+          "en": "Create a workspace for a new tenant and configure its subscription and applications.",
+          "ar": "أنشئ مساحة عمل لمستأجر جديد، وحدد اشتراكه والتطبيقات المتاحة له.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.created",
+          "en": "Tenant created successfully.",
+          "ar": "تم إنشاء المستأجر بنجاح.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.detailLoadError",
+          "en": "Tenant details could not be loaded. Retry to get the current record.",
+          "ar": "تعذر تحميل تفاصيل المستأجر. أعد المحاولة للحصول على السجل الحالي.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
           "key": "tenantManagement.disabled",
           "en": "Disabled",
           "ar": "معطّل",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.duplicateIdentifier",
+          "en": "Another tenant already uses this identifier.",
+          "ar": "يستخدم مستأجر آخر هذا المعرّف بالفعل.",
           "scope": "system",
           "systemPermissions": []
         },
@@ -47541,6 +48275,13 @@
           "key": "tenantManagement.formSubtitle",
           "en": "Configure the tenant profile, subscription, capacity, contacts, and purchased applications.",
           "ar": "إعداد بيانات المستأجر والاشتراك والسعة وجهات الاتصال والتطبيقات المشتراة.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.formTitle",
+          "en": "Tenant details",
+          "ar": "بيانات المستأجر",
           "scope": "system",
           "systemPermissions": []
         },
@@ -47629,9 +48370,23 @@
           "systemPermissions": []
         },
         {
+          "key": "tenantManagement.mutationUncertain",
+          "en": "The save result could not be confirmed. Review the list before trying again.",
+          "ar": "تعذر تأكيد نتيجة الحفظ. راجع القائمة قبل إعادة المحاولة.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
           "key": "tenantManagement.name",
           "en": "Tenant name",
           "ar": "اسم المستأجر",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.newTenant",
+          "en": "Your new tenant",
+          "ar": "المستأجر الجديد",
           "scope": "system",
           "systemPermissions": []
         },
@@ -47664,9 +48419,37 @@
           "systemPermissions": []
         },
         {
+          "key": "tenantManagement.reloadCurrent",
+          "en": "Reload current tenant",
+          "ar": "إعادة تحميل بيانات المستأجر الحالية",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.saveError",
+          "en": "The tenant could not be saved. Review the field messages and try again.",
+          "ar": "تعذر حفظ المستأجر. راجع رسائل الحقول ثم أعد المحاولة.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
           "key": "tenantManagement.searchPlaceholder",
           "en": "Search by name, identifier, or billing email",
           "ar": "البحث بالاسم أو المعرّف أو بريد الفوترة",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.seatLimitBelowUsage",
+          "en": "The account limit cannot be lower than the current usage.",
+          "ar": "لا يمكن أن يقل حد الحسابات عن الاستخدام الحالي.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.seatRange",
+          "en": "The administrator limit cannot exceed the user limit.",
+          "ar": "لا يمكن أن يتجاوز حد المسؤولين حد المستخدمين.",
           "scope": "system",
           "systemPermissions": []
         },
@@ -47741,9 +48524,23 @@
           "systemPermissions": []
         },
         {
+          "key": "tenantManagement.selectedAreas",
+          "en": "Functional areas",
+          "ar": "الوحدات الوظيفية",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
           "key": "tenantManagement.selectedAreasCount",
           "en": "{{selected}} of {{total}} selected",
           "ar": "تم تحديد {{selected}} من {{total}}",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.selectedModules",
+          "en": "Applications",
+          "ar": "التطبيقات",
           "scope": "system",
           "systemPermissions": []
         },
@@ -47814,6 +48611,27 @@
           "key": "tenantManagement.subtitle",
           "en": "Manage tenant subscriptions, access status, contacts, companies, and account limits.",
           "ar": "إدارة الاشتراكات والحالة وجهات الاتصال والشركات وحدود الحسابات.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.summaryDescription",
+          "en": "A live summary of the details you are entering.",
+          "ar": "ملخص مباشر للبيانات التي تدخلها.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.summaryNote",
+          "en": "Review the subscription limits and enabled applications before creating the tenant. All sections are saved together.",
+          "ar": "راجع حدود الاشتراك والتطبيقات المفعلة قبل إنشاء المستأجر. تُحفظ جميع الأقسام معًا.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.summaryTitle",
+          "en": "Tenant overview",
+          "ar": "نظرة على المستأجر",
           "scope": "system",
           "systemPermissions": []
         },
@@ -47891,6 +48709,13 @@
           "key": "tenantManagement.totalAccounts",
           "en": "Total accounts",
           "ar": "إجمالي الحسابات",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.updated",
+          "en": "Tenant updated successfully.",
+          "ar": "تم تحديث المستأجر بنجاح.",
           "scope": "system",
           "systemPermissions": []
         },
@@ -49437,9 +50262,99 @@
           ]
         },
         {
+          "key": "countries.import.duplicateField",
+          "en": "This value duplicates row {{row}}. Use a unique value or remove the duplicate row.",
+          "ar": "القيمة مكررة مع الصف {{row}}. استخدم قيمة فريدة أو احذف الصف المكرر.",
+          "scope": "system",
+          "systemPermissions": [
+            "Countries:View"
+          ]
+        },
+        {
           "key": "countries.import.duplicateInFile",
           "en": "Duplicate of another country row in this file",
           "ar": "هذا الصف مكرر لصف دولة آخر في الملف",
+          "scope": "system",
+          "systemPermissions": [
+            "Countries:View"
+          ]
+        },
+        {
+          "key": "countries.import.duplicateOnServer",
+          "en": "A country name or code in this batch already exists. No records in this batch were saved. Compare the file with existing countries, correct duplicates, then select the corrected file. The server did not identify a specific row.",
+          "ar": "يوجد اسم دولة أو كود مسجل مسبقًا ضمن هذه الدفعة. لم تُحفظ سجلات الدفعة. قارن الملف بالدول الموجودة، وصحح التكرار، ثم اختر الملف المصحح. لم يحدد الخادم صفًا بعينه.",
+          "scope": "system",
+          "systemPermissions": [
+            "Countries:View"
+          ]
+        },
+        {
+          "key": "countries.import.errors.alpha2Code",
+          "en": "Use exactly 2 English letters, for example EG, or leave it empty.",
+          "ar": "استخدم حرفين إنجليزيين بالضبط، مثل EG، أو اترك الحقل فارغًا.",
+          "scope": "system",
+          "systemPermissions": [
+            "Countries:View"
+          ]
+        },
+        {
+          "key": "countries.import.errors.alpha3Code",
+          "en": "Use exactly 3 English letters, for example EGY, or leave it empty.",
+          "ar": "استخدم 3 أحرف إنجليزية بالضبط، مثل EGY، أو اترك الحقل فارغًا.",
+          "scope": "system",
+          "systemPermissions": [
+            "Countries:View"
+          ]
+        },
+        {
+          "key": "countries.import.errors.currencyCode",
+          "en": "Use exactly 3 English letters, for example EGP, or leave it empty.",
+          "ar": "استخدم 3 أحرف إنجليزية بالضبط، مثل EGP، أو اترك الحقل فارغًا.",
+          "scope": "system",
+          "systemPermissions": [
+            "Countries:View"
+          ]
+        },
+        {
+          "key": "countries.import.errors.invalidText",
+          "en": "Remove hidden control characters or line breaks from the name.",
+          "ar": "احذف محارف التحكم المخفية أو فواصل الأسطر من الاسم.",
+          "scope": "system",
+          "systemPermissions": [
+            "Countries:View"
+          ]
+        },
+        {
+          "key": "countries.import.errors.maxlength",
+          "en": "Use no more than {{max}} characters.",
+          "ar": "استخدم {{max}} حرفًا كحد أقصى.",
+          "scope": "system",
+          "systemPermissions": [
+            "Countries:View"
+          ]
+        },
+        {
+          "key": "countries.import.errors.minlength",
+          "en": "Use at least {{min}} characters.",
+          "ar": "يجب أن يتكون اسم الدولة من حرفين على الأقل.",
+          "scope": "system",
+          "systemPermissions": [
+            "Countries:View"
+          ]
+        },
+        {
+          "key": "countries.import.errors.phoneCode",
+          "en": "Use up to 10 digits with an optional leading +, for example +20, or leave it empty.",
+          "ar": "استخدم حتى 10 أرقام، ويمكن أن تبدأ بعلامة +، مثل +20، أو اترك الحقل فارغًا.",
+          "scope": "system",
+          "systemPermissions": [
+            "Countries:View"
+          ]
+        },
+        {
+          "key": "countries.import.errors.required",
+          "en": "Required field. Enter a country name.",
+          "ar": "حقل مطلوب. أدخل اسم الدولة.",
           "scope": "system",
           "systemPermissions": [
             "Countries:View"
@@ -50182,9 +51097,27 @@
           ]
         },
         {
+          "key": "districts.addressesFilter",
+          "en": "Addresses",
+          "ar": "العناوين",
+          "scope": "system",
+          "systemPermissions": [
+            "Districts:View"
+          ]
+        },
+        {
           "key": "districts.all",
           "en": "All Districts",
           "ar": "الكل",
+          "scope": "system",
+          "systemPermissions": [
+            "Districts:View"
+          ]
+        },
+        {
+          "key": "districts.allStates",
+          "en": "All States",
+          "ar": "كل المحافظات",
           "scope": "system",
           "systemPermissions": [
             "Districts:View"
@@ -50401,6 +51334,15 @@
           "key": "districts.charts.noData",
           "en": "No District Data Available",
           "ar": "لا توجد بيانات أحياء متاحة",
+          "scope": "system",
+          "systemPermissions": [
+            "Districts:View"
+          ]
+        },
+        {
+          "key": "districts.charts.pageScope",
+          "en": "Charts describe the loaded page; the matching total comes from the server.",
+          "ar": "تعرض الرسوم الصفحة المحملة، بينما يأتي إجمالي النتائج المطابقة من الخادم.",
           "scope": "system",
           "systemPermissions": [
             "Districts:View"
@@ -50668,6 +51610,15 @@
           ]
         },
         {
+          "key": "districts.detailLoadError",
+          "en": "District details could not be loaded. Retry to get the current record.",
+          "ar": "تعذر تحميل تفاصيل المنطقة. أعد المحاولة للحصول على السجل الحالي.",
+          "scope": "system",
+          "systemPermissions": [
+            "Districts:View"
+          ]
+        },
+        {
           "key": "districts.details",
           "en": "District Details",
           "ar": "تفاصيل الحي",
@@ -50707,6 +51658,15 @@
           "key": "districts.districtsCount",
           "en": "districts",
           "ar": "أحياء",
+          "scope": "system",
+          "systemPermissions": [
+            "Districts:View"
+          ]
+        },
+        {
+          "key": "districts.duplicate",
+          "en": "A district with the same Arabic name, English name or code already exists under this State.",
+          "ar": "توجد منطقة بالاسم العربي أو الإنجليزي أو الكود نفسه داخل هذه المحافظة.",
           "scope": "system",
           "systemPermissions": [
             "Districts:View"
@@ -50830,6 +51790,15 @@
           ]
         },
         {
+          "key": "districts.hasAddresses",
+          "en": "With Addresses",
+          "ar": "بها عناوين",
+          "scope": "system",
+          "systemPermissions": [
+            "Districts:View"
+          ]
+        },
+        {
           "key": "districts.highlight.edited",
           "en": "Updated",
           "ar": "تم التحديث",
@@ -50848,6 +51817,15 @@
           ]
         },
         {
+          "key": "districts.import.ambiguousState",
+          "en": "More than one active State matches this name. Use a unique Arabic or English name.",
+          "ar": "توجد أكثر من محافظة نشطة بهذا الاسم. استخدم اسمًا عربيًا أو إنجليزيًا غير ملتبس.",
+          "scope": "system",
+          "systemPermissions": [
+            "Districts:View"
+          ]
+        },
+        {
           "key": "districts.import.districtRows",
           "en": "{{count}} district rows",
           "ar": "{{count}} صفاً من الأحياء",
@@ -50857,9 +51835,27 @@
           ]
         },
         {
+          "key": "districts.import.duplicateField",
+          "en": "Duplicate value for the same State in Excel row {{row}}.",
+          "ar": "قيمة مكررة داخل المحافظة نفسها في صف إكسل {{row}}.",
+          "scope": "system",
+          "systemPermissions": [
+            "Districts:View"
+          ]
+        },
+        {
           "key": "districts.import.duplicateInFile",
           "en": "Duplicate of another row for the same State in this file",
           "ar": "مكرر لصف آخر لنفس المحافظة في هذا الملف",
+          "scope": "system",
+          "systemPermissions": [
+            "Districts:View"
+          ]
+        },
+        {
+          "key": "districts.import.duplicateOnServer",
+          "en": "A matching district already exists under this State. Review the names and code.",
+          "ar": "توجد منطقة مطابقة داخل هذه المحافظة. راجع الأسماء والكود.",
           "scope": "system",
           "systemPermissions": [
             "Districts:View"
@@ -50938,9 +51934,27 @@
           ]
         },
         {
+          "key": "districts.invalidCode",
+          "en": "Use 2–10 letters, numbers or hyphens for the district code.",
+          "ar": "استخدم من حرفين إلى ١٠ أحرف أو أرقام أو شرطات لكود المنطقة.",
+          "scope": "system",
+          "systemPermissions": [
+            "Districts:View"
+          ]
+        },
+        {
           "key": "districts.invalidStateId",
           "en": "Invalid state selection",
           "ar": "اختيار المحافظة غير صالح",
+          "scope": "system",
+          "systemPermissions": [
+            "Districts:View"
+          ]
+        },
+        {
+          "key": "districts.lifecycleUncertain",
+          "en": "The archive or restore result could not be confirmed. Review the list before trying again.",
+          "ar": "تعذر تأكيد نتيجة الأرشفة أو الاستعادة. راجع القائمة قبل إعادة المحاولة.",
           "scope": "system",
           "systemPermissions": [
             "Districts:View"
@@ -50977,6 +51991,15 @@
           "key": "districts.mainTitle",
           "en": "Districts Card View",
           "ar": "قائمة الأحياء",
+          "scope": "system",
+          "systemPermissions": [
+            "Districts:View"
+          ]
+        },
+        {
+          "key": "districts.mutationUncertain",
+          "en": "The save result could not be confirmed. Review the list before trying again.",
+          "ar": "تعذر تأكيد نتيجة الحفظ. راجع القائمة قبل إعادة المحاولة.",
           "scope": "system",
           "systemPermissions": [
             "Districts:View"
@@ -51352,6 +52375,15 @@
           ]
         },
         {
+          "key": "districts.stateUnavailable",
+          "en": "Select an active State from the available list.",
+          "ar": "اختر محافظة نشطة من القائمة المتاحة.",
+          "scope": "system",
+          "systemPermissions": [
+            "Districts:View"
+          ]
+        },
+        {
           "key": "districts.status.active",
           "en": "Active",
           "ar": "نشط",
@@ -51521,6 +52553,15 @@
           "systemPermissions": [
             "Districts:View"
           ]
+        },
+        {
+          "key": "districts.withoutAddresses",
+          "en": "Without Addresses",
+          "ar": "بدون عناوين",
+          "scope": "system",
+          "systemPermissions": [
+            "Districts:View"
+          ]
         }
       ]
     },
@@ -51560,6 +52601,15 @@
           "key": "states.all",
           "en": "All States",
           "ar": "كل المحافظات",
+          "scope": "system",
+          "systemPermissions": [
+            "States:View"
+          ]
+        },
+        {
+          "key": "states.allCountries",
+          "en": "All countries",
+          "ar": "جميع الدول",
           "scope": "system",
           "systemPermissions": [
             "States:View"
@@ -51899,6 +52949,15 @@
           ]
         },
         {
+          "key": "states.countryUnavailable",
+          "en": "Choose an active country that you are authorized to view.",
+          "ar": "اختر دولة نشطة تملك صلاحية عرضها.",
+          "scope": "system",
+          "systemPermissions": [
+            "States:View"
+          ]
+        },
+        {
           "key": "states.createError",
           "en": "Failed to create state",
           "ar": "فشل في إنشاء المحافظة",
@@ -52061,6 +53120,15 @@
           ]
         },
         {
+          "key": "states.detailLoadError",
+          "en": "The state details could not be loaded. Retry before editing.",
+          "ar": "تعذّر تحميل تفاصيل المحافظة. أعد المحاولة قبل التعديل.",
+          "scope": "system",
+          "systemPermissions": [
+            "States:View"
+          ]
+        },
+        {
           "key": "states.details",
           "en": "State Details",
           "ar": "تفاصيل المحافظة",
@@ -52082,6 +53150,24 @@
           "key": "states.districtsCount",
           "en": "{{count}} districts",
           "ar": "{{count}} أحياء",
+          "scope": "system",
+          "systemPermissions": [
+            "States:View"
+          ]
+        },
+        {
+          "key": "states.districtsFilter",
+          "en": "Districts",
+          "ar": "المناطق",
+          "scope": "system",
+          "systemPermissions": [
+            "States:View"
+          ]
+        },
+        {
+          "key": "states.duplicate",
+          "en": "A state with the same Arabic name, English name or code already exists in this country.",
+          "ar": "توجد محافظة بنفس الاسم العربي أو الإنجليزي أو الرمز داخل الدولة نفسها.",
           "scope": "system",
           "systemPermissions": [
             "States:View"
@@ -52151,6 +53237,15 @@
           ]
         },
         {
+          "key": "states.hasDistricts",
+          "en": "Has districts",
+          "ar": "بها مناطق",
+          "scope": "system",
+          "systemPermissions": [
+            "States:View"
+          ]
+        },
+        {
           "key": "states.highlight.edited",
           "en": "Updated",
           "ar": "تم التحديث",
@@ -52163,6 +53258,15 @@
           "key": "states.highlight.new",
           "en": "New",
           "ar": "جديد",
+          "scope": "system",
+          "systemPermissions": [
+            "States:View"
+          ]
+        },
+        {
+          "key": "states.import.ambiguousCountry",
+          "en": "This country name matches more than one active country. Use a unique Arabic or English name.",
+          "ar": "يطابق اسم الدولة أكثر من دولة نشطة. استخدم اسمًا عربيًا أو إنجليزيًا يحدد دولة واحدة.",
           "scope": "system",
           "systemPermissions": [
             "States:View"
@@ -52232,9 +53336,27 @@
           ]
         },
         {
+          "key": "states.import.duplicateField",
+          "en": "Duplicates the value in row {{row}} within the same country.",
+          "ar": "يكرر قيمة الصف {{row}} داخل الدولة نفسها.",
+          "scope": "system",
+          "systemPermissions": [
+            "States:View"
+          ]
+        },
+        {
           "key": "states.import.duplicateInFile",
           "en": "Duplicate of another row for the same country in this file",
           "ar": "مكرر لصف آخر لنفس الدولة في هذا الملف",
+          "scope": "system",
+          "systemPermissions": [
+            "States:View"
+          ]
+        },
+        {
+          "key": "states.import.duplicateOnServer",
+          "en": "One or more submitted states already exist in the selected country. The batch was rejected; review the state names and codes.",
+          "ar": "توجد محافظة أو أكثر من الدفعة بالفعل داخل الدولة المحددة. رُفضت الدفعة؛ راجع أسماء المحافظات ورموزها.",
           "scope": "system",
           "systemPermissions": [
             "States:View"
@@ -52277,9 +53399,27 @@
           ]
         },
         {
+          "key": "states.invalidCode",
+          "en": "Use 2 to 10 letters, numbers or hyphens for the state code.",
+          "ar": "استخدم من حرفين إلى ١٠ أحرف أو أرقام أو شرطات لرمز المحافظة.",
+          "scope": "system",
+          "systemPermissions": [
+            "States:View"
+          ]
+        },
+        {
           "key": "states.invalidCountryId",
           "en": "Invalid country selection",
           "ar": "اختيار الدولة غير صحيح",
+          "scope": "system",
+          "systemPermissions": [
+            "States:View"
+          ]
+        },
+        {
+          "key": "states.lifecycleUncertain",
+          "en": "The operation result could not be confirmed. Refresh and verify the record status before repeating it.",
+          "ar": "تعذّر تأكيد نتيجة العملية. حدّث القائمة وتحقق من حالة السجل قبل تكرارها.",
           "scope": "system",
           "systemPermissions": [
             "States:View"
@@ -52316,6 +53456,15 @@
           "key": "states.mainTitle",
           "en": "States Card View",
           "ar": "قائمة المحافظات",
+          "scope": "system",
+          "systemPermissions": [
+            "States:View"
+          ]
+        },
+        {
+          "key": "states.mutationUncertain",
+          "en": "The server response was not received. Close this form and refresh the list to verify the result before submitting again.",
+          "ar": "لم يصل رد الخادم. أغلق النموذج وحدّث القائمة للتحقق من النتيجة قبل الإرسال مرة أخرى.",
           "scope": "system",
           "systemPermissions": [
             "States:View"
@@ -52865,6 +54014,15 @@
           "key": "states.withCodes",
           "en": "With Codes",
           "ar": "مع الأكواد",
+          "scope": "system",
+          "systemPermissions": [
+            "States:View"
+          ]
+        },
+        {
+          "key": "states.withoutDistricts",
+          "en": "No districts",
+          "ar": "بدون مناطق",
           "scope": "system",
           "systemPermissions": [
             "States:View"
@@ -53494,6 +54652,13 @@
           "systemPermissions": null
         },
         {
+          "key": "globalTemplates.databaseVerifiedAndPublished",
+          "en": "Crystal Verify Database completed and the adapted version was published.",
+          "ar": "اكتمل Verify Database في Crystal وتم نشر الإصدار المعدّل.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
           "key": "globalTemplates.design.created",
           "en": "The empty template was created. Upload the design as its first version.",
           "ar": "تم إنشاء القالب الفارغ. ارفع التصميم كأول إصدار.",
@@ -53795,6 +54960,13 @@
           "systemPermissions": null
         },
         {
+          "key": "globalTemplates.entities.system-error-logs",
+          "en": "System Error Logs",
+          "ar": "سجل أخطاء النظام",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
           "key": "globalTemplates.fileSize",
           "en": "File size",
           "ar": "حجم الملف",
@@ -53826,6 +54998,13 @@
           "key": "globalTemplates.maximumRoleGrants",
           "en": "A report can have at most 100 assigned roles.",
           "ar": "يمكن تعيين 100 دور بحد أقصى لكل تقرير.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.modules.platform",
+          "en": "Platform",
+          "ar": "المنصة",
           "scope": "shared",
           "systemPermissions": null
         },
@@ -54050,6 +55229,13 @@
           "key": "globalTemplates.validation.Valid",
           "en": "Valid",
           "ar": "صالح",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.verifyDatabase",
+          "en": "Verify Database and Publish",
+          "ar": "تحقق من قاعدة البيانات وانشر",
           "scope": "shared",
           "systemPermissions": null
         },

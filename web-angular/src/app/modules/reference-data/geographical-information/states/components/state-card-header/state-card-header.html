@@ -1,0 +1,22 @@
+<div class="card-heading">
+  <div>
+    <h2 dir="auto">{{ title() }}</h2>
+    <p dir="auto">{{ subtitle() }}</p>
+  </div>
+  <erp-status-badge
+    appearance="solid"
+    [contrast]="quality().contrast"
+    [label]="qualityLabel()"
+    [accent]="quality().accent"
+  />
+</div>
+<div class="chips">
+  <erp-status-badge [label]="state().code" accent="var(--primary)" />
+  <erp-status-badge appearance="outline" [label]="('general.id' | uiText) + ': ' + state().id" />
+  @if (state().isDeleted) {
+    <erp-status-badge
+      [label]="'states.status.archived' | uiText: 'reference-states'"
+      accent="var(--destructive)"
+    />
+  }
+</div>

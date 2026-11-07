@@ -58,6 +58,24 @@ Existing API/source stage first; exact bounded runtime only after current Phase 
 
 ## 15. Evidence
 
+Responsive correction 2026-11-06 supersedes the historical narrow horizontal KPI
+strip and independently scrolling panel rows. Dashboard composition uses the shared
+container-aware dashboard layout, small MetricCard, compact PageHeader, natural
+SurfaceCard sizing and one content ScrollViewport. Actual workspace width after
+sidebar changes controls 6/3/2 metric columns. See the canonical
+[responsive rule](../../../../guides/web/architecture/ANGULAR_RESPONSIVE_LAYOUT.md)
+and `web-angular/scripts/verify-dashboard-responsive-browser.mjs`. Current browser
+acceptance covers 32 dashboard cases and four new-tab preview cases (EN/AR,
+light/dark). No API, permission, DTO, aggregation, or Mobile source changed.
+
+Dashboard action maintenance 2026-11-06: the requester removed the Basic Data
+shortcut from the Angular Super Admin dashboard header. The dashboard no longer
+injects SHELL_DATA_NAVIGATION. Basic Data remains available through the shell's
+sidebar; the permitted Tenant Management header action remains. The existing
+dashboard component test now verifies the shortcut stays absent even when shell
+data navigation is available. This presentation-only change adds no API, mobile,
+permission, or translation contract.
+
 Current version-2 contract and applied books own evidence. Initial manifest includes existing sources only; later actual sources/tests added. FOLLOW-015 retains actual child screens, management/profile/context; FOLLOW-012/014 retain translation editor and business form acceptance.
 
 Phase 06 Verified 2026-10-29: full Angular check passes 21 files/77 tests plus 6 architecture cases, strict templates/types/token/font/catalog checks and production build (430.14 kB initial / 115.42 kB estimated transfer), unchanged budgets and no build warning. Production home acceptance passes 14 scenarios: 8 EN/AR/light/dark/390/1440 cases plus zero/empty, retry/error, HTTP403, malformed success, ordinary-role denial/landing and scoped SQL-text fixture across reload. Eight actual current Next KPI comparisons match width/height exactly (150x82.09375 compact, 208x81.796875 wide; icon34x34); module source tile comparisons separately passed8. Actual API/SQL role landing, summary-value comparison, reload and both-role logout passes separately. Login 11 scenarios including real API and shell24 cases pass; module14 fixture regressions pass after shared read extraction. Retained Next summary1, native tenant2 files/5 tests and API summary2 Release tests pass. No full repository/API/native release-gate claim replaces historical R2 evidence.
@@ -65,3 +83,6 @@ Phase 06 Verified 2026-10-29: full Angular check passes 21 files/77 tests plus 6
 Canonical report IMPLEMENTATION_REPORT.md distinguishes fixture reads, actual API/SQL, retained native aggregation and absent management actions. Shared scoped-read extraction is consumed by both existing module state and summary state. Strong secondary uses canonical brand2; owning platform-tenants captions load independently before rendering. Phase 06 is Verified; customer education is written afterward.
 
 S1-A12 Shared source evolution2026-10-30: existing createScopedRead now captures identity/defer/take1/empty error/current invalidation and DestroyRef teardown, preserving ReadState and old callbacks. Current services HTTP10000ms/parser/cookie policy unchanged;264unit/read40+8/context24/home14/company14/fiscal15/login10/language20 acceptance belongs to angular-scoped-read-lifetime-foundation/IMPLEMENTATION_REPORT.md. Role-home browser fixture now supports ANGULAR_API_ORIGIN with old localhost default. No API/domain/schema/native/resource change.
+
+
+Maintenance2026-11-06 — requester navigation correction: Basic Data contains the Global Geography group with Countries, States and Districts as independently permission-filtered children. States/Districts have no duplicate root entries. Countries remains development-only under the existing release gate. Root composition supplies generic dataEntries; Shell owns the shared navigation tree. The reports/global sidebar entry and its activation callback are removed at requester direction; its guarded route and feature report views remain. Global Template Manager remains available under its existing policy. Tenant Management is a real guarded sidebar/dashboard destination. No API/native navigation or permission contract changed. Current browser evidence belongs to angular-tenant-management-workspace/TENANT_WORKSPACE_2026-11-06.md; historical shell/role-home receipts retain their dated scope.

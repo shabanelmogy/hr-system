@@ -240,7 +240,8 @@
       "WorkforcePlanning": "Workforce planning",
       "WorkforcePlans": "Workforce plans",
       "CompanyEmailTemplates": "Email templates",
-      "MessageLogs": "Message logs"
+      "MessageLogs": "Message logs",
+      "GlobalDataExports": "Global data exports"
     },
     "permissionDescriptions": {
       "CompanyEmailTemplates": "Customize account emails independently for this company.",
@@ -568,6 +569,7 @@
     "companyLocalizations": "Company languages and texts"
   },
   "systemUiTexts": {
+    "saved": "System UI text updated successfully.",
     "title": "System UI texts",
     "scope": "Global texts for the areas you are allowed to access.",
     "hint": "Changes apply to Super Admin sessions. Company texts and language preferences remain independent.",
@@ -589,5 +591,38 @@
     "signOut": "Sign out",
     "passwordRequestSent": "If the account is eligible, password reset instructions will be sent.",
     "backToLogin": "Back to sign in"
+  },
+  "accountProfile": {
+    "overview": "Account profile",
+    "personalInfo": "Personal information",
+    "password": "Password and security",
+    "photo": "Profile photo",
+    "userName": "Username",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "edit": "Edit information",
+    "changePassword": "Change password",
+    "editPhoto": "Change photo",
+    "choosePhoto": "Choose image",
+    "removePhoto": "Remove photo",
+    "savePhoto": "Save photo",
+    "photoSaved": "Profile photo updated successfully.",
+    "saved": "Profile updated successfully.",
+    "passwordSaved": "Password updated. You will be signed out.",
+    "invalidImage": "Choose a JPG or PNG image up to 10 MB.",
+    "loadFailed": "Could not load your account profile.",
+    "saveFailed": "Could not save your account profile.",
+    "passwordFailed": "Could not change your password.",
+    "uncertain": "The result is unknown. Reload or sign in again before retrying.",
+    "photoLoadFailed": "Could not load your profile photo.",
+    "photoRefreshFailed": "The photo was saved, but its preview could not be reloaded. Retry loading the photo.",
+    "otherDrafts": "Save or cancel your information and photo changes before changing your password.",
+    "passwordMustDiffer": "The new password must differ from the current password.",
+    "passwordPolicy": "Use at least 8 characters, including uppercase, lowercase, a number and a symbol.",
+    "currentPasswordInvalid": "The current password is incorrect.",
+    "duplicateUserName": "This username is already in use.",
+    "dropPhoto": "Drop a JPG or PNG image here, or choose an image. Maximum 10 MB."
   }
 }

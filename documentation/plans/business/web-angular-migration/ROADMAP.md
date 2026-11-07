@@ -7,7 +7,15 @@ theme/action and licensed browser verification are Closed. S1-A2 text/form runti
 and browser verification are Closed. S2-A0 login and shared validation badges are
 Verified/Closed. S2-A1 application shell/preferences is Verified/Closed.
 
-**ACTIVE_FEATURE_STEP:** `angular-countries-pilot-acceptance`
+**ACTIVE_FEATURE_STEP:** `angular-super-admin-final-review`
+
+Current requester scope2026-11-05 supersedes the historical active-step statements
+below: D42 authorizes States, then Districts, then all existing Super Admin pages.
+The scope excludes company Basic Data and organizational-structure workflows.
+Countries hosted-report acceptance is Deferred (PROD-028), never marked Verified.
+States/Districts, Tenant Management and Tenant Administrators clients are Verified/Closed with education complete; System Audit Trail is Verified/Closed; System Error Logs and Settings runtime implementation is current Active step; final whole-Super-Admin parity review is
+Required after every workflow is complete. Current sequence and complete source
+ledger: SUPER_ADMIN_PARITY_2026-11-05.md.
 
 Current2026-11-01: non-report S3-A8 acceptance Verified (253fixture browser/7real
 hosted cases and full technical gate). Active feature remains held for actual
@@ -54,10 +62,23 @@ actual hosted csrf/login/catalog/refresh/logout now pass. PROD-017/019 retain wi
 | angular-countries-chart-view | Closed | S3-A5 Countries page-scoped charts | Shared chart adapter and four charts: currencies,creation timeline,states count and states coverage; total matching versus visible-page labels, locale/theme/responsive/empty/loading. |
 | angular-countries-report-view | Closed | S3-A6 Countries managed report integration | Compose the existing Reporting global Crystal/PDF owner in the Countries view, preserving independent applied criteria, source/hash/permission/cancel and mobile open/download behavior. |
 | angular-countries-import-view | Closed | S3-A7 Countries XLSX import | Reusable bounded XLSX file/template/parser/preview/row status and validation composition. One valid-row batch, no invalid-row upload, duplicate feedback and uncertain-submission recovery. |
-| angular-countries-pilot-acceptance | Active | S3-A8 Countries complete pilot acceptance | Complete actual Angular five-view/actions/API/realtime/shared layout/paging/focus/host/production-size acceptance under D35. Enable business route only after complete coverage. |
+| angular-countries-pilot-acceptance | Deferred | S3-A8 actual hosted report gate PROD-028 | Non-report acceptance retained; hosted report gate remains open and no false closure is inferred |
+| angular-states-workspace | Closed | S3-A9 complete States parity | Parent-aware four-field forms, collection/cards/chart/import/report, lifecycle and exact permission parity |
+| angular-districts-workspace | Closed | S3-A10 after States | State-dependent District workflow and all source-required views/actions |
+| angular-tenant-management-workspace | Closed | S4-A1 current Next Tenant management | Grid/Cards, structured five-tab create/edit, entitlement catalog and actual entry links; API-only lifecycle Excluded |
+| angular-tenant-admins-workspace | Closed | S4-A2 current Next Tenant administrators | Full772test gate; browser8/negative32/reference8; hosted reads only; Arabic education complete |
+| angular-system-audit-workspace | Closed | S4-A3 complete client | Full844tests/158files; browser8+32/reference8; four regressions; hosted GET-only; Arabic education |
+| angular-system-error-logs-workspace | Closed | S4-A4 complete client/education | Full907tests/177files; Angular8+8+36/Next8;5regressions;24navigation;hostedGET-only and Arabic education |
+| angular-collection-export | Closed | S4-A4a bounded all-filtered header Excel/CSV acceptance | Angular997/195, Reporting252;312parsed files/12browser matrices, cancellation/denial and Arabic education; hosted rollout PROD-032 |
+| angular-system-log-collection-consistency | Closed | S4-A4b Phase06 Verified; Phase07 completed | Angular926/API1295; actual .NET browser16 plus owner regressions; hosted SQL PROD-030 |
+| angular-system-error-log-reports | Closed | S4-A4c Phase06 Verified; Phase07 completed | API1310; Angular930; report dev/prod8+8; schema/SQL proof; PROD-031 real provider remains | S4-A4c user-requested RPT/PDF | Separate Platform/Reporting source/contract; no fake preview or unsupported entity |
+| angular-super-admin-settings | Closed | S4-A5 bounded client correction verified 2026-11-07 | Source/language/status/server paging/edit/reset; Angular971, browser12; hosted persistence remains FOLLOW-012/PROD-019 |
+| angular-super-admin-platform | Queued | S4 after global geography | Tenant/admin management, audit/error tools, settings and permitted health/docs/jobs; one execution contract per coherent workflow |
+| angular-super-admin-final-review | Active | Final requirement-by-requirement reconciliation after account/export closure | Account and export bounded acceptance resolved; production Countries and hosted/provider gates remain open |
+| angular-account-profile | Closed | S4-A7 bounded Phase06 Verified and education complete | Angular997/195; API1331 with3 opt-in skips; account browser12/current Next8/translation regression12; hosted publication remains PROD-019 |
 | All later foundation/platform/business units | Queued | No sibling start | Follow dependency/gate order |
 
-Current execution contract: [angular-countries-pilot-acceptance](decomposition/angular-countries-pilot-acceptance.md). S3-A8 Angular/API/frozen-contract/Phase00 preparation only. S3-A7 Import Verified/Closed under D35: fresh443tests and Angular40+15+5 browser cases. Next review/debug/rendered comparison is not a prerequisite. Full Angular Countries/host/realtime/Table acceptance remains Not Verified; FOLLOW-019 size warning and FOLLOW-018 provenance stay explicit.
+Latest completed execution contract: [angular-system-error-logs-workspace](decomposition/angular-system-error-logs-workspace.md). Historical Countries sequence follows: S3-A8 Angular/API/frozen-contract/Phase00 preparation only. S3-A7 Import Verified/Closed under D35: fresh443tests and Angular40+15+5 browser cases. Next review/debug/rendered comparison is not a prerequisite. Full Angular Countries/host/realtime/Table acceptance remains Not Verified; FOLLOW-019 size warning and FOLLOW-018 provenance stay explicit.
 
 Completed assessment: [S1-A13 report](../../../modules/platform/features/angular-foundation-exit-assessment/ASSESSMENT_REPORT.md).
 Completed scoped read: [S1-A12 report](../../../modules/platform/features/angular-scoped-read-lifetime-foundation/IMPLEMENTATION_REPORT.md).
@@ -240,3 +261,7 @@ acceptance sequentially, without dummy view buttons or omitted source workflows.
 Current hosted API supports one text condition plus status; native column menus
 must use that real contract until the true combined-query API is implemented and
 published. Full advanced filtering remains Required before full Countries acceptance.
+
+Current checkpoint2026-11-06: S4-A4 Error Logs/Settings client and education Closed with907tests/177files,8+8+36Angular/8Next,5owner regressions,24navigation and hostedGET-only. User now requires general PageHeader Excel/CSV for Grid and Cards, exporting all matching filtered pages. This is the next exact shared-foundation slice; System UI texts/Settings host, operational tools and final whole-Super-Admin review remain Required. Global Report Manager stays standalone per latest reversal.
+
+Requester2026-11-06 confirms completion of all Super Admin work after current corrections. Latest Settings decision: one Settings entry for system configuration and appearance; language selection and translation administration move to their own entry under Administration. Separate feature contracts remain mandatory. Parent goal completion requires every accepted workflow and final comprehensive review, with hosted/provider limits reported separately.

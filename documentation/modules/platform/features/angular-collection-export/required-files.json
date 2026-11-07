@@ -1,0 +1,566 @@
+{
+  "schemaVersion": 1,
+  "status": "final",
+  "executionMode": "authorized-client-implementation",
+  "runtimeAuthorized": true,
+  "feature": "angular-collection-export",
+  "featureName": "Shared all-filtered Excel and CSV export",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S4-A4a — Shared all-filtered Excel and CSV export",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-collection-export.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-collection-export.md",
+  "purpose": "Final implemented shared export sources and bounded local Phase06 acceptance; hosted rollout PROD-032",
+  "reviewArtifact": "documentation/modules/platform/features/angular-collection-export/angular-collection-export-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-collection-export/angular-collection-export-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-collection-export/angular-collection-export-review.md",
+    "api": "documentation/modules/platform/features/angular-collection-export/angular-collection-export-api.md",
+    "web": "documentation/modules/platform/features/angular-collection-export/angular-collection-export-web.md",
+    "mobile": "documentation/modules/platform/features/angular-collection-export/angular-collection-export-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/angular-collection-export-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/angular-collection-export-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "collection-export-preflight-0",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-collection-export.md",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-preflight-1",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/angular-collection-export-review.md",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-preflight-2",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/angular-collection-export-api.md",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-preflight-3",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/angular-collection-export-web.md",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-preflight-4",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/angular-collection-export-mobile.md",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-preflight-5",
+      "layer": "documentation",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/Exporting/V1/ExportController.cs",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-preflight-6",
+      "layer": "documentation",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/Exporting/ExportRequests.cs",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-preflight-7",
+      "layer": "documentation",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/Exporting/Services/ExportExcelService.cs",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-preflight-8",
+      "layer": "documentation",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/Authorization/ReportingPermissions.cs",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-preflight-9",
+      "layer": "documentation",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting/ReportingModule.cs",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-preflight-10",
+      "layer": "documentation",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ReportingAuthorizationTests.cs",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-preflight-11",
+      "layer": "documentation",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Authorization/TenantMemberAuthorizationHandler.cs",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-preflight-12",
+      "layer": "documentation",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Authorization/PermissionAuthorizationHandler.cs",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-preflight-13",
+      "layer": "documentation",
+      "path": "web-next/src/shared/export/useExportPipeline.ts",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-preflight-14",
+      "layer": "documentation",
+      "path": "web-next/src/shared/hooks/useCollectionExports.ts",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-preflight-15",
+      "layer": "documentation",
+      "path": "web-angular/src/app/shared/ui/layout/page-header/page-header.ts",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-preflight-16",
+      "layer": "documentation",
+      "path": "web-angular/src/app/shared/ui/layout/page-header/page-header.html",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-preflight-17",
+      "layer": "documentation",
+      "path": "web-angular/src/app/shared/ui/buttons/action-menu-button/action-menu-button.ts",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-preflight-18",
+      "layer": "documentation",
+      "path": "web-angular/src/app/shared/ui/collections/grid-export.ts",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-preflight-19",
+      "layer": "documentation",
+      "path": "documentation/guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-preflight-20",
+      "layer": "documentation",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "purpose": "Verified current source or Phase00 contract; no future runtime source"
+    },
+    {
+      "id": "collection-export-final-1",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/Exporting/Services/IExportExcelService.cs",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-2",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/Exporting/TabularExportData.cs",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-3",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/Exporting/TabularExportRequests.cs",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-4",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/Exporting/V1/GlobalDataExportsController.cs",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-5",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/TabularExportTests.cs",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-6",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/TabularExportValidationTests.cs",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-7",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/browser/ar-dark-1440.png",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-8",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/browser/ar-dark-390.png",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-9",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/browser/ar-dark-900.png",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-10",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/browser/ar-light-1440.png",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-11",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/browser/ar-light-390.png",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-12",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/browser/ar-light-900.png",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-13",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/browser/en-dark-1440.png",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-14",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/browser/en-dark-390.png",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-15",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/browser/en-dark-900.png",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-16",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/browser/en-light-1440.png",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-17",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/browser/en-light-390.png",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-18",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/browser/en-light-900.png",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-19",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/formatter-results.json",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-20",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-browser-final.log",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-21",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-development-build.log",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-22",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-final-check.log",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-23",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-formatter-browser.log",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-24",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-reporting-tests.log",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-25",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/results.json",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-26",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/verification-2026-11-07.json",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-27",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-collection-export-browser.mjs",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-28",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-tabular-export-formatter.mjs",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-29",
+      "layer": "web",
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-30",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-31",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-read-state.spec.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-32",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-read-state.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-33",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/districts/pages/districts-page/districts-page.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-34",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/districts/state/district-read-state.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-35",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/states/pages/states-page/states-page.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-36",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/states/state/state-read-state.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-37",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/collection-export/export.public-api.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-38",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/collection-export/services/tabular-file-service.spec.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-39",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/collection-export/services/tabular-file-service.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-40",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-list/global-template-list.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-41",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/state/global-template-state.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-42",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/pages/system-audit-page/system-audit-page.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-43",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/state/audit-read-state.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-44",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/pages/system-error-logs-page/system-error-logs-page.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-45",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/state/error-log-read-state.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-46",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/tenant-admins/pages/tenant-admins-page/tenant-admins-page.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-47",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/tenant-admins/state/admin-read-state.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-48",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/tenants/management/pages/tenant-management-page/tenant-management-page.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-49",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/tenants/management/state/tenant-read-state.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-50",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/tabular-export.spec.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-51",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/tabular-export.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-52",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-export-menu/collection-export-menu.html",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-53",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-export-menu/collection-export-menu.scss",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-54",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-export-menu/collection-export-menu.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-55",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-export-state.spec.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-56",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-export-state.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-57",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/page-header/page-header.spec.ts",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-58",
+      "layer": "web",
+      "path": "web-angular/tooling/tabular-export-proof/Program.cs",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-59",
+      "layer": "web",
+      "path": "web-angular/tooling/tabular-export-proof/TabularExportProof.csproj",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-customer-education",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-collection-export.md",
+      "purpose": "Arabic Phase07 guide after bounded Phase06 verification"
+    },
+    {
+      "id": "collection-export-export-closure-check",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-closure-check.log",
+      "purpose": "Executed documentation or planning closure check"
+    },
+    {
+      "id": "collection-export-export-closure-planning",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-closure-planning.log",
+      "purpose": "Executed documentation or planning closure check"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-collection-export-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-collection-export-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-collection-export/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

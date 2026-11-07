@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-05T20:23:01.665Z",
+  "results": [
+    {
+      "action": "duplicate",
+      "passed": true
+    },
+    {
+      "action": "field",
+      "passed": true
+    },
+    {
+      "action": "denied",
+      "passed": true
+    },
+    {
+      "action": "server",
+      "passed": true
+    },
+    {
+      "action": "network",
+      "passed": true
+    },
+    {
+      "action": "malformed",
+      "passed": true
+    },
+    {
+      "action": "delay",
+      "passed": true
+    },
+    {
+      "scenario": "extension",
+      "passed": true
+    },
+    {
+      "scenario": "headers",
+      "passed": true
+    },
+    {
+      "scenario": "formula",
+      "passed": true
+    },
+    {
+      "scenario": "limit",
+      "passed": true
+    },
+    {
+      "scenario": "empty",
+      "passed": true
+    },
+    {
+      "scenario": "zip",
+      "passed": true
+    },
+    {
+      "scenario": "no-create",
+      "passed": true
+    },
+    {
+      "scenario": "read-only",
+      "passed": true
+    },
+    {
+      "scenario": "discard",
+      "passed": true
+    }
+  ]
+}

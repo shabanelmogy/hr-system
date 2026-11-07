@@ -1,0 +1,103 @@
+@if (state.candidatesOpen()) {
+  <erp-dialog-panel
+    size="wide"
+    [open]="true"
+    [title]="'globalTemplates.registerExisting' | uiText: 'reporting'"
+    [description]="'globalTemplates.registrationHint' | uiText: 'reporting'"
+    [closeLabel]="'actions.close' | uiText"
+    [pending]="state.pending()"
+    [showFooter]="false"
+    (closeRequested)="state.closeCandidates()"
+  >
+    @if (state.candidateFailure(); as failure) {
+      <erp-feedback-state
+        kind="error"
+        [title]="
+          failure.message ||
+          locale.translate(
+            failure.key,
+            failure.key.startsWith('globalTemplates.') ? 'reporting' : 'core'
+          )
+        "
+        [actionLabel]="'actions.retry' | uiText"
+        (action)="state.refreshCandidates()"
+      />
+    }
+    @if (state.feedback(); as feedback) {
+      <erp-feedback-state
+        kind="error"
+        [title]="
+          feedback.message ||
+          locale.translate(
+            feedback.key,
+            feedback.key.startsWith('globalTemplates.') ? 'reporting' : 'core'
+          )
+        "
+      />
+    }
+    <erp-data-table
+      [source]="state.candidateSource()"
+      [recordNavigation]="true"
+      [label]="'globalTemplates.registerExisting' | uiText: 'reporting'"
+      [columns]="columns()"
+      [display]="{ frozenColumns: { register: 'end' } }"
+      [rowId]="candidateId"
+      [search]="{
+        value: state.candidateCriteria().search,
+        placeholder: ('general.search' | uiText),
+        maxLength: 200,
+      }"
+      (searchChange)="'value' in $event && state.searchCandidates($event.value)"
+      (pageChange)="state.pageCandidates($event.pageIndex, $event.pageSize)"
+      (retry)="state.refreshCandidates()"
+    >
+      <div toolbarFilters>
+        <erp-option-select
+          [label]="'crystalReports.entity' | uiText: 'reporting'"
+          [value]="state.entity() || ''"
+          [options]="createEntityOptions()"
+          [busy]="state.pending()"
+          (valueChange)="state.selectCandidateEntity($event)"
+        />
+      </div>
+      <ng-template [erpCollectionCell]="columns() | collectionColumn: 'name'" let-candidate
+        ><erp-record-summary
+          [title]="candidate.displayName"
+          [description]="candidate.fileName"
+          [metadata]="candidate.subject"
+      /></ng-template>
+      <ng-template [erpCollectionCell]="columns() | collectionColumn: 'registered'" let-candidate
+        ><erp-status-badge
+          [label]="
+            (candidate.isImported === null
+              ? 'globalTemplates.registrationUnknown'
+              : candidate.isImported
+                ? 'globalTemplates.registered'
+                : 'globalTemplates.notRegistered'
+            ) | uiText: 'reporting'
+          "
+          [accent]="candidate.isImported ? 'var(--success)' : 'var(--muted-foreground)'"
+          appearance="outline"
+      /></ng-template>
+      <ng-template [erpCollectionCell]="columns() | collectionColumn: 'reason'" let-candidate>
+        @if (candidate.validationReason) {
+          <erp-record-summary [title]="candidate.validationReason" />
+        } @else {
+          —
+        }
+      </ng-template>
+      <ng-template [erpCollectionCell]="columns() | collectionColumn: 'register'" let-candidate
+        ><erp-button
+          variant="outlined"
+          [compactOnSmallScreens]="true"
+          [label]="
+            (candidate.isImported ? 'globalTemplates.registered' : 'globalTemplates.registerReport')
+              | uiText: 'reporting'
+          "
+          [disabled]="state.pending() || !state.canRegister(candidate)"
+          (activated)="state.import(candidate)"
+          ><erp-icon buttonIcon [name]="candidate.isImported ? 'check' : 'add'" /></erp-button
+      ></ng-template>
+    </erp-data-table>
+  </erp-dialog-panel>
+}

@@ -1,0 +1,118 @@
+{
+  "featureId": "angular-tenant-management-workspace",
+  "scope": "Title-card spacing parity with Countries",
+  "verifiedAt": "2026-11-06T06:08:20.605Z",
+  "decision": "Verified",
+  "measurementDefinition": {
+    "above": "Title-card top minus application topbar bottom",
+    "below": "Collection workspace top minus title-card bottom"
+  },
+  "directComparison": [
+    {
+      "language": "en",
+      "width": 390,
+      "countries": {
+        "above": 12,
+        "below": 16,
+        "documentOverflow": 0
+      },
+      "tenants": {
+        "above": 12,
+        "below": 16,
+        "documentOverflow": 0
+      }
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "countries": {
+        "above": 24,
+        "below": 24,
+        "documentOverflow": 0
+      },
+      "tenants": {
+        "above": 24,
+        "below": 24,
+        "documentOverflow": 0
+      }
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "countries": {
+        "above": 12,
+        "below": 16,
+        "documentOverflow": 0
+      },
+      "tenants": {
+        "above": 12,
+        "below": 16,
+        "documentOverflow": 0
+      }
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "countries": {
+        "above": 24,
+        "below": 24,
+        "documentOverflow": 0
+      },
+      "tenants": {
+        "above": 24,
+        "below": 24,
+        "documentOverflow": 0
+      }
+    }
+  ],
+  "tenantBrowser": {
+    "cases": 8,
+    "languages": [
+      "en",
+      "ar"
+    ],
+    "modes": [
+      "light",
+      "dark"
+    ],
+    "widths": [
+      390,
+      1440
+    ],
+    "usesInterceptedFixtures": true
+  },
+  "angularGate": {
+    "command": "npm run check",
+    "exitCode": 0,
+    "testFiles": 154,
+    "tests": 809,
+    "architectureTests": 30,
+    "configurationTests": 4,
+    "includes": [
+      "format",
+      "lint",
+      "tokens",
+      "fonts",
+      "catalog",
+      "architecture",
+      "types",
+      "unit tests",
+      "production build"
+    ],
+    "initialBundleKB": 578.42,
+    "warningNote": "RISK-020"
+  },
+  "limits": [
+    "No hosted business writes",
+    "Earlier feature negative/live-read receipts are historical",
+    "System Audit and remaining Super Admin parity remain active"
+  ],
+  "sourceHashes": {
+    "web-angular/src/app/shared/ui/layout/_collection-page.scss": "7c9e048dd4118b3ea99e5ae7de9ddee5904d7ff33c72bedb5fa22ed90884e602",
+    "web-angular/src/app/shared/ui/layout/application-frame/application-frame.scss": "8754c5a9a16cdeb1d76bfa230602aff924e58e5edf84e5f0d19972fad7545abd",
+    "web-angular/src/app/shared/ui/layout/page-header/page-header.scss": "e58ac1b536313f3055aa45fea7cc62f54be26fe14b4409a1304407b200982f2c",
+    "web-angular/src/app/platform/tenants/management/pages/tenant-management-page/tenant-management-page.scss": "fed0a861e7f537a182945be4b6f7e2c69ba2943656a02b308b50454e910bed1e",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.scss": "630cd6b18deefb8039a62f10383dd6adc295af30281d144b8ff68acae6d85e97",
+    "web-angular/scripts/verify-tenant-management-browser.mjs": "04d692f3825aa56143244895fe873f0d104064b172b08d7fe22c17c912b7b3e3"
+  }
+}

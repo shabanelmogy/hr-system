@@ -1,0 +1,1 @@
+Tenant Management read-only contract checks passed: 3; no business writes.

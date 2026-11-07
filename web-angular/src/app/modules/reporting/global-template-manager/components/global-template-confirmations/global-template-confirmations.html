@@ -1,0 +1,31 @@
+<erp-confirmation-dialog
+  [open]="!!state.replacementTarget()"
+  [title]="'globalTemplates.replaceTitle' | uiText: 'reporting'"
+  [description]="
+    locale.translate('globalTemplates.replaceConfirm', 'reporting', {
+      name: state.replacementTarget()?.report.displayName || '',
+      version: state.replacementTarget()?.report.currentVersionNumber || '—',
+    })
+  "
+  [cancelLabel]="'actions.cancel' | uiText"
+  [confirmLabel]="'globalTemplates.replaceAndPublish' | uiText: 'reporting'"
+  [pending]="state.pending()"
+  severity="warn"
+  (cancelled)="state.cancelReplacement()"
+  (confirmed)="state.confirmReplacement()"
+/>
+<erp-confirmation-dialog
+  [open]="!!state.archiveTarget()"
+  [title]="'crystalReports.archive' | uiText: 'reporting'"
+  [description]="
+    locale.translate('crystalReports.archiveConfirm', 'reporting', {
+      name: state.archiveTarget()?.displayName || '',
+    })
+  "
+  [cancelLabel]="'actions.cancel' | uiText"
+  [confirmLabel]="'crystalReports.archive' | uiText: 'reporting'"
+  [pending]="state.pending()"
+  severity="danger"
+  (cancelled)="state.cancelArchive()"
+  (confirmed)="state.archive()"
+/>

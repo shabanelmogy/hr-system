@@ -9,6 +9,15 @@
   border-radius: var(--radius);
   background: var(--surface);
 }
+:host(.compact-field) .boolean-control {
+  min-block-size: 44px;
+  padding: 4px 8px;
+  gap: 8px;
+}
+:host(.compact-field) label {
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
 .boolean-control.invalid {
   border-color: var(--destructive);
 }

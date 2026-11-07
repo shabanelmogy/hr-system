@@ -1,0 +1,93 @@
+{
+  "dateUtc": "2026-11-07T07:54:52.763Z",
+  "cases": [
+    {
+      "language": "en",
+      "mode": "light",
+      "width": 390,
+      "height": 844,
+      "currentNextRendered": true,
+      "personalFields": true,
+      "photoActions": true,
+      "securityTab": true,
+      "accountWrites": 0
+    },
+    {
+      "language": "en",
+      "mode": "light",
+      "width": 1440,
+      "height": 844,
+      "currentNextRendered": true,
+      "personalFields": true,
+      "photoActions": true,
+      "securityTab": true,
+      "accountWrites": 0
+    },
+    {
+      "language": "en",
+      "mode": "dark",
+      "width": 390,
+      "height": 844,
+      "currentNextRendered": true,
+      "personalFields": true,
+      "photoActions": true,
+      "securityTab": true,
+      "accountWrites": 0
+    },
+    {
+      "language": "en",
+      "mode": "dark",
+      "width": 1440,
+      "height": 844,
+      "currentNextRendered": true,
+      "personalFields": true,
+      "photoActions": true,
+      "securityTab": true,
+      "accountWrites": 0
+    },
+    {
+      "language": "ar",
+      "mode": "light",
+      "width": 390,
+      "height": 844,
+      "currentNextRendered": true,
+      "personalFields": true,
+      "photoActions": true,
+      "securityTab": true,
+      "accountWrites": 0
+    },
+    {
+      "language": "ar",
+      "mode": "light",
+      "width": 1440,
+      "height": 844,
+      "currentNextRendered": true,
+      "personalFields": true,
+      "photoActions": true,
+      "securityTab": true,
+      "accountWrites": 0
+    },
+    {
+      "language": "ar",
+      "mode": "dark",
+      "width": 390,
+      "height": 844,
+      "currentNextRendered": true,
+      "personalFields": true,
+      "photoActions": true,
+      "securityTab": true,
+      "accountWrites": 0
+    },
+    {
+      "language": "ar",
+      "mode": "dark",
+      "width": 1440,
+      "height": 844,
+      "currentNextRendered": true,
+      "personalFields": true,
+      "photoActions": true,
+      "securityTab": true,
+      "accountWrites": 0
+    }
+  ]
+}

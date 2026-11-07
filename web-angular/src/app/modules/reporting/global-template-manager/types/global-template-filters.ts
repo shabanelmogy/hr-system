@@ -27,7 +27,10 @@ export const globalTemplateColumnFilters = {
     type: 'text',
     maxConstraints: 4,
     modes: ['equals', 'notEquals'],
-    choices: ['countries', 'states', 'districts'].map((value) => ({ value, label: value })),
+    choices: ['countries', 'states', 'districts', 'system-error-logs'].map((value) => ({
+      value,
+      label: value,
+    })),
   },
   version: {
     field: 'currentVersionNumber',

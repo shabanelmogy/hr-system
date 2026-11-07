@@ -62,6 +62,7 @@ class CardFixture {
   readonly id = (row: RecordFixture) => row.id;
   readonly label = (row: RecordFixture) => row.name;
   readonly custom = signal(true);
+  readonly showFooter = signal(true);
   readonly opened = signal<number | null>(null);
 }
 describe('Shared read-workspace compatibility extensions', () => {
@@ -130,6 +131,19 @@ describe('Shared read-workspace compatibility extensions', () => {
     await fixture.whenStable();
     expect(root.querySelector('erp-surface-card header h2')?.textContent).toBe('Fixture');
     expect(root.querySelector('.surface-footer')).toBeNull();
+  });
+  it('forwards the existing collection footer policy with its default and explicit hidden values', async () => {
+    const fixture = TestBed.createComponent(CardFixture);
+    await fixture.whenStable();
+    const cardList = fixture.debugElement.query(By.directive(CardList))
+      .componentInstance as CardList<RecordFixture>;
+    const frame = fixture.debugElement.query(By.directive(CollectionFrame))
+      .componentInstance as CollectionFrame<RecordFixture>;
+    expect(cardList.showFooter()).toBe(true);
+    expect(frame.showFooter()).toBe(true);
+    fixture.componentInstance.showFooter.set(false);
+    await fixture.whenStable();
+    expect(frame.showFooter()).toBe(false);
   });
   it('keeps usage color defaults while allowing a generic owner-defined progress accent', async () => {
     const fixture = TestBed.createComponent(ProgressMeter);

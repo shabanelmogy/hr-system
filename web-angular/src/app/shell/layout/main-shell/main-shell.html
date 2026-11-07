@@ -12,8 +12,10 @@
     [searchLabel]="'general.search' | uiText"
     [navigationVisible]="path() !== '/apps'"
     [fillContent]="
-      global() && (path() === '/home' || path() === '/super-admin' || path() === '/dev/countries')
+      workspacePresentation().fill ||
+      (global() && (path() === '/home' || path() === '/super-admin' || path() === '/dev/countries'))
     "
+    [contentSpacing]="workspacePresentation().compact ? 'compact' : 'standard'"
     [openLabel]="'menu.openSidebar' | uiText"
     [closeLabel]="'menu.closeSidebar' | uiText"
     (activated)="activate($event)"
@@ -56,6 +58,9 @@
       <erp-identity-avatar [name]="name()" />
     </div>
     <div workspaceActions class="toolbar-actions" [attr.inert]="auth.contextChanging() ? '' : null">
+      @if (development) {
+        <erp-viewport-debugger />
+      }
       <div class="desktop-preferences">
         <erp-appearance-preferences
           appearance="icon"
@@ -91,6 +96,17 @@
               (languageChange)="language($event)"
               (modeChange)="theme.setMode($event)"
             />
+          </div>
+          <div class="settings-profile">
+            <erp-button
+              appearance="quiet"
+              variant="text"
+              [label]="'general.profile' | uiText"
+              [description]="'menu.profileDescription' | uiText"
+              fullWidth
+              (activated)="profile()"
+              ><erp-icon buttonIcon name="user"
+            /></erp-button>
           </div>
           <div class="settings-logout">
             <erp-button

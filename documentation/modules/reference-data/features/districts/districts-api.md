@@ -6,6 +6,12 @@ HTTP contract for client integration: [Districts Controller Contract](districts-
 
 Districts is global State-dependent geographical reference data. It does not inherit Country-only fields; its approved bulk-create contract resolves State names in the web client and sends typed District rows.
 
+Angular client2026-11-06: the complete canonical District workspace now composes
+existing Shared owners with four-field State-aware native Signal Forms and all five
+source views. Complete acceptance/limits are in documentation/modules/platform/
+features/angular-districts-workspace/DISTRICTS_WORKSPACE_2026-11-06.md. API/Next/native
+business rules are retained; this migration does not change database/schema.
+
 ## 2. Domain model
 
 `District` requires printable Unicode display names, an uppercase code, and

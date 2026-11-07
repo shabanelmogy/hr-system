@@ -1,0 +1,65 @@
+<erp-form
+  [form]="editor.form"
+  [title]="captions.text('title')"
+  [submitLabel]="'actions.save' | uiText"
+  [appearance]="appearance()"
+  [fillContent]="appearance() === 'page'"
+  [hideHeader]="true"
+  [pending]="editor.pending()"
+  [readOnly]="editor.uncertain() || editor.conflict()"
+  [feedback]="
+    editor.feedback() ? captions.locale.translate(editor.feedback(), 'platform-tenants') : ''
+  "
+  (sectionFocusRequested)="chooseSection($event)"
+>
+  @if (editor.conflict()) {
+    <erp-button
+      formTools
+      [label]="captions.text('reloadCurrent')"
+      variant="outlined"
+      (activated)="editor.reload()"
+      ><erp-icon buttonIcon name="refresh"
+    /></erp-button>
+  }
+  <erp-content-tabs
+    [tabs]="tabs()"
+    [selected]="selected()"
+    (selectedChange)="chooseSection($event)"
+    [keepAlive]="true"
+    [content]="sectionContent"
+  />
+  <ng-template #sectionContent let-section>
+    @switch (section) {
+      @case ('identity') {
+        <erp-tenant-identity-fields formSection="identity" />
+      }
+      @case ('subscription') {
+        <erp-tenant-subscription-fields formSection="subscription" />
+      }
+      @case ('contact') {
+        <erp-tenant-contact-fields formSection="contact" />
+      }
+      @case ('entitlements') {
+        <erp-tenant-entitlement-field
+          formSection="entitlements"
+          [formField]="editor.form.entitlements"
+          [modules]="editor.catalog.modules()"
+          [label]="captions.label('entitlements')"
+          [messages]="captions.messages()"
+          [readOnly]="editor.locked()"
+        />
+      }
+      @case ('notes') {
+        <erp-tenant-notes-fields formSection="notes" />
+      }
+    }
+  </ng-template>
+  <erp-icon formSubmitIcon name="check" />
+  <erp-button
+    formActions
+    [label]="'actions.cancel' | uiText"
+    variant="outlined"
+    [disabled]="editor.pending()"
+    (activated)="cancelled.emit()"
+  />
+</erp-form>

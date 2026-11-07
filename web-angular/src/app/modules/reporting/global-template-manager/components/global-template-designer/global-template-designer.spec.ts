@@ -11,6 +11,7 @@ import type { GlobalTemplateDesignSource, GlobalTemplateDetail } from '../../typ
 import { GlobalTemplateDesigner } from './global-template-designer';
 
 const source: GlobalTemplateDesignSource = {
+  bindingKind: 'database-view',
   sourceKey: 'countries',
   moduleKey: 'reference-data',
   scope: 'global',
@@ -48,7 +49,7 @@ const detail: GlobalTemplateDetail = {
 };
 
 describe('empty template designer preparation', () => {
-  async function setup() {
+  async function setup(selectedSource: GlobalTemplateDesignSource = source) {
     vi.stubGlobal(
       'matchMedia',
       vi.fn((query: string) => ({
@@ -79,10 +80,11 @@ describe('empty template designer preparation', () => {
         'GlobalCrystalReports:Create',
         'GlobalCrystalReports:Download',
         'Countries:Edit',
+        'SystemErrorLogs:View',
       ],
     });
     const service = {
-      designSources: vi.fn(() => of([source])),
+      designSources: vi.fn(() => of([selectedSource])),
       databaseViews: vi.fn(() =>
         of({
           items: [{ viewName: 'dbo.vw_Countries', isCompatible: true, rejectionCode: null }],
@@ -101,6 +103,7 @@ describe('empty template designer preparation', () => {
       ],
     });
     const locale = TestBed.inject(LocalizationRuntime);
+    locale.setLanguage('en');
     await locale.loadNamespace('core');
     await locale.loadNamespace('reporting');
     const fixture = TestBed.createComponent(GlobalTemplateDesigner);
@@ -112,6 +115,29 @@ describe('empty template designer preparation', () => {
   afterEach(() => {
     TestBed.resetTestingModule();
     vi.unstubAllGlobals();
+  });
+  it('creates a fixed provider draft without querying or requiring a database View', async () => {
+    const provider = {
+      ...source,
+      bindingKind: 'provider' as const,
+      sourceKey: 'system-error-logs' as const,
+      moduleKey: 'platform',
+    };
+    const { fixture, state, service } = await setup(provider);
+    state.form.controls.moduleKey.setValue('platform');
+    state.form.controls.sourceKey.setValue('system-error-logs');
+    state.form.controls.displayName.setValue('Error summary');
+    state.form.controls.reportKey.setValue('system-error-logs-summary');
+    await fixture.whenStable();
+    expect(state.providerBound()).toBe(true);
+    expect(state.form.controls.viewName.disabled).toBe(true);
+    expect(service.databaseViews).not.toHaveBeenCalled();
+    expect(state.form.valid).toBe(true);
+    state.save(vi.fn());
+    await fixture.whenStable();
+    expect(service.createDraft).toHaveBeenCalledWith(
+      expect.objectContaining({ sourceKey: 'system-error-logs', viewName: '' }),
+    );
   });
 
   it('keeps draft submission enabled and focuses missing module through the shared form', async () => {

@@ -7,6 +7,12 @@ linked rather than copied here.
 
 ## Current status
 
+Documentation evidence is aligned with the current checkout as of2026-11-05.
+The [current evidence baseline](CURRENT_EVIDENCE_BASELINE_2026-11-05.md) records
+122 unavailable historical raw logs separately from existing required sources and
+retained receipts. Documentation generation is distinct from runtime/release
+acceptance; FOLLOW-025 owns any future reliance on those raw logs.
+
 - Lifecycle: active modular-monolith module.
 - Runtime foundation: six projects, a module bootstrap, and an EF Core context
   using the `rpt` schema.

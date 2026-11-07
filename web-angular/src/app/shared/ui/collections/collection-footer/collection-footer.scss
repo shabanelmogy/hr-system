@@ -81,24 +81,39 @@ p-paginator {
   gap: 12px;
   white-space: nowrap;
 }
+.record-navigation-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+.cursor-page-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
 .page-count {
   color: var(--muted-foreground);
   font-size: 12px;
   font-variant-numeric: tabular-nums;
 }
-:host ::ng-deep .with-record-navigation .collection-nav-space,
-:host ::ng-deep .with-record-navigation .collection-size-slot {
-  flex: 1 1 0px;
-  min-inline-size: 0;
-  margin-inline: 0;
-}
 @media (max-width: 799px) {
-  :host ::ng-deep .with-record-navigation .collection-nav-space {
-    display: none;
+  .record-navigation-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
   }
-  :host ::ng-deep .with-record-navigation .collection-size-slot {
-    flex-basis: 100%;
-    margin-block-start: 8px;
+  .record-navigation-layout .record-controls {
+    grid-row: 1;
+  }
+  .record-navigation-layout .size-settings,
+  .cursor-page-controls {
+    justify-content: center;
+  }
+  .page-context:empty {
+    display: none;
   }
   footer {
     flex-wrap: wrap;

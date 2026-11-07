@@ -1,0 +1,31 @@
+<dl>
+  <div>
+    <dt><erp-icon name="globe" />{{ 'states.country' | uiText: 'reference-states' }}</dt>
+    <dd><erp-status-badge [label]="countryName()" appearance="outline" /></dd>
+  </div>
+  <div>
+    <dt>{{ 'states.code' | uiText: 'reference-states' }}</dt>
+    <dd>
+      <bdi>{{ state().code }}</bdi>
+    </dd>
+  </div>
+  <div>
+    <dt><erp-icon name="location" />{{ 'states.districts' | uiText: 'reference-states' }}</dt>
+    <dd>
+      <erp-status-badge
+        [label]="districts()"
+        appearance="outline"
+        [accent]="state().districtsCount > 0 ? 'var(--success)' : 'var(--muted-foreground)'"
+      />
+    </dd>
+  </div>
+</dl>
+<erp-progress-meter
+  appearance="inline"
+  [label]="'states.dashboard.dataQuality' | uiText: 'reference-states'"
+  [description]="qualityLevel()"
+  [used]="quality().quality"
+  [limit]="100"
+  [accent]="quality().accent"
+/>
+<p class="created"><erp-icon name="calendar" />{{ createdOn() }}</p>

@@ -1,63 +1,126 @@
-<erp-surface-card [title]="'imports.selectSpreadsheet' | uiText">
-  <div class="policy">
-    <p>
-      {{ 'imports.filePolicy' | uiText: 'core' : { maxSizeMb: maxSizeMb(), maxRows: maxRows() } }}
-    </p>
-    <p dir="ltr">{{ 'imports.expectedHeaders' | uiText: 'core' : { headers: headers() } }}</p>
+<ng-template #importHeader>
+  <div class="import-heading">
+    <h2>{{ 'imports.workspaceTitle' | uiText }}</h2>
+    <div class="header-actions">
+      <p-fileupload
+        #picker
+        mode="basic"
+        [customUpload]="true"
+        [auto]="false"
+        [chooseButtonProps]="{ variant: 'outlined', severity: 'secondary' }"
+        [disabled]="busy() || locked() || disabled()"
+        [chooseLabel]="'imports.chooseFile' | uiText"
+        (onSelect)="select($event); picker.clear()"
+        ><ng-template #filelabel><span></span></ng-template
+      ></p-fileupload>
+      <erp-button
+        data-testid="import-template"
+        [compactOnSmallScreens]="true"
+        [label]="'imports.downloadTemplate' | uiText"
+        variant="outlined"
+        [disabled]="busy() || disabled()"
+        (activated)="downloadTemplate.emit()"
+      >
+        <erp-icon buttonIcon name="download" />
+      </erp-button>
+      <erp-button
+        data-testid="import-clear"
+        [compactOnSmallScreens]="true"
+        [label]="'imports.clearData' | uiText"
+        variant="text"
+        [disabled]="busy() || !fileName()"
+        (activated)="cleared.emit()"
+      >
+        <erp-icon buttonIcon name="reset" />
+      </erp-button>
+      <erp-button
+        data-testid="import-submit"
+        [compactOnSmallScreens]="true"
+        [label]="'imports.uploadData' | uiText"
+        [busy]="busy()"
+        [disabled]="disabled() || locked() || !rowCount() || !canSubmit()"
+        (activated)="submitted.emit()"
+      >
+        <erp-icon buttonIcon name="upload" />
+      </erp-button>
+    </div>
   </div>
-  <div class="actions">
-    <p-fileupload
-      #picker
-      mode="basic"
-      [customUpload]="true"
-      [auto]="false"
-      [chooseButtonProps]="{ variant: 'outlined', severity: 'secondary' }"
-      [disabled]="busy() || locked() || disabled()"
-      [chooseLabel]="'imports.selectSpreadsheet' | uiText"
-      (onSelect)="select($event); picker.clear()"
-      ><ng-template #filelabel><span></span></ng-template
-    ></p-fileupload>
-    <erp-button
-      data-testid="import-template"
-      [label]="'imports.downloadTemplate' | uiText"
-      variant="outlined"
-      [disabled]="busy() || disabled()"
-      (activated)="downloadTemplate.emit()"
-    />
-    <erp-button
-      data-testid="import-submit"
-      [label]="'imports.uploadData' | uiText"
-      [busy]="busy()"
-      [disabled]="disabled() || locked() || !rowCount() || !canSubmit()"
-      (activated)="submitted.emit()"
-    />
-    <erp-button
-      data-testid="import-clear"
-      [label]="'imports.clearData' | uiText"
-      variant="text"
-      [disabled]="busy() || !fileName()"
-      (activated)="cleared.emit()"
-    />
-  </div>
-  @if (fileName()) {
-    <p class="file" dir="auto">
-      {{ 'imports.selectedFile' | uiText }} {{ fileName() }} ·
-      {{ 'pagination.totalRows' | uiText }}: {{ rowCount() }}
-    </p>
-  }
-  @if (busy()) {
-    <erp-feedback-state kind="loading" [compact]="true" [title]="'common.loading' | uiText" />
-  }
-  @if (message()) {
-    <erp-feedback-state
-      layout="inline"
-      [tone]="locked() ? 'warning' : failed() ? 'danger' : 'success'"
-      [icon]="failed() ? 'close' : 'check'"
-      [kind]="failed() ? 'error' : 'empty'"
-      [title]="message()"
-      [actionLabel]="locked() ? ('imports.reviewRecords' | uiText) : ''"
-      (action)="reviewed.emit()"
-    />
-  }
-  <ng-content />
+</ng-template>
+<erp-surface-card
+  [title]="'imports.workspaceTitle' | uiText"
+  [compact]="true"
+  [fill]="true"
+  [headerTemplate]="importHeader"
+>
+  <section class="import-workspace" [attr.aria-label]="'imports.workspaceTitle' | uiText">
+    <div class="file-information">
+      @if (fileName()) {
+        <div class="selected-file" aria-live="polite">
+          <erp-icon name="assessment" />
+          <span class="selected-file-name" dir="auto" [title]="fileName()">{{ fileName() }}</span>
+          <erp-status-badge
+            [label]="'imports.rowsCount' | uiText: 'core' : { count: rowCount() }"
+            appearance="outline"
+          />
+        </div>
+      }
+      <details class="requirements">
+        <summary>{{ 'imports.fileRequirementsTitle' | uiText }}</summary>
+        <div class="requirements-content">
+          <p>
+            {{
+              'imports.filePolicy' | uiText: 'core' : { maxSizeMb: maxSizeMb(), maxRows: maxRows() }
+            }}
+          </p>
+          <p>{{ 'imports.fileRequirements' | uiText }}</p>
+          <p>{{ 'imports.expectedHeaders' | uiText: 'core' : { headers: headers() } }}</p>
+        </div>
+      </details>
+    </div>
+    @if (busy()) {
+      <erp-feedback-state kind="loading" [compact]="true" [title]="'common.loading' | uiText" />
+    }
+    @if (message()) {
+      <erp-feedback-state
+        layout="inline"
+        [tone]="locked() ? 'warning' : failed() ? 'danger' : 'success'"
+        [icon]="failed() ? 'close' : 'check'"
+        [kind]="failed() ? 'error' : 'empty'"
+        [title]="message()"
+        [message]="messageDetail()"
+        [actionLabel]="locked() ? ('imports.reviewRecords' | uiText) : ''"
+        (action)="reviewed.emit()"
+      />
+    }
+    <div class="data-area">
+      <section class="preview" [attr.aria-label]="'imports.previewTitle' | uiText">
+        <ng-content />
+      </section>
+      <section class="status-summary" [attr.aria-label]="'imports.status' | uiText">
+        @for (status of statusSummary; track status) {
+          <erp-metric-card
+            [compact]="true"
+            [label]="'imports.' + status | uiText"
+            [value]="(counts()[status] ?? 0).toLocaleString()"
+            [icon]="
+              status === 'failed' || status === 'invalid'
+                ? 'close'
+                : status === 'uploaded'
+                  ? 'check'
+                  : 'assessment'
+            "
+            [accent]="
+              status === 'failed' || status === 'invalid'
+                ? 'var(--destructive)'
+                : status === 'uncertain'
+                  ? 'var(--warning)'
+                  : status === 'uploaded'
+                    ? 'var(--success)'
+                    : 'var(--primary)'
+            "
+          />
+        }
+      </section>
+    </div>
+  </section>
 </erp-surface-card>

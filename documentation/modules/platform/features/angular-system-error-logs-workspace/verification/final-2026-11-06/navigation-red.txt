@@ -1,0 +1,121 @@
+
+> erp-angular@0.0.0 pretest
+> npm run configure:license
+
+
+> erp-angular@0.0.0 configure:license
+> node --env-file-if-exists=.env.local scripts/configure-license.mjs
+
+PrimeUI local license configured (value omitted).
+
+> erp-angular@0.0.0 test
+> node scripts/run-angular.mjs test --watch=false --include=src/app/composition/authenticated-routes/administration-navigation.spec.ts
+
+API target: host (https://shabanhrms.runasp.net)
+> Building...
+√ Building...
+Application bundle generation complete. [18.086 seconds] - 2026-11-06T10:48:57.591Z
+
+
+ RUN  v5.0.5 F:/Portofolio Projects/ERPSYSTEM/web-angular
+
+ ❯ |erp-angular| src/app/composition/authenticated-routes/administration-navigation.spec.ts (2 tests | 2 failed) 19ms
+   ❯ Administration navigation ownership (2)
+     × groups operational viewers and Settings under one translated Administration parent 14ms
+     × keeps independent permissions and never creates an empty parent or unavailable workflow 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |erp-angular| src/app/composition/authenticated-routes/administration-navigation.spec.ts > Administration navigation ownership > groups operational viewers and Settings under one translated Administration parent
+AssertionError: expected [ …(4) ] to deeply equal [ { id: 'tenants', …(2) }, { …(4) } ]
+
+- Expected
++ Received
+
+  [
+    {
+      "icon": "settings",
+-     "id": "tenants",
+-     "label": "tenants",
+-   },
+-   {
+-     "children": [
+-       {
+-         "icon": "settings",
+-         "id": "system-audit",
+-         "label": "system-audit",
+-       },
+-       {
+-         "icon": "settings",
+      "id": "system-error-logs",
+      "label": "system-error-logs",
+      "selected": true,
+    },
+    {
+      "icon": "settings",
+      "id": "error-log-settings",
+      "label": "error-log-settings",
+    },
+-     ],
+-     "icon": "admin",
+-     "id": "system-administration",
+-     "label": "الإدارة",
++   {
++     "icon": "settings",
++     "id": "system-audit",
++     "label": "system-audit",
++   },
++   {
++     "icon": "settings",
++     "id": "tenants",
++     "label": "tenants",
+    },
+  ]
+
+ ❯ src/app/composition/authenticated-routes/administration-navigation.spec.ts:12:24
+     10|     const settings = entry('error-log-settings');
+     11|     const navigation = groupAdministrationNavigation([logs, settings, …
+     12|     expect(navigation).toEqual([
+       |                        ^
+     13|       tenants,
+     14|       { id: 'system-administration', label: 'الإدارة', icon: 'admin', …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  |erp-angular| src/app/composition/authenticated-routes/administration-navigation.spec.ts > Administration navigation ownership > keeps independent permissions and never creates an empty parent or unavailable workflow
+AssertionError: expected [ { id: 'error-log-settings', …(2) } ] to deeply equal [ { …(4) } ]
+
+- Expected
++ Received
+
+  [
+    {
+-     "children": [
+-       {
+      "icon": "settings",
+      "id": "error-log-settings",
+      "label": "error-log-settings",
+-       },
+-     ],
+-     "icon": "admin",
+-     "id": "system-administration",
+-     "label": "Administration",
+    },
+  ]
+
+ ❯ src/app/composition/authenticated-routes/administration-navigation.spec.ts:20:92
+     18|     const tenants = entry('tenants');
+     19|     expect(groupAdministrationNavigation([tenants], 'Administration'))…
+     20|     expect(groupAdministrationNavigation([entry('error-log-settings')]…
+       |                                                                                            ^
+     21|       { id: 'system-administration', label: 'Administration', icon: 'a…
+     22|     ]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  12:48:58
+   Duration  5.86s (environment 71%, setup 24%, transform 4%)
+

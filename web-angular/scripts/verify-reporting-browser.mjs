@@ -218,21 +218,25 @@ try {
             }),
           );
           const view = page.locator('erp-global-report-view'),
-            viewer = page.locator('erp-pdf-viewer');
+            viewer = page.locator('erp-pdf-viewer'),
+            actions = view.locator('aside');
           const input = (id) => page.getByTestId(id).locator('input');
           const button = (id) => page.getByTestId(id).getByRole('button');
           const search = () => page.getByTestId('criteria').locator('button[type=submit]').click();
-          const ready = () => expect(viewer.locator('a[download]')).toBeVisible();
+          const ready = async () => {
+            await expect(viewer).toBeVisible();
+            await expect(actions.locator('a[download]')).toHaveAttribute('href', /^blob:/);
+          };
           const rendered = async (action) => {
-            const previous = (await viewer.locator('a[download]').count())
-                ? await viewer.locator('a[download]').getAttribute('href')
+            const previous = (await actions.locator('a[download]').count())
+                ? await actions.locator('a[download]').getAttribute('href')
                 : null,
               count = state.renders.length;
             await action();
             await expect.poll(() => state.renders.length).toBe(count + 1);
             await ready();
             if (previous)
-              await expect(viewer.locator('a[download]')).not.toHaveAttribute('href', previous);
+              await expect(actions.locator('a[download]')).not.toHaveAttribute('href', previous);
           };
           const heading = (key) =>
             view.getByRole('heading', { name: captions[language][key], exact: true });
@@ -257,9 +261,9 @@ try {
             await page.getByTestId('criteria').locator('form').getAttribute('novalidate'),
             '',
           );
-          const currentUrl = await viewer.locator('a[download]').getAttribute('href');
+          const currentUrl = await actions.locator('a[download]').getAttribute('href');
           assert.ok(currentUrl.startsWith('blob:' + origin + '/'));
-          await expect(viewer.locator('a[target=_blank]')).toHaveAttribute(
+          await expect(actions.locator('a[target=_blank]')).toHaveAttribute(
             'rel',
             'noopener noreferrer',
           );
@@ -283,8 +287,10 @@ try {
             animations: 'disabled',
           });
           if (focused) {
+            await actions.getByRole('tab').nth(1).click();
+            await expect(actions.locator('a[download]')).toBeVisible();
             const downloadPromise = page.waitForEvent('download');
-            await viewer.locator('a[download]').click();
+            await actions.locator('a[download]').click();
             const download = await downloadPromise;
             assert.equal(
               download.suggestedFilename(),
@@ -292,6 +298,7 @@ try {
             );
             const downloaded = await download.path();
             assert.deepEqual(fs.readFileSync(downloaded), pdf);
+            await actions.getByRole('tab').nth(0).click();
             await input('nameAr').fill('مصر');
             let before = state.renders.length;
             await rendered(() => button('language').click());

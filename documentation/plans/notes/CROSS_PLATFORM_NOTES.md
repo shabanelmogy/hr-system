@@ -3,6 +3,12 @@
 Use this index for notes whose resolution requires coordinated API + Web + Mobile
 decisions.
 
+Shared all-filtered collection export rollout: PROD-032 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).
+
+System log advanced query rollout: PROD-030 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).
+
+System Error Logs managed RPT/PDF integration and real provider/database acceptance: PROD-031 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).
+
 Typical examples:
 - shared business rule or lifecycle changes;
 - request/response contract changes consumed by both clients;

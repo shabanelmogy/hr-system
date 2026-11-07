@@ -1,0 +1,29 @@
+{
+  "dateUtc": "2026-11-07T08:47:08.5113712Z",
+  "method": "GET",
+  "endpoint": "/api/v1/browser-auth/csrf",
+  "host": "https://shabanhrms.runasp.net",
+  "authenticated": false,
+  "writes": false,
+  "tokenValuesRecorded": false,
+  "results": [
+    {
+      "origin": "https://localhost:4210",
+      "status": 200,
+      "allowOrigin": "https://localhost:4210",
+      "allowCredentials": "true",
+      "publicErrorCode": null,
+      "publicTitle": null,
+      "hasRequestToken": true
+    },
+    {
+      "origin": "https://untrusted-origin.example",
+      "status": 403,
+      "allowOrigin": "",
+      "allowCredentials": "",
+      "publicErrorCode": null,
+      "publicTitle": null,
+      "hasRequestToken": false
+    }
+  ]
+}

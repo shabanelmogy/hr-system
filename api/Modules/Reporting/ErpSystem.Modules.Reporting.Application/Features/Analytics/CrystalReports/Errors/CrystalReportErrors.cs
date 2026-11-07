@@ -29,4 +29,5 @@ public sealed class CrystalReportErrors(IStringLocalizer<CrystalReportDetailResp
     public Error CrystalReportSourceRejected => new("CrystalReport.SourceRejected", localizer[nameof(CrystalReportSourceRejected)], ErrorType.Validation);
     public Error CrystalReportParameterMismatch => new("CrystalReport.ParameterMismatch", localizer[nameof(CrystalReportParameterMismatch)], ErrorType.Validation);
     public Error CrystalReportContractStale => new("CrystalReport.ContractStale", localizer[nameof(CrystalReportContractStale)], ErrorType.Validation);
+    public Error CrystalReportDatabaseVerificationUnavailable => new("CrystalReport.DatabaseVerificationUnavailable", localizer[nameof(CrystalReportDatabaseVerificationUnavailable)], ErrorType.ServiceUnavailable);
 }

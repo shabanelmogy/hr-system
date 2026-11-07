@@ -1,0 +1,75 @@
+<main>
+  <erp-page-header
+    [exportSource]="exportSource()"
+    variant="collection"
+    [title]="'districts.viewTitle' | uiText: 'reference-districts'"
+    [views]="views()"
+    [view]="view()"
+    [total]="state.total()"
+    [totalLabel]="'pagination.items' | uiText"
+    [filterable]="view() !== 'import'"
+    [filterVisible]="toolbarVisible()"
+    (viewChange)="chooseView($event)"
+    (refresh)="refreshCurrent()"
+    (filterToggle)="toolbarVisible.set(!toolbarVisible())"
+    [primaryAction]="
+      view() !== 'import' && editor.canCreate()
+        ? { label: districtText('districts.add'), icon: 'add' }
+        : null
+    "
+    (primaryActivated)="editor.create()"
+  />
+  <div class="workspace" data-testid="districts" [attr.data-kind]="state.source().kind">
+    @if (view() === 'grid' || view() === 'cards') {
+      <erp-district-collection-view
+        [kind]="view() === 'cards' ? 'cards' : 'grid'"
+        [toolbarVisible]="toolbarVisible()"
+      />
+    } @else if (view() === 'chart') {
+      @defer (on immediate) {
+        <erp-collection-chart-view
+          [source]="state.source()"
+          [rowId]="id"
+          [label]="'districts.charts.title' | uiText: 'reference-districts'"
+          [toolbarVisible]="toolbarVisible()"
+          [search]="chartSearch()"
+          [metrics]="analytics().metrics"
+          [plots]="analytics().plots"
+          (searchChange)="state.changeSearch($event)"
+          (retry)="state.refresh()"
+        >
+          <div toolbarFilters><erp-district-list-criteria [showSort]="true" /></div>
+          <ng-template erpCollectionEmpty
+            ><erp-feedback-state
+              kind="empty"
+              [title]="'districts.charts.noData' | uiText: 'reference-districts'"
+          /></ng-template>
+        </erp-collection-chart-view>
+      } @placeholder {
+        <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
+      }
+    } @else if (view() === 'import') {
+      @defer (on immediate) {
+        <erp-district-import-view (review)="chooseView('grid'); state.refresh()" />
+      } @placeholder {
+        <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
+      }
+    } @else if (view() === 'report' && canReport()) {
+      @defer (on immediate) {
+        <erp-global-report-view
+          #districtReport
+          entity="districts"
+          [embedded]="true"
+          [showFilterBar]="toolbarVisible()"
+          [catalogErrorMessage]="districtText('districts.reportCatalogError')"
+          [unavailableMessage]="districtText('districts.reportUnavailable')"
+        />
+      } @placeholder {
+        <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
+      }
+    }
+  </div>
+  <erp-district-detail-dialog /><erp-district-editor
+    (saved)="saved($event)"
+  /><erp-district-lifecycle-confirmation />
+</main>

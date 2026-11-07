@@ -9,6 +9,10 @@ public sealed class GlobalCrystalReportConsumerPolicy(ICurrentActor actor, ICurr
 
     public bool Allows(string entityKey, bool download = false)
     {
+        if (entityKey == "system-error-logs")
+            return !string.IsNullOrWhiteSpace(actor.UserId) && PlatformReader &&
+                permissions.HasPermission("SystemErrorLogs:View") &&
+                (!download || permissions.HasPermission(ReportingPermissions.DownloadGlobalCrystalReports));
         if (entityKey is not ("countries" or "states" or "districts")) return false;
         if (PlatformReader) return !download || permissions.HasPermission(ReportingPermissions.DownloadGlobalCrystalReports);
         if (actor.IsInRole("super_admin")) return false;

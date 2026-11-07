@@ -1,0 +1,1199 @@
+{
+  "schemaVersion": 1,
+  "status": "final",
+  "executionMode": "authorized-client-implementation",
+  "runtimeAuthorized": true,
+  "feature": "angular-system-error-logs-workspace",
+  "featureName": "Super Admin System Error Logs and Settings parity",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S4-A4 — Super Admin System Error Logs and Settings parity",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-system-error-logs-workspace.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-system-error-logs-workspace.md",
+  "purpose": "Verified S4-A4 Angular system viewer and retention clients, retained API/native boundaries, current source and portable acceptance evidence.",
+  "reviewArtifact": "documentation/modules/platform/features/angular-system-error-logs-workspace/angular-system-error-logs-workspace-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-system-error-logs-workspace/angular-system-error-logs-workspace-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-system-error-logs-workspace/angular-system-error-logs-workspace-review.md",
+    "api": "documentation/modules/platform/features/angular-system-error-logs-workspace/angular-system-error-logs-workspace-api.md",
+    "web": "documentation/modules/platform/features/angular-system-error-logs-workspace/angular-system-error-logs-workspace-web.md",
+    "mobile": "documentation/modules/platform/features/angular-system-error-logs-workspace/angular-system-error-logs-workspace-mobile.md"
+  },
+  "sourceCollections": [
+    {
+      "id": "next-error-log-source",
+      "path": "web-next/src/platform/error-logs",
+      "minimumFiles": 16,
+      "layer": "web",
+      "purpose": "Current retained workflow source and tests; not new runtime acceptance"
+    },
+    {
+      "id": "native-error-log-source",
+      "path": "mobile-react/src/platform/tools/error-logs",
+      "minimumFiles": 25,
+      "layer": "mobile",
+      "purpose": "Current retained workflow source and tests; not new runtime acceptance"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/angular-system-error-logs-workspace-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/angular-system-error-logs-workspace-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "error-logs-preflight-1",
+      "layer": "web",
+      "path": ".codex/skills/angular-developer/SKILL.md",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-2",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/Platform/ErrorLogs/ErrorLogRequests.cs",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-3",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/Platform/ErrorLogs/ErrorLogStore.cs",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-4",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Platform/ErrorLogs/V1/SystemErrorLogsController.cs",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-5",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/ErrorLogHandlerTests.cs",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-6",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/ErrorLogsControllerTests.cs",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-7",
+      "layer": "documentation",
+      "path": "documentation/guides/shared/PERMISSION_MODEL.md",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-8",
+      "layer": "documentation",
+      "path": "documentation/guides/shared/SCREEN_PATTERN_CATALOG.md",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-9",
+      "layer": "documentation",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-10",
+      "layer": "documentation",
+      "path": "documentation/guides/web/architecture/ANGULAR_SIGNAL_FORMS.md",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-11",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/angular-system-error-logs-workspace-api.md",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-12",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/angular-system-error-logs-workspace-mobile.md",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-13",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/angular-system-error-logs-workspace-review.md",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-14",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/angular-system-error-logs-workspace-web.md",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-15",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-16",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/ROADMAP.md",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-17",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-system-error-logs-workspace.md",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-18",
+      "layer": "documentation",
+      "path": "documentation/plans/notes/FOLLOW_UPS.md",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-19",
+      "layer": "documentation",
+      "path": "documentation/plans/notes/WEB_NOTES.md",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-20",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/application/error-log-use-cases.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-21",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/composition/client-error-log-capture.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-22",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/composition/use-error-log-use-cases.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-23",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/data/remote/client-error-log-remote.test.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-24",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/data/remote/client-error-log-remote.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-25",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/data/remote/error-log-boundary.test.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-26",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/data/remote/error-log-endpoints.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-27",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/data/remote/error-log-export.test.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-28",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/data/remote/error-log-remote-data-source.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-29",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/data/remote/error-log-schemas.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-30",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/data/repositories/default-error-log-repository.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-31",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/domain/models/error-log.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-32",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/domain/repositories/error-log-repository.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-33",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/index.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-34",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/components/ErrorLogDetailModal.test.tsx",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-35",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/components/ErrorLogDetailModal.tsx",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-36",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/queries/use-error-logs.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-37",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/runtime/ErrorLogCaptureBridge.test.tsx",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-38",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/runtime/ErrorLogCaptureBridge.tsx",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-39",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/screens/ErrorLogSettingsScreen.test.tsx",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-40",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/screens/ErrorLogSettingsScreen.tsx",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-41",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/screens/ErrorLogsScreen.test.tsx",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-42",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/screens/ErrorLogsScreen.tsx",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-43",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/validation/retention-schema.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-44",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/runtime/index.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-45",
+      "layer": "web",
+      "path": "web-angular/package.json",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-46",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/public-api.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-47",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-48",
+      "layer": "web",
+      "path": "web-next/src/app/(main)/super-admin/(platform)/error-log-settings/page.tsx",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-49",
+      "layer": "web",
+      "path": "web-next/src/app/(main)/super-admin/(platform)/error-logs/page.tsx",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-50",
+      "layer": "web",
+      "path": "web-next/src/lib/auth/permissions.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-51",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs/components/ErrorLogDetailDialog.tsx",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-52",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs/components/ErrorLogSettingsDialog.tsx",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-53",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs/hooks/useErrorLogs.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-54",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs/index.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-55",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs/pages/ErrorLogSettingsPage.tsx",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-56",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs/pages/ErrorLogsPage.test.tsx",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-57",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs/pages/ErrorLogsPage.tsx",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-58",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs/runtime/ErrorLogCaptureBridge.tsx",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-59",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs/runtime/index.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-60",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs/services/clientErrorLogService.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-61",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs/services/errorLogService.test.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-62",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs/services/errorLogService.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-63",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs/types/errorLogs.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-64",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs/utils/errorLogDetails.test.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-65",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs/utils/errorLogDetails.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-66",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs/validation/errorLogs.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-67",
+      "layer": "web",
+      "path": "web-next/src/shared/components/navigation/header/PageHeader.tsx",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-68",
+      "layer": "web",
+      "path": "web-next/src/shared/hooks/useServerListState.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-69",
+      "layer": "web",
+      "path": "web-next/src/shared/hooks/useViewLayout.test.ts",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-logs-preflight-70",
+      "layer": "web",
+      "path": "web-next/src/shared/hooks/useViewLayout.tsx",
+      "purpose": "Current retained source/test reference or preflight contract/book; not runtime acceptance"
+    },
+    {
+      "id": "error-log-preflight-receipt",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/PREFLIGHT_2026-11-06.json",
+      "purpose": "Executed source-preflight/gate receipt; not runtime acceptance"
+    },
+    {
+      "id": "error-log-api-permission-source",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Contracts/Authorization/PermissionContracts.cs",
+      "purpose": "Existing exact five permission strings"
+    },
+    {
+      "id": "error-log-foundation-0",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/view-preference.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-1",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/view-preference.spec.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-2",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-view-preference-browser.mjs",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-3",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/IMPLEMENTATION_PLAN.md",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-4",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/EXECUTION.md",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-5",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/error-log.fixture.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-6",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/services/system-error-log-service.spec.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-7",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/services/system-error-log-service.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-8",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/state/error-log-detail-state.spec.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-9",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/state/error-log-detail-state.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-10",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/state/error-log-export-state.spec.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-11",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/state/error-log-export-state.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-12",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/state/error-log-read-state.spec.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-13",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/state/error-log-read-state.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-14",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/state/error-log-settings-state.spec.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-15",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/state/error-log-settings-state.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-16",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/state/retention-editor-state.spec.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-17",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/state/retention-editor-state.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-18",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/system-error-log-access.spec.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-19",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/system-error-log-access.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-20",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/types/error-log-filters.spec.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-21",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/types/error-log-filters.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-22",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/types/error-log.spec.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-23",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/types/error-log.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-24",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/validation/retention-form.spec.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "error-log-foundation-25",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/validation/retention-form.ts",
+      "purpose": "Existing runtime foundation or scoped verification; not screen acceptance"
+    },
+    {
+      "id": "view-preference-scoped-receipt",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/VIEW_PREFERENCE_2026-11-06.json",
+      "purpose": "Executed scoped unit/browser/source-review evidence for four existing consumers; not Error Logs UI acceptance"
+    },
+    {
+      "id": "error-log-ui-source-0",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-collection/error-log-collection.html",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-1",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-collection/error-log-collection.scss",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-2",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-collection/error-log-collection.spec.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-3",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-collection/error-log-collection.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-4",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-criteria/error-log-criteria.html",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-5",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-criteria/error-log-criteria.spec.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-6",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-criteria/error-log-criteria.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-7",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-details/error-log-details.html",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-8",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-details/error-log-details.spec.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-9",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-details/error-log-details.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-10",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/retention-editor/retention-editor.html",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-11",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/retention-editor/retention-editor.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-12",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/retention-form/retention-form.html",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-13",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/retention-form/retention-form.scss",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-14",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/retention-form/retention-form.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-15",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/retention-summary/retention-summary.html",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-16",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/retention-summary/retention-summary.scss",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-17",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/retention-summary/retention-summary.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-19",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/pages/error-log-settings-page/error-log-settings-page.html",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-20",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/pages/error-log-settings-page/error-log-settings-page.scss",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-21",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/pages/error-log-settings-page/error-log-settings-page.spec.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-22",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/pages/error-log-settings-page/error-log-settings-page.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-23",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/pages/system-error-logs-page/system-error-logs-page.html",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-24",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/pages/system-error-logs-page/system-error-logs-page.spec.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-25",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/pages/system-error-logs-page/system-error-logs-page.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-26",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/policy.public-api.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-27",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/presentation/error-log-presentation.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-28",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/presentation/retention-presentation.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-29",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/public-api.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-44",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/system-error-log-guards.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-51",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-error-log-settings-browser.mjs",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-52",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/copy-button/copy-button.html",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-53",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/copy-button/copy-button.scss",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-54",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/copy-button/copy-button.spec.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-55",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/copy-button/copy-button.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-56",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/data-display/text-panel/text-panel.html",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-57",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/data-display/text-panel/text-panel.scss",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-58",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/data-display/text-panel/text-panel.spec.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-ui-source-59",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/data-display/text-panel/text-panel.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-current-ui-5",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-criteria/error-log-criteria.scss",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-current-ui-9",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-details/error-log-details.scss",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-current-ui-21",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/error-log.spec-setup.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-current-ui-27",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/pages/system-error-logs-page/system-error-logs-page.scss",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-current-ui-31",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/presentation/error-log-detail-presentation.ts",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-current-ui-56",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-system-error-logs-browser.mjs",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-log-current-ui-57",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/_collection-criteria.scss",
+      "purpose": "Existing runtime or focused verification source; acceptance scope is recorded in the current receipt"
+    },
+    {
+      "id": "error-logs-final-149",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-card-header/error-log-card-header.html",
+      "purpose": "Verified system viewer or retention owner and focused source verification"
+    },
+    {
+      "id": "error-logs-final-150",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-card-header/error-log-card-header.scss",
+      "purpose": "Verified system viewer or retention owner and focused source verification"
+    },
+    {
+      "id": "error-logs-final-151",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-card-header/error-log-card-header.ts",
+      "purpose": "Verified system viewer or retention owner and focused source verification"
+    },
+    {
+      "id": "error-logs-final-152",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-error-log-failures-browser.mjs",
+      "purpose": "Current shared layout, navigation or repeatable acceptance source"
+    },
+    {
+      "id": "error-logs-final-153",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-system-error-logs-reference.mjs",
+      "purpose": "Current shared layout, navigation or repeatable acceptance source"
+    },
+    {
+      "id": "error-logs-final-154",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-system-error-logs-live-read.mjs",
+      "purpose": "Current shared layout, navigation or repeatable acceptance source"
+    },
+    {
+      "id": "error-logs-final-155",
+      "layer": "web",
+      "path": "web-angular/src/app/composition/authenticated-routes/administration-navigation.ts",
+      "purpose": "Current shared layout, navigation or repeatable acceptance source"
+    },
+    {
+      "id": "error-logs-final-156",
+      "layer": "web",
+      "path": "web-angular/src/app/composition/authenticated-routes/administration-navigation.spec.ts",
+      "purpose": "Current shared layout, navigation or repeatable acceptance source"
+    },
+    {
+      "id": "error-logs-final-157",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.component.scss",
+      "purpose": "Current shared layout, navigation or repeatable acceptance source"
+    },
+    {
+      "id": "error-logs-final-158",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/audit.spec-setup.ts",
+      "purpose": "Current shared layout, navigation or repeatable acceptance source"
+    },
+    {
+      "id": "error-logs-final-159",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/angular-check.txt",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-160",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/angular-format.txt",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-161",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/angular-phone-cards.png",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-162",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/angular-phone-detail.png",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-163",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/angular-phone-navigation.png",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-164",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/angular-settings.png",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-165",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/angular-wide-cards.png",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-166",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/browser-results.json",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-167",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/calendar-green.txt",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-168",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/calendar-red.txt",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-169",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/card-layout-green.txt",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-170",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/card-layout-red.txt",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-171",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/districts-regression.txt",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-172",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/feedback-summary-green.txt",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-173",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/feedback-summary-red.txt",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-174",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/geography-navigation.txt",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-175",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/header-spacing-results.json",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-176",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/live-read-results.json",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-177",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/navigation-red.txt",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-178",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/negative-results.json",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-179",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/next-phone-detail.png",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-180",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/next-reference-results.json",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-181",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/next-wide-cards.png",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-182",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/settings-results.json",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-183",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/states-regression.txt",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-184",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/system-audit-regression.txt",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-185",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/tenant-admins-regression.txt",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-186",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/final-2026-11-06/tenant-management-regression.txt",
+      "purpose": "Portable current acceptance evidence"
+    },
+    {
+      "id": "error-logs-final-187",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/verification/SYSTEM_ERROR_LOGS_2026-11-06.json",
+      "purpose": "Current complete client verification decision and source hashes"
+    },
+    {
+      "id": "error-logs-education",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-system-error-logs-workspace.md",
+      "purpose": "Arabic customer education written after Verified Phase06"
+    },
+    {
+      "id": "error-logs-final-report",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-logs-workspace/VERIFICATION_2026-11-06.md",
+      "purpose": "Current complete verification and bounded release limits"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-system-error-logs-workspace-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-system-error-logs-workspace-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-system-error-logs-workspace/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

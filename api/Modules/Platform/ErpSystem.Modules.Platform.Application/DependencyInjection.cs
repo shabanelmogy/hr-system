@@ -62,6 +62,7 @@ public static class DependencyInjection
         services.AddScoped<Features.CompanyLocalization.CompanyLocalizationErrors>();
         services.AddScoped<Features.SystemLocalization.SystemLocalizationErrors>();
         services.AddScoped<UserErrors>();
+        services.AddScoped<Contracts.ErrorLogs.ISystemErrorLogReportSource, Features.Platform.ErrorLogs.SystemErrorLogReportSource>();
 
         return services;
     }

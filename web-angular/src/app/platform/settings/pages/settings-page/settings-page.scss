@@ -1,0 +1,12 @@
+@use '../../../../shared/ui/layout/collection-page';
+@include collection-page.shell;
+main {
+  gap: 12px;
+}
+erp-content-tabs {
+  flex: 1;
+  min-block-size: 0;
+}
+.appearance-panel {
+  padding: 16px;
+}

@@ -108,7 +108,8 @@
     "entities": {
       "countries": "Countries",
       "states": "States",
-      "districts": "Districts"
+      "districts": "Districts",
+      "system-error-logs": "System Error Logs"
     },
     "validation": {
       "Pending": "Pending",
@@ -128,6 +129,8 @@
     "schemaVersion": "Schema version",
     "createdOn": "Created",
     "revalidationCompleted": "Stored version revalidation completed.",
+    "verifyDatabase": "Verify Database and Publish",
+    "databaseVerifiedAndPublished": "Crystal Verify Database completed and the adapted version was published.",
     "invalidCatalogResponse": "The server returned an empty or incompatible report catalog. Refresh after publishing the matching ERP API.",
     "registrationUnknown": "Registration status unavailable from this server version",
     "connectionError": "Unable to read the server response. Check connectivity and whether CORS allows this application origin.",
@@ -181,7 +184,8 @@
       }
     },
     "modules": {
-      "reference-data": "Reference data"
+      "reference-data": "Reference data",
+      "platform": "Platform"
     },
     "replaceTitle": "Report already exists",
     "replaceConfirm": "Report “{{name}}” already exists (published version: {{version}}). Replace and publish will inspect this file, save a new version and switch publication to it. Previous versions and report permissions will be preserved. The previous version remains published if replacement fails.",

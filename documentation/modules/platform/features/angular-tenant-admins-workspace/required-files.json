@@ -1,0 +1,429 @@
+{
+  "schemaVersion": 1,
+  "status": "final",
+  "executionMode": "implemented-client-verification",
+  "runtimeAuthorized": true,
+  "feature": "angular-tenant-admins-workspace",
+  "featureName": "Super Admin Tenant Administrators parity",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S4-A2 — Super Admin Tenant Administrators parity",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-tenant-admins-workspace.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-tenant-admins-workspace.md",
+  "purpose": "Current TenantAdmin runtime, source references and executed client/read-only verification, education and exact limits.",
+  "reviewArtifact": "documentation/modules/platform/features/angular-tenant-admins-workspace/angular-tenant-admins-workspace-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-tenant-admins-workspace/angular-tenant-admins-workspace-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-tenant-admins-workspace/angular-tenant-admins-workspace-review.md",
+    "api": "documentation/modules/platform/features/angular-tenant-admins-workspace/angular-tenant-admins-workspace-api.md",
+    "web": "documentation/modules/platform/features/angular-tenant-admins-workspace/angular-tenant-admins-workspace-web.md",
+    "mobile": "documentation/modules/platform/features/angular-tenant-admins-workspace/angular-tenant-admins-workspace-mobile.md"
+  },
+  "sourceCollections": [
+    {
+      "id": "angular-tenant-admin-client",
+      "path": "web-angular/src/app/platform/tenant-admins",
+      "patterns": [
+        "*.ts",
+        "*.html",
+        "*.scss"
+      ],
+      "minimumFiles": 37,
+      "layer": "web",
+      "purpose": "Current implemented state/service/form/Cards/route/confirmation source and tests"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "id": "admin-preflight-0",
+      "layer": "documentation",
+      "path": "AGENTS.md",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-1",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-tenant-admins-workspace.md",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-2",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/angular-tenant-admins-workspace-request.md",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-3",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/angular-tenant-admins-workspace-evidence.md",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-4",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/angular-tenant-admins-workspace-review.md",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-5",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/angular-tenant-admins-workspace-api.md",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-6",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/angular-tenant-admins-workspace-web.md",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-7",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/angular-tenant-admins-workspace-mobile.md",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-8",
+      "layer": "web",
+      "path": "web-next/src/platform/tenant-admins/TenantAdminManagementPage.tsx",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-9",
+      "layer": "web",
+      "path": "web-next/src/platform/tenant-admins/types.ts",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-10",
+      "layer": "web",
+      "path": "web-next/src/platform/tenant-admins/tenantAdminApi.ts",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-11",
+      "layer": "web",
+      "path": "web-next/src/platform/tenant-admins/tenantAdminApiSchemas.ts",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-12",
+      "layer": "web",
+      "path": "web-next/src/config/api/tenantAdmins.ts",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-13",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Tenancy/V1/TenantAdminsController.cs",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-14",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Tenancy/Administration/TenantAdministrationContracts.cs",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-15",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Identity/PlatformTenantAdministrationAdapters.cs",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-16",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Identity/PlatformIdentityServiceCollectionExtensions.cs",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-17",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/tenants/management/services/tenant-management-service.ts",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-18",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.ts",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-19",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.ts",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-20",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-field-control.ts",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-preflight-21",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-admins/presentation/screens/TenantAdminManagementScreen.tsx",
+      "purpose": "Existing inspected source or applied preflight contract"
+    },
+    {
+      "id": "admin-runtime-22",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/multi-reference-field/multi-reference-field.html",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-runtime-23",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/multi-reference-field/multi-reference-field.scss",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-runtime-24",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/multi-reference-field/multi-reference-field.spec.html",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-runtime-25",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/multi-reference-field/multi-reference-field.spec.ts",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-runtime-26",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/multi-reference-field/multi-reference-field.ts",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-runtime-27",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/public-api.ts",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-runtime-28",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-runtime-29",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.html",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-runtime-30",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-read-compatibility.spec.ts",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-runtime-31",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-read-compatibility.spec.card-fixture.html",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-runtime-32",
+      "layer": "web",
+      "path": "web-angular/src/theme/prime-preset.ts",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-runtime-33",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/tenants/management/lookup.public-api.ts",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-runtime-34",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/tenants/management/services/tenant-management-service.spec.ts",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-runtime-35",
+      "layer": "web",
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.ts",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-runtime-36",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-tenant-admins-browser.mjs",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-runtime-37",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-tenant-admins-failures-browser.mjs",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-runtime-38",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-tenant-admins-live-read.mjs",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-runtime-39",
+      "layer": "web",
+      "path": "web-angular/src/locales/generated/platform-tenants.json",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-runtime-40",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/localization/catalog.generated.ts",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-runtime-41",
+      "layer": "web",
+      "path": "web-next/src/locales/resources/platform-tenants/en.json",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-runtime-42",
+      "layer": "web",
+      "path": "web-next/src/locales/resources/platform-tenants/ar.json",
+      "purpose": "Actual implemented runtime or verification harness, not acceptance claim"
+    },
+    {
+      "id": "admin-acceptance-43",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-tenant-admins-workspace.md",
+      "purpose": "Actual current source or executed acceptance evidence"
+    },
+    {
+      "id": "admin-acceptance-44",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/TENANT_ADMINS_WORKSPACE_2026-11-06.md",
+      "purpose": "Actual current source or executed acceptance evidence"
+    },
+    {
+      "id": "admin-acceptance-45",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/TENANT_ADMINS_WORKSPACE_2026-11-06.json",
+      "purpose": "Actual current source or executed acceptance evidence"
+    },
+    {
+      "id": "admin-acceptance-46",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-tenant-admins-reference.mjs",
+      "purpose": "Actual current source or executed acceptance evidence"
+    },
+    {
+      "id": "admin-acceptance-47",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/_collection-page.scss",
+      "purpose": "Actual current source or executed acceptance evidence"
+    },
+    {
+      "id": "admin-acceptance-48",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/ar-dark-1440-cards.png",
+      "purpose": "Actual current source or executed acceptance evidence"
+    },
+    {
+      "id": "admin-acceptance-49",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/ar-dark-390-editor.png",
+      "purpose": "Actual current source or executed acceptance evidence"
+    },
+    {
+      "id": "admin-acceptance-50",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/en-light-1440-editor.png",
+      "purpose": "Actual current source or executed acceptance evidence"
+    },
+    {
+      "id": "admin-acceptance-51",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/live-read.json",
+      "purpose": "Actual current source or executed acceptance evidence"
+    },
+    {
+      "id": "admin-acceptance-52",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/negative.json",
+      "purpose": "Actual current source or executed acceptance evidence"
+    },
+    {
+      "id": "admin-acceptance-53",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/next-ar-dark-1440-cards.png",
+      "purpose": "Actual current source or executed acceptance evidence"
+    },
+    {
+      "id": "admin-acceptance-54",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/next-ar-dark-390-editor.png",
+      "purpose": "Actual current source or executed acceptance evidence"
+    },
+    {
+      "id": "admin-acceptance-55",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/next-en-light-1440-editor.png",
+      "purpose": "Actual current source or executed acceptance evidence"
+    },
+    {
+      "id": "admin-acceptance-56",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/next-reference.json",
+      "purpose": "Actual current source or executed acceptance evidence"
+    },
+    {
+      "id": "admin-acceptance-57",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/positive.json",
+      "purpose": "Actual current source or executed acceptance evidence"
+    },
+    {
+      "id": "tenant-navigation-tenant-navigation-ts",
+      "layer": "web",
+      "path": "web-angular/src/app/composition/authenticated-routes/tenant-navigation.ts",
+      "purpose": "Basic Data tenant branch ownership, existing access policy and active route selection"
+    },
+    {
+      "id": "tenant-navigation-tenant-navigation-spec-ts",
+      "layer": "web",
+      "path": "web-angular/src/app/composition/authenticated-routes/tenant-navigation.spec.ts",
+      "purpose": "Basic Data tenant branch ownership, existing access policy and active route selection"
+    },
+    {
+      "id": "tenant-navigation-verification-2026-11-06",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-navigation-2026-11-06.json",
+      "purpose": "Scoped Basic Data tenant navigation browser, source hashes and quality gate receipt"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-tenant-admins-workspace-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-tenant-admins-workspace-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-tenant-admins-workspace/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

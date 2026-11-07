@@ -1,0 +1,61 @@
+<main class="profile-page">
+  <erp-page-header
+    appearance="card"
+    [title]="passwordOnly ? text('changePassword') : ('general.profile' | uiText)"
+    [subtitle]="
+      (passwordOnly ? 'auth.manageYourPasswordAndSecuritySettings' : 'auth.profilePageDescription')
+        | uiText: 'platform-auth'
+    "
+    [backLabel]="'actions.back' | uiText"
+    [backDisabled]="state.pending()"
+    (backRequested)="back()"
+  />
+  @if (state.infoView() === 'loading') {
+    <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
+  } @else if (state.infoView() === 'error') {
+    <erp-feedback-state
+      kind="error"
+      [title]="text('loadFailed')"
+      [actionLabel]="'actions.retry' | uiText"
+      (action)="state.retry()"
+    />
+  } @else if (state.infoView() === 'forbidden') {
+    <erp-feedback-state kind="forbidden" [title]="'authorization.forbidden.title' | uiText" />
+  } @else {
+    <erp-surface-card
+      [title]="passwordOnly ? text('password') : text('overview')"
+      [compact]="true"
+      icon="user"
+      [fill]="true"
+    >
+      <erp-scroll-viewport [label]="text('overview')">
+        @if (passwordOnly) {
+          <erp-account-password-editor />
+        } @else {
+          <erp-record-summary
+            [title]="state.info()?.userName ?? ''"
+            [fields]="fields()"
+            density="compact"
+          />
+          <erp-account-photo-editor />
+          <erp-content-tabs
+            [tabs]="tabs()"
+            [selected]="selected()"
+            commitMode="external"
+            (selectionRequested)="selectTab($event)"
+            [content]="tabContent"
+            [keepAlive]="true"
+          />
+        }
+      </erp-scroll-viewport>
+    </erp-surface-card>
+  }
+</main>
+<ng-template #tabContent let-id>
+  @if (id === 'personal') {
+    <erp-account-personal-info />
+  }
+  @if (id === 'password') {
+    <erp-account-password-editor />
+  }
+</ng-template>

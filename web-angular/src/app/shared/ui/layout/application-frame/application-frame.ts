@@ -30,6 +30,7 @@ import { ScrollViewport } from '../scroll-viewport/scroll-viewport';
     '[class.compact]': '!desktop()',
     '[class.sidebarless]': '!navigationVisible()',
     '[class.filled]': 'fillContent()',
+    '[class.compact-workspace]': "contentSpacing()==='compact'",
   },
 })
 export class ApplicationFrame {
@@ -54,6 +55,7 @@ export class ApplicationFrame {
   readonly rtl = input(false);
   readonly navigationVisible = input(true);
   readonly fillContent = input(false);
+  readonly contentSpacing = input<'standard' | 'compact'>('standard');
   constructor() {
     effect(() => {
       this.desktop();

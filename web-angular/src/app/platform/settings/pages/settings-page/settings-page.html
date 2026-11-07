@@ -1,0 +1,26 @@
+<main>
+  <erp-page-header
+    appearance="card"
+    [title]="'menu.settings' | uiText"
+    [subtitle]="'settingsWorkspace.description' | uiText"
+  />
+  <erp-content-tabs [tabs]="tabs()" [(selected)]="selected" [content]="tabContent" />
+  <ng-template #tabContent let-id>
+    @switch (id) {
+      @case ('system') {
+        <erp-error-log-settings-page />
+      }
+      @case ('appearance') {
+        <section class="appearance-panel">
+          <h2>{{ 'settingsWorkspace.appearanceTitle' | uiText }}</h2>
+          <erp-appearance-preferences
+            [language]="appearanceLanguage()"
+            [mode]="theme.mode()"
+            (languageChange)="locale.setLanguage($event)"
+            (modeChange)="theme.setMode($event)"
+          />
+        </section>
+      }
+    }
+  </ng-template>
+</main>

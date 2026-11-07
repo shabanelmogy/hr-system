@@ -1,0 +1,106 @@
+<main>
+  <erp-page-header
+    [exportSource]="exportSource()"
+    [title]="'globalTemplates.title' | uiText: 'reporting'"
+    [subtitle]="'crystalReports.subTitle' | uiText: 'reporting'"
+  >
+    <erp-button
+      [label]="'actions.refresh' | uiText"
+      [disabled]="state.pending()"
+      (activated)="state.reload()"
+      ><erp-icon buttonIcon name="refresh"
+    /></erp-button>
+  </erp-page-header>
+  @if (!state.allowed()) {
+    <erp-feedback-state kind="forbidden" [title]="'authorization.forbidden.title' | uiText" />
+  } @else if (state.entities().kind === 'loading') {
+    <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
+  } @else if (!state.entity()) {
+    <erp-feedback-state
+      [kind]="state.entities().kind === 'error' ? 'error' : 'empty'"
+      [title]="'crystalReports.noSupportedEntities' | uiText: 'reporting'"
+      [actionLabel]="'actions.retry' | uiText"
+      (action)="state.reload()"
+    />
+  } @else {
+    @if (state.feedback(); as feedback) {
+      <erp-feedback-state
+        kind="error"
+        [title]="
+          feedback.message ||
+          locale.translate(
+            feedback.key,
+            feedback.key.startsWith('globalTemplates.') ? 'reporting' : 'core'
+          )
+        "
+      />
+    }
+    <erp-data-table
+      toolbarLayout="single-row"
+      [source]="state.source()"
+      [recordNavigation]="true"
+      [advancedFilters]="true"
+      [filters]="state.columnFilters()"
+      (filtersChange)="state.changeColumnFilters($event)"
+      [label]="'globalTemplates.title' | uiText: 'reporting'"
+      [columns]="columns()"
+      [rowId]="rowId"
+      [contextActions]="rowActions"
+      [display]="{ columnManagement: true }"
+      [search]="{
+        value: state.criteria().search,
+        placeholder: ('general.search' | uiText),
+        maxLength: 200,
+      }"
+      (searchChange)="'value' in $event && state.search($event.value)"
+      (pageChange)="state.page($event.pageIndex, $event.pageSize)"
+      (retry)="state.reload()"
+      (rowActivated)="state.openDetail($event)"
+      (rowAction)="rowAction($event)"
+    >
+      <ng-template [erpCollectionCell]="columns() | collectionColumn: 'status'" let-report
+        ><erp-status-badge
+          [label]="
+            (report.isArchived
+              ? 'crystalReports.archived'
+              : report.isPublished
+                ? 'crystalReports.published'
+                : 'globalTemplates.draft'
+            ) | uiText: 'reporting'
+          "
+          [accent]="
+            report.isArchived
+              ? 'var(--muted-foreground)'
+              : report.isPublished
+                ? 'var(--success)'
+                : 'var(--warning)'
+          "
+      /></ng-template>
+      <ng-container toolbarContent>
+        @if (toolbarActions().length) {
+          <erp-action-menu-button
+            [label]="'actions.buttons' | uiText"
+            [actions]="toolbarActions()"
+            [disabled]="state.pending()"
+            (activated)="toolbarAction($event)"
+          />
+        }
+      </ng-container>
+      <div toolbarFilters>
+        <erp-option-select
+          [label]="'crystalReports.entity' | uiText: 'reporting'"
+          [value]="state.filterEntity() || ''"
+          [options]="filterEntityOptions()"
+          [busy]="state.pending()"
+          (valueChange)="state.selectEntity($event)"
+        /><erp-option-select
+          [label]="'crystalReports.status' | uiText: 'reporting'"
+          [value]="state.criteria().status"
+          [options]="statusOptions()"
+          (valueChange)="state.filterStatus($event)"
+        />
+      </div>
+    </erp-data-table>
+  }
+</main>
+<erp-global-template-designer #designer (created)="state.showCreatedDraft($event)" />

@@ -1,0 +1,14 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-block-size: 0;
+  min-inline-size: 0;
+  gap: 12px;
+}
+.summary {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}

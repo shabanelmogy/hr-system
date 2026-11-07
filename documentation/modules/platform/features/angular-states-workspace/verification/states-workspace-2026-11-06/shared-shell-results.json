@@ -1,0 +1,170 @@
+[
+  {
+    "role": "user",
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "passed": true
+  },
+  {
+    "role": "user",
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "passed": true
+  },
+  {
+    "role": "user",
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "passed": true
+  },
+  {
+    "role": "user",
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "passed": true
+  },
+  {
+    "role": "user",
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "passed": true
+  },
+  {
+    "role": "user",
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "passed": true
+  },
+  {
+    "role": "user",
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "passed": true
+  },
+  {
+    "role": "user",
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "passed": true
+  },
+  {
+    "role": "user",
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "passed": true
+  },
+  {
+    "role": "user",
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "passed": true
+  },
+  {
+    "role": "user",
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "passed": true
+  },
+  {
+    "role": "user",
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "passed": true
+  },
+  {
+    "role": "super_admin",
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "passed": true
+  },
+  {
+    "role": "super_admin",
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "passed": true
+  },
+  {
+    "role": "super_admin",
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "passed": true
+  },
+  {
+    "role": "super_admin",
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "passed": true
+  },
+  {
+    "role": "super_admin",
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "passed": true
+  },
+  {
+    "role": "super_admin",
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "passed": true
+  },
+  {
+    "role": "super_admin",
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "passed": true
+  },
+  {
+    "role": "super_admin",
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "passed": true
+  },
+  {
+    "role": "super_admin",
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "passed": true
+  },
+  {
+    "role": "super_admin",
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "passed": true
+  },
+  {
+    "role": "super_admin",
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "passed": true
+  },
+  {
+    "role": "super_admin",
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "passed": true
+  }
+]

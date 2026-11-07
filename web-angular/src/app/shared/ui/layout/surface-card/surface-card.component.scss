@@ -38,6 +38,20 @@ h2 {
   min-height: 0;
   overflow: hidden;
 }
+:host(.fill-card.natural-card) {
+  display: flex;
+  height: auto;
+  min-height: min-content;
+}
+:host(.fill-card.natural-card) section {
+  flex: 1;
+  height: auto;
+  min-height: min-content;
+}
+:host(.fill-card.natural-card) .surface-content {
+  min-height: auto;
+  overflow: visible;
+}
 :host(.compact-card) section {
   border-color: color-mix(in srgb, var(--card-accent) 20%, transparent);
   background: linear-gradient(

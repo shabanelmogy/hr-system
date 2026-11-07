@@ -1,0 +1,74 @@
+[
+  {
+    "endpoint": "/api/v1/global-data-exports/csv/fixture/en",
+    "mode": null,
+    "status": 401
+  },
+  {
+    "endpoint": "/api/v1/global-data-exports/csv/fixture/en",
+    "mode": "denied",
+    "status": 403
+  },
+  {
+    "endpoint": "/api/v1/global-data-exports/csv/fixture/en",
+    "mode": "tenant",
+    "status": 403
+  },
+  {
+    "endpoint": "/api/v1/export/exportCsv/fixture/en",
+    "mode": "global",
+    "status": 403
+  },
+  {
+    "endpoint": "/api/v1/global-data-exports/csv/fixture/ar",
+    "mode": "global",
+    "status": 200,
+    "format": "csv",
+    "rows": 1
+  },
+  {
+    "endpoint": "/api/v1/global-data-exports/csv/fixture/ar",
+    "mode": "global",
+    "status": 400,
+    "reason": "empty table"
+  },
+  {
+    "endpoint": "/api/v1/global-data-exports/xlsx/fixture/ar",
+    "mode": "global",
+    "status": 200,
+    "format": "xlsx",
+    "rows": 1
+  },
+  {
+    "endpoint": "/api/v1/global-data-exports/xlsx/fixture/ar",
+    "mode": "global",
+    "status": 400,
+    "reason": "empty table"
+  },
+  {
+    "endpoint": "/api/v1/export/exportCsv/fixture/ar",
+    "mode": "tenant",
+    "status": 200,
+    "format": "csv",
+    "rows": 1
+  },
+  {
+    "endpoint": "/api/v1/export/exportCsv/fixture/ar",
+    "mode": "tenant",
+    "status": 400,
+    "reason": "empty table"
+  },
+  {
+    "endpoint": "/api/v1/export/exportExcel/fixture/ar",
+    "mode": "tenant",
+    "status": 200,
+    "format": "xlsx",
+    "rows": 1
+  },
+  {
+    "endpoint": "/api/v1/export/exportExcel/fixture/ar",
+    "mode": "tenant",
+    "status": 400,
+    "reason": "empty table"
+  }
+]

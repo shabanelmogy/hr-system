@@ -332,3 +332,24 @@ angular-localization-foundation/STRUCTURE_PERFORMANCE_REPORT.md.
 ## D41 — Component composition and recurring implementation rules
 
 Requester2026-11-04 approved the component-extraction findings and asked to document recurring patterns. Scope remains existing structure/performance with new functionality deferred. Extract shared controlled appearance preferences; internal collection options dialog and per-grid presentation factory; feature-owned Countries card header/content/read-detail/lifecycle composition; external Reporting template/styles. Keep shared public contracts and page-scoped authority/state ownership. No storage, domain/API/schema/native/package or engine change. Canonical repeated-development guide: documentation/guides/web/architecture/ANGULAR_COMPONENT_COMPOSITION.md. Current scoped verification and its limits: angular-collection-foundation/COMPONENT_COMPOSITION_REPORT.md. Existing release notes, including RISK-020, remain applicable.
+
+Current successor D42 overrides D40's deferred-new-feature boundary for the
+specifically requested Super Admin migration work only.
+
+## D42 — Complete Super Admin parity, global geography first — 2026-11-05
+
+The requester explicitly authorizes completing States and Districts after Countries,
+then all remaining current Super Admin workflows matching web-next, followed by a
+comprehensive review of all components. The requester clarified that company Basic
+Data and organizational structure are outside this scope. Shared-first composition,
+Angular Signal Forms Option B, typed services, owner state and exact grants remain
+mandatory. SUPER_ADMIN_PARITY_2026-11-05.md owns the sequence; States is the sole
+Active feature. Complete each workflow's source/Phase00/implementation/verification
+before the next. Countries hosted-report gate stays Deferred under PROD-028 and
+cannot be falsely marked complete. No domain/schema or business API rewrite,
+dependency installation, deployment, commit/push or new privilege grant is implied.
+
+
+## D43 — Tenant create page and Super Admin sidebar refinements — 2026-11-06
+
+Requester moves Add Tenant to a full route /super-admin/tenants/new with a more spacious responsive presentation and live draft summary; edit retains its dialog. Reuse one feature TenantForm and the shared page-form footer, fields, tabs, error and dirty/pending navigation contracts; preserve all business/API rules. States/Districts belong under Basic Data → Global Geography with independently filtered Countries; remove reports/global sidebar entry only and preserve its guarded route and feature reports. This explicitly adapts current Next container/navigation, not tenancy semantics. No new engine/dependency/domain/schema/native rewrite is authorized by the presentation change.

@@ -1,0 +1,49 @@
+{
+  "feature": "angular-system-error-log-reports",
+  "increment": "Platform safe source adapter only",
+  "date": "2026-11-06",
+  "phase06": "Not Verified",
+  "fullApiGate": {
+    "restoreExitCode": 0,
+    "buildExitCode": 0,
+    "testExitCode": 0,
+    "passed": 1304,
+    "skipped": 3,
+    "buildWarnings": 1,
+    "buildErrors": 0
+  },
+  "focusedTests": 24,
+  "newTests": 9,
+  "red": "Missing adapter/contract compile failure",
+  "green": "9new source tests plus15existing owner tests passed",
+  "sourceReview": "Independent bounded review and root integration review: no unresolved P1/P2",
+  "notImplemented": [
+    "Managed contract/artifact/provider registration",
+    "Fixed provider template binding and entity migration",
+    "Angular report view and criteria integration",
+    "Real RPT inspection/publication/render acceptance"
+  ],
+  "externalAcceptance": "PROD-031",
+  "hostedSqlVerified": false,
+  "sourceActivated": false,
+  "schemaChanged": false,
+  "sourceHashes": {
+    "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/Platform/ErrorLogs/ErrorLogRequests.cs": "e16907b1c6f8ffd6a1971518e935bd84efa07a8243fec94d40944951d95cc898",
+    "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/Platform/ErrorLogs/ErrorLogStore.cs": "8afd2d10e90a28c62fb0a14f48470201692071735c22e983c889dd7485f6530b",
+    "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/ErrorLogStoreTests.cs": "9c6127682b0af29ba3c056c9b9f96f508d349c54540ea1851c0335d3da61aa85",
+    "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Validation/GlobalCrystalReportPolicy.cs": "f41d395ee92d5bc8667dd7f9e29bf02ddf74bfb283abf056f742589c64fcb5a7",
+    "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Validation/GlobalCrystalReportConsumerPolicy.cs": "19d52ae491684efde92002f02c160bb630630fd8f37edff0594561218dc2d75b",
+    "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Commands/CreateGlobalCrystalReportDraftCommand.cs": "0eb8ea4fa9426b95f1fae806e065e237c0a04a132adcc2e5bd20940955b082f2",
+    "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs": "3d925a3762a6d9047ac8a2895f807955b6bb048d178abdc2221d1fe20d87829c",
+    "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDesignSourceCatalog.cs": "7128947ad89eee4a614e57181e8e83431e777fc1fb474460204d4cda8a691361",
+    "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/GlobalCrystalReportConfigurations.cs": "c447328d8c51ebb9080c9a6d67c5042ec6ff77823a5a989a107e4103da47cbea",
+    "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain/Analytics/CrystalReports/Entities/GlobalCrystalReport.cs": "823fddf26f173abda787b7d51abc93830d2ce9fcf5485e71bea998f646c47ac9",
+    "api/Modules/Platform/ErpSystem.Modules.Platform.Contracts/ErrorLogs/SystemErrorLogReportContracts.cs": "51ca62d5facbda514d84654ebfa4d29a903c48133f6a2d1bb67ded9d12164b37",
+    "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/Platform/ErrorLogs/ErrorLogCriteriaPolicy.cs": "0d04c95b57556942aec7e37b1d772ba64ca8fe02a72e18b8b72af608b74ac268",
+    "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/Platform/ErrorLogs/SystemErrorLogReportSource.cs": "1d37a0b804ff626f89252fbedeb91bfbdc8766a4d57b8040faa0366d2d5ca0bc",
+    "api/Modules/Platform/ErpSystem.Modules.Platform.Application/DependencyInjection.cs": "ac751f7da8edf1be0ec1063884edee40f1508c081f23ad30577665889f23e9a4",
+    "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/DependencyInjection.cs": "531e88efc07f413cfc8dc825e8e6403294cd7455afae52d004d8967b633f2a1e",
+    "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/SystemErrorLogReportSourceTests.cs": "a280131d9f4d2b3f5414234642cf54add3189d66ea4574f98cc938e090429230",
+    "api/Tests/ErpSystem.ArchitectureTests/PlatformContractsArchitectureTests.cs": "9c7baa4671cfaeae748a1eed6129aede6fcb41d1a6a0e261c8d6469a063cde1c"
+  }
+}

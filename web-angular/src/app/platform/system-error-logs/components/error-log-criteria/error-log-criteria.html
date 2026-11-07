@@ -1,0 +1,34 @@
+<erp-date-field
+  [label]="captions.text('fromUtc')"
+  [value]="reads.filters().from"
+  [readOnly]="!reads.canRead()"
+  (valueChange)="reads.patchFilters({ from: $event })"
+/>
+<erp-date-field
+  [label]="captions.text('toUtc')"
+  [value]="reads.filters().to"
+  [readOnly]="!reads.canRead()"
+  [errors]="rangeErrors()"
+  (valueChange)="reads.patchFilters({ to: $event })"
+/>
+<erp-text-field
+  [label]="captions.text('user')"
+  [value]="reads.filters().userName"
+  [maxLength]="100"
+  [readOnly]="!reads.canRead()"
+  (valueChange)="reads.patchFilters({ userName: $event })"
+/>
+<erp-option-select
+  [label]="captions.text('source')"
+  [value]="reads.filters().source"
+  [options]="sources()"
+  [disabled]="!reads.canRead()"
+  (valueChange)="source($event)"
+/>
+<erp-option-select
+  [label]="captions.text('status')"
+  [value]="statusValue()"
+  [options]="statuses()"
+  [disabled]="!reads.canRead()"
+  (valueChange)="status($event)"
+/>

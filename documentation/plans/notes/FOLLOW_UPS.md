@@ -3,9 +3,53 @@
 Non-blocking improvements that should be revisited, but are not yet formal Deferred
 business scope.
 
+### FOLLOW-027 — collection view preference source parity
+
+Observed 2026-11-06 during S4-A4 Error Logs source preflight. Next's
+`useViewLayout.tsx` stores only an allowlisted presentation string in localStorage
+and synchronizes same-tab/storage events. Error Logs, Tenant Management, Countries,
+States and Districts supply explicit storage keys. At discovery their Angular page
+owners used an initial `signal('grid')` without restoring the preference.
+
+Owner: Angular shared collections + Web Architecture. Surface: Web. Priority:
+High. Status: Verified2026-11-06. Original impact: choosing Cards/another permitted view was lost on a
+route remount/reload, unlike the reviewed source. Reason not fixed in this note:
+The shared primitive and all five consumers are now implemented and accepted. Trigger:
+implement the generic shared view-preference primitive during S4-A4, apply it to
+every verified applicable collection owner, and close this note with meaningful
+storage/allowlist/blocked-storage tests and rendered remount proof before the final
+whole-Super-Admin acceptance. Target: current D42 goal, not a later release.
+Persist no business payload, credentials, private logs or draft form values;
+permission/dirty guards remain authoritative and unavailable views fall back
+safely. Earlier screen receipts remain historical; none proves this preference.
+Interim evidence2026-11-06: shared createViewPreference, four existing consumers, unit14/2files, browser16EN/AR390/1440 reload/sync/fallback (wide also SPA leave/back), and clean independent source review. Error Logs consumer and full gate subsequently passed; this note is Verified. Closure evidence: SYSTEM_ERROR_LOGS_2026-11-06.json; full907tests/177files and Error Logs browser8complete. All five owners are implemented; only allowlisted view strings persist. Canonical authority:
+`documentation/plans/business/web-angular-migration/decomposition/angular-system-error-logs-workspace.md`;
+`web-next/src/shared/hooks/useViewLayout.tsx`;
+`web-next/src/platform/tenants/components/TenantManagementMultiView.tsx`;
+`web-next/src/modules/reference-data/geographical-information/countries/components/CountriesMultiView.tsx`;
+corresponding States/Districts MultiView sources and Angular page owners.
+
+### FOLLOW-026 — scope and closure
+
+Observed during the approved Angular structure-only maintenance on 2026-11-05.
+The report-view behavior and its 14 focused unit tests cover projected PDF
+links and tab lifetime, but they do not replace a complete fresh browser run. The
+legacy script originally stopped at its old PDF-link locator. The current revision
+selects sidebar links, opens Options for the actual download and returns to Search
+for field interactions, retaining all failure, validation, cancellation and Blob-URL
+assertions. All eight focused EN/AR, light/dark, 390/1440 fixture cases passed on
+2026-11-05. Owner: Angular QA + Reporting UI owner. Status: Verified. Reopen on a
+report-view/sidebar contract or harness regression. Hosted/Crystal and physical-
+browser acceptance remain separate. Current source hashes and executed receipts:
+`documentation/modules/reporting/features/global-crystal-template-manager/verification/REPORT_TEMPLATE_SIDEBAR_2026-11-05.json`.
+The original structural increment and its limits are in
+[the execution report](../../guides/web/architecture/ANGULAR_COMPONENT_DECOMPOSITION_2026-11-05.md).
+
 | ID | Surface | Area | Follow-up | Owner | Priority | Status | Trigger / due condition | Related source |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| FOLLOW-025 | Cross-platform | Missing historical reporting evidence in main | Full Generate-Documentation.ps1 and -Check stop because 122 registered Reporting evidence files are absent both locally and in bb70c916. Angular-only generation/check uses the canonical generator with an in-memory Angular recipe/required-manifest filter; this does not satisfy the global gate. Restore genuine sanitized receipts from their owner and rerun the full gate; never synthesize historical logs. | Reporting documentation owner + QA | High | Open | Before claiming a complete repository documentation gate or Reporting release acceptance | `documentation/plans/business/web-angular-migration/verification/MAIN_MERGE_MISSING_EVIDENCE_2026-11-05.json` |
+| FOLLOW-027 | Web | Collection view preference parity | Restore only an allowlisted view string through a generic shared primitive; apply all verified consumers and prove remount behavior. | Angular shared collections + Web Architecture | High | Verified | All five owners, unit/storage boundaries,16preference+8ErrorLogs browser cases and current907test full gate | `web-next/src/shared/hooks/useViewLayout.tsx`; `documentation/plans/business/web-angular-migration/decomposition/angular-system-error-logs-workspace.md` |
+| FOLLOW-026 | Web | Reporting browser harness after sidebar composition | Updated current sidebar PDF selectors and real Options/Search interactions; all eight focused lifecycle cases passed2026-11-05 with failure, validation, cancellation and URL-revocation checks retained. New RPT sidebar workflow passed12additional production-fixture cases. | Angular QA + Reporting UI owner | Medium | Verified | Reopen on report-view/sidebar contract or harness regression; hosted/Crystal acceptance remains independently gated | `documentation/modules/reporting/features/global-crystal-template-manager/verification/REPORT_TEMPLATE_SIDEBAR_2026-11-05.json`; `web-angular/scripts/verify-reporting-browser.mjs` |
+| FOLLOW-025 | Cross-platform | Historical Reporting raw-log availability | Requester-authorized current-evidence baseline preserves the inventory of 122 unavailable historical logs and removes only their nonexistent current requiredFiles entries. Existing sources/receipts stay required; the generator remains strict. Historical raw-log availability remains Open, independently of documentation generation. Never claim recovered logs or fresh runtime acceptance from this adjustment. | Reporting documentation owner + QA | Medium | Open | Before relying on any unavailable historical raw log for runtime/release acceptance; recover genuine originals or execute and retain a new scoped run | `documentation/modules/reporting/CURRENT_EVIDENCE_BASELINE_2026-11-05.md`; `documentation/modules/reporting/verification/CURRENT_EVIDENCE_BASELINE_2026-11-05.json` |
 | FOLLOW-023 | API | Crystal rejected catalog descriptors | Corrected2026-11-01: runtime omits unaddressable identities, ERP preserves rejected oversize metadata without allowing import/download, and null/malformed/importable oversize cases fail closed.5new Reporting cases and real .NET10-client to .NET48-IIS mixed catalog/hash download proof pass. | Reporting API + Crystal Runtime + QA | High | Verified | Reopen on descriptor-contract or source-download regression; hosted publication remains PROD-028/029 | `documentation/plans/business/managed-crystal-reporting-reliability/RUNTIME_CORRECTION_RESULT_2026-11-01.md` |
 | FOLLOW-022 | Web | Angular professional Clean Code hardening | CC-01..07 implemented and Verified: semantic lint, four stronger TS flags, selected Angular diagnostics, resolved owner/HTTP/stable-column guards, narrower public APIs, focused shared/feature extraction and typed test contracts. Final472unit tests/26architecture cases/122browser cases pass;84component folders;zero static or mixed cycles. | Angular Architecture + QA | High | Verified | Reopen on new quality-gate violations or a new owner/contract requirement; full pilot/release remains independently gated | `documentation/plans/business/web-angular-migration/CLEAN_CODE_IMPLEMENTATION.md` |
 | FOLLOW-021 | Web | Countries current browser harness acceptance | Current PageHeader/settings/toolbar/row/record selectors and full40palette read matrix plus8lifecycle and8actual-controls interaction cases passed2026-11-01. Current253case fixture acceptance has portable receipts; prior failures remain attributed. | Angular QA | Medium | Verified | Reopen on source/control/selector regression; hosted Crystal remains PROD-028 | `documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/FINAL_ACCEPTANCE.md` |
@@ -14,7 +58,7 @@ business scope.
 | FOLLOW-018 | Web | Historical verification-log portability | Checkout885753c1 references23 historical .log files absent from Git. Record exact unavailable paths in S3-A7 preflight evidence; remove nonexistent paths from current required-file manifests while retaining existing JSON/screenshots/reports. Historical result claims remain attributed to their reports, not rerun proof. | Web Architecture + QA | Medium | Open | Restore original logs from source workstation or replace with fresh owner-scoped runs before relying on raw historical logs/full release evidence | `documentation/modules/platform/features/angular-countries-import-view/verification/ENTRY_PORTABILITY.md` |
 | FOLLOW-017 | Web | Angular scoped lookup/live consumer acceptance | Existing scoped read foundation does not complete a real business lookup or SignalR subscription. Before actual consumer acceptance, register typed immutable scope identity, finite validated service snapshot/timeout, separate authorized watcher and teardown, hint coalescing/reconnect/missed-event reconciliation, old-response masking, selected-label retention and explicit local/page loading/retry. S1-A12 generic helper technically Verified264unit/read40+8/current context24/home14/company14/fiscal15/login10/language20; actual business acceptance remains separate. | Angular Shared + feature service owner + QA | High | Open | First actual S3 lookup/live consumer and each relevant route/session/context boundary; before SIG-01/02/03 consumer Verified | `documentation/plans/business/web-angular-migration/SIGMA_ACCEPTANCE.md`; `documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/SCOPED_READ_CONTRACT.md` |
 | FOLLOW-016 | Web | Advanced Angular collection capabilities | S1-A3 baseline is shared Table/Cards, controlled single-sort/paging/search, selection, density/visibility and feedback. S1-A11 opt-in typed public criteria/URL bridge technically Verified252unit/40+8browser; actual per-list privacy approval/API wire mapping/editor-return/export scope remains required in S3. User resize/reorder/pin, multi-sort/constraints/grouping, virtual/range/frozen/detail, context menu and server-wide selection remain owned opt-ins, not implied by PrimeNG availability. Editing also requires FOLLOW-014. | Angular Shared + consumer/API owner | Medium | Open | First actual consumer and supported API/selection/height/RTL/performance contract before enabling each option | `documentation/modules/platform/features/angular-collection-foundation/SHARED_COLLECTION_CONTRACT.md` |
-| FOLLOW-015 | Web | Remaining Angular authenticated workspace parity | S2-A1 responsive frame/preferences, S2-A2 permitted module/area discovery and S2-A3 role home/read-only tenant summary and S2-A4 secure company transition with cross-tab coordination and S2-A5 personal working-year context and S2-A6 shared application context navigation are Verified. Full business navigation/actual child screens, management/drill-down, profile/photo and search/notifications remain Required under exact subsequent contracts and real API/browser acceptance. No fake metrics or dead routes. S1-A4 regression observed unchanged development NG0912 wrapper identity collision (AuthenticatedApplication/ModuleWorkspace); inspect before adding wrapper styling/hydration or closing full workspace parity. | Angular Web + Platform owners | High | Open | Next matching S2 contract and before declaring full S2 parity | `documentation/plans/business/web-angular-migration/ROADMAP.md`; `decomposition/angular-application-shell.md` |
+| FOLLOW-015 | Web | Remaining Angular authenticated workspace parity | S2-A1 responsive frame/preferences, S2-A2 permitted module/area discovery and S2-A3 role home/read-only tenant summary and S2-A4 secure company transition with cross-tab coordination and S2-A5 personal working-year context and S2-A6 shared application context navigation are Verified. Full business navigation/actual child screens, management/drill-down, profile/photo and search/notifications remain Required under exact subsequent contracts and real API/browser acceptance. No fake metrics or dead routes. The earlier NG0912 wrapper identity collision is resolved by a unique AuthenticatedApplication selector in the States increment;24Shell regressions pass. This does not close the remaining workspace parity items. | Angular Web + Platform owners | High | Open | Next matching S2 contract and before declaring full S2 parity | `documentation/plans/business/web-angular-migration/ROADMAP.md`; `decomposition/angular-application-shell.md` |
 | FOLLOW-014 | Web | Angular remaining shared form compatibility | S1-A2 proves text/email/password CVA and submit/error/focus. S2-A0 additionally verifies shared ValidationSummary badges, preference select and actual scope-choice dialog for login; these are not business select/repeater/dirty editor proof. S1-A4 single ReferenceField/CVA/form discovery and S1-A5 local close/discard/Shared modal are technically Verified (138 unit;40+8 close browser; regressions). S1-A6 registered-draft Router/company/year/logout integration now technically Verified:160 unit, route40+final8/context8 and retained regressions. Actual future business editors must register semantic state and verify each journey; unregistered editors and hard reload/tab close/external document recovery are not protected. Hard-reload/save/recovery policy remains required before full unsaved parity. Actual ERP-02 consumers remain S3. Required remaining multi/date/reference consumer controls, structured repeaters, dirty navigation and dialog/overlay/CVA acceptance stay governed by ANGULAR_ARCHITECTURE and SIG-07/08; register exact contracts and verify each before its first consumer/full S1 closure. S1-A7 strict manual date input covers0001..9999; vendor calendar is guarded to0100..9999 with translated helper because native Date constructors remap years0..99; revisit only with a real earlier-year calendar requirement/vendor fix. PrimeNG22.1.4 locale changes emit NG0956 weekday tracking warnings; no vendor patch, revisit on upgrade. S1-A8 exact string NumericField technically Verified with188unit/numeric40+8/forms40; currency/group formatting/steppers and actual business numeric consumers remain required where their contracts need them. Exact API numeric transport remains FOLLOW-003/ERP-07, not inferred from field precision. S1-A9 strict Checkbox/Switch field technically Verified198unit/40+8browser; actual business flags/requiredTrue/permissions remain owner-specific. Native readonly activation is guarded in Shared. S1-A10 existing TextField multiline technically Verified206unit/40+8browser; actual domain multiline consumers and opt-in autoResize remain owner-specific requirements. No rich text/structured child editor parity inferred. | Angular Web + QA | High | Open | Next applicable S1 shared-form/control contract and before corresponding business editor is Verified | `documentation/plans/business/web-angular-migration/ANGULAR_ARCHITECTURE.md`; `documentation/plans/business/web-angular-migration/SIGMA_ACCEPTANCE.md`; `documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md` |
 | FOLLOW-013 | Web | Angular PrimeNG local license activation | Verified 2026-10-28: requester supplied local Community key; generated ignored configuration without printing its value. Licensed build passes (415.52 kB initial); repeat 40-case browser matrix passes and fresh-page screenshot inspection confirms invalid-license notice absent without bypass. Phase 06 Verified. | ERP owner + Angular Web | High | Verified | Reopen on key/entitlement replacement or a reproduced license notice; deployed CI/hosting must configure its own authorized input | `documentation/modules/platform/features/angular-theme-foundation/IMPLEMENTATION_REPORT.md` |
 | FOLLOW-012 | Web | Angular persisted translation consumer acceptance | Login/context wiring and actual authorized system runtime read Verified under S2-A0 on 2026-10-28. Remaining Settings consumer acceptance: save a permitted text through real API, reload Angular to observe SQL persistence, verify company/permission isolation, stale revision/placeholder denial and Reset. Foundation unit/service tests are not live UI proof. | Angular Web + QA | High | Open | S2 login/context wiring and S4 localization Settings; before declaring those consumers Verified | `documentation/plans/business/web-angular-migration/LOCALIZATION_PARITY.md`; `documentation/modules/platform/features/angular-localization-foundation/IMPLEMENTATION_REPORT.md` |
@@ -368,3 +412,46 @@ fixture browser cases pass. Operations/Reporting owns hosted visual/permission
 acceptance after Angular publication. No API/schema/Crystal change or deployment;
 section36 prior API rollout/full-suite finding remains separate. Status Open,
 Phase06 Not Verified, DEF-027/028 Deferred, Phase07 not started.
+
+### FOLLOW-024 — Verify Database and automatic publication, 2026-11-07
+
+The requested server-driven RPT verification and automatic new-version publication
+is implemented with preserved history, Upload+Publish authority, current-contract
+checks and compensation. Reporting 252 and full ERP Release 1331 tests pass (3 opt-in browser skips).
+Crystal host Release build and the current contract/HTTP boundary harness pass
+using the installed Visual Studio MSBuild. The earlier dotnet-msbuild missing-target
+error and stale September DLL are superseded by this current build, without any
+tool installation or system configuration change. Operations/Reporting must deploy
+the current host and verify a real compatible RPT and database connectivity before
+native VerifyDatabase acceptance. The SDK's
+VerifyDatabase requires an active design datasource connection; normal pushed-data
+rendering is not that proof. See global-crystal-template-manager/
+VERIFY_DATABASE_AUTOMATION_2026-11-07.md. Status remains Open.
+
+### FOLLOW-012 — Super Admin system-text editor correction, 2026-11-07
+
+The Angular Language/Translation workspace now mirrors SystemLocalizationsPage
+source/language/status/server paging/edit/reset against existing system-ui-localizations
+endpoints. Local automated receipts are under angular-super-admin-settings/
+verification/language-translation/. Hosted actual-role persistence/reload remains
+owned by Platform/Angular QA under this existing follow-up. Deploy Angular with
+the API's matching generated catalog under PROD-019; no remote write is claimed.
+
+### FOLLOW-015 — Super Admin final audit account gap, 2026-11-07
+
+Current source confirms no Angular profile/photo/password owner or routes, while
+web-next ProfilePage/ProfileTabs and AccountController implement those self-service
+journeys. This remains Required under the user's all-Super-Admin parity goal.
+Register the exact account execution contract and Phase00 before runtime; reuse
+the existing own-user API, shared forms/file controls and session lifecycle.
+The complete requirement matrix and production Countries/export acceptance gaps
+are recorded in angular-super-admin-final-review/PARITY_AUDIT_2026-11-07.md.
+The parent goal remains Active; this finding is not reclassified as release-only.
+
+Account successor resolution2026-11-07: angular-account-profile is bounded
+Verified/Closed on Angular997/195, API1331+3opt-in skips,12 account fixture browser
+cases and8 current Next references. Own information/photo/password and TopBar entry
+are implemented with Arabic education and portable receipt. This closes the
+account client gap above; FOLLOW-015 still owns its other workspace items and
+PROD-019 owns coordinated catalog publication. Real account writes/deployment are
+not claimed. All-filtered export acceptance is Active before final Super Admin review.

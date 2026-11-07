@@ -131,6 +131,8 @@
     "saveFailed": "The retention setting could not be saved.",
     "loadFailed": "Error log settings could not be loaded.",
     "loading": "Loading error log settings",
-    "forbidden": "You do not have access to error log settings."
+    "forbidden": "You do not have access to error log settings.",
+    "saved": "The retention setting was saved.",
+    "saveUncertain": "The server response was not received. Do not save again until you load the current value and verify the result."
   }
 }

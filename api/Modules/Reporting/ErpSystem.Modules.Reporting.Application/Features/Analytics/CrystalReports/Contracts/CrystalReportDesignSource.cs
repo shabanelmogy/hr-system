@@ -10,7 +10,10 @@ public sealed record CrystalReportDesignSource(
     IReadOnlyList<string> Filters,
     IReadOnlyList<CrystalReportDesignParameter> Parameters,
     int ContractSchemaVersion,
-    string ContractFingerprint);
+    string ContractFingerprint)
+{
+    public string BindingKind { get; init; } = "database-view";
+}
 
 public sealed record CrystalReportDesignColumn(string Name, string Type, bool Nullable);
 

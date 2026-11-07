@@ -1,11 +1,15 @@
 import { DOCUMENT } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DestroyRef, inject, Injectable, signal } from '@angular/core';
-import { firstValueFrom, Subject, takeUntil, tap, timeout } from 'rxjs';
+import { firstValueFrom, map, Subject, takeUntil, tap, timeout, type Observable } from 'rxjs';
 import { ERP_API_ORIGIN } from '../../config/api-origin';
 import { uiCatalogVersion } from './catalog.generated';
 import { LocalizationRuntime } from './localization-runtime';
-import { companyRuntimeSchema, systemRuntimeSchema } from './localization.schemas';
+import {
+  companyRuntimeSchema,
+  systemRuntimeSchema,
+  systemLocalizationTextsSchema,
+} from './localization.schemas';
 import type {
   LocalizationIdentity,
   LocalizationTarget,
@@ -13,6 +17,19 @@ import type {
   TextWrite,
   UiLanguage,
 } from './localization.types';
+
+export interface SystemLocalizationTexts {
+  readonly items: readonly {
+    readonly key: string;
+    readonly baseValue: string;
+    readonly targetValue: string;
+  }[];
+  readonly totalCount: number;
+  readonly page: number;
+  readonly pageSize: number;
+  readonly revision: number;
+  readonly catalogVersion: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class LocalizationService {
@@ -26,6 +43,26 @@ export class LocalizationService {
   private refreshSequence = 0;
   private readonly failed = signal(false);
   readonly runtimeUnavailable = this.failed.asReadonly();
+  systemTexts(search: string, pageSize = 25): Observable<SystemLocalizationTexts> {
+    return this.http
+      .get<unknown>(this.endpoint('system') + '/texts', {
+        withCredentials: true,
+        params: {
+          source: 'platform-auth',
+          baseLanguage: 'en',
+          targetLanguage: 'ar',
+          status: 'all',
+          search,
+          page: 1,
+          pageSize,
+        },
+      })
+      .pipe(
+        timeout(10_000),
+        tap((value) => systemLocalizationTextsSchema.parse(value)),
+        map((value) => systemLocalizationTextsSchema.parse(value) as SystemLocalizationTexts),
+      );
+  }
 
   constructor() {
     const parsed = new URL(this.origin);

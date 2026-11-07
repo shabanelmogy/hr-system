@@ -2,6 +2,27 @@
   display: block;
   min-inline-size: 0;
 }
+:host(.filled-form) {
+  block-size: 100%;
+  min-block-size: 0;
+}
+form.filled-form {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+  min-block-size: 0;
+}
+.form-scroll {
+  flex: 1;
+  block-size: auto;
+  min-block-size: 0;
+}
+form.filled-form footer {
+  flex-shrink: 0;
+  position: static;
+  margin-block-start: 12px;
+  padding-block-start: 12px;
+}
 form {
   background: var(--surface);
   color: var(--surface-foreground);
@@ -84,12 +105,12 @@ erp-validation-summary,
 .sidebar-form .form-feedback {
   margin: 16px 16px 0;
 }
-.dialog-form .form-content {
+:is(.dialog-form, .page-form) .form-content {
   gap: 20px;
   // Nested sticky grid headers stay below the form's persistent action footer.
   isolation: isolate;
 }
-.dialog-form footer {
+:is(.dialog-form, .page-form) footer {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
@@ -106,7 +127,7 @@ erp-validation-summary,
 .form-tools:empty {
   display: none;
 }
-.dialog-form footer {
+:is(.dialog-form, .page-form) footer {
   position: sticky;
   inset-block-end: 0;
   z-index: 1;
@@ -114,10 +135,10 @@ erp-validation-summary,
   padding-block-end: 8px;
 }
 @media (max-width: 599px) {
-  .dialog-form .form-tools:not(:empty) {
+  :is(.dialog-form, .page-form) .form-tools:not(:empty) {
     flex-basis: 100%;
   }
-  .dialog-form footer {
+  :is(.dialog-form, .page-form) footer {
     gap: 10px;
   }
 }

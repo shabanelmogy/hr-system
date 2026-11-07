@@ -2,6 +2,16 @@
 
 ## 1. Ownership and authorization
 
+Account consumer2026-11-07: the new Angular own-account labels use the canonical
+platform-auth/accountProfile prefix. It is explicitly registered as a shared
+self-service text surface with no extra owning-screen grant, like the existing
+profile/accountSecurity prefixes. Global role and SystemUiTexts View/Edit/Reset
+checks still apply; unrelated prefixes remain denied. One canonical generator
+updates server catalog and Web clients. The policy test covers both the new
+allowlist and an unknown-account denial; no API/domain permission is added.
+
+Angular correction 2026-11-07 retains this feature's global ownership and existing permissions, revision and placeholder rules. It completes source discovery, server criteria/paging, edit and reset in the Angular Administration entry using shared components. No domain or persistence change; Next/Mobile runtime behavior remains unchanged. Current source and bounded verification are registered in ../angular-super-admin-settings/angular-super-admin-settings-review.md. The [final receipt](../angular-super-admin-settings/verification/language-translation/verification-2026-11-07.json) records the successful full Angular check (971 tests / 189 files), 12 production-asset synthetic browser cases, API Release gates and remaining release checks. Hosted SQL persistence/reload is FOLLOW-012 and matching catalog rollout is PROD-019.
+
 Platform owns global registered UI text configuration. SuperAdmin role is mandatory; SystemUiTexts:View/Edit/Reset are independent global grants. Every catalog key additionally requires its owning screen view authority. Unknown/company-private prefixes fail closed. No tenant/company identity is simulated.
 
 ## 2. Reviewed reference and shared screen pattern

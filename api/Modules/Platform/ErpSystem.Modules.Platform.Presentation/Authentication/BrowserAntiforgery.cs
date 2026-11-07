@@ -8,6 +8,10 @@ namespace ErpSystem.Modules.Platform.Presentation.Authentication;
 public sealed class BrowserAntiforgery(IAntiforgery antiforgery, IBrowserAuthenticationCookies cookies,
     IAuthenticationTokenValidationParametersFactory validation, IOptions<AntiforgeryOptions> options)
 {
+    // Hangfire renders and submits the framework's own Cookie/header pair.
+    // Do not alias it to Angular's independent X-ERP-XSRF pair.
+    public Task ValidateHangfireAsync(HttpContext context) => antiforgery.ValidateRequestAsync(context);
+
     public string CreateToken(HttpContext context)
     {
         var original = context.User;

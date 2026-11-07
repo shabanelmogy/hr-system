@@ -1,0 +1,13 @@
+{
+  "scope": "Dashboard card reflow, compact header, TopBar copy/presets and development preview tab",
+  "status": "Verified-scoped-local",
+  "angular": { "fullCheckExitCode": 0, "tests": 950, "testFiles": 185, "architectureTests": 32, "initialBundleKb": 582.10, "existingBudgetWarning": "RISK-020", "budgetsChanged": false },
+  "dashboardBrowser": { "cases": 32, "languages": ["en", "ar"], "themes": ["light", "dark"], "viewports": [[1440,900],[900,820],[891,820],[768,640],[390,844],[320,720],[1440,640]], "sidebarOpenAndClosedAt900": true, "outerOverflow": false, "nestedPanelScrolling": false, "lastCardReachable": true },
+  "previewBrowser": { "cases": 4, "newTab": true, "originalPagePreserved": true, "noopener": true, "frameSizes": [[390,844],[900,820]], "resizedWithoutReload": true, "nativeCloseHandshake": true, "nativeClipboard": true, "triggerAndDropdownContrastAtLeast4point5": true },
+  "retainedHomeBrowser": { "cases": 14, "passed": true },
+  "productionBrowser": { "cases": 2, "debuggerAbsent": true, "previewAbsent": true, "forgedPreviewQueryIgnored": true },
+  "sourceReview": { "independentP1P2FindingsRemaining": 0, "nestedScrollFindingCorrected": true },
+  "documentation": { "recipes": 532, "allSizeContract": "documentation/guides/web/architecture/ANGULAR_RESPONSIVE_LAYOUT.md" },
+  "acceptanceLimits": ["Browser data is synthetic; no claim of new API/domain acceptance.", "The broader guide matrix, including all intermediate widths, 1920/2560 and200% zoom, remains a required per-feature acceptance contract; these listed receipts do not claim every application screen passed it."],
+  "attemptHistory": ["A broad eager UI import increased the initial bundle to2.45MB; narrow state and localization presentation public APIs restored582.10KB without raising budgets.", "Explicit architecture coverage accepts only the new narrow state public entry and retains denial of internal imports."]
+}

@@ -1,0 +1,96 @@
+// Shared entity-card typography and metadata layout; domain content stays with its feature.
+@mixin header($title-lines: 1) {
+  :host {
+    display: contents;
+  }
+  .card-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .card-heading > erp-status-badge {
+    position: absolute;
+    inset-block-start: 12px;
+    inset-inline-end: 12px;
+  }
+  .card-heading div {
+    min-width: 0;
+  }
+  h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    @if $title-lines > 1 {
+      white-space: normal;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: $title-lines;
+      line-clamp: $title-lines;
+    }
+    color: var(--primary);
+  }
+  .card-heading p {
+    margin: 4px 0 16px;
+    color: var(--muted-foreground);
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .chips {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-block-end: 12px;
+  }
+}
+@mixin content {
+  :host {
+    display: contents;
+  }
+  dl {
+    margin: 0 0 16px;
+    display: grid;
+    gap: 8px;
+    font-size: 14px;
+  }
+  dl div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  dt {
+    color: var(--muted-foreground);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  dt erp-icon {
+    width: 16px;
+    height: 16px;
+  }
+  dd {
+    margin: 0;
+    font-weight: 600;
+  }
+  .created {
+    color: var(--muted-foreground);
+    font-size: 12px;
+    margin: 16px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .created erp-icon {
+    width: 14px;
+    height: 14px;
+  }
+  .card-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

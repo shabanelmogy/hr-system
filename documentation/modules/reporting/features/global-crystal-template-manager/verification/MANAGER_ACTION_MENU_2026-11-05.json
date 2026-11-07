@@ -1,0 +1,388 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-05T18:49:11.2103695Z",
+  "scope": "Angular Global Report Manager shared dropdown actions, clear trailing chevron/separator and existing single-row toolbar.",
+  "unitAndBuild": {
+    "command": "npm run check",
+    "exitCode": 0,
+    "testFiles": 99,
+    "testsPassed": 570,
+    "architectureTests": 30,
+    "checks": [
+      "format",
+      "typed lint",
+      "configuration",
+      "tokens",
+      "fonts",
+      "catalog",
+      "architecture and ownership scan",
+      "strict app/spec types and templates",
+      "unit tests",
+      "production build"
+    ],
+    "initialRawKB": 574.5,
+    "warning": "Existing 500 kB initial budget warning RISK-020 retained; budget unchanged.",
+    "log": "manager-action-menu/angular-check.txt"
+  },
+  "browser": {
+    "command": "node scripts/verify-manager-pagination-browser.mjs --details --filters",
+    "exitCode": 0,
+    "source": "Production build, all API requests intercepted through Playwright routing; no application server started.",
+    "passed": 12,
+    "coverage": [
+      "EN/AR x light/dark x 1213/780/390",
+      "One dropdown trigger, four existing commands and icons",
+      "Trailing chevron with logical separator in RTL/LTR and expanded state",
+      "Enter, ArrowDown, Escape and trigger focus restoration",
+      "aria-haspopup, aria-controls and aria-expanded",
+      "One toolbar row, local scrolling and no document overflow",
+      "Opaque menu surface, border, padding, shadow and viewport bounds",
+      "Existing upload dialog and saved overview metadata",
+      "Record navigation, server last page, page size and six column filter Apply/Clear"
+    ],
+    "results": [
+      {
+        "scenario": {
+          "language": "en",
+          "width": 1213,
+          "mode": "light",
+          "palette": "green"
+        },
+        "layout": {
+          "fits": true,
+          "noOverlap": true,
+          "documentOverflow": false
+        },
+        "countriesRecordNavigation": true,
+        "samePageNavigationWithoutRequest": true,
+        "lastRecordLoadsServerPage": true,
+        "sizeChangeResetsPage": true,
+        "columnFiltersAppliedAndCleared": true,
+        "managerActionsAndMetadata": true,
+        "actionMenuAndSingleRow": true,
+        "errors": []
+      },
+      {
+        "scenario": {
+          "language": "en",
+          "width": 780,
+          "mode": "light",
+          "palette": "green"
+        },
+        "layout": {
+          "fits": true,
+          "noOverlap": true,
+          "documentOverflow": false
+        },
+        "countriesRecordNavigation": true,
+        "samePageNavigationWithoutRequest": true,
+        "lastRecordLoadsServerPage": true,
+        "sizeChangeResetsPage": true,
+        "columnFiltersAppliedAndCleared": true,
+        "managerActionsAndMetadata": true,
+        "actionMenuAndSingleRow": true,
+        "errors": []
+      },
+      {
+        "scenario": {
+          "language": "en",
+          "width": 390,
+          "mode": "light",
+          "palette": "green"
+        },
+        "layout": {
+          "fits": true,
+          "noOverlap": true,
+          "documentOverflow": false
+        },
+        "countriesRecordNavigation": true,
+        "samePageNavigationWithoutRequest": true,
+        "lastRecordLoadsServerPage": true,
+        "sizeChangeResetsPage": true,
+        "columnFiltersAppliedAndCleared": true,
+        "managerActionsAndMetadata": true,
+        "actionMenuAndSingleRow": true,
+        "errors": []
+      },
+      {
+        "scenario": {
+          "language": "en",
+          "width": 1213,
+          "mode": "dark",
+          "palette": "green"
+        },
+        "layout": {
+          "fits": true,
+          "noOverlap": true,
+          "documentOverflow": false
+        },
+        "countriesRecordNavigation": true,
+        "samePageNavigationWithoutRequest": true,
+        "lastRecordLoadsServerPage": true,
+        "sizeChangeResetsPage": true,
+        "columnFiltersAppliedAndCleared": true,
+        "managerActionsAndMetadata": true,
+        "actionMenuAndSingleRow": true,
+        "errors": []
+      },
+      {
+        "scenario": {
+          "language": "en",
+          "width": 780,
+          "mode": "dark",
+          "palette": "green"
+        },
+        "layout": {
+          "fits": true,
+          "noOverlap": true,
+          "documentOverflow": false
+        },
+        "countriesRecordNavigation": true,
+        "samePageNavigationWithoutRequest": true,
+        "lastRecordLoadsServerPage": true,
+        "sizeChangeResetsPage": true,
+        "columnFiltersAppliedAndCleared": true,
+        "managerActionsAndMetadata": true,
+        "actionMenuAndSingleRow": true,
+        "errors": []
+      },
+      {
+        "scenario": {
+          "language": "en",
+          "width": 390,
+          "mode": "dark",
+          "palette": "green"
+        },
+        "layout": {
+          "fits": true,
+          "noOverlap": true,
+          "documentOverflow": false
+        },
+        "countriesRecordNavigation": true,
+        "samePageNavigationWithoutRequest": true,
+        "lastRecordLoadsServerPage": true,
+        "sizeChangeResetsPage": true,
+        "columnFiltersAppliedAndCleared": true,
+        "managerActionsAndMetadata": true,
+        "actionMenuAndSingleRow": true,
+        "errors": []
+      },
+      {
+        "scenario": {
+          "language": "ar",
+          "width": 1213,
+          "mode": "light",
+          "palette": "green"
+        },
+        "layout": {
+          "fits": true,
+          "noOverlap": true,
+          "documentOverflow": false
+        },
+        "countriesRecordNavigation": true,
+        "samePageNavigationWithoutRequest": true,
+        "lastRecordLoadsServerPage": true,
+        "sizeChangeResetsPage": true,
+        "columnFiltersAppliedAndCleared": true,
+        "managerActionsAndMetadata": true,
+        "actionMenuAndSingleRow": true,
+        "errors": []
+      },
+      {
+        "scenario": {
+          "language": "ar",
+          "width": 780,
+          "mode": "light",
+          "palette": "green"
+        },
+        "layout": {
+          "fits": true,
+          "noOverlap": true,
+          "documentOverflow": false
+        },
+        "countriesRecordNavigation": true,
+        "samePageNavigationWithoutRequest": true,
+        "lastRecordLoadsServerPage": true,
+        "sizeChangeResetsPage": true,
+        "columnFiltersAppliedAndCleared": true,
+        "managerActionsAndMetadata": true,
+        "actionMenuAndSingleRow": true,
+        "errors": []
+      },
+      {
+        "scenario": {
+          "language": "ar",
+          "width": 390,
+          "mode": "light",
+          "palette": "green"
+        },
+        "layout": {
+          "fits": true,
+          "noOverlap": true,
+          "documentOverflow": false
+        },
+        "countriesRecordNavigation": true,
+        "samePageNavigationWithoutRequest": true,
+        "lastRecordLoadsServerPage": true,
+        "sizeChangeResetsPage": true,
+        "columnFiltersAppliedAndCleared": true,
+        "managerActionsAndMetadata": true,
+        "actionMenuAndSingleRow": true,
+        "errors": []
+      },
+      {
+        "scenario": {
+          "language": "ar",
+          "width": 1213,
+          "mode": "dark",
+          "palette": "green"
+        },
+        "layout": {
+          "fits": true,
+          "noOverlap": true,
+          "documentOverflow": false
+        },
+        "countriesRecordNavigation": true,
+        "samePageNavigationWithoutRequest": true,
+        "lastRecordLoadsServerPage": true,
+        "sizeChangeResetsPage": true,
+        "columnFiltersAppliedAndCleared": true,
+        "managerActionsAndMetadata": true,
+        "actionMenuAndSingleRow": true,
+        "errors": []
+      },
+      {
+        "scenario": {
+          "language": "ar",
+          "width": 780,
+          "mode": "dark",
+          "palette": "green"
+        },
+        "layout": {
+          "fits": true,
+          "noOverlap": true,
+          "documentOverflow": false
+        },
+        "countriesRecordNavigation": true,
+        "samePageNavigationWithoutRequest": true,
+        "lastRecordLoadsServerPage": true,
+        "sizeChangeResetsPage": true,
+        "columnFiltersAppliedAndCleared": true,
+        "managerActionsAndMetadata": true,
+        "actionMenuAndSingleRow": true,
+        "errors": []
+      },
+      {
+        "scenario": {
+          "language": "ar",
+          "width": 390,
+          "mode": "dark",
+          "palette": "green"
+        },
+        "layout": {
+          "fits": true,
+          "noOverlap": true,
+          "documentOverflow": false
+        },
+        "countriesRecordNavigation": true,
+        "samePageNavigationWithoutRequest": true,
+        "lastRecordLoadsServerPage": true,
+        "sizeChangeResetsPage": true,
+        "columnFiltersAppliedAndCleared": true,
+        "managerActionsAndMetadata": true,
+        "actionMenuAndSingleRow": true,
+        "errors": []
+      }
+    ]
+  },
+  "review": {
+    "method": "Bounded read-only peer review and root scoped source review",
+    "outcome": "No remaining actionable findings after generic action IDs, scoped menu tokens and trailing indicator corrections.",
+    "visualReview": [
+      "manager-action-menu/manager-en-light-1213.png",
+      "manager-action-menu/manager-ar-dark-390.png"
+    ]
+  },
+  "documentation": {
+    "commands": [
+      "./documentation/system/Generate-Documentation.ps1",
+      "./documentation/system/Generate-Documentation.ps1 -Check",
+      "./documentation/plans/Check-Planning.ps1"
+    ],
+    "exitCode": 0,
+    "recipeChecks": 460,
+    "planningWarnings": [
+      "Inherited version 2.0 contract migration warning: education-module",
+      "Inherited version 2.0 contract migration warning: erp-platform-template"
+    ],
+    "planningLog": "manager-action-menu/planning-check.txt"
+  },
+  "regressions": {
+    "theme": "New appearance assertion failed before scoped Menu tokens (transparent background, border 0, padding 0, no shadow), then passed all 12 browser cases.",
+    "indicator": "New unit assertion failed on the old leading arrow; final trigger projects a trailing chevron with a visible separator.",
+    "testTiming": "Existing viewer identity tests now poll the asynchronous WebCrypto result before view assertions; runtime identity/permission logic unchanged."
+  },
+  "limitations": [
+    "No live API, Crystal provider, hosted/native acceptance or real report writes.",
+    "No dependency, API, database, permission or other-client changes.",
+    "Broader Phase06 and existing release notes remain unchanged."
+  ],
+  "sourceHashes": [
+    {
+      "path": "web-angular/src/app/shared/ui/buttons/action-menu-button/action-menu-button.ts",
+      "sha256": "b0b8352677d865369986d60113aaca5d22a94553e606195e381f8452e504ed11"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/buttons/action-menu-button/action-menu-button.html",
+      "sha256": "f7666c2f40cc1f383d82707be70e81f3386a32c814c572e38bcf9731a12b2d04"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/buttons/action-menu-button/action-menu-button.scss",
+      "sha256": "8735b3bf684556b97f2c3d8df14b3b62c16ce0e112a26e08acab6fb38e11ada2"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/buttons/action-menu-button/action-menu-button.spec.ts",
+      "sha256": "9ae517d7f041a4f38921edd771456d02e678177bc62634c367f3f838a9169a8b"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/buttons/public-api.ts",
+      "sha256": "c8957e7cc3db0976f5dafe3706d42226c9d1170bd3ab824ebc2a143dd56619e8"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "sha256": "469e88fa34a7cc8447ab9233dd2033697e8bc7aa6b1709d9aa129ec3b924cc60"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.html",
+      "sha256": "b8e12444e06977e2590826fa27385ac3076bd5dc76f2d06904f6194d254e40f3"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.scss",
+      "sha256": "a85cad6dc3c309820fc99cd24862bc68a3abd80555a196463e5dbe46cf63a0dc"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-list/global-template-list.ts",
+      "sha256": "2130a5adb96bec4c83782107c89c421ce4af83c2235e43404f6535ffccc23330"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-list/global-template-list.html",
+      "sha256": "6ac9f42fc5db3441e8eaddfe66f27ba616515029a5438e1631323e1cf01e1392"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/pages/global-template-manager/global-template-manager.spec.ts",
+      "sha256": "a4bca272f07d2718960b6228c6abfd2a424ed856905d4c27c5f529a597550475"
+    },
+    {
+      "path": "web-angular/scripts/verify-manager-pagination-browser.mjs",
+      "sha256": "40c475d7b906342ffe63127e31e1189177fd2d27b173f2fed6bd932fea2b6170"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.html",
+      "sha256": "9e2a729a0d3c905be3261b8f97ff33b7f9f08cf5164a4da580fa9acf495c4f01"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/icons/app-icon/app-icon.ts",
+      "sha256": "2d6179387823f7e8eb32689e61e77b6fbcd0da9d0c8635b28e4e851abc516858"
+    }
+  ]
+}

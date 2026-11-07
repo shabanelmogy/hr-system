@@ -81,7 +81,7 @@ existing-system review, implementation order, and Definition of Done.
 | tenant-module-entitlements-master | 3 | `212764afdc3ce2ce0f4bd27da0a48644dadb0f63c0edd3b9102bbabe1a727e99` |
 | tenant-module-entitlements-master | 4 | `6ce0ac78f838937858372f8bd73c02c85b8d3495d904c9196b95944943a8de12` |
 | tenant-module-entitlements-master | 6 | `89544550aa2d052292f9b9095338d67eb4992cb1b1c89fc2d289082f0d031f38` |
-| tenant-module-entitlements-api | 1 | `040a7eab03d342360325a061f06bf27f1b2c9cacc8559af835b40daf87950528` |
+| tenant-module-entitlements-api | 1 | `70c1fdcfc2b2aa507be315813c6d3dbc2d996e694cfb4a18387c3bd22a91e143` |
 | tenant-module-entitlements-api | 2 | `2008c62d24b2cb2df80acb00790041590b4be651ba2b8cd5dbfa848913890ff6` |
 | tenant-module-entitlements-api | 3 | `b446d78a5c1e23da512f04a98540550f0374d6aaa6dabad5d7ade5e56a3da52f` |
 | tenant-module-entitlements-api | 4 | `7c311be251eaf055491c3edb19e0f8455e40da93ea4c2340b88a2749c35434f6` |

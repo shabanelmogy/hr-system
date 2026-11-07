@@ -1,0 +1,87 @@
+@if (kind() === 'grid') {
+  <erp-data-table
+    appearance="reference"
+    toolbarLayout="single-row"
+    actionDisplay="inline"
+    [stickyActions]="true"
+    [recordNavigation]="true"
+    [recordRequest]="records.request()"
+    [source]="reads.source()"
+    [rowId]="id"
+    [rowLabel]="label"
+    [label]="'tenantManagement.title' | uiText: 'platform-tenants'"
+    [columns]="columns()"
+    [search]="search()"
+    [sort]="sort()"
+    [toolbarVisible]="toolbarVisible()"
+    [display]="{ resizableColumns: 'fit', reorderableColumns: true, columnManagement: true }"
+    [contextActions]="actions"
+    (rowAction)="act($event)"
+    (pageChange)="reads.changePage($event)"
+    (searchChange)="reads.changeSearch($event)"
+    (sortChange)="reads.changeSort($event)"
+    (retry)="reads.refresh()"
+  >
+    <div toolbarContent>
+      <erp-button
+        data-testid="reset"
+        [label]="'general.reset' | uiText"
+        variant="text"
+        (activated)="reads.reset()"
+      />
+    </div>
+    <ng-template [erpCollectionCell]="columns() | collectionColumn: 'subscriptionStatus'" let-row
+      ><erp-status-badge
+        [label]="text('tenantManagement.statuses.' + row.subscriptionStatus)"
+        [accent]="statusAccent(row.subscriptionStatus)"
+    /></ng-template>
+    <ng-template [erpCollectionCell]="columns() | collectionColumn: 'isActive'" let-row
+      ><erp-status-badge
+        [label]="text('tenantManagement.' + (row.isActive ? 'enabled' : 'disabled'))"
+        [accent]="row.isActive ? 'var(--success)' : 'var(--muted-foreground)'"
+    /></ng-template>
+    <ng-template erpCollectionEmpty
+      ><erp-feedback-state
+        kind="empty"
+        [title]="'tenantManagement.emptyTitle' | uiText: 'platform-tenants'"
+        [message]="'tenantManagement.emptySubtitle' | uiText: 'platform-tenants'"
+    /></ng-template>
+  </erp-data-table>
+} @else {
+  <erp-card-list
+    appearance="entity"
+    layout="responsive"
+    toolbarLayout="single-row"
+    [recordNavigation]="true"
+    [recordRequest]="records.request()"
+    [source]="reads.source()"
+    [rowId]="id"
+    [rowLabel]="label"
+    [label]="'tenantManagement.title' | uiText: 'platform-tenants'"
+    [search]="search()"
+    [toolbarVisible]="toolbarVisible()"
+    (pageChange)="reads.changePage($event)"
+    (searchChange)="reads.changeSearch($event)"
+    (retry)="reads.refresh()"
+  >
+    <div toolbarFilters><erp-tenant-list-criteria /></div>
+    <ng-template [erpCollectionCardHeader]="reads.source()" let-row
+      ><erp-tenant-card-header [tenant]="row"
+    /></ng-template>
+    <ng-template [erpCollectionCard]="reads.source()" let-row
+      ><erp-tenant-card-content [tenant]="row"
+    /></ng-template>
+    <ng-template [erpCollectionCardFooter]="reads.source()" let-row
+      ><erp-row-actions
+        [actions]="actions(row)"
+        [rowKey]="row.id"
+        (activated)="act({ row: row, action: $event })"
+    /></ng-template>
+    <ng-template erpCollectionEmpty
+      ><erp-feedback-state
+        kind="empty"
+        [title]="'tenantManagement.emptyTitle' | uiText: 'platform-tenants'"
+        [message]="'tenantManagement.emptySubtitle' | uiText: 'platform-tenants'"
+    /></ng-template>
+  </erp-card-list>
+}

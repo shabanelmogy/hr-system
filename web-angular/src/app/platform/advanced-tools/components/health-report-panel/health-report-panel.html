@@ -1,0 +1,23 @@
+<div class="summary" data-testid="health-summary">
+  <span>{{ text('overallStatus') }}</span>
+  <erp-status-badge [label]="statusLabel(report().status)" [accent]="accent(report().status)" />
+  <span>{{
+    locale.translate('healthCheck.totalDuration', 'platform-advanced-tools', {
+      duration: report().totalDuration,
+    })
+  }}</span>
+</div>
+<erp-data-table
+  [source]="collection.source()"
+  [columns]="columns()"
+  [rowId]="id"
+  [label]="text('tableLabel')"
+  [toolbarVisible]="false"
+  [pageSizes]="[10, 25, 50, 100]"
+  [recordNavigation]="true"
+  (pageChange)="collection.changePage($event)"
+>
+  <ng-template [erpCollectionCell]="columns() | collectionColumn: 'status'" let-row>
+    <erp-status-badge [label]="statusLabel(row.status)" [accent]="accent(row.status)" />
+  </ng-template>
+</erp-data-table>

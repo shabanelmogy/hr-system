@@ -1,0 +1,63 @@
+// Include in a dashboard owner; the shared ScrollViewport owns vertical scrolling.
+// Container widths follow the actual workspace after navigation opens or closes.
+@mixin responsive {
+  :host {
+    container: dashboard-workspace / inline-size;
+    display: flex;
+    flex-direction: column;
+    block-size: 100%;
+    min-inline-size: 0;
+    min-block-size: 0;
+  }
+
+  .dashboard-viewport {
+    flex: 1;
+    min-block-size: 0;
+  }
+
+  .dashboard-content {
+    display: grid;
+    grid-template-rows: auto auto auto;
+    flex: 1;
+    gap: 12px;
+    min-inline-size: 0;
+    padding: 2px 2px 8px;
+  }
+
+  .metrics {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+    gap: 12px;
+    min-inline-size: 0;
+  }
+
+  .panel-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: minmax(14rem, 1fr);
+    gap: 12px;
+    min-inline-size: 0;
+  }
+
+  @container dashboard-workspace (min-width: 18rem) {
+    .metrics {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @container dashboard-workspace (min-width: 32rem) {
+    .metrics {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .panel-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @container dashboard-workspace (min-width: 64rem) {
+    .metrics {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+  }
+}

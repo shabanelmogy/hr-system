@@ -33,7 +33,9 @@ public sealed record AuditTrailFilter(
     DateTime? FromUtc,
     DateTime? ToUtc,
     AuditTrailCursor? After,
-    int Take);
+    int Take,
+    IReadOnlyList<Filtering.ColumnFilterGroup>? ColumnFilters = null,
+    IReadOnlyCollection<string>? MatchingUserIds = null);
 
 /// <summary>One audit-trail entry without its field details.</summary>
 public sealed record AuditTrailRecord(

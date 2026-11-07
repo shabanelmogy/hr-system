@@ -1,0 +1,38 @@
+<erp-dialog-panel
+  [open]="state.active()"
+  [title]="title()"
+  [description]="description()"
+  [closeLabel]="'actions.close' | uiText"
+  icon="history"
+  size="wide"
+  (closeRequested)="state.close()"
+>
+  @switch (state.view().kind) {
+    @case ('loading') {
+      <erp-feedback-state kind="loading" [title]="captions.text('loading')" />
+    }
+    @case ('error') {
+      <erp-feedback-state
+        kind="error"
+        [title]="captions.text('loadError')"
+        [actionLabel]="captions.text('retry')"
+        (action)="state.retry()"
+      />
+    }
+    @case ('forbidden') {
+      <erp-feedback-state kind="forbidden" [title]="'authorization.forbidden.title' | uiText" />
+    }
+    @case ('ready') {
+      @if (details(); as details) {
+        <erp-record-summary [title]="captions.text('record')" [fields]="fields()" />
+        <erp-audit-changes [details]="details" />
+      }
+    }
+  }
+  <erp-button
+    dialogActions
+    [label]="captions.text('close')"
+    variant="text"
+    (activated)="state.close()"
+  />
+</erp-dialog-panel>

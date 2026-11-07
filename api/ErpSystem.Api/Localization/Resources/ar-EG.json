@@ -296,6 +296,7 @@
     "CrystalReportSchemaMismatch": "جدول تقرير Crystal أو حقوله لا تطابق عقد الكيان المعتمد",
     "CrystalReportParameterMismatch": "معاملات تقرير Crystal لا تطابق عقد المعاملات المُدارة المعتمد",
     "CrystalReportContractStale": "يجب إعادة التحقق من نسخة تقرير Crystal وفق عقد الكيان الحالي",
+    "CrystalReportDatabaseVerificationUnavailable": "تعذر إكمال التحقق من قاعدة بيانات تقرير Crystal. تحقق من خدمة Crystal واتصالها بمصدر بيانات تصميم التقرير ثم أعد المحاولة. لم يتغير الإصدار المنشور.",
     "CompanyContextRequired": "اختر شركة قبل إدارة دول التشغيل",
     "CountriesUnavailable": "دولة واحدة أو أكثر من دول التشغيل المختارة غير متاحة",
     "CompanyCountriesRequired": "اختر دولة تشغيل واحدة على الأقل",

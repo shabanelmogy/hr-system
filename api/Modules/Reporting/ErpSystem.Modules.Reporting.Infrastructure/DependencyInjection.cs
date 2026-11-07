@@ -59,6 +59,7 @@ public static class DependencyInjection
         services.AddScoped<ICrystalReportDataProvider, DistrictsCrystalReportDataProvider>();
         services.AddScoped<ICrystalReportDataProvider, AddressTypesCrystalReportDataProvider>();
         services.AddScoped<ICrystalReportDataProvider, FiscalYearsCrystalReportDataProvider>();
+        services.AddScoped<ICrystalReportDataProvider, SystemErrorLogsCrystalReportDataProvider>();
         services.AddScoped<ICrystalReportDataSource, CrystalReportDataSource>();
         services.AddScoped<ICrystalReportFileStorage, PrivateCrystalReportFileStorage>();
         services.AddScoped<ICurrentPermissionChecker, CurrentPermissionChecker>();
@@ -97,6 +98,10 @@ public static class DependencyInjection
         services.AddHttpClient<ICrystalReportInspector, CrystalReportInspectorClient>((provider, client) =>
         {
             ConfigureCrystalRuntimeClient(provider, client, TimeSpan.FromSeconds(30));
+        });
+        services.AddHttpClient<ICrystalReportDatabaseVerifier, CrystalReportDatabaseVerifierClient>((provider, client) =>
+        {
+            ConfigureCrystalRuntimeClient(provider, client, TimeSpan.FromMinutes(2));
         });
         services.AddHttpClient<ICrystalReportDeploymentSource, CrystalReportDeploymentSourceClient>((provider, client) =>
         {

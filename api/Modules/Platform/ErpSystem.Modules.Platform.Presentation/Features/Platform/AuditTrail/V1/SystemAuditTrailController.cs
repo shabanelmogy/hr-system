@@ -24,6 +24,15 @@ public sealed class SystemAuditTrailController(ISender sender) : ControllerBase
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
+    // Advanced read criteria use a bounded body rather than an IIS-limited query string.
+    [HttpPost("query")]
+    [RequestSizeLimit(32768)]
+    public async Task<IActionResult> Query([FromBody] AuditTrailQueryRequest request, CancellationToken cancellationToken)
+    {
+        var result = await sender.Send(new GetAuditTrailQuery(request), cancellationToken);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
+    }
+
     [HttpGet("filters")]
     [ProducesResponseType(typeof(AuditTrailFiltersResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetFilters(

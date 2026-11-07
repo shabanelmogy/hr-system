@@ -16,6 +16,7 @@ public sealed class ReportingModule : IModule
     public ModuleDefinition Definition => new("reporting", "Reporting",
     [
         new SubmoduleDefinition("analytics", "Analytics", ReportingPermissions.Reports),
+        new SubmoduleDefinition("global-data-exports", "Global data exports", ReportingPermissions.GlobalDataExports, PermissionAccessMode: PermissionAccessMode.Global),
         new SubmoduleDefinition(
             "global-geography-reports",
             "Global geography reports",

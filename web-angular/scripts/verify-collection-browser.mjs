@@ -69,6 +69,10 @@ try {
             language === 'ar' ? 'rtl' : 'ltr',
           );
           await expect(rows).toHaveCount(10);
+          const selectPage = shell.locator('thead th.selection-cell input[type="checkbox"]');
+          await expect(selectPage).toHaveCount(1);
+          await expect(shell.locator('.selection-bar')).toHaveCount(0);
+          await expect(shell.locator('erp-collection-footer .selection-summary')).toBeVisible();
           assert.equal(await page.locator('table').getAttribute('role'), 'grid');
           await expect(page.locator('table')).toHaveAttribute('aria-rowcount', '37');
           await expect(record('First')).toBeDisabled();
@@ -103,6 +107,16 @@ try {
             // Inner actions and checkboxes do not change the active record.
             await rows.nth(1).locator('p-checkbox input').check();
             await expect(state).toHaveAttribute('data-selected', '2');
+            await expect(selectPage).toHaveAttribute('aria-checked', 'mixed');
+            await selectPage.focus();
+            await page.keyboard.press('Space');
+            await expect(state).toHaveAttribute('data-selected', '1,2,3,4,5,6,8,9,10');
+            await expect(selectPage).toBeChecked();
+            await shell
+              .locator('.selection-summary')
+              .getByRole('button', { name: core['general.clear'], exact: true })
+              .click();
+            await expect(state).toHaveAttribute('data-selected', '');
             await expect(state).toHaveAttribute('data-active', '1');
             await rows.nth(1).locator('[data-action-id] button').click();
             await expect(state).toHaveAttribute('data-opened', '2');
@@ -124,7 +138,7 @@ try {
             await expect(rows.first()).toBeFocused();
             await page.keyboard.press('Space');
             await expect(state).toHaveAttribute('data-selected', '11');
-            await shell.locator('.selection-bar p-checkbox input').check();
+            await selectPage.check();
             await expect(state).toHaveAttribute('data-selected', '11,12,13,15,16,17,18,19,20');
             await rows.last().click();
             await command(() => record('Next').click());
@@ -217,6 +231,7 @@ try {
           }
           await page.getByTestId('cards-view').getByRole('button').click();
           await expect(page.locator('erp-card-list')).toBeVisible();
+          await expect(shell.locator('.selection-bar p-checkbox input')).toBeVisible();
           await expect(rows.first()).toBeVisible();
           assert.ok(await rows.first().locator('erp-surface-card').count());
           await expect(rows.first().locator('erp-status-badge')).toBeVisible();

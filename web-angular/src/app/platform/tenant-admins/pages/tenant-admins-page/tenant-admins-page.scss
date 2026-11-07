@@ -1,0 +1,7 @@
+@use '../../../../shared/ui/layout/collection-page';
+@include collection-page.shell;
+.workspace {
+  flex: 1;
+  min-inline-size: 0;
+  min-block-size: 0;
+}

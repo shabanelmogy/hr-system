@@ -150,3 +150,20 @@ PrimeNG MCP metadata/examples were consulted for InputText, Select, DatePicker,
 Checkbox and ToggleSwitch. Final DatePicker usage validation accepted its generated
 API metadata; Angular compilation, unit tests and browser tests provide the separate
 behavioral evidence. Metadata validation alone does not certify runtime behavior.
+
+## 8. Split field groups and tabbed forms
+
+Keep one page-scoped form/editor state and let small child components bind its
+existing fields. FormContainer's nearest-form DI registry crosses component view
+boundaries and unregisters destroyed fields. Use the public FormSection directive
+with a stable logical tab ID, handle sectionFocusRequested to select that tab,
+and keep form panels alive when their controls must preserve data. The shared
+container reveals the first invalid section, waits for rendering, then focuses
+the input; summary links and server field errors follow the same path. A second
+form tree, feature-local error registry or custom submission framework is unnecessary.
+
+The implemented example is Platform Tenants Management: identity, subscription,
+contact and notes field groups, plus a typed entitlement aggregate field extending
+FormFieldControl. Its page owns the catalog/read/editor providers; child visual
+components never fetch or save. See the shared-components guide for the public
+composition contract and the feature's dated acceptance report for executed checks.

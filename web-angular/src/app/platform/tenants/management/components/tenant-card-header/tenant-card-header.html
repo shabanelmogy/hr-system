@@ -1,0 +1,19 @@
+<div class="card-heading">
+  <div>
+    <h2 dir="auto">{{ tenant().name }}</h2>
+    <p dir="ltr">{{ tenant().identifier }}</p>
+  </div>
+  <erp-status-badge [label]="status()" [accent]="accent()" />
+</div>
+<div class="chips">
+  <erp-status-badge
+    [label]="
+      'tenantManagement.' + (tenant().isActive ? 'enabled' : 'disabled')
+        | uiText: 'platform-tenants'
+    "
+    [accent]="tenant().isActive ? 'var(--success)' : 'var(--muted-foreground)'"
+  /><erp-status-badge
+    appearance="outline"
+    [label]="tenant().planName || ('tenantManagement.noPlan' | uiText: 'platform-tenants')"
+  />
+</div>

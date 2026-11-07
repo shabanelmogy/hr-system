@@ -1,0 +1,55 @@
+<main>
+  <erp-page-header appearance="card" [title]="title() | uiText">
+    @if (resolvedKind() !== 'swagger' && reads.canRead()) {
+      <erp-button
+        [label]="'healthCheck.refresh' | uiText: 'platform-advanced-tools'"
+        variant="outlined"
+        [busy]="reads.pending()"
+        (activated)="reads.refresh()"
+        ><erp-icon buttonIcon name="refresh"
+      /></erp-button>
+    }
+  </erp-page-header>
+  @if (resolvedKind() === 'swagger') {
+    <iframe class="tool-frame" [src]="url()" [title]="title() | uiText" loading="lazy"></iframe>
+  } @else {
+    @let state = reads.view();
+    @switch (state.kind) {
+      @case ('loading') {
+        <erp-feedback-state
+          kind="loading"
+          [title]="
+            (resolvedKind() === 'health' ? 'healthCheck.loading' : 'hangfireDashboard.loading')
+              | uiText: 'platform-advanced-tools'
+          "
+        />
+      }
+      @case ('forbidden') {
+        <erp-feedback-state kind="forbidden" [title]="'authorization.forbidden.title' | uiText" />
+      }
+      @case ('error') {
+        <erp-feedback-state
+          kind="error"
+          [title]="
+            (resolvedKind() === 'health' ? 'healthCheck.loadError' : 'hangfireDashboard.loadError')
+              | uiText: 'platform-advanced-tools'
+          "
+          [actionLabel]="'healthCheck.retry' | uiText: 'platform-advanced-tools'"
+          (action)="reads.retry()"
+        />
+      }
+      @case ('ready') {
+        @if (state.data.type === 'health') {
+          <erp-health-report-panel [report]="state.data.report" />
+        } @else {
+          <iframe
+            class="tool-frame"
+            [src]="url()"
+            [title]="title() | uiText"
+            referrerpolicy="strict-origin-when-cross-origin"
+          ></iframe>
+        }
+      }
+    }
+  }
+</main>

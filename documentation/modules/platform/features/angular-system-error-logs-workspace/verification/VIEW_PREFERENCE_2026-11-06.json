@@ -1,0 +1,178 @@
+{
+  "verifiedAt": "2026-11-06T08:57:35.677Z",
+  "results": [
+    {
+      "language": "en",
+      "width": 390,
+      "screen": "/super-admin/tenants",
+      "restore": true,
+      "synchronization": true,
+      "unavailableFallback": true,
+      "hostedWrites": 0
+    },
+    {
+      "language": "en",
+      "width": 390,
+      "screen": "/dev/countries",
+      "restore": true,
+      "synchronization": true,
+      "unavailableFallback": true,
+      "hostedWrites": 0
+    },
+    {
+      "language": "en",
+      "width": 390,
+      "screen": "/super-admin/geography/states",
+      "restore": true,
+      "synchronization": true,
+      "unavailableFallback": true,
+      "hostedWrites": 0
+    },
+    {
+      "language": "en",
+      "width": 390,
+      "screen": "/super-admin/geography/districts",
+      "restore": true,
+      "synchronization": true,
+      "unavailableFallback": true,
+      "hostedWrites": 0
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "screen": "/super-admin/tenants",
+      "restore": true,
+      "synchronization": true,
+      "unavailableFallback": true,
+      "hostedWrites": 0
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "screen": "/dev/countries",
+      "restore": true,
+      "synchronization": true,
+      "unavailableFallback": true,
+      "hostedWrites": 0
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "screen": "/super-admin/geography/states",
+      "restore": true,
+      "synchronization": true,
+      "unavailableFallback": true,
+      "hostedWrites": 0
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "screen": "/super-admin/geography/districts",
+      "restore": true,
+      "synchronization": true,
+      "unavailableFallback": true,
+      "hostedWrites": 0
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "screen": "/super-admin/tenants",
+      "restore": true,
+      "synchronization": true,
+      "unavailableFallback": true,
+      "hostedWrites": 0
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "screen": "/dev/countries",
+      "restore": true,
+      "synchronization": true,
+      "unavailableFallback": true,
+      "hostedWrites": 0
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "screen": "/super-admin/geography/states",
+      "restore": true,
+      "synchronization": true,
+      "unavailableFallback": true,
+      "hostedWrites": 0
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "screen": "/super-admin/geography/districts",
+      "restore": true,
+      "synchronization": true,
+      "unavailableFallback": true,
+      "hostedWrites": 0
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "screen": "/super-admin/tenants",
+      "restore": true,
+      "synchronization": true,
+      "unavailableFallback": true,
+      "hostedWrites": 0
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "screen": "/dev/countries",
+      "restore": true,
+      "synchronization": true,
+      "unavailableFallback": true,
+      "hostedWrites": 0
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "screen": "/super-admin/geography/states",
+      "restore": true,
+      "synchronization": true,
+      "unavailableFallback": true,
+      "hostedWrites": 0
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "screen": "/super-admin/geography/districts",
+      "restore": true,
+      "synchronization": true,
+      "unavailableFallback": true,
+      "hostedWrites": 0
+    }
+  ],
+  "featureId": "angular-system-error-logs-workspace",
+  "scope": "Shared view preference and four existing consumers; Error Logs consumer remains pending",
+  "decision": "Scoped foundation verified; whole feature not accepted",
+  "sourceHashes": {
+    "web-angular/src/app/shared/data/view-preference.ts": "978b9a0c352c814832857043c34b251b1c9a3b3bd527d017c9288a3aa4f2812f",
+    "web-angular/src/app/shared/data/view-preference.spec.ts": "14201112b3100c147eddd319b7c1b4fff0897904641a96825d7ecd0cb41496e0",
+    "web-angular/scripts/verify-view-preference-browser.mjs": "e69b36b2f4d0204a699c9e355b538d089d0bdb875fc74be29a43fd4bff67a407",
+    "web-angular/src/app/shared/ui/layout/page-header/page-header.ts": "60f54ee3f6ccf82e63ea2217cb9d4e57d5812daa01c98fb02875736dd1db02d7",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts": "4c7100b3402cfce255a18958d25bee5491d8d94dee519c6b8a467f9f0ac0ed4a",
+    "web-angular/src/app/modules/reference-data/geographical-information/states/pages/states-page/states-page.ts": "de0c4f3d59630b953fb6ecfe75eb7ae61dfc272dcb4a1cfe0ce7915f29e9d190",
+    "web-angular/src/app/modules/reference-data/geographical-information/districts/pages/districts-page/districts-page.ts": "62a7db6b82fb6cb86c2802522adda6cabe968e0eb86d1cce621014816ba2f447",
+    "web-angular/src/app/platform/tenants/management/pages/tenant-management-page/tenant-management-page.ts": "7143868bf7f93afab27dd430acf8a9fd8bdcd0d61af5369d4e90c02374019a60"
+  },
+  "unitEvidence": {
+    "files": 2,
+    "tests": 14,
+    "redConsumerFailures": 2
+  },
+  "independentSourceReview": {
+    "reviewer": "/root/tenant_final_review",
+    "p1p2Remaining": 0,
+    "executedTestsByReviewer": false
+  },
+  "limits": [
+    "No business writes",
+    "No Error Logs screen acceptance",
+    "Full application gate is separate",
+    "Compact browser is not native-device acceptance"
+  ]
+}

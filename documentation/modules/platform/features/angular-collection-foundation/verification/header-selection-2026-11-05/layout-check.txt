@@ -1,0 +1,1 @@
+Collections: 8 palette/mode/language/viewport cases; Table + Cards; layout-only checks passed. 

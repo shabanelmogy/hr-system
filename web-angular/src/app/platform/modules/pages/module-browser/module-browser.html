@@ -1,9 +1,7 @@
-@if (moduleCode()) {
-  <div class="browser-navigation">
-    <erp-button variant="text" [label]="backLabel()" (activated)="back()" />
-  </div>
-}
 @let state = catalog.state();
+@if (moduleCode() && (state.kind !== 'ready' || denied() || areaCode())) {
+  <erp-page-header [title]="title()" [backLabel]="backLabel()" (backRequested)="back()" />
+}
 @if (state.kind === 'loading') {
   <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
 } @else if (state.kind === 'error') {
@@ -24,6 +22,8 @@
   <erp-feedback-state [title]="title()" [message]="'modules.noAvailableFeatures' | uiText" />
 } @else {
   <erp-launcher-grid
+    [backLabel]="moduleCode() ? backLabel() : ''"
+    (backRequested)="back()"
     [title]="title()"
     [description]="(moduleCode() ? 'modules.submoduleDescription' : 'modules.description') | uiText"
     [items]="items()"

@@ -8,6 +8,15 @@ Angular initial bundle warning: FOLLOW-019 in FOLLOW_UPS.md.
 
 This is the Web-focused index into the central note registries.
 
+Shared all-filtered collection export rollout: PROD-032 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).
+
+System log advanced query rollout: PROD-030 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).
+
+System Error Logs managed RPT/PDF integration and real provider/database acceptance: PROD-031 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).
+
+Collection view-preference parity: FOLLOW-027 in [FOLLOW_UPS.md](FOLLOW_UPS.md),
+Required within the current Super Admin goal before final acceptance.
+
 Do not duplicate full note details here. Add the canonical note to one of:
 - `PRODUCTION_NOTES.md`
 - `DEFERRED_ITEMS.md`
@@ -21,7 +30,8 @@ Then reference its stable ID here.
 
 | Note ID | Type | Area | Summary | Canonical registry |
 | --- | --- | --- | --- | --- |
-| FOLLOW-025 | Follow-up | Global documentation gate | Reporting historical receipts are missing in main; Angular-scoped proof is separate. | `FOLLOW_UPS.md` |
+| FOLLOW-026 | Follow-up | Reporting browser harness | Verified: refreshed sidebar selectors and eight focused lifecycle cases; RPT sidebar12 additional fixture cases passed. | `FOLLOW_UPS.md` |
+| FOLLOW-025 | Follow-up | Historical Reporting raw logs | Current manifests use existing evidence; unavailable historical logs remain inventoried for future runtime acceptance. | `FOLLOW_UPS.md` |
 | FOLLOW-021 | Follow-up | Historical Countries browser harness | Refresh current shared-control selectors before full S3-A8 acceptance. | `FOLLOW_UPS.md` |
 | FOLLOW-020 | Follow-up | Retained Next preview bootstrap | Deferred outside Angular under D35; separate Next scope only. | `FOLLOW_UPS.md` |
 | RISK-020 | Risk | Angular startup bundle | Measured startup localization cost exceeds unchanged warning budget; release review remains required. | `KNOWN_RISKS.md` |

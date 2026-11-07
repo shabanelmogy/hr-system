@@ -1,0 +1,33 @@
+:host {
+  display: block;
+}
+.filter-editor {
+  display: grid;
+  gap: 16px;
+  min-inline-size: 0;
+}
+.filter-values {
+  display: grid;
+  gap: 12px;
+  max-block-size: 40dvh;
+  overflow: auto;
+  padding: 4px;
+}
+.value-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.value-row erp-text-field {
+  flex: 1;
+  min-inline-size: 0;
+}
+.filter-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+p {
+  color: var(--destructive);
+  margin: 0;
+}

@@ -8,13 +8,13 @@ namespace ErpSystem.Modules.Reporting.Tests;
 public sealed class ManagedCrystalReportContractRegistryTests
 {
     [Fact]
-    public void LoadEmbedded_UsesExactVersionedFiveEntityContract()
+    public void LoadEmbedded_UsesExactVersionedSixEntityContract()
     {
         var bytes = ManagedCrystalReportContractArtifact.ReadAllBytes();
         var registry = ManagedCrystalReportContractRegistry.LoadEmbedded();
 
         Assert.Equal(1, registry.SchemaVersion);
-        Assert.Equal(5, registry.Count);
+        Assert.Equal(6, registry.Count);
         Assert.Equal(
             Convert.ToHexString(SHA256.HashData(bytes)).ToLowerInvariant(),
             registry.Fingerprint);

@@ -1,0 +1,290 @@
+[
+  {
+    "language": "en",
+    "scenario": "read-only",
+    "passed": true,
+    "writes": 0,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "list-forbidden",
+    "passed": true,
+    "writes": 0,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "lookup-forbidden",
+    "passed": true,
+    "writes": 0,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "lookup-error",
+    "passed": true,
+    "writes": 0,
+    "lookupCalls": 2,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "detail-forbidden",
+    "passed": true,
+    "writes": 0,
+    "lookupCalls": 1,
+    "detailCalls": 1,
+    "listCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "detail-error",
+    "passed": true,
+    "writes": 0,
+    "lookupCalls": 1,
+    "detailCalls": 2,
+    "listCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "duplicate-email",
+    "passed": true,
+    "writes": 1,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "duplicate-username",
+    "passed": true,
+    "writes": 1,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "password",
+    "passed": true,
+    "writes": 1,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "seat",
+    "passed": true,
+    "writes": 1,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "field",
+    "passed": true,
+    "writes": 1,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "uncertain",
+    "passed": true,
+    "writes": 1,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "pending",
+    "passed": true,
+    "writes": 1,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 2
+  },
+  {
+    "language": "en",
+    "scenario": "mutation-forbidden",
+    "passed": true,
+    "writes": 1,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "delete-uncertain",
+    "passed": true,
+    "writes": 1,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 2
+  },
+  {
+    "language": "en",
+    "scenario": "delete-forbidden",
+    "passed": true,
+    "writes": 1,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "read-only",
+    "passed": true,
+    "writes": 0,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "list-forbidden",
+    "passed": true,
+    "writes": 0,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "lookup-forbidden",
+    "passed": true,
+    "writes": 0,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "lookup-error",
+    "passed": true,
+    "writes": 0,
+    "lookupCalls": 2,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "detail-forbidden",
+    "passed": true,
+    "writes": 0,
+    "lookupCalls": 1,
+    "detailCalls": 1,
+    "listCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "detail-error",
+    "passed": true,
+    "writes": 0,
+    "lookupCalls": 1,
+    "detailCalls": 2,
+    "listCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "duplicate-email",
+    "passed": true,
+    "writes": 1,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "duplicate-username",
+    "passed": true,
+    "writes": 1,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "password",
+    "passed": true,
+    "writes": 1,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "seat",
+    "passed": true,
+    "writes": 1,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "field",
+    "passed": true,
+    "writes": 1,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "uncertain",
+    "passed": true,
+    "writes": 1,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "pending",
+    "passed": true,
+    "writes": 1,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 2
+  },
+  {
+    "language": "ar",
+    "scenario": "mutation-forbidden",
+    "passed": true,
+    "writes": 1,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "delete-uncertain",
+    "passed": true,
+    "writes": 1,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 2
+  },
+  {
+    "language": "ar",
+    "scenario": "delete-forbidden",
+    "passed": true,
+    "writes": 1,
+    "lookupCalls": 1,
+    "detailCalls": 0,
+    "listCalls": 1
+  }
+]

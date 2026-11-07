@@ -4,6 +4,12 @@
 
 Districts is global Platform geographical reference data below an active State and is managed only by `super_admin` with the applicable District permission. It is implemented in the API, Next.js, and Expo clients. Its fields are `NameAr`, `NameEn`, `Code`, and required `StateId`; it is not a copy of Countries or States and has no country, currency, or telephone fields. Web and mobile imports resolve the parent from a `stateName` spreadsheet column without adding that display-only field to the domain.
 
+Angular client2026-11-06: the complete canonical District workspace now composes
+existing Shared owners with four-field State-aware native Signal Forms and all five
+source views. Complete acceptance/limits are in documentation/modules/platform/
+features/angular-districts-workspace/DISTRICTS_WORKSPACE_2026-11-06.md. API/Next/native
+business rules are retained; this migration does not change database/schema.
+
 ## 2. Audited baseline
 
 The pre-refactor API used `IDistrictService` with an unpaged controller. The browser list filtered and sorted local data, and Expo had no Districts route or feature. The refactor moves current paths to feature-owned CQRS reads/writes, server-managed lists, lifecycle actions, and a direct mobile route. The old service is retained only as unused compatibility code pending a separately audited removal.

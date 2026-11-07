@@ -1,0 +1,22 @@
+<erp-text-field
+  [formField]="editor.form.identifier"
+  [label]="captions.label('identifier')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+  textDirection="ltr"
+  [showCounter]="true"
+/>
+<erp-text-field
+  [formField]="editor.form.name"
+  [label]="captions.label('name')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+  [showCounter]="true"
+/>
+<erp-boolean-field
+  kind="switch"
+  [formField]="editor.form.isActive"
+  [label]="captions.label('isActive')"
+  [readOnly]="editor.locked()"
+  [help]="captions.text('sections.identityDescription')"
+/>

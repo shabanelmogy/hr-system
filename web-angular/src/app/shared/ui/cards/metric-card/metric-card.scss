@@ -29,7 +29,7 @@ header > span:first-child {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--muted-foreground);
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 .metric-icon {
   width: 34px;
@@ -55,10 +55,102 @@ strong {
   margin-bottom: 4px;
   color: var(--accent);
 }
+p {
+  margin: 8px 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+footer {
+  margin-block-start: 16px;
+}
+:host(.large-metric) section {
+  padding: 20px;
+}
+:host(.small-metric) header > span:first-child {
+  font-size: 11px;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+}
+:host(.small-metric) strong {
+  font-size: 16px;
+}
+:host(.small-metric) .metric-icon {
+  inline-size: 28px;
+  block-size: 28px;
+}
+:host(.large-metric) strong {
+  font-size: 2.25rem;
+}
 :host(.raised-metric) section {
   border-radius: 16px;
   box-shadow:
     0 3px 1px -2px #0003,
     0 2px 2px #00000024,
     0 1px 5px #0000001f;
+}
+
+:host(.compact-metric) {
+  container-type: inline-size;
+}
+
+:host(.compact-metric) section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.375rem;
+  min-block-size: 2.625rem;
+  padding: 0.375rem 0.5rem;
+}
+
+:host(.compact-metric) header {
+  display: contents;
+}
+
+:host(.compact-metric) header > span:first-child {
+  font-size: 0.6875rem;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+}
+
+:host(.compact-metric) .metric-icon {
+  grid-column: 2;
+  grid-row: 1;
+  inline-size: 1.625rem;
+  block-size: 1.625rem;
+  border-width: 1px;
+  box-shadow: none;
+}
+
+:host(.compact-metric) erp-icon {
+  inline-size: 0.875rem;
+  block-size: 0.875rem;
+}
+
+:host(.compact-metric) strong {
+  grid-column: 3;
+  grid-row: 1;
+  margin: 0;
+  font-size: 1rem;
+}
+
+@container (max-width: 12rem) {
+  :host(.compact-metric) section {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  :host(.compact-metric) header > span:first-child {
+    grid-column: 1 / -1;
+    overflow-wrap: normal;
+  }
+
+  :host(.compact-metric) .metric-icon {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  :host(.compact-metric) strong {
+    grid-column: 2;
+    grid-row: 2;
+  }
 }

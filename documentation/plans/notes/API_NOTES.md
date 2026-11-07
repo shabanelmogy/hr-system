@@ -2,6 +2,12 @@
 
 This is the API-focused index into the central note registries.
 
+Shared all-filtered collection export rollout: PROD-032 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).
+
+System log advanced query rollout: PROD-030 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).
+
+System Error Logs managed RPT/PDF integration and real provider/database acceptance: PROD-031 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).
+
 Current Crystal review references: **PROD-029** (published runtime auth/version
 mismatch) in `PRODUCTION_NOTES.md`, **FOLLOW-023** (rejected catalog descriptor
 interoperability) in `FOLLOW_UPS.md`, and existing **PROD-028** (hosted ERP report503).

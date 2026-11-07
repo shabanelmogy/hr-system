@@ -4,4 +4,10 @@
     ><span class="metric-icon"><erp-icon [name]="icon()" /></span>
   </header>
   <strong>{{ value() }}</strong>
+  @if (description()) {
+    <p>{{ description() }}</p>
+  }
+  @if (footerTemplate(); as template) {
+    <footer><ng-container [ngTemplateOutlet]="template" /></footer>
+  }
 </section>

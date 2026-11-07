@@ -1,0 +1,194 @@
+[
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "system-audit",
+    "matched": 21,
+    "actualDotnetQuery": true,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "system-error-logs",
+    "matched": 21,
+    "actualDotnetQuery": true,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "system-audit",
+    "matched": 21,
+    "actualDotnetQuery": true,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "system-error-logs",
+    "matched": 21,
+    "actualDotnetQuery": true,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "system-audit",
+    "matched": 21,
+    "actualDotnetQuery": true,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "system-error-logs",
+    "matched": 21,
+    "actualDotnetQuery": true,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "system-audit",
+    "matched": 21,
+    "actualDotnetQuery": true,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "system-error-logs",
+    "matched": 21,
+    "actualDotnetQuery": true,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "system-audit",
+    "matched": 21,
+    "actualDotnetQuery": true,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "system-error-logs",
+    "matched": 21,
+    "actualDotnetQuery": true,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "system-audit",
+    "matched": 21,
+    "actualDotnetQuery": true,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "system-error-logs",
+    "matched": 21,
+    "actualDotnetQuery": true,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "system-audit",
+    "matched": 21,
+    "actualDotnetQuery": true,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "system-error-logs",
+    "matched": 21,
+    "actualDotnetQuery": true,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "system-audit",
+    "matched": 21,
+    "actualDotnetQuery": true,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "system-error-logs",
+    "matched": 21,
+    "actualDotnetQuery": true,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  }
+]

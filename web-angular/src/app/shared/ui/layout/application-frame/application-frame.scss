@@ -145,6 +145,14 @@
   min-height: 0;
   flex: 1;
 }
+:host(.compact-workspace) .workspace-main {
+  padding: 72px 12px 12px;
+}
+@media (max-width: 599px) {
+  :host(.compact-workspace) .workspace-main {
+    padding-block-start: 64px;
+  }
+}
 :host-context(.dark) .workspace-topbar {
   --option-label-background: var(--surface);
   background: var(--surface);

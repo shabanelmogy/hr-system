@@ -1,0 +1,14 @@
+<erp-form
+  [form]="form"
+  title="Section fixture"
+  submitLabel="Submit fixture"
+  (sectionFocusRequested)="selectSection($event)"
+>
+  @if (showChild()) {
+    <boundary-child-fields
+      formSection="settings"
+      [control]="form.controls.nested"
+      [hidden]="activeSection() !== 'settings'"
+    />
+  }
+</erp-form>

@@ -1,0 +1,33 @@
+.responsive-preview {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+  color: var(--foreground);
+}
+.preview-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  gap: 12px;
+  padding: 12px;
+  background: var(--surface);
+  border-block-end: 1px solid var(--border);
+  --option-label-background: var(--surface);
+}
+.preview-stage {
+  flex: 1;
+  min-block-size: 0;
+  overflow: auto;
+  background: var(--muted);
+  border: 1px solid var(--border);
+}
+iframe {
+  display: block;
+  max-inline-size: none;
+  border: 0;
+  background: var(--background);
+  margin-inline: auto;
+}

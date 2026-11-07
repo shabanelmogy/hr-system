@@ -1,0 +1,261 @@
+{
+  "feature": "angular-collection-export",
+  "dateUtc": "2026-11-07T08:41:31.6807707Z",
+  "acceptance": "Verified bounded local Angular and Reporting integration; hosted rollout remains PROD-032 and whole Super Admin remains open",
+  "angular": {
+    "architectureTests": 32,
+    "exitCode": 0,
+    "initialBundleKB": 581.99,
+    "files": 195,
+    "warning": "RISK-020",
+    "tests": 997,
+    "log": "logs/export-final-check.log",
+    "command": "npm run check"
+  },
+  "api": {
+    "fullSolutionPassed": 1331,
+    "fullSolutionSkipped": 3,
+    "focusedReportingPassed": 252,
+    "fullSolutionLog": "../../angular-account-profile/verification/logs/account-catalog-final-tests.log",
+    "comment": "Full API gate retained on same runtime sources; no API runtime edits in this acceptance pass",
+    "focusedExitCode": 0,
+    "fullBuildLog": "../../angular-account-profile/verification/logs/account-catalog-final-build.log",
+    "fullSolutionWarnings": 78
+  },
+  "browser": {
+    "formatterResults": "formatter-results.json",
+    "recoveryFiles": 12,
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "authentication": "synthetic business reads/session; actual loopback Reporting controllers/CQRS/ClosedXML formatter with fixture auth",
+    "owners": 8,
+    "widths": [
+      390,
+      900,
+      1440
+    ],
+    "results": "results.json",
+    "languages": [
+      "en",
+      "ar"
+    ],
+    "formatterCases": 12,
+    "matrices": 12,
+    "artifact": "development build required for existing dev-only Countries route; source gate unchanged",
+    "parsedFiles": 312,
+    "shortWindow": "900x640",
+    "scenarios": [
+      "all matching pages",
+      "every exported cell compared",
+      "Grid/Cards where supported",
+      "cancel without stale download",
+      "denied formatter with shared feedback",
+      "zero outer overflow"
+    ],
+    "exitCode": 0
+  },
+  "review": {
+    "currentFilteredRows": true,
+    "nonAtomicSnapshot": "Existing APIs have no atomic multi-request snapshot; count/identity/cursor drift fails explicitly",
+    "noClientWorkbookEncoder": true,
+    "noRealBusinessWrites": true,
+    "noSchemaChange": true,
+    "actualOwnerViews": true,
+    "noDeployment": true,
+    "sharedFirst": true
+  },
+  "sourceHashes": [
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/Exporting/ExportRequests.cs",
+      "sha256": "4f476e4bb0e043ee16c85578c9e1cd7d4f27ed4991b55224f8262c1493f56012"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/Exporting/Services/IExportExcelService.cs",
+      "sha256": "6b70c6eeac41586debad3491c8478d9a21df89c4b70139d3cc2aa8ead4a05fc3"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/Exporting/TabularExportData.cs",
+      "sha256": "7d8acd340a70ff45a63a0f01cb98bb5e8cf7522c16e0af05fd9041c6b74552f4"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/Exporting/TabularExportRequests.cs",
+      "sha256": "098b6156a36d430c00128474ec85a15fb9638d4fcfed44c31d0be884b02c917f"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/Authorization/ReportingPermissions.cs",
+      "sha256": "29093572e91023c95ccd5daa2addc647f244f48c81989606b836b3f2ee9e10b7"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/Exporting/Services/ExportExcelService.cs",
+      "sha256": "2f8bbfe2caaefac1c12ff67b78aceb97e5c7558c4e3a0f6d320e139c7ec0f023"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/Exporting/V1/GlobalDataExportsController.cs",
+      "sha256": "5d08b438dc045d5fcbedbd225cac1b5e02cf43b899c7f22eec098c9bf5f5345b"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ReportingAuthorizationTests.cs",
+      "sha256": "568bd2e2227ddc58e2f573085dbc40f64a9ed98fab9ba6fd8e6c56bd2891239c"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/TabularExportTests.cs",
+      "sha256": "3aa91e52f0fd543d07865350ac1efdd356140d57dce90e4dc4ea171a1b49b944"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/TabularExportValidationTests.cs",
+      "sha256": "5d388480c27a5dccdf91315a891191665ed5f31e72fff2a321f5c83fd5d909cf"
+    },
+    {
+      "path": "web-angular/scripts/verify-collection-export-browser.mjs",
+      "sha256": "39064d32441b2717d705644fe84e2b2cb9b3093c98af106f36893e089db093f3"
+    },
+    {
+      "path": "web-angular/scripts/verify-tabular-export-formatter.mjs",
+      "sha256": "1fa8c53ad17d86ab40fec18bb6a1db6eb350546454297bdfa5003f9f522c62ba"
+    },
+    {
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.ts",
+      "sha256": "63237b13bc3ae64e8fe941227a61106677b30de7fb616c9fbce8a0d0a70cb6f3"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+      "sha256": "84ded5c7eb109c05f2245cf1b942d276b2d7d00227fdc807fc516d6fae6473c8"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-read-state.spec.ts",
+      "sha256": "b5a5ab9eb3d29cd772158747a649e00ced6b023885c4feb418ec1dc8fd0fed0b"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-read-state.ts",
+      "sha256": "65f553ec69944229ad962baec6daa9136d8506546549ac5127758949045f2b7f"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/districts/pages/districts-page/districts-page.ts",
+      "sha256": "af35a690e1fb8d7af8cf99a6794b7b1b98d0758d3e8b74df1adf147eb3a52e43"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/districts/state/district-read-state.ts",
+      "sha256": "5e45026e225b011d4ceef68edb5f65fbda83e8250bb1e5a56f92d67af983668e"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/states/pages/states-page/states-page.ts",
+      "sha256": "fa2bc717f9957e7f4fd2dc9f84395396e1be14304f30777e4308abb12c1d7122"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/states/state/state-read-state.ts",
+      "sha256": "7d3708717ca91c53c3766c2ca040210f658daceecb541c6f54b0f88b663aa275"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/collection-export/export.public-api.ts",
+      "sha256": "8b1831686305e64ef1e42d1154f803ba96512e0fbbde017787283874941d9993"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/collection-export/services/tabular-file-service.spec.ts",
+      "sha256": "59f9cf2a3ba25c44d2ed805d36239d2fb5f641c154b1e4e50051ad10cbb9eb6d"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/collection-export/services/tabular-file-service.ts",
+      "sha256": "73393b8290b889cfce8b233f6ec2bdac5d2e7af4345e90f130484926b5aa4b66"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-list/global-template-list.ts",
+      "sha256": "03896d4c6b3afbf3236e7ac431c20b9da43a3df8e48e6884d5e046e30dbab782"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/state/global-template-state.ts",
+      "sha256": "6f2eca4caba9452963cada04dd5159d8d95748f3e976ee05d387d2be25d8409b"
+    },
+    {
+      "path": "web-angular/src/app/platform/system-audit/pages/system-audit-page/system-audit-page.ts",
+      "sha256": "a161d80fe85312d7f23176622e243d3f9fca90166094f143a07692043f65a003"
+    },
+    {
+      "path": "web-angular/src/app/platform/system-audit/state/audit-read-state.ts",
+      "sha256": "84f87a1a2ecb7c870e6739b5b7f04b57210214c26ac5619d666b54ef9e628ae5"
+    },
+    {
+      "path": "web-angular/src/app/platform/system-error-logs/pages/system-error-logs-page/system-error-logs-page.ts",
+      "sha256": "2828f78af24b90a34e20d864858fcc83708603c3558d014882efd8a856a04638"
+    },
+    {
+      "path": "web-angular/src/app/platform/system-error-logs/state/error-log-read-state.ts",
+      "sha256": "bfe0be8ba28c26ba9ae7964d7588efbccb0405a66d1617b8a52ee8be955e73e9"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenant-admins/pages/tenant-admins-page/tenant-admins-page.ts",
+      "sha256": "8aaf9db3f0b4bb96ae754a5e56b3c849f8428319f9196227a685e286b48315e7"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenant-admins/state/admin-read-state.ts",
+      "sha256": "bb609adeac6c0e6f7046e299de61200f16dbc1eacf82a0320d62c2768e31457b"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenants/management/pages/tenant-management-page/tenant-management-page.ts",
+      "sha256": "3a82f71bdd8802f62205644c686f648fb96301eaa989b49a6081de7cfa12f833"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenants/management/state/tenant-read-state.ts",
+      "sha256": "5ff2bfc076fce38da65a697ef3214f5ef4bc16a3454e1b1f4f10d4d45b473f7d"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/tabular-export.spec.ts",
+      "sha256": "f5c8a00c4152c14d5a814d55bafa1d80b1c350f89acdd4545d9a4f4b4575fc90"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/tabular-export.ts",
+      "sha256": "e1716166cc92be54b8482cd4d3e92734f234dfd55925121f77bffbcf7fbab857"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-export-menu/collection-export-menu.html",
+      "sha256": "0b3d4fbadb1b11b382b67c8607b9e78316c7b3478a6500d510f7883b0b2fb983"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-export-menu/collection-export-menu.scss",
+      "sha256": "185f1bd23a4b83e324051c74f3774b75125be6f369eca23f4cdac89b8f10c730"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-export-menu/collection-export-menu.ts",
+      "sha256": "e6b02c95f473c659f4870c4b394d1d95c4647cc4f6949d14fc9e3cfda679700b"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-export-state.spec.ts",
+      "sha256": "fd72b5f4273497c50706ccfd9b43c58d95438749b8996dd90e633f6782ac0a79"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-export-state.ts",
+      "sha256": "b1c8c99a5d7df2fd681d7587c93b18224856c3a491025179219db8f441fe90f2"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/page-header/page-header.html",
+      "sha256": "4f671fc4fc96552bff3d672d99c4d0ac13f966529e6904970c9dbdbec6f7ef82"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/page-header/page-header.spec.ts",
+      "sha256": "bbd41a42c71b0d3c6c85edcc147c1ac362dbb5a1a4ddcf95201279c7b054ab96"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/page-header/page-header.ts",
+      "sha256": "ee782e5a30e55291fff0e9bc9d718a6f05e7acb1f3e8c5f5406028e5cf8d3d4e"
+    },
+    {
+      "path": "web-angular/tooling/tabular-export-proof/Program.cs",
+      "sha256": "af872a2d60dfc9a06b1f4cbf320b5bfea478c77650aac93bffefa4a81d067e8c"
+    },
+    {
+      "path": "web-angular/tooling/tabular-export-proof/TabularExportProof.csproj",
+      "sha256": "7e20bb47e509cb747c68b2cf86cdf47fe4971e03fe1a41d9b45748aebf04c3f3"
+    }
+  ],
+  "documentation": {
+    "education": "documentation/plans/business/web-angular-migration/education/angular-collection-export.md",
+    "recipes": 540,
+    "existingPlanningWarnings": [
+      "education-module",
+      "erp-platform-template"
+    ],
+    "generationCheck": "logs/export-closure-check.log",
+    "planningCheck": "logs/export-closure-planning.log"
+  }
+}

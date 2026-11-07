@@ -63,6 +63,48 @@ namespace CrystalReportGeneratorApi.Runtime.Inspection
             }
         }
 
+        /// <summary>
+        /// Runs Crystal's Verify Database operation against the stored report and
+        /// saves the adapted RPT to a caller-owned output path. The caller must
+        /// inspect the output before it becomes a managed report version.
+        /// </summary>
+        public CrystalReportVerificationResult VerifyDatabase(
+            string reportFilePath,
+            string outputFilePath,
+            string entityKey)
+        {
+            if (string.IsNullOrWhiteSpace(reportFilePath))
+                throw new ArgumentException("A report file path is required.", nameof(reportFilePath));
+            if (string.IsNullOrWhiteSpace(outputFilePath))
+                throw new ArgumentException("An output file path is required.", nameof(outputFilePath));
+
+            _profiles.GetRequired(entityKey);
+            using (var report = new ReportDocument())
+            {
+                report.Load(reportFilePath, OpenReportMethod.OpenReportByTempCopy);
+                var rejectionReason = CrystalReportManagedSourcePolicy.GetRejectionReason(report);
+                if (rejectionReason != null)
+                    throw new CrystalReportRejectedException(InternalReportErrorCodes.SourceRejected, rejectionReason);
+
+                // Crystal owns the schema adaptation. It may add/remove database
+                // fields in the saved report, but it never places new fields into
+                // sections or invents layout/formatting.
+                report.VerifyDatabase();
+                report.SaveAs(outputFilePath);
+            }
+
+            var inspection = Inspect(outputFilePath, entityKey);
+            return new CrystalReportVerificationResult
+            {
+                IsValid = inspection.IsValid,
+                Title = inspection.Title,
+                Subject = inspection.Subject,
+                ContractSchemaVersion = inspection.ContractSchemaVersion,
+                ContractFingerprint = inspection.ContractFingerprint,
+                Failure = inspection.Failure
+            };
+        }
+
         internal static void ValidateTemplateContract(
             ReportDocument report,
             CrystalReportProfile profile)
@@ -148,6 +190,16 @@ namespace CrystalReportGeneratorApi.Runtime.Inspection
         public string Title { get; set; }
         public string Subject { get; set; }
         public int SubreportCount { get; set; }
+        public int ContractSchemaVersion { get; set; }
+        public string ContractFingerprint { get; set; }
+        public CrystalReportTemplateValidationFailure Failure { get; set; }
+    }
+
+    public sealed class CrystalReportVerificationResult
+    {
+        public bool IsValid { get; set; }
+        public string Title { get; set; }
+        public string Subject { get; set; }
         public int ContractSchemaVersion { get; set; }
         public string ContractFingerprint { get; set; }
         public CrystalReportTemplateValidationFailure Failure { get; set; }

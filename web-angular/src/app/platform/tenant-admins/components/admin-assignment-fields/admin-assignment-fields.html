@@ -1,0 +1,18 @@
+<erp-multi-reference-field
+  [formField]="editor.form.tenantIds"
+  [options]="options()"
+  [label]="captions.text('tenants')"
+  [help]="captions.text('assignmentHint')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+  (valueChange)="editor.membershipsChanged($event)"
+/>
+<erp-reference-field
+  [formField]="editor.form.defaultTenantId"
+  [source]="defaults()"
+  [searchable]="false"
+  [clearable]="false"
+  [label]="captions.text('defaultTenant')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+/>

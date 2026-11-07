@@ -1,0 +1,52 @@
+
+> erp-angular@0.0.0 pretest
+> npm run configure:license
+
+
+> erp-angular@0.0.0 configure:license
+> node --env-file-if-exists=.env.local scripts/configure-license.mjs
+
+PrimeUI local license configured (value omitted).
+
+> erp-angular@0.0.0 test
+> node scripts/run-angular.mjs test --watch=false --include=src/app/modules/reference-data/geographical-information/districts/**/*.spec.ts --include=src/app/modules/reference-data/geographical-information/states/services/state-lookup-service.spec.ts
+
+API target: host (https://shabanhrms.runasp.net)
+> Building...
+√ Building...
+Application bundle generation complete. [11.623 seconds] - 2026-11-05T23:59:41.891Z
+
+
+ RUN  v5.0.5 F:/Portofolio Projects/ERPSYSTEM/web-angular
+
+ ❯ |erp-angular| src/app/modules/reference-data/geographical-information/districts/state/district-read-state.spec.ts (15 tests | 1 failed) 283ms
+   ❯ Districts current actor and criteria read lifetime (15)
+     × refreshes child Address counts after an Address change and ignores unrelated resources 26ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |erp-angular| src/app/modules/reference-data/geographical-information/districts/state/district-read-state.spec.ts > Districts current actor and criteria read lifetime > refreshes child Address counts after an Address change and ignores unrelated resources
+AssertionError: expected [ { …(3) } ] to have a length of 2 but got 1
+
+- Expected
++ Received
+
+- 2
++ 1
+
+ ❯ src/app/modules/reference-data/geographical-information/districts/state/district-read-state.spec.ts:285:21
+    283|       await vi.advanceTimersByTimeAsync(250);
+    284|       TestBed.tick();
+    285|       expect(pages).toHaveLength(resource === 'addresses' ? 2 : 1);
+       |                     ^
+    286|     }
+    287|     expect(state.parentRevision()).toBe(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 12 passed (13)
+      Tests  1 failed | 61 passed (62)
+   Start at  01:59:42
+   Duration  10.01s (environment 64%, setup 17%, import 10%, transform 7%, tests 1%, worker 1%)
+

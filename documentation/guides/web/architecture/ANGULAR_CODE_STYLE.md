@@ -140,3 +140,9 @@ Tests use typed service mocks and checked fixture entries. Maintain the actual
 expected outcome when tightening types; never remove assertions merely to pass a
 new gate. Canonical hardening evidence and CC-01..07 closure are in
 `documentation/plans/business/web-angular-migration/CLEAN_CODE_HARDENING.md`.
+
+Primary workspace layout follows ANGULAR_SCROLLING.md: no outer page scrollbar,
+shared inner scrolling with reachable content/actions, and shared collection-page
+spacing. Back navigation is always the shared RTL-aware arrow before the title,
+through PageHeader or LauncherGrid; the feature supplies the destination and dirty
+guard. These are reusable implementation contracts, not feature-local CSS rules.

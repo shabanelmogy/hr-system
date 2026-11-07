@@ -1,0 +1,12 @@
+<erp-option-select
+  [label]="'general.sortBy' | uiText"
+  [value]="reads.query().columnName"
+  [options]="sorts()"
+  [controlHeight]="36"
+  (valueChange)="choose($event)"
+/>
+<erp-sort-direction-button
+  [direction]="reads.query().sortDirection === 'DESC' ? 'desc' : 'asc'"
+  (directionChange)="reads.changeSort({ field: reads.query().columnName, direction: $event })"
+/>
+<erp-button [label]="'general.reset' | uiText" variant="text" (activated)="reads.reset()" />

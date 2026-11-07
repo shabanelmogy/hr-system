@@ -1,0 +1,53 @@
+<erp-dialog-panel
+  [open]="editor.active()"
+  size="wide"
+  [title]="captions.text(editor.mode() === 'create' ? 'addTenant' : 'editTenant')"
+  [description]="captions.text('formSubtitle')"
+  [closeLabel]="'actions.close' | uiText"
+  [pending]="editor.pending()"
+  [showFooter]="false"
+  (closeRequested)="closeGuard().requestClose()"
+>
+  @if (editor.active()) {
+    @switch (editor.phase()) {
+      @case ('loading') {
+        <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
+      }
+      @case ('forbidden') {
+        <erp-feedback-state kind="forbidden" [title]="'authorization.forbidden.title' | uiText" />
+      }
+      @case ('error') {
+        <erp-feedback-state
+          kind="error"
+          [title]="captions.text('detailLoadError')"
+          [message]="
+            editor.feedback()
+              ? captions.locale.translate(editor.feedback(), 'platform-tenants')
+              : ''
+          "
+          [actionLabel]="'actions.retry' | uiText"
+          (action)="editor.retry()"
+        />
+      }
+      @case ('catalog-error') {
+        <erp-feedback-state
+          kind="error"
+          [title]="captions.text('catalogCompatibility')"
+          [actionLabel]="'actions.retry' | uiText"
+          (action)="editor.retry()"
+        />
+      }
+      @case ('ready') {
+        <erp-tenant-form appearance="dialog" (cancelled)="closeGuard().requestClose()" />
+      }
+    }
+  }
+</erp-dialog-panel>
+<erp-form-close-guard
+  [identity]="editor.identity()"
+  [revision]="editor.revision()"
+  [active]="editor.active()"
+  [unsaved]="editor.unsaved()"
+  [pending]="editor.pending()"
+  (closed)="editor.close($event)"
+/>

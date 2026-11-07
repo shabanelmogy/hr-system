@@ -76,7 +76,7 @@ on the original plan alone.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | global-crystal-template-manager-master | 8 | `e49172a953d01c2ebbe50d20f9fb429b8f06dba434168008dca3d1761fc81ba1` |
-| global-crystal-template-manager-master | 9 | `7f874017adb53ab2a23a23f3f15e827415df1f167dfdebc7acf626839a5d054c` |
+| global-crystal-template-manager-master | 9 | `f8e47d8a41fea8a41b6687c40f33456c27575e85882a59785da4ace9ae9ca4e6` |
 | global-crystal-template-manager-master | 10 | `e194b7cfe0a21fbc5cc18fe52e462a6f14a6d468fd48ba2013998af2740b345f` |
 | global-crystal-template-manager-master | 20 | `7cce7bcd793c79160e4c86a3b8d08c750ebc39b2f2224474a73f858d671bfc68` |
 | global-crystal-template-manager-master | 21 | `d4c3cb230cc1b91ef63280157daf31ff73299f7ffe734e3457792977b7578109` |
@@ -120,7 +120,7 @@ on the original plan alone.
 | global-crystal-template-manager-api | 38 | `b78bd8ddfc6fcbe593dc815ac4c3849fafeb0eae896199ce52568de6c8b9ab46` |
 | global-crystal-template-manager-api | 39 | `b91369d1b82101ed5dd44eb90c4e4a57483bcc094721ea18e9af66c3d9c3fcfa` |
 | global-crystal-template-manager-web | 12 | `c852338da83db8d6b5ee61a1f43826bc50cbd1b83e75dd20f4f0095b88f34488` |
-| global-crystal-template-manager-web | 13 | `feb2b4b105453f091f7439beaa4cc63bc5f778693920b095215c11f92b20fa7a` |
+| global-crystal-template-manager-web | 13 | `df8c55f8fd9efccf72639dcc8fdbe8666a68a82bdfe04768f14115ddceeb04d2` |
 | global-crystal-template-manager-web | 14 | `6bbdfd8dd2d2e8eb4059296724255c23c89a3452818f2f8851e7829900209300` |
 | global-crystal-template-manager-web | 20 | `7cce7bcd793c79160e4c86a3b8d08c750ebc39b2f2224474a73f858d671bfc68` |
 | global-crystal-template-manager-web | 21 | `d4c3cb230cc1b91ef63280157daf31ff73299f7ffe734e3457792977b7578109` |

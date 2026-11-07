@@ -26,6 +26,7 @@ p {
   max-width: 560px;
   color: var(--muted-foreground);
   overflow-wrap: anywhere;
+  white-space: pre-line;
 }
 .spinner {
   inline-size: 40px;
@@ -77,4 +78,38 @@ p {
   flex: 1;
   font-size: 14px;
   overflow-wrap: anywhere;
+}
+:host(.inline-feedback) section:has(> p) {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 4px 12px;
+}
+:host(.inline-feedback) section:has(> p) erp-icon {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+:host(.inline-feedback) section:has(> p) strong {
+  grid-column: 2;
+  grid-row: 1;
+}
+:host(.inline-feedback) section:has(> p) p {
+  grid-column: 2;
+  grid-row: 2;
+  max-width: none;
+  min-width: 0;
+  font-size: 0.8125rem;
+}
+:host(.inline-feedback) section:has(> p) erp-button {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+}
+@media (max-width: 599px) {
+  :host(.inline-feedback) section:has(> p) {
+    grid-template-columns: 24px minmax(0, 1fr);
+  }
+  :host(.inline-feedback) section:has(> p) erp-button {
+    grid-column: 2;
+    grid-row: 3;
+  }
 }

@@ -9,6 +9,7 @@ import { AppIcon, type AppIconName } from '../../icons/app-icon/app-icon';
     '[class.chart-card]': "appearance()==='chart'",
     '[class.compact-card]': 'compact()',
     '[class.fill-card]': 'fill()',
+    '[class.natural-card]': "contentSizing()==='natural'",
     '[class.entity-card]': 'entity()',
     '[class.details-card]': "contentLayout() === 'details'",
   },
@@ -23,6 +24,7 @@ export class SurfaceCard<T = unknown> {
   readonly title = input.required<string>();
   readonly compact = input(false, { transform: booleanAttribute });
   readonly fill = input(false, { transform: booleanAttribute });
+  readonly contentSizing = input<'bounded' | 'natural'>('bounded');
   readonly icon = input<AppIconName>();
   readonly accent = input('var(--primary)');
   readonly headerTemplate = input<TemplateRef<{ $implicit: T }> | null>(null);

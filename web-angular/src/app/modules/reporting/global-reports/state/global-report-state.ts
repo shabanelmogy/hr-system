@@ -21,10 +21,10 @@ import {
 } from '../../../../shared/data/public-api';
 import { GlobalReportService } from '../services/global-report-service';
 import {
-  emptyReportFilters,
+  emptyReportFiltersForEntity,
   globalReportAllowed,
   GlobalReportFailure,
-  reportFiltersSchema,
+  parseReportFilters,
   type GlobalReport,
   type ReportFilters,
   type GlobalReportEntity,
@@ -51,6 +51,8 @@ export class GlobalReportState {
   readonly sourcePending = signal(false);
   readonly sourceFailure = signal<GlobalReportFailure | null>(null);
   readonly entity = signal<GlobalReportEntity>('countries');
+  private readonly configured = signal(false);
+  private readonly invalidExternalCriteria = signal(false);
   private readonly auth = inject(AuthSession);
   private readonly service = inject(GlobalReportService);
   private readonly locale = inject(LocalizationRuntime);
@@ -61,7 +63,9 @@ export class GlobalReportState {
   private readonly criteria = signal<{ actor: Session; filters: ReportFilters } | null>(null);
   readonly applied = computed<ReportFilters>(() => {
     const criteria = this.criteria();
-    return criteria?.actor === this.identity() ? criteria.filters : emptyReportFilters;
+    return criteria?.actor === this.identity()
+      ? criteria.filters
+      : emptyReportFiltersForEntity(this.entity());
   });
   private readonly identity = computed(() => {
     const actor = this.auth.readIdentity();
@@ -69,7 +73,7 @@ export class GlobalReportState {
   });
   private readonly catalogSpec = computed(() => {
     const actor = this.identity();
-    return actor ? { actor, entity: this.entity() } : null;
+    return actor && this.configured() ? { actor, entity: this.entity() } : null;
   });
   private readonly scopeChanges = toObservable(this.catalogSpec);
   private readonly catalogRead = createScopedRead(
@@ -96,7 +100,13 @@ export class GlobalReportState {
   private readonly spec = computed<RenderSpec | null>(() => {
     const actor = this.identity(),
       report = this.selected();
-    if (!actor || !globalReportAllowed(actor, this.entity()) || !report || this.conflict())
+    if (
+      !actor ||
+      !globalReportAllowed(actor, this.entity()) ||
+      !report ||
+      this.conflict() ||
+      this.invalidExternalCriteria()
+    )
       return null;
     return {
       actor,
@@ -129,6 +139,8 @@ export class GlobalReportState {
   );
   readonly view = computed<GlobalReportView>(() => {
     const actor = this.auth.readIdentity();
+    if (this.invalidExternalCriteria())
+      return { kind: 'error', failure: new GlobalReportFailure('validation') };
     if (!actor) return { kind: 'loading' };
     if (!globalReportAllowed(actor, this.entity()) || actor === this.deniedActor())
       return { kind: 'forbidden' };
@@ -190,6 +202,7 @@ export class GlobalReportState {
       });
   }
   setEntity(entity: GlobalReportEntity): void {
+    this.configured.set(true);
     if (this.entity() === entity) return;
     this.selection.set(null);
     this.staleActor.set(null);
@@ -237,17 +250,34 @@ export class GlobalReportState {
     const actor = this.identity();
     if (actor) this.selection.set({ actor, id });
   }
+  setExternalCriteria(input: unknown): void {
+    const actor = this.identity();
+    if (!actor || !globalReportAllowed(actor, this.entity())) return;
+    try {
+      const filters = parseReportFilters(this.entity(), input);
+      this.invalidExternalCriteria.set(false);
+      if (JSON.stringify(this.applied()) !== JSON.stringify(filters))
+        this.criteria.set({ actor, filters });
+    } catch {
+      this.invalidExternalCriteria.set(true);
+    }
+  }
   search(input: unknown) {
-    const parsed = reportFiltersSchema.safeParse(input);
-    if (!parsed.success || this.conflict() || !this.spec() || this.pending()) return false;
+    let filters: ReportFilters;
+    try {
+      filters = parseReportFilters(this.entity(), input);
+    } catch {
+      return false;
+    }
+    if (this.conflict() || !this.spec() || this.pending()) return false;
     const actor = this.identity();
     if (!actor) return false;
-    this.criteria.set({ actor, filters: { ...parsed.data } });
+    this.criteria.set({ actor, filters });
     this.revision.update((n) => n + 1);
     return true;
   }
   reset() {
-    return this.search(emptyReportFilters);
+    return this.search(emptyReportFiltersForEntity(this.entity()));
   }
   reload() {
     const actor = this.auth.readIdentity();

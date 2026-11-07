@@ -1,0 +1,11 @@
+<div class="card-heading">
+  <div>
+    <h2 [title]="entry().summary">{{ entry().summary }}</h2>
+    <p>{{ captions.date(entry().occurredOnUtc) }}</p>
+  </div>
+  <erp-status-badge
+    [label]="captions.text('severities.' + entry().severity)"
+    [accent]="entry().severity === 'error' ? 'var(--destructive)' : 'var(--warning)'"
+    [pill]="true"
+  />
+</div>

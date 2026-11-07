@@ -1,0 +1,37 @@
+{
+  "feature": "angular-super-admin-settings",
+  "date": "2026-11-06",
+  "status": "Verified-bounded-local",
+  "angular": {
+    "tests": 930,
+    "files": 182,
+    "architecture": 31,
+    "buildExitCode": 0,
+    "buildWarning": "RISK-020"
+  },
+  "settings": {
+    "singleAdministrationEntry": true,
+    "tabs": [
+      "system",
+      "appearance"
+    ],
+    "sharedContentTabs": true
+  },
+  "languageTranslation": {
+    "separateAdministrationEntry": true,
+    "serverSearch": true,
+    "existingLocalizationService": true
+  },
+  "advancedTools": {
+    "healthPermission": "SystemHealth:View",
+    "apiPermission": "SystemApiDocs:View",
+    "hangfirePermission": "Hangfire:View",
+    "cspHostedCheck": "pending-release"
+  },
+  "databaseMigrations": "none",
+  "hostedWrites": false,
+  "remaining": [
+    "Hosted CSP/iframe and permission matrix",
+    "Final whole Super Admin rendered review"
+  ]
+}

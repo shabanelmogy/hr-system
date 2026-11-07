@@ -1,0 +1,27 @@
+{
+  "origin": "https://localhost:4210",
+  "api": "https://shabanhrms.runasp.net",
+  "businessWrites": 0,
+  "results": [
+    {
+      "check": "authenticated District page and actual parent/count DTO",
+      "status": 200,
+      "pageRows": 0,
+      "total": 0
+    },
+    {
+      "check": "active State lookup",
+      "status": 200,
+      "rows": 27
+    },
+    {
+      "check": "hosted Districts report catalog availability (release evidence)",
+      "status": 200,
+      "rows": 0
+    },
+    {
+      "check": "own test session logout",
+      "status": 204
+    }
+  ]
+}

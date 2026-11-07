@@ -1,0 +1,86 @@
+[
+  {
+    "language": "en",
+    "scenario": "read-only",
+    "writes": 0,
+    "passed": true
+  },
+  {
+    "language": "en",
+    "scenario": "parent-forbidden",
+    "writes": 0,
+    "passed": true
+  },
+  {
+    "language": "en",
+    "scenario": "parent-error",
+    "writes": 0,
+    "passed": true
+  },
+  {
+    "language": "en",
+    "scenario": "field",
+    "writes": 1,
+    "passed": true
+  },
+  {
+    "language": "en",
+    "scenario": "duplicate",
+    "writes": 1,
+    "passed": true
+  },
+  {
+    "language": "en",
+    "scenario": "uncertain",
+    "writes": 1,
+    "passed": true
+  },
+  {
+    "language": "en",
+    "scenario": "api-forbidden",
+    "writes": 0,
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "scenario": "read-only",
+    "writes": 0,
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "scenario": "parent-forbidden",
+    "writes": 0,
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "scenario": "parent-error",
+    "writes": 0,
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "scenario": "field",
+    "writes": 1,
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "scenario": "duplicate",
+    "writes": 1,
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "scenario": "uncertain",
+    "writes": 1,
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "scenario": "api-forbidden",
+    "writes": 0,
+    "passed": true
+  }
+]

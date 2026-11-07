@@ -19,7 +19,20 @@
     "web": "documentation/modules/platform/features/system-ui-localization/system-ui-localization-web.md",
     "mobile": "documentation/modules/platform/features/system-ui-localization/system-ui-localization-mobile.md"
   },
-  "sourceCollections": [],
+  "sourceCollections": [
+    {
+      "id": "angular-system-text-client",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/language-translation",
+      "patterns": [
+        "**/*.ts",
+        "**/*.html",
+        "**/*.scss"
+      ],
+      "minimumFiles": 15,
+      "purpose": "Angular global system text source/language/status/paging and revisioned edit/reset"
+    }
+  ],
   "requiredFiles": [
     {
       "id": "root-agent-guidance",
@@ -758,6 +771,24 @@
       "layer": "documentation",
       "path": "documentation/plans/business/super-admin-administration/education/system-ui-localization.md",
       "purpose": "Verified Phase 07 customer operation and scope guidance"
+    },
+    {
+      "id": "angular-system-text-review",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-super-admin-settings/angular-super-admin-settings-review.md",
+      "purpose": "Angular global text parity, ownership and verification limits"
+    },
+    {
+      "id": "angular-system-text-browser",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-language-translation-browser.mjs",
+      "purpose": "Production-asset synthetic edit/reset/filter/paging/permission/responsive verification"
+    },
+    {
+      "id": "angular-system-text-final-receipt",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-super-admin-settings/verification/language-translation/verification-2026-11-07.json",
+      "purpose": "Final source hashes, full gates, browser matrix and explicit hosted/native acceptance limits"
     }
   ],
   "finalizationChecklist": [

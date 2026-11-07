@@ -13,7 +13,8 @@ Execution order marker: API → Web → Mobile → integrated live verification 
 | Child feature name | Countries complete pilot acceptance |
 | Owner | ReferenceData business; Platform migration evidence |
 | Depends on | angular-countries-import-view Verified/Closed |
-| Execution status | Active |
+| Execution status | Deferred |
+| Status evidence | D42; SUPER_ADMIN_PARITY_2026-11-05.md; hosted-report acceptance remains pending under PROD-028, not Verified |
 | Runtime authorization | Bounded runtime after exact registered Phase00 generation/check; PILOT_CONTRACT.md fixes G0-G3; remaining G4 release-only, no sibling runtime |
 
 ## 1. Child boundary and outcome

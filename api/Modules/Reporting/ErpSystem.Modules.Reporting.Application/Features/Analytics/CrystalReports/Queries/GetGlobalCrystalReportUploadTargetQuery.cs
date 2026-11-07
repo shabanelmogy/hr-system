@@ -13,7 +13,7 @@ public sealed class GetGlobalCrystalReportUploadTargetQueryValidator : AbstractV
 {
     public GetGlobalCrystalReportUploadTargetQueryValidator()
     {
-        RuleFor(request => request.EntityKey).NotEmpty().Must(key => key is "countries" or "states" or "districts");
+        RuleFor(request => request.EntityKey).NotEmpty().Must(key => key is "countries" or "states" or "districts" or "system-error-logs");
         RuleFor(request => request.FileName).NotEmpty().MaximumLength(255);
     }
 }
@@ -42,7 +42,7 @@ public sealed class GetGlobalCrystalReportUploadTargetQueryHandler(IGlobalCrysta
         var allowed = !report.IsDeleted && detail is not null &&
             policy.Allows(report.EntityKey, ReportingPermissions.UploadGlobalCrystalReports) &&
             policy.Allows(report.EntityKey, ReportingPermissions.PublishGlobalCrystalReports) &&
-            (policy.AccessAdministrator ||
+            (policy.BypassesRoleGrants(report.EntityKey) ||
              await access.HasRightAsync(report.Id, CrystalReportRight.Upload, cancellationToken) &&
              await access.HasRightAsync(report.Id, CrystalReportRight.Publish, cancellationToken));
         return Result.Success(new CrystalReportUploadTargetResponse(detail, allowed));

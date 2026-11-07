@@ -7,6 +7,7 @@
   [recordNavigation]="recordNavigation()"
   [selectionEnabled]="selectionEnabled()"
   [toolbarVisible]="toolbarVisible()"
+  [showFooter]="showFooter()"
   [toolbarLayout]="toolbarLayout()"
   (searchChange)="searchChange.emit($event)"
 >
@@ -15,7 +16,13 @@
   <div collectionBody class="cards-body">
     <erp-scroll-viewport [label]="label()">
       @if (controller.view().kind === 'ready' && controller.view().rows.length) {
-        <div class="cards" [class.responsive]="layout() === 'responsive'" role="list">
+        <div
+          class="cards"
+          [class.responsive]="layout() === 'responsive'"
+          [class.fit]="layout() === 'fit'"
+          [style.--card-min-width]="minCardWidth() + 'px'"
+          role="list"
+        >
           @for (row of controller.view().rows; track controller.rowKey(row)) {
             <article
               role="listitem"

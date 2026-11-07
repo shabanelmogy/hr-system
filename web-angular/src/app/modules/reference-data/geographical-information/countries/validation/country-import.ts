@@ -4,6 +4,7 @@ import {
   parseCountryMutation,
   type CountryDraft,
   type CountryMutation,
+  type CountryMutationField,
 } from './country-mutation';
 import type {
   SpreadsheetPolicy,
@@ -20,42 +21,72 @@ export interface CountryImportRow {
   readonly draft: CountryDraft;
   readonly status: ImportRowStatus;
   readonly errors: readonly string[];
+  readonly issues: readonly CountryImportIssue[];
+}
+export interface CountryImportIssue {
+  readonly field: CountryMutationField | null;
+  readonly kind:
+    | 'required'
+    | 'minlength'
+    | 'maxlength'
+    | 'invalidText'
+    | 'pattern'
+    | 'duplicate'
+    | 'server'
+    | 'batchRejected'
+    | 'notSent'
+    | 'uncertain';
+  readonly relatedRow?: number;
+  readonly message?: string;
 }
 export function validateCountryImport(rows: readonly CountryImportRow[]): {
   rows: readonly CountryImportRow[];
   valid: readonly CountryDraft[];
 } {
   const seen = {
-      nameAr: new Set<string>(),
-      nameEn: new Set<string>(),
-      alpha2Code: new Set<string>(),
-      alpha3Code: new Set<string>(),
+      nameAr: new Map<string, number>(),
+      nameEn: new Map<string, number>(),
+      alpha2Code: new Map<string, number>(),
+      alpha3Code: new Map<string, number>(),
     },
     valid: CountryDraft[] = [];
   return {
     rows: rows.map((row) => {
       if (row.status !== 'pending') return row;
-      const errors: string[] = countryMutationFields
-        .filter((field) => countryFieldError(field, row.draft[field]))
-        .map((field) => field);
+      const issues: CountryImportIssue[] = countryMutationFields.flatMap((field) => {
+        const details = countryFieldError(field, row.draft[field]);
+        if (!details) return [];
+        const kind =
+          'required' in details
+            ? 'required'
+            : 'minlength' in details
+              ? 'minlength'
+              : 'maxlength' in details
+                ? 'maxlength'
+                : 'invalidText' in details
+                  ? 'invalidText'
+                  : 'pattern';
+        return [{ field, kind }];
+      });
+      const errors: string[] = issues.flatMap((issue) => (issue.field ? [issue.field] : []));
       let mutation: CountryMutation | null = null;
       if (!errors.length) {
         mutation = parseCountryMutation(row.draft);
-        if (
-          (Object.keys(seen) as (keyof typeof seen)[]).some(
-            (field) =>
-              !!mutation![field] && seen[field].has(mutation![field].toLocaleLowerCase('en-US')),
-          )
-        )
-          errors.push('duplicate');
+        for (const field of Object.keys(seen) as (keyof typeof seen)[]) {
+          const value = mutation[field];
+          const relatedRow = value ? seen[field].get(value.toLocaleLowerCase('en-US')) : undefined;
+          if (relatedRow !== undefined) issues.push({ field, kind: 'duplicate', relatedRow });
+        }
+        if (issues.length) errors.push('duplicate');
       }
-      if (errors.length) return { ...row, status: 'invalid', errors };
+      if (errors.length) return { ...row, status: 'invalid', errors, issues };
+      if (!mutation) return row;
       for (const field of Object.keys(seen) as (keyof typeof seen)[]) {
-        const value = mutation![field];
-        if (value) seen[field].add(value.toLocaleLowerCase('en-US'));
+        const value = mutation[field];
+        if (value) seen[field].set(value.toLocaleLowerCase('en-US'), row.rowNumber);
       }
       valid.push(row.draft);
-      return { ...row, status: 'submitted', errors: [] };
+      return { ...row, status: 'submitted', errors: [], issues: [] };
     }),
     valid,
   };
@@ -73,6 +104,7 @@ export function countryImportRows(rows: readonly SpreadsheetRow[]): readonly Cou
     },
     status: 'pending',
     errors: [],
+    issues: [],
   }));
 }
 export function countryBulkPayload(input: readonly CountryDraft[]): readonly CountryMutation[] {
@@ -84,6 +116,7 @@ export function countryBulkPayload(input: readonly CountryDraft[]): readonly Cou
       rowNumber: i + 2,
       status: 'pending',
       errors: [],
+      issues: [],
     })),
   );
   if (checked.valid.length !== input.length) throw Error('Invalid import batch');

@@ -1,0 +1,12 @@
+@use '../../../../../shared/ui/forms/field-layout';
+
+@include field-layout.group;
+.metrics {
+  display: contents;
+}
+.period {
+  grid-column: 1 / -1;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  margin: 0;
+}

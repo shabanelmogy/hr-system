@@ -80,6 +80,27 @@ describe('Countries cookie read transport', () => {
     await assertion;
     http.expectNone(() => true);
   });
+  it('retains only exact in-batch server field paths for import error mapping', async () => {
+    const result = firstValueFrom(service.bulkCreate([draft]));
+    const assertion = expect(result).rejects.toMatchObject({
+      outcome: 'rejected',
+      fieldErrors: { 'countries[0].nameEn': 'Use another name.' },
+    });
+    await Promise.resolve();
+    http.expectOne(base + '/bulk').flush(
+      {
+        errors: {
+          'Countries[0].NameEn': ['Use another name.'],
+          'Countries[2].NameEn': ['Out-of-range row'],
+          'Other[0].NameEn': ['Unrelated detail'],
+          'Countries[0].Unknown': ['Internal detail'],
+        },
+      },
+      { status: 400, statusText: 'Invalid' },
+    );
+    await assertion;
+    http.expectNone(() => true);
+  });
   it('preserves definitive duplicate rejection and distinguishes server uncertainty without retry', async () => {
     const rejected = firstValueFrom(service.bulkCreate([draft])),
       failure = expect(rejected).rejects.toMatchObject({

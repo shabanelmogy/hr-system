@@ -1,0 +1,35 @@
+<erp-option-select
+  [label]="captions.text('module')"
+  [value]="reads.filters().moduleCode"
+  [options]="modules()"
+  [disabled]="!reads.canRead() || options.view().kind !== 'ready'"
+  (valueChange)="reads.patchFilters({ moduleCode: $event })"
+/>
+<erp-option-select
+  [label]="captions.text('recordType')"
+  [value]="reads.filters().entityName"
+  [options]="entities()"
+  [disabled]="!reads.canRead() || options.view().kind !== 'ready'"
+  (valueChange)="reads.patchFilters({ entityName: $event })"
+/>
+<erp-option-select
+  [label]="captions.text('action')"
+  [value]="reads.filters().action"
+  [options]="actions()"
+  [disabled]="!reads.canRead()"
+  (valueChange)="action($event)"
+/>
+<erp-date-field
+  [label]="captions.text('from')"
+  [value]="reads.filters().from"
+  [readOnly]="!reads.canRead()"
+  (valueChange)="reads.patchFilters({ from: $event })"
+/>
+<erp-date-field
+  [label]="captions.text('to')"
+  [value]="reads.filters().to"
+  [readOnly]="!reads.canRead()"
+  [touched]="true"
+  [errors]="rangeErrors()"
+  (valueChange)="reads.patchFilters({ to: $event })"
+/>

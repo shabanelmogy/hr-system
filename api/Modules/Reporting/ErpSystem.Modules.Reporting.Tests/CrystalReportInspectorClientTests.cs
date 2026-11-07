@@ -1,4 +1,5 @@
 using System.Net;
+using System.Net.Http.Headers;
 using System.Text;
 using ErpSystem.BuildingBlocks.Context;
 using ErpSystem.Modules.Platform.Contracts.Files.Models;
@@ -11,6 +12,27 @@ namespace ErpSystem.Modules.Reporting.Tests;
 
 public sealed class CrystalReportInspectorClientTests
 {
+    [Fact]
+    public async Task DatabaseVerifierAsync_PostsStoredReportToDedicatedVerifyEndpointAndReturnsAdaptedRpt()
+    {
+        using var httpClient = CreateHttpClient(new CallbackHandler(request =>
+        {
+            Assert.Equal("internal/reports/verify-database", request.RequestUri!.PathAndQuery.TrimStart('/'));
+            Assert.Equal(HttpMethod.Post, request.Method);
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new ByteArrayContent("verified-rpt"u8.ToArray())
+            };
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = "countries-verified.rpt" };
+            return Task.FromResult(response);
+        }));
+
+        var result = await CreateVerifier(httpClient).VerifyDatabaseAsync("countries", CreateUpload(), default);
+
+        Assert.NotNull(result);
+        Assert.Equal("countries-verified.rpt", result.FileName);
+        Assert.Equal("verified-rpt", await new StreamReader(result.OpenReadStream()).ReadToEndAsync());
+    }
     [Theory]
     [InlineData("")]
     [InlineData(",\"hasEmbeddedCredentials\":true")]
@@ -212,6 +234,18 @@ public sealed class CrystalReportInspectorClientTests
             }),
             new TestExecutionContext("crystal-test-correlation"),
             NullLogger<CrystalReportInspectorClient>.Instance);
+
+    private static CrystalReportDatabaseVerifierClient CreateVerifier(HttpClient httpClient) =>
+        new(
+            httpClient,
+            Options.Create(new CrystalReportStorageOptions
+            {
+                RuntimeEnabled = true,
+                RuntimeBaseUrl = "https://crystal.test/",
+                MaxFileSizeBytes = 1024
+            }),
+            new TestExecutionContext("crystal-test-correlation"),
+            NullLogger<CrystalReportDatabaseVerifierClient>.Instance);
 
     private sealed class TestExecutionContext(string correlationId) : ICurrentExecutionContext
     {

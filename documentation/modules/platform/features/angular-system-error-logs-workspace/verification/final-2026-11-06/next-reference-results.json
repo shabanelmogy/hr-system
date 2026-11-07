@@ -1,0 +1,221 @@
+{
+  "verifiedAt": "2026-11-06T10:41:35.782Z",
+  "results": [
+    {
+      "language": "en",
+      "mode": "light",
+      "width": 390,
+      "passed": true,
+      "columns": [
+        "occurredOnUtc",
+        "source",
+        "severity",
+        "userName",
+        "service",
+        "action",
+        "statusCode",
+        "durationMs",
+        "client",
+        "browser",
+        "summary",
+        "ipAddress",
+        "details"
+      ],
+      "listRequests": 2,
+      "businessWrites": 0,
+      "settingsRoute": "/super-admin/error-log-settings",
+      "geometry": {
+        "horizontal": 0
+      }
+    },
+    {
+      "language": "en",
+      "mode": "light",
+      "width": 1440,
+      "passed": true,
+      "columns": [
+        "occurredOnUtc",
+        "source",
+        "severity",
+        "userName",
+        "service",
+        "action",
+        "statusCode",
+        "durationMs",
+        "client",
+        "browser",
+        "summary",
+        "ipAddress",
+        "details"
+      ],
+      "listRequests": 2,
+      "businessWrites": 0,
+      "settingsRoute": "/super-admin/error-log-settings",
+      "geometry": {
+        "horizontal": 0
+      }
+    },
+    {
+      "language": "en",
+      "mode": "dark",
+      "width": 390,
+      "passed": true,
+      "columns": [
+        "occurredOnUtc",
+        "source",
+        "severity",
+        "userName",
+        "service",
+        "action",
+        "statusCode",
+        "durationMs",
+        "client",
+        "browser",
+        "summary",
+        "ipAddress",
+        "details"
+      ],
+      "listRequests": 2,
+      "businessWrites": 0,
+      "settingsRoute": "/super-admin/error-log-settings",
+      "geometry": {
+        "horizontal": 0
+      }
+    },
+    {
+      "language": "en",
+      "mode": "dark",
+      "width": 1440,
+      "passed": true,
+      "columns": [
+        "occurredOnUtc",
+        "source",
+        "severity",
+        "userName",
+        "service",
+        "action",
+        "statusCode",
+        "durationMs",
+        "client",
+        "browser",
+        "summary",
+        "ipAddress",
+        "details"
+      ],
+      "listRequests": 2,
+      "businessWrites": 0,
+      "settingsRoute": "/super-admin/error-log-settings",
+      "geometry": {
+        "horizontal": 0
+      }
+    },
+    {
+      "language": "ar",
+      "mode": "light",
+      "width": 390,
+      "passed": true,
+      "columns": [
+        "occurredOnUtc",
+        "source",
+        "severity",
+        "userName",
+        "service",
+        "action",
+        "statusCode",
+        "durationMs",
+        "client",
+        "browser",
+        "summary",
+        "ipAddress",
+        "details"
+      ],
+      "listRequests": 2,
+      "businessWrites": 0,
+      "settingsRoute": "/super-admin/error-log-settings",
+      "geometry": {
+        "horizontal": 0
+      }
+    },
+    {
+      "language": "ar",
+      "mode": "light",
+      "width": 1440,
+      "passed": true,
+      "columns": [
+        "occurredOnUtc",
+        "source",
+        "severity",
+        "userName",
+        "service",
+        "action",
+        "statusCode",
+        "durationMs",
+        "client",
+        "browser",
+        "summary",
+        "ipAddress",
+        "details"
+      ],
+      "listRequests": 2,
+      "businessWrites": 0,
+      "settingsRoute": "/super-admin/error-log-settings",
+      "geometry": {
+        "horizontal": 0
+      }
+    },
+    {
+      "language": "ar",
+      "mode": "dark",
+      "width": 390,
+      "passed": true,
+      "columns": [
+        "occurredOnUtc",
+        "source",
+        "severity",
+        "userName",
+        "service",
+        "action",
+        "statusCode",
+        "durationMs",
+        "client",
+        "browser",
+        "summary",
+        "ipAddress",
+        "details"
+      ],
+      "listRequests": 2,
+      "businessWrites": 0,
+      "settingsRoute": "/super-admin/error-log-settings",
+      "geometry": {
+        "horizontal": 0
+      }
+    },
+    {
+      "language": "ar",
+      "mode": "dark",
+      "width": 1440,
+      "passed": true,
+      "columns": [
+        "occurredOnUtc",
+        "source",
+        "severity",
+        "userName",
+        "service",
+        "action",
+        "statusCode",
+        "durationMs",
+        "client",
+        "browser",
+        "summary",
+        "ipAddress",
+        "details"
+      ],
+      "listRequests": 2,
+      "businessWrites": 0,
+      "settingsRoute": "/super-admin/error-log-settings",
+      "geometry": {
+        "horizontal": 0
+      }
+    }
+  ]
+}

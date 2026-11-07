@@ -1,0 +1,76 @@
+<section class="photo-panel" [attr.aria-label]="text('photo')">
+  <div class="photo-preview">
+    @if (state.displayPhoto(); as photo) {
+      <img [src]="photo" [alt]="'auth.profilePictureAlt' | uiText: 'platform-auth'" />
+    } @else {
+      <erp-identity-avatar
+        [name]="(state.info()?.firstName ?? '') + ' ' + (state.info()?.lastName ?? '')"
+      />
+    }
+  </div>
+  @if (state.photoView() === 'error') {
+    <erp-feedback-state
+      kind="error"
+      layout="inline"
+      [title]="text('photoLoadFailed')"
+      [actionLabel]="'actions.retry' | uiText"
+      (action)="state.retryPhoto()"
+    />
+  } @else if (state.photoView() === 'loading') {
+    <erp-feedback-state kind="loading" layout="inline" [title]="'common.loading' | uiText" />
+  }
+  @if (state.photoFeedback()) {
+    <p role="status">{{ state.photoFeedback() | uiText: 'platform-auth' }}</p>
+  }
+  @if (!state.editingPhoto() && state.photoView() === 'ready') {
+    <erp-button
+      [label]="text('editPhoto')"
+      variant="outlined"
+      (activated)="state.editPhoto()"
+      [disabled]="state.photoLocked()"
+    />
+  } @else if (state.editingPhoto()) {
+    <erp-file-field
+      [label]="text('photo')"
+      acceptTypes="image/jpeg,image/png"
+      [dropzone]="true"
+      [dropLabel]="text('dropPhoto')"
+      [chooseLabel]="text('choosePhoto')"
+      [clearLabel]="'actions.cancel' | uiText"
+      [value]="state.selectedFile()"
+      (valueChange)="state.choosePhoto($event)"
+      [readOnly]="state.photoLocked()"
+      [touched]="true"
+      [errors]="
+        state.photoFieldError() ? [{ kind: 'server', message: state.photoFieldError() }] : []
+      "
+    />
+    <div class="photo-actions">
+      <erp-button
+        [label]="text('removePhoto')"
+        variant="text"
+        (activated)="state.removePhoto()"
+        [disabled]="state.photoLocked()"
+      />
+      <erp-button
+        [label]="text('savePhoto')"
+        (activated)="state.savePhoto()"
+        [busy]="state.photoPending()"
+        [disabled]="state.photoUncertain()"
+      />
+      <erp-button
+        [label]="'actions.cancel' | uiText"
+        variant="outlined"
+        (activated)="state.cancelPhoto()"
+        [disabled]="state.photoLocked()"
+      />
+      @if (state.photoUncertain()) {
+        <erp-button
+          [label]="'actions.reload' | uiText"
+          variant="outlined"
+          (activated)="state.recover()"
+        />
+      }
+    </div>
+  }
+</section>

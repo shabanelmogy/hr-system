@@ -1,5 +1,6 @@
 <main>
   <erp-page-header
+    [exportSource]="exportSource()"
     variant="collection"
     [title]="'countries.viewTitle' | uiText: 'reference-countries'"
     [views]="views()"

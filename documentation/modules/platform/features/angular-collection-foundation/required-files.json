@@ -33,9 +33,127 @@
       "minimumFiles": 14,
       "layer": "web",
       "purpose": "Actual typed shared collection controls, lifecycle and tests"
+    },
+    {
+      "id": "grid-composition-helpers",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid",
+      "patterns": [
+        "grid-*.ts"
+      ],
+      "minimumFiles": 5,
+      "layer": "web",
+      "purpose": "Per-grid query, context, expansion, geometry and projected-template helpers"
     }
   ],
   "requiredFiles": [
+    {
+      "id": "action-menu-20261105-proof-0",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/MANAGER_ACTION_MENU_2026-11-05.json",
+      "purpose": "Current dropdown, trailing indicator and single-row executed verification evidence"
+    },
+    {
+      "id": "action-menu-20261105-proof-1",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-action-menu/angular-check.txt",
+      "purpose": "Current dropdown, trailing indicator and single-row executed verification evidence"
+    },
+    {
+      "id": "action-menu-20261105-proof-2",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-action-menu/planning-check.txt",
+      "purpose": "Current dropdown, trailing indicator and single-row executed verification evidence"
+    },
+    {
+      "id": "action-menu-20261105-proof-3",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-action-menu/browser-results.json",
+      "purpose": "Current dropdown, trailing indicator and single-row executed verification evidence"
+    },
+    {
+      "id": "action-menu-20261105-proof-4",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-action-menu/manager-en-light-1213.png",
+      "purpose": "Current dropdown, trailing indicator and single-row executed verification evidence"
+    },
+    {
+      "id": "action-menu-20261105-proof-5",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-action-menu/manager-ar-dark-390.png",
+      "purpose": "Current dropdown, trailing indicator and single-row executed verification evidence"
+    },
+    {
+      "id": "action-menu-20261105-0",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/action-menu-button/action-menu-button.ts",
+      "purpose": "Shared typed action dropdown: runtime resources and guarded activation regression"
+    },
+    {
+      "id": "action-menu-20261105-1",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/action-menu-button/action-menu-button.html",
+      "purpose": "Shared typed action dropdown: runtime resources and guarded activation regression"
+    },
+    {
+      "id": "action-menu-20261105-2",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/action-menu-button/action-menu-button.scss",
+      "purpose": "Shared typed action dropdown: runtime resources and guarded activation regression"
+    },
+    {
+      "id": "action-menu-20261105-3",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/action-menu-button/action-menu-button.spec.ts",
+      "purpose": "Shared typed action dropdown: runtime resources and guarded activation regression"
+    },
+    {
+      "id": "action-menu-20261105-contract",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/MANAGER_ACTION_MENU_2026-11-05.md",
+      "purpose": "Current manager dropdown and single-row ownership contract"
+    },
+    {
+      "id": "composition-20261105-0",
+      "path": "documentation/guides/web/architecture/ANGULAR_COMPONENT_DECOMPOSITION_2026-11-05.md",
+      "layer": "documentation",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-1",
+      "path": "documentation/guides/web/ANGULAR_ENVIRONMENT.md",
+      "layer": "documentation",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-2",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-query-state.ts",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-3",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-context-state.ts",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-4",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-expansion-state.ts",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-5",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-geometry.ts",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-6",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-template-index.ts",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
     {
       "id": "preflight-0",
       "path": "documentation/modules/platform/features/angular-collection-foundation/angular-collection-foundation-api.md",
@@ -737,6 +855,36 @@
       "path": "documentation/modules/platform/features/angular-collection-foundation/verification/component-composition-summary.json",
       "layer": "documentation",
       "purpose": "D41 final source hashes, executed checks and portable measurements"
+    },
+    {
+      "id": "header-selection-maintenance",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/HEADER_SELECTION_2026-11-05.md",
+      "purpose": "Select-page header placement, shared footer summary, verified behavior and metadata limits"
+    },
+    {
+      "id": "header-selection-source-0",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.scss",
+      "purpose": "Current compiled selection placement style and meaningful header-selection regressions"
+    },
+    {
+      "id": "header-selection-source-1",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/grid-capabilities.spec.ts",
+      "purpose": "Current compiled selection placement style and meaningful header-selection regressions"
+    },
+    {
+      "id": "header-selection-source-2",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/grid-capabilities.spec.html",
+      "purpose": "Current compiled selection placement style and meaningful header-selection regressions"
+    },
+    {
+      "id": "header-selection-verification",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/verification/HEADER_SELECTION_2026-11-05.json",
+      "purpose": "Final source hashes and executed Angular/browser acceptance for shared header selection"
     }
   ],
   "finalizationChecklist": [

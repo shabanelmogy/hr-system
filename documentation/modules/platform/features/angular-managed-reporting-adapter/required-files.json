@@ -21,8 +21,83 @@
     "web": "documentation/modules/platform/features/angular-managed-reporting-adapter/angular-managed-reporting-adapter-web.md",
     "mobile": "documentation/modules/platform/features/angular-managed-reporting-adapter/angular-managed-reporting-adapter-mobile.md"
   },
-  "sourceCollections": [],
+  "sourceCollections": [
+    {
+      "id": "global-report-composition",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-criteria",
+      "patterns": ["*.ts", "*.html"],
+      "minimumFiles": 2,
+      "layer": "web",
+      "purpose": "Typed criteria presentation component while the parent owns Signal Forms and state"
+    }
+  ],
   "requiredFiles": [
+    {
+      "id": "report-sidebar-20261105-identity",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/utils/global-template-viewer-identity.ts",
+      "layer": "web",
+      "purpose": "Exact current SourceId and publication Token matching against the existing server wire contract"
+    },
+    {
+      "id": "report-sidebar-20261105-receipt",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/REPORT_TEMPLATE_SIDEBAR_2026-11-05.json",
+      "layer": "verification",
+      "purpose": "Executed Angular567-test full gate, sidebar12 and PDF lifecycle8 browser fixture acceptance with current source hashes"
+    },
+    {
+      "id": "report-sidebar-20261105-0",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-report-template-editor/global-report-template-editor.ts",
+      "layer": "web",
+      "purpose": "RPT source download and authorized existing version-editor entry from report sidebar"
+    },
+    {
+      "id": "report-sidebar-20261105-1",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-report-template-editor/global-report-template-editor.html",
+      "layer": "web",
+      "purpose": "RPT source download and authorized existing version-editor entry from report sidebar"
+    },
+    {
+      "id": "report-sidebar-20261105-2",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/report-editor.public-api.ts",
+      "layer": "web",
+      "purpose": "RPT source download and authorized existing version-editor entry from report sidebar"
+    },
+    {
+      "id": "report-sidebar-20261105-3",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/policy.public-api.ts",
+      "layer": "web",
+      "purpose": "RPT source download and authorized existing version-editor entry from report sidebar"
+    },
+    {
+      "id": "report-sidebar-20261105-4",
+      "path": "web-angular/scripts/verify-report-template-sidebar-browser.mjs",
+      "layer": "web",
+      "purpose": "RPT source download and authorized existing version-editor entry from report sidebar"
+    },
+    {
+      "id": "report-sidebar-20261105-5",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/REPORT_TEMPLATE_SIDEBAR_2026-11-05.md",
+      "layer": "documentation",
+      "purpose": "RPT source download and authorized existing version-editor entry from report sidebar"
+    },
+    {
+      "id": "composition-20261105-0",
+      "path": "documentation/guides/web/architecture/ANGULAR_COMPONENT_DECOMPOSITION_2026-11-05.md",
+      "layer": "documentation",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-1",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-criteria/global-report-criteria.ts",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-2",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-criteria/global-report-criteria.html",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
     {
       "id": "phase00-0",
       "path": "documentation/modules/platform/features/angular-managed-reporting-adapter/GLOBAL_PDF_CONTRACT.md",

@@ -1,0 +1,31 @@
+<dl>
+  <div>
+    <dt><erp-icon name="globe" />{{ 'districts.state' | uiText: 'reference-districts' }}</dt>
+    <dd><erp-status-badge [label]="stateName()" appearance="outline" /></dd>
+  </div>
+  <div>
+    <dt>{{ 'districts.code' | uiText: 'reference-districts' }}</dt>
+    <dd>
+      <bdi>{{ state().code }}</bdi>
+    </dd>
+  </div>
+  <div>
+    <dt><erp-icon name="location" />{{ 'districts.addresses' | uiText: 'reference-districts' }}</dt>
+    <dd>
+      <erp-status-badge
+        [label]="districts()"
+        appearance="outline"
+        [accent]="state().addressesCount > 0 ? 'var(--success)' : 'var(--muted-foreground)'"
+      />
+    </dd>
+  </div>
+</dl>
+<erp-progress-meter
+  appearance="inline"
+  [label]="'districts.dashboard.dataQuality' | uiText: 'reference-districts'"
+  [description]="qualityLevel()"
+  [used]="quality().quality"
+  [limit]="100"
+  [accent]="quality().accent"
+/>
+<p class="created"><erp-icon name="calendar" />{{ createdOn() }}</p>

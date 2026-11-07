@@ -1,0 +1,807 @@
+{
+  "schemaVersion": 1,
+  "status": "final",
+  "executionMode": "implemented-client-verification",
+  "runtimeAuthorized": true,
+  "feature": "angular-system-audit-workspace",
+  "featureName": "Super Admin System Audit Trail parity",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S4-A3 — Super Admin System Audit Trail parity",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-system-audit-workspace.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-system-audit-workspace.md",
+  "purpose": "Accepted System Audit Angular client source, current rendered-reference/negative/hosted-read evidence and Arabic education; remaining Super Admin goal Active.",
+  "reviewArtifact": "documentation/modules/platform/features/angular-system-audit-workspace/angular-system-audit-workspace-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-system-audit-workspace/angular-system-audit-workspace-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-system-audit-workspace/angular-system-audit-workspace-review.md",
+    "api": "documentation/modules/platform/features/angular-system-audit-workspace/angular-system-audit-workspace-api.md",
+    "web": "documentation/modules/platform/features/angular-system-audit-workspace/angular-system-audit-workspace-web.md",
+    "mobile": "documentation/modules/platform/features/angular-system-audit-workspace/angular-system-audit-workspace-mobile.md"
+  },
+  "sourceCollections": [
+    {
+      "id": "angular-system-audit-client",
+      "path": "web-angular/src/app/platform/system-audit",
+      "patterns": [
+        "*.ts",
+        "*.html",
+        "*.scss"
+      ],
+      "minimumFiles": 37,
+      "layer": "web",
+      "purpose": "Current typed system audit services/state/criteria/guard/route consumer, focused components and tests; final screen acceptance pending"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/angular-system-audit-workspace-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/angular-system-audit-workspace-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "audit-preflight-3",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-system-audit-workspace.md",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-4",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-5",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/angular-system-audit-workspace-review.md",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-6",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/angular-system-audit-workspace-api.md",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-7",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/angular-system-audit-workspace-web.md",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-8",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/angular-system-audit-workspace-mobile.md",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-9",
+      "layer": "web",
+      "path": "web-next/src/platform/audit-trail/pages/AuditTrailPage.tsx",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-10",
+      "layer": "web",
+      "path": "web-next/src/platform/audit-trail/components/AuditTrailTable.tsx",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-11",
+      "layer": "web",
+      "path": "web-next/src/platform/audit-trail/components/AuditTrailDetailsDialog.tsx",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-12",
+      "layer": "web",
+      "path": "web-next/src/platform/audit-trail/components/auditTrailFormat.ts",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-13",
+      "layer": "web",
+      "path": "web-next/src/platform/audit-trail/hooks/useAuditTrail.ts",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-14",
+      "layer": "web",
+      "path": "web-next/src/platform/audit-trail/services/auditTrailService.ts",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-15",
+      "layer": "web",
+      "path": "web-next/src/platform/audit-trail/types/auditTrail.ts",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-16",
+      "layer": "web",
+      "path": "web-next/src/app/(main)/super-admin/(platform)/audit-trail/page.tsx",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-17",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Platform/AuditTrail/V1/SystemAuditTrailController.cs",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-18",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/Platform/AuditTrail/AuditTrailQueries.cs",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-19",
+      "layer": "api",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Abstractions/AuditTrail/AuditTrailContracts.cs",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-20",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/AuditTrailQueryTests.cs",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-21",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/data-display/record-summary/record-summary.ts",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-22",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection.types.ts",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-23",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-controller.spec.ts",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-24",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/date-field/date-field.ts",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-25",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/audit-trail/presentation/screens/AuditTrailScreen.tsx",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-preflight-26",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/audit-trail/data/remote/audit-trail-schemas.ts",
+      "purpose": "Existing inspected current-source contract/preflight evidence"
+    },
+    {
+      "id": "audit-foundation-27",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/data-display/record-summary/record-summary.html",
+      "purpose": "Actual implemented foundation/shared source or meaningful verification test, not complete screen acceptance"
+    },
+    {
+      "id": "audit-foundation-28",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/data-display/record-summary/record-summary.scss",
+      "purpose": "Actual implemented foundation/shared source or meaningful verification test, not complete screen acceptance"
+    },
+    {
+      "id": "audit-foundation-29",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/data-display/record-summary/record-summary.spec.ts",
+      "purpose": "Actual implemented foundation/shared source or meaningful verification test, not complete screen acceptance"
+    },
+    {
+      "id": "audit-foundation-30",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "purpose": "Actual implemented foundation/shared source or meaningful verification test, not complete screen acceptance"
+    },
+    {
+      "id": "audit-foundation-31",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/presentation/audit-presentation.ts",
+      "purpose": "Actual implemented foundation/shared source or meaningful verification test, not complete screen acceptance"
+    },
+    {
+      "id": "audit-foundation-32",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/services/system-audit-service.spec.ts",
+      "purpose": "Actual implemented foundation/shared source or meaningful verification test, not complete screen acceptance"
+    },
+    {
+      "id": "audit-foundation-33",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/services/system-audit-service.ts",
+      "purpose": "Actual implemented foundation/shared source or meaningful verification test, not complete screen acceptance"
+    },
+    {
+      "id": "audit-foundation-34",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/state/audit-detail-state.spec.ts",
+      "purpose": "Actual implemented foundation/shared source or meaningful verification test, not complete screen acceptance"
+    },
+    {
+      "id": "audit-foundation-35",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/state/audit-detail-state.ts",
+      "purpose": "Actual implemented foundation/shared source or meaningful verification test, not complete screen acceptance"
+    },
+    {
+      "id": "audit-foundation-36",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/state/audit-filter-state.ts",
+      "purpose": "Actual implemented foundation/shared source or meaningful verification test, not complete screen acceptance"
+    },
+    {
+      "id": "audit-foundation-37",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/state/audit-read-state.spec.ts",
+      "purpose": "Actual implemented foundation/shared source or meaningful verification test, not complete screen acceptance"
+    },
+    {
+      "id": "audit-foundation-38",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/state/audit-read-state.ts",
+      "purpose": "Actual implemented foundation/shared source or meaningful verification test, not complete screen acceptance"
+    },
+    {
+      "id": "audit-foundation-39",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/types/audit-criteria.spec.ts",
+      "purpose": "Actual implemented foundation/shared source or meaningful verification test, not complete screen acceptance"
+    },
+    {
+      "id": "audit-foundation-40",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/types/audit-criteria.ts",
+      "purpose": "Actual implemented foundation/shared source or meaningful verification test, not complete screen acceptance"
+    },
+    {
+      "id": "audit-foundation-41",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/types/audit-trail.spec.ts",
+      "purpose": "Actual implemented foundation/shared source or meaningful verification test, not complete screen acceptance"
+    },
+    {
+      "id": "audit-foundation-42",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/types/audit-trail.ts",
+      "purpose": "Actual implemented foundation/shared source or meaningful verification test, not complete screen acceptance"
+    },
+    {
+      "id": "audit-foundation-43",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/FOUNDATION_2026-11-06.md",
+      "purpose": "Executed foundation checkpoint; explicitly not Phase06/screen acceptance"
+    },
+    {
+      "id": "audit-foundation-44",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/FOUNDATION_2026-11-06.json",
+      "purpose": "Executed foundation checkpoint; explicitly not Phase06/screen acceptance"
+    },
+    {
+      "id": "audit-current-screen-1",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-system-audit-browser.mjs",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-2",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-system-audit-failures-browser.mjs",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-3",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-system-audit-live-read.mjs",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-4",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-system-audit-reference.mjs",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-5",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/audit.fixture.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-6",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/audit.spec-setup.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-7",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-changes/audit-changes.html",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-8",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-changes/audit-changes.scss",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-9",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-changes/audit-changes.spec.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-10",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-changes/audit-changes.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-11",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-collection/audit-collection.html",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-12",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-collection/audit-collection.scss",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-13",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-collection/audit-collection.spec.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-14",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-collection/audit-collection.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-15",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-criteria/audit-criteria.html",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-16",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-criteria/audit-criteria.scss",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-17",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-criteria/audit-criteria.spec.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-18",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-criteria/audit-criteria.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-19",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-details/audit-details.html",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-20",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-details/audit-details.spec.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-21",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-details/audit-details.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-22",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/pages/system-audit-page/system-audit-page.html",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-23",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/pages/system-audit-page/system-audit-page.scss",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-24",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/pages/system-audit-page/system-audit-page.spec.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-25",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/pages/system-audit-page/system-audit-page.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-26",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/policy.public-api.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-27",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/public-api.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-28",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/system-audit-access.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-29",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/system-audit/system-audit-guard.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-30",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-text-filter/collection-text-filter.html",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-31",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-text-filter/collection-text-filter.scss",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-32",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-text-filter/collection-text-filter.spec.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-33",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-text-filter/collection-text-filter.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-34",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/local-collection.spec.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-35",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/local-collection.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-36",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/local-text-filter.spec.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-37",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/local-text-filter.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-38",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.html",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-39",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/row-activation.spec.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-40",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/page-header/page-header.html",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-41",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/page-header/page-header.spec.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-current-screen-42",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/page-header/page-header.ts",
+      "purpose": "Current screen/shared implementation or meaningful verification; not final Phase06 proof"
+    },
+    {
+      "id": "audit-final-1",
+      "layer": "documentation",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-2",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/SYSTEM_AUDIT_WORKSPACE_2026-11-06.md",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-3",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/SYSTEM_AUDIT_WORKSPACE_2026-11-06.json",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-4",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/system-audit-2026-11-06/angular-ar-dark-390-filters.png",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-5",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/system-audit-2026-11-06/angular-ar-light-1440-detail.png",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-6",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/system-audit-2026-11-06/angular-ar-light-1440-grid.png",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-7",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/system-audit-2026-11-06/browser-results.json",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-8",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/system-audit-2026-11-06/districts-regression.json",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-9",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/system-audit-2026-11-06/live-read-results.json",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-10",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/system-audit-2026-11-06/negative-browser-results.json",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-11",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/system-audit-2026-11-06/next-ar-dark-390-filters.png",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-12",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/system-audit-2026-11-06/next-ar-light-1440-detail.png",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-13",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/system-audit-2026-11-06/next-ar-light-1440-grid.png",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-14",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/system-audit-2026-11-06/next-reference-results.json",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-15",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/system-audit-2026-11-06/states-regression.json",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-16",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/system-audit-2026-11-06/tenant-admin-regression.json",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-17",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/system-audit-2026-11-06/tenant-regression.json",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-18",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-system-audit-workspace.md",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-19",
+      "layer": "web",
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.ts",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-20",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/localization/catalog.generated.ts",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-21",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.html",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-22",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.scss",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-23",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.spec.ts",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-24",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.ts",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-25",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-query-state.ts",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-26",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.ts",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-27",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/page-header/page-header.scss",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-28",
+      "layer": "web",
+      "path": "web-angular/src/locales/generated/core.json",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-29",
+      "layer": "web",
+      "path": "web-next/src/locales/resources/core/ar.json",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-30",
+      "layer": "web",
+      "path": "web-next/src/locales/resources/core/en.json",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-31",
+      "layer": "web",
+      "path": "web-next/src/platform/audit-trail/index.ts",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-32",
+      "layer": "web",
+      "path": "web-next/src/platform/audit-trail/services/auditTrailService.test.ts",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-33",
+      "layer": "web",
+      "path": "web-next/src/shared/components/data-grid/core/MyDataGrid.tsx",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-34",
+      "layer": "web",
+      "path": "web-next/src/shared/components/data-grid/navigation/GridFooter.tsx",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-final-35",
+      "layer": "web",
+      "path": "web-next/src/shared/components/data-grid/toolbar/DataGridToolbar.tsx",
+      "purpose": "Current implemented source or executed screen acceptance/education evidence"
+    },
+    {
+      "id": "audit-next-evidence-1",
+      "layer": "web",
+      "path": "web-next/src/platform/audit-trail/components/AuditActionChip.tsx",
+      "purpose": "Current reviewed Next audit workflow source"
+    },
+    {
+      "id": "audit-next-evidence-2",
+      "layer": "web",
+      "path": "web-next/src/platform/audit-trail/components/RecordHistoryDialog.tsx",
+      "purpose": "Current reviewed Next audit workflow source"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-system-audit-workspace-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-system-audit-workspace-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-system-audit-workspace/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

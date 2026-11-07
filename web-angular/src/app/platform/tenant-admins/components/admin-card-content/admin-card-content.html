@@ -1,0 +1,14 @@
+<h3>{{ 'tenantAdmins.assignedTenants' | uiText: 'platform-tenants' }}</h3>
+<div class="assignments">
+  @for (tenant of admin().tenants; track tenant.id) {
+    <erp-status-badge
+      [appearance]="tenant.isDefault ? 'soft' : 'outline'"
+      [label]="
+        tenant.name +
+        (tenant.isDefault ? ' · ' + ('tenantAdmins.default' | uiText: 'platform-tenants') : '')
+      "
+    />
+  } @empty {
+    <span>{{ 'reference.unavailable' | uiText }}</span>
+  }
+</div>

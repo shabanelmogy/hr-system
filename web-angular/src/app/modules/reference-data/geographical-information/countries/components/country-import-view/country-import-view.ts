@@ -13,10 +13,13 @@ import {
   type CollectionColumn,
   type CollectionSource,
 } from '../../../../../../shared/ui/public-api';
-import { downloadSpreadsheetBlob } from '../../../../../../shared/data/spreadsheet-public-api';
+import {
+  downloadSpreadsheetBlob,
+  type ImportRowStatus,
+} from '../../../../../../shared/data/spreadsheet-public-api';
 import { CountryImportState } from '../../state/country-import-state';
-import { countryMutationFields, countryFieldError } from '../../validation/country-mutation';
-import type { CountryImportRow } from '../../validation/country-import';
+import { countryMutationFields, countryFieldLimits } from '../../validation/country-mutation';
+import type { CountryImportIssue, CountryImportRow } from '../../validation/country-import';
 
 @Component({
   selector: 'erp-country-import-view',
@@ -31,6 +34,7 @@ import type { CountryImportRow } from '../../validation/country-import';
     UiTextPipe,
   ],
   templateUrl: './country-import-view.html',
+  styleUrl: './country-import-view.scss',
 })
 export class CountryImportView {
   readonly state = inject(CountryImportState);
@@ -50,6 +54,19 @@ export class CountryImportView {
         )
       : '';
   });
+  readonly messageDetail = computed(() => {
+    const affected = this.state.rows().filter((row) => row.issues.length).length;
+    if (affected)
+      return this.locale.translate('imports.rowsNeedAttention', 'core', { count: affected });
+    const cell = this.state.errorDetails()['cell'];
+    return cell ? this.locale.translate('imports.cellLocation', 'core', { cell }) : '';
+  });
+  readonly counts = computed<Readonly<Partial<Record<ImportRowStatus, number>>>>(() =>
+    this.state.rows().reduce<Partial<Record<ImportRowStatus, number>>>((counts, row) => {
+      counts[row.status] = (counts[row.status] ?? 0) + 1;
+      return counts;
+    }, {}),
+  );
   readonly source = computed<CollectionSource<CountryImportRow>>(() => {
     const rows = this.state.rows(),
       page = this.page(),
@@ -88,27 +105,39 @@ export class CountryImportView {
     {
       key: 'errors',
       header: this.text('imports.errorDetails'),
-      value: (row) =>
-        row.errors
-          .map((field) => {
-            if (field === 'duplicate')
-              return this.locale.translate(
-                'countries.import.duplicateInFile',
-                'reference-countries',
-              );
-            const name = countryMutationFields.find((key) => key === field);
-            if (!name) return '';
-            const error = countryFieldError(name, row.draft[name]);
-            return (
-              this.fieldLabel(name) +
-              ': ' +
-              this.text(error?.['required'] ? 'validation.required' : 'validation.invalidValues')
-            );
-          })
-          .join(' | '),
-      minWidth: 280,
+      value: (row) => (row.issues.length ? this.rowIssues(row) : ''),
+      minWidth: 320,
     },
   ]);
+  rowIssues(row: CountryImportRow): string {
+    const details = row.issues.map((issue) => this.issueText(issue)).join(' | ');
+    return `${this.text('imports.row')} ${row.rowNumber}: ${details}`;
+  }
+  issueText(issue: CountryImportIssue): string {
+    const field = issue.field;
+    const label = field ? this.fieldLabel(field) + ': ' : '';
+    if (issue.kind === 'duplicate') {
+      return (
+        label +
+        this.locale.translate('countries.import.duplicateField', 'reference-countries', {
+          row: issue.relatedRow ?? '',
+        })
+      );
+    }
+    if (issue.kind === 'server' && issue.message) return label + issue.message;
+    if (issue.kind === 'batchRejected') return this.text('imports.batchRejectedRow');
+    if (issue.kind === 'notSent') return this.text('imports.notSent');
+    if (issue.kind === 'uncertain') return this.text('imports.submissionUncertain');
+    if (!field) return this.text('validation.invalidValues');
+    const key = issue.kind === 'pattern' ? field : issue.kind;
+    return (
+      label +
+      this.locale.translate('countries.import.errors.' + key, 'reference-countries', {
+        min: 2,
+        max: countryFieldLimits[field],
+      })
+    );
+  }
   async select(file: File): Promise<void> {
     await this.state.select(file);
     this.page.set({ pageIndex: 0, pageSize: 10 });

@@ -8,6 +8,28 @@ namespace ErpSystem.Modules.Platform.Tests;
 
 public sealed class ErrorLogHandlerTests
 {
+    [Theory]
+    [InlineData("api")]
+    [InlineData("job")]
+    [InlineData("web")]
+    [InlineData("mobile")]
+    public async Task An_allowed_source_does_not_bypass_other_criteria_bounds(string source)
+    {
+        var store = new Store();
+        var handler = Handler(store, new Actor("admin", null, null, true));
+        foreach (var criteria in new[] {
+            new ErrorLogCriteria(Source: source, PageSize: int.MaxValue),
+            new ErrorLogCriteria(Source: source, Page: 0),
+            new ErrorLogCriteria(Source: source, StatusCode: 200),
+            new ErrorLogCriteria(Source: source, Search: new string('x', 121)),
+            new ErrorLogCriteria(Source: source, FromUtc: new DateTime(2026, 2, 1, 0, 0, 0, DateTimeKind.Utc), ToUtc: new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)) })
+        {
+            Assert.Equal("ErrorLogs.Invalid", (await handler.Handle(new ListErrorLogsQuery(criteria, true), default)).Error.Code);
+            Assert.Equal("ErrorLogs.Invalid", (await handler.Handle(new ExportErrorLogsQuery(criteria, true), default)).Error.Code);
+        }
+        Assert.Equal(0, store.Reads);
+        Assert.Equal(0, store.ScopeChecks);
+    }
     [Fact]
     public async Task Company_reads_fail_closed_before_store_access()
     {

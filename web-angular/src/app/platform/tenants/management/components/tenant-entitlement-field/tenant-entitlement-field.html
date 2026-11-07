@@ -1,0 +1,55 @@
+<fieldset
+  [attr.aria-describedby]="describedBy()"
+  [attr.aria-invalid]="error() ? 'true' : null"
+  (focusout)="blur()"
+>
+  <legend [id]="id">{{ label() }}</legend>
+  <p class="summary">{{ summary() }}</p>
+  <div class="entitlement-layout">
+    <nav class="module-list" [attr.aria-label]="label()">
+      @for (module of modules(); track module.code) {
+        <div class="module-choice" [class.selected]="current()?.code === module.code">
+          <erp-boolean-field
+            density="compact"
+            [value]="enabled(module.code)"
+            [label]="moduleLabel(module)"
+            [readOnly]="isReadOnly()"
+            [disabled]="isDisabled()"
+            (valueChange)="chooseModule(module, $event)"
+          />
+          <erp-button
+            variant="text"
+            appearance="icon"
+            [label]="captions.text('functionalAreas')"
+            [accessibleLabel]="captions.text('functionalAreas') + ': ' + moduleLabel(module)"
+            [pressed]="current()?.code === module.code"
+            (activated)="selectedModule.set(module.code)"
+            ><erp-icon buttonIcon name="forward"
+          /></erp-button>
+        </div>
+      } @empty {
+        <p>{{ captions.text('catalogEmpty') }}</p>
+      }
+    </nav>
+    <section class="areas">
+      @if (current(); as module) {
+        <h3>{{ moduleLabel(module) }}</h3>
+        @for (area of module.submodules; track area.code) {
+          <erp-boolean-field
+            density="compact"
+            [value]="selected(module.code, area.code)"
+            [label]="areaLabel(module, area.code, area.name)"
+            [readOnly]="isReadOnly() || !enabled(module.code)"
+            [disabled]="isDisabled()"
+            (valueChange)="chooseArea(module, area.code, $event)"
+          />
+        } @empty {
+          <p>{{ captions.text('moduleNoAreas') }}</p>
+        }
+      }
+    </section>
+  </div>
+</fieldset>
+@if (error(); as message) {
+  <p class="error" [id]="id + '-error'">{{ message }}</p>
+}

@@ -1,0 +1,78 @@
+{
+  "verifiedAt": "2026-11-06T10:30:22.869Z",
+  "results": [
+    {
+      "check": "Authoritative system error-log server page",
+      "status": 200,
+      "rows": 25,
+      "total": 5373
+    },
+    {
+      "check": "Fresh requested detail identity and authorized diagnostics",
+      "status": 200,
+      "diagnosticEntries": 10
+    },
+    {
+      "check": "Independent singleton settings GET; no retention PUT",
+      "status": 200,
+      "retentionDays": 90,
+      "revision": 0
+    },
+    {
+      "check": "Actual authorized Angular system-error-log route rendered",
+      "passed": true
+    },
+    {
+      "check": "Actual Angular settings counters rendered read-only verification",
+      "passed": true
+    },
+    {
+      "check": "Owned verification session logout",
+      "status": 204
+    }
+  ],
+  "transport": [
+    {
+      "path": "/api/v1/browser-auth/session",
+      "status": 401
+    },
+    {
+      "path": "/api/v1/browser-auth/csrf",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "path": "/api/v1/browser-auth/refresh",
+      "status": 401
+    },
+    {
+      "path": "/api/v1/system-ui-localizations/runtime",
+      "status": 409
+    },
+    {
+      "path": "/api/v1/system-ui-localizations/runtime",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "path": "/api/v1/system-ui-localizations/runtime",
+      "status": 409
+    },
+    {
+      "path": "/api/v1/system-error-logs",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "path": "/api/v1/browser-auth/session",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "path": "/api/v1/system-ui-localizations/runtime",
+      "status": 409
+    },
+    {
+      "path": "/api/v1/system-ui-localizations/runtime",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "blockedBusinessWrites": [],
+  "businessWrites": 0
+}

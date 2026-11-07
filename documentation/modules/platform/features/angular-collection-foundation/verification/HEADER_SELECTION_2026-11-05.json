@@ -1,0 +1,70 @@
+{
+  "date": "2026-11-05",
+  "feature": "angular-collection-foundation",
+  "scope": "MyDataGrid header page selection and footer summary; Cards retain selection bar",
+  "angularCheck": {
+    "command": "npm run check",
+    "passed": true,
+    "tests": 575,
+    "testFiles": 99,
+    "architectureTests": 30,
+    "initialBundleKB": 574.5,
+    "existingWarning": "RISK-020: 500kB initial budget",
+    "componentStyleWarning": false
+  },
+  "focusedTests": {
+    "passed": true,
+    "tests": 22,
+    "files": 3,
+    "regressionRedObserved": true
+  },
+  "browser": {
+    "passed": true,
+    "interactions": 8,
+    "finalLayout": 8,
+    "languages": [
+      "en",
+      "ar"
+    ],
+    "modes": [
+      "light",
+      "dark"
+    ],
+    "widths": [
+      390,
+      1440
+    ],
+    "fixturesOnly": true,
+    "apiCalls": 0,
+    "nativeDialogs": 0,
+    "pageErrors": 0,
+    "note": "Final layout rerun after equivalent style consolidation. Existing scope-remount tracking warning in full interaction fixture is retained."
+  },
+  "mcp": {
+    "sources": [
+      "primeui://primeng/components/table.md",
+      "primeui://primeng/components/checkbox.md"
+    ],
+    "limit": "validate_usage reports Angular NgModel directive input ngModelOptions as unknown in Checkbox-only generated metadata; Angular checks validate this adapter."
+  },
+  "review": {
+    "scope": "header selection, controller eligibility, grouped headers, Cards and footer composition",
+    "result": "No actionable findings",
+    "readOnly": true
+  },
+  "preview": {
+    "temporaryPort": 4220,
+    "stopped": true
+  },
+  "sourceHashes": {
+    "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.html": "608f59e893d48840261ba8d4ec21d8ab2f5886e0649928ae4e52057641bed697",
+    "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.ts": "53e7849d492579f86a6f85dbe5220a52be9b2058a3d951b85028d193e70b11b0",
+    "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.html": "8477381dc08a3825cbb36680aaac3c330381d87ad2434c8cc41041c96c94de73",
+    "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.scss": "823add09560a5204a05c334527c4e61feefede36b6773874be48cd88d39c2e76",
+    "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.html": "ad9eecc59e38c90a722844adb6a00f27bdb5894e8a2ce52f6bef1705449f487e",
+    "web-angular/src/app/shared/ui/collections/grid-capabilities.spec.ts": "962f97bb728e86ae0fcc2443274ccf0de7d5d52384f779b9ac1cda4919b75d33",
+    "web-angular/src/app/shared/ui/collections/grid-capabilities.spec.html": "3f1007705c5f6f8aaa6d38bc14fbefaabd179ff35d56bf1742865b5cbb440e9e",
+    "web-angular/scripts/verify-collection-browser.mjs": "272e5f6baed05b3724c6f4cc6aabc982b800f35c47ec14d126036be60c42ce1f",
+    "web-angular/src/styles.scss": "bece7acbe16466a98f5ee67f9c7d4bbd85bf2f70e1e88e452bb2cf39c7667973"
+  }
+}

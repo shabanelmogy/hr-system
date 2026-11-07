@@ -1,6 +1,11 @@
 import { z } from 'zod';
 
-export const globalTemplateEntities = ['countries', 'states', 'districts'] as const;
+export const globalTemplateEntities = [
+  'countries',
+  'states',
+  'districts',
+  'system-error-logs',
+] as const;
 export type GlobalTemplateEntity = (typeof globalTemplateEntities)[number];
 export type GlobalTemplateAction =
   'View' | 'Create' | 'Upload' | 'Publish' | 'Download' | 'Archive' | 'ViewAccess' | 'EditAccess';
@@ -11,12 +16,15 @@ const editPermissions: Record<GlobalTemplateEntity, string> = {
   countries: 'Countries:Edit',
   states: 'States:Edit',
   districts: 'Districts:Edit',
+  'system-error-logs': 'SystemErrorLogs:View',
 };
 export function globalTemplateAllowed(
   actor: Actor | null,
   entity: GlobalTemplateEntity,
   action: GlobalTemplateAction = 'View',
 ): boolean {
+  if (entity === 'system-error-logs' && (action === 'ViewAccess' || action === 'EditAccess'))
+    return false;
   return (
     !!actor &&
     actor.roles.some((role) => role.trim().toLowerCase() === 'super_admin') &&
@@ -82,6 +90,11 @@ export const globalTemplateUploadTargetSchema = z.object({
   canReplace: z.boolean(),
 });
 export type GlobalTemplateUploadTarget = z.infer<typeof globalTemplateUploadTargetSchema>;
+/** Consumer SourceId and version token; these are distinct from the raw RPT SHA-256. */
+export type GlobalTemplateViewerSource = Pick<
+  GlobalTemplateRow,
+  'entityKey' | 'reportKey' | 'rowVersion'
+> & { readonly id: string };
 export const globalTemplatePageSchema = z.object({
   items: z.array(globalTemplateRowSchema),
   totalCount: z.number().int().nonnegative(),
@@ -144,6 +157,9 @@ export type GlobalTemplateDetail = z.infer<typeof globalTemplateDetailSchema>;
 export type GlobalTemplateVersion = z.infer<typeof globalTemplateVersionSchema>;
 export type GlobalTemplateContract = z.infer<typeof globalTemplateEntitySchema>;
 export const globalTemplateDesignSourceSchema = z.object({
+  bindingKind: z
+    .optional(z.enum(['database-view', 'provider']))
+    .transform((value) => value ?? 'database-view'),
   sourceKey: z.enum(globalTemplateEntities),
   moduleKey: z
     .string()

@@ -1,0 +1,23 @@
+<erp-text-field
+  [formField]="editor.form.billingEmail"
+  [label]="captions.label('billingEmail')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+  type="email"
+  textDirection="ltr"
+/>
+<erp-text-field
+  [formField]="editor.form.contactName"
+  [label]="captions.label('contactName')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+  [showCounter]="true"
+/>
+<erp-text-field
+  [formField]="editor.form.contactPhone"
+  [label]="captions.label('contactPhone')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+  inputMode="tel"
+  textDirection="ltr"
+/>

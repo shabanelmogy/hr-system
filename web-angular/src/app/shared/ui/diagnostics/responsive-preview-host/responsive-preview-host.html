@@ -1,0 +1,33 @@
+@if (preview.active(); as preset) {
+  <section class="responsive-preview" role="region" [attr.aria-label]="text('preview')">
+    <div class="preview-toolbar">
+      <erp-option-select
+        [label]="text('preset')"
+        [value]="preset.id"
+        [options]="options"
+        (valueChange)="preview.select($event)"
+      />
+      <erp-button
+        [label]="text('closePreview')"
+        appearance="icon"
+        variant="text"
+        [busy]="preview.closing()"
+        (activated)="preview.requestClose()"
+        ><erp-icon buttonIcon name="close"
+      /></erp-button>
+    </div>
+    <div class="preview-stage">
+      @if (url(); as source) {
+        <iframe
+          #frame
+          name="erp-responsive-preview"
+          [src]="source"
+          [title]="text('preview')"
+          [style.width.px]="preset.width"
+          [style.height.px]="preset.height"
+          (load)="preview.attach(frame)"
+        ></iframe>
+      }
+    </div>
+  </section>
+}

@@ -11,6 +11,7 @@ namespace ErpSystem.Modules.Reporting.Presentation.Features.Analytics.Exporting.
 public class ExportController(ISender sender) : ControllerBase
 {
     [HttpPost("{fileName}/{culture:alpha}")]
+    [RequestSizeLimit(TabularExportData.MaximumRequestBytes)]
     [HasPermission(ReportingPermissions.ExportData)]
     public async Task<IActionResult> ExportExcel(
         [FromBody] List<Dictionary<string, object>> data,
@@ -18,12 +19,12 @@ public class ExportController(ISender sender) : ControllerBase
         string culture,
         CancellationToken cancellationToken)
     {
-        var fileContent = await sender.Send(new GenerateExcelExportQuery(data, culture), cancellationToken);
-
-        return File(fileContent, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+        var file = await sender.Send(new GenerateTabularExportQuery(data, "xlsx", fileName, culture), cancellationToken);
+        return File(file.Content, file.ContentType, file.FileName);
     }
 
     [HttpPost("{fileName}/{culture}")]
+    [RequestSizeLimit(TabularExportData.MaximumRequestBytes)]
     [HasPermission(ReportingPermissions.ExportData)]
     public async Task<IActionResult> ExportCsv(
         [FromBody] List<Dictionary<string, object>> data,
@@ -36,8 +37,8 @@ public class ExportController(ISender sender) : ControllerBase
             fileName = "export.csv";
         }
 
-        var csvBytes = await sender.Send(new GenerateCsvExportQuery(data), cancellationToken);
-        return File(csvBytes, "text/csv", fileName);
+        var file = await sender.Send(new GenerateTabularExportQuery(data, "csv", fileName, culture), cancellationToken);
+        return File(file.Content, file.ContentType, file.FileName);
     }
 
 

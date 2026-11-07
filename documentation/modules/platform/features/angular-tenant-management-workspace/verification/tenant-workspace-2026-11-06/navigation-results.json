@@ -1,0 +1,146 @@
+[
+  {
+    "language": "en",
+    "width": 390,
+    "name": "all",
+    "passed": true
+  },
+  {
+    "language": "en",
+    "width": 390,
+    "name": "states",
+    "passed": true
+  },
+  {
+    "language": "en",
+    "width": 390,
+    "name": "districts",
+    "passed": true
+  },
+  {
+    "language": "en",
+    "width": 390,
+    "name": "none",
+    "passed": true
+  },
+  {
+    "language": "en",
+    "width": 390,
+    "name": "non-super",
+    "passed": true
+  },
+  {
+    "language": "en",
+    "width": 390,
+    "name": "templates",
+    "passed": true
+  },
+  {
+    "language": "en",
+    "width": 1440,
+    "name": "all",
+    "passed": true
+  },
+  {
+    "language": "en",
+    "width": 1440,
+    "name": "states",
+    "passed": true
+  },
+  {
+    "language": "en",
+    "width": 1440,
+    "name": "districts",
+    "passed": true
+  },
+  {
+    "language": "en",
+    "width": 1440,
+    "name": "none",
+    "passed": true
+  },
+  {
+    "language": "en",
+    "width": 1440,
+    "name": "non-super",
+    "passed": true
+  },
+  {
+    "language": "en",
+    "width": 1440,
+    "name": "templates",
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "width": 390,
+    "name": "all",
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "width": 390,
+    "name": "states",
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "width": 390,
+    "name": "districts",
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "width": 390,
+    "name": "none",
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "width": 390,
+    "name": "non-super",
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "width": 390,
+    "name": "templates",
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "width": 1440,
+    "name": "all",
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "width": 1440,
+    "name": "states",
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "width": 1440,
+    "name": "districts",
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "width": 1440,
+    "name": "none",
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "width": 1440,
+    "name": "non-super",
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "width": 1440,
+    "name": "templates",
+    "passed": true
+  }
+]

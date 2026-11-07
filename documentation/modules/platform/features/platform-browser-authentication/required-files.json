@@ -424,6 +424,24 @@
       "layer": "documentation",
       "path": "documentation/modules/platform/features/platform-browser-authentication/verification/results/browser-runtime-verification.json",
       "purpose": "Final Release full-gate and retained-client counts for bounded browser API transport"
+    },
+    {
+      "id": "hangfire-embedding-repair",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/HANGFIRE_EMBEDDING_REPAIR.md",
+      "purpose": "Scoped Hangfire Cookie/native-CSRF/frame policy correction, integration limits and production note ownership"
+    },
+    {
+      "id": "hangfire-browser-authentication-tests",
+      "layer": "test",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/HangfireBrowserAuthenticationTests.cs",
+      "purpose": "JWT Cookie fallback, native CSRF, origin denial, scoped CSP and retained transport regression evidence"
+    },
+    {
+      "id": "hosted-origin-regression-2026-11-06",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/results/hosted-origin-regression-2026-11-06.json",
+      "purpose": "Sanitized hosted CSRF403 regression, local publish settings repair and 19 Cookie test receipt"
     }
   ],
   "finalizationChecklist": [

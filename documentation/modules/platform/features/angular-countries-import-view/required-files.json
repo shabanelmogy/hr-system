@@ -24,6 +24,84 @@
   "sourceCollections": [],
   "requiredFiles": [
     {
+      "id": "compact-import-proof-0",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/IMPORT_WORKSPACE_2026-11-05.json",
+      "layer": "verification",
+      "purpose": "Executed Import compact workspace and diagnostic acceptance; retains source timestamps and bounded scope"
+    },
+    {
+      "id": "compact-import-proof-1",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/compact-import-2026-11-05/angular-check.txt",
+      "layer": "verification",
+      "purpose": "Executed Import compact workspace and diagnostic acceptance; retains source timestamps and bounded scope"
+    },
+    {
+      "id": "compact-import-proof-2",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/compact-import-2026-11-05/results.json",
+      "layer": "verification",
+      "purpose": "Executed Import compact workspace and diagnostic acceptance; retains source timestamps and bounded scope"
+    },
+    {
+      "id": "compact-import-proof-3",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/compact-import-2026-11-05/focused-results.json",
+      "layer": "verification",
+      "purpose": "Executed Import compact workspace and diagnostic acceptance; retains source timestamps and bounded scope"
+    },
+    {
+      "id": "compact-import-proof-4",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/compact-import-2026-11-05/journey-results.json",
+      "layer": "verification",
+      "purpose": "Executed Import compact workspace and diagnostic acceptance; retains source timestamps and bounded scope"
+    },
+    {
+      "id": "compact-import-proof-5",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/compact-import-2026-11-05/en-light-1440-result.png",
+      "layer": "verification",
+      "purpose": "Executed Import compact workspace and diagnostic acceptance; retains source timestamps and bounded scope"
+    },
+    {
+      "id": "compact-import-proof-6",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/compact-import-2026-11-05/ar-dark-390-result.png",
+      "layer": "verification",
+      "purpose": "Executed Import compact workspace and diagnostic acceptance; retains source timestamps and bounded scope"
+    },
+    {
+      "id": "compact-import-contract",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/IMPORT_WORKSPACE_2026-11-05.md",
+      "layer": "documentation",
+      "purpose": "Current shared import workspace: compact header/vertical metrics/full-height scrolling and truthful row diagnostics"
+    },
+    {
+      "id": "compact-import-host-style",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-import-view/country-import-view.scss",
+      "layer": "web",
+      "purpose": "Current shared import workspace: compact header/vertical metrics/full-height scrolling and truthful row diagnostics"
+    },
+    {
+      "id": "compact-import-failure-mapping",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/validation/country-import-feedback.ts",
+      "layer": "web",
+      "purpose": "Current shared import workspace: compact header/vertical metrics/full-height scrolling and truthful row diagnostics"
+    },
+    {
+      "id": "compact-import-metric-ts",
+      "path": "web-angular/src/app/shared/ui/cards/metric-card/metric-card.ts",
+      "layer": "web",
+      "purpose": "Current shared import workspace: compact header/vertical metrics/full-height scrolling and truthful row diagnostics"
+    },
+    {
+      "id": "compact-import-metric-scss",
+      "path": "web-angular/src/app/shared/ui/cards/metric-card/metric-card.scss",
+      "layer": "web",
+      "purpose": "Current shared import workspace: compact header/vertical metrics/full-height scrolling and truthful row diagnostics"
+    },
+    {
+      "id": "compact-import-feedback-scss",
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state/feedback-state.scss",
+      "layer": "web",
+      "purpose": "Current shared import workspace: compact header/vertical metrics/full-height scrolling and truthful row diagnostics"
+    },
+    {
       "id": "root-agent-guidance",
       "layer": "configuration",
       "path": "AGENTS.md",

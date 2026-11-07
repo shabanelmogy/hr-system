@@ -1,0 +1,74 @@
+<erp-form
+  data-testid="criteria"
+  [form]="form()"
+  [title]="'reports.searchOptions' | uiText"
+  [submitLabel]="'reports.searchUpper' | uiText"
+  appearance="sidebar"
+  [hideHeader]="true"
+  [submitFullWidth]="true"
+  [pending]="pending()"
+  [readOnly]="conflict()"
+  [showSubmit]="selected() !== null && entity() !== 'system-error-logs'"
+>
+  @if (chooseEntity()) {
+    <erp-option-select
+      [label]="'crystalReports.entity' | uiText: 'reporting'"
+      [value]="entity()"
+      [options]="entityOptions()"
+      (valueChange)="entityChange.emit($event)"
+    />
+  }
+  @if (selected()) {
+    <erp-reference-field
+      data-testid="report"
+      [value]="selected()?.id ?? null"
+      (valueChange)="reportChange.emit($event)"
+      [source]="source()"
+      [label]="'reports.reportForms' | uiText"
+      [searchable]="false"
+      [clearable]="false"
+    />
+    @if (entity() !== 'system-error-logs') {
+      <erp-text-field
+        data-testid="nameAr"
+        [formField]="form().nameAr"
+        [label]="'general.nameAr' | uiText"
+        [messages]="messages()"
+      />
+      <erp-text-field
+        data-testid="nameEn"
+        [formField]="form().nameEn"
+        [label]="'general.nameEn' | uiText"
+        [messages]="messages()"
+      />
+      @if (entity() === 'districts') {
+        <erp-text-field
+          data-testid="stateAr"
+          [formField]="form().stateAr"
+          [label]="'districts.stateNameAr' | uiText: 'reference-districts'"
+          [messages]="messages()"
+        />
+        <erp-text-field
+          data-testid="stateEn"
+          [formField]="form().stateEn"
+          [label]="'districts.stateNameEn' | uiText: 'reference-districts'"
+          [messages]="messages()"
+        />
+      }
+    }
+  }
+  <erp-icon formSubmitIcon name="search" />
+  <div formActions>
+    @if (selected() && entity() !== 'system-error-logs') {
+      <erp-button
+        data-testid="reset"
+        [label]="'reports.clearFilters' | uiText"
+        variant="outlined"
+        [fullWidth]="true"
+        [disabled]="pending() || conflict()"
+        (activated)="resetRequested.emit()"
+        ><erp-icon buttonIcon name="reset"
+      /></erp-button>
+    }
+  </div>
+</erp-form>

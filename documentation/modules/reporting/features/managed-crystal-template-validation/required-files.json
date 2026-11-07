@@ -1,5 +1,12 @@
 {
   "schemaVersion": 1,
+  "evidenceBaseline": {
+    "date": "2026-11-05",
+    "report": "documentation/modules/reporting/CURRENT_EVIDENCE_BASELINE_2026-11-05.md",
+    "unavailableHistoricalEvidenceInventory": "documentation/modules/reporting/verification/CURRENT_EVIDENCE_BASELINE_2026-11-05.json",
+    "unavailableHistoricalLogCount": 13,
+    "policy": "Current required files must exist. Historical unavailable raw logs remain inventoried; documentation validity does not assert runtime acceptance."
+  },
   "status": "phase-06-verified-closed",
   "feature": "managed-crystal-template-validation",
   "featureName": "Managed Crystal Template Validation",
@@ -43,6 +50,18 @@
     }
   ],
   "requiredFiles": [
+    {
+      "id": "current-evidence-baseline-20261105-report",
+      "path": "documentation/modules/reporting/CURRENT_EVIDENCE_BASELINE_2026-11-05.md",
+      "layer": "documentation",
+      "purpose": "Current retained-evidence baseline and limits of historical raw-log availability"
+    },
+    {
+      "id": "current-evidence-baseline-20261105-inventory",
+      "path": "documentation/modules/reporting/verification/CURRENT_EVIDENCE_BASELINE_2026-11-05.json",
+      "layer": "documentation",
+      "purpose": "Exact preserved IDs, paths and original metadata of unavailable historical logs"
+    },
     {
       "id": "root-guidance",
       "layer": "configuration",
@@ -410,12 +429,6 @@
       "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
     },
     {
-      "id": "runtime-correction-61-client-fix-tests-log",
-      "layer": "verification",
-      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/client-fix-tests.log",
-      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
-    },
-    {
       "id": "runtime-correction-62-corrected-interoperability-json",
       "layer": "verification",
       "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/corrected-interoperability.json",
@@ -440,30 +453,6 @@
       "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
     },
     {
-      "id": "runtime-correction-66-final-boundary-tests-log",
-      "layer": "verification",
-      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/final-boundary-tests.log",
-      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
-    },
-    {
-      "id": "runtime-correction-67-full-build-log",
-      "layer": "verification",
-      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/full-build.log",
-      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
-    },
-    {
-      "id": "runtime-correction-68-full-restore-log",
-      "layer": "verification",
-      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/full-restore.log",
-      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
-    },
-    {
-      "id": "runtime-correction-69-full-test-sqlserver-log",
-      "layer": "verification",
-      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/full-test-sqlserver.log",
-      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
-    },
-    {
       "id": "runtime-correction-70-package-validation-json",
       "layer": "verification",
       "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/package-validation.json",
@@ -473,18 +462,6 @@
       "id": "runtime-correction-71-portable-interoperability-json",
       "layer": "verification",
       "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/portable-interoperability.json",
-      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
-    },
-    {
-      "id": "runtime-correction-72-portable-interoperability-log",
-      "layer": "verification",
-      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/portable-interoperability.log",
-      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
-    },
-    {
-      "id": "runtime-correction-73-prepare-ready-log",
-      "layer": "verification",
-      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/prepare-ready.log",
       "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
     },
     {
@@ -551,12 +528,6 @@
       "id": "publish-final-84",
       "layer": "verification",
       "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/hosted-runtime-publication-verified.json",
-      "purpose": "Current publish/source/local or sanitized actual hosted evidence; no private key/config registered"
-    },
-    {
-      "id": "publish-final-85",
-      "layer": "verification",
-      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/local-debug-rebuild.log",
       "purpose": "Current publish/source/local or sanitized actual hosted evidence; no private key/config registered"
     },
     {
@@ -641,36 +612,6 @@
       "id": "render-verification-0",
       "layer": "verification",
       "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/render-correction-verification.json",
-      "purpose": "Actual local render-correction technical verification; native PDF remains unverified"
-    },
-    {
-      "id": "render-verification-1",
-      "layer": "verification",
-      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/render-full-api-tests-serial.log",
-      "purpose": "Actual local render-correction technical verification; native PDF remains unverified"
-    },
-    {
-      "id": "render-verification-2",
-      "layer": "verification",
-      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/render-full-api-tests.log",
-      "purpose": "Actual local render-correction technical verification; native PDF remains unverified"
-    },
-    {
-      "id": "render-verification-3",
-      "layer": "verification",
-      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/render-full-reporting-tests.log",
-      "purpose": "Actual local render-correction technical verification; native PDF remains unverified"
-    },
-    {
-      "id": "render-verification-4",
-      "layer": "verification",
-      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/render-boundary-tests.log",
-      "purpose": "Actual local render-correction technical verification; native PDF remains unverified"
-    },
-    {
-      "id": "render-verification-5",
-      "layer": "verification",
-      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/render-angular-check.log",
       "purpose": "Actual local render-correction technical verification; native PDF remains unverified"
     },
     {

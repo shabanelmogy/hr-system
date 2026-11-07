@@ -1,0 +1,28 @@
+:host {
+  display: block;
+}
+.photo-panel {
+  display: grid;
+  gap: 16px;
+  justify-items: start;
+}
+.photo-preview {
+  min-block-size: 120px;
+  min-inline-size: 120px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+}
+.photo-preview img {
+  display: block;
+  inline-size: 120px;
+  block-size: 120px;
+  object-fit: cover;
+}
+.photo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}

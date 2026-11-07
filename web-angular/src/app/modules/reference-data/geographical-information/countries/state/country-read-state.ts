@@ -1,3 +1,9 @@
+import {
+  pagedTabularSource,
+  exportRead,
+  type TabularColumn,
+  type TabularExportSource,
+} from '../../../../../shared/data/public-api';
 import { computed, effect, inject, Injectable, signal, untracked } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -46,6 +52,36 @@ export class CountryReadState {
   private readonly identityKeys = new WeakMap<Session, number>();
   private identitySequence = 0;
   readonly query = this.criteria.asReadonly();
+
+  exportSource(
+    columns: readonly TabularColumn<CountryListItem>[],
+    culture: 'en' | 'ar',
+  ): TabularExportSource | null {
+    const actor = this.auth.readIdentity(),
+      query = this.criteria();
+    if (!actor || !this.canRead() || !columns.length) return null;
+    const criterion = () =>
+      JSON.stringify({ ...this.criteria(), pageNumber: undefined, pageSize: undefined });
+    const criteriaKey = criterion();
+    return pagedTabularSource({
+      actor,
+      criteriaKey,
+      fileName: 'countries',
+      culture,
+      columns,
+      rowId: (row) => row.id,
+      isCurrent: () =>
+        this.auth.readIdentity() === actor && this.canRead() && criterion() === criteriaKey,
+      read: async (page, signal) => {
+        const result = await exportRead(
+          this.service.page({ ...query, pageNumber: page, pageSize: 200 }),
+          signal,
+        );
+        return { rows: result.items, total: result.metaData.totalCount };
+      },
+    });
+  }
+
   readonly searchDraft = this.draft.asReadonly();
   readonly columnFilters = computed(() => countryColumnFilters(this.criteria()));
   private readonly allowed = computed(() => {

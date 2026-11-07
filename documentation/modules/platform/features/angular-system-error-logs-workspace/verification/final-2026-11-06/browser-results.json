@@ -1,0 +1,117 @@
+{
+  "verifiedAt": "2026-11-06T10:55:26.620Z",
+  "results": [
+    {
+      "language": "en",
+      "mode": "light",
+      "width": 390,
+      "passed": true,
+      "details": 1,
+      "exports": 1,
+      "queries": 3,
+      "geometry": {
+        "vertical": 0,
+        "horizontal": 0
+      },
+      "hostedWrites": 0
+    },
+    {
+      "language": "en",
+      "mode": "light",
+      "width": 1440,
+      "passed": true,
+      "details": 1,
+      "exports": 1,
+      "queries": 3,
+      "geometry": {
+        "vertical": 0,
+        "horizontal": 0
+      },
+      "hostedWrites": 0
+    },
+    {
+      "language": "en",
+      "mode": "dark",
+      "width": 390,
+      "passed": true,
+      "details": 1,
+      "exports": 1,
+      "queries": 3,
+      "geometry": {
+        "vertical": 0,
+        "horizontal": 0
+      },
+      "hostedWrites": 0
+    },
+    {
+      "language": "en",
+      "mode": "dark",
+      "width": 1440,
+      "passed": true,
+      "details": 1,
+      "exports": 1,
+      "queries": 3,
+      "geometry": {
+        "vertical": 0,
+        "horizontal": 0
+      },
+      "hostedWrites": 0
+    },
+    {
+      "language": "ar",
+      "mode": "light",
+      "width": 390,
+      "passed": true,
+      "details": 1,
+      "exports": 1,
+      "queries": 3,
+      "geometry": {
+        "vertical": 0,
+        "horizontal": 0
+      },
+      "hostedWrites": 0
+    },
+    {
+      "language": "ar",
+      "mode": "light",
+      "width": 1440,
+      "passed": true,
+      "details": 1,
+      "exports": 1,
+      "queries": 3,
+      "geometry": {
+        "vertical": 0,
+        "horizontal": 0
+      },
+      "hostedWrites": 0
+    },
+    {
+      "language": "ar",
+      "mode": "dark",
+      "width": 390,
+      "passed": true,
+      "details": 1,
+      "exports": 1,
+      "queries": 3,
+      "geometry": {
+        "vertical": 0,
+        "horizontal": 0
+      },
+      "hostedWrites": 0
+    },
+    {
+      "language": "ar",
+      "mode": "dark",
+      "width": 1440,
+      "passed": true,
+      "details": 1,
+      "exports": 1,
+      "queries": 3,
+      "geometry": {
+        "vertical": 0,
+        "horizontal": 0
+      },
+      "hostedWrites": 0
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+:host {
+  display: block;
+  min-inline-size: 0;
+  min-block-size: 0;
+}
+:host(.page-composition) {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+}
+:host(.page-composition) erp-form {
+  flex: 1;
+  min-block-size: 0;
+}

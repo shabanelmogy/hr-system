@@ -1,0 +1,36 @@
+<erp-surface-card
+  [title]="'tenantManagement.summaryTitle' | uiText: 'platform-tenants'"
+  [subtitle]="'tenantManagement.summaryDescription' | uiText: 'platform-tenants'"
+  icon="company"
+  [compact]="true"
+>
+  <div class="summary-content">
+    <div class="tenant-identity">
+      <h3>
+        {{ draft().name.trim() || ('tenantManagement.newTenant' | uiText: 'platform-tenants') }}
+      </h3>
+      <p>{{ draft().identifier.trim() || '—' }}</p>
+      <div class="status-chips">
+        <erp-status-badge
+          [label]="
+            'tenantManagement.statuses.' + draft().subscriptionStatus | uiText: 'platform-tenants'
+          "
+        />
+        @if (draft().planName.trim()) {
+          <erp-status-badge appearance="outline" [label]="draft().planName" />
+        }
+      </div>
+    </div>
+    <div class="summary-metrics">
+      @for (metric of metrics(); track metric.id) {
+        <erp-metric-card
+          [compact]="true"
+          [label]="'tenantManagement.' + metric.id | uiText: 'platform-tenants'"
+          [value]="metric.value"
+          [icon]="metric.icon"
+        />
+      }
+    </div>
+    <p class="summary-note">{{ 'tenantManagement.summaryNote' | uiText: 'platform-tenants' }}</p>
+  </div>
+</erp-surface-card>

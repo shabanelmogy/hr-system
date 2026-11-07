@@ -91,6 +91,8 @@ node documentation/plans/business/web-angular-migration/verification/MAIN_MERGE_
 
 ## 6. التوثيق: نجاح محدد وعائق موروث
 
+تحديث لاحق بطلب المستخدم في نفس اليوم: تمت مواءمة requiredFiles مع الأدلة الموجودة، مع حفظ قائمة السجلات القديمة غير المتاحة تحت FOLLOW-025. نجح بعدها التوليد والفحص العام لكل460وصفة، بما فيها Reporting، دون filter أو تغيير المولد. [أساس الأدلة الحالي](../../../modules/reporting/CURRENT_EVIDENCE_BASELINE_2026-11-05.md) يملك الوضع الحالي؛ الفقرات التالية تحفظ نتيجة محاولة الدمج السابقة ولا تعني أن التوليد ما زال معلقًا. السجلات القديمة لم تُستعد ولم تُختلق.
+
 نجح توليد وفحص 256 وصفة Angular باستعمال منطق المولد الرسمي مع مرشح Angular
 مؤقت في الذاكرة، دون تعديل المولد أو manifest العامة. يعيد
 [أمر التحقق المحدد](verification/Generate-AngularMergeDocumentation.ps1)

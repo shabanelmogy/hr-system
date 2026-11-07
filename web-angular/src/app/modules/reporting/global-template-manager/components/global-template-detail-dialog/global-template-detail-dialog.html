@@ -1,0 +1,45 @@
+<erp-dialog-panel
+  size="wide"
+  [open]="state.detailOpen() && !state.editorOpen()"
+  [title]="state.detail()?.displayName || ('crystalReports.versions' | uiText: 'reporting')"
+  [closeLabel]="'actions.close' | uiText"
+  [showFooter]="false"
+  [pending]="state.pending()"
+  (closeRequested)="closeGuard().requestClose()"
+>
+  @if (state.detail()) {
+    <erp-content-tabs
+      [tabs]="tabs()"
+      [(selected)]="selectedTab"
+      [content]="detailContent"
+    /><ng-template #detailContent let-tab>
+      @switch (tab) {
+        @case ('overview') {
+          <erp-global-template-overview />
+        }
+        @case ('versions') {
+          <erp-global-template-versions />
+        }
+        @case ('permissions') {
+          <erp-global-template-permissions [state]="state.access" />
+        }
+      }
+    </ng-template>
+  } @else {
+    <erp-feedback-state
+      [kind]="state.detailState().kind === 'error' ? 'error' : 'loading'"
+      [title]="'common.loading' | uiText"
+      [actionLabel]="'actions.retry' | uiText"
+      (action)="state.reload()"
+    />
+  }
+</erp-dialog-panel>
+<erp-form-close-guard
+  #detailCloseGuard
+  [identity]="'global-template-access-' + (state.detail()?.id || '')"
+  [revision]="state.access.draftRevision()"
+  [active]="state.detailOpen()"
+  [unsaved]="state.access.dirty()"
+  [pending]="state.pending()"
+  (closed)="state.closeDetail()"
+/>

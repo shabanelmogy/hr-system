@@ -1,5 +1,12 @@
 {
   "schemaVersion": 1,
+  "evidenceBaseline": {
+    "date": "2026-11-05",
+    "report": "documentation/modules/reporting/CURRENT_EVIDENCE_BASELINE_2026-11-05.md",
+    "unavailableHistoricalEvidenceInventory": "documentation/modules/reporting/verification/CURRENT_EVIDENCE_BASELINE_2026-11-05.json",
+    "unavailableHistoricalLogCount": 109,
+    "policy": "Current required files must exist. Historical unavailable raw logs remain inventoried; documentation validity does not assert runtime acceptance."
+  },
   "status": "final",
   "executionMode": "implementation",
   "runtimeAuthorized": true,
@@ -15,8 +22,284 @@
   "purpose": "Current global manager parity, database-backed source/View selection, prepared LEFT JOIN Views and verification; hosted/native acceptance remains FOLLOW-024.",
   "reviewArtifact": "documentation/modules/reporting/features/global-crystal-template-manager/global-crystal-template-manager-evidence.md",
   "implementationRequest": "documentation/modules/reporting/features/global-crystal-template-manager/global-crystal-template-manager-request.md",
-  "sourceCollections": [],
+  "sourceCollections": [
+    {
+      "id": "global-template-composition",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components",
+      "patterns": [
+        "**/*.ts",
+        "**/*.html"
+      ],
+      "minimumFiles": 14,
+      "layer": "web",
+      "purpose": "Feature-owned list, dialogs, detail tabs and confirmation composition"
+    }
+  ],
   "requiredFiles": [
+    {
+      "id": "verify-database-automation",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/VERIFY_DATABASE_AUTOMATION_2026-11-07.md",
+      "purpose": "Programmatic Crystal Verify Database contract, atomic auto-publish behavior, limits and native-host acceptance"
+    },
+    {
+      "id": "countries-published-contract-stale-diagnosis",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/COUNTRIES_PUBLISHED_REPORT_STALE_2026-11-06.md",
+      "purpose": "Read-only published Countries version3 fingerprint mismatch, configured-versus-hosted evidence and validated recovery path"
+    },
+    {
+      "id": "action-menu-20261105-proof-0",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/MANAGER_ACTION_MENU_2026-11-05.json",
+      "purpose": "Current dropdown, trailing indicator and single-row executed verification evidence"
+    },
+    {
+      "id": "action-menu-20261105-proof-1",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-action-menu/angular-check.txt",
+      "purpose": "Current dropdown, trailing indicator and single-row executed verification evidence"
+    },
+    {
+      "id": "action-menu-20261105-proof-2",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-action-menu/planning-check.txt",
+      "purpose": "Current dropdown, trailing indicator and single-row executed verification evidence"
+    },
+    {
+      "id": "action-menu-20261105-proof-3",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-action-menu/browser-results.json",
+      "purpose": "Current dropdown, trailing indicator and single-row executed verification evidence"
+    },
+    {
+      "id": "action-menu-20261105-proof-4",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-action-menu/manager-en-light-1213.png",
+      "purpose": "Current dropdown, trailing indicator and single-row executed verification evidence"
+    },
+    {
+      "id": "action-menu-20261105-proof-5",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-action-menu/manager-ar-dark-390.png",
+      "purpose": "Current dropdown, trailing indicator and single-row executed verification evidence"
+    },
+    {
+      "id": "action-menu-20261105-shared-guide",
+      "layer": "documentation",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "purpose": "Reusable action menu and single-row toolbar ownership rules"
+    },
+    {
+      "id": "action-menu-20261105-layout-html",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.html",
+      "purpose": "Generic text-only search layout classification"
+    },
+    {
+      "id": "action-menu-20261105-layout-scss",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.scss",
+      "purpose": "Generic bounded single-row toolbar search and scroll styles"
+    },
+    {
+      "id": "action-menu-20261105-0",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/action-menu-button/action-menu-button.ts",
+      "purpose": "Shared typed action dropdown: runtime resources and guarded activation regression"
+    },
+    {
+      "id": "action-menu-20261105-1",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/action-menu-button/action-menu-button.html",
+      "purpose": "Shared typed action dropdown: runtime resources and guarded activation regression"
+    },
+    {
+      "id": "action-menu-20261105-2",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/action-menu-button/action-menu-button.scss",
+      "purpose": "Shared typed action dropdown: runtime resources and guarded activation regression"
+    },
+    {
+      "id": "action-menu-20261105-3",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/action-menu-button/action-menu-button.spec.ts",
+      "purpose": "Shared typed action dropdown: runtime resources and guarded activation regression"
+    },
+    {
+      "id": "action-menu-20261105-contract",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/MANAGER_ACTION_MENU_2026-11-05.md",
+      "purpose": "Current manager dropdown and single-row ownership contract"
+    },
+    {
+      "id": "report-sidebar-20261105-identity",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/utils/global-template-viewer-identity.ts",
+      "layer": "web",
+      "purpose": "Exact current SourceId and publication Token matching against the existing server wire contract"
+    },
+    {
+      "id": "report-sidebar-20261105-receipt",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/REPORT_TEMPLATE_SIDEBAR_2026-11-05.json",
+      "layer": "verification",
+      "purpose": "Executed Angular567-test full gate, sidebar12 and PDF lifecycle8 browser fixture acceptance with current source hashes"
+    },
+    {
+      "id": "report-sidebar-20261105-0",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-report-template-editor/global-report-template-editor.ts",
+      "layer": "web",
+      "purpose": "RPT source download and authorized existing version-editor entry from report sidebar"
+    },
+    {
+      "id": "report-sidebar-20261105-1",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-report-template-editor/global-report-template-editor.html",
+      "layer": "web",
+      "purpose": "RPT source download and authorized existing version-editor entry from report sidebar"
+    },
+    {
+      "id": "report-sidebar-20261105-2",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/report-editor.public-api.ts",
+      "layer": "web",
+      "purpose": "RPT source download and authorized existing version-editor entry from report sidebar"
+    },
+    {
+      "id": "report-sidebar-20261105-3",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/policy.public-api.ts",
+      "layer": "web",
+      "purpose": "RPT source download and authorized existing version-editor entry from report sidebar"
+    },
+    {
+      "id": "report-sidebar-20261105-4",
+      "path": "web-angular/scripts/verify-report-template-sidebar-browser.mjs",
+      "layer": "web",
+      "purpose": "RPT source download and authorized existing version-editor entry from report sidebar"
+    },
+    {
+      "id": "report-sidebar-20261105-5",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/REPORT_TEMPLATE_SIDEBAR_2026-11-05.md",
+      "layer": "documentation",
+      "purpose": "RPT source download and authorized existing version-editor entry from report sidebar"
+    },
+    {
+      "id": "current-evidence-baseline-20261105-report",
+      "path": "documentation/modules/reporting/CURRENT_EVIDENCE_BASELINE_2026-11-05.md",
+      "layer": "documentation",
+      "purpose": "Current retained-evidence baseline and limits of historical raw-log availability"
+    },
+    {
+      "id": "current-evidence-baseline-20261105-inventory",
+      "path": "documentation/modules/reporting/verification/CURRENT_EVIDENCE_BASELINE_2026-11-05.json",
+      "layer": "documentation",
+      "purpose": "Exact preserved IDs, paths and original metadata of unavailable historical logs"
+    },
+    {
+      "id": "composition-20261105-0",
+      "path": "documentation/guides/web/architecture/ANGULAR_COMPONENT_DECOMPOSITION_2026-11-05.md",
+      "layer": "documentation",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-1",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-list/global-template-list.ts",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-2",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-list/global-template-list.html",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-3",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-registration-dialog/global-template-registration-dialog.ts",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-4",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-registration-dialog/global-template-registration-dialog.html",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-5",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-upload-dialog/global-template-upload-dialog.ts",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-6",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-upload-dialog/global-template-upload-dialog.html",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-7",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-detail-dialog/global-template-detail-dialog.ts",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-8",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-detail-dialog/global-template-detail-dialog.html",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-9",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-overview/global-template-overview.ts",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-10",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-overview/global-template-overview.html",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-11",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-versions/global-template-versions.ts",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-12",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-versions/global-template-versions.html",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-13",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-confirmations/global-template-confirmations.ts",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-14",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-confirmations/global-template-confirmations.html",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-15",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/utils/global-template-presentation.ts",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-16",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-criteria/global-report-criteria.ts",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
+    {
+      "id": "composition-20261105-17",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-criteria/global-report-criteria.html",
+      "layer": "web",
+      "purpose": "Approved component decomposition: current source, verification and diagnostic evidence"
+    },
     {
       "id": "root-agent-guidance",
       "layer": "configuration",
@@ -486,57 +769,9 @@
       "purpose": "Actual global managed-template runtime or portable verification; no future/secret source registered"
     },
     {
-      "id": "global-current-78",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/global-manager-angular-check.log",
-      "purpose": "Actual global managed-template runtime or portable verification; no future/secret source registered"
-    },
-    {
-      "id": "global-current-79",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/global-manager-angular-focused.log",
-      "purpose": "Actual global managed-template runtime or portable verification; no future/secret source registered"
-    },
-    {
-      "id": "global-current-80",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/global-manager-full-api-tests.log",
-      "purpose": "Actual global managed-template runtime or portable verification; no future/secret source registered"
-    },
-    {
-      "id": "global-current-81",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/global-manager-full-build.log",
-      "purpose": "Actual global managed-template runtime or portable verification; no future/secret source registered"
-    },
-    {
       "id": "global-current-82",
       "layer": "verification",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/global-manager-live-schema.json",
-      "purpose": "Actual global managed-template runtime or portable verification; no future/secret source registered"
-    },
-    {
-      "id": "global-current-83",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/global-manager-migrations-applied.log",
-      "purpose": "Actual global managed-template runtime or portable verification; no future/secret source registered"
-    },
-    {
-      "id": "global-current-84",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/global-manager-migrations-created.log",
-      "purpose": "Actual global managed-template runtime or portable verification; no future/secret source registered"
-    },
-    {
-      "id": "global-current-85",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/global-manager-sql-tests.log",
-      "purpose": "Actual global managed-template runtime or portable verification; no future/secret source registered"
-    },
-    {
-      "id": "global-current-86",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/global-manager-tests.log",
       "purpose": "Actual global managed-template runtime or portable verification; no future/secret source registered"
     },
     {
@@ -738,80 +973,8 @@
       "purpose": "Current parity, role-grant/company consumption or shared presentation source and verification evidence"
     },
     {
-      "id": "parity-20261102-20",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-angular-final.log",
-      "layer": "verification",
-      "purpose": "Current parity, role-grant/company consumption or shared presentation source and verification evidence"
-    },
-    {
-      "id": "parity-20261102-21",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-api-clean-build.log",
-      "layer": "verification",
-      "purpose": "Current parity, role-grant/company consumption or shared presentation source and verification evidence"
-    },
-    {
-      "id": "parity-20261102-22",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-api-final-build.log",
-      "layer": "verification",
-      "purpose": "Current parity, role-grant/company consumption or shared presentation source and verification evidence"
-    },
-    {
-      "id": "parity-20261102-23",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-api-final-tests.log",
-      "layer": "verification",
-      "purpose": "Current parity, role-grant/company consumption or shared presentation source and verification evidence"
-    },
-    {
       "id": "parity-20261102-24",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-live-schema.json",
-      "layer": "verification",
-      "purpose": "Current parity, role-grant/company consumption or shared presentation source and verification evidence"
-    },
-    {
-      "id": "parity-20261102-25",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-migration-apply.log",
-      "layer": "verification",
-      "purpose": "Current parity, role-grant/company consumption or shared presentation source and verification evidence"
-    },
-    {
-      "id": "parity-20261102-26",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-mobile-check.log",
-      "layer": "verification",
-      "purpose": "Current parity, role-grant/company consumption or shared presentation source and verification evidence"
-    },
-    {
-      "id": "parity-20261102-27",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-next-final-architecture.log",
-      "layer": "verification",
-      "purpose": "Current parity, role-grant/company consumption or shared presentation source and verification evidence"
-    },
-    {
-      "id": "parity-20261102-28",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-next-final-tests.log",
-      "layer": "verification",
-      "purpose": "Current parity, role-grant/company consumption or shared presentation source and verification evidence"
-    },
-    {
-      "id": "parity-20261102-29",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-next-final-types.log",
-      "layer": "verification",
-      "purpose": "Current parity, role-grant/company consumption or shared presentation source and verification evidence"
-    },
-    {
-      "id": "parity-20261102-30",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-next-permissions.log",
-      "layer": "verification",
-      "purpose": "Current parity, role-grant/company consumption or shared presentation source and verification evidence"
-    },
-    {
-      "id": "parity-20261102-31",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-reporting-final.log",
-      "layer": "verification",
-      "purpose": "Current parity, role-grant/company consumption or shared presentation source and verification evidence"
-    },
-    {
-      "id": "parity-20261102-32",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-sql-access-tests.log",
       "layer": "verification",
       "purpose": "Current parity, role-grant/company consumption or shared presentation source and verification evidence"
     },
@@ -1062,18 +1225,6 @@
       "purpose": "Expanded implementation dependency or current verification receipt"
     },
     {
-      "id": "parity-final-6",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-doc-check.log",
-      "layer": "verification",
-      "purpose": "Expanded implementation dependency or current verification receipt"
-    },
-    {
-      "id": "parity-final-7",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-planning-check.log",
-      "layer": "verification",
-      "purpose": "Expanded implementation dependency or current verification receipt"
-    },
-    {
       "id": "registration-layout-20261102-0",
       "path": "web-angular/package.json",
       "layer": "web",
@@ -1182,18 +1333,6 @@
       "purpose": "Shared registration layout correction and bounded browser verification"
     },
     {
-      "id": "registration-layout-20261102-19",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/registration-layout/registration-layout-angular.log",
-      "layer": "verification",
-      "purpose": "Shared registration layout correction and bounded browser verification"
-    },
-    {
-      "id": "registration-layout-20261102-20",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/registration-layout/registration-layout-browser.log",
-      "layer": "verification",
-      "purpose": "Shared registration layout correction and bounded browser verification"
-    },
-    {
       "id": "registration-layout-20261102-21",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/registration-layout/results.json",
       "layer": "verification",
@@ -1238,36 +1377,6 @@
     {
       "id": "source-rejection-20261102-7",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/import-rejection/existing-report-rdc-metadata.json",
-      "layer": "verification",
-      "purpose": "Source rejection correction, native metadata evidence or shared layout compatibility"
-    },
-    {
-      "id": "source-rejection-20261102-8",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/import-rejection/import-rejection-api-build.log",
-      "layer": "verification",
-      "purpose": "Source rejection correction, native metadata evidence or shared layout compatibility"
-    },
-    {
-      "id": "source-rejection-20261102-9",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/import-rejection/import-rejection-api-tests.log",
-      "layer": "verification",
-      "purpose": "Source rejection correction, native metadata evidence or shared layout compatibility"
-    },
-    {
-      "id": "source-rejection-20261102-10",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/import-rejection/import-rejection-crystal-build.log",
-      "layer": "verification",
-      "purpose": "Source rejection correction, native metadata evidence or shared layout compatibility"
-    },
-    {
-      "id": "source-rejection-20261102-11",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/import-rejection/import-rejection-harness-build.log",
-      "layer": "verification",
-      "purpose": "Source rejection correction, native metadata evidence or shared layout compatibility"
-    },
-    {
-      "id": "source-rejection-20261102-12",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/import-rejection/import-rejection-harness-tests.log",
       "layer": "verification",
       "purpose": "Source rejection correction, native metadata evidence or shared layout compatibility"
     },
@@ -1434,63 +1543,9 @@
       "purpose": "Portable current manual View/draft verification evidence"
     },
     {
-      "id": "manual-view-verification-5",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manual-view-workflow/source-design-angular-check.log",
-      "purpose": "Portable current manual View/draft verification evidence"
-    },
-    {
-      "id": "manual-view-verification-6",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manual-view-workflow/source-design-api-build.log",
-      "purpose": "Portable current manual View/draft verification evidence"
-    },
-    {
-      "id": "manual-view-verification-7",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manual-view-workflow/source-design-api-restore.log",
-      "purpose": "Portable current manual View/draft verification evidence"
-    },
-    {
-      "id": "manual-view-verification-8",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manual-view-workflow/source-design-api-tests.log",
-      "purpose": "Portable current manual View/draft verification evidence"
-    },
-    {
-      "id": "manual-view-verification-9",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manual-view-workflow/source-design-browser.log",
-      "purpose": "Portable current manual View/draft verification evidence"
-    },
-    {
       "id": "manual-view-verification-10",
       "layer": "documentation",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manual-view-workflow/source-design-live-schema.json",
-      "purpose": "Portable current manual View/draft verification evidence"
-    },
-    {
-      "id": "manual-view-verification-11",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manual-view-workflow/source-design-migrations.log",
-      "purpose": "Portable current manual View/draft verification evidence"
-    },
-    {
-      "id": "manual-view-verification-12",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manual-view-workflow/source-design-model-drift.log",
-      "purpose": "Portable current manual View/draft verification evidence"
-    },
-    {
-      "id": "manual-view-verification-13",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manual-view-workflow/source-design-registration-browser.log",
-      "purpose": "Portable current manual View/draft verification evidence"
-    },
-    {
-      "id": "manual-view-verification-14",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manual-view-workflow/source-design-sql-focused.log",
       "purpose": "Portable current manual View/draft verification evidence"
     },
     {
@@ -1518,33 +1573,15 @@
       "purpose": "Development display diagnosis/correction and current verification evidence"
     },
     {
-      "id": "designer-display-3",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/designer-display-correction/angular-check.log",
-      "purpose": "Development display diagnosis/correction and current verification evidence"
-    },
-    {
       "id": "designer-display-4",
       "layer": "documentation",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/designer-display-correction/before.png",
       "purpose": "Development display diagnosis/correction and current verification evidence"
     },
     {
-      "id": "designer-display-5",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/designer-display-correction/existing-dev-browser.log",
-      "purpose": "Development display diagnosis/correction and current verification evidence"
-    },
-    {
       "id": "designer-display-6",
       "layer": "documentation",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/designer-display-correction/existing-dev-results.json",
-      "purpose": "Development display diagnosis/correction and current verification evidence"
-    },
-    {
-      "id": "designer-display-7",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/designer-display-correction/production-browser.log",
       "purpose": "Development display diagnosis/correction and current verification evidence"
     },
     {
@@ -1602,24 +1639,6 @@
       "purpose": "Database View discovery, prepared navigation Views and current verification evidence"
     },
     {
-      "id": "database-view-6972945f2d48",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/database-view-discovery/angular-check.log",
-      "purpose": "Database View discovery, prepared navigation Views and current verification evidence"
-    },
-    {
-      "id": "database-view-200fac6c032d",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/database-view-discovery/api-build.log",
-      "purpose": "Database View discovery, prepared navigation Views and current verification evidence"
-    },
-    {
-      "id": "database-view-13a781bffdca",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/database-view-discovery/api-tests.log",
-      "purpose": "Database View discovery, prepared navigation Views and current verification evidence"
-    },
-    {
       "id": "database-view-bbd38d324466",
       "layer": "documentation",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/database-view-discovery/configured-metadata.json",
@@ -1638,27 +1657,9 @@
       "purpose": "Database View discovery, prepared navigation Views and current verification evidence"
     },
     {
-      "id": "database-view-0038738e43e4",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/database-view-discovery/development-browser.log",
-      "purpose": "Database View discovery, prepared navigation Views and current verification evidence"
-    },
-    {
       "id": "database-view-dcb07b54bbd0",
       "layer": "documentation",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/database-view-discovery/development-en-light-1213-form.png",
-      "purpose": "Database View discovery, prepared navigation Views and current verification evidence"
-    },
-    {
-      "id": "database-view-ad14e15bae14",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/database-view-discovery/migration-apply.log",
-      "purpose": "Database View discovery, prepared navigation Views and current verification evidence"
-    },
-    {
-      "id": "database-view-b91fc0afd89f",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/database-view-discovery/model-drift.log",
       "purpose": "Database View discovery, prepared navigation Views and current verification evidence"
     },
     {
@@ -1674,21 +1675,9 @@
       "purpose": "Database View discovery, prepared navigation Views and current verification evidence"
     },
     {
-      "id": "database-view-ce7529994f57",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/database-view-discovery/production-browser.log",
-      "purpose": "Database View discovery, prepared navigation Views and current verification evidence"
-    },
-    {
       "id": "database-view-adf7384f80e2",
       "layer": "documentation",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/database-view-discovery/production-en-light-1213-form.png",
-      "purpose": "Database View discovery, prepared navigation Views and current verification evidence"
-    },
-    {
-      "id": "database-view-1574ef08644a",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/database-view-discovery/sql-focused.log",
       "purpose": "Database View discovery, prepared navigation Views and current verification evidence"
     },
     {
@@ -1746,48 +1735,6 @@
       "purpose": "GCT-1 Command design-connection/pushed-data policy and bounded verification"
     },
     {
-      "id": "command-push-0e88ca7def3c",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/command-push-data/command-push-api-build.log",
-      "purpose": "GCT-1 Command design-connection/pushed-data policy and bounded verification"
-    },
-    {
-      "id": "command-push-36b39522bf99",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/command-push-data/command-push-api-restore.log",
-      "purpose": "GCT-1 Command design-connection/pushed-data policy and bounded verification"
-    },
-    {
-      "id": "command-push-7e107941aaa6",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/command-push-data/command-push-api-tests.log",
-      "purpose": "GCT-1 Command design-connection/pushed-data policy and bounded verification"
-    },
-    {
-      "id": "command-push-d84f05a3d670",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/command-push-data/command-push-crystal-build.log",
-      "purpose": "GCT-1 Command design-connection/pushed-data policy and bounded verification"
-    },
-    {
-      "id": "command-push-1416818cc326",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/command-push-data/command-push-harness-build.log",
-      "purpose": "GCT-1 Command design-connection/pushed-data policy and bounded verification"
-    },
-    {
-      "id": "command-push-574d4e39b9af",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/command-push-data/command-push-harness-tests.log",
-      "purpose": "GCT-1 Command design-connection/pushed-data policy and bounded verification"
-    },
-    {
-      "id": "command-push-e50de2533407",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/command-push-data/command-push-native-baseline.log",
-      "purpose": "GCT-1 Command design-connection/pushed-data policy and bounded verification"
-    },
-    {
       "id": "command-push-94c6906e7f29",
       "layer": "documentation",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/command-push-data/verification.json",
@@ -1797,42 +1744,6 @@
       "id": "connection-ignore-b0653b448dc1",
       "layer": "documentation",
       "path": "documentation/plans/business/global-crystal-template-management/CONNECTION_IGNORE_2026-11-03.md",
-      "purpose": "Explicit no-connection-inspection policy and exact user-report diagnostic evidence"
-    },
-    {
-      "id": "connection-ignore-eed3f69806a3",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/connection-ignore/connection-ignore-api-build.log",
-      "purpose": "Explicit no-connection-inspection policy and exact user-report diagnostic evidence"
-    },
-    {
-      "id": "connection-ignore-2a3a56765cca",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/connection-ignore/connection-ignore-api-restore.log",
-      "purpose": "Explicit no-connection-inspection policy and exact user-report diagnostic evidence"
-    },
-    {
-      "id": "connection-ignore-a7dfda2110d4",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/connection-ignore/connection-ignore-api-tests.log",
-      "purpose": "Explicit no-connection-inspection policy and exact user-report diagnostic evidence"
-    },
-    {
-      "id": "connection-ignore-afb404c41c68",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/connection-ignore/connection-ignore-crystal-build.log",
-      "purpose": "Explicit no-connection-inspection policy and exact user-report diagnostic evidence"
-    },
-    {
-      "id": "connection-ignore-507c379197d7",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/connection-ignore/connection-ignore-harness-build.log",
-      "purpose": "Explicit no-connection-inspection policy and exact user-report diagnostic evidence"
-    },
-    {
-      "id": "connection-ignore-c709bea17e9f",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/connection-ignore/connection-ignore-harness-tests.log",
       "purpose": "Explicit no-connection-inspection policy and exact user-report diagnostic evidence"
     },
     {
@@ -1890,12 +1801,6 @@
       "purpose": "Authorized local SQL2017 database creation, repository migrations and actual schema/View verification"
     },
     {
-      "id": "local-sql-local-database-migrations",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/local-sql-database/local-database-migrations.log",
-      "purpose": "Authorized local SQL2017 database creation, repository migrations and actual schema/View verification"
-    },
-    {
       "id": "local-sql-local-database-verified",
       "layer": "documentation",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/local-sql-database/local-database-verified.json",
@@ -1911,48 +1816,6 @@
       "id": "container-data-1af522e7efca",
       "layer": "documentation",
       "path": "documentation/plans/notes/KNOWN_RISKS.md",
-      "purpose": "Requester-approved RPT container data policy and bounded verification"
-    },
-    {
-      "id": "container-data-e393afc66e23",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/container-data/container-data-api-build.log",
-      "purpose": "Requester-approved RPT container data policy and bounded verification"
-    },
-    {
-      "id": "container-data-32588f268c5c",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/container-data/container-data-api-restore.log",
-      "purpose": "Requester-approved RPT container data policy and bounded verification"
-    },
-    {
-      "id": "container-data-b537fb96bb6c",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/container-data/container-data-api-tests-parallel-attempt.log",
-      "purpose": "Requester-approved RPT container data policy and bounded verification"
-    },
-    {
-      "id": "container-data-da9dd6250ccf",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/container-data/container-data-api-tests.log",
-      "purpose": "Requester-approved RPT container data policy and bounded verification"
-    },
-    {
-      "id": "container-data-fc08b4ed9a1c",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/container-data/container-data-crystal-build.log",
-      "purpose": "Requester-approved RPT container data policy and bounded verification"
-    },
-    {
-      "id": "container-data-b65b74ecd0d2",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/container-data/container-data-harness-build.log",
-      "purpose": "Requester-approved RPT container data policy and bounded verification"
-    },
-    {
-      "id": "container-data-15bbce6d0c80",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/container-data/container-data-harness-tests.log",
       "purpose": "Requester-approved RPT container data policy and bounded verification"
     },
     {
@@ -1986,24 +1849,6 @@
       "purpose": "Optional report Language binding and independent native verification"
     },
     {
-      "id": "optional-language-f86d4361981b",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/optional-rpt-language/optional-language-crystal-build.log",
-      "purpose": "Optional report Language binding and independent native verification"
-    },
-    {
-      "id": "optional-language-dd14867e3e70",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/optional-rpt-language/optional-language-harness-build.log",
-      "purpose": "Optional report Language binding and independent native verification"
-    },
-    {
-      "id": "optional-language-9bc3e4a9200e",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/optional-rpt-language/optional-language-harness-tests.log",
-      "purpose": "Optional report Language binding and independent native verification"
-    },
-    {
       "id": "optional-language-35f3677cc3bf",
       "layer": "documentation",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/optional-rpt-language/verification.json",
@@ -2028,46 +1873,10 @@
       "purpose": "Bounded GCT-1 correction: explicit managed publication in viewer list/render, preserved management and acceptance boundaries"
     },
     {
-      "id": "published-viewer-evidence-build",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/published-viewer-catalog/build.log",
-      "purpose": "Current explicit-publication correction verification evidence"
-    },
-    {
-      "id": "published-viewer-evidence-focused",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/published-viewer-catalog/focused.log",
-      "purpose": "Current explicit-publication correction verification evidence"
-    },
-    {
-      "id": "published-viewer-evidence-planning",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/published-viewer-catalog/planning.log",
-      "purpose": "Current explicit-publication correction verification evidence"
-    },
-    {
-      "id": "published-viewer-evidence-restore",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/published-viewer-catalog/restore.log",
-      "purpose": "Current explicit-publication correction verification evidence"
-    },
-    {
-      "id": "published-viewer-evidence-tests",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/published-viewer-catalog/tests.log",
-      "purpose": "Current explicit-publication correction verification evidence"
-    },
-    {
       "id": "published-viewer-evidence-verification",
       "layer": "documentation",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/published-viewer-catalog/verification.json",
       "purpose": "Current explicit-publication correction verification evidence"
-    },
-    {
-      "id": "published-viewer-evidence-language-tests",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/published-viewer-catalog/language-tests.log",
-      "purpose": "34 existing Angular report contract, HTTP, state and view tests verify language request propagation"
     },
     {
       "id": "restore-direction-RESTORE_DIRECTION_2026-11-03",
@@ -2092,36 +1901,6 @@
       "layer": "api",
       "path": "api/CrystalReportGeneratorApi.ContractTests/CrystalReportDirectionTests.cs",
       "purpose": "Current GCT-1 legacy direction restoration and bilingual Summary Info verification"
-    },
-    {
-      "id": "restore-direction-evidence-angular-check",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/restore-direction/angular-check.log",
-      "purpose": "Portable native layout restoration / bilingual names / full Angular gate evidence with explicit native proof limits"
-    },
-    {
-      "id": "restore-direction-evidence-crystal-build",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/restore-direction/crystal-build.log",
-      "purpose": "Portable native layout restoration / bilingual names / full Angular gate evidence with explicit native proof limits"
-    },
-    {
-      "id": "restore-direction-evidence-harness-build",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/restore-direction/harness-build.log",
-      "purpose": "Portable native layout restoration / bilingual names / full Angular gate evidence with explicit native proof limits"
-    },
-    {
-      "id": "restore-direction-evidence-harness-green",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/restore-direction/harness-green.log",
-      "purpose": "Portable native layout restoration / bilingual names / full Angular gate evidence with explicit native proof limits"
-    },
-    {
-      "id": "restore-direction-evidence-regression-red",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/restore-direction/regression-red.log",
-      "purpose": "Portable native layout restoration / bilingual names / full Angular gate evidence with explicit native proof limits"
     },
     {
       "id": "restore-direction-evidence-verification",
@@ -2256,24 +2035,6 @@
       "purpose": "GCT-1 vertical-line correction: atomic native mirroring and AR/EN fixture PDF evidence"
     },
     {
-      "id": "vertical-lines-crystal-build-log",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/vertical-lines/crystal-build.log",
-      "purpose": "GCT-1 vertical-line correction: atomic native mirroring and AR/EN fixture PDF evidence"
-    },
-    {
-      "id": "vertical-lines-harness-build-log",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/vertical-lines/harness-build.log",
-      "purpose": "GCT-1 vertical-line correction: atomic native mirroring and AR/EN fixture PDF evidence"
-    },
-    {
-      "id": "vertical-lines-harness-green-log",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/vertical-lines/harness-green.log",
-      "purpose": "GCT-1 vertical-line correction: atomic native mirroring and AR/EN fixture PDF evidence"
-    },
-    {
       "id": "pdf-viewer-theme-scope",
       "layer": "documentation",
       "path": "documentation/plans/business/global-crystal-template-management/PDF_VIEWER_THEME_2026-11-04.md",
@@ -2295,12 +2056,6 @@
       "id": "pdf-viewer-theme-browser-script",
       "layer": "test",
       "path": "web-angular/scripts/verify-pdf-viewer-browser.mjs",
-      "purpose": "Shared native PDF theme correction and bounded verification evidence"
-    },
-    {
-      "id": "pdf-viewer-theme-angular-check",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/pdf-viewer-theme/angular-check.log",
       "purpose": "Shared native PDF theme correction and bounded verification evidence"
     },
     {
@@ -2385,12 +2140,6 @@
       "id": "sidebar-report-workspace-scss",
       "layer": "web",
       "path": "web-angular/src/app/shared/ui/layout/report-workspace/report-workspace.scss",
-      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
-    },
-    {
-      "id": "sidebar-angular-check-log",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/angular-check.log",
       "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
     },
     {
@@ -2598,30 +2347,6 @@
       "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
     },
     {
-      "id": "column-filters-10",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/angular-check.log",
-      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
-    },
-    {
-      "id": "column-filters-11",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/api-build.log",
-      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
-    },
-    {
-      "id": "column-filters-12",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/api-restore.log",
-      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
-    },
-    {
-      "id": "column-filters-13",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/api-test.log",
-      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
-    },
-    {
       "id": "column-filters-14",
       "layer": "verification",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/ar-1213.png",
@@ -2643,12 +2368,6 @@
       "id": "column-filters-17",
       "layer": "verification",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/browser-results.json",
-      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
-    },
-    {
-      "id": "column-filters-18",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/browser.log",
       "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
     },
     {
@@ -2706,34 +2425,10 @@
       "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
     },
     {
-      "id": "column-filters-28",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/platform-diagnostic.log",
-      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
-    },
-    {
       "id": "column-filters-29",
       "layer": "verification",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/verification.json",
       "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
-    },
-    {
-      "id": "column-filters-final-format-check.log",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/format-check.log",
-      "purpose": "Final section36 formatting/documentation/planning quality gate receipt"
-    },
-    {
-      "id": "column-filters-final-documentation-check.log",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/documentation-check.log",
-      "purpose": "Final section36 formatting/documentation/planning quality gate receipt"
-    },
-    {
-      "id": "column-filters-final-planning-check.log",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/planning-check.log",
-      "purpose": "Final section36 formatting/documentation/planning quality gate receipt"
     },
     {
       "id": "search-layout-1",
@@ -2769,24 +2464,6 @@
       "id": "search-layout-6",
       "layer": "test",
       "path": "web-angular/scripts/verify-country-report-browser.mjs",
-      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
-    },
-    {
-      "id": "search-layout-7",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/angular-check.log",
-      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
-    },
-    {
-      "id": "search-layout-8",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded-browser.log",
-      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
-    },
-    {
-      "id": "search-layout-9",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone-browser.log",
       "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
     },
     {
@@ -3114,12 +2791,6 @@
       "purpose": "Section38 manager action/metadata implementation and verification evidence"
     },
     {
-      "id": "manager-actions-4",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded-development-build.log",
-      "purpose": "Section38 manager action/metadata implementation and verification evidence"
-    },
-    {
       "id": "manager-actions-5",
       "layer": "verification",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/ar-1213.png",
@@ -3141,12 +2812,6 @@
       "id": "manager-actions-8",
       "layer": "verification",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/browser-results.json",
-      "purpose": "Section38 manager action/metadata implementation and verification evidence"
-    },
-    {
-      "id": "manager-actions-9",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/browser.log",
       "purpose": "Section38 manager action/metadata implementation and verification evidence"
     },
     {
@@ -3354,12 +3019,6 @@
       "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
     },
     {
-      "id": "button-group-7",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/angular-check.log",
-      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
-    },
-    {
       "id": "button-group-8",
       "layer": "verification",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/ar-1213.png",
@@ -3381,12 +3040,6 @@
       "id": "button-group-11",
       "layer": "verification",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/browser-results.json",
-      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
-    },
-    {
-      "id": "button-group-12",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/browser.log",
       "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
     },
     {
@@ -3558,28 +3211,16 @@
       "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
     },
     {
-      "id": "button-group-final-gate-0",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/documentation-check.log",
-      "purpose": "Final canonical documentation/planning/format receipts for section39"
+      "id": "verify-database-client",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportDatabaseVerifierClient.cs",
+      "purpose": "Verify Database and automatic publication current implementation or orchestration evidence"
     },
     {
-      "id": "button-group-final-gate-1",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/planning-check.log",
-      "purpose": "Final canonical documentation/planning/format receipts for section39"
-    },
-    {
-      "id": "button-group-final-gate-2",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/format-check.log",
-      "purpose": "Final canonical documentation/planning/format receipts for section39"
-    },
-    {
-      "id": "button-group-final-gate-3",
-      "layer": "verification",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/documentation-staged-generation.log",
-      "purpose": "Final canonical documentation/planning/format receipts for section39"
+      "id": "verify-database-handler-tests",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportDatabaseVerificationTests.cs",
+      "purpose": "Verify Database and automatic publication current implementation or orchestration evidence"
     }
   ],
   "finalizationChecklist": [

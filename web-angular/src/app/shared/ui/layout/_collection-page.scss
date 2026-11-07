@@ -1,0 +1,18 @@
+// The application frame owns the outer inset; PageHeader owns header separation.
+// Collection screens must not add another page padding or gap around that header.
+@mixin shell {
+  :host,
+  main {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    block-size: 100%;
+    min-inline-size: 0;
+    min-block-size: 0;
+  }
+  main {
+    padding: 0;
+    gap: 0;
+    box-sizing: border-box;
+  }
+}

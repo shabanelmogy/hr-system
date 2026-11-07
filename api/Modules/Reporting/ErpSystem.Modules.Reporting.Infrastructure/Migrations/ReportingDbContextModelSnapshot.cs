@@ -452,7 +452,7 @@ namespace ErpSystem.Modules.Reporting.Infrastructure.Migrations
 
                     b.ToTable("GlobalCrystalReports", "rpt", t =>
                         {
-                            t.HasCheckConstraint("CK_GlobalCrystalReports_Entity", "[EntityKey] IN ('countries','states','districts')");
+                            t.HasCheckConstraint("CK_GlobalCrystalReports_Entity", "[EntityKey] IN ('countries','states','districts','system-error-logs')");
 
                             t.HasCheckConstraint("CK_GlobalCrystalReports_ViewBinding", "([ViewName] IS NULL AND [ViewFingerprint] IS NULL) OR ([ViewName] IS NOT NULL AND [ViewFingerprint] IS NOT NULL AND LEN([ViewFingerprint]) = 64)");
                         });

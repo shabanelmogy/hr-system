@@ -47,9 +47,9 @@ realtime, notification, localization, report, or Import integration is reachable
 | platform-browser-authentication-master | 5 | `59011011d1ce9fdaa6364cb22876b53a5304d6e465050642503a7adf35d9c778` |
 | platform-browser-authentication-master | 6 | `3f6972c09887aa9b387d77f91d23c2f2e48de37583bdb9cc0506f94dd1d5a8c4` |
 | platform-browser-authentication-master | 7 | `6390b0bf66b6037b53e9c024f398ba2c920c21acf87513c7525a99a3815032c9` |
-| platform-browser-authentication-master | 9 | `39bcd574836cb653b4a0b876f1ee7450102de9cac328b3f276ad93c4812cdb83` |
+| platform-browser-authentication-master | 9 | `6380c391d4768abe9f2714a668aa17effe11206e1943367c6bf15950e6263a0f` |
 | platform-browser-authentication-api | 8 | `26cc4d301319e508521dc58bb8dcd580b32bb021be0b65eb63efb67d48ee244d` |
-| platform-browser-authentication-api | 9 | `19ce75cffb7afc5152f3f28adc221e860d2ef8b40eb3c4f3de9357c951ba4c99` |
+| platform-browser-authentication-api | 9 | `68b8ec7b146a72b47a49f05abf59cef643cca03c0177e4aee8a8e23b2e087571` |
 | platform-browser-authentication-api | 10 | `0e4108d4382344db7c74d76883a2e1b7804947764162e3298fbd32e9cf365e67` |
 | platform-browser-authentication-web | 8 | `3b480eab32b081a85dd0a739f8911bf49c01ab5032ce617f1d0330e32e9d0df6` |
 | platform-browser-authentication-web | 10 | `e8585061d8db42a2a0a3d2362f56cd0238abb04e8c2637898ba433e003dc9771` |

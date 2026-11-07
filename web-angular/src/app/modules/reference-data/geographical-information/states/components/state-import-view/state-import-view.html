@@ -1,0 +1,66 @@
+@if (state.allowed()) {
+  <erp-spreadsheet-import-panel
+    [headers]="state.policy.headers.join(', ')"
+    [fileName]="state.fileName()"
+    [rowCount]="state.rows().length"
+    [busy]="state.busy()"
+    [locked]="state.uncertain()"
+    [canSubmit]="state.canSubmit()"
+    [failed]="state.phase() === 'failed' || state.uncertain()"
+    [message]="message()"
+    [messageDetail]="messageDetail()"
+    [counts]="counts()"
+    (fileSelected)="select($event)"
+    (submitted)="state.submit()"
+    (cleared)="state.clear()"
+    (downloadTemplate)="download()"
+    (reviewed)="review.emit()"
+  >
+    @if (state.lookupStatus() !== 'ready') {
+      <erp-feedback-state
+        layout="inline"
+        [kind]="
+          state.lookupStatus() === 'loading'
+            ? 'loading'
+            : state.lookupStatus() === 'forbidden'
+              ? 'forbidden'
+              : state.lookupStatus() === 'error'
+                ? 'error'
+                : 'empty'
+        "
+        [title]="'states.import.countryLookup.' + state.lookupStatus() | uiText: 'reference-states'"
+        [actionLabel]="state.lookupStatus() === 'error' ? ('actions.retry' | uiText) : ''"
+        (action)="state.parents.refresh()"
+      />
+    }
+    @if (state.rows().length) {
+      <erp-data-table
+        data-testid="import-preview"
+        [source]="source()"
+        [columns]="columns()"
+        [label]="'imports.status' | uiText"
+        [rowId]="id"
+        [rowLabel]="rowLabel"
+        [selectionEnabled]="false"
+        [toolbarVisible]="true"
+        (pageChange)="page.set($event)"
+      >
+        <ng-template [erpCollectionCell]="columns() | collectionColumn: 'status'" let-row
+          ><erp-status-badge
+            [label]="'imports.' + row.status | uiText"
+            [accent]="
+              row.status === 'uploaded'
+                ? 'var(--success)'
+                : row.status === 'invalid' || row.status === 'failed'
+                  ? 'var(--destructive)'
+                  : 'var(--primary)'
+            "
+        /></ng-template>
+      </erp-data-table>
+    } @else if (!state.busy()) {
+      <erp-feedback-state kind="empty" [title]="'imports.startExcelUpload' | uiText" />
+    }
+  </erp-spreadsheet-import-panel>
+} @else {
+  <erp-feedback-state kind="forbidden" [title]="'authorization.forbidden.title' | uiText" />
+}

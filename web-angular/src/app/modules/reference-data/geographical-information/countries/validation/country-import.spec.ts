@@ -15,6 +15,9 @@ describe('Country import row contract', () => {
     const checked = validateCountryImport(rows());
     expect(checked.valid).toHaveLength(1);
     expect(checked.rows[1]).toMatchObject({ status: 'invalid', errors: ['duplicate'] });
+    expect(checked.rows[1]?.issues).toEqual([
+      { field: 'nameEn', kind: 'duplicate', relatedRow: 2 },
+    ]);
     expect(countryBulkPayload(checked.valid)[0]).toMatchObject({
       nameAr: 'مصر',
       alpha2Code: 'EG',
@@ -31,6 +34,24 @@ describe('Country import row contract', () => {
     ]);
     expect(checked.valid).toEqual([]);
     expect(fixtureItem(checked.rows, 0).errors).toEqual(['nameAr', 'phoneCode']);
+    expect(fixtureItem(checked.rows, 0).issues).toEqual([
+      { field: 'nameAr', kind: 'required' },
+      { field: 'phoneCode', kind: 'pattern' },
+    ]);
+  });
+  it('points duplicates to the earlier accepted row, skipping an invalid matching row', () => {
+    const checked = validateCountryImport(
+      countryImportRows([
+        { rowNumber: 2, values: ['', 'Egypt', 'EG', '', '', ''] },
+        { rowNumber: 8, values: ['مصر', 'Egypt', 'EG', '', '', ''] },
+        { rowNumber: 12, values: ['دولة', 'Egypt', 'EG', '', '', ''] },
+      ]),
+    );
+    expect(checked.valid).toHaveLength(1);
+    expect(checked.rows[2]?.issues).toEqual([
+      { field: 'nameEn', kind: 'duplicate', relatedRow: 8 },
+      { field: 'alpha2Code', kind: 'duplicate', relatedRow: 8 },
+    ]);
   });
   it('allows blank optional codes across rows and compares only corresponding fields', () => {
     const input = fixtureItem(rows(), 0);

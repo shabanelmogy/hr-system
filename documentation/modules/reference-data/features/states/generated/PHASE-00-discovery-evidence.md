@@ -71,18 +71,18 @@ scenarios or an explicit `N/A` with a reason.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| states-master | 1 | `0e192449a9ad82e9773069702c28c99efd04c63f5fcffe4ba0889edf26e14056` |
+| states-master | 1 | `73c012a1be7f294c721ef117b7db317a671ccc7d7c7b9abef5eb65404987cefb` |
 | states-master | 2 | `f1462cfea2d924b4ae4a48a56f29a26faaa38ea195066212af66867ed1647ae1` |
 | states-master | 5 | `002d36cfa33f128930ba6d0987b3a52e2fb1dae047686ff1921e5c841bde7f1d` |
 | states-master | 8 | `103cda8ceabc6cdb194149434e646d558fac575baaa20e3f693ba7c38737ca22` |
 | states-master | 9 | `c56131d22ae6e1f98d8597c06bd7c35de5f1cc6899218a347cc896a47b064a9e` |
-| states-api | 1 | `85523ed52ed56c5ba99bfe170b3ae346c42d8851b1b420b13a784ae4eac9fa17` |
+| states-api | 1 | `9e730bf207420de9d883bffd6000d08f72e01cb6ba5fdb2ceac253449bf8aacf` |
 | states-api | 10 | `67f990428b9dbca4718c2f98282eab7cbd9bb777971adb9c3614260407765e8c` |
 | states-api | 11 | `5a38ee0366c7086b15c909303fb8df58af3cbdc1e11f8614f371572a6b78ef7f` |
-| states-web | 1 | `2830c94b77b726e63ca1d52b90bc8adc8d697e8f652429afb6908d42578c4ede` |
+| states-web | 1 | `41b896f54a526a4cf15d3384a6a371284fa4969963eff6e0eba439dfc1a573c9` |
 | states-web | 2 | `5715616f7749731d49b88637b1bdf8ddeb9d6d691bfa13552d58058a37aaed75` |
 | states-web | 12 | `ecb38dd9b6149a025aa10b1edca9ed23050620cedf2f397b10ff34764e10874d` |
 | states-web | 13 | `6f4711600d21044390b0bccc326dadf61fbb4bb687b5c0b4aebe5f33772c42ca` |
-| states-mobile | 1 | `36f536a172405f5822b722894810743121e730f10532981ae313647308ee7ad3` |
+| states-mobile | 1 | `45e2f935ab73d0bbb642401bdcf3929d6014c019e90a0a9c582d29aa95c42089` |
 | states-mobile | 14 | `a0fde356dc3744931b4f192dfdb22ee8bedace0d3602839351983dbd5508dfa1` |
 | states-mobile | 15 | `8fe3184610339dfca55e2726e49f5a46c550fe0cdec4a57b9972ea28bcf46fb7` |

@@ -43,9 +43,12 @@ Repository requirements govern how upstream guidance is applied:
 - Reuse or extend shared UI adapters over PrimeNG, including `MyDataGrid`, and
   consult the PrimeNG MCP before changing shared controls as required by policy.
   Generic ARIA or native-control examples do not replace these shared components.
-- Preserve the established Angular Reactive Forms and shared form contracts.
-  Upstream preferences for Signal Forms in new forms do not authorize migrating
-  the ERP form system.
+- Use Angular Signal Forms with the established lightweight shared controls,
+  validation helpers and API-error mapping (Option B). Keep existing Reactive
+  Forms at documented compatibility boundaries, including report-file upload and
+  report-designer integration. The approved form strategy is documented in
+  [ANGULAR_SIGNAL_FORMS.md](architecture/ANGULAR_SIGNAL_FORMS.md); upstream examples
+  do not authorize another migration or a centralized form engine.
 - Keep templates in external HTML files and styles in external SCSS files when
   needed, with a matching component folder. Adapt inline upstream examples to
   this structure; do not copy their inline component resources.

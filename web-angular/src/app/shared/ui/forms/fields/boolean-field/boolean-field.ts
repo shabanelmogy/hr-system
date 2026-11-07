@@ -26,8 +26,10 @@ import { FormFieldControl } from '../../form-field-control';
   providers: [{ provide: FormFieldControl, useExisting: forwardRef(() => BooleanField) }],
   templateUrl: './boolean-field.html',
   styleUrl: './boolean-field.scss',
+  host: { '[class.compact-field]': "density()==='compact'" },
 })
 export class BooleanField extends FormFieldControl<boolean> implements OnDestroy {
+  readonly density = input<'standard' | 'compact'>('standard');
   readonly kind = input<'checkbox' | 'switch'>('checkbox');
   readonly value = model(false);
   readonly control = new FormControl(false, { nonNullable: true });

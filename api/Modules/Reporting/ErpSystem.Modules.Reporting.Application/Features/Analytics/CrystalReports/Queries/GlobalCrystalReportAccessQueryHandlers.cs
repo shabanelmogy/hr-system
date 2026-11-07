@@ -31,7 +31,7 @@ public sealed class GetGlobalCrystalReportAccessQueryHandler(IGlobalCrystalRepor
         var view = manageAccess || policy.Allows(report.EntityKey, ReportingPermissions.ViewGlobalCrystalReportAccess);
         var rights = new List<string>();
         foreach (var right in Enum.GetValues<CrystalReportRight>().Where(right => right != CrystalReportRight.None))
-            if (edit || await access.HasRightAsync(report.Id, right, cancellationToken)) rights.Add(right.ToString());
+            if (edit || policy.BypassesRoleGrants(report.EntityKey) || await access.HasRightAsync(report.Id, right, cancellationToken)) rights.Add(right.ToString());
         return Result.Success(new GlobalCrystalReportAccessResponse(view ? await access.GrantsAsync(report.Id, cancellationToken) : [],
             rights, view, edit, Convert.ToBase64String(report.RowVersion)));
     }

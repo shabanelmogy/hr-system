@@ -24,7 +24,7 @@ public sealed class PublishGlobalCrystalReportVersionCommandHandler(IGlobalCryst
         {
             var report = await store.FindAsync(request.ReportId, token);
             if (report is null || report.IsDeleted || !policy.Allows(report.EntityKey, ReportingPermissions.PublishGlobalCrystalReports) ||
-                !policy.AccessAdministrator && !await access.HasRightAsync(report.Id, CrystalReportRight.Publish, token))
+                !policy.BypassesRoleGrants(report.EntityKey) && !await access.HasRightAsync(report.Id, CrystalReportRight.Publish, token))
                 return Result.Failure(errors.CrystalReportNotFound);
             if (!report.RowVersion.SequenceEqual(rowVersion)) return Result.Failure(errors.CrystalReportConcurrencyConflict);
             var version = await store.VersionAsync(report.Id, request.VersionId, token);
@@ -54,7 +54,7 @@ public sealed class RevalidateGlobalCrystalReportVersionCommandHandler(IGlobalCr
             return Result.Failure<CrystalReportDetailResponse>(errors.GlobalCrystalReportForbidden);
         var detail = await store.DetailAsync(request.ReportId, cancellationToken);
         if (detail is null || detail.IsArchived || !policy.Allows(detail.EntityKey, ReportingPermissions.UploadGlobalCrystalReports) ||
-            !policy.AccessAdministrator && !await access.HasRightAsync(detail.Id, CrystalReportRight.Upload, cancellationToken))
+            !policy.BypassesRoleGrants(detail.EntityKey) && !await access.HasRightAsync(detail.Id, CrystalReportRight.Upload, cancellationToken))
             return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportNotFound);
         var version = await store.VersionAsync(detail.Id, request.VersionId, cancellationToken);
         if (version is null) return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportNotFound);
@@ -70,7 +70,7 @@ public sealed class RevalidateGlobalCrystalReportVersionCommandHandler(IGlobalCr
         {
             var report = await store.FindAsync(request.ReportId, token);
             if (report is null || report.IsDeleted || !policy.Allows(report.EntityKey, ReportingPermissions.UploadGlobalCrystalReports) ||
-                !policy.AccessAdministrator && !await access.HasRightAsync(report.Id, CrystalReportRight.Upload, token))
+                !policy.BypassesRoleGrants(report.EntityKey) && !await access.HasRightAsync(report.Id, CrystalReportRight.Upload, token))
                 return false;
             version.RecordValidation(inspection.IsValid, inspection.ValidationReason ?? errors.CrystalReportInvalidFile.Description,
                 contracts.SchemaVersion, contracts.Fingerprint);
@@ -80,6 +80,94 @@ public sealed class RevalidateGlobalCrystalReportVersionCommandHandler(IGlobalCr
         if (!recorded) return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportNotFound);
         var updated = await store.DetailAsync(request.ReportId, cancellationToken);
         return updated is null ? Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportNotFound) : Result.Success(updated);
+    }
+}
+
+public sealed class VerifyDatabaseGlobalCrystalReportVersionCommandHandler(
+    IGlobalCrystalReportStore store,
+    ICrystalReportFileStorage storage,
+    ICrystalReportDatabaseVerifier verifier,
+    IReportingUnitOfWork unitOfWork,
+    GlobalCrystalReportPolicy policy,
+    IManagedCrystalReportContractSource contracts,
+    CrystalReportErrors errors,
+    IGlobalCrystalReportAccessStore access)
+    : ICommandHandler<VerifyDatabaseGlobalCrystalReportVersionCommand, Result<CrystalReportDetailResponse>>
+{
+    public async Task<Result<CrystalReportDetailResponse>> Handle(
+        VerifyDatabaseGlobalCrystalReportVersionCommand request,
+        CancellationToken cancellationToken)
+    {
+        if (!policy.EditableEntities().Any(key => policy.Allows(key, ReportingPermissions.UploadGlobalCrystalReports) &&
+                                                   policy.Allows(key, ReportingPermissions.PublishGlobalCrystalReports)))
+            return Result.Failure<CrystalReportDetailResponse>(errors.GlobalCrystalReportForbidden);
+
+        var detail = await store.DetailAsync(request.ReportId, cancellationToken);
+        if (detail is null || detail.IsArchived ||
+            !policy.Allows(detail.EntityKey, ReportingPermissions.UploadGlobalCrystalReports) ||
+            !policy.Allows(detail.EntityKey, ReportingPermissions.PublishGlobalCrystalReports) ||
+            !policy.BypassesRoleGrants(detail.EntityKey) &&
+            (!await access.HasRightAsync(detail.Id, CrystalReportRight.Upload, cancellationToken) ||
+             !await access.HasRightAsync(detail.Id, CrystalReportRight.Publish, cancellationToken)))
+            return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportNotFound);
+
+        var sourceVersion = await store.VersionAsync(detail.Id, request.VersionId, cancellationToken);
+        if (sourceVersion is null)
+            return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportNotFound);
+
+        await using var source = await storage.OpenVerifiedReadAsync(
+            sourceVersion.StorageKey, sourceVersion.Size, sourceVersion.Sha256, cancellationToken);
+        if (source is null)
+            return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportSourceUnavailable);
+
+        var verified = await verifier.VerifyDatabaseAsync(
+            detail.EntityKey,
+            new FileUpload(sourceVersion.OriginalFileName, "application/octet-stream", sourceVersion.Size, () => source),
+            cancellationToken);
+        if (verified is null)
+            return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportDatabaseVerificationUnavailable);
+
+        var stored = await storage.StoreAsync(detail.EntityKey, verified, cancellationToken);
+        if (!stored.IsSuccess)
+            return Result.Failure<CrystalReportDetailResponse>(
+                CreateCrystalReportCommandHandler.ToStorageError(stored.Failure, errors));
+        var file = stored.File!;
+        var committed = false;
+        try
+        {
+            if (file.ValidationContractSchemaVersion != contracts.SchemaVersion ||
+                file.ValidationContractFingerprint != contracts.Fingerprint)
+                return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportContractStale);
+            var result = await unitOfWork.ExecuteAtomicallyAsync(
+                [$"global-crystal:report:{request.ReportId:N}"],
+                async token =>
+                {
+                    var report = await store.FindAsync(request.ReportId, token);
+                    if (report is null || report.IsDeleted ||
+                        !policy.Allows(report.EntityKey, ReportingPermissions.UploadGlobalCrystalReports) ||
+                        !policy.Allows(report.EntityKey, ReportingPermissions.PublishGlobalCrystalReports) ||
+                        !policy.BypassesRoleGrants(report.EntityKey) &&
+                        (!await access.HasRightAsync(report.Id, CrystalReportRight.Upload, token) ||
+                         !await access.HasRightAsync(report.Id, CrystalReportRight.Publish, token)))
+                        return Result.Failure(errors.CrystalReportNotFound);
+
+                    var number = await store.NextVersionAsync(report.Id, token);
+                    var version = CreateGlobalCrystalReportCommandHandler.NewVersion(report.Id, number, file);
+                    report.AddVersion(version);
+                    store.AddVersion(version);
+                    report.Publish(version, contracts.Fingerprint);
+                    await unitOfWork.SaveChangesAsync(token);
+                    return Result.Success();
+                }, cancellationToken);
+            if (!result.IsSuccess) return Result.Failure<CrystalReportDetailResponse>(result.Error);
+            committed = true;
+            var updated = await store.DetailAsync(request.ReportId, cancellationToken);
+            return updated is null ? Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportNotFound) : Result.Success(updated);
+        }
+        finally
+        {
+            if (!committed) await storage.DeleteIfExistsAsync(file.StorageKey, CancellationToken.None);
+        }
     }
 }
 

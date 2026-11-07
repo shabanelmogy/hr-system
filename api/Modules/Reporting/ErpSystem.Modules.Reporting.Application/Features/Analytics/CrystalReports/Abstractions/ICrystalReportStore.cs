@@ -60,6 +60,14 @@ public interface ICrystalReportInspector
         CancellationToken cancellationToken);
 }
 
+public interface ICrystalReportDatabaseVerifier
+{
+    Task<FileUpload?> VerifyDatabaseAsync(
+        string entityKey,
+        FileUpload upload,
+        CancellationToken cancellationToken);
+}
+
 public interface IManagedCrystalReportContractSource
 {
     int SchemaVersion { get; }

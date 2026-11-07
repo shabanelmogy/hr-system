@@ -1,0 +1,191 @@
+{
+  "checkedAtUtc": "2026-11-06T12:52:19.7848975Z",
+  "scope": "Requester-authorized Basic Data tenant navigation grouping only",
+  "hierarchy": [
+    "Basic Data",
+    "Tenant administration",
+    [
+      "Tenant administrators",
+      "Tenant Management"
+    ]
+  ],
+  "browserCases": [
+    {
+      "language": "en",
+      "width": 390,
+      "name": "all",
+      "passed": true
+    },
+    {
+      "language": "en",
+      "width": 390,
+      "name": "states",
+      "passed": true
+    },
+    {
+      "language": "en",
+      "width": 390,
+      "name": "districts",
+      "passed": true
+    },
+    {
+      "language": "en",
+      "width": 390,
+      "name": "none",
+      "passed": true
+    },
+    {
+      "language": "en",
+      "width": 390,
+      "name": "non-super",
+      "passed": true
+    },
+    {
+      "language": "en",
+      "width": 390,
+      "name": "templates",
+      "passed": true
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "name": "all",
+      "passed": true
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "name": "states",
+      "passed": true
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "name": "districts",
+      "passed": true
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "name": "none",
+      "passed": true
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "name": "non-super",
+      "passed": true
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "name": "templates",
+      "passed": true
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "name": "all",
+      "passed": true
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "name": "states",
+      "passed": true
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "name": "districts",
+      "passed": true
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "name": "none",
+      "passed": true
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "name": "non-super",
+      "passed": true
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "name": "templates",
+      "passed": true
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "name": "all",
+      "passed": true
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "name": "states",
+      "passed": true
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "name": "districts",
+      "passed": true
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "name": "none",
+      "passed": true
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "name": "non-super",
+      "passed": true
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "name": "templates",
+      "passed": true
+    }
+  ],
+  "sourceHashes": [
+    {
+      "path": "web-angular/src/app/composition/authenticated-routes/tenant-navigation.ts",
+      "sha256": "f7b6800b674502405cb4f9e59c555b69da84d02ed38cb9bc2509f0ead8f2f827"
+    },
+    {
+      "path": "web-angular/src/app/composition/authenticated-routes/tenant-navigation.spec.ts",
+      "sha256": "7f34446ebcda543d23f968b5405a8b7269c92d7ce81bb3388c6d373c5f836f3b"
+    },
+    {
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.ts",
+      "sha256": "648987f1ce779d9b7d774b23d63b73f51208839feb734dd20b8c8d5f29d6175e"
+    },
+    {
+      "path": "web-angular/scripts/verify-global-geography-navigation.mjs",
+      "sha256": "6ab9a6b9ca68b594b86dd7f62c14d85caf4a5ef995b6833024952287feb4fc3e"
+    }
+  ],
+  "fullAngularGate": {
+    "command": "npm run check",
+    "exitCode": 0,
+    "testsPassed": 921,
+    "testFilesPassed": 181,
+    "architectureTestsPassed": 31,
+    "configurationTestsPassed": 4,
+    "format": "Passed",
+    "lint": "Passed",
+    "types": "Passed",
+    "build": "Passed",
+    "initialBundleKB": 579.49,
+    "inheritedWarning": "RISK-020: initial bundle exceeds 500kB warning threshold"
+  },
+  "parentMigrationGoal": "Paused; no export or sibling implementation resumed"
+}

@@ -178,6 +178,10 @@
     "apac": "Asia-Pacific"
   },
   "displayDebugger": {
+    "preset": "Screen size",
+    "preview": "Responsive preview",
+    "actualSize": "Current browser size",
+    "closePreview": "Close responsive preview",
     "title": "Display",
     "viewport": "Viewport",
     "screen": "Screen",
@@ -282,6 +286,7 @@
   "UserEnabledNotificationMessage": "{{UserName}} was enabled.",
   "UserUnlockedNotificationMessage": "{{UserName}} was unlocked.",
   "menu": {
+    "languageTranslation": "Language and translation",
     "systemSettings": "Settings",
     "systemErrorLogs": "System Error Logs",
     "errorLogSettings": "Error Log Settings",
@@ -655,6 +660,19 @@
     "endedOn": "Subscription ended on {{date}}"
   },
   "imports": {
+    "chooseFile": "Choose file",
+    "fileRequirementsTitle": "File requirements",
+    "rowsCount": "Rows: {{count}}",
+    "rowsNeedAttention": "{{count}} rows need attention. See Validation details in the preview.",
+    "cellLocation": "Check cell {{cell}} in the first worksheet.",
+    "batchRejected": "The server rejected this import batch. No records in this batch were saved.",
+    "batchRejectedRow": "Not saved because the batch was rejected. Correct the reported errors, then select the corrected file.",
+    "notSent": "The import request was not sent. Check your connection, then clear and select the file again.",
+    "workspaceTitle": "Spreadsheet import",
+    "workspaceDescription": "Upload a prepared XLSX file, review every row, then submit only the valid records.",
+    "fileRequirements": "Use the downloaded template. Keep the header order unchanged and remove formulas before selecting the file.",
+    "previewTitle": "Import preview",
+    "previewHint": "Rows with a problem stay visible here with the exact row and field that need attention.",
     "dragDropText": "Drag and drop your file here or click to browse",
     "supportedFormats": "Supported format (.xlsx)",
     "filePolicy": "XLSX only, up to {{maxSizeMb}} MB and {{maxRows}} data rows. The first worksheet is used.",
@@ -688,18 +706,19 @@
     "submissionUncertain": "The server response was not received. Do not submit this file again until you refresh the list and verify whether the records were created.",
     "reviewRecords": "Review records",
     "errors": {
-      "unsupportedExtension": "Only .xlsx files are supported.",
-      "unsupportedMime": "The selected file is not recognized as an XLSX workbook.",
-      "fileTooLarge": "The workbook exceeds the {{maxSizeMb}} MB size limit.",
-      "emptyFile": "The workbook has no import rows.",
-      "invalidWorkbook": "The selected file is not a valid XLSX workbook.",
-      "missingWorksheet": "The workbook does not contain the required first worksheet.",
-      "duplicateHeaders": "The header row contains duplicate columns.",
+      "unsupportedExtension": "Only .xlsx files are supported. Save the workbook as Excel Workbook (.xlsx), then select it again.",
+      "unsupportedMime": "The file is not recognized as an XLSX workbook. Open it in Excel and save a new .xlsx copy.",
+      "fileTooLarge": "The workbook exceeds {{maxSizeMb}} MB. Remove unused sheets or split the data into smaller files.",
+      "emptyFile": "No data rows were found in the first worksheet. Enter records below the template headers.",
+      "invalidWorkbook": "This file is damaged or is not a valid XLSX workbook. Copy the data into a fresh downloaded template.",
+      "missingWorksheet": "No first worksheet was found. Copy the data into a fresh downloaded template.",
+      "duplicateHeaders": "Row 1 contains duplicate column names. Use each template header once in its original order.",
       "invalidHeaders": "The header row is invalid. Expected: {{expectedHeaders}}.",
-      "unexpectedColumns": "A data row contains values outside the documented columns.",
+      "unexpectedColumns": "A row contains data beyond the template columns. Remove the extra values or copy the records into a fresh template.",
       "formulaNotAllowed": "Formula cells are not allowed in import workbooks. Replace formulas with values.",
-      "rowLimitExceeded": "The workbook exceeds the {{maxRows}}-row import limit.",
-      "parseFailed": "The workbook could not be read. Download a fresh template and try again."
+      "rowLimitExceeded": "The first worksheet exceeds {{maxRows}} data rows. Split the records into batches within this limit.",
+      "parseFailed": "The workbook could not be read. Download a fresh template and try again.",
+      "templateFailed": "The template could not be downloaded. Try Download Template again before preparing your file."
     }
   },
   "Action": {
@@ -1157,7 +1176,12 @@
     "contextMenu": "Context menu",
     "filterByCellValue": "Filter by this value",
     "sortAscendingShort": "Asc",
-    "sortDescendingShort": "Desc"
+    "sortDescendingShort": "Desc",
+    "isEmpty": "Is empty",
+    "isNotEmpty": "Is not empty",
+    "isAnyOf": "Is any of",
+    "addValue": "Add value",
+    "removeValue": "Remove value"
   },
   "reference": {
     "currentSelection": "Current selection",
@@ -1228,5 +1252,20 @@
     "requiredLabel": "Required confirmation",
     "requiredHelp": "This example requires explicit confirmation before submission.",
     "invalid": "Choose a valid enabled or disabled value."
+  },
+  "collectionExport": {
+    "preparing": "Preparing export…",
+    "excel": "Excel (.xlsx)",
+    "csv": "CSV (.csv)",
+    "completed": "All matching filtered data was exported.",
+    "failed": "The export could not be completed. Refresh the data and try again.",
+    "empty": "No data matches the current filters. Adjust the filters and try again.",
+    "limit": "The matching data exceeds this export limit. Narrow the filters and try again.",
+    "changed": "The data changed while the export was being prepared. Refresh and try again.",
+    "invalid": "A column or value cannot be exported in this format. Review the data and try again.",
+    "forbidden": "You no longer have permission to export this data."
+  },
+  "development": {
+    "viewport": "Viewport size in CSS pixels"
   }
 }

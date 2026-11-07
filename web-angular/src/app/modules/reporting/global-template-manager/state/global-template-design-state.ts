@@ -77,6 +77,7 @@ export class GlobalTemplateDesignState {
           source.moduleKey === this.moduleKey() && source.sourceKey === this.values().sourceKey,
       ) ?? null,
   );
+  readonly providerBound = computed(() => this.selectedSource()?.bindingKind === 'provider');
   readonly canDownload = computed(() => {
     const source = this.selectedSource();
     return !!source && globalTemplateAllowed(this.identity(), source.sourceKey, 'Download');
@@ -86,7 +87,7 @@ export class GlobalTemplateDesignState {
     effect(() =>
       this.views.bind(
         this.identity(),
-        this.opened() ? (this.selectedSource()?.sourceKey ?? null) : null,
+        this.opened() && !this.providerBound() ? (this.selectedSource()?.sourceKey ?? null) : null,
       ),
     );
     this.form.controls.viewName.valueChanges
@@ -107,6 +108,8 @@ export class GlobalTemplateDesignState {
       const source = this.sources().find(
         (item) => item.sourceKey === key && item.moduleKey === this.form.controls.moduleKey.value,
       );
+      if (source?.bindingKind === 'provider') this.form.controls.viewName.disable();
+      else this.form.controls.viewName.enable();
       if (source && !this.form.controls.reportKey.dirty)
         this.form.controls.reportKey.setValue(source.sourceKey + '-');
       this.form.controls.reportKey.updateValueAndValidity();
@@ -163,9 +166,10 @@ export class GlobalTemplateDesignState {
       return;
     const values = this.form.getRawValue();
     if (
-      !values.viewName ||
-      this.views.selected()?.viewName !== values.viewName ||
-      !this.views.selected()?.isCompatible
+      !this.providerBound() &&
+      (!values.viewName ||
+        this.views.selected()?.viewName !== values.viewName ||
+        !this.views.selected()?.isCompatible)
     )
       return;
     if (
@@ -177,7 +181,7 @@ export class GlobalTemplateDesignState {
     }
     this.run(
       this.service.createDraft({
-        viewName: values.viewName,
+        viewName: values.viewName ?? '',
         moduleKey: source.moduleKey,
         sourceKey: source.sourceKey,
         reportKey: values.reportKey,

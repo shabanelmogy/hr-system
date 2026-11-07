@@ -1,0 +1,17 @@
+<main>
+  <erp-page-header
+    appearance="card"
+    [title]="'systemUiTexts.title' | uiText: 'platform-auth'"
+    [subtitle]="'systemUiTexts.scope' | uiText: 'platform-auth'"
+  >
+    <erp-button
+      [label]="'companyLocalizations.reload' | uiText: 'platform-auth'"
+      variant="outlined"
+      [busy]="state.pending()"
+      [disabled]="editor.active() || !state.canRead()"
+      (activated)="state.refresh()"
+    />
+  </erp-page-header>
+  <erp-translation-collection />
+  <erp-translation-editor />
+</main>

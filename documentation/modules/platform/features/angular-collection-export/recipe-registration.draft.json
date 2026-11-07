@@ -1,0 +1,340 @@
+{
+  "status": "draft",
+  "executionMode": "implementation-preflight",
+  "runtimeAuthorized": false,
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S4-A4a — Shared all-filtered Excel and CSV export",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "N/A",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-collection-export.md",
+  "instructions": "Merge these entries into recipe-manifest.json after Phase 00 has a final preflight required-files.json and all four initial applied implementation books. Extend the manifest/books with runtime evidence during implementation.",
+  "books": [
+    {
+      "id": "angular-collection-export-master",
+      "path": "../modules/platform/features/angular-collection-export/angular-collection-export-review.md",
+      "title": "Shared all-filtered Excel and CSV export cross-platform master review"
+    },
+    {
+      "id": "angular-collection-export-api",
+      "path": "../modules/platform/features/angular-collection-export/angular-collection-export-api.md",
+      "title": "Shared all-filtered Excel and CSV export API implementation profile"
+    },
+    {
+      "id": "angular-collection-export-web",
+      "path": "../modules/platform/features/angular-collection-export/angular-collection-export-web.md",
+      "title": "Shared all-filtered Excel and CSV export Next.js implementation profile"
+    },
+    {
+      "id": "angular-collection-export-mobile",
+      "path": "../modules/platform/features/angular-collection-export/angular-collection-export-mobile.md",
+      "title": "Shared all-filtered Excel and CSV export Expo implementation profile"
+    }
+  ],
+  "requiredFileManifest": "../modules/platform/features/angular-collection-export/required-files.json",
+  "recipes": [
+    {
+      "id": "angular-collection-export-phase-00-implementation-preflight",
+      "title": "Shared all-filtered Excel and CSV export Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-collection-export/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-collection-export-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-collection-export-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-collection-export-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-collection-export-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-export-phase-01-domain-api",
+      "title": "Shared all-filtered Excel and CSV export Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-collection-export/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-collection-export-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-collection-export-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-export-phase-02-web-client",
+      "title": "Shared all-filtered Excel and CSV export Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-collection-export/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-collection-export-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-collection-export-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-export-phase-03-mobile-client",
+      "title": "Shared all-filtered Excel and CSV export Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-collection-export/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-collection-export-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-collection-export-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-export-phase-04-domain-actions",
+      "title": "Shared all-filtered Excel and CSV export Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-collection-export/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-collection-export-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-collection-export-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-collection-export-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-collection-export-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-export-phase-05-integration-runtime",
+      "title": "Shared all-filtered Excel and CSV export Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-collection-export/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-collection-export-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-collection-export-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-collection-export-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-collection-export-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-export-phase-06-verification-acceptance",
+      "title": "Shared all-filtered Excel and CSV export Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-collection-export/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-collection-export-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-collection-export-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-collection-export-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-collection-export-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-export-phase-07-customer-education-closure",
+      "title": "Shared all-filtered Excel and CSV export Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-collection-export/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-collection-export-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-collection-export-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-collection-export-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    }
+  ]
+}

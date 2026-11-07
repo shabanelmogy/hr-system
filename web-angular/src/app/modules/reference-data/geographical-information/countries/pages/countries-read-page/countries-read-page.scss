@@ -1,18 +1,5 @@
-:host {
-  display: block;
-  height: 100%;
-  min-width: 0;
-  min-height: 0;
-}
-main {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 0;
-  min-width: 0;
-  min-height: 0;
-  box-sizing: border-box;
-}
+@use '../../../../../../shared/ui/layout/collection-page';
+@include collection-page.shell;
 .page-actions {
   display: flex;
   align-items: center;
@@ -49,9 +36,6 @@ main {
   flex-shrink: 0;
 }
 @media (max-width: 599px) {
-  main {
-    padding: 0;
-  }
   .page-actions {
     gap: 6px;
   }

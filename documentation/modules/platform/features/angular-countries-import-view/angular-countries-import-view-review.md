@@ -2,6 +2,15 @@
 
 ## 1. Ownership
 
+Current requester-authorized maintenance2026-11-05 improves the Angular Import
+workspace, compact header actions, vertical status rail, available-height Table
+and actionable file/row/server diagnostics. The
+[current workspace contract](IMPORT_WORKSPACE_2026-11-05.md) owns these source and
+verification details. Existing submit/permission/uncertainty rules remain intact.
+API business/schema and Next/Mobile runtime are unchanged; canonical Web resources
+and generated catalog identity are synchronized for both Web clients (PROD-019
+host deployment remains required). Earlier receipts below retain their own dates.
+
 ReferenceData Countries owns six flat fields, validation and Create authority. Platform migration owns shared adapters/evidence. This is exact S3-A7 only; API/Next/native runtime unchanged.
 
 ## 2. Reviewed source

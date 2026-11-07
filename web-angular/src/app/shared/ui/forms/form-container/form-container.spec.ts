@@ -1,13 +1,22 @@
 import { fixtureItem } from '../../../../../testing/fixture-item';
-import { Component, signal } from '@angular/core';
-import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, input, model, signal, viewChild, type ElementRef } from '@angular/core';
+import {
+  FormArray,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  type ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { TestBed } from '@angular/core/testing';
 import { provideAppTheme } from '../../../../../theme/public-api';
 import { LocalizationRuntime } from '../../../../platform/localization/public-api';
 import {
   applyServerFieldErrors,
   clearServerFieldError,
+  FormFieldControl,
   FormContainer,
+  FormSection,
   TextField,
 } from '../public-api';
 
@@ -48,6 +57,94 @@ class ProfileComposition {
   count = 0;
 }
 
+@Component({
+  imports: [ReactiveFormsModule, TextField],
+  selector: 'boundary-child-fields',
+  templateUrl: './form-container.spec.boundary-child.html',
+})
+class BoundaryChildFields {
+  readonly control = input.required<FormControl<string | null>>();
+}
+
+@Component({
+  imports: [ReactiveFormsModule, FormContainer, FormSection, BoundaryChildFields],
+  templateUrl: './form-container.spec.section-composition.html',
+})
+class SectionComposition {
+  readonly form = new FormGroup({
+    nested: new FormControl<string | null>('', Validators.required),
+  });
+  readonly activeSection = signal('identity');
+  readonly requestedSections: string[] = [];
+  readonly showChild = signal(true);
+
+  selectSection(section: string): void {
+    this.requestedSections.push(section);
+    this.activeSection.set(section);
+  }
+}
+
+@Component({
+  selector: 'array-value-field',
+  imports: [ReactiveFormsModule],
+  templateUrl: './form-container.spec.array-value-field.html',
+})
+class ArrayValueField extends FormFieldControl<readonly string[]> {
+  readonly value = model<readonly string[]>([]);
+  private readonly button = viewChild.required<ElementRef<HTMLButtonElement>>('button');
+
+  writeValue(value: unknown): void {
+    this.value.set(
+      Array.isArray(value) ? value.filter((item): item is string => typeof item === 'string') : [],
+    );
+  }
+
+  focus(): void {
+    this.button().nativeElement.focus();
+  }
+}
+
+@Component({
+  imports: [ReactiveFormsModule, FormContainer, ArrayValueField],
+  templateUrl: './form-container.spec.array-composition.html',
+})
+class ArrayComposition {
+  readonly form = new FormGroup({
+    grants: new FormControl<readonly string[]>([], nonEmptyArray),
+  });
+}
+
+const nonEmptyArray: ValidatorFn = (control) => {
+  const value: unknown = control.value;
+  return Array.isArray(value) && value.some((item) => typeof item === 'string')
+    ? null
+    : { required: true };
+};
+
+@Component({
+  imports: [ReactiveFormsModule, FormContainer, FormSection, BoundaryChildFields],
+  templateUrl: './form-container.spec.isolation-composition.html',
+})
+class IsolationComposition {
+  readonly first = new FormGroup({
+    value: new FormControl<string | null>('', Validators.required),
+  });
+  readonly second = new FormGroup({
+    value: new FormControl<string | null>('', Validators.required),
+  });
+}
+
+@Component({
+  imports: [ReactiveFormsModule, FormContainer, BoundaryChildFields],
+  templateUrl: './form-container.spec.boundary-composition.html',
+})
+class BoundaryComposition {
+  readonly form = new FormGroup({
+    nested: new FormControl<string | null>('', Validators.required),
+  });
+  readonly messages = { required: 'Nested value is required' };
+}
+
 describe('Shared form and text accessor under zoneless rendering', () => {
   beforeEach(async () => {
     document.cookie = 'i18next=; Path=/; Max-Age=0';
@@ -78,6 +175,73 @@ describe('Shared form and text accessor under zoneless rendering', () => {
     secondLink.click();
     expect(document.activeElement).toBe(root.querySelectorAll('input')[1]);
     expect(fixture.componentInstance.count).toBe(0);
+  });
+
+  it('includes an invalid shared field projected through a child component in the validation summary', async () => {
+    const fixture = TestBed.createComponent(BoundaryComposition);
+    await fixture.whenStable();
+    const root = fixture.nativeElement as HTMLElement;
+
+    root.querySelector<HTMLButtonElement>('button[type=submit]')!.click();
+    await fixture.whenStable();
+
+    expect(root.querySelectorAll('.error-summary a')).toHaveLength(1);
+    expect(root.querySelector('.error-summary')?.textContent).toContain('Nested field');
+  });
+
+  it('requests the child section before focusing an invalid field from a hidden kept-alive panel', async () => {
+    const fixture = TestBed.createComponent(SectionComposition);
+    await fixture.whenStable();
+    const root = fixture.nativeElement as HTMLElement;
+
+    root.querySelector<HTMLButtonElement>('button[type=submit]')!.click();
+    await fixture.whenStable();
+    fixture.componentInstance.activeSection.set('identity');
+    await fixture.whenStable();
+
+    root.querySelector<HTMLAnchorElement>('.error-summary a')!.click();
+    expect(fixture.componentInstance.requestedSections).toEqual(['settings', 'settings']);
+    expect(fixture.componentInstance.activeSection()).toBe('settings');
+    await fixture.whenStable();
+    expect(document.activeElement).toBe(root.querySelector('input'));
+  });
+
+  it('removes a destroyed child field from the validation summary', async () => {
+    const fixture = TestBed.createComponent(SectionComposition);
+    await fixture.whenStable();
+    const root = fixture.nativeElement as HTMLElement;
+    root.querySelector<HTMLButtonElement>('button[type=submit]')!.click();
+    await fixture.whenStable();
+    expect(root.querySelectorAll('.error-summary a')).toHaveLength(1);
+
+    fixture.componentInstance.showChild.set(false);
+    await fixture.whenStable();
+    expect(root.querySelectorAll('.error-summary a')).toHaveLength(0);
+  });
+
+  it('registers a readonly-array custom field through the public base contract', async () => {
+    const fixture = TestBed.createComponent(ArrayComposition);
+    await fixture.whenStable();
+    const root = fixture.nativeElement as HTMLElement;
+
+    root.querySelector<HTMLButtonElement>('button[type=submit]')!.click();
+    await fixture.whenStable();
+
+    expect(root.querySelector('.error-summary')?.textContent).toContain('Grant choices');
+    expect(document.activeElement).toBe(root.querySelector('button[type=button]'));
+  });
+
+  it('keeps field registration isolated between separate forms', async () => {
+    const fixture = TestBed.createComponent(IsolationComposition);
+    await fixture.whenStable();
+    const root = fixture.nativeElement as HTMLElement;
+    const forms = root.querySelectorAll('form');
+
+    forms[0]?.querySelector<HTMLButtonElement>('button[type=submit]')?.click();
+    await fixture.whenStable();
+
+    expect(forms[0]?.querySelectorAll('.error-summary a')).toHaveLength(1);
+    expect(forms[1]?.querySelectorAll('.error-summary a')).toHaveLength(0);
   });
 
   it('propagates model patches/reset/null/disable without echoing a value change and repaints without forced detection', async () => {

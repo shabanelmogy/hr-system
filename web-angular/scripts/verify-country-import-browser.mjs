@@ -42,6 +42,7 @@ const mixed = workbook([
   ['', 'Invalid', '', '', '', ''],
 ]);
 const focused = process.argv.includes('--focused'),
+  compact = process.argv.includes('--compact'),
   smoke = process.argv.includes('--smoke'),
   journeys = process.argv.includes('--journeys'),
   browser = await chromium.launch({ channel: 'chrome' }),
@@ -116,15 +117,25 @@ async function setup({
               ? 403
               : state.action === 'server'
                 ? 503
-                : 201;
+                : state.action === 'field'
+                  ? 400
+                  : 201;
         body =
           state.action === 'malformed'
             ? { createdCount: 0 }
             : status === 409
-              ? { errors: { 'Country.CountryExists': ['private server details'] } }
-              : status === 201
-                ? { createdCount: payload.countries.length }
-                : {};
+              ? { errors: { 'Country.Duplicated': ['private server details'] } }
+              : status === 400
+                ? {
+                    errors: {
+                      'Countries[0].NameEn': [
+                        'This name is reserved. Choose another country name.',
+                      ],
+                    },
+                  }
+                : status === 201
+                  ? { createdCount: payload.countries.length }
+                  : {};
       } else if (p === '/api/v1/countries') {
         state.reads++;
         const page = Number(url.searchParams.get('pageNumber') ?? 1),
@@ -182,7 +193,7 @@ async function setup({
 }
 try {
   if (!focused && !journeys)
-    for (const palette of smoke ? ['green'] : themePaletteOrder)
+    for (const palette of smoke || compact ? ['green'] : themePaletteOrder)
       for (const mode of smoke ? ['light'] : ['light', 'dark'])
         for (const language of smoke ? ['en'] : ['en', 'ar'])
           for (const width of smoke ? [1440] : [390, 1440]) {
@@ -190,6 +201,15 @@ try {
             const { p, view, state, pick, select, submit, context, errors, text } = f;
             await pick('import');
             await expect(view).toBeVisible();
+            const heading = view.locator('.import-heading');
+            const actionButtons = heading.getByRole('button');
+            await expect(actionButtons).toHaveCount(4);
+            await expect(view.locator('.requirements')).not.toHaveAttribute('open');
+            if (compact) {
+              await view.locator('.requirements summary').click();
+              await expect(view.locator('.requirements-content')).toBeVisible();
+              await view.locator('.requirements summary').click();
+            }
             await expect(view.locator('p-fileupload')).toHaveCount(1);
             const downloaded = p.waitForEvent('download');
             await view.getByTestId('import-template').getByRole('button').click();
@@ -219,8 +239,79 @@ try {
             assert.ok(
               state.posts[0].countries.every((row) => row.nameAr && row.nameEn !== 'Invalid'),
             );
-            await expect(view).toContainText(country[language]['countries.import.duplicateInFile']);
-            await expect(view).toContainText(text['validation.required']);
+            await expect(view).toContainText(
+              country[language]['countries.import.duplicateField'].replace('{{row}}', '2'),
+            );
+            await expect(view).toContainText(country[language]['countries.import.errors.required']);
+            const measured = await view.evaluate((element) => {
+              const rail = element.querySelector('.status-summary').getBoundingClientRect();
+              const railStyle = getComputedStyle(element.querySelector('.status-summary'));
+              const preview = element.querySelector('.preview').getBoundingClientRect();
+              const card = element
+                .querySelector('erp-surface-card > section')
+                .getBoundingClientRect();
+              const tableBody = element
+                .querySelector('.p-datatable-table-container')
+                .getBoundingClientRect();
+              const title = element.querySelector('.import-heading h2').getBoundingClientRect();
+              const buttons = [...element.querySelectorAll('.header-actions button')].map(
+                (button) => button.getBoundingClientRect(),
+              );
+              const cards = [...element.querySelectorAll('.status-summary erp-metric-card')].map(
+                (card) => card.getBoundingClientRect(),
+              );
+              const rtl = getComputedStyle(element).direction === 'rtl';
+              const verificationLabel = [
+                ...element.querySelectorAll('.status-summary header > span:first-child'),
+              ].find((label) => label.textContent.toLowerCase().includes('verification'));
+              let verificationFits = true;
+              if (verificationLabel?.firstChild) {
+                const range = document.createRange();
+                const text = verificationLabel.textContent;
+                range.setStart(
+                  verificationLabel.firstChild,
+                  text.toLowerCase().indexOf('verification'),
+                );
+                range.setEnd(verificationLabel.firstChild, text.length);
+                verificationFits = range.getClientRects().length === 1;
+              }
+              return {
+                railAtEnd: rtl ? rail.right <= preview.left + 1 : rail.left >= preview.right - 1,
+                vertical: cards.every((card, i) => i === 0 || card.top >= cards[i - 1].bottom),
+                compactCards: cards.every((card) => card.height <= 72),
+                headerSingleRow: buttons.every(
+                  (button) =>
+                    Math.abs(button.y + button.height / 2 - title.y - title.height / 2) <= 4,
+                ),
+                actionsAtEnd: rtl
+                  ? buttons.every((button) => button.right <= title.left)
+                  : buttons.every((button) => button.left >= title.right),
+                mobilePreviewFirst: preview.bottom <= rail.top,
+                previewTop: preview.top,
+                cardBottom: card.bottom,
+                viewportHeight: innerHeight,
+                bodyHeight: tableBody.height,
+                verificationFits,
+                separator: Number.parseFloat(
+                  innerWidth > 899 ? railStyle.borderInlineStartWidth : railStyle.borderTopWidth,
+                ),
+              };
+            });
+            assert.ok(measured.vertical && measured.compactCards, JSON.stringify(measured));
+            assert.ok(measured.bodyHeight >= 65, JSON.stringify(measured));
+            assert.ok(
+              Math.abs(measured.cardBottom - measured.viewportHeight) <= 32,
+              JSON.stringify(measured),
+            );
+            assert.equal(measured.separator, 1);
+            assert.ok(measured.verificationFits, JSON.stringify(measured));
+            if (width > 899) {
+              assert.ok(
+                measured.railAtEnd && measured.headerSingleRow && measured.actionsAtEnd,
+                JSON.stringify(measured),
+              );
+              assert.ok(measured.previewTop < 450, JSON.stringify(measured));
+            } else assert.ok(measured.mobilePreviewFirst, JSON.stringify(measured));
             await expect(view.getByTestId('import-submit').getByRole('button')).toBeDisabled();
             assert.equal(state.posts.length, 1);
             await expect(view.locator('p-fileupload button')).toBeEnabled();
@@ -245,6 +336,7 @@ try {
               template: true,
               valid: 12,
               invalid: 2,
+              measured,
               oneBatch: true,
               passed: true,
             });
@@ -252,7 +344,15 @@ try {
             console.log(`Import passed ${palette}/${mode}/${language}/${width}`);
           }
   if (focused) {
-    for (const action of ['duplicate', 'denied', 'server', 'network', 'malformed', 'delay']) {
+    for (const action of [
+      'duplicate',
+      'field',
+      'denied',
+      'server',
+      'network',
+      'malformed',
+      'delay',
+    ]) {
       const f = await setup({ action }),
         { p, view, state, pick, select, submit, clear, text, context, errors } = f;
       await pick('import');
@@ -272,12 +372,14 @@ try {
       } else {
         await expect(view).toContainText(
           action === 'duplicate'
-            ? text['validation.duplicateValues']
-            : text['imports.submissionUncertain'],
+            ? country.en['countries.import.duplicateOnServer']
+            : action === 'field'
+              ? 'This name is reserved. Choose another country name.'
+              : text['imports.submissionUncertain'],
         );
         await expect(view.getByTestId('import-submit').getByRole('button')).toBeDisabled();
         assert.equal(state.posts.length, 1);
-        if (action !== 'duplicate') {
+        if (!['duplicate', 'field'].includes(action)) {
           await expect(view.locator('p-fileupload button')).toBeDisabled();
           await view
             .getByRole('button', { name: text['imports.reviewRecords'], exact: true })

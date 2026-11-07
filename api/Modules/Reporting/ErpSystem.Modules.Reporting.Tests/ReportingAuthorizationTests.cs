@@ -43,6 +43,31 @@ public sealed class ReportingAuthorizationTests
     }
 
     [Fact]
+    public void GlobalDataExport_UsesAnIndependentGlobalGrantWithoutWeakeningTenantExports()
+    {
+        var controller = typeof(GlobalDataExportsController);
+        Assert.Contains(controller.GetCustomAttributes<AuthorizeAttribute>(), attribute => attribute.Roles == PlatformRoleNames.SuperAdmin);
+        Assert.Contains(controller.GetCustomAttributes<HasPermissionAttribute>(), attribute => attribute.Policy == ReportingPermissions.ExportGlobalData);
+        Assert.Empty(controller.GetCustomAttributes<TenantMemberAttribute>());
+        Assert.Single(typeof(ExportController).GetCustomAttributes<TenantMemberAttribute>());
+        var definition = new ReportingModule().Definition;
+        var global = Assert.Single(definition.Submodules, item => item.Code == "global-data-exports");
+        Assert.Equal(PermissionAccessMode.Global, global.PermissionAccessMode);
+        Assert.Contains(ReportingPermissions.ExportGlobalData, global.RequiredPermissions);
+        Assert.DoesNotContain(ReportingPermissions.ExportGlobalData, ReportingPermissions.GlobalReports);
+    }
+
+    [Theory]
+    [InlineData(nameof(ExportController.ExportExcel))]
+    [InlineData(nameof(ExportController.ExportCsv))]
+    public void ExistingFormatter_AppliesTheSameBoundedRequestEnvelope(string action)
+    {
+        var attribute = Assert.Single(typeof(ExportController).GetMethod(action)!
+            .GetCustomAttributesData(), item => item.AttributeType == typeof(Microsoft.AspNetCore.Mvc.RequestSizeLimitAttribute));
+        Assert.Equal(8L * 1024 * 1024, attribute.ConstructorArguments[0].Value);
+    }
+
+    [Fact]
     public void ReportingCatalog_DeclaresDashboardAndExportPermissions()
     {
         var definition = new ReportingModule().Definition;

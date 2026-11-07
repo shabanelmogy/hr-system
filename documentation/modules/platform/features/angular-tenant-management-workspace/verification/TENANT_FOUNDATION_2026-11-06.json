@@ -1,0 +1,87 @@
+{
+  "checkpoint": "Typed Tenant transport/native forms/actor-scoped page and independent assignable module catalog",
+  "date": "2026-11-06",
+  "featureStatus": "Active; editor/UI/route/browser/Phase06/education remain Required",
+  "angularCheck": {
+    "command": "npm run check",
+    "passed": true,
+    "tests": 726,
+    "testFiles": 132,
+    "architectureTests": 30,
+    "initialBundleKB": 574.5,
+    "remainingWarning": "RISK-020 initial500kB"
+  },
+  "liveRead": {
+    "origin": "https://localhost:4210",
+    "api": "https://shabanhrms.runasp.net",
+    "businessWrites": 0,
+    "results": [
+      {
+        "check": "Tenant server page and real concurrency/usage DTO",
+        "status": 200,
+        "rows": 1,
+        "total": 1
+      },
+      {
+        "check": "fresh Tenant detail with rowVersion",
+        "status": 200,
+        "hasEntitlements": true
+      },
+      {
+        "check": "independent assignable module/submodule catalog",
+        "status": 200,
+        "modules": 8
+      },
+      {
+        "check": "owned test session logout",
+        "status": 204
+      }
+    ]
+  },
+  "customerUiExecuted": false,
+  "sourceHashes": {
+    "web-angular/scripts/verify-tenant-management-live-read.mjs": "53bb6ef6469db64450167bd4ccb1be4ffa35488a73b98f70166b456a60b8c09c",
+    "web-angular/src/app/platform/modules/entitlements.public-api.ts": "5c8fb1874c643cedf472d9154f656483a5691778b8678aa6222c02797c6bb7a3",
+    "web-angular/src/app/platform/modules/services/tenant-entitlement-catalog-service.spec.ts": "2db99c871382e67229da6513dcb9081bc6b4aa43c6e326fc7c98f6f8fdbd6c56",
+    "web-angular/src/app/platform/modules/services/tenant-entitlement-catalog-service.ts": "f69608be0532b55bc2dc64c3b2a4ecaf06e5d2314f8f1a4216cf0cad4338ef02",
+    "web-angular/src/app/platform/modules/types/tenant-entitlement-catalog.ts": "38e79bb24939b4c699d34a4d0bca4ff7ca5febce6bd8a2519231710368aa6432",
+    "web-angular/src/app/platform/tenants/management/services/tenant-management-service.spec.ts": "436da5d4f520ad21c5a31b2640faeffbe78ab0489d58b551cdef26c0d66da9f9",
+    "web-angular/src/app/platform/tenants/management/services/tenant-management-service.ts": "a23befed303e6fa0a4fb8d735a99e09b8f926eaa55aab7d6cce38355c36bece7",
+    "web-angular/src/app/platform/tenants/management/state/tenant-entitlements-state.spec.ts": "e529a4d3f4d3e94d1d66de9f1299e8a2ccfe1f86a108b8a24fc59ad966bfe773",
+    "web-angular/src/app/platform/tenants/management/state/tenant-entitlements-state.ts": "856ab37afb2d20b733ad521ed4381d1780c3d3969b6b30fecd8588a53913afb5",
+    "web-angular/src/app/platform/tenants/management/state/tenant-read-state.spec.ts": "3f669ddeabcce65e69d66039a9a747c6ecfeff8028a3c9cf1a31fbb43e7830fd",
+    "web-angular/src/app/platform/tenants/management/state/tenant-read-state.ts": "f8dc4819dce13245913be9e379e6faa06a102f69c1d50535e0b81fa399860ad9",
+    "web-angular/src/app/platform/tenants/management/tenant-route-guard.spec.ts": "1d9e01b16e9fc4b16d24c77e481c27b71aebb4485d95591cb3a3ecaf667db7f0",
+    "web-angular/src/app/platform/tenants/management/tenant-route-guard.ts": "892473c2cf0f527ecdaa335a24427027c04461a58158046ed0fa52c4b734a7eb",
+    "web-angular/src/app/platform/tenants/management/tenant.fixture.ts": "61ede8ecb73af6520162803c8342b9325cf882dadda5500b2a1ad9642c9f8925",
+    "web-angular/src/app/platform/tenants/management/types/tenant-management.spec.ts": "76e283bfbaf62276e7b60124009a85276ad9fa619d16df8394155e6166b35025",
+    "web-angular/src/app/platform/tenants/management/types/tenant.ts": "3db497c605bb0bd34feb61c329ca4dcc1629596ba9d68b2df12515c5b115356c",
+    "web-angular/src/app/platform/tenants/management/validation/tenant-mutation.spec.ts": "299b9a3243944db53c67d63d394e4cde83153c4929edf02c6dcbfc2a54baa918",
+    "web-angular/src/app/platform/tenants/management/validation/tenant-mutation.ts": "603afb0f9de200a662590532bb1129a00c1309e6f72ee0dff20e93f62c7ec2ad"
+  },
+  "evidenceHashes": {
+    "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-foundation-2026-11-06/angular-check.txt": "06105d1fc973e26e1ff8061f15165644d483c616771b283ebfa7874aaff8b206",
+    "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-foundation-2026-11-06/calendar-regression-red.txt": "8093bdf86c37e6222f48b2bc976269e939471cda210fd1c85a7254076b1f5812",
+    "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-foundation-2026-11-06/documentation-check.txt": "1f9a48ad3a4e727265dd8e30317325c7d9b67f1668f2dc347214d7d17d45d643",
+    "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-foundation-2026-11-06/format-check.txt": "022e5a1994ae0a21074b8f8a2c0caad68438d911091562daecd1e2e14e764ffe",
+    "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-foundation-2026-11-06/live-read-results.json": "65f63fe86295ccf0e1f191c37d5b9efabd6f85611c4e8968a6b99c3307379288",
+    "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-foundation-2026-11-06/live-read.txt": "25decbe920b146ff259e754f4cc60516f6c899f04b38250377a53e125de37481",
+    "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-foundation-2026-11-06/planning-check.txt": "54a59dd3c5d16a9368a9244442e7f318a6e1f77bee78f5fe651e4be779bc0752",
+    "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-foundation-2026-11-06/problem-details-regression-red.txt": "3478420a35368f59a83e116bcb929431da4f7df80ebb86fd4fd3b23092645b4b",
+    "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-foundation-2026-11-06/public-codes-regression-red.txt": "da8a3a5bd60178f381ff091464fcc75a4ba58c435361bdc3c36c4fb82a329d53"
+  },
+  "requiredNext": [
+    "Editor state and fresh rowVersion/conflict/draft lifetime",
+    "Generic shared form fields/section focus across child components; existing ContentTabs keepAlive",
+    "Small5tab editor and structured entitlement controls",
+    "Real Grid/Cards/page/route/sidebar/dashboard links",
+    "Full UI/negative/source parity acceptance,Phase06 then education/closure",
+    "All later Super Admin workflows and final comprehensive review"
+  ],
+  "review": "Bounded integrated foundation source review: one public-code allowlist finding repaired with observed failing regression, then scoped re-review closed it; no remaining actionable P1/P2 in reviewed foundation.",
+  "documentationCheck": {
+    "passed": true,
+    "recipes": 484,
+    "planning": "Passed with two inherited unrelated contract migration warnings"
+  }
+}

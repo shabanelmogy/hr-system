@@ -136,6 +136,101 @@
           "allowedValues": ["ar", "en"]
         }
       ]
+    },
+    {
+      "entityKey": "system-error-logs",
+      "scope": "global",
+      "tableName": "ReportData",
+      "maxRows": 5000,
+      "columns": [
+        {
+          "name": "Id",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "OccurredOnUtc",
+          "type": "datetime",
+          "nullable": false
+        },
+        {
+          "name": "Source",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "Severity",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "Summary",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "UserName",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "Service",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "Action",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "StatusCode",
+          "type": "int32",
+          "nullable": true
+        },
+        {
+          "name": "DurationMs",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "CorrelationId",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "Client",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "Browser",
+          "type": "string",
+          "nullable": true
+        }
+      ],
+      "filters": [
+        "FromUtc",
+        "ToUtc",
+        "UserName",
+        "Source",
+        "StatusCode",
+        "Search",
+        "ColumnFilters"
+      ],
+      "parameters": [
+        {
+          "name": "Language",
+          "type": "string",
+          "required": true,
+          "allowMultipleValues": false,
+          "discreteOnly": true,
+          "allowedValues": [
+            "ar",
+            "en"
+          ]
+        }
+      ]
     }
   ]
 }

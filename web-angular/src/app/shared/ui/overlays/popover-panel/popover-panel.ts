@@ -6,11 +6,13 @@ import { ActionButton } from '../../buttons/public-api';
   selector: 'erp-popover-panel',
   imports: [Popover, ActionButton],
   templateUrl: './popover-panel.html',
+  styleUrl: './popover-panel.scss',
 })
 export class PopoverPanel {
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly triggerAppearance = input<'icon' | 'quiet'>('icon');
   readonly label = input.required<string>();
+  readonly triggerText = input<string | null>(null);
   readonly opened = signal(false);
   private readonly panel = viewChild.required<Popover>('panel');
   private readonly trigger = viewChild.required<ActionButton>('trigger');

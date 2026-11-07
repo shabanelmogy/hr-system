@@ -18,7 +18,7 @@ public sealed class GetGlobalCrystalReportCandidatesQueryValidator : AbstractVal
 {
     public GetGlobalCrystalReportCandidatesQueryValidator()
     {
-        RuleFor(x => x.EntityKey).NotEmpty().Must(key => key is "countries" or "states" or "districts");
+        RuleFor(x => x.EntityKey).NotEmpty().Must(key => key is "countries" or "states" or "districts" or "system-error-logs");
         RuleFor(x => x.Search).MaximumLength(200);
         RuleFor(x => x.Page).InclusiveBetween(1, 100000);
         RuleFor(x => x.PageSize).InclusiveBetween(1, 100);
@@ -31,7 +31,7 @@ public sealed class GetGlobalCrystalReportManagementQueryValidator : AbstractVal
     {
         RuleFor(x => x.Filters).Must(GlobalCrystalReportFilters.IsValid);
         RuleFor(x => x.Status).Must(status => string.IsNullOrEmpty(status) || status is "published" or "draft" or "archived");
-        RuleFor(x => x.EntityKey).Must(key => string.IsNullOrEmpty(key) || key is "countries" or "states" or "districts");
+        RuleFor(x => x.EntityKey).Must(key => string.IsNullOrEmpty(key) || key is "countries" or "states" or "districts" or "system-error-logs");
         RuleFor(x => x.Search).MaximumLength(200);
         RuleFor(x => x.Page).InclusiveBetween(1, 100000);
         RuleFor(x => x.PageSize).InclusiveBetween(1, 100);

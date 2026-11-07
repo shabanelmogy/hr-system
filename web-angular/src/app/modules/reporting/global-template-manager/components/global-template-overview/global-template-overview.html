@@ -1,0 +1,59 @@
+@if (state.detail(); as detail) {
+  <ng-template #overviewActions>
+    @if (state.can('Download')) {
+      <erp-button-group [label]="'crystalReports.download' | uiText: 'reporting'"
+        ><erp-button
+          variant="outlined"
+          [label]="'globalTemplates.design.downloadPackage' | uiText: 'reporting'"
+          [disabled]="state.pending()"
+          (activated)="state.designerPackage()"
+          ><erp-icon buttonIcon name="download"
+        /></erp-button>
+        @if (detail.isPublished && !detail.isArchived) {
+          <erp-button
+            [label]="'crystalReports.download' | uiText: 'reporting'"
+            variant="outlined"
+            [disabled]="state.pending()"
+            (activated)="state.downloadPublished(detail)"
+            ><erp-icon buttonIcon name="download"
+          /></erp-button>
+        }
+      </erp-button-group>
+    }
+  </ng-template>
+  <erp-surface-card
+    [title]="'crystalReports.overview' | uiText: 'reporting'"
+    [subtitle]="
+      ('globalTemplates.entities.' + detail.entityKey | uiText: 'reporting') +
+      ' · ' +
+      detail.reportKey
+    "
+    [compact]="true"
+    contentLayout="details"
+    [footerTemplate]="overviewActions"
+  >
+    @for (item of metadata(); track item.key) {
+      <erp-record-summary [title]="item.label" [description]="item.value" />
+    }
+    @if (detail.viewName) {
+      <erp-record-summary
+        [title]="'globalTemplates.design.viewName' | uiText: 'reporting'"
+        [description]="detail.viewName"
+      />
+    }
+    @if (!detail.versions.length) {
+      <erp-feedback-state
+        kind="empty"
+        [title]="'globalTemplates.design.emptyVersions' | uiText: 'reporting'"
+      />
+      @if (state.canVersion('Upload')) {
+        <erp-button
+          [label]="'crystalReports.selectNewVersion' | uiText: 'reporting'"
+          [disabled]="state.pending()"
+          (activated)="state.openEditor(detail)"
+          ><erp-icon buttonIcon name="upload"
+        /></erp-button>
+      }
+    }
+  </erp-surface-card>
+}

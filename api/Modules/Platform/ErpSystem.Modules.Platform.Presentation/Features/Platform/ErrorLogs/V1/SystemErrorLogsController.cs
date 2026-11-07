@@ -25,6 +25,24 @@ public sealed class SystemErrorLogsController(ISender sender) : ControllerBase
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
+    [HttpPost("query")]
+    [RequestSizeLimit(32768)]
+    [HasPermission(PlatformPermissions.ViewSystemErrorLogs)]
+    public async Task<IActionResult> Query([FromBody] ErrorLogCriteria criteria, CancellationToken cancellationToken)
+    {
+        var result = await sender.Send(new ListErrorLogsQuery(criteria, true), cancellationToken);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
+    }
+
+    [HttpPost("export/query")]
+    [RequestSizeLimit(32768)]
+    [HasPermission(PlatformPermissions.ExportSystemErrorLogs)]
+    public async Task<IActionResult> ExportQuery([FromBody] ErrorLogCriteria criteria, CancellationToken cancellationToken)
+    {
+        var result = await sender.Send(new ExportErrorLogsQuery(criteria, true), cancellationToken);
+        return result.IsSuccess ? File(result.Value.Contents, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", result.Value.FileName) : result.ToProblem();
+    }
+
     [HttpGet("export")]
     [HasPermission(PlatformPermissions.ExportSystemErrorLogs)]
     public async Task<IActionResult> Export([FromQuery] ErrorLogCriteria criteria, CancellationToken cancellationToken)

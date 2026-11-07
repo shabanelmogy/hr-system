@@ -23,7 +23,7 @@ public sealed class CreateCrystalReportCommandHandler(
         CancellationToken cancellationToken)
     {
         var entityKey = request.EntityKey.Trim().ToLowerInvariant();
-        if (!contracts.Supports(entityKey))
+        if (entityKey == "system-error-logs" || !contracts.Supports(entityKey))
             return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportUnsupportedEntity);
         var reportKey = CrystalReportRules.FileStemToKey(request.File.FileName);
         if (string.IsNullOrWhiteSpace(reportKey) ||

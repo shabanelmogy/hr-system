@@ -12,6 +12,7 @@ export {
   normalizeDateDigits,
 } from './fields/date-only';
 export { ReferenceField } from './fields/reference-field/reference-field';
+export { MultiReferenceField } from './fields/multi-reference-field/multi-reference-field';
 export type {
   ReferenceId,
   ReferenceOption,
@@ -21,6 +22,8 @@ export type {
   ReferenceSelection,
 } from './fields/reference.types';
 export { FormContainer } from './form-container/form-container';
+export { FormFieldControl } from './form-field-control';
+export { FormSection } from './form-section';
 export { FileField } from './fields/file-field/file-field';
 export { ValidationSummary } from './validation-summary/validation-summary';
 export type { ValidationIssue } from './validation-summary/validation-summary';

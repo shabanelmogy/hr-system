@@ -1,0 +1,54 @@
+<div class="create-workspace">
+  <erp-page-header
+    appearance="card"
+    [title]="text('addTenant')"
+    [subtitle]="text('createIntro')"
+    [backLabel]="'actions.back' | uiText"
+    [backDisabled]="editor.pending()"
+    (backRequested)="back()"
+  >
+    <erp-popover-panel class="compact-summary" [label]="text('summaryTitle')">
+      <erp-icon popoverTrigger name="company" />
+      <erp-tenant-draft-summary />
+    </erp-popover-panel>
+  </erp-page-header>
+  @switch (catalog.view().kind) {
+    @case ('loading') {
+      <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
+    }
+    @case ('error') {
+      <erp-feedback-state
+        kind="error"
+        [title]="text('catalogLoadError')"
+        [actionLabel]="'actions.retry' | uiText"
+        (action)="catalog.refresh()"
+      />
+    }
+    @case ('forbidden') {
+      <erp-feedback-state kind="forbidden" [title]="'authorization.forbidden.title' | uiText" />
+    }
+    @case ('ready') {
+      @if (editor.active() && editor.phase() !== 'forbidden') {
+        <div class="editor-layout">
+          <erp-surface-card
+            class="editor-card"
+            [title]="text('formTitle')"
+            [subtitle]="text('formSubtitle')"
+            icon="company"
+            [fill]="true"
+            [compact]="true"
+          >
+            <erp-tenant-form (cancelled)="back()" />
+          </erp-surface-card>
+          <aside [attr.aria-label]="text('summaryTitle')">
+            <erp-scroll-viewport [label]="text('summaryTitle')"
+              ><erp-tenant-draft-summary
+            /></erp-scroll-viewport>
+          </aside>
+        </div>
+      } @else {
+        <erp-feedback-state kind="forbidden" [title]="'authorization.forbidden.title' | uiText" />
+      }
+    }
+  }
+</div>

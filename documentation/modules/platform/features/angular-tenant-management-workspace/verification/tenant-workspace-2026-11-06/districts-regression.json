@@ -1,0 +1,56 @@
+[
+  {
+    "geometry": {
+      "erp-districts-page": {
+        "top": 88,
+        "bottom": 1026,
+        "height": 938,
+        "display": "flex"
+      },
+      "erp-districts-page > main": {
+        "top": 88,
+        "bottom": 1026,
+        "height": 938,
+        "display": "flex"
+      },
+      ".workspace": {
+        "top": 184,
+        "bottom": 1026,
+        "height": 842,
+        "display": "flex"
+      },
+      "erp-district-import-view": {
+        "top": 184,
+        "bottom": 1026,
+        "height": 842,
+        "display": "flex"
+      },
+      "erp-spreadsheet-import-panel": {
+        "top": 184,
+        "bottom": 1026,
+        "height": 842,
+        "display": "flex"
+      },
+      "erp-spreadsheet-import-panel erp-surface-card": {
+        "top": 184,
+        "bottom": 1026,
+        "height": 842,
+        "display": "block"
+      }
+    },
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "passed": true,
+    "writes": [
+      "create",
+      "edit",
+      "archive",
+      "restore",
+      "bulk",
+      "import"
+    ],
+    "queryCount": 16,
+    "renders": 3
+  }
+]

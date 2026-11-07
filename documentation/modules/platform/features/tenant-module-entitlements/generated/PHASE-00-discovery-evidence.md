@@ -71,18 +71,18 @@ scenarios or an explicit `N/A` with a reason.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| tenant-module-entitlements-master | 1 | `7a1664dc8692c84e5f0d34ce051180c314ed505deafeefab8a059c6fc68126c3` |
+| tenant-module-entitlements-master | 1 | `a32d86f7f9ba9ab5d818a62dfc3af6d67c8501baa39ddc5b65e07357ddacc0d3` |
 | tenant-module-entitlements-master | 2 | `2e7b60ecd221f14bb754a9726ee770020e87de7cf5f79b4a518fc80165a6696e` |
 | tenant-module-entitlements-master | 5 | `33487ff92f7cbe8016aefa881fa307cdd8cd24645d06255261b68bcdcf41b1c9` |
 | tenant-module-entitlements-master | 8 | `9e8b5674dbf4c97a1895c5d66c203aa67822631d4a66c0fc6db7f1af3d97aafe` |
 | tenant-module-entitlements-master | 9 | `60c69fc638e2b14a82907e3c7d6c6a9b1df99042b776f0ba848ff33754256bfe` |
-| tenant-module-entitlements-api | 1 | `040a7eab03d342360325a061f06bf27f1b2c9cacc8559af835b40daf87950528` |
+| tenant-module-entitlements-api | 1 | `70c1fdcfc2b2aa507be315813c6d3dbc2d996e694cfb4a18387c3bd22a91e143` |
 | tenant-module-entitlements-api | 10 | `5f5786e9787de042ace942379192494d4721791a92efd6192f61da06b60c24ff` |
 | tenant-module-entitlements-api | 11 | `2a6817fbd4f4f819446478653927804e26295f987e42cfd9a22c7b13a30074f0` |
-| tenant-module-entitlements-web | 1 | `92537e75c7e2394ffe61cb474399c65abd0606a68251ac628ab549ef8182397a` |
+| tenant-module-entitlements-web | 1 | `2a8372a2805d207d8dd06921e13d342e5a6be42d61531764261b49a419997ebf` |
 | tenant-module-entitlements-web | 2 | `f244e2800352bed39f0e4db75904dbdde70021e3ff14b2ac7f483256503e7687` |
 | tenant-module-entitlements-web | 12 | `e78b2a2fdec5376b2db3df3a3445f1a1540910ebb1a87b98bb58214ec3561493` |
 | tenant-module-entitlements-web | 13 | `8d4e22b075f697513becfe7f146ec4fa5f7448c429f001a46927bb8b448c0529` |
-| tenant-module-entitlements-mobile | 1 | `dac449024ffa05afd4c86f4dca97b17ef88bcbb19f9786faa0702c25233b035c` |
+| tenant-module-entitlements-mobile | 1 | `df57fe900bb13ec90f88f4af883ca802abf31deb460ec61db7b0ec1edf60681c` |
 | tenant-module-entitlements-mobile | 14 | `ad56df437717354886dddec6587c7b805f7e2e539e5f767b81c01b85629aa8dc` |
 | tenant-module-entitlements-mobile | 15 | `32851ba2d1639f1c905ebf6269b6f55623aa6856171421fed3edd2ce5034715c` |

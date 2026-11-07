@@ -8,7 +8,7 @@ import { LocalizationRuntime } from '../../../../platform/localization/public-ap
 import { validatePdfDocument, type PdfDocument } from '../../../../shared/data/public-api';
 import { globalReportFixture as report } from '../report.fixture';
 import { GlobalReportService } from '../services/global-report-service';
-import { GlobalReportFailure } from '../types/global-report';
+import { GlobalReportFailure, type GlobalReportEntity } from '../types/global-report';
 import { GlobalReportState } from './global-report-state';
 
 describe('Global report lifetime and authorization', () => {
@@ -22,7 +22,7 @@ describe('Global report lifetime and authorization', () => {
   beforeEach(async () => {
     document = await validatePdfDocument(new Blob(['%PDF-1.7'], { type: 'application/pdf' }));
   });
-  function setup(initial: Session = permitted) {
+  function setup(initial: Session = permitted, entity: GlobalReportEntity | null = 'countries') {
     const identity = signal<Session | null>(initial),
       language = signal<'en' | 'ar'>('en');
     const subscriptions: { subject: Subject<PdfDocument>; cancelled: boolean }[] = [];
@@ -50,9 +50,41 @@ describe('Global report lifetime and authorization', () => {
       ],
     });
     const state = TestBed.inject(GlobalReportState);
+    if (entity) state.setEntity(entity);
     TestBed.tick();
     return { identity, language, state, service, subscriptions };
   }
+  it('waits for the consumer entity before starting its first catalog request', () => {
+    const { state, service } = setup(permitted, null);
+    expect(service.catalog).not.toHaveBeenCalled();
+    state.setEntity('states');
+    TestBed.tick();
+    expect(service.catalog).toHaveBeenCalledExactlyOnceWith('states');
+  });
+  it('cancels an active render when externally applied report criteria change and never broadens invalid criteria', () => {
+    const { state, service, subscriptions } = setup();
+    const filters = { nameAr: '', nameEn: 'Target' };
+    state.setExternalCriteria(filters);
+    TestBed.tick();
+    expect(fixtureItem(subscriptions, 0).cancelled).toBe(true);
+    expect(service.render).toHaveBeenLastCalledWith(report, filters, 'en');
+    const calls = service.render.mock.calls.length;
+    state.setExternalCriteria(filters);
+    TestBed.tick();
+    expect(service.render.mock.calls).toHaveLength(calls);
+    state.setExternalCriteria({ nameAr: '', nameEn: 'x'.repeat(201) });
+    TestBed.tick();
+    expect(state.view().kind).toBe('error');
+    expect(service.render.mock.calls).toHaveLength(calls);
+    expect(fixtureItem(subscriptions, 1).cancelled).toBe(true);
+    state.setExternalCriteria({ nameAr: '', nameEn: 'Another' });
+    TestBed.tick();
+    expect(service.render).toHaveBeenLastCalledWith(
+      report,
+      { nameAr: '', nameEn: 'Another' },
+      'en',
+    );
+  });
   it('makes zero catalog and PDF requests without both permissions', () => {
     const { state, service } = setup(sessionFixture);
     expect(state.view().kind).toBe('forbidden');

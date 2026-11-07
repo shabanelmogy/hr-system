@@ -1,0 +1,37 @@
+:host {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+.action-menu-indicator {
+  display: inline-flex;
+  align-items: center;
+  block-size: 1.5rem;
+  padding-inline-start: 0.6rem;
+  margin-inline-start: 0.25rem;
+  border-inline-start: 1px solid color-mix(in srgb, currentColor 45%, transparent);
+}
+.action-menu-indicator erp-icon {
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  transition: transform var(--duration-fast);
+}
+.action-menu-indicator.expanded erp-icon {
+  transform: rotate(180deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .action-menu-indicator erp-icon {
+    transition: none;
+  }
+}
+.action-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.p-menu-item-label {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+erp-icon {
+  flex-shrink: 0;
+}

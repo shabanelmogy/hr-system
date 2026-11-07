@@ -1,0 +1,10 @@
+<erp-content-tabs
+  [tabs]="tabs"
+  [selected]="selected()"
+  commitMode="external"
+  (selectionRequested)="requested.set($event)"
+  [content]="content"
+/>
+<ng-template #content let-id
+  ><p>{{ id }}</p></ng-template
+>

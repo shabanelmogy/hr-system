@@ -1,4 +1,18 @@
 // Shell-owned wrapper: projected actions keep generic spacing and wrapping.
+:host ::ng-deep .collection-cell-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-inline-size: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+:host ::ng-deep .collection-cell-label erp-icon {
+  color: var(--primary);
+  inline-size: 16px;
+  block-size: 16px;
+  flex-shrink: 0;
+}
 .collection-actions {
   display: flex;
   align-items: center;

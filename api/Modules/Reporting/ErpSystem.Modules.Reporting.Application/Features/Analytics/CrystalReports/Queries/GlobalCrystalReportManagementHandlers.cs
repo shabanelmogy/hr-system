@@ -71,7 +71,7 @@ public sealed class DownloadGlobalCrystalReportVersionQueryHandler(IGlobalCrysta
             return Result.Failure<CrystalReportDownload>(errors.GlobalCrystalReportForbidden);
         var report = await store.FindAsync(request.ReportId, cancellationToken);
         if (report is null || report.IsDeleted || !policy.Allows(report.EntityKey, ReportingPermissions.DownloadGlobalCrystalReports) ||
-            !policy.AccessAdministrator && !await access.HasRightAsync(report.Id, CrystalReportRight.Download, cancellationToken))
+            !policy.BypassesRoleGrants(report.EntityKey) && !await access.HasRightAsync(report.Id, CrystalReportRight.Download, cancellationToken))
             return Result.Failure<CrystalReportDownload>(errors.CrystalReportNotFound);
         var version = await store.VersionAsync(report.Id, request.VersionId, cancellationToken);
         if (version is null) return Result.Failure<CrystalReportDownload>(errors.CrystalReportNotFound);

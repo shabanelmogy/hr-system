@@ -2,6 +2,8 @@
   novalidate
   [class.plain]="appearance() !== 'card'"
   [class.dialog-form]="appearance() === 'dialog'"
+  [class.page-form]="appearance() === 'page'"
+  [class.filled-form]="fillContent()"
   [class.sidebar-form]="appearance() === 'sidebar'"
   [attr.aria-label]="title()"
   [attr.aria-busy]="pending() || checking() ? 'true' : null"
@@ -13,6 +15,22 @@
       <ng-content select="[formHeader]" />
     </header>
   }
+  @if (fillContent()) {
+    <erp-scroll-viewport class="form-scroll" [label]="title()">
+      <ng-container [ngTemplateOutlet]="formBody" />
+    </erp-scroll-viewport>
+  } @else {
+    <ng-container [ngTemplateOutlet]="formBody" />
+  }
+  <footer>
+    <div class="form-tools"><ng-content select="[formTools]" /></div>
+    <ng-container [ngTemplateOutlet]="appearance() === 'sidebar' ? submitAction : null" />
+    <ng-content select="[formActions]" />
+    <ng-container [ngTemplateOutlet]="appearance() !== 'sidebar' ? submitAction : null" />
+  </footer>
+  <ng-content select="[afterSubmit]" />
+</form>
+<ng-template #formBody>
   @if (validationIssues().length) {
     <erp-validation-summary [issues]="validationIssues()" (issueSelected)="focusError($event)" />
   }
@@ -26,14 +44,7 @@
     </p>
   }
   <section class="form-content"><ng-content /></section>
-  <footer>
-    <div class="form-tools"><ng-content select="[formTools]" /></div>
-    <ng-container [ngTemplateOutlet]="appearance() === 'sidebar' ? submitAction : null" />
-    <ng-content select="[formActions]" />
-    <ng-container [ngTemplateOutlet]="appearance() !== 'sidebar' ? submitAction : null" />
-  </footer>
-  <ng-content select="[afterSubmit]" />
-</form>
+</ng-template>
 <ng-template #submitAction>
   @if (showSubmit()) {
     <erp-button

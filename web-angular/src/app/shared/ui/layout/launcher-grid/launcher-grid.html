@@ -1,7 +1,12 @@
 <section class="launcher" [class.area-launcher]="variant() === 'area'" [attr.aria-label]="title()">
   <header>
     <span class="heading-icon"><erp-icon [name]="icon()" /></span>
-    <h1>{{ title() }}</h1>
+    <div class="launcher-title">
+      @if (backLabel()) {
+        <erp-back-button [label]="backLabel()" (activated)="backRequested.emit()" />
+      }
+      <h1>{{ title() }}</h1>
+    </div>
     <p>{{ description() }}</p>
   </header>
   <div class="launcher-grid">

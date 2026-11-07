@@ -33,13 +33,13 @@ namespace CrystalReportGeneratorApi.ContractTests
                     using (var server = new HttpServer(config))
                     using (var http = new HttpClient(server) { BaseAddress = new Uri("https://runtime.test/") })
                     {
-                        foreach (var route in new[] { "catalog", "health", "inspect", "render" })
+                        foreach (var route in new[] { "catalog", "health", "inspect", "render", "verify-database" })
                         {
                             VerifyDenied(http, route, null, HttpStatusCode.Unauthorized);
                             VerifyDenied(http, route, "incorrect", HttpStatusCode.Unauthorized);
                             VerifyDenied(http, route, FixtureKey + "," + FixtureKey, HttpStatusCode.Unauthorized);
                         }
-                        foreach (var route in new[] { "inspect", "render" })
+                        foreach (var route in new[] { "inspect", "render", "verify-database" })
                         {
                             using (var request = Request(route, FixtureKey))
                             using (var response = http.SendAsync(request).GetAwaiter().GetResult())
@@ -59,7 +59,7 @@ namespace CrystalReportGeneratorApi.ContractTests
             {
                 Environment.SetEnvironmentVariable(KeyVariable, previous);
             }
-            Console.WriteLine("Runtime boundary: catalog normalization/oversize and15 actual HTTP authorization cases passed.");
+            Console.WriteLine("Runtime boundary: catalog normalization/oversize and 16 actual HTTP authorization cases passed.");
             Console.WriteLine("Render boundary: schema mismatch and unsupported entity retain distinct HTTP400 codes before native execution.");
         }
 
@@ -111,7 +111,7 @@ namespace CrystalReportGeneratorApi.ContractTests
 
         private static HttpRequestMessage Request(string route, string key)
         {
-            var post = route == "inspect" || route == "render";
+            var post = route == "inspect" || route == "render" || route == "verify-database";
             var request = new HttpRequestMessage(post ? HttpMethod.Post : HttpMethod.Get, "internal/reports/" + route);
             if (key != null)
                 request.Headers.TryAddWithoutValidation("X-Internal-Api-Key", key.Split(','));

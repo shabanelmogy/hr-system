@@ -1,0 +1,150 @@
+{
+  "dateUtc": "2026-11-07T05:24:31.7647625Z",
+  "scope": "Crystal Verify Database automatic new-version publication, followed by Angular Super Admin Language/Translation parity",
+  "branch": "codex/angular-component-composition",
+  "acceptance": "Local source, full technical gates and synthetic browser workflows verified; hosted/native acceptance pending",
+  "angular": {
+    "command": "npm run check",
+    "exitCode": 0,
+    "testsPassed": 971,
+    "testFiles": 189,
+    "architectureTests": 32,
+    "initialBundleKB": 581.92,
+    "budgetWarningNote": "RISK-020",
+    "focusedTranslationTests": 20,
+    "finalFormatCommand": "npm run check:format",
+    "finalFormatExitCode": 0,
+    "fullLog": ".codex-tmp/language-translation-final-check.log"
+  },
+  "api": {
+    "commands": [
+      "dotnet restore ErpSystem.sln",
+      "dotnet build ErpSystem.sln -c Release --no-restore",
+      "dotnet test ErpSystem.sln -c Release --no-build --no-restore"
+    ],
+    "exitCode": 0,
+    "testsPassed": 1331,
+    "skippedOptInBrowserTests": 3,
+    "assemblies": 12,
+    "reportingTests": 252,
+    "focusedLocalizationCatalogTests": 43,
+    "finalBuildErrors": 0,
+    "finalBuildAnalyzerWarnings": 78,
+    "finalBuildLog": ".codex-tmp/report-api-final-build.log",
+    "finalTestsLog": ".codex-tmp/report-api-final-tests.log",
+    "localizedVerificationErrorChecked": [
+      "en-US",
+      "ar-EG"
+    ]
+  },
+  "crystal": {
+    "build": "Visual Studio 18 Community MSBuild Release to .codex-tmp/crystal-verify-build/",
+    "buildExitCode": 0,
+    "harnessExitCode": 0,
+    "profiles": 6,
+    "languageGeometryCases": 14,
+    "actualHttpAuthorizationCases": 16,
+    "fingerprint": "2e0dfd64ef9fc69fbc45c19542ae157bcfb88564114a40a9edc8c566253f6b89",
+    "buildLog": ".codex-tmp/crystal-verify-native-build.log",
+    "harnessLog": ".codex-tmp/crystal-verify-contract-tests.log",
+    "realRptVerifyDatabaseExecuted": false
+  },
+  "browser": {
+    "command": "node scripts/verify-language-translation-browser.mjs",
+    "exitCode": 0,
+    "fixtureOnly": true,
+    "results": "results.json",
+    "executedAt": "2026-11-07T05:19:17.963Z",
+    "cases": 12,
+    "languages": [
+      "en",
+      "ar"
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "widths": [
+      390,
+      900,
+      1440
+    ],
+    "shortWindow": "900x640",
+    "scenarios": [
+      "Web/Mobile source discovery and switching",
+      "base/target language and status selection",
+      "page size and server paging",
+      "debounced server search resets page",
+      "invalid field prevents write",
+      "edit/save and reset",
+      "409 conflict and draft-discard consent",
+      "list failure and retry",
+      "read-only permission",
+      "zero outer overflow"
+    ],
+    "reviewedScreenshots": [
+      "ar-390.png",
+      "en-390.png"
+    ],
+    "realApiWrites": false,
+    "serverStarted": false
+  },
+  "catalog": {
+    "sources": 21,
+    "keys": 7485,
+    "webFingerprint": "1e8962a7bf61ddc2500ecb38debec55aacbd19b76b43fa1a9a81ea534e97e3b7"
+  },
+  "previousAttempts": [
+    "dotnet msbuild lacked WebApplication.targets; installed Visual Studio MSBuild resolved this without installation or configuration changes.",
+    "Historical September Crystal DLL did not represent current source; new Release DLL passed the harness.",
+    "An earlier full Angular run timed out in an unrelated Countries test; it passed alone and in the final full check without changes to its timeout or implementation.",
+    "The extended browser harness encountered a detached toast close-button race; the harness now waits for automatic toast removal and all 12 final cases pass."
+  ],
+  "pending": [
+    "FOLLOW-024 / PROD-028: native VerifyDatabase on a real RPT with its design datasource connection on the configured Crystal host.",
+    "FOLLOW-012 / PROD-019: actual-role persisted system-text save/reset/reload and coordinated Angular/API catalog rollout.",
+    "No hosted deployment, real RPT mutation, live translation write, commit, push or merge performed."
+  ],
+  "sourceHashes": [
+    {
+      "path": "web-angular/src/app/platform/language-translation/services/language-translation-service.ts",
+      "sha256": "6afb5d5c2a3185313b53f7f9e628a723b1e3008c55e0e6a86c145189d0102d93"
+    },
+    {
+      "path": "web-angular/src/app/platform/language-translation/state/language-translation-state.ts",
+      "sha256": "0066c491352193264308d741b5d431c292dd63272d4ba3a24aedca41dec98ce7"
+    },
+    {
+      "path": "web-angular/src/app/platform/language-translation/state/translation-editor-state.ts",
+      "sha256": "7529acf7112150b6cb6ac2124968530b4297c7b475d962003f7e951b40dcc506"
+    },
+    {
+      "path": "web-angular/scripts/verify-language-translation-browser.mjs",
+      "sha256": "00fce09d6f1a7298b1518d3b9e57867426f6d72a98bd260a1433cdb1331c59ed"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Commands/GlobalCrystalReportLifecycleHandlers.cs",
+      "sha256": "9f9945ed094db699abfd5a1acc9894eca1a040cf45b549c3f53c0f66ac7d150a"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportDatabaseVerifierClient.cs",
+      "sha256": "9df5ea838ee6e9fdae7860f611bcd79eb266ae2993d399be7acf99f86413a9e0"
+    },
+    {
+      "path": "api/CrystalReportGeneratorApi/Runtime/Inspection/CrystalReportInspectionService.cs",
+      "sha256": "a2f6ffeb0be47be1d7f92a6e5e2c8eb2f15c869b2f007033b07096eb9c079b9f"
+    },
+    {
+      "path": "api/CrystalReportGeneratorApi/Controllers/InternalReportInspectorController.cs",
+      "sha256": "c6ff6fc17c32cde36dab30c5791d441aac1fac3ffd5ac9089a9314c3f1479b25"
+    },
+    {
+      "path": "api/ErpSystem.Api/Localization/Resources/en-US.json",
+      "sha256": "745159f933029f42eb9f5021c9eb55d9e18f529c31a39ab8c0fafe06fc9e83d0"
+    },
+    {
+      "path": "api/ErpSystem.Api/Localization/Resources/ar-EG.json",
+      "sha256": "5709377b5e5b88a388f3cf3732289ecdce3ad979c40fc332d8520b5e85f54e8c"
+    }
+  ]
+}

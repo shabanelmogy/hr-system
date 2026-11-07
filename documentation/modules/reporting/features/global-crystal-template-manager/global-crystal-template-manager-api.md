@@ -4,7 +4,20 @@ Status: source and technical gates Verified for the expanded scope; integrated h
 
 ## 1. Implemented boundary
 
+### Current evidence registration — 2026-11-05
+
+The requester-authorized [current Reporting evidence baseline](../../CURRENT_EVIDENCE_BASELINE_2026-11-05.md)
+registers existing sources and retained receipts only. Unavailable historical raw
+logs are preserved in an inventory, not claimed as recovered or replayable proof.
+FOLLOW-025 owns future reliance on those logs. This documentation-only correction
+does not re-run runtime tests, change platform scope or close release gates. Earlier
+verification statements below retain their original dates and bounded scope.
+
 Reporting owns CQRS and ISender-only controllers. Management remains super_admin + global View + persisted entity Edit/action. Public list/render/current-source are authenticated and use GlobalCrystalReportAuthorizeAttribute to invoke the existing live platform or tenant permission policy. Application policy and persisted grants independently enforce scope. Existing tenant report controller remains TenantMember.
+
+### Programmatic Verify Database and automatic publication — 2026-11-07
+
+Reporting now exposes a protected `POST /api/v1/global-crystal-reports/manage/{id}/versions/{versionId}/verify-database` action. It reads the immutable stored RPT, delegates `ReportDocument.VerifyDatabase()` to the internal Crystal runtime, stores the adapted file as a new version, re-inspects it against the current managed contract, and publishes that version atomically. The previous version remains preserved if any stage fails. See [automation evidence](VERIFY_DATABASE_AUTOMATION_2026-11-07.md).
 
 ## 2. Reuse inventory
 

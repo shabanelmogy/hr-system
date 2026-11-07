@@ -1,0 +1,7 @@
+<erp-form [form]="form" title="Array fixture" submitLabel="Submit fixture">
+  <array-value-field
+    [formControl]="form.controls.grants"
+    label="Grant choices"
+    [messages]="{ required: 'Choose at least one grant' }"
+  />
+</erp-form>

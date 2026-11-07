@@ -1,0 +1,42 @@
+<erp-text-field
+  [formField]="editor.form.planName"
+  [label]="captions.label('planName')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+  [showCounter]="true"
+/>
+<erp-reference-field
+  [formField]="editor.form.subscriptionStatus"
+  [source]="statuses()"
+  [searchable]="false"
+  [clearable]="false"
+  [label]="captions.label('subscriptionStatus')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+/>
+<erp-date-field
+  [formField]="editor.form.subscriptionStartedOn"
+  [label]="captions.label('subscriptionStartedOn')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+/>
+<erp-date-field
+  [formField]="editor.form.subscriptionEndsOn"
+  [label]="captions.label('subscriptionEndsOn')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+/>
+<erp-numeric-field
+  mode="integer"
+  [formField]="editor.form.maxAdmins"
+  [label]="captions.label('maxAdmins')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+/>
+<erp-numeric-field
+  mode="integer"
+  [formField]="editor.form.maxUsers"
+  [label]="captions.label('maxUsers')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+/>

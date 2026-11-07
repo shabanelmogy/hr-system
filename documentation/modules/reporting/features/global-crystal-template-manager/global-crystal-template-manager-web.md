@@ -1,10 +1,82 @@
 # Global Crystal Template Manager — web profile
 
-Status: source and technical gates Verified for the expanded scope; integrated hosted/browser/native acceptance Active. Phase06 Not Verified; Phase07 not started.
-
 ## 1. Framework/status
 
-Angular22.2.3 + PrimeNG22.1.4; standalone/zoneless, established Reactive Forms. Manager /administration/global-crystal-reports and company consumer /reports/global are guarded by current identity policy. Complete technical gate passes; rendered hosted acceptance remains open without starting Angular.
+### Verify Database action — 2026-11-07
+
+Version actions include `Verify Database and Publish`. It runs against the stored
+RPT through the API/Crystal runtime and publishes the adapted result without a
+download round trip. It requires Upload and Publish rights and preserves earlier
+versions. New fields become available to the report schema; Crystal does not place
+or format them in report sections automatically. See
+[automation evidence](VERIFY_DATABASE_AUTOMATION_2026-11-07.md).
+
+### Manager action dropdown and single-row toolbar — 2026-11-05
+
+GlobalTemplateList composes the shared ActionMenuButton using the existing core
+Actions label and reporting command labels/icons. The feature supplies only
+currently permitted upload/register/designer/schema actions and dispatches their
+IDs to the existing GlobalTemplateState and GlobalTemplateDesigner. Pending blocks
+the trigger and dispatch; schema stays disabled without a selected entity or its
+Download permission. No permissions or submission semantics change.
+
+MyDataGrid uses its existing single-row toolbar mode. CollectionFrame owns the
+text-only search's 220px minimum and local horizontal scrolling. Search,
+entity/status selectors, Actions and Grid options share one row, including RTL.
+The PrimeNG popup renders outside the toolbar scroll area. This supersedes the
+list toolbar grouping in section39, while retaining other ActionButtonGroup uses.
+[The current contract and receipt](MANAGER_ACTION_MENU_2026-11-05.md) separate
+fixture-browser acceptance from live API/Crystal/native release gates.
+
+### Report sidebar version management — 2026-11-05
+
+Requester-authorized report sidebar actions retain the granted RPT source download
+and add a deferred entry to the existing template upload/version dialogs. Exact
+entity/reportKey resolution and immutable SourceId/version-token matching precede the existing
+management and report Upload ACL checks. A new version does not publish itself.
+The viewer refreshes after closing details; session/selection changes destroy the
+scoped editor and cancel pending work. No API, database, permission or other-client
+contract change is introduced. The [owning sidebar contract](REPORT_TEMPLATE_SIDEBAR_2026-11-05.md)
+records source, verification and acceptance limits.
+
+### Current evidence registration — 2026-11-05
+
+The requester-authorized [current Reporting evidence baseline](../../CURRENT_EVIDENCE_BASELINE_2026-11-05.md)
+registers existing sources and retained receipts only. Unavailable historical raw
+logs are preserved in an inventory, not claimed as recovered or replayable proof.
+FOLLOW-025 owns future reliance on those logs. This documentation-only correction
+does not re-run runtime tests, change platform scope or close release gates. Earlier
+verification statements below retain their original dates and bounded scope.
+
+### Current Angular composition maintenance — 2026-11-05
+
+GlobalTemplateManager is the composition root and sole provider of
+GlobalTemplateState and GlobalTemplateAccessState. Feature-owned components now
+render the list, registration dialog, upload dialog, detail dialog, overview,
+versions and confirmations. Date formatting is centralized in
+utils/global-template-presentation.ts. The existing permissions and designer
+components remain in the feature. Children use shared grids/forms/dialogs and
+inherit the page's states, pending/permission rules and close protection.
+
+The detail-dialog close event reads the view query signal before calling its
+method: closeGuard().requestClose(). The Reporting public-API import resolves to
+pages/global-template-manager/global-template-manager.ts. A stale port4210 watcher was
+confirmed and recovered by restarting that session; a new build and Chrome login
+check passed. The reproduced HTTP/2 status-message warning belongs to Vite's
+response handler and does not alter the application contract; see
+[development-server diagnostics](../../../../guides/web/ANGULAR_ENVIRONMENT.md#development-server-diagnostics--2026-11-05).
+
+Full Angular check (98 files / 560 tests), 30 architecture checks, lint, strict types/templates and
+production build passed. The manager pagination browser suite passed 6 fixture cases;
+the focused manager suite passed 15 tests. Current evidence and limitations:
+[execution report](../../../../guides/web/architecture/ANGULAR_COMPONENT_DECOMPOSITION_2026-11-05.md).
+Report browser-script refresh is Verified under FOLLOW-026; historical raw-log availability remains
+FOLLOW-025 under the current-evidence baseline. No API/Next/Mobile/database
+or dependency change. Existing Phase06 Not Verified and release gates stay open.
+
+Status: source and technical gates Verified for the expanded scope; integrated hosted/browser/native acceptance Active. Phase06 Not Verified; Phase07 not started.
+
+Angular 22.2.3 + PrimeNG 22.1.4; standalone/zoneless. Report criteria use native Signal Forms with the lightweight shared layer; upload/designer retain Reactive Forms at their compatibility boundaries. Manager /administration/global-crystal-reports and company consumer /reports/global are guarded by current identity policy. Hosted acceptance remains separate from the local technical verification recorded above.
 
 ## 2. Pattern/reference
 
@@ -51,6 +123,14 @@ Generic collection spacing, wrapping and selector width, shared dialog floating-
 Creation: RPT/description through shared form. Editing: append version; prior source/publication retained. Viewing: version grid exposes status/reason/fingerprint. Listing/filtering: shared server-paged grid and exact entity selection. Mock generator: N/A for authoritative source/validation; typed synthetic test fixtures only, never fabricated native validity in runtime.
 
 ## 13. Verification
+
+Current sidebar increment2026-11-05: full Angular check passes 98 files / 567 tests,
+30 architecture checks, strict types/templates, lint/format and production build.
+The exact immutable SourceId and publication Token are checked against the existing
+backend contract; tests reject mismatched report identity and a changed publication
+version even when file bytes have the same hash. Earlier counts below retain their
+dated scopes. Current browser receipts and source hashes are registered in
+verification/REPORT_TEMPLATE_SIDEBAR_2026-11-05.json. Phase06 overall remains Not Verified.
 
 1239 API tests passed, 0 failed, 3 existing opt-in browser skips across 12 projects; Reporting 203; architecture 70. Angular full check: 504 tests/90 files, 26 architecture cases, format/lint/strict types/templates/catalog and production build passed. Next reporting: 30 tests plus permission-catalog parity, type-check and architecture passed. Mobile full check: 601 tests/195 suites passed; repository-wide coverage remains limited (28.34% lines), not feature-specific acceptance. DOM tests additionally cover registration, invalid responses, All-filter stability, form focus, role paging/drafts/conflict/identity revocation. The registration dialog additionally passes40browser fixture cases; native PDF and remaining hosted manager journeys stay unverified.
 

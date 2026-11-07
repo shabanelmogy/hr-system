@@ -2,6 +2,8 @@
 
 ## 1. Ownership and authorization
 
+Angular correction 2026-11-07: /administration/language-translation now implements the existing global source/base/target/status/search/server-page/edit/reset contract through MyDataGrid, shared Signal Forms, DialogPanel and UnsavedChanges. The reviewed reference is SystemLocalizationsPage/CompanyLocalizationsPage in system mode. See ../angular-super-admin-settings/angular-super-admin-settings-review.md and its verification/language-translation receipts. The separate tenant Localization API is not the global editor. The read source is discovered from settings instead of hardcoding platform-auth. Angular/API matching catalog publication remains PROD-019.
+
 Platform owns global registered UI text configuration. SuperAdmin role is mandatory; SystemUiTexts:View/Edit/Reset are independent global grants. Every catalog key additionally requires its owning screen view authority. Unknown/company-private prefixes fail closed. No tenant/company identity is simulated.
 
 ## 2. Reviewed reference and shared screen pattern

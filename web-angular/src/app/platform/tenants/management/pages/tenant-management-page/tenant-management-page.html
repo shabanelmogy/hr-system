@@ -1,0 +1,37 @@
+<main>
+  <erp-page-header
+    [exportSource]="exportSource()"
+    variant="collection"
+    [title]="text('title')"
+    [views]="views()"
+    [view]="view()"
+    [total]="reads.total()"
+    [totalLabel]="text('tenantsLabel')"
+    [filterVisible]="toolbar()"
+    [primaryAction]="editor.canCreate() ? { label: text('addTenant'), icon: 'add' } : null"
+    (primaryActivated)="create()"
+    (viewChange)="choose($event)"
+    (refresh)="refresh()"
+    (filterToggle)="toolbar.set(!toolbar())"
+  />
+  @if (catalog.view().kind === 'error') {
+    <erp-feedback-state
+      kind="error"
+      layout="inline"
+      [title]="text('catalogLoadError')"
+      [actionLabel]="'actions.retry' | uiText"
+      (action)="catalog.refresh()"
+    />
+  }
+  @if (catalog.view().kind === 'forbidden') {
+    <erp-feedback-state
+      kind="forbidden"
+      layout="inline"
+      [title]="'authorization.forbidden.title' | uiText"
+    />
+  }
+  <div class="workspace" data-testid="tenants" [attr.data-kind]="reads.source().kind">
+    <erp-tenant-collection-view [kind]="view()" [toolbarVisible]="toolbar()" />
+  </div>
+  <erp-tenant-editor />
+</main>

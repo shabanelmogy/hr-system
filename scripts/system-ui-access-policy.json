@@ -408,6 +408,12 @@
   {
     "client": "web",
     "namespace": "platform-auth",
+    "prefix": "accountProfile",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
     "prefix": "personalDetails",
     "permissions": []
   },

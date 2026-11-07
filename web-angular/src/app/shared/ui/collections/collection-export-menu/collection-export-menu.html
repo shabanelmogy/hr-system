@@ -1,0 +1,11 @@
+@if (export.available()) {
+  <erp-action-menu-button
+    [label]="(export.pending() ? 'collectionExport.preparing' : 'actions.export') | uiText"
+    [actions]="formats()"
+    [disabled]="export.pending()"
+    (activated)="export.run($event)"
+  />
+  @if (export.pending()) {
+    <erp-button [label]="'actions.cancel' | uiText" variant="text" (activated)="export.cancel()" />
+  }
+}

@@ -1,5 +1,31 @@
 # Angular shared components
 
+## Responsive verification and collection sizing
+
+Apply the mandatory [responsive layout contract](ANGULAR_RESPONSIVE_LAYOUT.md)
+for compact viewports, sidebar-dependent content sizing, natural dashboard cards,
+compact headers and the development-only preset preview in a separate tab.
+
+The shared `ViewportDebugger` is rendered in MainShell's TopBar only when
+`isDevMode()` is true. It displays `window.innerWidth × innerHeight` in CSS pixels,
+updates on resize, and labels the current layout interval: xs below600, sm600–899,
+md900–1199, lg1200and above. It is an inspection aid, not a device detector; browser
+zoom affects CSS pixels. Do not use physical screen dimensions for media-query checks.
+Production shell rendering excludes the indicator. Labels use core EN/AR resources.
+
+The indicator includes the shared `CopyButton` in its optional `iconOnly` mode.
+Copy reads the latest signal value at activation (for example `390 × 844 · xs`),
+including after a resize. Its accessible label uses `displayDebugger.copy` in EN/AR.
+The generic copy owner handles unavailable/denied clipboard access and stale async
+feedback; icon mode keeps its live feedback accessible without widening the TopBar
+and shows a check icon on success. Existing text-button consumers keep their default
+outlined layout. The diagnostic badge inherits the TopBar text color for contrast.
+
+MyDataGrid's host must use `flex: 1` alongside zero minimum sizes when composed in a
+flex collection workspace. A hidden toolbar must not make its width shrink to the
+footer's content. Browser acceptance compares Grid width to the owner workspace,
+in addition to verifying no outer scroll. CardList already follows the same rule.
+
 Current source: web-angular/src/app/shared/ui. Ownership is generic presentation,
 field/control integration and form behavior. Business rules, permissions, API
 services and feature validators stay with their feature. Platform localization and
@@ -10,6 +36,28 @@ All shared components follow the mandatory
 typed focused logic, shared ownership and automatic formatting/architecture gates.
 
 ## Current structure
+
+### Collection consistency contract — 2026-11-06
+
+Pagination presentation belongs exclusively to CollectionFooter. When record
+navigation is enabled, Grid and Cards use the same centered record controls and
+edge page-size settings at every known-total/cursor consumer. A cursor source may
+add explicit page controls in the shared context slot, show an unknown total and
+disable last-record navigation; it must not fabricate counts or use another
+feature-local footer. Responsive wrapping, dimensions, RTL and focus are shared
+policy, never page-specific overrides. Native Paginator remains the documented
+adapter for page-only known-total collections.
+
+MyDataGrid owns column-filter menus and AND/OR editors. A remote owner supplies
+typed field definitions, applied filters and callbacks, and implements real
+server predicates before paging/count/cursor merging. Never add a local predicate
+over only the current remote page or silently ignore unsupported fields.
+
+RecordSummary offers optional compact labeled metadata, and the shared entity
+card header mixin accepts an optional title-line count. Owners provide domain
+values; shared code owns recurring typography, spacing and wrapping. System Error
+Logs consumes these APIs with container-fitting cards. Acceptance and rollout:
+angular-system-log-collection-consistency; hosted query rollout is PROD-030.
 
 S3-A7 adds `imports/spreadsheet-import-panel/spreadsheet-import-panel.ts`, the shared PrimeNG FileUpload
 selection/template/action shell. Its file bytes stay local; owner-supplied JSON
@@ -67,6 +115,26 @@ and build evidence: angular-localization-foundation/STRUCTURE_PERFORMANCE_REPORT
 
 ## Existing components
 
+### Compact import workspace — 2026-11-05
+
+Reuse `SpreadsheetImportPanel` for local file selection, template/submit/clear
+actions, optional status counts and bounded preview composition. Its shared header
+groups existing commands opposite the title; instructions use an accessible native
+disclosure. SurfaceCard's existing `fill`/`compact`/`headerTemplate` APIs provide
+the full available-height composition. Keep an unbroken flex/min-height:0 chain
+in its host. The table owns scrolling; no feature-specific viewport subtraction.
+Status metrics form a vertical rail at inline-end with a theme border separator;
+small viewports render the preview first and bound the rail's scrolling height.
+MetricCard's optional `compact` input preserves the default for other consumers.
+
+The caller supplies `counts`, `message` and `messageDetail` and retains file rules,
+permissions, validation, submission and uncertainty. Show a short summary above
+the preview and retain complete field/row diagnostics in the data. FeedbackState's
+inline layout places descriptions below their titles so narrow text cannot collapse
+to individual characters. Never infer a specific duplicate row from a batch error.
+The applied [Import workspace contract](../../../modules/platform/features/angular-countries-import-view/IMPORT_WORKSPACE_2026-11-05.md)
+records the current consumer, error boundaries and acceptance evidence.
+
 Clean Code hardening retains MyDataGrid as the public collection shell. Its
 colocated `grid-column-presentation.ts` owns generic preferences and
 `grid-viewport.ts` owns native size/font observation. Shared `CollectionColumnPipe`
@@ -77,10 +145,89 @@ record-feedback decisions and criteria normalizers retain their existing owners.
 | Public API | Generic responsibility | Caller responsibility |
 | --- | --- | --- |
 | ActionButton | Native button type, busy/disabled/selected state, focus, translated label, full-width | Domain callback, permission, actual operation pending |
+| ActionMenuButton | Anchored PrimeNG popup menu, one named non-submit trigger, icons, keyboard/focus, unique menu IDs and current disabled guards | Translated label, unique action IDs/labels/icons, permission-filtered actions, pending and action callback |
 | TextField | Text/email/password CVA, label/help/error IDs, clear/reveal, readonly/disabled, IME and zoneless control updates | Typed control, validators and translated error messages, required label marker, autocomplete policy |
 | FormContainer | Projected header/content/footer, native noValidate, touched errors and summary links, first invalid rendered focus, pending/read-only submit guard | Typed form, feature title/action/feedback, save pending and actual authorized submit |
 | applyServerFieldErrors | Exact nested dot/index field matching, preserve client errors, return unknown paths | API-specific error parsing and unmatched form feedback |
 | clearServerFieldError | Remove only server error without discarding other validator errors | No business conflict/forced replay decision |
+
+## Action menus and single-row toolbars — 2026-11-05
+
+Use `ActionMenuButton` (`erp-action-menu-button`) from the Shared public API when
+several existing commands should share a dropdown trigger. Supply readonly
+`ActionMenuItem` entries with stable unique `id`, translated `label`, optional
+public `AppIconName` and `disabled`. Bind the global pending state to `disabled`
+and handle the emitted `activated` ID in the feature. The feature filters actions
+by permission and rechecks its current policy before dispatching to its existing
+state/service; Shared never decides grants or performs HTTP. Duplicate IDs fail
+closed. Removed, disabled or globally blocked commands cannot emit from retained
+menu callbacks. No schema, business operation or form engine belongs here.
+
+`ActionButton` accepts existing leading `[buttonIcon]` content and optional trailing
+`[buttonEndIcon]` content. DOM order defines icon placement, as documented by
+[PrimeNG Button](https://primeng.dev/button#icons). ActionMenuButton uses the trailing
+slot for a `chevronDown` indicator with a logical separator and an expanded-state
+rotation. Keep this visual dropdown affordance even while closed; a download arrow
+before the label does not communicate a menu clearly. Shared owns these styles
+and respects RTL and reduced-motion preferences. The whole control remains one
+button and one keyboard target.
+
+The adapter composes the existing `ActionButton` with PrimeNG `Menu` in popup mode;
+the popup is appended to body so a scrolling toolbar does not clip it. PrimeNG
+owns menu keyboard navigation, Escape and trigger focus restoration. External
+HTML/SCSS only adapts icon and long-label layout to the existing theme. Its scoped
+`dt` imports the adopted Aura Menu preset and maps root/item/list tokens to the
+existing application surface, foreground, border and accent variables, following
+the existing ContextMenuPanel strategy. The global preset is intentionally
+selective; a newly adopted component must supply its own registered/scoped tokens
+before visual acceptance. Do not compensate for absent tokens with feature CSS.
+PrimeNG MCP Menu API, popup example, scoped-token guide and usage validation were
+consulted; actual browser verification remains necessary for the installed version.
+
+Reuse `MyDataGrid`'s existing `toolbarLayout="single-row"` for a toolbar that keeps
+search, projected filters, actions and Grid options on one line. Small viewports
+scroll inside that toolbar. `CollectionFrame` gives a text-only search a 220px
+minimum; field/operator search retains its existing 540px minimum. Responsive
+wrapping remains the default for other consumers. Do not add feature-local flex,
+scroll or menu CSS. The current manager consumer and verification are recorded in
+[the manager action menu contract](../../../modules/reporting/features/global-crystal-template-manager/MANAGER_ACTION_MENU_2026-11-05.md).
+
+## Loaded snapshot collections — 2026-11-06
+
+Use `createLocalCollection` from the Shared UI public API for an already loaded,
+immutable array, such as a record's field-change snapshots. Provide signal-backed
+`rows` and `scopeKey` callbacks, allowed `pageSizes` (the first is the default),
+and explicit raw-value selectors in `sortValues`. Bind its `source`, `sort`,
+`changePage` and `changeSort` to the existing `MyDataGrid`; keep the shared Grid
+shell, columns, feedback, footer and selection. This adapter never fetches data.
+Do not use it to sort or filter one downloaded page of a remote collection.
+
+Local text filtering is opt-in through `textFilterFields`. Bind
+`CollectionTextFilter.columns` to translated `{ field, label }` entries,
+`filter` to the adapter's current criterion, and `filterChange` to
+`changeFilter`. The filter editor composes the existing shared popover, fields,
+options and buttons; `isAnyOf` has individual add/remove value controls. It
+supports contains/notContains, equals/notEquals, startsWith/endsWith,
+isEmpty/isNotEmpty and isAnyOf. The single-condition contract is independent of
+remote `GridFilters` and does not add operators to API codecs.
+
+The adapter filters the complete snapshot before stable sorting and paging.
+Null/undefined/empty-string checks use raw values, never translated empty labels.
+Text queries are trimmed; equality/list matching uses case/diacritic-insensitive
+search collation. Criteria changes reset the page and shared row selection;
+replacing the snapshot or scope resets page, sort and filter. Keep original row
+IDs stable across sorting/filtering. Allowed filter fields are intersected with
+the adapter's own raw selectors; malformed criteria preserve the existing filter.
+
+`MyDataGrid.recordNavigation` and `selectionEnabled` remain explicit opt-ins.
+Activate them when required by the reviewed source. Interactive checkbox controls
+must not trigger a single-click row action. Unknown totals stay null, and the last
+record is unavailable until an authoritative bound exists.
+Unknown-total footers keep direct page controls alongside record navigation;
+stepping individual records does not replace the cursor-page action.
+The native Table sort field is cleared with `null`, because the installed PrimeNG input treats
+`undefined` as an omitted update. Tests cover local criteria, stable rows,
+selection/navigation and resetting an applied native sort.
 
 ## Current form contract — D07/D39, 2026-11-04
 
@@ -212,6 +359,26 @@ Shell exposes generic context-component and feedback InjectionTokens. Only the l
 
 ## Shared collections (S1-A3)
 
+Entity-card recurring typography and metadata styles now live in Shared Sass
+cards/_entity-card.scss. Countries and States domain header/content components
+include its header/content mixins; domain labels/values/quality rules remain
+feature-owned. Use the existing SurfaceCard/CardList slots and this shared
+presentation before copying card CSS. MainShell stretches the routed page inside
+scope-view; nested workspace and import owners compose column Flex with min-height0
+so short data does not collapse the remaining screen area. Current States and
+Countries Import acceptance checks actual bounds, not only a height declaration.
+
+Selection placement maintenance2026-11-05: MyDataGrid renders its single
+page-selection checkbox inside the selection column header, spanning grouped
+headers once. It is present only for enabled multiple/range selection. Its state
+comes from the existing CollectionController: current eligible page only, partial
+selection announced as mixed, and disabled outside a ready eligible page. Count
+and Clear share CollectionFooter through its content slot; no standalone Table
+selection bar consumes vertical data space. CardList retains its selection bar.
+The internal CollectionFrame selectionPlacement defaults to bar; Grid chooses
+footer. Features must not recreate either presentation or selection state.
+Evidence: angular-collection-foundation/HEADER_SELECTION_2026-11-05.md.
+
 MyDataGrid<T>/erp-data-table and CardList<T> are the public collection shells.
 CollectionColumn/Source/Query/Page/Sort/Search contracts and typed CollectionCell,
 CollectionCardTemplate and CollectionEmptyTemplate are exported by shared/ui/public-api.
@@ -234,6 +401,19 @@ or actual Countries parity. Canonical labels still use the schema3/SQL UI catalo
 matching API resource deployment stays PROD-019.
 
 ## Shared business reference field (S1-A4)
+
+Parent-dependent feature forms use the existing ReferenceField with owner-scoped
+ReferenceSource/ReferenceSelection. Keep lookup transport in the referenced
+domain's service and expose a narrow public entry when another owner consumes it;
+the Angular Countries lookup.public-api.ts is the current read-only example.
+The dependent feature owns independent lookup grants, active membership, loading/
+empty/error/forbidden and actor fencing. A retained unavailable parent is a
+disabled display option, never an active choice. Compose native Signal Forms
+validation with lookup signals so availability changes revalidate the selected ID
+without requiring an edit or disabling Save. Dirty-key normalization must accept
+incomplete drafts, and detail-to-draft conversion must explicitly project form
+fields rather than spread response metadata. States' state-mutation/read/parent
+controllers demonstrate this foundation; full States customer UI remains pending.
 
 ReferenceField and typed ReferenceId/Option/Query/Result/Source/Selection contracts
 are public through shared/ui/public-api. Single scalar CVA preserves numeric0 versus
@@ -809,3 +989,166 @@ tests and six EN/AR production-fixture browser cases including RTL joined edges.
 Shared AppearancePreferences composes existing OptionSelect/ActionButton with controlled typed language/mode inputs and events. AuthLayout/MainShell retain preference writes. CollectionOptionsDialog is internal to CollectionFrame; createGridPresentation is internal per-grid state. MyDataGrid public API remains stable. Countries card header/content, read-detail dialog and lifecycle confirmation remain feature-owned; page-scoped providers remain at the page. GlobalReportView uses external template/styles.
 
 The reusable policy, extraction decisions, CSS/projection/provider boundaries, source examples and regression requirements are in [Angular component composition](ANGULAR_COMPONENT_COMPOSITION.md). Current evidence: [D41 report](../../../modules/platform/features/angular-collection-foundation/COMPONENT_COMPOSITION_REPORT.md).
+
+## Small form components and tab focus — 2026-11-06
+
+FormContainer owns a nearest-form field registry. Shared FormFieldControl instances
+register through Angular DI, including fields inside child-component views, and
+unregister on destruction. Registration follows DOM order and is isolated between
+form containers. Feature field groups inject their page-scoped editor state; they
+do not create another form, error store, submission handler or shared field copy.
+
+Assign `formSection="identity"` (or another stable feature section ID) to a child
+component or group. Handle FormContainer.sectionFocusRequested by selecting the
+corresponding tab. FormContainer then focuses the registered field after rendering.
+Use ContentTabs.keepAlive for forms whose inactive panels must retain controls and
+drafts. The same section/focus contract handles invalid submit, server field errors
+and validation-summary links. Non-section fields retain direct focus; legacy
+Reactive Forms remain an explicit compatibility boundary.
+
+FormFieldControl is the public extension contract for a domain-specific value field
+that cannot be expressed with existing shared controls. The Tenant entitlement
+picker is one such aggregate field: it composes shared BooleanField inputs and
+inherits the existing label/error/touch/focus lifecycle. Do not build a field-schema
+renderer or Form Engine. The optional shared `forms/_field-layout.scss` mixin owns
+recurring field-group spacing; feature components supply only their domain layout.
+
+MetricCard.compact adapts to its own container width. At widths up to12rem, the
+label occupies a full row above the icon/value so ordinary words remain readable
+inside narrow entity cards. Wider Import statistics keep their existing inline
+layout. This policy belongs to MetricCard rather than a Tenant-only CSS override.
+PrimeNG MCP Styled Mode and Card metadata were consulted; Card supplies no metric
+layout policy. The change uses existing application CSS/tokens and introduces no
+vendor selector override or dependency. Metadata validation of the supplied markup
+does not validate CSS or the custom MetricCard; browser checks own that evidence.
+
+FormContainer.appearance=`page` is the routed-form container. It retains the
+borderless shared form surface while using the existing spaced persistent action
+footer from dialog forms. It does not alter plain/sidebar consumers. Compose it
+with PageHeader/SurfaceCard and an owner-supplied summary when a full page is
+required by C-01. Keep the same form tree, field groups, validation focus and
+submission owner when adapting a dialog to a page. Add an explicit route
+canDeactivate unsaved guard and use current authority at direct-link entry.
+
+## Viewport workspaces and consistent back navigation — 2026-11-06
+
+PageHeader.appearance=`card` is the generic title-card surface for form/workflow
+pages. PageHeader.backLabel/backDisabled/backRequested place the shared BackButton
+before the h1, with an accessible translated name and logical RTL arrow direction.
+LauncherGrid exposes the same back-label/event pattern and uses that shared button.
+Features own the destination; shared presentation never calls history.back or the
+router. Do not add a separate text Back action after the title.
+
+Primary form/collection pages have no outer page scrollbar. Route presentation
+data `workspaceLayout: 'fill'` and optional `workspaceDensity: 'compact'` are read
+generically by Shell/ApplicationFrame. FormContainer.fillContent reserves the
+footer and scrolls its own body through ScrollViewport. Draft summaries remain
+available through PopoverPanel on compact screens. The shared collection-page
+Sass shell keeps Countries and Tenant Management header insets/gaps identical;
+States/Districts/Tenant Admins inherit it. See ANGULAR_SCROLLING.md for the browser
+acceptance rules; do not clip overflow as a substitute for reachable content.
+
+BooleanField.density=`compact` reduces label/padding while keeping44px control
+height. The Tenant module/area picker composes that option and tighter domain
+layout spacing; controls retain the shared field lifecycle and keyboard behavior.
+
+## Allowlisted collection presentation preference (S4-A4 foundation)
+
+`shared/data/public-api` exports `createViewPreference`. Owners supply an Angular-
+namespaced key, a safe default and their current typed view allowlist. It stores
+only the presentation string, tolerates unavailable storage/SSR, synchronizes
+same-key browser events and unregisters listeners with the owning injector.
+Application data, filters, diagnostics, credentials and form drafts never belong
+in this helper. Only its exact implementation path may access localStorage;
+other owners and sessionStorage remain rejected by the architecture checker.
+
+Always pass `canSynchronize` when a view transition can unmount an editor. Check
+registered UnsavedChanges dirty/busy, local active editor and lifecycle/pending
+state. Incoming storage events do not obtain discard consent. Explicit feature
+transitions retain the normal shared consent and post-await actor/stamp checks.
+Keep view-dependent collection work (selection, Chart page1) in the feature owner,
+including restored/synchronized transitions. Reuse typed PageViewOption<T> to
+construct allowlists without unchecked casts.
+
+Tenant Management, Countries, States and Districts use this owner now. Scoped
+unit14/2files and fixture-browser16EN/AR390/1440 cases prove their restore,
+synchronization and unavailable-value fallback; wide cases include actual SPA
+route departure/back. Independent source review has no P1/P2. Error Logs consumer
+and full S4-A4 acceptance remain Required under FOLLOW-027; this foundation is not
+acceptance of either new screen.
+
+
+Administration navigation2026-11-06: application composition groups existing audit/operational/error/settings entries below the translated Administration parent. Shared NavigationList retains nested rendering/filtering/keyboard behavior. Tenant management and Global Geography keep their current hierarchy. Global Report Manager remains standalone after the requester reversed its proposed move. Current acceptance907tests/177files,8ErrorLogs navigation cases and24geography cases; portable S4-A4 receipt registers the source. Future entries require real authorized workflows.
+
+## Account consumer additions — 2026-11-07
+
+`ContentTabs.commitMode` defaults to `immediate`. A page requiring asynchronous
+discard consent uses `external`, supplies the committed `selected` value and
+handles `selectionRequested`. The adapter restores PrimeNG's public `value` model
+while the decision is pending; only an owner-approved value activates another
+panel. Never implement this with a feature-local tabs copy or allow a visual
+transition before consent. `keepAlive` controls mounting independently; it does
+not authorize a tab transition. Unit and production-asset browser evidence is
+registered under `angular-account-profile`.
+
+`FileField.dropzone` defaults to false, preserving existing basic pickers.
+Opting in uses PrimeNG FileUpload's advanced mode and `dropLabel` for a translated
+prompt. Both modes remain single-file, nonautomatic and custom-upload only;
+the service owns persistence. No URL/credentials/business-specific validation is
+embedded in this shared adapter. Existing read-only/disabled/clear/field-error
+contracts apply. A consumer validates its domain file rules and provides explicit
+Save/Undo actions. The native file dialog remains an accessible alternative to
+dragging.
+
+PrimeNG MCP FileUpload and Tabs metadata/examples were consulted. Final generated
+API usage validation accepted both components. Tabs metadata does not enumerate
+the Angular model's generated output separately; the routed controlled example,
+installed22.1.4 public model and Angular/browser checks establish that behavior.
+See [FileUpload](https://primeng.dev/fileupload) and [Tabs](https://primeng.dev/tabs).
+MCP acceptance covers API metadata only, not compilation, geometry or consent.
+
+## All-filtered collection export
+
+Collection pages bind `PageHeader.exportSource` to the feature state's typed
+`TabularExportSource`. The header owns one `CollectionExportMenu` for Excel and
+CSV, independent of the current Grid or Cards view. Do not create a feature-local
+export button, workbook encoder, second collection toolbar or current-page export
+handler. The shared menu reuses `ActionMenuButton` and shared feedback.
+
+The feature state captures its verified actor, locale, immutable filter/order
+identity and explicit scalar columns. Use `pagedTabularSource` for known totals,
+`collectExportCursor` for cursor APIs and `localTabularSource` only when the owner
+has already loaded the complete collection. Data-page requests remain in the
+owning service. Exclude paging from `criteriaKey`; retain every applied filter,
+sort and archived-state criterion. A page change alone does not cancel export.
+Provide stable row IDs and an `isCurrent` predicate that includes source access.
+Never derive a server-wide export from the rendered Grid rows or selection.
+
+Shared orchestration is `createCollectionExport`; formatting is supplied through
+`TABULAR_FILE_WRITER`. Application composition binds that port to Reporting's
+`TabularFileService`. Shared code must not import Reporting or Platform. The
+formatter service chooses the verified tenant/global contract and owns HTTPS,
+credentials, CSRF, response checks and file generation. The API does not fetch
+business rows and cannot grant source access. A global actor needs the independent
+`GlobalDataExports:Export` permission in addition to the source View permission;
+System Error Logs also retains its dedicated Export grant and5000row limit.
+
+The general envelope is100000rows,200columns,2000000cells and8MiBof request
+data. Domain limits can be smaller. Empty results, count drift, duplicate IDs,
+cursor loops and limit overflow fail explicitly without a truncated download.
+The APIs do not supply a cross-request atomic database snapshot. Capture explicit
+allowlisted fields, exclude actions/selection/diagnostic secrets, and disambiguate
+duplicate translated headers. Do not export arbitrary DTO properties.
+
+Actor, permissions, applied criteria, locale or owner destruction cancels the
+operation and suppresses stale file downloads and feedback. Keep an explicit
+Cancel action while preparing. Never reset visible collection paging, selected
+rows or business drafts as a side effect. No automatic retry after denial or
+failure. Each future collection consumer must verify its actual filters and
+all-page results, both file formats, any supported views, cancellation and denial
+at EN/AR390/900/1440, including900x640 and both themes. Browser fixtures must parse
+the actual API-generated files and compare their rows, not merely count clicks.
+
+Canonical source and evidence belong to
+`documentation/modules/platform/features/angular-collection-export/`. Hosted
+rollout is independently tracked by PROD-032.

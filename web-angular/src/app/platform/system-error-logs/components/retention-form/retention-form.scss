@@ -1,0 +1,9 @@
+:host {
+  display: block;
+  min-inline-size: 0;
+}
+p {
+  color: var(--muted-foreground);
+  line-height: 1.6;
+  margin: 0;
+}

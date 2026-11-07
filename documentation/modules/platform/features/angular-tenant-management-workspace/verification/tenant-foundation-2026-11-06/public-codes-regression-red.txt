@@ -1,0 +1,63 @@
+
+> erp-angular@0.0.0 pretest
+> npm run configure:license
+
+
+> erp-angular@0.0.0 configure:license
+> node --env-file-if-exists=.env.local scripts/configure-license.mjs
+
+PrimeUI local license configured (value omitted).
+
+> erp-angular@0.0.0 test
+> node scripts/run-angular.mjs test --watch=false --include=src/app/platform/tenants/management/services/tenant-management-service.spec.ts
+
+API target: host (https://shabanhrms.runasp.net)
+> Building...
+√ Building...
+Application bundle generation complete. [8.444 seconds] - 2026-11-06T01:00:46.320Z
+
+
+ RUN  v5.0.5 F:/Portofolio Projects/ERPSYSTEM/web-angular
+
+ ❯ |erp-angular| src/app/platform/tenants/management/services/tenant-management-service.spec.ts (4 tests | 1 failed) 60ms
+   ❯ Tenant management cookie transport (4)
+     × does not promote arbitrary ProblemDetails titles into domain error codes 15ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |erp-angular| src/app/platform/tenants/management/services/tenant-management-service.spec.ts > Tenant management cookie transport > does not promote arbitrary ProblemDetails titles into domain error codes
+AssertionError: expected Error: Command rejected { …(4) } to match object { Object (outcome, codes, ...) }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+- {
+-   "codes": [],
++ CommandFailure {
++   "codes": [
++     "Private.InternalCode",
++     "Identifier",
++   ],
+    "fieldErrors": {
+      "identifier": "Choose a unique identifier",
+    },
+    "outcome": "rejected",
+  }
+
+ ❯ src/app/platform/tenants/management/services/tenant-management-service.spec.ts:152:27
+    150|         { status: 400, statusText: 'Bad request' },
+    151|       );
+    152|     expect(await outcome).toMatchObject({
+       |                           ^
+    153|       outcome: 'rejected',
+    154|       codes: [],
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  03:00:46
+   Duration  3.36s (environment 65%, setup 25%, transform 5%, import 2%, tests 2%, worker 1%)
+

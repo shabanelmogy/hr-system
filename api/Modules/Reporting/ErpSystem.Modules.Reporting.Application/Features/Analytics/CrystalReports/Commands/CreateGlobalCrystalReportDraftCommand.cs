@@ -22,8 +22,10 @@ public sealed class CreateGlobalCrystalReportDraftCommandValidator : AbstractVal
         RuleFor(request => request.DisplayName).NotEmpty().MaximumLength(200);
         RuleFor(request => request.Description).MaximumLength(500);
         RuleFor(request => request.ContractFingerprint).NotEmpty().Matches("^[a-f0-9]{64}$");
+        RuleFor(request => request.ViewName).Empty().When(request => request.SourceKey == "system-error-logs");
         RuleFor(request => request.ViewName).NotEmpty().MaximumLength(257)
-            .Matches("^[A-Za-z_][A-Za-z0-9_]{0,127}\\.[A-Za-z_][A-Za-z0-9_]{0,127}$");
+            .Matches("^[A-Za-z_][A-Za-z0-9_]{0,127}\\.[A-Za-z_][A-Za-z0-9_]{0,127}$")
+            .When(request => request.SourceKey != "system-error-logs");
     }
 }
 
@@ -50,8 +52,11 @@ public sealed class CreateGlobalCrystalReportDraftCommandHandler(
             request.Description?.Length > 500)
             return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportInvalidDraft);
 
-        var binding = views is null ? null : await views.InspectAsync(source.SourceKey, request.ViewName, cancellationToken);
-        if (binding is null)
+        var providerBound = source.BindingKind == "provider";
+        if (providerBound && !string.IsNullOrEmpty(request.ViewName))
+            return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportInvalidView);
+        var binding = providerBound || views is null ? null : await views.InspectAsync(source.SourceKey, request.ViewName, cancellationToken);
+        if (!providerBound && binding is null)
             return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportInvalidView);
         var outcome = await unitOfWork.ExecuteAtomicallyAsync(
             [$"global-crystal:identity:{source.SourceKey}:{request.ReportKey}"], async token =>
@@ -61,7 +66,7 @@ public sealed class CreateGlobalCrystalReportDraftCommandHandler(
                 if (await store.KeyExistsAsync(source.SourceKey, request.ReportKey, token))
                     return Result.Failure<Guid>(errors.CrystalReportDuplicateKey);
                 var report = GlobalCrystalReport.CreateDraft(source.SourceKey, request.ReportKey,
-                    request.DisplayName, request.Description, binding.ViewName, binding.Fingerprint);
+                    request.DisplayName, request.Description, binding?.ViewName, binding?.Fingerprint);
                 store.Add(report);
                 await unitOfWork.SaveChangesAsync(token);
                 return Result.Success(report.Id);

@@ -1,4 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthSession } from '../../../auth/session.public-api';
+import { tenantReadAllowed } from '../../management/policy.public-api';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, from, map, of, timeout } from 'rxjs';
 import {
@@ -10,11 +13,11 @@ import {
   ProgressMeter,
   StatusBadge,
   SurfaceCard,
+  ScrollViewport,
 } from '../../../../shared/ui/public-api';
 import { LocalizationRuntime, UiTextPipe } from '../../../localization/public-api';
 import { ThemeService } from '../../../../../theme/public-api';
 import { DashboardState } from '../../state/dashboard-state';
-import { SHELL_DATA_NAVIGATION } from '../../../../shell/context.public-api';
 import { subscriptionStatuses } from '../../types/dashboard-contracts';
 import { daysRemaining, statusAccent } from '../../presentation/dashboard-utils';
 @Component({
@@ -27,6 +30,7 @@ import { daysRemaining, statusAccent } from '../../presentation/dashboard-utils'
     ProgressMeter,
     StatusBadge,
     SurfaceCard,
+    ScrollViewport,
     UiTextPipe,
   ],
   providers: [DashboardState],
@@ -34,7 +38,12 @@ import { daysRemaining, statusAccent } from '../../presentation/dashboard-utils'
   styleUrl: './dashboard-page.scss',
 })
 export class DashboardPage {
-  readonly dataNavigation = inject(SHELL_DATA_NAVIGATION);
+  private readonly router = inject(Router);
+  private readonly auth = inject(AuthSession);
+  readonly canManage = computed(() => tenantReadAllowed(this.auth.readIdentity()));
+  manageTenants(): void {
+    if (this.canManage()) void this.router.navigateByUrl('/super-admin/tenants');
+  }
   readonly dashboard = inject(DashboardState);
   readonly locale = inject(LocalizationRuntime);
   private readonly theme = inject(ThemeService);

@@ -1,0 +1,75 @@
+<main>
+  <erp-page-header
+    [exportSource]="exportSource()"
+    variant="collection"
+    [title]="'states.viewTitle' | uiText: 'reference-states'"
+    [views]="views()"
+    [view]="view()"
+    [total]="state.total()"
+    [totalLabel]="'pagination.items' | uiText"
+    [filterable]="view() !== 'import'"
+    [filterVisible]="toolbarVisible()"
+    (viewChange)="chooseView($event)"
+    (refresh)="refreshCurrent()"
+    (filterToggle)="toolbarVisible.set(!toolbarVisible())"
+    [primaryAction]="
+      view() !== 'import' && editor.canCreate()
+        ? { label: stateText('states.add'), icon: 'add' }
+        : null
+    "
+    (primaryActivated)="editor.create()"
+  />
+  <div class="workspace" data-testid="states" [attr.data-kind]="state.source().kind">
+    @if (view() === 'grid' || view() === 'cards') {
+      <erp-state-collection-view
+        [kind]="view() === 'cards' ? 'cards' : 'grid'"
+        [toolbarVisible]="toolbarVisible()"
+      />
+    } @else if (view() === 'chart') {
+      @defer (on immediate) {
+        <erp-collection-chart-view
+          [source]="state.source()"
+          [rowId]="id"
+          [label]="'states.charts.title' | uiText: 'reference-states'"
+          [toolbarVisible]="toolbarVisible()"
+          [search]="chartSearch()"
+          [metrics]="analytics().metrics"
+          [plots]="analytics().plots"
+          (searchChange)="state.changeSearch($event)"
+          (retry)="state.refresh()"
+        >
+          <div toolbarFilters><erp-state-list-criteria [showSort]="true" /></div>
+          <ng-template erpCollectionEmpty
+            ><erp-feedback-state
+              kind="empty"
+              [title]="'states.charts.noData' | uiText: 'reference-states'"
+          /></ng-template>
+        </erp-collection-chart-view>
+      } @placeholder {
+        <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
+      }
+    } @else if (view() === 'import') {
+      @defer (on immediate) {
+        <erp-state-import-view (review)="chooseView('grid'); state.refresh()" />
+      } @placeholder {
+        <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
+      }
+    } @else if (view() === 'report' && canReport()) {
+      @defer (on immediate) {
+        <erp-global-report-view
+          #stateReport
+          entity="states"
+          [embedded]="true"
+          [showFilterBar]="toolbarVisible()"
+          [catalogErrorMessage]="stateText('states.reportCatalogError')"
+          [unavailableMessage]="stateText('states.reportUnavailable')"
+        />
+      } @placeholder {
+        <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
+      }
+    }
+  </div>
+  <erp-state-detail-dialog /><erp-state-editor
+    (saved)="saved($event)"
+  /><erp-state-lifecycle-confirmation />
+</main>

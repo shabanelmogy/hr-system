@@ -1,10 +1,11 @@
+import { GridExpansionState } from './grid-expansion-state';
+import { indexGridTemplates } from './grid-template-index';
+import { GridContextState } from './grid-context-state';
+import { GridQueryState } from './grid-query-state';
 import { attachGridViewport } from './grid-viewport';
 import {
   Component,
-  DestroyRef,
   type ElementRef,
-  Injector,
-  afterNextRender,
   computed,
   contentChild,
   contentChildren,
@@ -25,29 +26,14 @@ import { RadioButton } from 'primeng/radiobutton';
 import { RowActions } from '../row-actions/row-actions';
 import type { CollectionRecordRequest } from '../collection-record-feedback';
 import { collectionKeyTarget } from '../collection-keyboard';
-import {
-  ContextMenuPanel,
-  type ContextMenuAction,
-} from '../../overlays/context-menu-panel/context-menu-panel';
-import { filterByCellValue } from '../grid-cell-filter';
+import { ContextMenuPanel } from '../../overlays/context-menu-panel/context-menu-panel';
 import { UI_LOCALIZATION, UiTextPipe } from '../../../localization/public-api';
 import { GridLocale } from '../../../../../theme/grid-public-api';
 import { GridFilterInput } from '../grid-filter-input/grid-filter-input';
 import { FeedbackState } from '../../feedback/feedback-state/feedback-state';
+import { setPrimeGridFilterDraft } from '../grid-filter-adapter';
+import { gridFilterModes, type GridFilters, type GridColumnFilter } from '../grid-filter.types';
 import {
-  fromPrimeGridFilters,
-  toPrimeGridFilters,
-  setPrimeGridFilterDraft,
-} from '../grid-filter-adapter';
-import {
-  filterDefinitionValid,
-  gridFilterModes,
-  parseGridFilters,
-  type GridFilters,
-  type GridColumnFilter,
-} from '../grid-filter.types';
-import {
-  parseGridSort,
   type GridDisplayOptions,
   type GridSortItem,
   type GridSelectionMode,
@@ -69,12 +55,12 @@ import { AppIcon } from '../../icons/app-icon/app-icon';
 import { createGridCsv, gridCsvFilename, type GridCsvOptions } from '../grid-export';
 import type { GridPresentation } from '../grid-presentation';
 import { createGridPresentation } from './grid-column-presentation';
-import { gridColumnWidths, gridColumnMinimum, gridFrozenOffset } from '../grid-column-widths';
+import { GridGeometry } from './grid-geometry';
+import { downloadBlob } from '../../../data/public-api';
 import { createCollectionController } from '../collection-controller';
 import { attachCollectionFocus, collectionRowInteraction } from '../collection-focus';
 import {
   collectionPageSizes,
-  collectionQueryKey,
   type CollectionColumn,
   type CollectionId,
   type CollectionPageRequest,
@@ -115,7 +101,6 @@ import {
 export class MyDataGrid<T> {
   private static sequence = 0;
   readonly selectionName = 'erp-grid-selection-' + ++MyDataGrid.sequence;
-  private readonly injector = inject(Injector);
   readonly gridFilterModes = gridFilterModes;
   readonly filterDraft = setPrimeGridFilterDraft;
   readonly filterButtonProps: TableFilterButtonPropsOptions = {
@@ -129,12 +114,6 @@ export class MyDataGrid<T> {
     filterButtonBar: { style: { gap: '12px', paddingTop: '8px' } },
   };
   readonly locale = inject(UI_LOCALIZATION);
-  private readonly destroyRef = inject(DestroyRef);
-  private pendingSort: {
-    readonly value: CollectionSort;
-    readonly source: CollectionSource<T>;
-  } | null = null;
-  private sortScheduled = false;
   readonly source = input.required<CollectionSource<T>>();
   readonly label = input.required<string>();
   readonly columns = input.required<readonly CollectionColumn<T>[]>();
@@ -167,76 +146,7 @@ export class MyDataGrid<T> {
       : 50,
   );
   readonly cellContextFilter = input(true);
-  private readonly context = signal<{
-    readonly row: T;
-    readonly key: string;
-    readonly source: CollectionSource<T>;
-    readonly column: CollectionColumn<T> | null;
-    readonly value: unknown;
-  } | null>(null);
   private readonly rowMenu = viewChild<ContextMenuPanel>('rowMenu');
-  readonly contextItems = computed<readonly ContextMenuAction[]>(() => {
-    const context = this.context();
-    if (!context || !this.currentContext(context)) return [];
-    const rows = (this.contextActions()?.(context.row) ?? []).map((action) => ({
-      id: 'row:' + action.id,
-      label: action.label,
-      ...(action.icon === undefined ? {} : { icon: action.icon }),
-      ...(action.disabled === undefined ? {} : { disabled: action.disabled }),
-    }));
-    const filter = this.cellFilter(context);
-    return [
-      ...(filter
-        ? [
-            {
-              id: 'filter-by-value',
-              label: this.locale.translate('collections.filterByCellValue'),
-              icon: 'filter' as const,
-            },
-          ]
-        : []),
-      ...(filter && rows.length ? [{ id: 'separator', label: '', separator: true }] : []),
-      ...rows,
-    ];
-  });
-  readonly groupColumn = computed(() =>
-    this.grouping()
-      ? (this.columns().find((column) => column.key === this.grouping()?.field) ?? null)
-      : null,
-  );
-  readonly groupingValid = computed(() => {
-    const group = this.grouping();
-    if (!group) return true;
-    const column = this.groupColumn();
-    if (
-      !column ||
-      this.details() ||
-      this.frozenRows().length > 0 ||
-      (group.expandable && group.mode === 'rowspan')
-    )
-      return false;
-    if (this.controller.view().kind !== 'ready') return true;
-    if (group.scope === 'all' && this.controller.view().total !== this.rows().length) return false;
-    const seen = new Set<string>();
-    let previous: string | null = null;
-    for (const row of this.rows()) {
-      const value = column.value(row);
-      if (
-        (typeof value !== 'string' && typeof value !== 'number') ||
-        typeof row !== 'object' ||
-        row === null ||
-        Reflect.get(row, group.field) !== value
-      )
-        return false;
-      const key = JSON.stringify([typeof value, value]);
-      if (key !== previous) {
-        if (seen.has(key)) return false;
-        seen.add(key);
-        previous = key;
-      }
-    }
-    return true;
-  });
   readonly display = input<GridDisplayOptions>({});
   readonly toolbarVisible = input(true);
   readonly appearance = input<'standard' | 'reference'>('standard');
@@ -262,7 +172,6 @@ export class MyDataGrid<T> {
   readonly advancedFilters = input(false);
   readonly filters = input<GridFilters>([]);
   readonly filtersChange = output<GridFilters>();
-  readonly filterInvalid = signal(false);
   readonly sortMode = input<'single' | 'multiple'>('single');
   readonly sorts = input<readonly GridSortItem[]>([]);
   readonly sortsChange = output<readonly GridSortItem[]>();
@@ -271,7 +180,6 @@ export class MyDataGrid<T> {
   readonly csv = input<GridCsvOptions | null>(null);
   readonly csvExported = output<{ readonly rows: number; readonly filename: string }>();
   readonly details = contentChild(CollectionRowDetails<T>);
-  readonly expanded = signal<Readonly<Record<string, boolean>>>({});
   readonly detailToggle = output<{ readonly row: T; readonly expanded: boolean }>();
   readonly dataKey = input('id');
   private readonly presentationState = createGridPresentation({
@@ -283,33 +191,25 @@ export class MyDataGrid<T> {
   readonly order = this.presentationState.order;
   readonly widths = this.presentationState.widths;
   readonly pins = this.presentationState.pins;
-  readonly filterDefinitions = computed<readonly GridColumnFilter[]>(() =>
-    this.advancedFilters()
-      ? this.columns().flatMap((column) => (column.filter ? [column.filter] : []))
-      : [],
-  );
-  readonly filterContractValid = computed(() => {
-    const definitions = this.filterDefinitions();
-    try {
-      parseGridFilters(this.filters(), definitions);
-      return definitions.every(filterDefinitionValid);
-    } catch {
-      return false;
-    }
+  private readonly queryState = new GridQueryState<T>({
+    columns: this.columns,
+    advancedFilters: this.advancedFilters,
+    filters: this.filters,
+    sorts: this.sorts,
+    sort: this.sort,
+    sortMode: this.sortMode,
+    source: this.source,
+    ready: () => this.controller.view().kind === 'ready',
+    locale: this.locale,
+    filtersChange: (value) => this.filtersChange.emit(value),
+    sortsChange: (value) => this.sortsChange.emit(value),
+    sortChange: (value) => this.sortChange.emit(value),
   });
-  readonly nativeFilters = computed(() =>
-    this.filterContractValid() ? toPrimeGridFilters(this.filters(), this.filterDefinitions()) : {},
-  );
-  readonly nativeSorts = computed(() => {
-    try {
-      return parseGridSort(
-        this.sorts(),
-        this.columns().flatMap((column) => (column.sortField ? [column.sortField] : [])),
-      ).map((item) => ({ field: item.field, order: item.direction === 'asc' ? 1 : -1 }));
-    } catch {
-      return [];
-    }
-  });
+  readonly filterDefinitions = this.queryState.filterDefinitions;
+  readonly filterContractValid = this.queryState.filterContractValid;
+  readonly nativeFilters = this.queryState.nativeFilters;
+  readonly nativeSorts = this.queryState.nativeSorts;
+  readonly filterInvalid = this.queryState.filterInvalid;
   readonly pageChange = output<CollectionPageRequest>();
   readonly activeChange = output<CollectionId | null>();
   readonly selectionChange = output<readonly CollectionId[]>();
@@ -317,6 +217,7 @@ export class MyDataGrid<T> {
   readonly searchChange = output<CollectionSearchChange>();
   readonly retry = output<void>();
   readonly rowActivated = output<T>();
+  readonly rowActivation = input<'double-click' | 'click'>('double-click');
   readonly controller = createCollectionController(
     this.source,
     this.rowId,
@@ -338,6 +239,18 @@ export class MyDataGrid<T> {
   readonly empty = contentChild(CollectionEmptyTemplate);
   private readonly columnHeaders = contentChildren(CollectionColumnHeader<T>);
   private readonly columnFooters = contentChildren(CollectionColumnFooter<T>);
+  private readonly cellTemplates = indexGridTemplates(
+    this.cells,
+    (cell) => cell.erpCollectionCell().key,
+  );
+  private readonly headerTemplates = indexGridTemplates(
+    this.columnHeaders,
+    (header) => header.erpCollectionColumnHeader().key,
+  );
+  private readonly footerTemplates = indexGridTemplates(
+    this.columnFooters,
+    (footer) => footer.erpCollectionColumnFooter().key,
+  );
   readonly hasFooters = computed(
     () =>
       this.controller.view().kind === 'ready' &&
@@ -359,32 +272,24 @@ export class MyDataGrid<T> {
       (this.details() ? 50 : 0) +
       (this.contextActions() ? this.actionColumnWidth() : 0),
   );
-  private readonly headerMinimums = signal<Readonly<Record<string, number>>>({});
-  readonly resolvedWidths = computed(() =>
-    gridColumnWidths(
-      this.displayColumns(),
-      this.availableWidth() - this.reservedWidth(),
-      this.widths(),
-      this.headerMinimums(),
-      this.compactViewport(),
-    ),
-  );
-  readonly tableWidth = computed(
-    () =>
-      this.displayColumns().reduce(
-        (sum, column) => sum + this.width(column),
-        this.reservedWidth(),
-      ) + 'px',
-  );
-  private readonly compactViewport = computed(
-    () => this.availableWidth() > 0 && this.availableWidth() < 600,
-  );
-  compact(column: CollectionColumn<T>): boolean {
-    return (
-      this.compactViewport() &&
-      Number.isFinite(column.compactWidth) &&
-      (column.compactWidth ?? 0) >= 48
-    );
+  private readonly geometry = new GridGeometry<T>({
+    columns: this.columns,
+    displayColumns: this.displayColumns,
+    availableWidth: this.availableWidth,
+    reservedWidth: this.reservedWidth,
+    widths: this.widths,
+    pins: this.pins,
+    display: this.display,
+    contextActions: this.contextActions,
+    stickyActions: this.stickyActions,
+    actionColumnWidth: this.actionColumnWidth,
+    columnWidthsChange: (widths) => this.columnWidthsChange.emit(widths),
+  });
+  private readonly headerMinimums = this.geometry.headerMinimums;
+  readonly resolvedWidths = this.geometry.resolvedWidths;
+  readonly tableWidth = this.geometry.tableWidth;
+  compact(column: CollectionColumn<T>) {
+    return this.geometry.compact(column);
   }
   readonly tableAttributes = computed(() => ({
     table: {
@@ -409,6 +314,39 @@ export class MyDataGrid<T> {
     row: { background: 'var(--surface)', color: 'var(--foreground)' },
     sortIcon: { color: 'var(--muted-foreground)', hoverColor: 'var(--primary)' },
   }));
+  private readonly expansionState = new GridExpansionState<T>({
+    grouping: this.grouping,
+    columns: this.columns,
+    details: this.details,
+    frozenRows: this.frozenRows,
+    rows: this.rows,
+    ready: () => this.controller.view().kind === 'ready',
+    total: () => this.controller.view().total,
+    rowId: this.rowId,
+    dataKey: this.dataKey,
+    detailToggle: (event) => this.detailToggle.emit(event),
+  });
+  readonly expanded = this.expansionState.expanded;
+  readonly groupColumn = this.expansionState.groupColumn;
+  readonly groupingValid = this.expansionState.groupingValid;
+  private readonly contextState = new GridContextState<T>({
+    source: this.source,
+    rows: this.rows,
+    ready: () => this.controller.view().kind === 'ready',
+    contextActions: this.contextActions,
+    cellContextFilter: this.cellContextFilter,
+    advancedFilters: this.advancedFilters,
+    filterContractValid: this.filterContractValid,
+    filters: this.filters,
+    filterDefinitions: this.filterDefinitions,
+    displayColumns: this.displayColumns,
+    rowMenu: this.rowMenu,
+    locale: this.locale,
+    filtersChange: (value) => this.filtersChange.emit(value),
+    rowAction: (value) => this.rowAction.emit(value),
+    clearFilterError: () => this.filterInvalid.set(false),
+  });
+  readonly contextItems = this.contextState.contextItems;
   constructor() {
     attachGridViewport({
       viewport: () => this.viewport()?.nativeElement,
@@ -441,8 +379,7 @@ export class MyDataGrid<T> {
       this.grouping();
       untracked(() => {
         this.expanded.set({});
-        this.context.set(null);
-        this.rowMenu()?.hide(false);
+        this.contextState.reset();
       });
     });
     effect(() => {
@@ -472,168 +409,45 @@ export class MyDataGrid<T> {
           .rows.filter((row) => this.controller.selectedIds().includes(this.rowId()(row)))
       : this.controller.view().rows;
     const csv = createGridCsv(this.displayColumns(), rows, options),
-      filename = gridCsvFilename(options.filename),
-      url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-    link.click();
-    setTimeout(() => URL.revokeObjectURL(url), 0);
+      filename = gridCsvFilename(options.filename);
+    downloadBlob(new Blob([csv], { type: 'text/csv;charset=utf-8' }), filename);
     this.csvExported.emit({ rows: rows.length, filename });
   }
-  toggleDetails(row: T): void {
-    if (
-      !this.details() ||
-      this.controller.view().kind !== 'ready' ||
-      !this.controller.view().rows.includes(row)
-    )
-      return;
-    const id = this.rowId()(row);
-    if (typeof row !== 'object' || row === null || Reflect.get(row, this.dataKey()) !== id) return;
-    const key = String(id),
-      expanded = !this.expanded()[key];
-    this.expanded.update((value) => ({ ...value, [key]: expanded }));
-    this.detailToggle.emit({ row, expanded });
+  toggleDetails(row: T) {
+    this.expansionState.toggleDetails(row);
   }
   groupLabel(row: T) {
-    return String(this.groupColumn()?.value(row) ?? '');
+    return this.expansionState.groupLabel(row);
   }
-  toggleGroup(row: T): void {
-    if (
-      !this.grouping()?.expandable ||
-      !this.groupingValid() ||
-      this.controller.view().kind !== 'ready'
-    )
-      return;
-    const key = this.groupLabel(row);
-    this.expanded.update((value) => ({ ...value, [key]: !value[key] }));
+  toggleGroup(row: T) {
+    this.expansionState.toggleGroup(row);
   }
-  private currentContext(context: NonNullable<ReturnType<typeof this.context>>): boolean {
-    return (
-      context.source === this.source() &&
-      this.controller.view().kind === 'ready' &&
-      context.key === collectionQueryKey(this.source().query) &&
-      this.rows().includes(context.row)
-    );
+  openContext(row: T, event: MouseEvent) {
+    this.contextState.openContext(row, event);
   }
-  private cellValue(column: CollectionColumn<T>, row: T): unknown {
-    try {
-      return column.filterValue ? column.filterValue(row) : column.value(row);
-    } catch {
-      return undefined;
-    }
+  runContextCommand(id: string) {
+    this.contextState.runContextCommand(id);
   }
-  private cellFilter(context: NonNullable<ReturnType<typeof this.context>>): GridFilters | null {
-    const column = context.column;
-    if (
-      !this.cellContextFilter() ||
-      !this.advancedFilters() ||
-      !this.filterContractValid() ||
-      !column?.filter ||
-      !this.displayColumns().includes(column) ||
-      !Object.is(context.value, this.cellValue(column, context.row))
-    )
-      return null;
-    return filterByCellValue(
-      this.filters(),
-      this.filterDefinitions(),
-      column.filter.field,
-      context.value,
-    );
-  }
-  openContext(row: T, event: MouseEvent): void {
-    if (
-      (!this.contextActions() && (!this.advancedFilters() || !this.cellContextFilter())) ||
-      this.controller.view().kind !== 'ready' ||
-      !this.rows().includes(row)
-    )
-      return;
-    const cell =
-      event.target instanceof Element
-        ? event.target.closest<HTMLElement>('td[data-cell-column]')
-        : null;
-    const column = cell
-      ? (this.displayColumns().find((column) => column.key === cell.dataset['cellColumn']) ?? null)
-      : null;
-    const context = {
-      row,
-      key: collectionQueryKey(this.source().query),
-      source: this.source(),
-      column,
-      value: column ? this.cellValue(column, row) : undefined,
-    };
-    this.context.set(context);
-    if (!this.contextItems().length) return;
-    event.preventDefault();
-    event.stopPropagation();
-    const returnTarget = event.currentTarget instanceof HTMLElement ? event.currentTarget : null;
-    const rect = returnTarget?.getBoundingClientRect() ?? null;
-    const position =
-      event.clientX === 0 && event.clientY === 0 && rect
-        ? new MouseEvent('contextmenu', {
-            clientX: rect.x + rect.width / 2,
-            clientY: rect.y + rect.height / 2,
-          })
-        : event;
-    afterNextRender(
-      () => {
-        if (!this.destroyRef.destroyed && this.context() === context && this.contextItems().length)
-          this.rowMenu()?.show(position, returnTarget);
-      },
-      { injector: this.injector },
-    );
-  }
-  runContextCommand(id: string): void {
-    const context = this.context();
-    if (!context || !this.currentContext(context)) return;
-    if (id === 'filter-by-value') {
-      const filters = this.cellFilter(context);
-      if (!filters) return;
-      this.filterInvalid.set(false);
-      if (JSON.stringify(filters) !== JSON.stringify(this.filters()))
-        this.filtersChange.emit(filters);
-      this.context.set(null);
-    } else if (id.startsWith('row:')) this.runContextAction(context.row, id.slice(4), context.key);
-  }
-  dismissContext(): void {
-    this.context.set(null);
-  }
-  private runContextAction(row: T, action: string, key: string): void {
-    if (
-      this.controller.view().kind !== 'ready' ||
-      key !== collectionQueryKey(this.source().query) ||
-      !this.rows().includes(row) ||
-      !this.contextActions()?.(row).some((item) => item.id === action && !item.disabled)
-    )
-      return;
-    this.rowAction.emit({ row, action });
-    this.context.set(null);
+  dismissContext() {
+    this.contextState.dismissContext();
   }
   activateRowAction(row: T, action: string) {
-    this.runContextAction(row, action, collectionQueryKey(this.source().query));
+    this.contextState.activateRowAction(row, action);
   }
   width(column: CollectionColumn<T>) {
-    return this.resolvedWidths()[column.key] ?? gridColumnMinimum(column);
+    return this.geometry.width(column);
   }
   columnStyleWidth(column: CollectionColumn<T>) {
-    return this.width(column);
+    return this.geometry.columnStyleWidth(column);
   }
   minimum(column: CollectionColumn<T>) {
-    return gridColumnMinimum(column, this.headerMinimums()[column.key], this.compactViewport());
+    return this.geometry.minimum(column);
   }
   pinned(column: CollectionColumn<T>) {
-    return this.pins()[column.key] ?? null;
+    return this.geometry.pinned(column);
   }
-  frozenOffset(column: CollectionColumn<T>): string {
-    return (
-      gridFrozenOffset(
-        this.displayColumns(),
-        this.resolvedWidths(),
-        this.pins(),
-        column.key,
-        this.contextActions() && this.stickyActions() ? this.actionColumnWidth() : 0,
-      ) + 'px'
-    );
+  frozenOffset(column: CollectionColumn<T>) {
+    return this.geometry.frozenOffset(column);
   }
   moveColumn(change: { readonly key: string; readonly direction: -1 | 1 }) {
     return this.presentationState.moveColumn(change);
@@ -647,71 +461,25 @@ export class MyDataGrid<T> {
       : 'right';
   }
   filterModes(definition: GridColumnFilter) {
-    return (definition.modes ?? gridFilterModes[definition.type]).map((value) => ({
-      value,
-      label: this.locale.translate('collections.' + value),
-    }));
+    return this.queryState.filterModes(definition);
   }
   changeFilters(event: unknown) {
-    if (
-      !this.advancedFilters() ||
-      this.controller.view().kind !== 'ready' ||
-      !this.filterContractValid()
-    )
-      return;
-    try {
-      if (typeof event !== 'object' || event === null || !('filters' in event))
-        throw Error('Invalid filter event');
-      const filters = fromPrimeGridFilters(event.filters, this.filterDefinitions());
-      this.filterInvalid.set(false);
-      if (JSON.stringify(filters) !== JSON.stringify(this.filters()))
-        this.filtersChange.emit(filters);
-    } catch {
-      this.filterInvalid.set(true);
-    }
+    this.queryState.changeFilters(event);
   }
   resized(event: unknown) {
-    if (
-      !this.display().resizableColumns ||
-      typeof event !== 'object' ||
-      event === null ||
-      !('element' in event) ||
-      !(event.element instanceof HTMLElement)
-    )
-      return;
-    const key = event.element.dataset['columnKey'],
-      column = this.columns().find((item) => item.key === key);
-    if (!column) return;
-    const widths = { ...this.widths() };
-    for (const element of event.element
-      .closest('tr')
-      ?.querySelectorAll<HTMLElement>('[data-column-key]') ?? []) {
-      const key = element.dataset['columnKey'],
-        column = this.columns().find((item) => item.key === key);
-      if (!column) continue;
-      const width = Math.round(element.getBoundingClientRect().width);
-      if (width < gridColumnMinimum(column, this.headerMinimums()[column.key]) || width > 4096)
-        return;
-      widths[column.key] = width;
-    }
-    this.widths.set(widths);
-    this.columnWidthsChange.emit(widths);
+    this.geometry.resized(event);
   }
   reordered(event: unknown) {
     return this.presentationState.reordered(event);
   }
   cell(column: CollectionColumn<T>) {
-    return this.cells().find((cell) => cell.erpCollectionCell().key === column.key)?.template;
+    return this.cellTemplates().get(column.key);
   }
   columnHeader(column: CollectionColumn<T>) {
-    return this.columnHeaders().find(
-      (header) => header.erpCollectionColumnHeader().key === column.key,
-    )?.template;
+    return this.headerTemplates().get(column.key);
   }
   columnFooter(column: CollectionColumn<T>) {
-    return this.columnFooters().find(
-      (footer) => footer.erpCollectionColumnFooter().key === column.key,
-    )?.template;
+    return this.footerTemplates().get(column.key);
   }
   groupHeaderWidth(columns: readonly CollectionColumn<T>[]) {
     return columns.reduce((sum, column) => sum + this.width(column), 0);
@@ -720,69 +488,7 @@ export class MyDataGrid<T> {
     return String(column.value(row) ?? '—');
   }
   changeSort(event: unknown) {
-    if (this.sortMode() === 'multiple') {
-      if (
-        typeof event !== 'object' ||
-        event === null ||
-        !('multisortmeta' in event) ||
-        !Array.isArray(event.multisortmeta) ||
-        this.controller.view().kind !== 'ready'
-      )
-        return;
-      try {
-        const sorts = parseGridSort(
-          event.multisortmeta.map((item: unknown) => {
-            if (
-              typeof item !== 'object' ||
-              item === null ||
-              !('field' in item) ||
-              !('order' in item) ||
-              (item.order !== 1 && item.order !== -1)
-            )
-              throw Error('Invalid sort');
-            return { field: item.field, direction: item.order === 1 ? 'asc' : 'desc' };
-          }),
-          this.columns().flatMap((column) => (column.sortField ? [column.sortField] : [])),
-        );
-        if (JSON.stringify(sorts) !== JSON.stringify(this.sorts())) this.sortsChange.emit(sorts);
-      } catch {
-        /* Unsupported vendor sort never becomes owner criteria. */
-      }
-      return;
-    }
-    if (
-      typeof event !== 'object' ||
-      event === null ||
-      !('field' in event) ||
-      !('order' in event) ||
-      typeof event.field !== 'string' ||
-      !this.columns().some((column) => column.sortField === event.field) ||
-      (event.order !== 1 && event.order !== -1)
-    )
-      return;
-    // PrimeNG applies field and order in separate effects, including on mount.
-    // Commit only their final pair after the current input synchronization completes.
-    this.pendingSort = {
-      value: { field: event.field, direction: event.order === 1 ? 'asc' : 'desc' },
-      source: this.source(),
-    };
-    if (this.sortScheduled) return;
-    this.sortScheduled = true;
-    queueMicrotask(() => {
-      this.sortScheduled = false;
-      const pending = this.pendingSort;
-      this.pendingSort = null;
-      if (
-        this.destroyRef.destroyed ||
-        !pending ||
-        pending.source !== this.source() ||
-        this.controller.view().kind !== 'ready' ||
-        (this.sort()?.field === pending.value.field &&
-          this.sort()?.direction === pending.value.direction)
-      )
-        return;
-      this.sortChange.emit(pending.value);
-    });
+    this.queryState.changeSort(event);
   }
   clickRow(row: T, event: Event) {
     if (!collectionRowInteraction(event)) {
@@ -794,10 +500,19 @@ export class MyDataGrid<T> {
         event.shiftKey
       )
         this.controller.selectRange(this.rowId()(row));
+      if (this.rowActivation() === 'click') this.activateRow(row, event);
     }
   }
   openRow(row: T, event: Event) {
-    if (!collectionRowInteraction(event)) this.rowActivated.emit(row);
+    if (this.rowActivation() === 'double-click') this.activateRow(row, event);
+  }
+  private activateRow(row: T, event: Event): void {
+    if (
+      !collectionRowInteraction(event) &&
+      this.controller.view().kind === 'ready' &&
+      this.controller.view().rows.includes(row)
+    )
+      this.rowActivated.emit(row);
   }
   keyRow(row: T, event: KeyboardEvent) {
     if (

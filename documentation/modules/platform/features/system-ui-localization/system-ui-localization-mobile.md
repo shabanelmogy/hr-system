@@ -2,6 +2,8 @@
 
 ## 1. Ownership and authorization
 
+Angular correction 2026-11-07 introduces no Mobile screen or contract change. Existing Mobile system-text editor/runtime remains implemented; this change does not claim new physical-device verification or duplicate the Angular administration composition. Native catalog identity remains owned by the existing generator. See ../angular-super-admin-settings/angular-super-admin-settings-review.md for Angular-only scope.
+
 Platform owns global registered UI text configuration. SuperAdmin role is mandatory; SystemUiTexts:View/Edit/Reset are independent global grants. Every catalog key additionally requires its owning screen view authority. Unknown/company-private prefixes fail closed. No tenant/company identity is simulated.
 
 ## 2. Reviewed reference and shared screen pattern

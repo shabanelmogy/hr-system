@@ -1,0 +1,29 @@
+<main>
+  <erp-page-header
+    appearance="card"
+    [title]="captions.text('title')"
+    [subtitle]="captions.text('subtitle')"
+  />
+  <erp-scroll-viewport [label]="captions.text('title')">
+    @switch (reads.view().kind) {
+      @case ('loading') {
+        <erp-feedback-state kind="loading" [title]="captions.text('loading')" />
+      }
+      @case ('forbidden') {
+        <erp-feedback-state kind="forbidden" [title]="captions.text('forbidden')" />
+      }
+      @case ('error') {
+        <erp-feedback-state
+          kind="error"
+          [title]="captions.text('loadFailed')"
+          [actionLabel]="captions.text('reload')"
+          (action)="reads.retry()"
+        />
+      }
+      @case ('ready') {
+        <erp-retention-summary />
+      }
+    }
+  </erp-scroll-viewport>
+  <erp-retention-editor />
+</main>

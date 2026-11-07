@@ -35,3 +35,4 @@ Feature-specific books live with their module: `../../modules/<module>/features/
 - [Shared components](architecture/ANGULAR_SHARED_COMPONENTS.md).
 - [Signal Forms and lightweight form utilities](architecture/ANGULAR_SIGNAL_FORMS.md).
 - [Component composition and extraction rules](architecture/ANGULAR_COMPONENT_COMPOSITION.md).
+- [Current component decomposition and verification — 2026-11-05](architecture/ANGULAR_COMPONENT_DECOMPOSITION_2026-11-05.md).

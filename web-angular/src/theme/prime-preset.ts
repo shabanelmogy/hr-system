@@ -8,6 +8,9 @@ import AuraPopover from '@primeuix/themes/aura/popover';
 import AuraTag from '@primeuix/themes/aura/tag';
 import AuraProgressBar from '@primeuix/themes/aura/progressbar';
 import AuraSelect from '@primeuix/themes/aura/select';
+import AuraMultiSelect from '@primeuix/themes/aura/multiselect';
+import AuraChip from '@primeuix/themes/aura/chip';
+import AuraIconField from '@primeuix/themes/aura/iconfield';
 import AuraRadioButton from '@primeuix/themes/aura/radiobutton';
 import AuraDataTable from '@primeuix/themes/aura/datatable';
 import AuraPaginator from '@primeuix/themes/aura/paginator';
@@ -195,6 +198,9 @@ export function createPrimePreset(palette: ThemePalette): Preset {
         tag: AuraTag,
         progressbar: AuraProgressBar,
         select: AuraSelect,
+        multiselect: AuraMultiSelect,
+        chip: AuraChip,
+        iconfield: AuraIconField,
         radiobutton: AuraRadioButton,
         datatable: AuraDataTable,
         paginator: AuraPaginator,

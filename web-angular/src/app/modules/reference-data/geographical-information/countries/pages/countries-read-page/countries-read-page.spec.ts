@@ -15,9 +15,11 @@ import { By } from '@angular/platform-browser';
 import { GlobalReportView } from '../../../../../reporting/public-api';
 import { GlobalReportService } from '../../../../../reporting/global-reports/services/global-report-service';
 import { globalReportFixture } from '../../../../../reporting/global-reports/report.fixture';
-import { validatePdfDocument } from '../../../../../../shared/data/public-api';
+import { UnsavedChanges, validatePdfDocument } from '../../../../../../shared/data/public-api';
 
 describe('Countries read composition', () => {
+  const viewStorageKey = 'erp-angular:views:countries-view-layout';
+  beforeEach(() => localStorage.removeItem(viewStorageKey));
   async function setup(stubCharts = false) {
     const pdf = await validatePdfDocument(new Blob(['%PDF-fixture'], { type: 'application/pdf' }));
     const reports = {
@@ -88,6 +90,43 @@ describe('Countries read composition', () => {
   afterEach(() => {
     TestBed.resetTestingModule();
     vi.unstubAllGlobals();
+    localStorage.removeItem(viewStorageKey);
+  });
+  it('restores the permitted view across remounts without retaining collection data', async () => {
+    const { fixture, owner } = await setup();
+    await owner.chooseView('cards');
+    await fixture.whenStable();
+    expect(localStorage.getItem(viewStorageKey)).toBe('cards');
+    fixture.destroy();
+    const remounted = TestBed.createComponent(CountriesReadPage);
+    await remounted.whenStable();
+    expect(remounted.componentInstance.view()).toBe('cards');
+    const remountedRoot = remounted.nativeElement as HTMLElement;
+    expect(remountedRoot.querySelector('erp-card-list')).not.toBeNull();
+  });
+  it('ignores an external preference while a registered draft needs protection', async () => {
+    const { fixture, owner } = await setup();
+    const drafts = TestBed.inject(UnsavedChanges);
+    const unsaved = signal(true);
+    const unregister = drafts.register({
+      read: () => ({
+        identity: 'view-fixture',
+        revision: 0,
+        active: true,
+        unsaved: unsaved(),
+        pending: false,
+      }),
+      invalidate: () => undefined,
+    });
+    localStorage.setItem(viewStorageKey, 'cards');
+    window.dispatchEvent(new StorageEvent('storage', { key: viewStorageKey }));
+    await fixture.whenStable();
+    expect(owner.view()).toBe('grid');
+    unsaved.set(false);
+    window.dispatchEvent(new StorageEvent('storage', { key: viewStorageKey }));
+    await fixture.whenStable();
+    expect(owner.view()).toBe('cards');
+    unregister();
   });
   it('requires report authority and composes one shared embedded report with independent criteria and refresh', async () => {
     const { fixture, owner, reports, service, identity, root } = await setup(true);
@@ -166,7 +205,7 @@ describe('Countries read composition', () => {
     expect(root.querySelector('erp-chart-panel')).toBeNull();
     expect(root.querySelector('erp-metric-card')).toBeNull();
     await owner.chooseView('grid');
-    expect(owner.view()).toBe('chart');
+    expect(owner.view()).toBe('grid');
   });
   it('keeps Cards criteria on one shared row and preserves the header toggle state across Grid/Cards', async () => {
     const { fixture, owner, root } = await setup();
@@ -201,7 +240,7 @@ describe('Countries read composition', () => {
     expect(root.querySelector('erp-page-header.collection-header')).not.toBeNull();
     expect(root.querySelectorAll('p-column-filter')).toHaveLength(11);
     expect(root.querySelector('.reference-grid')).not.toBeNull();
-    owner.view.set('cards');
+    await owner.chooseView('cards');
     await fixture.whenStable();
     expect(root.querySelector('erp-card-list erp-surface-card')).not.toBeNull();
     expect(root.querySelector('.card-heading')?.textContent).toContain('Egypt');
@@ -233,7 +272,7 @@ describe('Countries read composition', () => {
   });
   it('masks all rows/cards/detail and guards old callbacks immediately after permission loss', async () => {
     const { fixture, owner, identity, service, root } = await setup();
-    owner.view.set('cards');
+    await owner.chooseView('cards');
     await fixture.whenStable();
     owner.state.open(1);
     await fixture.whenStable();

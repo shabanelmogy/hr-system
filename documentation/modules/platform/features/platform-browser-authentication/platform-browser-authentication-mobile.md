@@ -19,6 +19,10 @@ Existing offline lease/error behavior retained; no new offline capability.
 ## 9. Scope and security
 Native header-only clients require no browser Origin/CSRF token; server validation remains authoritative.
 ## 10. Persistence and side effects
+The 2026-11-06 Hangfire embedding correction affects the browser transport only.
+The dashboard remains excluded from native UI; bearer-only and realtime transport
+remain unchanged. See [corrective evidence](verification/HANGFIRE_EMBEDDING_REPAIR.md).
+
 No native schema/storage/data migration; context reset revalidated if shared auth changes.
 ## 11. Verification
 Current R2 native auth data-source regression passed (one test: switch waits for refresh). Existing bearer wire unchanged; actual device evidence remains later. See verification/BROWSER_IMPLEMENTATION_REPORT.md. No native runtime source changed.

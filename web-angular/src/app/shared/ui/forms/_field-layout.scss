@@ -1,0 +1,13 @@
+@mixin group($columns: 2) {
+  :host {
+    display: grid;
+    grid-template-columns: repeat($columns, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  @media (max-width: 40rem) {
+    :host {
+      grid-template-columns: 1fr;
+    }
+  }
+}

@@ -76,8 +76,8 @@ on the original plan alone.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | platform-browser-authentication-master | 8 | `337efcf914ffbb3bf125b9eaebfeee31f1e1f3fddd41b636684f13739eb950c2` |
-| platform-browser-authentication-master | 9 | `39bcd574836cb653b4a0b876f1ee7450102de9cac328b3f276ad93c4812cdb83` |
-| platform-browser-authentication-master | 10 | `32be92f671da8e70a694d07276422bf659bcf3e14818625470fddd0416e77caa` |
+| platform-browser-authentication-master | 9 | `6380c391d4768abe9f2714a668aa17effe11206e1943367c6bf15950e6263a0f` |
+| platform-browser-authentication-master | 10 | `5be12b02e73ee6a572ff4f2c44087284120720f5bd7427decae80b91c5923000` |
 | platform-browser-authentication-api | 10 | `0e4108d4382344db7c74d76883a2e1b7804947764162e3298fbd32e9cf365e67` |
 | platform-browser-authentication-api | 11 | `bd5f4185028ebf42e040f53b76f7240ec8b113147c3c47f1d58f1a2552220195` |
 | platform-browser-authentication-web | 12 | `7575dd3727ecb36dc30f9d167594024d153a27123c5b3dc803d15cf0a1c6bc81` |

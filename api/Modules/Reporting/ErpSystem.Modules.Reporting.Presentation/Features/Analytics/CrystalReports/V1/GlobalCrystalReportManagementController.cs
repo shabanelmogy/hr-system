@@ -172,6 +172,15 @@ public sealed class GlobalCrystalReportManagementController(ISender sender) : Co
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
+    [HttpPost("{id:guid}/versions/{versionId:guid}/verify-database")]
+    [HasPermission(ReportingPermissions.UploadGlobalCrystalReports)]
+    [HasPermission(ReportingPermissions.PublishGlobalCrystalReports)]
+    public async Task<IActionResult> VerifyDatabase(Guid id, Guid versionId, CancellationToken token)
+    {
+        var result = await sender.Send(new VerifyDatabaseGlobalCrystalReportVersionCommand(id, versionId), token);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
+    }
+
     [HttpGet("{id:guid}/versions/{versionId:guid}/source")]
     [HasPermission(ReportingPermissions.DownloadGlobalCrystalReports)]
     public async Task<IActionResult> Download(Guid id, Guid versionId, CancellationToken token)

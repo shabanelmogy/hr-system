@@ -56,6 +56,12 @@ public sealed class PlatformContractsArchitectureTests
         "ErpSystem.Modules.Platform.Contracts.ErrorLogs.ErrorLogSeverity",
         "ErpSystem.Modules.Platform.Contracts.ErrorLogs.ErrorLogCapture",
         "ErpSystem.Modules.Platform.Contracts.ErrorLogs.IErrorLogCaptureSink",
+        // Read-only Reporting integration: summary projection only, with Platform-owned filtering and scope.
+        "ErpSystem.Modules.Platform.Contracts.ErrorLogs.ISystemErrorLogReportSource",
+        "ErpSystem.Modules.Platform.Contracts.ErrorLogs.SystemErrorLogReportCriteria",
+        "ErpSystem.Modules.Platform.Contracts.ErrorLogs.SystemErrorLogReportFailure",
+        "ErpSystem.Modules.Platform.Contracts.ErrorLogs.SystemErrorLogReportResult",
+        "ErpSystem.Modules.Platform.Contracts.ErrorLogs.SystemErrorLogReportRow",
         "ErpSystem.Modules.Platform.Contracts.Files.PlatformFileUpload",
         "ErpSystem.Modules.Platform.Contracts.Files.FileUploadSecurityFailureKind",
         "ErpSystem.Modules.Platform.Contracts.Files.FileUploadSecurityException",

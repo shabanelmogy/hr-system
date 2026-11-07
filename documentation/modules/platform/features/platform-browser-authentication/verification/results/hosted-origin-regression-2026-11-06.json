@@ -1,0 +1,31 @@
+{
+  "checkedAtUtc": "2026-11-06T12:35:23.4964781Z",
+  "scope": "Existing browser-auth hosted origin configuration maintenance",
+  "origin": "https://localhost:4210",
+  "hosted": {
+    "status": 403,
+    "title": "Authentication.BrowserOriginDenied",
+    "allowOrigin": "",
+    "allowCredentials": "",
+    "effectiveRemoteConfigurationRead": false,
+    "deploymentPerformed": false
+  },
+  "local": {
+    "publishOwnedSettings": "api/ErpSystem.Api/appsettings.json (ignored)",
+    "corsOriginPresent": true,
+    "browserOriginPresent": true,
+    "crossSiteCookies": true,
+    "developmentSettingsPublished": false,
+    "preservedExistingSettings": true
+  },
+  "verification": {
+    "cookieTestsPassed": 19,
+    "cookieTestsFailed": 0,
+    "cookieTestsSkipped": 0,
+    "command": "dotnet test Modules/Platform/ErpSystem.Modules.Platform.Tests/ErpSystem.Modules.Platform.Tests.csproj -c Release --no-build --no-restore --artifacts-path .artifacts/collection-export --filter FullyQualifiedName~BrowserAuthenticationCookieTests -m:1 /nodeReuse:false",
+    "freshBuildPerformed": false,
+    "configurationChecks": "JSON, exact HTTPS origin, browser origins subset of CORS, cross-site mode, publish selection",
+    "documentationBaselineRecipes": 516
+  },
+  "pending": "PROD-019: operator applies hosted configuration/restarts API and verifies exact-origin CSRF and actual browser login/session/logout"
+}

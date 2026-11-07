@@ -1,0 +1,87 @@
+
+> erp-angular@0.0.0 pretest
+> npm run configure:license
+
+
+> erp-angular@0.0.0 configure:license
+> node --env-file-if-exists=.env.local scripts/configure-license.mjs
+
+PrimeUI local license configured (value omitted).
+
+> erp-angular@0.0.0 test
+> node scripts/run-angular.mjs test --watch=false --include=src/app/platform/system-error-logs/state/error-log-export-state.spec.ts --include=src/app/platform/system-error-logs/state/retention-editor-state.spec.ts
+
+API target: host (https://shabanhrms.runasp.net)
+> Building...
+√ Building...
+Application bundle generation complete. [12.754 seconds] - 2026-11-06T10:30:26.102Z
+
+
+ RUN  v5.0.5 F:/Portofolio Projects/ERPSYSTEM/web-angular
+
+ ❯ |erp-angular| src/app/platform/system-error-logs/state/error-log-export-state.spec.ts (3 tests | 1 failed) 51ms
+   ❯ error log export state (3)
+     × reports a completed authorized export through shared feedback 15ms
+ ❯ |erp-angular| src/app/platform/system-error-logs/state/retention-editor-state.spec.ts (10 tests | 1 failed) 109ms
+   ❯ Retention editor lifetime and revision recovery (10)
+     × refreshes the displayed settings after loading the authoritative value 20ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |erp-angular| src/app/platform/system-error-logs/state/error-log-export-state.spec.ts > error log export state > reports a completed authorized export through shared feedback
+AssertionError: expected [] to deep equally contain ObjectContaining{…}
+
+- Expected:
+ObjectContaining {
+  "key": "errorLogs.exported",
+  "namespace": "platform-advanced-tools",
+}
+
++ Received:
+[]
+
+ ❯ src/app/platform/system-error-logs/state/error-log-export-state.spec.ts:95:32
+     93|       response.next({ blob: new Blob(['xlsx']), fileName: 'error-logs.…
+     94|       expect(state.pending()).toBe(false);
+     95|       expect(notices.toasts()).toContainEqual(
+       |                                ^
+     96|         expect.objectContaining({ key: 'errorLogs.exported', namespace…
+     97|       );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  |erp-angular| src/app/platform/system-error-logs/state/retention-editor-state.spec.ts > Retention editor lifetime and revision recovery > refreshes the displayed settings after loading the authoritative value
+AssertionError: expected { kind: 'ready', data: { …(5) } } to deeply equal { kind: 'ready', data: { …(5) } }
+
+- Expected
++ Received
+
+  {
+    "data": {
+      "droppedCount": 0,
+      "failedWrites": 0,
+      "queueDepth": 0,
+-     "retentionDays": 60,
+-     "revision": 7,
++     "retentionDays": 90,
++     "revision": 4,
+    },
+    "kind": "ready",
+  }
+
+ ❯ src/app/platform/system-error-logs/state/retention-editor-state.spec.ts:209:26
+    207|     await editor.loadCurrent();
+    208|     expect(editor.form.retentionDays().value()).toBe('60');
+    209|     expect(reads.view()).toEqual({ kind: 'ready', data: latest });
+       |                          ^
+    210|   });
+    211| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  2 failed | 11 passed (13)
+   Start at  12:30:26
+   Duration  7.34s (environment 38%, import 36%, setup 13%, transform 11%, tests 1%)
+

@@ -24,7 +24,7 @@ public sealed class GlobalCrystalReportConfiguration : IEntityTypeConfiguration<
             .OnDelete(DeleteBehavior.NoAction);
         builder.ToTable("GlobalCrystalReports", table =>
         {
-            table.HasCheckConstraint("CK_GlobalCrystalReports_Entity", "[EntityKey] IN ('countries','states','districts')");
+            table.HasCheckConstraint("CK_GlobalCrystalReports_Entity", "[EntityKey] IN ('countries','states','districts','system-error-logs')");
             table.HasCheckConstraint("CK_GlobalCrystalReports_ViewBinding",
                 "([ViewName] IS NULL AND [ViewFingerprint] IS NULL) OR ([ViewName] IS NOT NULL AND [ViewFingerprint] IS NOT NULL AND LEN([ViewFingerprint]) = 64)");
         });

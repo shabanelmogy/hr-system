@@ -30,6 +30,18 @@
       "path": "mobile-react/src/modules/reference-data/geography/states",
       "minimumFiles": 15,
       "purpose": "Expo schemas, API, queries, screen, form, controls, integration tests, and views"
+    },
+    {
+      "id": "angular-states-client",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/states",
+      "patterns": [
+        "*.ts",
+        "*.html",
+        "*.scss"
+      ],
+      "minimumFiles": 57,
+      "purpose": "Current Angular client and meaningful tests; no change to retained Next/native domain"
     }
   ],
   "requiredFiles": [
@@ -662,6 +674,12 @@
       "layer": "api",
       "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Migrations/20261102143015_AddGlobalReferenceReportViews.Designer.cs",
       "purpose": "ReferenceData-owned schema-bound navigation reporting View and verification"
+    },
+    {
+      "id": "angular-states-acceptance",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-states-workspace/STATES_WORKSPACE_2026-11-06.md",
+      "purpose": "Current Angular migration acceptance and hosted/fixture boundaries"
     }
   ]
 }

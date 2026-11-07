@@ -1,0 +1,311 @@
+{
+  "schemaVersion": 1,
+  "status": "active",
+  "executionMode": "implementation",
+  "runtimeAuthorized": true,
+  "feature": "angular-account-profile",
+  "featureName": "Angular own account profile and password parity",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S4-A7 — Own account profile and password parity",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-account-profile.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-account-profile.md",
+  "purpose": "Current self-service Angular implementation, existing API/reference/native sources and bounded verification evidence.",
+  "reviewArtifact": "documentation/modules/platform/features/angular-account-profile/angular-account-profile-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-account-profile/angular-account-profile-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-account-profile/angular-account-profile-review.md",
+    "api": "documentation/modules/platform/features/angular-account-profile/angular-account-profile-api.md",
+    "web": "documentation/modules/platform/features/angular-account-profile/angular-account-profile-web.md",
+    "mobile": "documentation/modules/platform/features/angular-account-profile/angular-account-profile-mobile.md"
+  },
+  "sourceCollections": [
+    {
+      "id": "angular-account-owner",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/account-profile",
+      "patterns": [
+        "**/*.ts",
+        "**/*.html",
+        "**/*.scss"
+      ],
+      "minimumFiles": 20,
+      "purpose": "Own-user typed transport, Signal Forms, captured state, photo/personal/password components and meaningful tests"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-account-profile/angular-account-profile-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-account-profile/angular-account-profile-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "account-preflight-0",
+      "layer": "configuration",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-account-profile.md",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-1",
+      "layer": "configuration",
+      "path": "documentation/modules/platform/features/angular-account-profile/angular-account-profile-review.md",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-2",
+      "layer": "configuration",
+      "path": "documentation/modules/platform/features/angular-account-profile/angular-account-profile-api.md",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-3",
+      "layer": "configuration",
+      "path": "documentation/modules/platform/features/angular-account-profile/angular-account-profile-web.md",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-4",
+      "layer": "configuration",
+      "path": "documentation/modules/platform/features/angular-account-profile/angular-account-profile-mobile.md",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-5",
+      "layer": "configuration",
+      "path": "web-next/src/platform/auth/profile/ProfilePage.tsx",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-6",
+      "layer": "configuration",
+      "path": "web-next/src/platform/auth/profile/profile-tabs/ProfileTabs.tsx",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-7",
+      "layer": "configuration",
+      "path": "web-next/src/platform/auth/profile/profile-header/ProfileHeader.tsx",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-8",
+      "layer": "configuration",
+      "path": "web-next/src/platform/auth/profile/profile-tabs/personal-info/PersonalInfo.tsx",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-9",
+      "layer": "configuration",
+      "path": "web-next/src/platform/auth/profile/profile-tabs/change-password/ChangePassword.tsx",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-10",
+      "layer": "configuration",
+      "path": "web-next/src/platform/auth/profile/services/userProfileService.ts",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-11",
+      "layer": "configuration",
+      "path": "web-next/src/platform/auth/profile/services/userProfileResponse.ts",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-12",
+      "layer": "configuration",
+      "path": "web-next/src/platform/auth/profile/hooks/useProfileImage.ts",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-13",
+      "layer": "configuration",
+      "path": "web-next/src/shell/components/top-bar/SettingsMenu.tsx",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-14",
+      "layer": "configuration",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Security/Authentication/V1/AccountController.cs",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-15",
+      "layer": "configuration",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/Security/Users/Persistence/UserProfileStore.cs",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-16",
+      "layer": "configuration",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/Security/Users/Contracts/UpdateProfileRequestValidator.cs",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-17",
+      "layer": "configuration",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/Security/Users/Contracts/UpdateProfilePictureRequestValidator.cs",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-18",
+      "layer": "configuration",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Files/Settings/FileSettings.cs",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-19",
+      "layer": "configuration",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/PlatformUserProfileCqrsTests.cs",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-20",
+      "layer": "configuration",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Authentication/BrowserAuthenticationMiddleware.cs",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-21",
+      "layer": "configuration",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Identity/PlatformIdentityAuthenticationAdapters.cs",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-22",
+      "layer": "configuration",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.ts",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-23",
+      "layer": "configuration",
+      "path": "web-angular/src/app/shared/ui/forms/fields/file-field/file-field.ts",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-24",
+      "layer": "configuration",
+      "path": "web-angular/src/app/shared/ui/layout/identity-avatar/identity-avatar.ts",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-25",
+      "layer": "configuration",
+      "path": "web-angular/src/app/shared/ui/navigation/content-tabs/content-tabs.ts",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-26",
+      "layer": "configuration",
+      "path": "web-angular/src/app/platform/auth/services/browser-mutation-security.ts",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-27",
+      "layer": "configuration",
+      "path": "web-angular/src/app/platform/auth/state/auth-session.ts",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-28",
+      "layer": "configuration",
+      "path": "mobile-react/src/platform/auth/presentation/profile/ProfileScreen.tsx",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "id": "account-preflight-29",
+      "layer": "configuration",
+      "path": "mobile-react/src/platform/auth/data/remote/profile/profile-endpoints.ts",
+      "purpose": "Current inspected account/reference/shared/retained-platform source for Phase00"
+    },
+    {
+      "layer": "web",
+      "id": "account-browser",
+      "path": "web-angular/scripts/verify-account-profile-browser.mjs",
+      "purpose": "Production-asset synthetic full account journey verification"
+    },
+    {
+      "layer": "web",
+      "id": "account-reference",
+      "path": "web-angular/scripts/verify-account-profile-reference.mjs",
+      "purpose": "Current Next rendering and source field/action reference; account mutations intercepted and disallowed"
+    },
+    {
+      "layer": "web",
+      "id": "account-tab-shared",
+      "path": "web-angular/src/app/shared/ui/navigation/content-tabs/content-tabs.ts",
+      "purpose": "Optional externally committed tab selection for async discard consent"
+    },
+    {
+      "layer": "verification",
+      "id": "account-tab-shared-test",
+      "path": "web-angular/src/app/shared/ui/navigation/content-tabs/content-tabs.spec.ts",
+      "purpose": "Native model rollback and owner-approved selection proof"
+    },
+    {
+      "id": "account-system-text-policy",
+      "purpose": "Explicit self-service account label authority, preserving unknown-prefix denial",
+      "layer": "configuration",
+      "path": "scripts/system-ui-access-policy.json"
+    },
+    {
+      "id": "account-system-text-policy-test",
+      "purpose": "Account shared text allowlist and unknown-account denial",
+      "layer": "verification",
+      "path": "scripts/system-ui-access-policy.test.mjs"
+    },
+    {
+      "id": "account-shared-guide",
+      "purpose": "Reusable externally committed tabs and native file dropzone contracts",
+      "layer": "documentation",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md"
+    },
+    {
+      "id": "account-education",
+      "purpose": "Arabic user guide after Phase06 Verified",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-account-profile.md",
+      "layer": "documentation"
+    },
+    {
+      "id": "account-final-receipt",
+      "purpose": "Final bounded technical/browser/source acceptance and source hashes",
+      "path": "documentation/modules/platform/features/angular-account-profile/verification/verification-2026-11-07.json",
+      "layer": "verification"
+    },
+    {
+      "id": "account-browser-results",
+      "purpose": "Twelve final production-asset fixture account journeys",
+      "path": "documentation/modules/platform/features/angular-account-profile/verification/browser/results.json",
+      "layer": "verification"
+    },
+    {
+      "id": "account-reference-results",
+      "purpose": "Eight current Next field/action/source render cases with zero account writes",
+      "path": "documentation/modules/platform/features/angular-account-profile/verification/reference/results.json",
+      "layer": "verification"
+    }
+  ],
+  "finalizationChecklist": [
+    "Current source contract/rules/edges/impact reviewed.",
+    "No future runtime paths in this preflight manifest.",
+    "Register and generate Phase00 before runtime.",
+    "Extend source and verification evidence during implementation.",
+    "Phase06 must record Verified before education/closure."
+  ]
+}

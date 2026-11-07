@@ -47,7 +47,7 @@ realtime, notification, localization, report, or Import integration is reachable
 | global-crystal-template-manager-master | 5 | `17c7a5f3d3dc35a7909d22e0727e45d77ca077aaed6fc41abd0d9e54fde31b18` |
 | global-crystal-template-manager-master | 6 | `1273a47a237eb1ffa6534fbed0a57ffd8dbeb1a1d48fed9b0c7514bf49d9c6ca` |
 | global-crystal-template-manager-master | 7 | `27dc851a30500c16c368d6fab8927d9010533f2fe2fcf1d7e5380f026c533dea` |
-| global-crystal-template-manager-master | 9 | `7f874017adb53ab2a23a23f3f15e827415df1f167dfdebc7acf626839a5d054c` |
+| global-crystal-template-manager-master | 9 | `f8e47d8a41fea8a41b6687c40f33456c27575e85882a59785da4ace9ae9ca4e6` |
 | global-crystal-template-manager-master | 20 | `7cce7bcd793c79160e4c86a3b8d08c750ebc39b2f2224474a73f858d671bfc68` |
 | global-crystal-template-manager-master | 21 | `d4c3cb230cc1b91ef63280157daf31ff73299f7ffe734e3457792977b7578109` |
 | global-crystal-template-manager-master | 22 | `c1329e689ea0d46a23116d9ab45527c3c2fd6ec098ec64b2c5bb5d5bc7395c92` |
@@ -92,7 +92,7 @@ realtime, notification, localization, report, or Import integration is reachable
 | global-crystal-template-manager-api | 39 | `b91369d1b82101ed5dd44eb90c4e4a57483bcc094721ea18e9af66c3d9c3fcfa` |
 | global-crystal-template-manager-web | 8 | `cfc6a4919c70651f613c31089806fae15a71b0ead56a50e5a2f50d8cd7e24ddc` |
 | global-crystal-template-manager-web | 10 | `b323da842f4aac08484becb9d7ec372a0086599e67539ba27bdf9325059339ff` |
-| global-crystal-template-manager-web | 13 | `feb2b4b105453f091f7439beaa4cc63bc5f778693920b095215c11f92b20fa7a` |
+| global-crystal-template-manager-web | 13 | `df8c55f8fd9efccf72639dcc8fdbe8666a68a82bdfe04768f14115ddceeb04d2` |
 | global-crystal-template-manager-web | 20 | `7cce7bcd793c79160e4c86a3b8d08c750ebc39b2f2224474a73f858d671bfc68` |
 | global-crystal-template-manager-web | 21 | `d4c3cb230cc1b91ef63280157daf31ff73299f7ffe734e3457792977b7578109` |
 | global-crystal-template-manager-web | 22 | `c1329e689ea0d46a23116d9ab45527c3c2fd6ec098ec64b2c5bb5d5bc7395c92` |

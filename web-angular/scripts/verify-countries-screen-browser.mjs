@@ -245,7 +245,7 @@ try {
               await target.click({ button: 'right' });
               await expect(menu).toBeVisible();
             };
-            await page.locator('erp-collection-footer p-paginator>button').last().click();
+            await page.locator('erp-collection-footer .record-controls button').last().click();
             await expect(rows).toHaveCount(2);
             assert.equal(reads.at(-1).pageNumber, '2');
             const before = reads.length;
@@ -463,7 +463,7 @@ try {
           });
           const footerGeometry = await page.locator('erp-collection-footer').evaluate((element) => {
             const box = element.getBoundingClientRect(),
-              controls = [...element.querySelectorAll('p-paginator>button')].map((control) => {
+              controls = [...element.querySelectorAll('.record-controls button')].map((control) => {
                 const rect = control.getBoundingClientRect();
                 return rect.y + rect.height / 2;
               });
@@ -477,10 +477,14 @@ try {
             Math.max(...footerGeometry.centers) - Math.min(...footerGeometry.centers) <= 2,
             JSON.stringify(footerGeometry),
           );
-          await expect(page.locator('erp-collection-footer p-paginator')).toHaveCount(1);
-          await expect(page.locator('p-paginator .record-controls')).toHaveCount(0);
-          await expect(page.locator('p-paginator>button')).toHaveCount(4);
-          await expect(page.locator('p-paginator .p-paginator-current')).toHaveCount(1);
+          await expect(page.locator('erp-collection-footer .record-navigation-layout')).toHaveCount(
+            1,
+          );
+          await expect(page.locator('.record-navigation-layout .record-controls')).toHaveCount(1);
+          await expect(
+            page.locator('.record-navigation-layout .record-controls button'),
+          ).toHaveCount(4);
+          await expect(page.locator('.record-navigation-layout .record-count')).toHaveCount(1);
           await expect(page.locator('.p-paginator-pages')).toHaveCount(0);
           if (full && (palette !== 'green' || visualOnly)) {
             const inset = await page
@@ -560,12 +564,12 @@ try {
             console.log(`Actual Countries visual passed ${palette}/${mode}/${language}/${width}`);
             continue;
           }
-          const pager = page.locator('erp-collection-footer p-paginator');
+          const pager = page.locator('erp-collection-footer .record-navigation-layout');
           await expect(pager.locator('.p-paginator-pages')).toHaveCount(0);
           await expect(pager.locator('erp-option-select label')).toHaveCount(0);
           const navigationLayout = await pager.evaluate((element) => {
             const box = element.getBoundingClientRect(),
-              report = element.querySelector('.p-paginator-current').getBoundingClientRect(),
+              report = element.querySelector('.record-count').getBoundingClientRect(),
               settings = element.querySelector('.size-settings').getBoundingClientRect();
             return {
               centerOffset: Math.abs(report.x + report.width / 2 - box.x - box.width / 2),
@@ -680,9 +684,9 @@ try {
           await expect(pager.locator('.page-count')).toHaveText(
             text['pagination.pages'] + ': ' + new Intl.NumberFormat(language).format(1),
           );
-          await expect(pager.locator('.p-paginator-current')).toContainText('1');
+          await expect(pager.locator('.record-count')).toContainText('1');
           await expect(record('Next')).toBeEnabled();
-          await expect(pager.locator('.p-paginator-current')).toHaveText('1 / 12');
+          await expect(pager.locator('.record-count')).toHaveText('1 / 12');
           const onePageReads = reads.length;
           await record('Next').click();
           await expect(active).toHaveAttribute('data-collection-row', secondKey);

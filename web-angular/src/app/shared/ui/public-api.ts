@@ -1,5 +1,13 @@
-export { ActionButton, ActionButtonGroup } from './buttons/public-api';
+export {
+  ActionButton,
+  BackButton,
+  CopyButton,
+  ActionButtonGroup,
+  ActionMenuButton,
+  type ActionMenuItem,
+} from './buttons/public-api';
 export { ReferenceField } from './forms/public-api';
+export { MultiReferenceField } from './forms/public-api';
 export { FileField } from './forms/public-api';
 export {
   DateField,
@@ -27,6 +35,7 @@ export type {
 } from './forms/public-api';
 export {
   TextField,
+  FormFieldControl,
   FormContainer,
   ValidationSummary,
   applyServerFieldErrors,
@@ -52,7 +61,9 @@ export { IdentityAvatar } from './layout/identity-avatar/identity-avatar';
 export { ContextBadge } from './layout/context-badge/context-badge';
 export { PageHeader } from './layout/page-header/page-header';
 export { ContentTabs } from './navigation/content-tabs/content-tabs';
+export { FormSection } from './forms/public-api';
 export { RecordSummary } from './data-display/record-summary/record-summary';
+export type { RecordSummaryField } from './data-display/record-summary/record-summary';
 export type { ContentTab } from './navigation/content-tabs/content-tabs';
 export type { PageViewOption, PageHeaderAction } from './layout/page-header/page-header';
 export { ContextMenuPanel } from './overlays/context-menu-panel/context-menu-panel';
@@ -96,9 +107,19 @@ export { FeedbackNotifications } from './feedback/feedback-notifications';
 export { NotificationToast } from './feedback/notification-toast/notification-toast';
 export { ErrorModalHost } from './dialogs/error-modal-host/error-modal-host';
 export { MetricCard } from './cards/metric-card/metric-card';
+export { TextPanel } from './data-display/text-panel/text-panel';
 export { ProgressMeter } from './controls/progress-meter/progress-meter';
 export { StatusBadge } from './feedback/status-badge/status-badge';
+export { ViewportDebugger } from './diagnostics/viewport-debugger/viewport-debugger';
+export { ResponsivePreviewHost } from './diagnostics/responsive-preview-host/responsive-preview-host';
 export { MyDataGrid } from './collections/my-data-grid/my-data-grid';
+export { createLocalCollection } from './collections/local-collection';
+export { CollectionTextFilter } from './collections/collection-text-filter/collection-text-filter';
+export type {
+  LocalTextFilter,
+  LocalTextColumn,
+  LocalTextOperator,
+} from './collections/local-text-filter';
 export { CollectionColumnPipe } from './collections/collection-column-pipe';
 export { CardList } from './collections/card-list/card-list';
 export { CollectionRecordFeedback } from './collections/collection-record-feedback';

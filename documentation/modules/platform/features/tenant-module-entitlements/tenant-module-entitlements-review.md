@@ -6,6 +6,13 @@ The feature separates the commercial subscription from operational RBAC. A
 tenant buys modules and submodules; a user still needs the corresponding role
 permission. The effective access set is the intersection of both.
 
+Angular Tenant foundation2026-11-06: a narrow owner-scoped client now reads the
+existing /modules/tenant-entitlements catalog independently of navigation's
+/modules/accessible. Typed module/submodule validation and native form grant-set
+helpers exist; no Angular Tenant customer editor or grant UI is accepted yet.
+Checkpoint: documentation/modules/platform/features/angular-tenant-management-workspace/
+TENANT_FOUNDATION_2026-11-06.md. API/domain/Next/native semantics remain unchanged.
+
 ## 2. Scope and ownership
 
 Entitlements are tenant-owned because the subscription is sold to the tenant.

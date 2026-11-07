@@ -1,0 +1,35 @@
+<erp-data-table
+  [source]="source()"
+  [label]="captions.text('title')"
+  [columns]="columns()"
+  [advancedFilters]="true"
+  [filters]="reads.columnFilters()"
+  (filtersChange)="reads.changeColumnFilters($event)"
+  [rowId]="id"
+  [rowLabel]="label"
+  dataKey="key"
+  rowActivation="click"
+  [pageSizes]="[50]"
+  [recordNavigation]="true"
+  [selectionEnabled]="true"
+  [search]="search()"
+  [cellContextFilter]="false"
+  [display]="{ resizableColumns: 'fit', reorderableColumns: true, columnManagement: true }"
+  (pageChange)="reads.changePage($event)"
+  (searchChange)="reads.changeSearch($event)"
+  (retry)="reads.retry()"
+  (rowActivated)="detail.open($event)"
+>
+  @if (filtersVisible()) {
+    <div toolbarFilters><erp-audit-criteria /></div>
+  }
+  <ng-template [erpCollectionCell]="columns() | collectionColumn: 'action'" let-row
+    ><erp-status-badge
+      [label]="captions.text('actions.' + row.action)"
+      [accent]="captions.accent(row.action)"
+      [pill]="true"
+  /></ng-template>
+  <ng-template erpCollectionEmpty
+    ><erp-feedback-state kind="empty" [title]="captions.text('noEntries')"
+  /></ng-template>
+</erp-data-table>

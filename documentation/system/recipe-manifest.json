@@ -4,6 +4,26 @@
   "repositoryRoot": "../..",
   "books": [
     {
+      "id": "angular-states-workspace-master",
+      "path": "../modules/platform/features/angular-states-workspace/angular-states-workspace-review.md",
+      "title": "States complete Angular parity cross-platform master review"
+    },
+    {
+      "id": "angular-states-workspace-api",
+      "path": "../modules/platform/features/angular-states-workspace/angular-states-workspace-api.md",
+      "title": "States complete Angular parity API implementation profile"
+    },
+    {
+      "id": "angular-states-workspace-web",
+      "path": "../modules/platform/features/angular-states-workspace/angular-states-workspace-web.md",
+      "title": "States complete Angular parity Next.js implementation profile"
+    },
+    {
+      "id": "angular-states-workspace-mobile",
+      "path": "../modules/platform/features/angular-states-workspace/angular-states-workspace-mobile.md",
+      "title": "States complete Angular parity Expo implementation profile"
+    },
+    {
       "id": "master",
       "path": "../modules/reference-data/features/countries/countries-review.md",
       "title": "Countries cross-platform master review"
@@ -1182,6 +1202,186 @@
       "id": "global-crystal-template-manager-mobile",
       "path": "../modules/reporting/features/global-crystal-template-manager/global-crystal-template-manager-mobile.md",
       "title": "Global Crystal Template Manager Expo implementation profile"
+    },
+    {
+      "id": "angular-districts-workspace-master",
+      "path": "../modules/platform/features/angular-districts-workspace/angular-districts-workspace-review.md",
+      "title": "Districts complete Angular parity cross-platform master review"
+    },
+    {
+      "id": "angular-districts-workspace-api",
+      "path": "../modules/platform/features/angular-districts-workspace/angular-districts-workspace-api.md",
+      "title": "Districts complete Angular parity API implementation profile"
+    },
+    {
+      "id": "angular-districts-workspace-web",
+      "path": "../modules/platform/features/angular-districts-workspace/angular-districts-workspace-web.md",
+      "title": "Districts complete Angular parity Next.js implementation profile"
+    },
+    {
+      "id": "angular-districts-workspace-mobile",
+      "path": "../modules/platform/features/angular-districts-workspace/angular-districts-workspace-mobile.md",
+      "title": "Districts complete Angular parity Expo implementation profile"
+    },
+    {
+      "id": "angular-tenant-management-workspace-master",
+      "path": "../modules/platform/features/angular-tenant-management-workspace/angular-tenant-management-workspace-review.md",
+      "title": "Super Admin Tenant Management parity cross-platform master review"
+    },
+    {
+      "id": "angular-tenant-management-workspace-api",
+      "path": "../modules/platform/features/angular-tenant-management-workspace/angular-tenant-management-workspace-api.md",
+      "title": "Super Admin Tenant Management parity API implementation profile"
+    },
+    {
+      "id": "angular-tenant-management-workspace-web",
+      "path": "../modules/platform/features/angular-tenant-management-workspace/angular-tenant-management-workspace-web.md",
+      "title": "Super Admin Tenant Management parity Next.js implementation profile"
+    },
+    {
+      "id": "angular-tenant-management-workspace-mobile",
+      "path": "../modules/platform/features/angular-tenant-management-workspace/angular-tenant-management-workspace-mobile.md",
+      "title": "Super Admin Tenant Management parity Expo implementation profile"
+    },
+    {
+      "id": "angular-tenant-admins-workspace-master",
+      "path": "../modules/platform/features/angular-tenant-admins-workspace/angular-tenant-admins-workspace-review.md",
+      "title": "Super Admin Tenant Administrators parity cross-platform master review"
+    },
+    {
+      "id": "angular-tenant-admins-workspace-api",
+      "path": "../modules/platform/features/angular-tenant-admins-workspace/angular-tenant-admins-workspace-api.md",
+      "title": "Super Admin Tenant Administrators parity API implementation profile"
+    },
+    {
+      "id": "angular-tenant-admins-workspace-web",
+      "path": "../modules/platform/features/angular-tenant-admins-workspace/angular-tenant-admins-workspace-web.md",
+      "title": "Super Admin Tenant Administrators parity Next.js implementation profile"
+    },
+    {
+      "id": "angular-tenant-admins-workspace-mobile",
+      "path": "../modules/platform/features/angular-tenant-admins-workspace/angular-tenant-admins-workspace-mobile.md",
+      "title": "Super Admin Tenant Administrators parity Expo implementation profile"
+    },
+    {
+      "id": "angular-system-audit-workspace-master",
+      "path": "../modules/platform/features/angular-system-audit-workspace/angular-system-audit-workspace-review.md",
+      "title": "Super Admin System Audit Trail parity cross-platform master review"
+    },
+    {
+      "id": "angular-system-audit-workspace-api",
+      "path": "../modules/platform/features/angular-system-audit-workspace/angular-system-audit-workspace-api.md",
+      "title": "Super Admin System Audit Trail parity API implementation profile"
+    },
+    {
+      "id": "angular-system-audit-workspace-web",
+      "path": "../modules/platform/features/angular-system-audit-workspace/angular-system-audit-workspace-web.md",
+      "title": "System Audit Trail Angular client implementation profile"
+    },
+    {
+      "id": "angular-system-audit-workspace-mobile",
+      "path": "../modules/platform/features/angular-system-audit-workspace/angular-system-audit-workspace-mobile.md",
+      "title": "Super Admin System Audit Trail parity Expo implementation profile"
+    },
+    {
+      "id": "angular-system-error-logs-workspace-master",
+      "path": "../modules/platform/features/angular-system-error-logs-workspace/angular-system-error-logs-workspace-review.md",
+      "title": "Super Admin System Error Logs and Settings parity cross-platform master review"
+    },
+    {
+      "id": "angular-system-error-logs-workspace-api",
+      "path": "../modules/platform/features/angular-system-error-logs-workspace/angular-system-error-logs-workspace-api.md",
+      "title": "Super Admin System Error Logs and Settings parity API implementation profile"
+    },
+    {
+      "id": "angular-system-error-logs-workspace-web",
+      "path": "../modules/platform/features/angular-system-error-logs-workspace/angular-system-error-logs-workspace-web.md",
+      "title": "Super Admin System Error Logs and Settings parity Angular implementation profile"
+    },
+    {
+      "id": "angular-system-error-logs-workspace-mobile",
+      "path": "../modules/platform/features/angular-system-error-logs-workspace/angular-system-error-logs-workspace-mobile.md",
+      "title": "Super Admin System Error Logs and Settings parity Expo implementation profile"
+    },
+    {
+      "id": "angular-collection-export-master",
+      "path": "../modules/platform/features/angular-collection-export/angular-collection-export-review.md",
+      "title": "Shared all-filtered Excel and CSV export cross-platform master review"
+    },
+    {
+      "id": "angular-collection-export-api",
+      "path": "../modules/platform/features/angular-collection-export/angular-collection-export-api.md",
+      "title": "Shared all-filtered Excel and CSV export API implementation profile"
+    },
+    {
+      "id": "angular-collection-export-web",
+      "path": "../modules/platform/features/angular-collection-export/angular-collection-export-web.md",
+      "title": "Shared all-filtered Excel and CSV export Next.js implementation profile"
+    },
+    {
+      "id": "angular-collection-export-mobile",
+      "path": "../modules/platform/features/angular-collection-export/angular-collection-export-mobile.md",
+      "title": "Shared all-filtered Excel and CSV export Expo implementation profile"
+    },
+    {
+      "id": "angular-system-log-collection-consistency-master",
+      "path": "../modules/platform/features/angular-system-log-collection-consistency/angular-system-log-collection-consistency-review.md",
+      "title": "System log collection consistency cross-platform master review"
+    },
+    {
+      "id": "angular-system-log-collection-consistency-api",
+      "path": "../modules/platform/features/angular-system-log-collection-consistency/angular-system-log-collection-consistency-api.md",
+      "title": "System log collection consistency API implementation profile"
+    },
+    {
+      "id": "angular-system-log-collection-consistency-web",
+      "path": "../modules/platform/features/angular-system-log-collection-consistency/angular-system-log-collection-consistency-web.md",
+      "title": "System log collection consistency Next.js implementation profile"
+    },
+    {
+      "id": "angular-system-log-collection-consistency-mobile",
+      "path": "../modules/platform/features/angular-system-log-collection-consistency/angular-system-log-collection-consistency-mobile.md",
+      "title": "System log collection consistency Expo implementation profile"
+    },
+    {
+      "id": "angular-system-error-log-reports-master",
+      "path": "../modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-review.md",
+      "title": "System Error Logs managed reports cross-platform master review"
+    },
+    {
+      "id": "angular-system-error-log-reports-api",
+      "path": "../modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-api.md",
+      "title": "System Error Logs managed reports API implementation profile"
+    },
+    {
+      "id": "angular-system-error-log-reports-web",
+      "path": "../modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-web.md",
+      "title": "System Error Logs managed reports Next.js implementation profile"
+    },
+    {
+      "id": "angular-system-error-log-reports-mobile",
+      "path": "../modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-mobile.md",
+      "title": "System Error Logs managed reports Expo implementation profile"
+    },
+    {
+      "id": "angular-account-profile-master",
+      "path": "../modules/platform/features/angular-account-profile/angular-account-profile-review.md",
+      "title": "Angular own account profile and password parity cross-platform master review"
+    },
+    {
+      "id": "angular-account-profile-api",
+      "path": "../modules/platform/features/angular-account-profile/angular-account-profile-api.md",
+      "title": "Angular own account profile and password parity API implementation profile"
+    },
+    {
+      "id": "angular-account-profile-web",
+      "path": "../modules/platform/features/angular-account-profile/angular-account-profile-web.md",
+      "title": "Angular own account profile and password parity Next.js implementation profile"
+    },
+    {
+      "id": "angular-account-profile-mobile",
+      "path": "../modules/platform/features/angular-account-profile/angular-account-profile-mobile.md",
+      "title": "Angular own account profile and password parity Expo implementation profile"
     }
   ],
   "requiredFileManifests": [
@@ -1241,9 +1441,325 @@
     "../modules/platform/features/angular-countries-chart-view/required-files.json",
     "../modules/platform/features/angular-countries-report-view/required-files.json",
     "../modules/platform/features/angular-countries-import-view/required-files.json",
-    "../modules/reporting/features/global-crystal-template-manager/required-files.json"
+    "../modules/reporting/features/global-crystal-template-manager/required-files.json",
+    "../modules/platform/features/angular-districts-workspace/required-files.json",
+    "../modules/platform/features/angular-tenant-management-workspace/required-files.json",
+    "../modules/platform/features/angular-tenant-admins-workspace/required-files.json",
+    "../modules/platform/features/angular-system-audit-workspace/required-files.json",
+    "../modules/platform/features/angular-system-error-log-reports/required-files.json",
+    "../modules/platform/features/angular-account-profile/required-files.json"
   ],
   "recipes": [
+    {
+      "id": "angular-states-workspace-phase-00-implementation-preflight",
+      "title": "States complete Angular parity Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-states-workspace/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-states-workspace-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-states-workspace-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-states-workspace-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-states-workspace-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ],
+      "requiredFileManifest": "../modules/platform/features/angular-states-workspace/required-files.json"
+    },
+    {
+      "id": "angular-states-workspace-phase-01-domain-api",
+      "title": "States complete Angular parity Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-states-workspace/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-states-workspace-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-states-workspace-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ],
+      "requiredFileManifest": "../modules/platform/features/angular-states-workspace/required-files.json"
+    },
+    {
+      "id": "angular-states-workspace-phase-02-web-client",
+      "title": "States complete Angular parity Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-states-workspace/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-states-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-states-workspace-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ],
+      "requiredFileManifest": "../modules/platform/features/angular-states-workspace/required-files.json"
+    },
+    {
+      "id": "angular-states-workspace-phase-03-mobile-client",
+      "title": "States complete Angular parity Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-states-workspace/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-states-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-states-workspace-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ],
+      "requiredFileManifest": "../modules/platform/features/angular-states-workspace/required-files.json"
+    },
+    {
+      "id": "angular-states-workspace-phase-04-domain-actions",
+      "title": "States complete Angular parity Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-states-workspace/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-states-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-states-workspace-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-states-workspace-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-states-workspace-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ],
+      "requiredFileManifest": "../modules/platform/features/angular-states-workspace/required-files.json"
+    },
+    {
+      "id": "angular-states-workspace-phase-05-integration-runtime",
+      "title": "States complete Angular parity Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-states-workspace/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-states-workspace-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-states-workspace-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-states-workspace-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-states-workspace-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ],
+      "requiredFileManifest": "../modules/platform/features/angular-states-workspace/required-files.json"
+    },
+    {
+      "id": "angular-states-workspace-phase-06-verification-acceptance",
+      "title": "States complete Angular parity Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-states-workspace/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-states-workspace-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-states-workspace-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-states-workspace-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-states-workspace-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ],
+      "requiredFileManifest": "../modules/platform/features/angular-states-workspace/required-files.json"
+    },
+    {
+      "id": "angular-states-workspace-phase-07-customer-education-closure",
+      "title": "States complete Angular parity Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-states-workspace/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-states-workspace-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-states-workspace-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-states-workspace-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ],
+      "requiredFileManifest": "../modules/platform/features/angular-states-workspace/required-files.json"
+    },
     {
       "id": "phase-00-discovery-evidence",
       "title": "Phase 00 - Discovery and Evidence",
@@ -19186,6 +19702,2732 @@
           ]
         }
       ]
+    },
+    {
+      "id": "angular-districts-workspace-phase-00-implementation-preflight",
+      "title": "Districts complete Angular parity Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-districts-workspace/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-districts-workspace-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-districts-workspace-phase-01-domain-api",
+      "title": "Districts complete Angular parity Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-districts-workspace/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-districts-workspace-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-districts-workspace-phase-02-web-client",
+      "title": "Districts complete Angular parity Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-districts-workspace/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-districts-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-districts-workspace-phase-03-mobile-client",
+      "title": "Districts complete Angular parity Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-districts-workspace/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-districts-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-districts-workspace-phase-04-domain-actions",
+      "title": "Districts complete Angular parity Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-districts-workspace/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-districts-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-districts-workspace-phase-05-integration-runtime",
+      "title": "Districts complete Angular parity Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-districts-workspace/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-districts-workspace-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-districts-workspace-phase-06-verification-acceptance",
+      "title": "Districts complete Angular parity Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-districts-workspace/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-districts-workspace-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-districts-workspace-phase-07-customer-education-closure",
+      "title": "Districts complete Angular parity Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-districts-workspace/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-districts-workspace-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-districts-workspace-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-tenant-management-workspace-phase-00-implementation-preflight",
+      "title": "Super Admin Tenant Management parity Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-tenant-management-workspace/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-tenant-management-workspace-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-tenant-management-workspace-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-tenant-management-workspace-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-tenant-management-workspace-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-tenant-management-workspace-phase-01-domain-api",
+      "title": "Super Admin Tenant Management parity Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-tenant-management-workspace/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-tenant-management-workspace-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-tenant-management-workspace-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-tenant-management-workspace-phase-02-web-client",
+      "title": "Super Admin Tenant Management parity Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-tenant-management-workspace/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-tenant-management-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-tenant-management-workspace-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-tenant-management-workspace-phase-03-mobile-client",
+      "title": "Super Admin Tenant Management parity Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-tenant-management-workspace/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-tenant-management-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-tenant-management-workspace-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-tenant-management-workspace-phase-04-domain-actions",
+      "title": "Super Admin Tenant Management parity Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-tenant-management-workspace/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-tenant-management-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-tenant-management-workspace-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-tenant-management-workspace-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-tenant-management-workspace-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-tenant-management-workspace-phase-05-integration-runtime",
+      "title": "Super Admin Tenant Management parity Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-tenant-management-workspace/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-tenant-management-workspace-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-tenant-management-workspace-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-tenant-management-workspace-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-tenant-management-workspace-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-tenant-management-workspace-phase-06-verification-acceptance",
+      "title": "Super Admin Tenant Management parity Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-tenant-management-workspace/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-tenant-management-workspace-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-tenant-management-workspace-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-tenant-management-workspace-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-tenant-management-workspace-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-tenant-management-workspace-phase-07-customer-education-closure",
+      "title": "Super Admin Tenant Management parity Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-tenant-management-workspace/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-tenant-management-workspace-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-tenant-management-workspace-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-tenant-management-workspace-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-tenant-admins-workspace-phase-00-implementation-preflight",
+      "title": "Super Admin Tenant Administrators parity Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-tenant-admins-workspace/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-tenant-admins-workspace-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-tenant-admins-workspace-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-tenant-admins-workspace-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-tenant-admins-workspace-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-tenant-admins-workspace-phase-01-domain-api",
+      "title": "Super Admin Tenant Administrators parity Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-tenant-admins-workspace/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-tenant-admins-workspace-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-tenant-admins-workspace-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-tenant-admins-workspace-phase-02-web-client",
+      "title": "Super Admin Tenant Administrators parity Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-tenant-admins-workspace/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-tenant-admins-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-tenant-admins-workspace-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-tenant-admins-workspace-phase-03-mobile-client",
+      "title": "Super Admin Tenant Administrators parity Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-tenant-admins-workspace/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-tenant-admins-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-tenant-admins-workspace-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-tenant-admins-workspace-phase-04-domain-actions",
+      "title": "Super Admin Tenant Administrators parity Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-tenant-admins-workspace/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-tenant-admins-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-tenant-admins-workspace-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-tenant-admins-workspace-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-tenant-admins-workspace-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-tenant-admins-workspace-phase-05-integration-runtime",
+      "title": "Super Admin Tenant Administrators parity Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-tenant-admins-workspace/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-tenant-admins-workspace-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-tenant-admins-workspace-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-tenant-admins-workspace-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-tenant-admins-workspace-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-tenant-admins-workspace-phase-06-verification-acceptance",
+      "title": "Super Admin Tenant Administrators parity Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-tenant-admins-workspace/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-tenant-admins-workspace-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-tenant-admins-workspace-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-tenant-admins-workspace-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-tenant-admins-workspace-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-tenant-admins-workspace-phase-07-customer-education-closure",
+      "title": "Super Admin Tenant Administrators parity Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-tenant-admins-workspace/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-tenant-admins-workspace-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-tenant-admins-workspace-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-tenant-admins-workspace-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-audit-workspace-phase-00-implementation-preflight",
+      "title": "Super Admin System Audit Trail parity Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-system-audit-workspace/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-system-audit-workspace-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-system-audit-workspace-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-system-audit-workspace-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-system-audit-workspace-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-audit-workspace-phase-01-domain-api",
+      "title": "Super Admin System Audit Trail parity Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-system-audit-workspace/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-system-audit-workspace-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-system-audit-workspace-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-audit-workspace-phase-02-web-client",
+      "title": "Super Admin System Audit Trail parity Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-system-audit-workspace/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-system-audit-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-system-audit-workspace-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-audit-workspace-phase-03-mobile-client",
+      "title": "Super Admin System Audit Trail parity Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-system-audit-workspace/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-system-audit-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-system-audit-workspace-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-audit-workspace-phase-04-domain-actions",
+      "title": "Super Admin System Audit Trail parity Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-system-audit-workspace/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-system-audit-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-system-audit-workspace-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-system-audit-workspace-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-system-audit-workspace-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-audit-workspace-phase-05-integration-runtime",
+      "title": "Super Admin System Audit Trail parity Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-system-audit-workspace/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-system-audit-workspace-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-system-audit-workspace-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-system-audit-workspace-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-system-audit-workspace-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-audit-workspace-phase-06-verification-acceptance",
+      "title": "Super Admin System Audit Trail parity Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-system-audit-workspace/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-system-audit-workspace-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-system-audit-workspace-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-system-audit-workspace-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-system-audit-workspace-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-audit-workspace-phase-07-customer-education-closure",
+      "title": "Super Admin System Audit Trail parity Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-system-audit-workspace/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-system-audit-workspace-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-system-audit-workspace-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-system-audit-workspace-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-logs-workspace-phase-00-implementation-preflight",
+      "title": "Super Admin System Error Logs and Settings parity Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-system-error-logs-workspace/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-system-error-logs-workspace-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-system-error-logs-workspace-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-system-error-logs-workspace-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-system-error-logs-workspace-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-logs-workspace-phase-01-domain-api",
+      "title": "Super Admin System Error Logs and Settings parity Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-system-error-logs-workspace/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-system-error-logs-workspace-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-system-error-logs-workspace-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-logs-workspace-phase-02-web-client",
+      "title": "Super Admin System Error Logs and Settings parity Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-system-error-logs-workspace/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-system-error-logs-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-system-error-logs-workspace-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-logs-workspace-phase-03-mobile-client",
+      "title": "Super Admin System Error Logs and Settings parity Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-system-error-logs-workspace/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-system-error-logs-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-system-error-logs-workspace-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-logs-workspace-phase-04-domain-actions",
+      "title": "Super Admin System Error Logs and Settings parity Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-system-error-logs-workspace/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-system-error-logs-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-system-error-logs-workspace-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-system-error-logs-workspace-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-system-error-logs-workspace-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-logs-workspace-phase-05-integration-runtime",
+      "title": "Super Admin System Error Logs and Settings parity Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-system-error-logs-workspace/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-system-error-logs-workspace-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-system-error-logs-workspace-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-system-error-logs-workspace-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-system-error-logs-workspace-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-logs-workspace-phase-06-verification-acceptance",
+      "title": "Super Admin System Error Logs and Settings parity Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-system-error-logs-workspace/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-system-error-logs-workspace-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-system-error-logs-workspace-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-system-error-logs-workspace-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-system-error-logs-workspace-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-logs-workspace-phase-07-customer-education-closure",
+      "title": "Super Admin System Error Logs and Settings parity Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-system-error-logs-workspace/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-system-error-logs-workspace-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-system-error-logs-workspace-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-system-error-logs-workspace-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-export-phase-00-implementation-preflight",
+      "title": "Shared all-filtered Excel and CSV export Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-collection-export/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-collection-export-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-collection-export-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-collection-export-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-collection-export-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-export-phase-01-domain-api",
+      "title": "Shared all-filtered Excel and CSV export Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-collection-export/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-collection-export-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-collection-export-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-export-phase-02-web-client",
+      "title": "Shared all-filtered Excel and CSV export Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-collection-export/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-collection-export-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-collection-export-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-export-phase-03-mobile-client",
+      "title": "Shared all-filtered Excel and CSV export Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-collection-export/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-collection-export-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-collection-export-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-export-phase-04-domain-actions",
+      "title": "Shared all-filtered Excel and CSV export Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-collection-export/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-collection-export-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-collection-export-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-collection-export-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-collection-export-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-export-phase-05-integration-runtime",
+      "title": "Shared all-filtered Excel and CSV export Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-collection-export/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-collection-export-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-collection-export-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-collection-export-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-collection-export-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-export-phase-06-verification-acceptance",
+      "title": "Shared all-filtered Excel and CSV export Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-collection-export/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-collection-export-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-collection-export-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-collection-export-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-collection-export-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-export-phase-07-customer-education-closure",
+      "title": "Shared all-filtered Excel and CSV export Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-collection-export/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-collection-export-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-collection-export-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-collection-export-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-log-collection-consistency-phase-00-implementation-preflight",
+      "title": "System log collection consistency Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-system-log-collection-consistency/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-system-log-collection-consistency-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-system-log-collection-consistency-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-system-log-collection-consistency-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-system-log-collection-consistency-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-log-collection-consistency-phase-01-domain-api",
+      "title": "System log collection consistency Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-system-log-collection-consistency/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-system-log-collection-consistency-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-system-log-collection-consistency-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-log-collection-consistency-phase-02-web-client",
+      "title": "System log collection consistency Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-system-log-collection-consistency/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-system-log-collection-consistency-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-system-log-collection-consistency-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-log-collection-consistency-phase-03-mobile-client",
+      "title": "System log collection consistency Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-system-log-collection-consistency/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-system-log-collection-consistency-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-system-log-collection-consistency-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-log-collection-consistency-phase-04-domain-actions",
+      "title": "System log collection consistency Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-system-log-collection-consistency/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-system-log-collection-consistency-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-system-log-collection-consistency-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-system-log-collection-consistency-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-system-log-collection-consistency-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-log-collection-consistency-phase-05-integration-runtime",
+      "title": "System log collection consistency Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-system-log-collection-consistency/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-system-log-collection-consistency-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-system-log-collection-consistency-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-system-log-collection-consistency-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-system-log-collection-consistency-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-log-collection-consistency-phase-06-verification-acceptance",
+      "title": "System log collection consistency Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-system-log-collection-consistency/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-system-log-collection-consistency-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-system-log-collection-consistency-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-system-log-collection-consistency-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-system-log-collection-consistency-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-log-collection-consistency-phase-07-customer-education-closure",
+      "title": "System log collection consistency Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-system-log-collection-consistency/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-system-log-collection-consistency-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-system-log-collection-consistency-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-system-log-collection-consistency-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-log-reports-phase-00-implementation-preflight",
+      "title": "System Error Logs managed reports Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-system-error-log-reports/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-system-error-log-reports-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-log-reports-phase-01-domain-api",
+      "title": "System Error Logs managed reports Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-system-error-log-reports/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-system-error-log-reports-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-log-reports-phase-02-web-client",
+      "title": "System Error Logs managed reports Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-system-error-log-reports/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-system-error-log-reports-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-log-reports-phase-03-mobile-client",
+      "title": "System Error Logs managed reports Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-system-error-log-reports/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-system-error-log-reports-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-log-reports-phase-04-domain-actions",
+      "title": "System Error Logs managed reports Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-system-error-log-reports/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-system-error-log-reports-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-log-reports-phase-05-integration-runtime",
+      "title": "System Error Logs managed reports Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-system-error-log-reports/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-system-error-log-reports-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-log-reports-phase-06-verification-acceptance",
+      "title": "System Error Logs managed reports Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-system-error-log-reports/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-system-error-log-reports-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-log-reports-phase-07-customer-education-closure",
+      "title": "System Error Logs managed reports Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-system-error-log-reports/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-system-error-log-reports-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-account-profile-phase-00-implementation-preflight",
+      "title": "Angular own account profile and password parity Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-account-profile/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-account-profile-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-account-profile-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-account-profile-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-account-profile-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ],
+      "requiredFileManifest": "../modules/platform/features/angular-account-profile/required-files.json"
+    },
+    {
+      "id": "angular-account-profile-phase-01-domain-api",
+      "title": "Angular own account profile and password parity Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-account-profile/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-account-profile-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-account-profile-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ],
+      "requiredFileManifest": "../modules/platform/features/angular-account-profile/required-files.json"
+    },
+    {
+      "id": "angular-account-profile-phase-02-web-client",
+      "title": "Angular own account profile and password parity Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-account-profile/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-account-profile-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-account-profile-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ],
+      "requiredFileManifest": "../modules/platform/features/angular-account-profile/required-files.json"
+    },
+    {
+      "id": "angular-account-profile-phase-03-mobile-client",
+      "title": "Angular own account profile and password parity Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-account-profile/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-account-profile-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-account-profile-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ],
+      "requiredFileManifest": "../modules/platform/features/angular-account-profile/required-files.json"
+    },
+    {
+      "id": "angular-account-profile-phase-04-domain-actions",
+      "title": "Angular own account profile and password parity Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-account-profile/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-account-profile-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-account-profile-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-account-profile-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-account-profile-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ],
+      "requiredFileManifest": "../modules/platform/features/angular-account-profile/required-files.json"
+    },
+    {
+      "id": "angular-account-profile-phase-05-integration-runtime",
+      "title": "Angular own account profile and password parity Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-account-profile/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-account-profile-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-account-profile-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-account-profile-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-account-profile-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ],
+      "requiredFileManifest": "../modules/platform/features/angular-account-profile/required-files.json"
+    },
+    {
+      "id": "angular-account-profile-phase-06-verification-acceptance",
+      "title": "Angular own account profile and password parity Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-account-profile/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-account-profile-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-account-profile-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-account-profile-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-account-profile-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ],
+      "requiredFileManifest": "../modules/platform/features/angular-account-profile/required-files.json"
+    },
+    {
+      "id": "angular-account-profile-phase-07-customer-education-closure",
+      "title": "Angular own account profile and password parity Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-account-profile/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-account-profile-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-account-profile-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-account-profile-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ],
+      "requiredFileManifest": "../modules/platform/features/angular-account-profile/required-files.json"
     }
   ]
 }

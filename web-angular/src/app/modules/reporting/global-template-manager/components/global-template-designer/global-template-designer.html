@@ -72,42 +72,44 @@
           [readOnly]="state.pending() || !state.moduleKey()"
           (retry)="state.reload()"
         />
-        <erp-reference-field
-          [formControl]="state.form.controls.viewName"
-          [label]="'globalTemplates.design.viewName' | uiText: 'reporting'"
-          [help]="'globalTemplates.design.viewCatalogHint' | uiText: 'reporting'"
-          [source]="viewOptions()"
-          [selection]="viewSelection()"
-          [searchText]="state.views.criteria().search"
-          [messages]="messages()"
-          [readOnly]="state.pending() || !state.selectedSource()"
-          (searchChange)="state.views.search($event)"
-          (loadMore)="state.views.loadMore()"
-          (retry)="state.refreshViews()"
-        />
-        @if (state.selectedSource()) {
-          <erp-button
-            variant="text"
-            [label]="'globalTemplates.design.refreshViews' | uiText: 'reporting'"
-            [disabled]="state.pending()"
-            (activated)="state.refreshViews()"
-            ><erp-icon buttonIcon name="refresh"
-          /></erp-button>
-          @if (state.views.state().kind === 'ready' && !state.views.items().length) {
-            <erp-feedback-state
-              layout="inline"
-              kind="empty"
-              tone="warning"
-              [title]="'globalTemplates.design.noViews' | uiText: 'reporting'"
-            />
-          } @else if (state.views.state().kind === 'error') {
-            <erp-feedback-state
-              layout="inline"
-              kind="error"
-              [title]="'globalTemplates.design.viewLoadError' | uiText: 'reporting'"
-              [actionLabel]="'actions.retry' | uiText"
-              (action)="state.refreshViews()"
-            />
+        @if (!state.providerBound()) {
+          <erp-reference-field
+            [formControl]="state.form.controls.viewName"
+            [label]="'globalTemplates.design.viewName' | uiText: 'reporting'"
+            [help]="'globalTemplates.design.viewCatalogHint' | uiText: 'reporting'"
+            [source]="viewOptions()"
+            [selection]="viewSelection()"
+            [searchText]="state.views.criteria().search"
+            [messages]="messages()"
+            [readOnly]="state.pending() || !state.selectedSource()"
+            (searchChange)="state.views.search($event)"
+            (loadMore)="state.views.loadMore()"
+            (retry)="state.refreshViews()"
+          />
+          @if (state.selectedSource()) {
+            <erp-button
+              variant="text"
+              [label]="'globalTemplates.design.refreshViews' | uiText: 'reporting'"
+              [disabled]="state.pending()"
+              (activated)="state.refreshViews()"
+              ><erp-icon buttonIcon name="refresh"
+            /></erp-button>
+            @if (state.views.state().kind === 'ready' && !state.views.items().length) {
+              <erp-feedback-state
+                layout="inline"
+                kind="empty"
+                tone="warning"
+                [title]="'globalTemplates.design.noViews' | uiText: 'reporting'"
+              />
+            } @else if (state.views.state().kind === 'error') {
+              <erp-feedback-state
+                layout="inline"
+                kind="error"
+                [title]="'globalTemplates.design.viewLoadError' | uiText: 'reporting'"
+                [actionLabel]="'actions.retry' | uiText"
+                (action)="state.refreshViews()"
+              />
+            }
           }
         }
         <erp-text-field

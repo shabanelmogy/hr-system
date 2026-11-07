@@ -127,7 +127,7 @@ export function inspectSource(relative, source) {
       !test &&
       !shared &&
       /shared\/ui\//.test(name) &&
-      !/shared\/ui\/(?:public-api|charts\/public-api|feedback\/notifications\.public-api)$/.test(
+      !/shared\/ui\/(?:public-api|charts\/public-api|feedback\/notifications\.public-api|diagnostics\/state\.public-api)$/.test(
         name,
       )
     )
@@ -217,7 +217,12 @@ export function inspectSource(relative, source) {
     )
       checkModule(node.arguments[0].text);
     if (!test && node.kind === ts.SyntaxKind.AnyKeyword) violations.add('untyped any');
-    if (!test && ts.isIdentifier(node) && ['localStorage', 'sessionStorage'].includes(node.text))
+    if (
+      !test &&
+      ts.isIdentifier(node) &&
+      (node.text === 'sessionStorage' ||
+        (node.text === 'localStorage' && relative !== 'src/app/shared/data/view-preference.ts'))
+    )
       violations.add('undeclared browser storage');
     if (
       !test &&

@@ -1,0 +1,66 @@
+<erp-dialog-panel
+  [open]="state.active()"
+  [title]="captions.text('detailTitle')"
+  [description]="state.item()?.entry.id ?? ''"
+  [closeLabel]="captions.core('actions.close')"
+  icon="category"
+  size="wide"
+  (closeRequested)="state.close()"
+>
+  @if (detail()) {
+    <erp-copy-button dialogActions [content]="copyContent" [label]="captions.text('copyMessage')" />
+  }
+  @switch (state.view().kind) {
+    @case ('loading') {
+      <erp-feedback-state kind="loading" [title]="captions.text('loading')" />
+    }
+    @case ('error') {
+      <erp-feedback-state
+        kind="error"
+        [title]="captions.text('loadFailed')"
+        [actionLabel]="captions.text('retry')"
+        (action)="state.retry()"
+      />
+    }
+    @case ('forbidden') {
+      <erp-feedback-state
+        kind="forbidden"
+        [title]="captions.core('authorization.forbidden.title')"
+      />
+    }
+    @case ('ready') {
+      @if (detail(); as detail) {
+        <erp-surface-card [title]="captions.text('message')" [compact]="true">
+          <div class="badges">
+            <erp-status-badge
+              [label]="captions.text('sources.' + detail.entry.source)"
+            /><erp-status-badge
+              [label]="captions.text('severities.' + detail.entry.severity)"
+              [accent]="detail.entry.severity === 'error' ? 'var(--destructive)' : 'var(--warning)'"
+            />
+          </div>
+          <erp-text-panel [label]="captions.text('message')" [text]="detail.entry.summary" />
+        </erp-surface-card>
+        @for (group of groups(); track group.id) {
+          <erp-record-summary [title]="group.title" [fields]="group.fields" />
+        }
+        @if (detail.diagnostics.length) {
+          <erp-text-panel
+            [label]="captions.text('diagnostics')"
+            [text]="detail.diagnostics.join('\n')"
+            direction="ltr"
+            [monospace]="true"
+          />
+        } @else {
+          <erp-feedback-state kind="empty" [title]="captions.text('diagnosticsEmpty')" />
+        }
+      }
+    }
+  }
+  <erp-button
+    dialogActions
+    [label]="captions.core('actions.close')"
+    variant="text"
+    (activated)="state.close()"
+  />
+</erp-dialog-panel>

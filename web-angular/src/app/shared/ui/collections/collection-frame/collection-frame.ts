@@ -43,6 +43,7 @@ export class CollectionFrame<T> {
   readonly search = input<CollectionSearch>();
   readonly pageSizes = input<readonly number[]>(collectionPageSizes);
   readonly selectionEnabled = input(false);
+  readonly selectionPlacement = input<'bar' | 'footer'>('bar');
   readonly columns = input<readonly CollectionColumn<T>[]>([]);
   readonly visibleColumns = input<readonly string[]>([]);
   readonly density = input<CollectionDensity>('standard');

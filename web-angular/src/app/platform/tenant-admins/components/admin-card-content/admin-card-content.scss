@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  min-inline-size: 0;
+}
+h3 {
+  margin: 1rem 0 0.5rem;
+  font-size: 0.875rem;
+}
+.assignments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}

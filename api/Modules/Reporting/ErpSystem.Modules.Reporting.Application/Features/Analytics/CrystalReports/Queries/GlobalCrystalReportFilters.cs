@@ -33,7 +33,7 @@ public static class GlobalCrystalReportFilters
         "displayName" or "reportKey" =>
             rule.MatchMode is "contains" or "notContains" or "startsWith" or "endsWith" or "equals" or "notEquals" &&
             rule.Value.ValueKind == JsonValueKind.String && rule.Value.GetString() is { Length: > 0 and <= 200 } text && !string.IsNullOrWhiteSpace(text),
-        "entityKey" => Choice(rule, ["countries", "states", "districts"]),
+        "entityKey" => Choice(rule, ["countries", "states", "districts", "system-error-logs"]),
         "status" => Choice(rule, ["published", "draft", "archived"]),
         "currentVersionNumber" => rule.MatchMode is "equals" or "notEquals" or "lt" or "lte" or "gt" or "gte" &&
             rule.Value.ValueKind == JsonValueKind.Number && rule.Value.TryGetInt32(out var number) && number > 0,

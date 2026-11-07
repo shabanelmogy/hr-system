@@ -78,7 +78,7 @@ profile and do not leave an unreachable route, component, or translation surface
 | platform-browser-authentication-mobile | 7 | `a4515584d58b8d0fe284653bda3c395f7192fd8292b19bc4bebe972f7a7abdec` |
 | platform-browser-authentication-mobile | 8 | `0c49901ed86b9cb505f189c04c89b4ee83d43a5cf9618c78a478e9c1b0359457` |
 | platform-browser-authentication-mobile | 9 | `ee88e7570c0c92759fc11905a984191f1b35504afdc1f82cffb14e21e514cabc` |
-| platform-browser-authentication-mobile | 10 | `55671e8beaf38554eacb8d95c72da2780692ea162c3bb358796621f03d69cb8c` |
+| platform-browser-authentication-mobile | 10 | `38d1122284f77f6b6fbe114a487d424c8f1d02902ac4a2c0a05d929b6dd5b7b0` |
 | platform-browser-authentication-mobile | 11 | `3b9b38136ee9eee63b85e9b06240286b646e8b78f3d34926eaea28e95760c620` |
 | platform-browser-authentication-mobile | 12 | `3308fb3907bfc143e813e7885d79a4f0a5deb686d1459079e2f47ef2cbddd72c` |
 | platform-browser-authentication-mobile | 13 | `e03b2fedba3aeb97ef2f9cad9ff1e716328f4f87494425de8484fe6b42f477d5` |

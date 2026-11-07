@@ -1,0 +1,27 @@
+
+> erp-angular@0.0.0 pretest
+> npm run configure:license
+
+
+> erp-angular@0.0.0 configure:license
+> node --env-file-if-exists=.env.local scripts/configure-license.mjs
+
+PrimeUI local license configured (value omitted).
+
+> erp-angular@0.0.0 test
+> node scripts/run-angular.mjs test --watch=false --include=src/app/platform/system-error-logs/state/error-log-export-state.spec.ts --include=src/app/platform/system-error-logs/state/retention-editor-state.spec.ts
+
+API target: host (https://shabanhrms.runasp.net)
+> Building...
+√ Building...
+Application bundle generation complete. [10.559 seconds] - 2026-11-06T10:31:32.888Z
+
+
+ RUN  v5.0.5 F:/Portofolio Projects/ERPSYSTEM/web-angular
+
+
+ Test Files  2 passed (2)
+      Tests  13 passed (13)
+   Start at  12:31:33
+   Duration  6.26s (import 38%, environment 35%, setup 15%, transform 11%, tests 1%)
+

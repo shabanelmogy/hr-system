@@ -1,0 +1,42 @@
+<erp-confirmation-dialog
+  [open]="lifecycle.open()"
+  [pending]="lifecycle.pending()"
+  [title]="
+    (lifecycle.action() === 'bulk'
+      ? 'districts.bulkArchiveTitle'
+      : lifecycle.action() === 'restore'
+        ? 'districts.restoreTitle'
+        : 'districts.archiveTitle'
+    ) | uiText: 'reference-districts'
+  "
+  [description]="
+    (lifecycle.action() === 'bulk'
+      ? 'districts.bulkArchiveDescription'
+      : lifecycle.action() === 'restore'
+        ? 'districts.restoreDescription'
+        : 'districts.archiveDescription'
+    ) | uiText: 'reference-districts'
+  "
+  [cancelLabel]="'actions.cancel' | uiText"
+  [confirmLabel]="
+    lifecycle.action() === 'bulk'
+      ? locale.translate('districts.bulkArchiveConfirm', 'reference-districts', {
+          count: lifecycle.count(),
+        })
+      : text(lifecycle.action() === 'restore' ? 'actions.restore' : 'actions.archive')
+  "
+  [severity]="lifecycle.action() === 'restore' ? 'success' : 'warn'"
+  (confirmed)="lifecycle.confirm()"
+  (cancelled)="lifecycle.cancel()"
+>
+  @if (lifecycle.action() === 'bulk') {
+    <p>
+      {{ 'districts.selectedCount' | uiText: 'reference-districts' : { count: lifecycle.count() } }}
+    </p>
+  }
+  @for (row of lifecycle.targets(); track row.id) {
+    <p dir="auto">
+      {{ rowLabel(row) }} <bdi>({{ row.id }})</bdi>
+    </p>
+  }
+</erp-confirmation-dialog>

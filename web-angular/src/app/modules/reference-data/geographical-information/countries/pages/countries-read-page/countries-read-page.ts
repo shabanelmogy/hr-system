@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal, viewChild } from '@angular/core';
+import { Component, computed, effect, inject, signal, untracked, viewChild } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   LocalizationRuntime,
@@ -52,7 +52,9 @@ import { countryChartData } from '../../utils/country-chart-data';
 import { AuthSession } from '../../../../../../platform/auth/session.public-api';
 import { GlobalReportView, globalReportAllowed } from '../../../../../reporting/public-api';
 import { CountryImportView } from '../../components/country-import-view/country-import-view';
-import { UnsavedChanges } from '../../../../../../shared/data/public-api';
+import { createViewPreference, UnsavedChanges } from '../../../../../../shared/data/public-api';
+
+type CountryView = 'grid' | 'cards' | 'chart' | 'report' | 'import';
 
 @Component({
   selector: 'erp-countries-read-page',
@@ -94,6 +96,12 @@ import { UnsavedChanges } from '../../../../../../shared/data/public-api';
   styleUrl: './countries-read-page.scss',
 })
 export class CountriesReadPage {
+  readonly exportSource = computed(() =>
+    ['grid', 'cards'].includes(this.view())
+      ? this.state.exportSource(this.columns(), this.locale.language())
+      : null,
+  );
+
   readonly state = inject(CountryReadState);
   readonly editor = inject(CountryEditorState);
   readonly lifecycle = inject(CountryLifecycleState);
@@ -132,19 +140,36 @@ export class CountriesReadPage {
   );
   private readonly reportView = viewChild<GlobalReportView>('countryReport');
   private readonly drafts = inject(UnsavedChanges);
-  readonly view = signal<'grid' | 'cards' | 'chart' | 'report' | 'import'>('grid');
+  private readonly preference = createViewPreference<CountryView>({
+    storageKey: 'erp-angular:views:countries-view-layout',
+    defaultValue: 'grid',
+    allowedValues: () => this.views().map((view) => view.id),
+    canSynchronize: () =>
+      this.state.canRead() &&
+      !this.editor.active() &&
+      !this.lifecycle.pending() &&
+      !this.drafts.busy() &&
+      !this.drafts.dirty(),
+  });
+  readonly view = this.preference.value;
   readonly toolbarVisible = signal(true);
-  readonly views = computed<readonly PageViewOption[]>(() =>
+  readonly views = computed<readonly PageViewOption<CountryView>[]>(() =>
     this.state.canRead()
       ? [
           { id: 'grid', label: this.text('views.grid'), icon: 'grid' },
           { id: 'cards', label: this.text('views.cards'), icon: 'cards' },
           { id: 'chart', label: this.text('views.chart'), icon: 'chart' },
           ...(this.canReport()
-            ? [{ id: 'report', label: this.text('views.report'), icon: 'report' as const }]
+            ? [{ id: 'report' as const, label: this.text('views.report'), icon: 'report' as const }]
             : []),
           ...(this.editor.canCreate()
-            ? [{ id: 'import', label: this.text('views.import'), icon: 'dataset' as const }]
+            ? [
+                {
+                  id: 'import' as const,
+                  label: this.text('views.import'),
+                  icon: 'dataset' as const,
+                },
+              ]
             : []),
         ]
       : [],
@@ -190,7 +215,7 @@ export class CountriesReadPage {
       this.lifecycle.cancel();
       if (value === 'chart' && this.state.query().pageNumber !== 1)
         this.state.changePage({ pageIndex: 0, pageSize: this.state.query().pageSize });
-      this.view.set(value);
+      this.preference.choose(value);
     }
   }
   readonly id = (row: CountryListItem) => row.id;
@@ -248,11 +273,13 @@ export class CountriesReadPage {
     void this.locale.loadNamespace('core');
     void this.locale.loadNamespace('reference-countries');
     effect(() => {
-      if (
-        (this.view() === 'report' && !this.canReport()) ||
-        (this.view() === 'import' && !this.editor.canCreate())
-      )
-        this.view.set('grid');
+      const view = this.view();
+      untracked(() => {
+        this.lifecycle.clearSelection();
+        this.lifecycle.cancel();
+        if (view === 'chart' && this.state.query().pageNumber !== 1)
+          this.state.changePage({ pageIndex: 0, pageSize: this.state.query().pageSize });
+      });
     });
   }
   refreshCurrent(): void {

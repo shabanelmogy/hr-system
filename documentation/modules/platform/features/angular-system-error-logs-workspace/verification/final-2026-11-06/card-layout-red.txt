@@ -1,0 +1,19 @@
+(node:20684) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/src/app/platform/auth/auth.fixture.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\F:\Portofolio Projects\ERPSYSTEM\web-angular\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: {"width":403.796875,"availableWidth":1328,"columns":1}
+    at file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/verify-system-error-logs-browser.mjs:241:16 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.18.1

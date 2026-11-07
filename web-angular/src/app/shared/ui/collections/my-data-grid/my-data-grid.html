@@ -4,7 +4,7 @@
   [search]="search()"
   [pageSizes]="pageSizes()"
   [selectionEnabled]="selectionEnabled()"
-  [pageSelection]="selectionMode() === 'multiple' || selectionMode() === 'range'"
+  selectionPlacement="footer"
   [columns]="optionColumns()"
   [visibleColumns]="visibleKeys()"
   [density]="density()"
@@ -63,7 +63,7 @@
           [lazyLoadOnInit]="false"
           [scrollable]="true"
           scrollHeight="flex"
-          [sortField]="sort()?.field"
+          [sortField]="sort()?.field ?? null"
           [sortOrder]="sort()?.direction === 'desc' ? -1 : 1"
           [sortMode]="sortMode()"
           [multiSortMeta]="nativeSorts()"
@@ -86,7 +86,30 @@
               <tr>
                 @if (first && selectionEnabled()) {
                   <th class="selection-cell" scope="col" [attr.rowspan]="headerRows()?.length">
-                    <span class="sr-only">{{ 'collections.selectPage' | uiText }}</span>
+                    @if (selectionMode() === 'multiple' || selectionMode() === 'range') {
+                      <p-checkbox
+                        [binary]="true"
+                        [ngModelOptions]="{ standalone: true }"
+                        [ngModel]="controller.allSelected()"
+                        [indeterminate]="controller.partlySelected()"
+                        [pt]="{
+                          input: {
+                            'aria-checked': controller.partlySelected()
+                              ? 'mixed'
+                              : controller.allSelected()
+                                ? 'true'
+                                : 'false',
+                          },
+                        }"
+                        [ariaLabel]="'collections.selectPage' | uiText"
+                        [disabled]="
+                          controller.view().kind !== 'ready' || !controller.eligibleIds().length
+                        "
+                        (ngModelChange)="controller.selectPage($event === true)"
+                      />
+                    } @else {
+                      <span class="sr-only">{{ 'collections.selectPage' | uiText }}</span>
+                    }
                   </th>
                 }
                 @if (first && details()) {

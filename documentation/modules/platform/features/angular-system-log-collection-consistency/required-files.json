@@ -1,0 +1,980 @@
+{
+  "schemaVersion": 1,
+  "status": "final",
+  "executionMode": "authorized-client-implementation",
+  "runtimeAuthorized": true,
+  "feature": "angular-system-log-collection-consistency",
+  "featureName": "System log collection consistency",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S4-A4b \u2014 System log collection consistency",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-system-log-collection-consistency.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-system-log-collection-consistency.md",
+  "purpose": "Accepted bounded API/Angular implementation, source tests, portable browser evidence and Arabic education; hosted SQL/release remains PROD-030.",
+  "reviewArtifact": "documentation/modules/platform/features/angular-system-log-collection-consistency/angular-system-log-collection-consistency-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-system-log-collection-consistency/angular-system-log-collection-consistency-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-system-log-collection-consistency/angular-system-log-collection-consistency-review.md",
+    "api": "documentation/modules/platform/features/angular-system-log-collection-consistency/angular-system-log-collection-consistency-api.md",
+    "web": "documentation/modules/platform/features/angular-system-log-collection-consistency/angular-system-log-collection-consistency-web.md",
+    "mobile": "documentation/modules/platform/features/angular-system-log-collection-consistency/angular-system-log-collection-consistency-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/angular-system-log-collection-consistency-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/angular-system-log-collection-consistency-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "log-consistency-preflight-0",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-system-log-collection-consistency.md",
+      "purpose": "Verified current owner source or current preflight book/contract"
+    },
+    {
+      "id": "log-consistency-preflight-1",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/angular-system-log-collection-consistency-review.md",
+      "purpose": "Verified current owner source or current preflight book/contract"
+    },
+    {
+      "id": "log-consistency-preflight-2",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/angular-system-log-collection-consistency-api.md",
+      "purpose": "Verified current owner source or current preflight book/contract"
+    },
+    {
+      "id": "log-consistency-preflight-3",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/angular-system-log-collection-consistency-web.md",
+      "purpose": "Verified current owner source or current preflight book/contract"
+    },
+    {
+      "id": "log-consistency-preflight-4",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/angular-system-log-collection-consistency-mobile.md",
+      "purpose": "Verified current owner source or current preflight book/contract"
+    },
+    {
+      "id": "log-consistency-preflight-5",
+      "layer": "documentation",
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.ts",
+      "purpose": "Verified current owner source or current preflight book/contract"
+    },
+    {
+      "id": "log-consistency-preflight-6",
+      "layer": "documentation",
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.html",
+      "purpose": "Verified current owner source or current preflight book/contract"
+    },
+    {
+      "id": "log-consistency-preflight-7",
+      "layer": "documentation",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.ts",
+      "purpose": "Verified current owner source or current preflight book/contract"
+    },
+    {
+      "id": "log-consistency-preflight-8",
+      "layer": "documentation",
+      "path": "web-angular/src/app/shared/ui/data-display/record-summary/record-summary.ts",
+      "purpose": "Verified current owner source or current preflight book/contract"
+    },
+    {
+      "id": "log-consistency-preflight-9",
+      "layer": "documentation",
+      "path": "web-angular/src/app/platform/system-audit/state/audit-read-state.ts",
+      "purpose": "Verified current owner source or current preflight book/contract"
+    },
+    {
+      "id": "log-consistency-preflight-10",
+      "layer": "documentation",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-collection/audit-collection.ts",
+      "purpose": "Verified current owner source or current preflight book/contract"
+    },
+    {
+      "id": "log-consistency-preflight-11",
+      "layer": "documentation",
+      "path": "web-angular/src/app/platform/system-error-logs/state/error-log-read-state.ts",
+      "purpose": "Verified current owner source or current preflight book/contract"
+    },
+    {
+      "id": "log-consistency-preflight-12",
+      "layer": "documentation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-collection/error-log-collection.ts",
+      "purpose": "Verified current owner source or current preflight book/contract"
+    },
+    {
+      "id": "log-consistency-preflight-13",
+      "layer": "documentation",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Persistence/AuditTrail/AuditTrailSource.cs",
+      "purpose": "Verified current owner source or current preflight book/contract"
+    },
+    {
+      "id": "log-consistency-preflight-14",
+      "layer": "documentation",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Abstractions/AuditTrail/AuditTrailContracts.cs",
+      "purpose": "Verified current owner source or current preflight book/contract"
+    },
+    {
+      "id": "log-consistency-preflight-15",
+      "layer": "documentation",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/Platform/ErrorLogs/ErrorLogRequests.cs",
+      "purpose": "Verified current owner source or current preflight book/contract"
+    },
+    {
+      "id": "log-consistency-preflight-16",
+      "layer": "documentation",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/Platform/AuditTrail/AuditTrailQueries.cs",
+      "purpose": "Verified current owner source or current preflight book/contract"
+    },
+    {
+      "id": "log-consistency-preflight-17",
+      "layer": "documentation",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/Platform/ErrorLogs/ErrorLogStore.cs",
+      "purpose": "Verified current owner source or current preflight book/contract"
+    },
+    {
+      "id": "log-consistency-preflight-18",
+      "layer": "documentation",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "purpose": "Verified current owner source or current preflight book/contract"
+    },
+    {
+      "id": "log-consistency-preflight-19",
+      "layer": "documentation",
+      "path": "documentation/guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md",
+      "purpose": "Verified current owner source or current preflight book/contract"
+    },
+    {
+      "id": "log-consistency-accepted-0",
+      "layer": "implementation",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Abstractions/AuditTrail/AuditColumnFilters.cs",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-1",
+      "layer": "implementation",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Filtering/ColumnFilterSet.cs",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-2",
+      "layer": "implementation",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Persistence/AuditTrail/AuditColumnFilterProjection.cs",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-3",
+      "layer": "implementation",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/Platform/ErrorLogs/ErrorLogColumnFilters.cs",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-4",
+      "layer": "implementation",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/Platform/ErrorLogs/ErrorLogFilterProjection.cs",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-5",
+      "layer": "implementation",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Platform/AuditTrail/V1/SystemAuditTrailController.cs",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-6",
+      "layer": "implementation",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Platform/ErrorLogs/V1/SystemErrorLogsController.cs",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-7",
+      "layer": "implementation",
+      "path": "api/Tests/ErpSystem.BuildingBlocks.Tests/ColumnFilterTests.cs",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-8",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/acceptance-2026-11-06.json",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-9",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/ar-dark-1440-cards.png",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-10",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/ar-dark-390-cards.png",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-11",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/ar-light-1440-cards.png",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-12",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/ar-light-390-cards.png",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-13",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/en-dark-1440-cards.png",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-14",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/en-dark-390-cards.png",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-15",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/en-light-1440-cards.png",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-16",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/en-light-390-cards.png",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-17",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-angular-accepted.log",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-18",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-audit-browser.log",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-19",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-consistency-browser-final.log",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-20",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-countries-regression.log",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-21",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-districts-regression.log",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-22",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-error-browser.log",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-23",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-solution-build-final.log",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-24",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-solution-test-final.log",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-25",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-states-regression.log",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-26",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-tenants-regression.log",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-27",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/results.json",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-28",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-system-log-collection-consistency.md",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-29",
+      "layer": "implementation",
+      "path": "web-angular/scripts/verify-system-log-consistency-browser.mjs",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-30",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/audit.fixture.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-31",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/audit.spec-setup.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-32",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-changes/audit-changes.html",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-33",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-changes/audit-changes.scss",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-34",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-changes/audit-changes.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-35",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-changes/audit-changes.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-36",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-collection/audit-collection.html",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-37",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-collection/audit-collection.scss",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-38",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-collection/audit-collection.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-40",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-criteria/audit-criteria.html",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-41",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-criteria/audit-criteria.scss",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-42",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-criteria/audit-criteria.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-43",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-criteria/audit-criteria.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-44",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-details/audit-details.html",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-45",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-details/audit-details.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-46",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/components/audit-details/audit-details.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-47",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/pages/system-audit-page/system-audit-page.html",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-48",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/pages/system-audit-page/system-audit-page.scss",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-49",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/pages/system-audit-page/system-audit-page.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-50",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/pages/system-audit-page/system-audit-page.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-51",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/policy.public-api.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-52",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/presentation/audit-presentation.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-53",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/public-api.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-54",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/services/system-audit-service.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-55",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/services/system-audit-service.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-56",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/state/audit-detail-state.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-57",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/state/audit-detail-state.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-58",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/state/audit-filter-state.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-59",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/state/audit-read-state.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-61",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/system-audit-access.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-62",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/system-audit-guard.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-63",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/types/audit-column-filters.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-64",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/types/audit-criteria.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-65",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/types/audit-criteria.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-66",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/types/audit-trail.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-67",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-audit/types/audit-trail.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-68",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-card-header/error-log-card-header.html",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-69",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-card-header/error-log-card-header.scss",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-70",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-card-header/error-log-card-header.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-71",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-collection/error-log-collection.html",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-72",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-collection/error-log-collection.scss",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-73",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-collection/error-log-collection.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-75",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-criteria/error-log-criteria.html",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-76",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-criteria/error-log-criteria.scss",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-77",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-criteria/error-log-criteria.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-78",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-criteria/error-log-criteria.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-79",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-details/error-log-details.html",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-80",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-details/error-log-details.scss",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-81",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-details/error-log-details.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-82",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/error-log-details/error-log-details.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-83",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/retention-editor/retention-editor.html",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-84",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/retention-editor/retention-editor.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-85",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/retention-form/retention-form.html",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-86",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/retention-form/retention-form.scss",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-87",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/retention-form/retention-form.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-88",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/retention-summary/retention-summary.html",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-89",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/retention-summary/retention-summary.scss",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-90",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/components/retention-summary/retention-summary.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-91",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/error-log.fixture.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-92",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/error-log.spec-setup.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-93",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/pages/error-log-settings-page/error-log-settings-page.html",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-94",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/pages/error-log-settings-page/error-log-settings-page.scss",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-95",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/pages/error-log-settings-page/error-log-settings-page.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-96",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/pages/error-log-settings-page/error-log-settings-page.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-97",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/pages/system-error-logs-page/system-error-logs-page.html",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-98",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/pages/system-error-logs-page/system-error-logs-page.scss",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-99",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/pages/system-error-logs-page/system-error-logs-page.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-100",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/pages/system-error-logs-page/system-error-logs-page.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-101",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/policy.public-api.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-102",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/presentation/error-log-detail-presentation.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-103",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/presentation/error-log-presentation.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-104",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/presentation/retention-presentation.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-105",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/public-api.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-106",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/services/system-error-log-service.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-107",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/services/system-error-log-service.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-108",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/state/error-log-detail-state.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-109",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/state/error-log-detail-state.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-110",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/state/error-log-export-state.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-111",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/state/error-log-export-state.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-112",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/state/error-log-read-state.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-114",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/state/error-log-settings-state.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-115",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/state/error-log-settings-state.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-116",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/state/retention-editor-state.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-117",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/state/retention-editor-state.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-118",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/system-error-log-access.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-119",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/system-error-log-access.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-120",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/system-error-log-guards.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-121",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/types/error-log-column-filters.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-122",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/types/error-log-filters.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-123",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/types/error-log-filters.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-124",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/types/error-log.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-125",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/types/error-log.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-126",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/validation/retention-form.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-127",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/validation/retention-form.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-128",
+      "layer": "implementation",
+      "path": "web-angular/src/app/shared/ui/cards/_entity-card.scss",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-129",
+      "layer": "implementation",
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.scss",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-130",
+      "layer": "implementation",
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-131",
+      "layer": "implementation",
+      "path": "web-angular/src/app/shared/ui/data-display/record-summary/record-summary.html",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-132",
+      "layer": "implementation",
+      "path": "web-angular/src/app/shared/ui/data-display/record-summary/record-summary.scss",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-133",
+      "layer": "implementation",
+      "path": "web-angular/src/app/shared/ui/data-display/record-summary/record-summary.spec.ts",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-134",
+      "layer": "implementation",
+      "path": "web-angular/tooling/system-log-proof/Program.cs",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-135",
+      "layer": "implementation",
+      "path": "web-angular/tooling/system-log-proof/SystemLogProof.csproj",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-system-log-collection-consistency-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-system-log-collection-consistency-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-system-log-collection-consistency/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

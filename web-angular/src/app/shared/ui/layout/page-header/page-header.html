@@ -1,21 +1,33 @@
 <header>
   <div class="title-block">
-    <h1>{{ title() }}</h1>
+    <div class="heading-row">
+      @if (backLabel()) {
+        <erp-back-button
+          [label]="backLabel()"
+          [disabled]="backDisabled()"
+          (activated)="backRequested.emit()"
+        />
+      }
+      <h1>{{ title() }}</h1>
+    </div>
     @if (variant() !== 'collection' && subtitle()) {
       <p>{{ subtitle() }}</p>
     }
   </div>
   @if (variant() === 'collection') {
     <div class="header-badges">
+      @if (total() !== null) {
+        <erp-status-badge
+          class="total-badge"
+          appearance="outline"
+          accent="var(--primary)"
+          [pill]="true"
+          size="medium"
+          [strong]="false"
+          [label]="countLabel()"
+        />
+      }
       <erp-status-badge
-        class="total-badge"
-        appearance="outline"
-        accent="var(--primary)"
-        [pill]="true"
-        size="medium"
-        [strong]="false"
-        [label]="countLabel()"
-      /><erp-status-badge
         class="view-badge"
         [softOpacity]="theme.mode() === 'dark' ? 18 : 8"
         [pill]="true"
@@ -40,6 +52,9 @@
         /></erp-button>
       }
       <ng-content />
+      @if (exportSource()) {
+        <erp-collection-export-menu [source]="exportSource()" />
+      }
       @if (variant() === 'collection') {
         @if (refreshable()) {
           <erp-button

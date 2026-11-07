@@ -9,6 +9,21 @@ public sealed class AuditTrailQueryTests
     private static readonly DateTime Start = new(2026, 1, 1, 8, 0, 0, DateTimeKind.Utc);
 
     [Fact]
+    public async Task Column_filters_are_validated_and_resolved_by_owner_before_module_reads()
+    {
+        var source = new FakeSource("hr", Record("hr", 1, 1));
+        var handler = new GetAuditTrailQueryHandler([source], new FakeUsers(), new TestContext("tenant-1", 7));
+        const string rules = """[{"field":"userName","operator":"and","constraints":[{"matchMode":"contains","value":"Ahmed"}]}]""";
+        var result = await handler.Handle(new(new AuditTrailQueryRequest { ColumnFilters = rules }), default);
+        Assert.True(result.IsSuccess);
+        Assert.Equal("userName", Assert.Single(source.LastFilter!.ColumnFilters!).Field);
+        Assert.Equal("user-1", Assert.Single(source.LastFilter.MatchingUserIds!));
+        var invalid = await handler.Handle(new(new AuditTrailQueryRequest { ColumnFilters = "[] garbage" }), default);
+        Assert.True(invalid.IsFailure);
+        Assert.Equal("AuditTrail.InvalidFilters", invalid.Error.Code);
+    }
+
+    [Fact]
     public async Task Page_MergesModulesNewestFirstAndResolvesUserNames()
     {
         var hr = new FakeSource("hr", Record("hr", 1, 1), Record("hr", 2, 3));
@@ -94,6 +109,9 @@ public sealed class AuditTrailQueryTests
 
     private sealed class FakeUsers : IAuditTrailUserDirectory
     {
+        public Task<IReadOnlyCollection<string>> GetMatchingIdsAsync(
+            IReadOnlyList<ErpSystem.BuildingBlocks.Application.Filtering.ColumnFilterGroup> filters,
+            CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyCollection<string>>(["user-1"]);
         public Task<IReadOnlyDictionary<string, string>> GetDisplayNamesAsync(
             IReadOnlyCollection<string> userIds,
             CancellationToken cancellationToken = default) =>

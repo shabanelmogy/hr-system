@@ -7,6 +7,12 @@ using the approved Grid, Cards, Chart, Report, and Import views. Its Report is a
 global managed Crystal view and requires `super_admin` plus
 `GlobalCrystalReports:View`; it has no tenant Reporting entitlement query.
 
+Angular client2026-11-06: the complete canonical District workspace now composes
+existing Shared owners with four-field State-aware native Signal Forms and all five
+source views. Complete acceptance/limits are in documentation/modules/platform/
+features/angular-districts-workspace/DISTRICTS_WORKSPACE_2026-11-06.md. API/Next/native
+business rules are retained; this migration does not change database/schema.
+
 ## 2. Route and composition
 
 The thin app route at `app/(main)/super-admin/(reference-data)/geography/districts/page.tsx` renders `DistrictsPage`; it is `super_admin` only. The page owns dialogs and delegates all list behavior to `useDistrictGridLogic` and `DistrictsMultiView`.

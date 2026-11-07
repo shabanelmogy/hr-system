@@ -34,7 +34,7 @@ public sealed class ReplaceGlobalCrystalReportCommandHandler(IGlobalCrystalRepor
             return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportInvalidRowVersion);
         var snapshot = await store.DetailAsync(request.ReportId, cancellationToken);
         if (snapshot is null || snapshot.IsArchived || !CanReplaceEntity(snapshot.EntityKey) ||
-            !await HasReportRightsAsync(request.ReportId, cancellationToken))
+            !await HasReportRightsAsync(request.ReportId, snapshot.EntityKey, cancellationToken))
             return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportNotFound);
         if (!Convert.FromBase64String(snapshot.RowVersion).SequenceEqual(expected))
             return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportConcurrencyConflict);
@@ -55,7 +55,7 @@ public sealed class ReplaceGlobalCrystalReportCommandHandler(IGlobalCrystalRepor
             {
                 var report = await store.FindAsync(request.ReportId, token);
                 if (report is null || report.IsDeleted || !CanReplaceEntity(report.EntityKey) ||
-                    !await HasReportRightsAsync(report.Id, token))
+                    !await HasReportRightsAsync(report.Id, report.EntityKey, token))
                     return Result.Failure(errors.CrystalReportNotFound);
                 if (!report.RowVersion.SequenceEqual(expected))
                     return Result.Failure(errors.CrystalReportConcurrencyConflict);
@@ -83,8 +83,8 @@ public sealed class ReplaceGlobalCrystalReportCommandHandler(IGlobalCrystalRepor
         policy.Allows(entityKey, ReportingPermissions.UploadGlobalCrystalReports) &&
         policy.Allows(entityKey, ReportingPermissions.PublishGlobalCrystalReports);
 
-    private async Task<bool> HasReportRightsAsync(Guid reportId, CancellationToken token) =>
-        policy.AccessAdministrator ||
+    private async Task<bool> HasReportRightsAsync(Guid reportId, string entityKey, CancellationToken token) =>
+        policy.BypassesRoleGrants(entityKey) ||
         await access.HasRightAsync(reportId, CrystalReportRight.Upload, token) &&
         await access.HasRightAsync(reportId, CrystalReportRight.Publish, token);
 }

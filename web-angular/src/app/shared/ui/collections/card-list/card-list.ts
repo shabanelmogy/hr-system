@@ -1,4 +1,4 @@
-import { Component, contentChild, inject, input, output } from '@angular/core';
+import { Component, contentChild, inject, input, numberAttribute, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgTemplateOutlet } from '@angular/common';
 import { Checkbox } from 'primeng/checkbox';
@@ -47,11 +47,13 @@ import {
 })
 export class CardList<T> {
   readonly toolbarVisible = input(true);
+  readonly showFooter = input(true);
   readonly toolbarLayout = input<'responsive' | 'single-row'>('responsive');
   readonly searchMaxWidth = input<number | null>(null);
   readonly recordNavigation = input(false);
   readonly recordRequest = input<CollectionRecordRequest | null>(null);
-  readonly layout = input<'auto' | 'responsive'>('auto');
+  readonly layout = input<'auto' | 'responsive' | 'fit'>('auto');
+  readonly minCardWidth = input(260, { transform: numberAttribute });
   readonly appearance = input<'compact' | 'entity'>('compact');
   private readonly locale = inject(UI_LOCALIZATION);
   readonly source = input.required<CollectionSource<T>>();

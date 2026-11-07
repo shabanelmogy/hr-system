@@ -12,6 +12,7 @@ public static class ReportingPermissions
     public const string EditGlobalCrystalReportAccess = "GlobalCrystalReportAccess:Edit";
     public const string ViewDashboard = "Analytics:ViewDashboard";
     public const string ExportData = "Analytics:Export";
+    public const string ExportGlobalData = "GlobalDataExports:Export";
 
     public const string ViewDatabaseViews = "DatabaseViews:View";
     public const string EditDatabaseViews = "DatabaseViews:Edit";
@@ -57,5 +58,6 @@ public static class ReportingPermissions
         ViewGlobalCrystalReportAccess, EditGlobalCrystalReportAccess
     ];
 
-    public static IReadOnlyList<string> All { get; } = [.. Reports, .. GlobalReports];
+    public static IReadOnlyList<string> GlobalDataExports { get; } = [ExportGlobalData];
+    public static IReadOnlyList<string> All { get; } = [.. Reports, .. GlobalReports, .. GlobalDataExports];
 }

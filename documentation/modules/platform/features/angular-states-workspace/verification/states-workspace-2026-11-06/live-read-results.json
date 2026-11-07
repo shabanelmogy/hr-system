@@ -1,0 +1,37 @@
+{
+  "origin": "https://localhost:4210",
+  "api": "https://shabanhrms.runasp.net",
+  "businessWrites": 0,
+  "results": [
+    {
+      "check": "authenticated State page and actual parent/count DTO",
+      "status": 200,
+      "pageRows": 10,
+      "total": 27
+    },
+    {
+      "check": "active Country lookup",
+      "status": 200,
+      "rows": 5
+    },
+    {
+      "check": "actual State detail",
+      "status": 200,
+      "parentMatches": true
+    },
+    {
+      "check": "actual parent and District dependency criteria",
+      "status": 200,
+      "rows": 10
+    },
+    {
+      "check": "hosted States report catalog availability (release evidence)",
+      "status": 200,
+      "rows": 0
+    },
+    {
+      "check": "own test session logout",
+      "status": 204
+    }
+  ]
+}

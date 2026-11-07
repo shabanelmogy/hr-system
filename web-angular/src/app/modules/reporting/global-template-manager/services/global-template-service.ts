@@ -159,6 +159,14 @@ export class GlobalTemplateService {
       {},
     ).pipe(map((body) => globalTemplateDetailSchema.parse(body)));
   }
+  verifyDatabase(id: string, versionId: string) {
+    return this.mutate(
+      `/${encodeURIComponent(id)}/versions/${encodeURIComponent(versionId)}/verify-database`,
+      {},
+      'POST',
+      180000,
+    ).pipe(map((body) => globalTemplateDetailSchema.parse(body)));
+  }
   import(entityKey: GlobalTemplateEntity, sourceId: string, expectedSha256: string) {
     return this.mutate('/import', { entityKey, sourceId, expectedSha256 }).pipe(
       map((body) => globalTemplateDetailSchema.parse(body)),
@@ -214,6 +222,7 @@ export class GlobalTemplateService {
     path: string,
     body: unknown,
     method: 'POST' | 'PUT' | 'DELETE' = 'POST',
+    timeoutMs = 45000,
   ): Observable<unknown> {
     return defer(() => from(this.security.csrf(true))).pipe(
       switchMap((token) =>
@@ -223,7 +232,7 @@ export class GlobalTemplateService {
           headers: { 'X-ERP-XSRF': token },
         }),
       ),
-      timeout(45000),
+      timeout(timeoutMs),
     );
   }
   private form(entityKey: GlobalTemplateEntity, file: File): FormData {

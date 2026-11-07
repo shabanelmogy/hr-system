@@ -66,7 +66,8 @@ export function spreadsheetRows(
     const row = Number(match[2]);
     if (!Number.isSafeInteger(row) || row > 1048576) throw new SpreadsheetError('invalidWorkbook');
     if (!cell || typeof cell !== 'object') throw new SpreadsheetError('invalidWorkbook');
-    if ('f' in cell && cell.f) throw new SpreadsheetError('formulaNotAllowed');
+    if ('f' in cell && cell.f)
+      throw new SpreadsheetError('formulaNotAllowed', { row, cell: address });
     const value: unknown = 'v' in cell ? cell.v : null;
     if (
       value !== null &&
@@ -81,12 +82,15 @@ export function spreadsheetRows(
       if (text && column >= policy.headers.length)
         throw new SpreadsheetError('invalidHeaders', {
           expectedHeaders: policy.headers.join(', '),
+          row,
+          cell: address,
         });
       if (column < policy.headers.length) headers[column] = text;
       continue;
     }
     if (!text) continue;
-    if (column >= policy.headers.length) throw new SpreadsheetError('unexpectedColumns');
+    if (column >= policy.headers.length)
+      throw new SpreadsheetError('unexpectedColumns', { row, cell: address });
     if (!rows.has(row) && rows.size >= policy.maxRows)
       throw new SpreadsheetError('rowLimitExceeded', { maxRows: policy.maxRows });
     const values = rows.get(row) ?? [];
@@ -95,7 +99,8 @@ export function spreadsheetRows(
   }
   const actual = policy.headers.map((_, i) => headers[i] ?? ''),
     nonempty = actual.filter(Boolean).map((v) => v.toLowerCase());
-  if (new Set(nonempty).size !== nonempty.length) throw new SpreadsheetError('duplicateHeaders');
+  if (new Set(nonempty).size !== nonempty.length)
+    throw new SpreadsheetError('duplicateHeaders', { row: 1 });
   if (actual.some((value, i) => value !== policy.headers[i]))
     throw new SpreadsheetError('invalidHeaders', { expectedHeaders: policy.headers.join(', ') });
   if (!rows.size) throw new SpreadsheetError('emptyFile');

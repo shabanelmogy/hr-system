@@ -1,0 +1,1 @@
+Districts live read passed: 3 authenticated read checks; no business writes.

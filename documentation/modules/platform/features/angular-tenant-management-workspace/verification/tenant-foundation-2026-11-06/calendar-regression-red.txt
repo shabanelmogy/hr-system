@@ -1,0 +1,45 @@
+
+> erp-angular@0.0.0 pretest
+> npm run configure:license
+
+
+> erp-angular@0.0.0 configure:license
+> node --env-file-if-exists=.env.local scripts/configure-license.mjs
+
+PrimeUI local license configured (value omitted).
+
+> erp-angular@0.0.0 test
+> node scripts/run-angular.mjs test --watch=false --include=src/app/platform/tenants/management/validation/tenant-mutation.spec.ts
+
+API target: host (https://shabanhrms.runasp.net)
+> Building...
+√ Building...
+Application bundle generation complete. [3.611 seconds] - 2026-11-06T00:48:57.015Z
+
+
+ RUN  v5.0.5 F:/Portofolio Projects/ERPSYSTEM/web-angular
+
+ ❯ |erp-angular| src/app/platform/tenants/management/validation/tenant-mutation.spec.ts (7 tests | 1 failed) 93ms
+   ❯ Tenant mutation validation (7)
+     × shares the supported calendar range and rejects year zero and rolled dates 14ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |erp-angular| src/app/platform/tenants/management/validation/tenant-mutation.spec.ts > Tenant mutation validation > shares the supported calendar range and rejects year zero and rolled dates
+AssertionError: expected null not to be null
+ ❯ src/app/platform/tenants/management/validation/tenant-mutation.spec.ts:25:73
+     23| describe('Tenant mutation validation', () => {
+     24|   it('shares the supported calendar range and rejects year zero and ro…
+     25|     expect(tenantFieldError('subscriptionStartedOn', '0000-01-01')).no…
+       |                                                                         ^
+     26|     expect(tenantFieldError('subscriptionEndsOn', '2026-02-30')).not.t…
+     27|     expect(tenantFieldError('subscriptionStartedOn', '0001-01-01')).to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 passed (7)
+   Start at  02:48:57
+   Duration  3.80s (environment 65%, setup 25%, transform 4%, import 3%, tests 3%, worker 1%)
+

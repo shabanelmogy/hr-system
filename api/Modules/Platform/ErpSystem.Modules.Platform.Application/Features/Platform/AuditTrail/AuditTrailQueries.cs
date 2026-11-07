@@ -1,5 +1,6 @@
 using ErpSystem.BuildingBlocks.Application.Abstractions.AuditTrail;
 using ErpSystem.BuildingBlocks.Context;
+using ErpSystem.BuildingBlocks.Application.Filtering;
 
 namespace ErpSystem.Modules.Platform.Application.Features.Platform.AuditTrail;
 
@@ -17,6 +18,7 @@ public sealed record AuditTrailQueryRequest
     public string? UserId { get; init; }
     public DateTime? FromUtc { get; init; }
     public DateTime? ToUtc { get; init; }
+    public string? ColumnFilters { get; init; }
 
     /// <summary>The <c>nextCursor</c> of the previous page; empty for the first page.</summary>
     public string? Cursor { get; init; }
@@ -51,6 +53,8 @@ public sealed record AuditTrailFiltersResponse(IReadOnlyList<AuditTrailModuleFil
 /// <summary>Resolves user ids stored in audit entries to display names.</summary>
 public interface IAuditTrailUserDirectory
 {
+    Task<IReadOnlyCollection<string>> GetMatchingIdsAsync(
+        IReadOnlyList<ColumnFilterGroup> filters, CancellationToken cancellationToken = default);
     Task<IReadOnlyDictionary<string, string>> GetDisplayNamesAsync(
         IReadOnlyCollection<string> userIds,
         CancellationToken cancellationToken = default);
@@ -78,6 +82,7 @@ public sealed class GetAuditTrailQueryValidator : AbstractValidator<GetAuditTrai
         RuleFor(query => query.Request.EntityKey).MaximumLength(200);
         RuleFor(query => query.Request.UserId).MaximumLength(450);
         RuleFor(query => query.Request.Cursor).MaximumLength(400);
+        RuleFor(query => query.Request.ColumnFilters).Must(json => ColumnFilterSet.TryParse(json, AuditColumnFilters.Fields, out _));
         RuleFor(query => query.Request.Action).IsInEnum().When(query => query.Request.Action.HasValue);
         RuleFor(query => query.Request.ToUtc)
             .GreaterThanOrEqualTo(query => query.Request.FromUtc)
@@ -114,6 +119,8 @@ public sealed class GetAuditTrailQueryHandler(
         CancellationToken cancellationToken)
     {
         var request = query.Request;
+        if (!ColumnFilterSet.TryParse(request.ColumnFilters, AuditColumnFilters.Fields, out var columnFilters))
+            return Result.Failure<AuditTrailPageResponse>(new Error("AuditTrail.InvalidFilters", "Invalid audit column filters.", ErrorType.Validation));
         if (AuditTrailReadScope.Resolve(executionContext, request.TenantId) is not { } scope)
             return Result.Failure<AuditTrailPageResponse>(AuditTrailReadScope.ScopeError(executionContext));
 
@@ -127,6 +134,8 @@ public sealed class GetAuditTrailQueryHandler(
 
         // One extra row tells whether another page exists.
         var take = request.PageSize + 1;
+        var userFilters = columnFilters.Where(group => group.Field == "userName").ToArray();
+        var matchingUsers = userFilters.Length == 0 ? null : await users.GetMatchingIdsAsync(userFilters, cancellationToken).ConfigureAwait(false);
         var filter = new AuditTrailFilter(
             scope.TenantId,
             scope.CompanyId,
@@ -137,7 +146,9 @@ public sealed class GetAuditTrailQueryHandler(
             AsUtc(request.FromUtc),
             AsUtc(request.ToUtc),
             after,
-            take);
+            take,
+            columnFilters,
+            matchingUsers);
 
         var moduleCode = AuditTrailReadScope.Normalize(request.ModuleCode);
         var merged = new List<AuditTrailRecord>();

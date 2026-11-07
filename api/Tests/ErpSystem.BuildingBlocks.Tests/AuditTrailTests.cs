@@ -161,6 +161,30 @@ public sealed class AuditTrailTests
     private static AuditTrailFilter Filter(AuditTrailCursor? after, int take) =>
         new("tenant-1", 7, null, null, null, null, null, null, after, take);
 
+    [Fact]
+    public async Task Source_applies_column_predicates_before_take_and_preserves_scope_and_cursor()
+    {
+        await using var context = CreateContext(out var clock);
+        foreach (var name in new[] { "Match first", "Other", "Match latest" })
+        {
+            clock.Advance(TimeSpan.FromMinutes(1));
+            context.Widgets.Add(new Widget { Name = name, TenantId = "tenant-1", CompanyId = 7 });
+            await context.SaveChangesAsync();
+        }
+        const string json = """[{"field":"record","operator":"and","constraints":[{"matchMode":"startsWith","value":"Match"}]},{"field":"action","operator":"or","constraints":[{"matchMode":"equals","value":"Created"},{"matchMode":"equals","value":"Modified"}]}]""";
+        Assert.True(ErpSystem.BuildingBlocks.Application.Filtering.ColumnFilterSet.TryParse(json, AuditColumnFilters.Fields, out var rules));
+        var filter = Filter(null, 1) with { ColumnFilters = rules, MatchingUserIds = new[] { "user-1" } };
+        var source = new AuditTrailSource<TestDbContext>(context, "test");
+        var first = Assert.Single(await source.ListAsync(filter));
+        Assert.Equal("Match latest", first.EntityDisplay);
+        var next = Assert.Single(await source.ListAsync(filter with { After = new(first.OccurredOnUtc, "test", first.Id) }));
+        Assert.Equal("Match first", next.EntityDisplay);
+        Assert.Empty(await source.ListAsync(filter with { MatchingUserIds = new[] { "foreign-user" } }));
+        Assert.Empty(await source.ListAsync(filter with { CompanyId = 99 }));
+        Assert.True(ErpSystem.BuildingBlocks.Application.Filtering.ColumnFilterSet.TryParse("""[{"field":"moduleCode","operator":"and","constraints":[{"matchMode":"equals","value":"other"}]}]""", AuditColumnFilters.Fields, out var moduleRules));
+        Assert.Empty(await source.ListAsync(filter with { ColumnFilters = moduleRules }));
+    }
+
     private static TestDbContext CreateContext(out ManualClock clock)
     {
         clock = new ManualClock(new DateTimeOffset(2026, 1, 1, 8, 0, 0, TimeSpan.Zero));

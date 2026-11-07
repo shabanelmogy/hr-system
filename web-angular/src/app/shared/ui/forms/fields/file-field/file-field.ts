@@ -1,4 +1,13 @@
-import { Component, type ElementRef, forwardRef, input, model, viewChild } from '@angular/core';
+import {
+  booleanAttribute,
+  Component,
+  effect,
+  type ElementRef,
+  forwardRef,
+  input,
+  model,
+  viewChild,
+} from '@angular/core';
 import { FileUpload, type FileSelectEvent } from 'primeng/fileupload';
 import { FormFieldControl } from '../../form-field-control';
 import { ActionButton } from '../../../buttons/public-api';
@@ -15,8 +24,16 @@ export class FileField extends FormFieldControl<File | null> {
   readonly acceptTypes = input('');
   readonly chooseLabel = input.required<string>();
   readonly clearLabel = input.required<string>();
+  readonly dropzone = input(false, { transform: booleanAttribute });
+  readonly dropLabel = input('');
   private readonly host = viewChild.required<ElementRef<HTMLElement>>('field');
   private readonly picker = viewChild(FileUpload);
+  constructor() {
+    super();
+    effect(() => {
+      if (!this.value()) this.picker()?.clear();
+    });
+  }
   writeValue(value: unknown): void {
     this.value.set(value instanceof File ? value : null);
     if (!this.value()) this.picker()?.clear();

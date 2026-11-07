@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { contrastRatio } from '@app/tokens';
 import {
-  ActionButton,
+  PageHeader,
   FeedbackState,
   LauncherGrid,
   type LauncherItem,
@@ -14,7 +14,7 @@ import { ModuleCatalogState } from '../../state/module-catalog-state';
 import { areaPath, moduleDefinitions, modulePath } from '../../presentation/module-registry';
 
 @Component({
-  imports: [ActionButton, FeedbackState, LauncherGrid, UiTextPipe],
+  imports: [PageHeader, FeedbackState, LauncherGrid, UiTextPipe],
   templateUrl: './module-browser.html',
   styleUrl: './module-browser.scss',
 })

@@ -57,4 +57,4 @@ realtime, notification, localization, report, or Import integration is reachable
 | angular-application-shell-mobile | 2 | `832cb5332e6be88662481f48f16fdc3a2fa6b0c2b135e9ed874308ded3bf9051` |
 | angular-application-shell-mobile | 11 | `4afad814fac09a3ae3647a6a443a6ee3d0a50162a0a2ca29ddaff98d0e28120f` |
 | angular-application-shell-mobile | 12 | `148e66f157845465d73081eb09cd5b24e8a38d6978de8c68df5626ffe4449a18` |
-| angular-application-shell-mobile | 15 | `9decaf031292c3b4e868f05781846b96c45f7443d62d9fa6fd25d4e7cc89e431` |
+| angular-application-shell-mobile | 15 | `cf25e2d97d241378646c006de216628f374b7f32252b2eac1a8412a9a9388f8e` |

@@ -1,15 +1,23 @@
 <div #field [attr.aria-labelledby]="id + '-label'" [attr.aria-describedby]="describedBy()">
   <span [id]="id + '-label'" class="field-label">{{ label() }}</span>
   <p-fileupload
-    mode="basic"
+    [mode]="dropzone() ? 'advanced' : 'basic'"
     [customUpload]="true"
     [auto]="false"
     [multiple]="false"
+    [showUploadButton]="false"
+    [showCancelButton]="false"
     [accept]="acceptTypes()"
     [chooseLabel]="chooseLabel()"
     [disabled]="isDisabled() || isReadOnly()"
     (onSelect)="select($event)"
-  />
+  >
+    <ng-template #content>
+      @if (dropLabel()) {
+        <p>{{ dropLabel() }}</p>
+      }
+    </ng-template>
+  </p-fileupload>
   @if (value(); as file) {
     <p>{{ file.name }} · {{ file.size }}</p>
     <erp-button

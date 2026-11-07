@@ -1,0 +1,40 @@
+<erp-form
+  [form]="editor.form"
+  [title]="captions.text('edit')"
+  [submitLabel]="captions.text('save')"
+  appearance="dialog"
+  [hideHeader]="true"
+  [pending]="editor.pending()"
+  [readOnly]="editor.locked()"
+  [feedback]="feedback()"
+>
+  <p>{{ captions.text('helper') }}</p>
+  <erp-numeric-field
+    [formField]="editor.form.retentionDays"
+    mode="integer"
+    [label]="captions.text('retentionDays')"
+    [messages]="captions.messages()"
+    [readOnly]="editor.locked()"
+  />
+  @if (editor.conflict()) {
+    <erp-button
+      [label]="captions.text('reload')"
+      variant="outlined"
+      [disabled]="editor.pending()"
+      (activated)="editor.reloadRevision()"
+    />
+  }
+  <erp-button
+    [label]="captions.text('loadCurrent')"
+    variant="text"
+    [disabled]="editor.pending() || !editor.canEdit()"
+    (activated)="editor.loadCurrent()"
+  />
+  <erp-button
+    formActions
+    [label]="'actions.cancel' | uiText"
+    variant="outlined"
+    [disabled]="editor.pending()"
+    (activated)="cancelled.emit()"
+  />
+</erp-form>

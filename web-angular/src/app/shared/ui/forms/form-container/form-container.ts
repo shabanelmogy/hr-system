@@ -2,7 +2,6 @@ import {
   afterNextRender,
   Component,
   computed,
-  contentChildren,
   DestroyRef,
   effect,
   inject,
@@ -22,12 +21,15 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter, firstValueFrom } from 'rxjs';
 import { ActionButton } from '../../buttons/public-api';
 import { UI_LOCALIZATION } from '../../../localization/public-api';
-import { FormFieldControl } from '../form-field-control';
+import { FormFieldRegistry, type RegisteredFormField } from '../form-field-registry';
 import { ValidationSummary } from '../validation-summary/validation-summary';
+import { ScrollViewport } from '../../layout/scroll-viewport/scroll-viewport';
 
 @Component({
   selector: 'erp-form',
-  imports: [ActionButton, NgTemplateOutlet, ValidationSummary],
+  imports: [ActionButton, NgTemplateOutlet, ValidationSummary, ScrollViewport],
+  host: { '[class.filled-form]': 'fillContent()' },
+  providers: [FormFieldRegistry],
   templateUrl: './form-container.html',
   styleUrl: './form-container.scss',
 })
@@ -39,12 +41,15 @@ export class FormContainer {
   readonly feedbackKind = input<'error' | 'success' | 'info'>('error');
   readonly pending = input(false);
   readonly readOnly = input(false);
-  readonly appearance = input<'card' | 'plain' | 'dialog' | 'sidebar'>('card');
+  readonly appearance = input<'card' | 'plain' | 'dialog' | 'sidebar' | 'page'>('card');
   readonly hideHeader = input(false);
   readonly submitFullWidth = input(false);
   readonly showSubmit = input(true);
+  readonly fillContent = input(false);
   readonly validSubmit = output<void>();
-  readonly fields = contentChildren(FormFieldControl, { descendants: true });
+  readonly sectionFocusRequested = output<string>();
+  private readonly registry = inject(FormFieldRegistry);
+  readonly fields = this.registry.fields;
   readonly checking = signal(false);
   private readonly revision = signal(0);
   private readonly destroyRef = inject(DestroyRef);
@@ -138,9 +143,8 @@ export class FormContainer {
     )
       return;
     if (form.invalid || form.disabled) {
-      this.fields()
-        .find((field) => field.error())
-        ?.focus();
+      const field = this.fields().find((field) => field.error());
+      if (field) this.focusField(field);
       return;
     }
     // Parent pending inputs arrive on the next render. Cover the interval before then.
@@ -157,7 +161,7 @@ export class FormContainer {
   focusError(id: string): void {
     const field = this.fields().find((field) => field.id === id);
     if (field) {
-      field.focus();
+      this.focusField(field);
       return;
     }
     const form = this.form();
@@ -173,11 +177,32 @@ export class FormContainer {
     afterNextRender(
       () => {
         if (this.destroyRef.destroyed || this.form() !== form) return;
-        if (typeof form === 'function') form().errorSummary()[0]?.fieldTree().focusBoundControl();
-        else
-          this.fields()
-            .find((field) => field.error())
-            ?.focus();
+        if (typeof form === 'function') {
+          const error = form().errorSummary()[0];
+          const field = error
+            ? this.fields().find((candidate) => candidate.name() === error.fieldTree().name())
+            : undefined;
+          if (field) this.focusField(field);
+          else error?.fieldTree().focusBoundControl();
+        } else {
+          const field = this.fields().find((field) => field.error());
+          if (field) this.focusField(field);
+        }
+      },
+      { injector: this.injector },
+    );
+  }
+
+  private focusField(field: RegisteredFormField): void {
+    const section = field.sectionId();
+    if (!section) {
+      field.focus();
+      return;
+    }
+    this.sectionFocusRequested.emit(section);
+    afterNextRender(
+      () => {
+        if (!this.destroyRef.destroyed) field.focus();
       },
       { injector: this.injector },
     );

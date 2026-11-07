@@ -1,6 +1,19 @@
 <ng-template #ownerFilters
   ><div class="filter-region"><ng-content select="[toolbarFilters]" /></div
 ></ng-template>
+<ng-template #selectionSummary>
+  <div class="selection-summary">
+    <span aria-live="polite">{{
+      'collections.selected' | uiText: 'core' : { count: controller().selectedIds().length }
+    }}</span>
+    <erp-button
+      [label]="'general.clear' | uiText"
+      variant="text"
+      [disabled]="!controller().selectedIds().length"
+      (activated)="controller().clearSelection()"
+    />
+  </div>
+</ng-template>
 <section
   class="collection-shell"
   [class.reference-shell]="appearance() === 'reference'"
@@ -11,7 +24,7 @@
   @if (toolbarVisible()) {
     <header class="collection-toolbar erp-native-scrollbar">
       @if (search(); as criteria) {
-        <div class="search-controls">
+        <div class="search-controls" [class.simple-search]="!criteria.field && !criteria.operator">
           @if (criteria.field; as field) {
             <erp-option-select
               class="search-field"
@@ -68,7 +81,7 @@
       <ng-container [ngTemplateOutlet]="ownerFilters" />
     }
   }
-  @if (selectionEnabled()) {
+  @if (selectionEnabled() && selectionPlacement() === 'bar') {
     <div class="selection-bar">
       @if (pageSelection()) {
         <p-checkbox
@@ -81,15 +94,7 @@
           (ngModelChange)="controller().selectPage($event === true)"
         />
       }
-      <span aria-live="polite">{{
-        'collections.selected' | uiText: 'core' : { count: controller().selectedIds().length }
-      }}</span>
-      <erp-button
-        [label]="'general.clear' | uiText"
-        variant="text"
-        [disabled]="!controller().selectedIds().length"
-        (activated)="controller().clearSelection()"
-      />
+      <ng-container [ngTemplateOutlet]="selectionSummary" />
     </div>
   }
   <ng-content select="[collectionBody]" />
@@ -98,7 +103,11 @@
       [controller]="controller()"
       [pageSizes]="pageSizes()"
       [recordNavigation]="recordNavigation()"
-    />
+    >
+      @if (selectionEnabled() && selectionPlacement() === 'footer') {
+        <ng-container [ngTemplateOutlet]="selectionSummary" />
+      }
+    </erp-collection-footer>
   }
 </section>
 <erp-collection-options-dialog

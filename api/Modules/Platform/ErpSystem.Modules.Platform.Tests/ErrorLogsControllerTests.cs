@@ -14,6 +14,18 @@ namespace ErpSystem.Modules.Platform.Tests;
 public sealed class ErrorLogsControllerTests
 {
     [Fact]
+    public void Advanced_filter_reads_keep_bounded_bodies_and_independent_permissions()
+    {
+        Check<SystemErrorLogsController>(nameof(SystemErrorLogsController.Query), PlatformPermissions.ViewSystemErrorLogs);
+        Check<SystemErrorLogsController>(nameof(SystemErrorLogsController.ExportQuery), PlatformPermissions.ExportSystemErrorLogs);
+        foreach (var name in new[] { nameof(SystemErrorLogsController.Query), nameof(SystemErrorLogsController.ExportQuery) })
+        {
+            var method = typeof(SystemErrorLogsController).GetMethod(name)!;
+            Assert.NotNull(method.GetCustomAttribute<HttpPostAttribute>());
+            Assert.Equal(32768L, method.GetCustomAttributesData().Single(attribute => attribute.AttributeType == typeof(RequestSizeLimitAttribute)).ConstructorArguments[0].Value);
+        }
+    }
+    [Fact]
     public void Company_and_system_routes_have_distinct_authority_and_exact_action_permissions()
     {
         Assert.NotNull(typeof(ErrorLogsController).GetCustomAttribute<TenantMemberAttribute>());

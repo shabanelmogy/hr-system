@@ -1,0 +1,32 @@
+{
+  "origin": "https://localhost:4210",
+  "api": "https://shabanhrms.runasp.net",
+  "businessWrites": 0,
+  "blockedWrites": 0,
+  "results": [
+    {
+      "check": "Authoritative system audit cursor page",
+      "status": 200,
+      "rows": 31,
+      "hasNextCursor": false
+    },
+    {
+      "check": "Authoritative module/entity filter choices",
+      "status": 200,
+      "modules": 3
+    },
+    {
+      "check": "Fresh module and entry identity with structured field changes",
+      "status": 200,
+      "changes": 6
+    },
+    {
+      "check": "Actual Angular rendered authorized system audit route",
+      "passed": true
+    },
+    {
+      "check": "Owned test session logout",
+      "status": 204
+    }
+  ]
+}

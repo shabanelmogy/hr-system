@@ -92,7 +92,17 @@ export class CountryService {
           }),
         );
       }).pipe(
-        catchError((error: unknown) => throwError(() => classifyCommandFailure(error, dispatched))),
+        catchError((error: unknown) =>
+          throwError(() =>
+            classifyCommandFailure(
+              error,
+              dispatched,
+              input.flatMap((_, index) =>
+                countryMutationFields.map((field) => `countries[${index}].${field}`),
+              ),
+            ),
+          ),
+        ),
       );
     });
   }

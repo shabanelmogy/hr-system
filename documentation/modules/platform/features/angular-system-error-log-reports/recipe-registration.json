@@ -1,0 +1,340 @@
+{
+  "status": "final",
+  "executionMode": "authorized-client-implementation",
+  "runtimeAuthorized": true,
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S4-A4c — System Error Logs managed reports",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-system-error-log-reports.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-system-error-log-reports.md",
+  "instructions": "Merge these entries into recipe-manifest.json after Phase 00 has a final preflight required-files.json and all four initial applied implementation books. Extend the manifest/books with runtime evidence during implementation.",
+  "books": [
+    {
+      "id": "angular-system-error-log-reports-master",
+      "path": "../modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-review.md",
+      "title": "System Error Logs managed reports cross-platform master review"
+    },
+    {
+      "id": "angular-system-error-log-reports-api",
+      "path": "../modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-api.md",
+      "title": "System Error Logs managed reports API implementation profile"
+    },
+    {
+      "id": "angular-system-error-log-reports-web",
+      "path": "../modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-web.md",
+      "title": "System Error Logs managed reports Next.js implementation profile"
+    },
+    {
+      "id": "angular-system-error-log-reports-mobile",
+      "path": "../modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-mobile.md",
+      "title": "System Error Logs managed reports Expo implementation profile"
+    }
+  ],
+  "requiredFileManifest": "../modules/platform/features/angular-system-error-log-reports/required-files.json",
+  "recipes": [
+    {
+      "id": "angular-system-error-log-reports-phase-00-implementation-preflight",
+      "title": "System Error Logs managed reports Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-system-error-log-reports/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-system-error-log-reports-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-log-reports-phase-01-domain-api",
+      "title": "System Error Logs managed reports Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-system-error-log-reports/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-system-error-log-reports-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-log-reports-phase-02-web-client",
+      "title": "System Error Logs managed reports Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-system-error-log-reports/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-system-error-log-reports-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-log-reports-phase-03-mobile-client",
+      "title": "System Error Logs managed reports Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-system-error-log-reports/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-system-error-log-reports-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-log-reports-phase-04-domain-actions",
+      "title": "System Error Logs managed reports Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-system-error-log-reports/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-system-error-log-reports-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-log-reports-phase-05-integration-runtime",
+      "title": "System Error Logs managed reports Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-system-error-log-reports/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-system-error-log-reports-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-log-reports-phase-06-verification-acceptance",
+      "title": "System Error Logs managed reports Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-system-error-log-reports/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-system-error-log-reports-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-system-error-log-reports-phase-07-customer-education-closure",
+      "title": "System Error Logs managed reports Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-system-error-log-reports/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-system-error-log-reports-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-system-error-log-reports-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    }
+  ]
+}

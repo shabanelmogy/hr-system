@@ -20,7 +20,7 @@ public sealed class GetPublishedCrystalReportsQueryHandler(
 }
 
 public sealed class GetSupportedCrystalReportEntitiesQueryHandler(
-    IManagedCrystalReportContractSource contracts)
+    IManagedCrystalReportContractSource contracts, GlobalCrystalReportConsumerPolicy? policy = null)
     : IQueryHandler<GetSupportedCrystalReportEntitiesQuery,
         IReadOnlyList<SupportedCrystalReportEntityResponse>>
 {
@@ -29,6 +29,7 @@ public sealed class GetSupportedCrystalReportEntitiesQueryHandler(
         CancellationToken cancellationToken) =>
         Task.FromResult<IReadOnlyList<SupportedCrystalReportEntityResponse>>(
             contracts.EntityDescriptors
+                .Where(entity => entity.EntityKey != "system-error-logs" || policy?.Allows(entity.EntityKey) == true)
                 .OrderBy(entity => entity.EntityKey, StringComparer.Ordinal)
                 .Select(entity => new SupportedCrystalReportEntityResponse(
                     entity.EntityKey,
@@ -146,7 +147,8 @@ internal static class GlobalCrystalReportScope
     {
         "countries",
         "states",
-        "districts"
+        "districts",
+        "system-error-logs"
     };
 
     internal static string Normalize(string entityKey) => entityKey.Trim().ToLowerInvariant();

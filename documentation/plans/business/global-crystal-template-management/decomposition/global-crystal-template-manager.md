@@ -42,6 +42,14 @@ picker needed only because no shared file picker exists. No feature-local grid s
 
 ## 5. Screen and workspace contract
 
+Requester extension2026-11-05: reporting.global-templates.consume uses its existing
+ReportWorkspace Options sidebar to download the permitted RPT and launch the same
+shared upload/version dialogs for a fully authorized global-template administrator.
+This is a bounded GCT-1 entry to existing version management, not a consumer-wide
+write entitlement. Resolve one exact reportKey/entity, immutable SourceId and current publication token; check the
+report Upload ACL. Loading/error/stale, first-invalid focus, pending and dirty-close
+protection remain required. No offline editing or new API/schema contract.
+
 Entity selector lists only authorized global entities. Select a template to inspect,
 download or append a new version; upload creates an absent canonical report key. Version detail exposes validation and explicit publish. XSD download
 supports designer correction. Archive and role grants are Required; physical delete

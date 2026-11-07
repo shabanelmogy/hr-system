@@ -81,7 +81,7 @@ existing-system review, implementation order, and Definition of Done.
 | states-master | 3 | `11eb828b5ab01b440915284f32842ff110624d6f4f7a57b77d5dde5f7ce9ca4b` |
 | states-master | 4 | `bdd06ecc021be41977ee565c556463820df58f7b4a9de63ff75642bda7486eb3` |
 | states-master | 6 | `b8c91c53fff7908b583e3690463b7effdbab5394ed9d327133e8c755d3234223` |
-| states-api | 1 | `85523ed52ed56c5ba99bfe170b3ae346c42d8851b1b420b13a784ae4eac9fa17` |
+| states-api | 1 | `9e730bf207420de9d883bffd6000d08f72e01cb6ba5fdb2ceac253449bf8aacf` |
 | states-api | 2 | `11f8fd32cf2e1917fcbc35ea783d4f6f46e6df380bef0165ee054c636da37db1` |
 | states-api | 3 | `0385cf078edb08d33b9029d57b67bf2d6055a6bbef25d102ef84327700ea2271` |
 | states-api | 4 | `92e778ea7fa6031f285df9ddc1316b21d870f5dafba11f3ae2504b777c365a41` |

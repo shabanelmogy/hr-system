@@ -1,0 +1,90 @@
+<erp-form-close-guard
+  #closeGuard
+  [identity]="'global-template-' + (state.editor()?.revision || 0)"
+  [revision]="state.draftRevision()"
+  [active]="state.editorOpen()"
+  [unsaved]="state.form.dirty"
+  [pending]="state.pending()"
+  (closed)="state.closeEditor()"
+/>
+<erp-dialog-panel
+  [open]="state.editorOpen()"
+  [title]="
+    (state.editor()?.reportId ? 'crystalReports.selectNewVersion' : 'crystalReports.create')
+      | uiText: 'reporting'
+  "
+  [description]="'crystalReports.summaryInfoHint' | uiText: 'reporting'"
+  [closeLabel]="'actions.close' | uiText"
+  [showFooter]="false"
+  [pending]="state.pending()"
+  (closeRequested)="closeGuard.requestClose()"
+>
+  @if (state.editorOpen()) {
+    <erp-form
+      #entryForm
+      [form]="state.form"
+      [title]="'globalTemplates.upload' | uiText: 'reporting'"
+      appearance="dialog"
+      [hideHeader]="true"
+      [submitLabel]="'actions.save' | uiText"
+      [pending]="state.pending()"
+      (validSubmit)="state.save()"
+      [feedback]="state.feedback()?.message || (state.feedback() ? ('common.error' | uiText) : '')"
+      ><erp-icon formSubmitIcon name="save" /><erp-option-select
+        [label]="'crystalReports.entity' | uiText: 'reporting'"
+        [value]="state.entity() || ''"
+        [options]="state.editor()?.reportId ? entityOptions() : createEntityOptions()"
+        [disabled]="state.pending() || !!state.editor()?.reportId"
+        (valueChange)="state.selectEditorEntity($event)" /><erp-file-field
+        [formControl]="state.form.controls.file"
+        [label]="'crystalReports.reportFile' | uiText: 'reporting'"
+        acceptTypes=".rpt"
+        [chooseLabel]="'crystalReports.selectFile' | uiText: 'reporting'"
+        [clearLabel]="'globalTemplates.clearFile' | uiText: 'reporting'"
+        [help]="'crystalReports.fileHint' | uiText: 'reporting'"
+        [messages]="messages()"
+        [readOnly]="state.pending()" />
+      @if (!state.editor()?.reportId) {
+        <erp-text-field
+          [formControl]="state.form.controls.description"
+          [label]="'crystalReports.description' | uiText: 'reporting'"
+          [maxLength]="500"
+          [multiline]="true"
+          [rows]="3"
+          [showCounter]="true"
+          [messages]="messages()"
+          [readOnly]="state.pending()"
+        />
+      }
+      @if (state.inspection(); as inspection) {
+        <erp-feedback-state
+          kind="error"
+          [tone]="inspection.valid ? 'success' : 'danger'"
+          [title]="
+            inspection.reason ||
+            (inspection.valid
+              ? ('globalTemplates.valid' | uiText: 'reporting')
+              : ('common.error' | uiText))
+          "
+        />
+      }
+      <ng-container formTools>
+        @if (state.can('Upload')) {
+          <erp-button
+            [label]="'globalTemplates.inspect' | uiText: 'reporting'"
+            variant="outlined"
+            [disabled]="state.pending()"
+            (activated)="inspect()"
+            ><erp-icon buttonIcon name="search"
+          /></erp-button>
+        }</ng-container
+      ><erp-button
+        formActions
+        [label]="'actions.cancel' | uiText"
+        variant="text"
+        [disabled]="state.pending()"
+        (activated)="closeGuard.requestClose()"
+        ><erp-icon buttonIcon name="close" /></erp-button
+    ></erp-form>
+  }
+</erp-dialog-panel>

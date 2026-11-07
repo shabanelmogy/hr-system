@@ -1,0 +1,4166 @@
+[
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "countries",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "countries",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "countries",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "countries",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "states",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "states",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "states",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "states",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "districts",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "districts",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "districts",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "districts",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "admins",
+    "view": null,
+    "format": "csv",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "admins",
+    "view": null,
+    "format": "xlsx",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "audit",
+    "view": "grid",
+    "format": "csv",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "audit",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "errors",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "errors",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "errors",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "errors",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "reports",
+    "view": null,
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "owner": "reports",
+    "view": null,
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "scenarios": [
+      "cancel-without-late-download",
+      "formatter-denied-with-feedback"
+    ]
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "countries",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "countries",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "countries",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "countries",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "states",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "states",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "states",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "states",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "districts",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "districts",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "districts",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "districts",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "admins",
+    "view": null,
+    "format": "csv",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "admins",
+    "view": null,
+    "format": "xlsx",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "audit",
+    "view": "grid",
+    "format": "csv",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "audit",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "errors",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "errors",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "errors",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "errors",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "reports",
+    "view": null,
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "owner": "reports",
+    "view": null,
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "scenarios": [
+      "cancel-without-late-download",
+      "formatter-denied-with-feedback"
+    ]
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "countries",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "countries",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "countries",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "countries",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "states",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "states",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "states",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "states",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "districts",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "districts",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "districts",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "districts",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "admins",
+    "view": null,
+    "format": "csv",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "admins",
+    "view": null,
+    "format": "xlsx",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "audit",
+    "view": "grid",
+    "format": "csv",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "audit",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "errors",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "errors",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "errors",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "errors",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "reports",
+    "view": null,
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "owner": "reports",
+    "view": null,
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "scenarios": [
+      "cancel-without-late-download",
+      "formatter-denied-with-feedback"
+    ]
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "countries",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "countries",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "countries",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "countries",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "states",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "states",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "states",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "states",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "districts",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "districts",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "districts",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "districts",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "admins",
+    "view": null,
+    "format": "csv",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "admins",
+    "view": null,
+    "format": "xlsx",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "audit",
+    "view": "grid",
+    "format": "csv",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "audit",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "errors",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "errors",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "errors",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "errors",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "reports",
+    "view": null,
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "owner": "reports",
+    "view": null,
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "scenarios": [
+      "cancel-without-late-download",
+      "formatter-denied-with-feedback"
+    ]
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "countries",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "countries",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "countries",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "countries",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "states",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "states",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "states",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "states",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "districts",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "districts",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "districts",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "districts",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "admins",
+    "view": null,
+    "format": "csv",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "admins",
+    "view": null,
+    "format": "xlsx",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "audit",
+    "view": "grid",
+    "format": "csv",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "audit",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "errors",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "errors",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "errors",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "errors",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "reports",
+    "view": null,
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "owner": "reports",
+    "view": null,
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "scenarios": [
+      "cancel-without-late-download",
+      "formatter-denied-with-feedback"
+    ]
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "countries",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "countries",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "countries",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "countries",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "states",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "states",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "states",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "states",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "districts",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "districts",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "districts",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "districts",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "admins",
+    "view": null,
+    "format": "csv",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "admins",
+    "view": null,
+    "format": "xlsx",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "audit",
+    "view": "grid",
+    "format": "csv",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "audit",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "errors",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "errors",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "errors",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "errors",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "reports",
+    "view": null,
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "reports",
+    "view": null,
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "scenarios": [
+      "cancel-without-late-download",
+      "formatter-denied-with-feedback"
+    ]
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "countries",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "countries",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "countries",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "countries",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "states",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "states",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "states",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "states",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "districts",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "districts",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "districts",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "districts",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "admins",
+    "view": null,
+    "format": "csv",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "admins",
+    "view": null,
+    "format": "xlsx",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "audit",
+    "view": "grid",
+    "format": "csv",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "audit",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "errors",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "errors",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "errors",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "errors",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "reports",
+    "view": null,
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "owner": "reports",
+    "view": null,
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "scenarios": [
+      "cancel-without-late-download",
+      "formatter-denied-with-feedback"
+    ]
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "countries",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "countries",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "countries",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "countries",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "states",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "states",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "states",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "states",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "districts",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "districts",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "districts",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "districts",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "admins",
+    "view": null,
+    "format": "csv",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "admins",
+    "view": null,
+    "format": "xlsx",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "audit",
+    "view": "grid",
+    "format": "csv",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "audit",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "errors",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "errors",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "errors",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "errors",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "reports",
+    "view": null,
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "owner": "reports",
+    "view": null,
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "scenarios": [
+      "cancel-without-late-download",
+      "formatter-denied-with-feedback"
+    ]
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "countries",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "countries",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "countries",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "countries",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "states",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "states",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "states",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "states",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "districts",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "districts",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "districts",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "districts",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "admins",
+    "view": null,
+    "format": "csv",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "admins",
+    "view": null,
+    "format": "xlsx",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "audit",
+    "view": "grid",
+    "format": "csv",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "audit",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "errors",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "errors",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "errors",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "errors",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "reports",
+    "view": null,
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "owner": "reports",
+    "view": null,
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "scenarios": [
+      "cancel-without-late-download",
+      "formatter-denied-with-feedback"
+    ]
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "countries",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "countries",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "countries",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "countries",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "states",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "states",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "states",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "states",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "districts",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "districts",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "districts",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "districts",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "admins",
+    "view": null,
+    "format": "csv",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "admins",
+    "view": null,
+    "format": "xlsx",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "audit",
+    "view": "grid",
+    "format": "csv",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "audit",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "errors",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "errors",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "errors",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "errors",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "reports",
+    "view": null,
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "owner": "reports",
+    "view": null,
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "scenarios": [
+      "cancel-without-late-download",
+      "formatter-denied-with-feedback"
+    ]
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "countries",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "countries",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "countries",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "countries",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "states",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "states",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "states",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "states",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "districts",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "districts",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "districts",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "districts",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "admins",
+    "view": null,
+    "format": "csv",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "admins",
+    "view": null,
+    "format": "xlsx",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "audit",
+    "view": "grid",
+    "format": "csv",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "audit",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "errors",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "errors",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "errors",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "errors",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "reports",
+    "view": null,
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "owner": "reports",
+    "view": null,
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "scenarios": [
+      "cancel-without-late-download",
+      "formatter-denied-with-feedback"
+    ]
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "countries",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "countries",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "countries",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "countries",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "states",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "states",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "states",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "states",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "districts",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "districts",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "districts",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "districts",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "tenants",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "tenants",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "admins",
+    "view": null,
+    "format": "csv",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "admins",
+    "view": null,
+    "format": "xlsx",
+    "rows": 17,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "audit",
+    "view": "grid",
+    "format": "csv",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "audit",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 53,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "errors",
+    "view": "grid",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "errors",
+    "view": "grid",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "errors",
+    "view": "cards",
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "errors",
+    "view": "cards",
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "reports",
+    "view": null,
+    "format": "csv",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "owner": "reports",
+    "view": null,
+    "format": "xlsx",
+    "rows": 205,
+    "overflow": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "scenarios": [
+      "cancel-without-late-download",
+      "formatter-denied-with-feedback"
+    ]
+  }
+]

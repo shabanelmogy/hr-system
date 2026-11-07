@@ -1,0 +1,27 @@
+{
+  "origin": "https://localhost:4210",
+  "api": "https://shabanhrms.runasp.net",
+  "businessWrites": 0,
+  "blockedWrites": 0,
+  "results": [
+    {
+      "check": "Authoritative Tenant administrator collection and nested DTO",
+      "status": 200,
+      "rows": 1
+    },
+    {
+      "check": "Fresh administrator detail identity",
+      "status": 200,
+      "hasAssignments": true
+    },
+    {
+      "check": "Complete Tenant assignment lookup",
+      "status": 200,
+      "rows": 1
+    },
+    {
+      "check": "Owned test-session logout",
+      "status": 204
+    }
+  ]
+}

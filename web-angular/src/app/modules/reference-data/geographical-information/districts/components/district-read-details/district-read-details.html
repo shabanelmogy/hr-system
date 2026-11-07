@@ -1,0 +1,39 @@
+<erp-form
+  [form]="form"
+  [title]="'districts.view' | uiText: 'reference-districts'"
+  [submitLabel]="'actions.view' | uiText"
+  appearance="dialog"
+  [hideHeader]="true"
+  [readOnly]="true"
+  [showSubmit]="false"
+>
+  <div class="metadata">
+    <erp-status-badge
+      appearance="outline"
+      [label]="('general.id' | uiText) + ': ' + state().id"
+    /><erp-status-badge
+      [label]="
+        (state().isDeleted ? 'districts.status.archived' : 'districts.status.active')
+          | uiText: 'reference-districts'
+      "
+      [accent]="state().isDeleted ? 'var(--destructive)' : 'var(--success)'"
+    />
+  </div>
+  <erp-text-field [formField]="form.nameAr" [label]="'general.nameAr' | uiText" /><erp-text-field
+    [formField]="form.nameEn"
+    [label]="'general.nameEn' | uiText"
+  /><erp-text-field
+    [formField]="form.code"
+    [label]="'districts.code' | uiText: 'reference-districts'"
+    textDirection="ltr"
+  /><erp-text-field
+    [formField]="form.state"
+    [label]="'districts.state' | uiText: 'reference-districts'"
+  />
+  <erp-button
+    formActions
+    [label]="'actions.close' | uiText"
+    variant="outlined"
+    (activated)="closed.emit()"
+  />
+</erp-form>

@@ -1,0 +1,70 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-inline-size: 0;
+}
+legend,
+h3 {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+.summary,
+.areas p {
+  color: var(--muted-foreground);
+}
+.summary {
+  font-size: 0.8125rem;
+  margin: 4px 0 10px;
+}
+.entitlement-layout {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(0, 1.5fr);
+  gap: 12px;
+}
+.module-list {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+}
+.module-choice {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.module-choice.selected {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 6%, var(--surface));
+}
+.module-choice erp-boolean-field {
+  flex: 1;
+  min-width: 0;
+}
+.areas {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.areas h3,
+.areas p {
+  margin: 0;
+}
+.error {
+  color: var(--destructive);
+}
+@media (max-width: 40rem) {
+  .entitlement-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

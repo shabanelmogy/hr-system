@@ -17,7 +17,7 @@ No screen created; reuse current shared UI unchanged. S2 preserves current desig
 ## 8. States
 Current dirty/context/error handling retained; new Cookie/cross-tab behavior unverified.
 ## 9. Scope and security
-Current Next Cookies retained; API owns distinct HttpOnly/Secure names and server CSRF/origin enforcement. SameSite defaults Lax; explicit API UseCrossSiteCookies=true enables None for the local Angular/hosted API topology without changing Next's own Cookies. Global Hangfire antiforgery defaults preserved. See verification/HOSTED_CONFIGURATION_REPAIR.md for the2026-10-29 correction and actual hosted limits.
+Current Next Cookies retained; API owns distinct HttpOnly/Secure names and server CSRF/origin enforcement. Session SameSite defaults Lax; explicit API UseCrossSiteCookies=true enables None for the local Angular/hosted API topology without changing Next's own Cookies. The 2026-11-06 correction also permits native Hangfire antiforgery Cookies in explicitly enabled cross-site mode, preserving names/header/validation. Angular embeds the actual protected dashboard after a credentialed access check; Next keeps its Bearer proxy. See [embedding repair](verification/HANGFIRE_EMBEDDING_REPAIR.md) and verification/HOSTED_CONFIGURATION_REPAIR.md for source/host acceptance limits.
 ## 10. Persistence and side effects
 No web token storage/business-data migration/service-worker cache introduced.
 ## 11. Verification

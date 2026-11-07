@@ -1,0 +1,26 @@
+:host {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  min-inline-size: 0;
+  min-block-size: 0;
+  max-block-size: 45dvh;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--foreground) 4%, var(--surface));
+}
+erp-scroll-viewport {
+  min-block-size: 0;
+}
+pre {
+  margin: 0;
+  padding: 16px;
+  min-inline-size: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: inherit;
+  font-size: 0.875rem;
+  line-height: 1.8;
+  text-align: start;
+}
+.monospace {
+  font-family: monospace;
+}

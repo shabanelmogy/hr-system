@@ -2,7 +2,48 @@
 
 ## 1. Ownership
 
+Entity initialization correction2026-11-06: GlobalReportState starts catalog reads only after setEntity configures the consumer. A State workspace no longer issues an incidental Countries catalog request before its input effect. Existing entity switch, form reset, ACL and PDF semantics remain; the regression failed before the fix and27focused report tests pass afterward. Current full/client/browser evidence is owned by angular-states-workspace/STATES_WORKSPACE_2026-11-06.md. No Reporting API, native or provider deployment change.
+
+### Report sidebar version management — 2026-11-05
+
+Requester-authorized report sidebar actions retain the granted RPT source download
+and add a deferred entry to the existing template upload/version dialogs. Exact
+entity/reportKey resolution and immutable SourceId/version-token matching precede the existing
+management and report Upload ACL checks. A new version does not publish itself.
+The viewer refreshes after closing details; session/selection changes destroy the
+scoped editor and cancel pending work. No API, database, permission or other-client
+contract change is introduced. The [owning sidebar contract](../../../../modules/reporting/features/global-crystal-template-manager/REPORT_TEMPLATE_SIDEBAR_2026-11-05.md)
+records source, verification and acceptance limits.
+
+### Current composition maintenance — 2026-11-05
+
+GlobalReportView composes the new feature-owned GlobalReportCriteria through the
+existing reportCriteria slot. The child receives a typed FieldTree<ReportFilters>,
+catalog presentation, pending/conflict flags and emits selection/reset requests.
+The parent remains the sole form, validation, submission, auth-context reset and
+GlobalReportState owner. Shared FormContainer and fields preserve error focus,
+native Signal Forms submission and server-field errors. Existing Reactive Forms
+compatibility boundaries elsewhere in reporting remain explicit.
+
+Current verification: full Angular check (98 files / 560 tests) and production build pass;
+the focused GlobalReportView suite passes 14 tests, including sidebar action placement,
+tab lifetime, validation and context reset. That increment initially stopped at the
+legacy script's outdated download-link selector. Subsequent sidebar maintenance
+updated the script and passed all eight focused lifecycle cases; FOLLOW-026 is
+Verified. The current sidebar receipt records the full567-test gate and 12 new
+production-fixture cases, without claiming hosted or physical-device acceptance.
+Source/verification details:
+[current execution report](../../../../guides/web/architecture/ANGULAR_COMPONENT_DECOMPOSITION_2026-11-05.md).
+API/Next/Mobile/persistence are unchanged; no new engine or domain capability.
+
 Reporting owns global Countries catalog/auth/service/controller; Shared generic validated PDF resource/layout. No tenant/report-manager/designer/API business ownership transfer.
+
+Districts integration2026-11-06: the existing typed Reporting owner additionally
+supports exact StateAr/StateEn filters only for districts. Native Signal Forms
+retains200char bounds, beneath-field server alias mapping, reset/entity/actor
+cleanup and shared PDF lifecycle. Countries/States requests stay NameAr/NameEn.
+District labels load only when needed. Evidence is the District workspace report
+and receipt; fixture PDFs do not close PROD-028/025 real-provider acceptance.
 
 ## 2. Existing-System Relationship Review
 
@@ -22,7 +63,7 @@ Web P-001/C-01 dev/reports authenticated global proof Required; production Count
 
 ## 6. API and permission
 
-Exact global GET/catalog and POST/render, super_admin+GlobalCrystalReports:View, no tenant entitlement; expectedSha256 selected source hash, NameAr/NameEn200 and en/ar. HTTPS/cookie CSRF current middleware.
+Exact global GET/catalog and POST/render, super_admin+GlobalCrystalReports:View, no tenant entitlement; expectedSha256 selected source hash, NameAr/NameEn200 (plus StateAr/StateEn200 for districts only) and en/ar. HTTPS/cookie CSRF current middleware.
 
 ## 7. Business Rules Matrix
 
@@ -47,6 +88,14 @@ One current immutable auth+selection/hash+language+applied render key. Unsubscri
 Four reports.* bilingual core captions through existing SQL-backed runtime/generator; matching API resource deploy PROD-019. Optional csrf renewal on existing narrow bridge, old default retained. No API/domain/schema/native change.
 
 ## 11. Verification
+
+Latest sidebar maintenance2026-11-05: full Angular check567tests/98files,
+architecture30, lint/format, strict app/spec types and production build pass.
+The existing consumer SourceId and version-token envelope is matched exactly to
+the chosen management record before upload. Current browser receipt:
+`documentation/modules/reporting/features/global-crystal-template-manager/verification/REPORT_TEMPLATE_SIDEBAR_2026-11-05.json`.
+Earlier counts below belong to their own dated increments; hosted/native release
+and historical raw-log availability remain separately owned.
 
 Phase06 Verified2026-10-30 for GLOBAL_PDF_CONTRACT bounded minimum. IMPLEMENTATION_REPORT.md and verification/ own current295unit/full check,PDF40+8,login10/language20/context24,API17/localization43/catalog7 and limits. No full Countries/managed-manager/native/physical/live acceptance.
 

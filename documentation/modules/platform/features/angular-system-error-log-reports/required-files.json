@@ -1,0 +1,944 @@
+{
+  "schemaVersion": 1,
+  "status": "final",
+  "executionMode": "authorized-client-implementation",
+  "runtimeAuthorized": true,
+  "feature": "angular-system-error-log-reports",
+  "featureName": "System Error Logs managed reports",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S4-A4c — System Error Logs managed reports",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-system-error-log-reports.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-system-error-log-reports.md",
+  "purpose": "Accepted bounded managed Error Logs report integration and responsive debugger; real provider/template release remains PROD-031",
+  "reviewArtifact": "documentation/modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-review.md",
+    "api": "documentation/modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-api.md",
+    "web": "documentation/modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-web.md",
+    "mobile": "documentation/modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "report-preflight-0",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-system-error-log-reports.md",
+      "purpose": "Verified current owner source or authored preflight contract"
+    },
+    {
+      "id": "report-preflight-1",
+      "layer": "implementation",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/Platform/ErrorLogs/ErrorLogRequests.cs",
+      "purpose": "Verified current owner source or authored preflight contract"
+    },
+    {
+      "id": "report-preflight-2",
+      "layer": "implementation",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/Platform/ErrorLogs/ErrorLogStore.cs",
+      "purpose": "Verified current owner source or authored preflight contract"
+    },
+    {
+      "id": "report-preflight-3",
+      "layer": "implementation",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/ErrorLogStoreTests.cs",
+      "purpose": "Verified current owner source or authored preflight contract"
+    },
+    {
+      "id": "report-preflight-4",
+      "layer": "implementation",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/Features/Analytics/CrystalReports/managed-crystal-report-contracts.v1.json",
+      "purpose": "Verified current owner source or authored preflight contract"
+    },
+    {
+      "id": "report-preflight-5",
+      "layer": "implementation",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Validation/GlobalCrystalReportPolicy.cs",
+      "purpose": "Verified current owner source or authored preflight contract"
+    },
+    {
+      "id": "report-preflight-6",
+      "layer": "implementation",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Validation/GlobalCrystalReportConsumerPolicy.cs",
+      "purpose": "Verified current owner source or authored preflight contract"
+    },
+    {
+      "id": "report-preflight-7",
+      "layer": "implementation",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Commands/CreateGlobalCrystalReportDraftCommand.cs",
+      "purpose": "Verified current owner source or authored preflight contract"
+    },
+    {
+      "id": "report-preflight-8",
+      "layer": "implementation",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs",
+      "purpose": "Verified current owner source or authored preflight contract"
+    },
+    {
+      "id": "report-preflight-9",
+      "layer": "implementation",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDesignSourceCatalog.cs",
+      "purpose": "Verified current owner source or authored preflight contract"
+    },
+    {
+      "id": "report-preflight-10",
+      "layer": "implementation",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/GlobalCrystalReportConfigurations.cs",
+      "purpose": "Verified current owner source or authored preflight contract"
+    },
+    {
+      "id": "report-preflight-11",
+      "layer": "implementation",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain/Analytics/CrystalReports/Entities/GlobalCrystalReport.cs",
+      "purpose": "Verified current owner source or authored preflight contract"
+    },
+    {
+      "id": "report-preflight-12",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-reports/types/global-report.ts",
+      "purpose": "Verified current owner source or authored preflight contract"
+    },
+    {
+      "id": "report-preflight-13",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/pages/system-error-logs-page/system-error-logs-page.ts",
+      "purpose": "Verified current owner source or authored preflight contract"
+    },
+    {
+      "id": "report-preflight-14",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/states/pages/states-page/states-page.ts",
+      "purpose": "Verified current owner source or authored preflight contract"
+    },
+    {
+      "id": "report-preflight-15",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-api.md",
+      "purpose": "Verified current owner source or authored preflight contract"
+    },
+    {
+      "id": "report-preflight-17",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-mobile.md",
+      "purpose": "Verified current owner source or authored preflight contract"
+    },
+    {
+      "id": "report-preflight-19",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-review.md",
+      "purpose": "Verified current owner source or authored preflight contract"
+    },
+    {
+      "id": "report-preflight-20",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-web.md",
+      "purpose": "Verified current owner source or authored preflight contract"
+    },
+    {
+      "id": "report-source-runtime-0",
+      "layer": "implementation",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Contracts/ErrorLogs/SystemErrorLogReportContracts.cs",
+      "purpose": "Actual safe source increment and owning architecture approval/test evidence"
+    },
+    {
+      "id": "report-source-runtime-1",
+      "layer": "implementation",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/Platform/ErrorLogs/ErrorLogCriteriaPolicy.cs",
+      "purpose": "Actual safe source increment and owning architecture approval/test evidence"
+    },
+    {
+      "id": "report-source-runtime-2",
+      "layer": "implementation",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/Platform/ErrorLogs/SystemErrorLogReportSource.cs",
+      "purpose": "Actual safe source increment and owning architecture approval/test evidence"
+    },
+    {
+      "id": "report-source-runtime-3",
+      "layer": "implementation",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/DependencyInjection.cs",
+      "purpose": "Actual safe source increment and owning architecture approval/test evidence"
+    },
+    {
+      "id": "report-source-runtime-4",
+      "layer": "implementation",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/DependencyInjection.cs",
+      "purpose": "Actual safe source increment and owning architecture approval/test evidence"
+    },
+    {
+      "id": "report-source-runtime-5",
+      "layer": "implementation",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/SystemErrorLogReportSourceTests.cs",
+      "purpose": "Actual safe source increment and owning architecture approval/test evidence"
+    },
+    {
+      "id": "report-source-runtime-6",
+      "layer": "implementation",
+      "path": "api/Tests/ErpSystem.ArchitectureTests/PlatformContractsArchitectureTests.cs",
+      "purpose": "Actual safe source increment and owning architecture approval/test evidence"
+    },
+    {
+      "id": "report-source-verification-0",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-source-build-final.log",
+      "purpose": "Portable completed source-adapter gate evidence; not complete report acceptance"
+    },
+    {
+      "id": "report-source-verification-1",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-source-green.log",
+      "purpose": "Portable completed source-adapter gate evidence; not complete report acceptance"
+    },
+    {
+      "id": "report-source-verification-2",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-source-red.log",
+      "purpose": "Portable completed source-adapter gate evidence; not complete report acceptance"
+    },
+    {
+      "id": "report-source-verification-3",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-source-restore.log",
+      "purpose": "Portable completed source-adapter gate evidence; not complete report acceptance"
+    },
+    {
+      "id": "report-source-verification-4",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-source-test-final.log",
+      "purpose": "Portable completed source-adapter gate evidence; not complete report acceptance"
+    },
+    {
+      "id": "report-source-verification-5",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/source-adapter-2026-11-06.json",
+      "purpose": "Portable completed source-adapter gate evidence; not complete report acceptance"
+    },
+    {
+      "id": "managed-report-accepted-0",
+      "layer": "implementation",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/SystemErrorLogsCrystalReportDataProvider.cs",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-1",
+      "layer": "implementation",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Migrations/20261106160838_AllowSystemErrorLogGlobalReports.Designer.cs",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-2",
+      "layer": "implementation",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Migrations/20261106160838_AllowSystemErrorLogGlobalReports.cs",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-3",
+      "layer": "implementation",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Migrations/ReportingDbContextModelSnapshot.cs",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-4",
+      "layer": "implementation",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/SystemErrorLogManagedReportTests.cs",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-5",
+      "layer": "documentation",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-6",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-error-report-browser.log",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-7",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-error-report-migration-apply.log",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-8",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-error-report-migration.log",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-9",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-error-report-production-browser.log",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-10",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-grid-viewport-browser-final.log",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-11",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-managed-report-api-build.log",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-12",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-managed-report-api-test.log",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-13",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-live-schema-proof.log",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-19",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-viewport-final-angular.log",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-20",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/managed-report-2026-11-06.json",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-22",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/system-error-log-report-browser-production/ar-dark-1440-empty.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-23",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/system-error-log-report-browser-production/ar-dark-390-empty.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-24",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/system-error-log-report-browser-production/ar-light-1440-empty.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-25",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/system-error-log-report-browser-production/ar-light-390-empty.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-26",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/system-error-log-report-browser-production/en-dark-1440-empty.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-27",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/system-error-log-report-browser-production/en-dark-390-empty.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-28",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/system-error-log-report-browser-production/en-light-1440-empty.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-29",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/system-error-log-report-browser-production/en-light-390-empty.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-30",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/system-error-log-report-browser-production/results.json",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-31",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/system-error-log-report-browser/ar-dark-1440-empty.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-32",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/system-error-log-report-browser/ar-dark-390-empty.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-33",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/system-error-log-report-browser/ar-light-1440-empty.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-34",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/system-error-log-report-browser/ar-light-390-empty.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-35",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/system-error-log-report-browser/en-dark-1440-empty.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-36",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/system-error-log-report-browser/en-dark-390-empty.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-37",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/system-error-log-report-browser/en-light-1440-empty.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-38",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/system-error-log-report-browser/en-light-390-empty.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-39",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/system-error-log-report-browser/results.json",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-40",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/viewport-grid/ar-dark-1440-grid.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-41",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/viewport-grid/ar-dark-390-grid.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-42",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/viewport-grid/ar-light-1440-grid.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-43",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/viewport-grid/ar-light-390-grid.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-44",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/viewport-grid/en-dark-1440-grid.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-45",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/viewport-grid/en-dark-390-grid.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-46",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/viewport-grid/en-light-1440-grid.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-47",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/viewport-grid/en-light-390-grid.png",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-48",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/viewport-grid/failure-results.json",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-49",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/viewport-grid/live-read-results.json",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-50",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/viewport-grid/results.json",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-51",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-system-error-log-reports.md",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-52",
+      "layer": "implementation",
+      "path": "web-angular/scripts/verify-system-error-log-report-browser.mjs",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-53",
+      "layer": "implementation",
+      "path": "web-angular/scripts/verify-system-error-logs-browser.mjs",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-54",
+      "layer": "implementation",
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-55",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-criteria/global-report-criteria.html",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-56",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-criteria/global-report-criteria.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-57",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.html",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-58",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.scss",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-59",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.spec.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-60",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-61",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-reports/global-report-guard.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-62",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-reports/pages/global-reports-page/global-reports-page.html",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-63",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-reports/pages/global-reports-page/global-reports-page.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-64",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-reports/report.fixture.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-65",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-reports/services/global-report-service.spec.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-66",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-reports/services/global-report-service.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-67",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-reports/state/global-report-state.spec.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-68",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-reports/state/global-report-state.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-69",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-reports/types/global-report.spec.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-71",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-reports/validation/report-filter-validator.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-72",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-report-template-editor/global-report-template-editor.html",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-73",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-report-template-editor/global-report-template-editor.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-74",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-confirmations/global-template-confirmations.html",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-75",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-confirmations/global-template-confirmations.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-76",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-designer/global-template-designer.html",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-77",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-designer/global-template-designer.spec.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-78",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-designer/global-template-designer.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-79",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-detail-dialog/global-template-detail-dialog.html",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-80",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-detail-dialog/global-template-detail-dialog.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-81",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-list/global-template-list.html",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-82",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-list/global-template-list.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-83",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-overview/global-template-overview.html",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-84",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-overview/global-template-overview.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-85",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-permissions/global-template-permissions.html",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-86",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-permissions/global-template-permissions.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-87",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-registration-dialog/global-template-registration-dialog.html",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-88",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-registration-dialog/global-template-registration-dialog.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-89",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-upload-dialog/global-template-upload-dialog.html",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-90",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-upload-dialog/global-template-upload-dialog.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-91",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-versions/global-template-versions.html",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-92",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-versions/global-template-versions.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-93",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/global-template-guard.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-94",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/pages/global-template-manager/global-template-manager.html",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-95",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/pages/global-template-manager/global-template-manager.scss",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-96",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/pages/global-template-manager/global-template-manager.spec.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-97",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/pages/global-template-manager/global-template-manager.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-98",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/policy.public-api.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-99",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/report-editor.public-api.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-100",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/services/global-template-service.spec.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-101",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/services/global-template-service.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-102",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/state/global-template-access-state.spec.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-103",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/state/global-template-access-state.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-104",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/state/global-template-design-state.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-105",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/state/global-template-state.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-106",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/state/global-template-view-state.spec.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-107",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/state/global-template-view-state.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-108",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/types/global-template-filters.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-109",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/types/global-template.spec.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-110",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/types/global-template.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-111",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/utils/global-template-presentation.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-112",
+      "layer": "implementation",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/utils/global-template-viewer-identity.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-113",
+      "layer": "implementation",
+      "path": "web-angular/src/app/platform/system-error-logs/system-error-log-report-slot.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-114",
+      "layer": "implementation",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.scss",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-115",
+      "layer": "implementation",
+      "path": "web-angular/src/app/shared/ui/diagnostics/viewport-debugger/viewport-debugger.html",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-116",
+      "layer": "implementation",
+      "path": "web-angular/src/app/shared/ui/diagnostics/viewport-debugger/viewport-debugger.scss",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-117",
+      "layer": "implementation",
+      "path": "web-angular/src/app/shared/ui/diagnostics/viewport-debugger/viewport-debugger.spec.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-118",
+      "layer": "implementation",
+      "path": "web-angular/src/app/shared/ui/diagnostics/viewport-debugger/viewport-debugger.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-119",
+      "layer": "implementation",
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.html",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-120",
+      "layer": "implementation",
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.ts",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-system-error-log-reports-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-system-error-log-reports-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-system-error-log-reports/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

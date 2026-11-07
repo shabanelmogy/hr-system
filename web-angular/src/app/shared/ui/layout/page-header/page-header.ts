@@ -1,15 +1,25 @@
-import { Component, computed, inject, input, output, viewChild } from '@angular/core';
+import {
+  booleanAttribute,
+  Component,
+  computed,
+  inject,
+  input,
+  output,
+  viewChild,
+} from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ThemeService } from '../../../../../theme/public-api';
-import { ActionButton } from '../../buttons/public-api';
+import { ActionButton, BackButton } from '../../buttons/public-api';
 import { AppIcon, type AppIconName } from '../../icons/app-icon/app-icon';
 import { UiTextPipe } from '../../../localization/public-api';
 import { StatusBadge } from '../../feedback/status-badge/status-badge';
 import { PopoverPanel } from '../../overlays/popover-panel/popover-panel';
+import { CollectionExportMenu } from '../../collections/collection-export-menu/collection-export-menu';
+import type { TabularExportSource } from '../../../data/public-api';
 
-export interface PageViewOption {
-  readonly id: string;
+export interface PageViewOption<T extends string = string> {
+  readonly id: T;
   readonly label: string;
   readonly icon: AppIconName;
 }
@@ -36,8 +46,20 @@ export function partitionPageViews(
 }
 @Component({
   selector: 'erp-page-header',
-  imports: [ActionButton, AppIcon, UiTextPipe, StatusBadge, PopoverPanel],
-  host: { '[class.collection-header]': "variant()==='collection'" },
+  imports: [
+    ActionButton,
+    BackButton,
+    AppIcon,
+    UiTextPipe,
+    StatusBadge,
+    PopoverPanel,
+    CollectionExportMenu,
+  ],
+  host: {
+    '[class.collection-header]': "variant()==='collection'",
+    '[class.card-header]': "appearance()==='card'",
+    '[class.compact-header]': 'compact()',
+  },
   templateUrl: './page-header.html',
   styleUrl: './page-header.scss',
 })
@@ -56,14 +78,20 @@ export class PageHeader {
   readonly title = input.required<string>();
   readonly subtitle = input('');
   readonly variant = input<'simple' | 'collection'>('simple');
+  readonly appearance = input<'plain' | 'card'>('plain');
+  readonly compact = input(false, { transform: booleanAttribute });
+  readonly backLabel = input('');
+  readonly backDisabled = input(false);
+  readonly backRequested = output<void>();
   readonly views = input<readonly PageViewOption[]>([]);
   readonly view = input('grid');
-  readonly total = input(0);
+  readonly total = input<number | null>(0);
   readonly totalLabel = input('');
   readonly refreshable = input(true);
   readonly filterable = input(true);
   readonly filterVisible = input(true);
   readonly primaryAction = input<PageHeaderAction | null>(null);
+  readonly exportSource = input<TabularExportSource | null>(null);
   readonly primaryActivated = output<void>();
   readonly compactAction = computed(
     () => this.breakpoint().breakpoints['(max-width:599px)'] === true,

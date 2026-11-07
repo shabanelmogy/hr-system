@@ -1,0 +1,15 @@
+<div class="metrics">
+  @for (metric of metrics(); track metric.id) {
+    <erp-metric-card
+      [compact]="true"
+      [label]="'tenantManagement.' + metric.id | uiText: 'platform-tenants'"
+      [value]="metric.value"
+      [icon]="metric.icon"
+    />
+  }
+</div>
+@let endDate = tenant().subscriptionEndsOn;
+<p class="period">
+  {{ date(tenant().subscriptionStartedOn) }} —
+  {{ endDate ? date(endDate) : ('tenantManagement.noEndDate' | uiText: 'platform-tenants') }}
+</p>

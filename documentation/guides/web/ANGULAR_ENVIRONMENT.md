@@ -64,3 +64,46 @@ Angular's [environment documentation](https://angular.dev/tools/cli/environments
 describes environment values as client bundle inputs. This repository uses a
 small Node preparation script to read `.env` and emit that typed input, following
 the existing generated-license preparation pattern instead of adding a builder.
+
+## Development-server diagnostics — 2026-11-05
+
+After component moves or extraction, compare any compiler error with the current
+file before editing it again. A long-running server on port4210 was observed
+sending a stale Vite error overlay for `closeGuard.requestClose()` even though the
+file already contained `closeGuard().requestClose()` and a fresh production build
+passed. Restarting that server restored the current compilation. Chrome then
+returned HTTP200 for Login, without a Vite error overlay, compilation messages or
+page errors. This is a verified recovery for that session, not a rule to ignore
+new compilation failures. `viewChild.required()` returns a signal; read it before
+calling the component method. The Reporting public-API import resolves to the
+existing `global-template-manager/pages/global-template-manager/global-template-manager.ts`.
+
+With HTTPS enabled, Node may print
+`UnsupportedWarning: Status message is not supported by HTTP/2 (RFC7540 8.1.2.4)`.
+A temporary server using Node24.18.1, Angular CLI22.2.5 and Vite8.3.5 reproduced
+this warning with `--trace-warnings`: Vite's final response handler writes
+`res.statusMessage` for a missing JSON path. HTTP/2 still delivered the expected
+404 response; requesting `/` with `Accept: text/html` returned200 over HTTP/2.
+Node ignores the unsupported text status message, as described in its
+[HTTP/2 compatibility API](https://nodejs.org/api/http2.html#responsestatusmessage).
+The warning alone does not require an application-code change. Inspect any
+associated failed request independently; the original request that triggered a
+user-reported warning cannot be identified from the warning text alone.
+
+To capture the source for one run from `web-angular/` in PowerShell:
+
+```powershell
+$previousNodeOptions = $env:NODE_OPTIONS
+try {
+    $env:NODE_OPTIONS = ((@($previousNodeOptions, '--trace-warnings') | Where-Object { $_ }) -join ' ')
+    npm start
+}
+finally {
+    $env:NODE_OPTIONS = $previousNodeOptions
+}
+```
+
+Stop that diagnostic run with Ctrl+C. Do not suppress all Node warnings, patch
+`node_modules`, disable HTTPS or upgrade dependencies solely for this warning.
+The temporary diagnostic server used for the recorded reproduction was stopped;
+other development-server sessions were left with their owner.

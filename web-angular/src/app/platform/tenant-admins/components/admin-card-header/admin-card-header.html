@@ -1,0 +1,14 @@
+<div class="card-heading">
+  <div>
+    <h2>{{ admin().firstName }} {{ admin().lastName }}</h2>
+    <p>{{ admin().email }}</p>
+  </div>
+  <erp-status-badge
+    [label]="
+      'tenantAdmins.' + (admin().isDisabled ? 'disabled' : admin().isLocked ? 'locked' : 'active')
+        | uiText: 'platform-tenants'
+    "
+    [accent]="admin().isDisabled || admin().isLocked ? 'var(--destructive)' : 'var(--success)'"
+  />
+</div>
+<span class="username">{{ '@' + admin().userName }}</span>

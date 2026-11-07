@@ -1,4 +1,10 @@
-<erp-card-list [source]="source" label="Cards fixture" [rowId]="id" [rowLabel]="label">
+<erp-card-list
+  [source]="source"
+  label="Cards fixture"
+  [rowId]="id"
+  [rowLabel]="label"
+  [showFooter]="showFooter()"
+>
   @if (custom()) {
     <ng-template [erpCollectionCardHeader]="source" let-row
       ><h3>Header {{ row.name }}</h3></ng-template

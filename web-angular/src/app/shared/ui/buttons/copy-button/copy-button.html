@@ -1,0 +1,20 @@
+<erp-button
+  [label]="label()"
+  [variant]="iconOnly() ? 'text' : 'outlined'"
+  [appearance]="iconOnly() ? 'icon' : 'default'"
+  [attr.title]="iconOnly() ? (feedback() ? (feedback() | uiText) : label()) : null"
+  [busy]="pending()"
+  (activated)="copy()"
+>
+  @if (iconOnly()) {
+    <erp-icon
+      buttonIcon
+      [name]="feedback() === 'common.copied' ? 'check' : feedback() ? 'warning' : 'copy'"
+    />
+  }
+</erp-button>
+<span class="feedback" aria-live="polite" aria-atomic="true">
+  @if (feedback(); as key) {
+    {{ key | uiText }}
+  }
+</span>

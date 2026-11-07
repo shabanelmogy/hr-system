@@ -7,6 +7,54 @@ import {
 import { globalReportFixture as report } from '../report.fixture';
 
 describe('Global managed Crystal contract', () => {
+  it('requires both system log and global report grants and preserves applied diagnostic criteria', () => {
+    const actor = { roles: ['super_admin'], permissions: ['GlobalCrystalReports:View'] };
+    expect(globalReportAllowed(actor, 'system-error-logs')).toBe(false);
+    expect(
+      globalReportAllowed(
+        { ...actor, permissions: [...actor.permissions, 'SystemErrorLogs:View'] },
+        'system-error-logs',
+      ),
+    ).toBe(true);
+    expect(
+      globalReportAllowed(
+        {
+          roles: ['tenant_admin'],
+          permissions: ['SystemErrorLogs:View', 'CrystalReports:View'],
+          tenantId: 'tenant',
+          companyId: 1,
+        },
+        'system-error-logs',
+      ),
+    ).toBe(false);
+    const body = renderBody(
+      { ...report, entityKey: 'system-error-logs' },
+      {
+        nameAr: '',
+        nameEn: '',
+        systemErrorLogs: {
+          statusCode: 500,
+          search: 'Target',
+          fromUtc: '2026-11-06T00:00:00Z',
+          columnFilters: '[]',
+        },
+      },
+      'en',
+    );
+    expect(body.filters).toEqual({
+      StatusCode: '500',
+      Search: 'Target',
+      FromUtc: '2026-11-06T00:00:00Z',
+      ColumnFilters: '[]',
+    });
+    expect(() =>
+      renderBody(
+        { ...report, entityKey: 'system-error-logs' },
+        { nameAr: '', nameEn: '', systemErrorLogs: { statusCode: 200 } },
+        'en',
+      ),
+    ).toThrow();
+  });
   it('permits company consumers only with trusted scope, reporting and owning entity permissions', () => {
     const user = {
       roles: ['user'],
@@ -65,5 +113,25 @@ describe('Global managed Crystal contract', () => {
       expect(() => renderBody(report, input, 'ar')).toThrow();
     }
     expect(() => renderBody(report, emptyReportFilters, 'fr' as 'en')).toThrow();
+  });
+  it('maps State parent criteria only for District reports and strips them from other entities', () => {
+    const districtReport = { ...report, entityKey: 'districts' as const };
+    const filters = {
+      nameAr: 'حي',
+      nameEn: 'District',
+      stateAr: 'القاهرة',
+      stateEn: 'Cairo',
+    };
+
+    expect(renderBody(districtReport, filters, 'en').filters).toEqual({
+      NameAr: 'حي',
+      NameEn: 'District',
+      StateAr: 'القاهرة',
+      StateEn: 'Cairo',
+    });
+    expect(renderBody(report, filters, 'en').filters).toEqual({
+      NameAr: 'حي',
+      NameEn: 'District',
+    });
   });
 });

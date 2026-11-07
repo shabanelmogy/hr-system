@@ -118,6 +118,8 @@ Rules:
 
 ## Shared component first (mandatory)
 
+- Angular screens follow the application-wide [Responsive Layout contract](documentation/guides/web/architecture/ANGULAR_RESPONSIVE_LAYOUT.md) across phone, tablet, laptop, desktop, ultrawide and short/landscape windows. Test usable content width with navigation both open and closed; viewport labels alone never determine feature columns. Below900px width or820px height is a mandatory compact acceptance boundary. Keep headers/actions reachable, necessary scrolling in shared content viewports, and verify EN/AR, Light/Dark and zoom without clipped cards or character-per-line labels. Reuse shared responsive layouts and density options instead of local presentation forks.
+
 - Reusability is a template requirement: every recurring UI structure, interaction,
   or presentation rule belongs in the target application's shared library. Feature
   pages own business data, permissions and callbacks only. Extend the existing

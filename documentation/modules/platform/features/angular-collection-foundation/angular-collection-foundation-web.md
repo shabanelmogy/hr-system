@@ -2,6 +2,33 @@
 
 ## 1. Ownership
 
+Header-selection maintenance2026-11-05: MyDataGrid renders one controlled
+page-selection Checkbox in the selection th, with grouped-header rowspan,
+all/partial/disabled states and an accessible mixed announcement. Single/radio
+and selection-disabled modes omit select-all. CollectionFrame places its shared
+count/Clear summary in CollectionFooter's generic content slot for Grid; Cards
+keep the existing default bar. Owner callbacks and source/query semantics remain
+unchanged. [Current verification](HEADER_SELECTION_2026-11-05.md) supersedes only
+selection placement; historical acceptance retains its dated scope.
+
+### Current maintenance — 2026-11-05
+
+MyDataGrid delegates query normalization/deferred sorting, context-menu leases,
+expansion/grouping and geometry to per-instance GridQueryState, GridContextState,
+GridExpansionState and GridGeometry. indexGridTemplates caches projected
+cell/header/footer lookup per content-query or key change and preserves first-match
+semantics. Source/query/row identity guards, viewport lifecycle and the public
+MyDataGrid contract remain with their existing owner. CSV export reuses downloadBlob.
+Helpers stay internal to Shared; business pages continue to use the curated public API.
+
+The approved decomposition and exact verification limits are recorded in
+[the current execution report](../../../../guides/web/architecture/ANGULAR_COMPONENT_DECOMPOSITION_2026-11-05.md).
+Full Angular check: 98 files / 560 tests, 30 architecture checks, lint, strict types/templates
+and production build passed. Grid browser acceptance for this increment is one
+smoke case, not the full capability matrix. Initial 574.45 kB retains RISK-020.
+API, Next.js, Mobile and persistence are unchanged; migration/domain UI audit is N/A.
+Historical sections below retain their own dated acceptance.
+
 Platform Web Shared owns a generic collection presentation kit, not entity data, permissions, API queries or business rules. MyDataGrid and CardList share toolbar/footer/feedback contracts. Root/feature callers retain scope and data ownership. No Next/native runtime is rewritten.
 
 ## 2. Current source
@@ -25,6 +52,17 @@ Web standard Table/Cards/toolbar/footer/feedback and synthetic technical harness
 Caller query: scopeKey/criteriaKey/pageIndex/pageSize. Result repeats identity plus readonly rows, authoritative total or null and hasNextPage. Shared renders only ready matching result; retains count during loading only for same scope/criteria. Caller alone writes page/search/filter/sort and owns debounce/HTTP/cancellation/out-of-range recovery. No implicit server page clamp, local page-only sorting/filtering or invented count.
 
 ## 7. Shared reuse
+
+Current presentation maintenance2026-11-05 adds shared ActionMenuButton, composing
+the existing ActionButton and PrimeNG Menu popup. Callers supply typed stable IDs,
+translated labels/icons, permission-filtered items, pending and command callbacks.
+Shared guards removed/disabled commands and duplicate IDs; it owns no domain data
+or authorization. Existing MyDataGrid single-row mode retains its public contract,
+with a 220px minimum for text-only search and 540px for rich field/operator search.
+Toolbar overflow remains local on small viewports; default responsive layout is
+unchanged. The actual consumer is GlobalTemplateList. Current evidence and rules:
+documentation/modules/reporting/features/global-crystal-template-manager/MANAGER_ACTION_MENU_2026-11-05.md
+and documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md.
 
 Reuse existing ActionButton/TextField/OptionSelect/PopoverPanel/FeedbackState/ScrollViewport/public icons and @app/tokens. Internal PrimeNG Table/Paginator/Checkbox adapters live under Shared; feature bypasses rejected by architecture checks. Generic templates/slots supply row/card/actions/empty content, never a feature-local look-alike shell. No unnecessary wrapper duplicating an existing control.
 

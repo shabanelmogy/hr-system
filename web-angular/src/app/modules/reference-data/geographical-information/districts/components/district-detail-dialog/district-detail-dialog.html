@@ -1,0 +1,32 @@
+<erp-dialog-panel
+  [open]="state.detailOpen()"
+  [title]="'districts.view' | uiText: 'reference-districts'"
+  [description]="'districts.viewSubtitle' | uiText: 'reference-districts'"
+  [closeLabel]="'actions.close' | uiText"
+  icon="location"
+  [manualInitialFocus]="true"
+  [showFooter]="false"
+  (closeRequested)="state.close()"
+>
+  @switch (state.detail().kind) {
+    @case ('loading') {
+      <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
+    }
+    @case ('error') {
+      <erp-feedback-state
+        kind="error"
+        [title]="'districts.detailLoadError' | uiText: 'reference-districts'"
+        [actionLabel]="'actions.retry' | uiText"
+        (action)="state.retryDetail()"
+      />
+    }
+    @case ('forbidden') {
+      <erp-feedback-state kind="forbidden" [title]="'authorization.forbidden.title' | uiText" />
+    }
+    @case ('ready') {
+      @if (detail(); as detail) {
+        <erp-district-read-details [state]="detail" (closed)="state.close()" />
+      }
+    }
+  }
+</erp-dialog-panel>

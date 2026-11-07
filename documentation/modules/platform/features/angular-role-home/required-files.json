@@ -23,6 +23,18 @@
   },
   "sourceCollections": [],
   "requiredFiles": [
+    { "id": "responsive-verification-receipt", "layer": "documentation", "path": "documentation/modules/platform/features/angular-role-home/responsive-verification-2026-11-06.json", "purpose": "Current scoped Angular gates,32dashboard/4preview/14retained/2production browser cases, review and acceptance boundaries" },
+    { "id": "responsive-layout-contract", "layer": "documentation", "path": "documentation/guides/web/architecture/ANGULAR_RESPONSIVE_LAYOUT.md", "purpose": "Application-wide screen families, container sizing, compact heights, shared rules and verification matrix" },
+    { "id": "responsive-dashboard-layout", "layer": "web", "path": "web-angular/src/app/shared/ui/layout/_dashboard-layout.scss", "purpose": "Reusable intrinsic dashboard grid and actual workspace container queries" },
+    { "id": "responsive-browser-regression", "layer": "test", "path": "web-angular/scripts/verify-dashboard-responsive-browser.mjs", "purpose": "EN/AR themes,900/891 sidebar boundary, compact heights, card reachability and preview tab resize" },
+    { "id": "responsive-preview-presets", "layer": "web", "path": "web-angular/src/app/shared/ui/diagnostics/responsive-preview-presets.ts", "purpose": "Allowlisted development viewport sizes" },
+    { "id": "responsive-preview-state", "layer": "web", "path": "web-angular/src/app/shared/ui/diagnostics/responsive-preview-state.ts", "purpose": "Same-origin isolated preview tab/frame protocol and unsaved-close guard" },
+    { "id": "responsive-preview-state-public-api", "layer": "web", "path": "web-angular/src/app/shared/ui/diagnostics/state.public-api.ts", "purpose": "Narrow eager bootstrap contract without eagerly importing the deferred shared UI barrel" },
+    { "id": "responsive-preview-tests", "layer": "test", "path": "web-angular/src/app/shared/ui/diagnostics/responsive-preview-state.spec.ts", "purpose": "Preset validation, stable URL resizing, source/origin denial, close approval and original-draft preservation" },
+    { "id": "responsive-preview-host", "layer": "web", "path": "web-angular/src/app/shared/ui/diagnostics/responsive-preview-host/responsive-preview-host.ts", "purpose": "Development preview tab composition" },
+    { "id": "responsive-preview-host-html", "layer": "web", "path": "web-angular/src/app/shared/ui/diagnostics/responsive-preview-host/responsive-preview-host.html", "purpose": "Shared controls and a single iframe with real selected viewport dimensions" },
+    { "id": "responsive-preview-host-scss", "layer": "web", "path": "web-angular/src/app/shared/ui/diagnostics/responsive-preview-host/responsive-preview-host.scss", "purpose": "Preview toolbar and independent inspection stage without product-page overflow" },
+    { "id": "popover-surface-scss", "layer": "web", "path": "web-angular/src/app/shared/ui/overlays/popover-panel/popover-panel.scss", "purpose": "Generic Light/Dark foreground and field-label surface ownership" },
     {
       "id": "preflight-0",
       "path": "documentation/modules/platform/features/angular-role-home/angular-role-home-review.md",

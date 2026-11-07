@@ -31,65 +31,20 @@
       [criteriaVisible]="criteriaVisible()"
     >
       <div reportCriteria>
-        <erp-form
-          #criteriaForm
-          data-testid="criteria"
+        <erp-global-report-criteria
           [form]="form"
-          [title]="'reports.searchOptions' | uiText"
-          [submitLabel]="'reports.searchUpper' | uiText"
-          appearance="sidebar"
-          [hideHeader]="true"
-          [submitFullWidth]="true"
+          [entity]="entity()"
+          [chooseEntity]="chooseEntity()"
+          [entityOptions]="entityOptions()"
+          [selected]="state.selected()"
+          [source]="source()"
+          [messages]="messages()"
           [pending]="state.pending()"
-          [readOnly]="state.conflict()"
-          [showSubmit]="state.selected() !== null"
-        >
-          @if (chooseEntity()) {
-            <erp-option-select
-              [label]="'crystalReports.entity' | uiText: 'reporting'"
-              [value]="entity()"
-              [options]="entityOptions()"
-              (valueChange)="selectEntity($event)"
-            />
-          }
-          @if (state.selected()) {
-            <erp-reference-field
-              data-testid="report"
-              [value]="state.selected()?.id ?? null"
-              (valueChange)="state.select($event)"
-              [source]="source()"
-              [label]="'reports.reportForms' | uiText"
-              [searchable]="false"
-              [clearable]="false"
-            />
-            <erp-text-field
-              data-testid="nameAr"
-              [formField]="form.nameAr"
-              [label]="'general.nameAr' | uiText"
-              [messages]="messages()"
-            />
-            <erp-text-field
-              data-testid="nameEn"
-              [formField]="form.nameEn"
-              [label]="'general.nameEn' | uiText"
-              [messages]="messages()"
-            />
-          }
-          <erp-icon formSubmitIcon name="search" />
-          <div formActions>
-            @if (state.selected()) {
-              <erp-button
-                data-testid="reset"
-                [label]="'reports.clearFilters' | uiText"
-                variant="outlined"
-                [fullWidth]="true"
-                [disabled]="state.pending() || state.conflict()"
-                (activated)="reset()"
-                ><erp-icon buttonIcon name="reset"
-              /></erp-button>
-            }
-          </div>
-        </erp-form>
+          [conflict]="state.conflict()"
+          (entityChange)="selectEntity($event)"
+          (reportChange)="state.select($event)"
+          (resetRequested)="reset()"
+        />
       </div>
       <ng-container reportActions>
         @if (document()) {
@@ -114,6 +69,18 @@
             [busy]="state.sourcePending()"
             (activated)="state.downloadSource()"
             ><erp-icon buttonIcon name="download"
+          /></erp-button>
+        }
+        @if (canUploadSource()) {
+          <erp-button
+            data-testid="upload-source"
+            [label]="'globalTemplates.upload' | uiText: 'reporting'"
+            variant="outlined"
+            [fullWidth]="true"
+            [disabled]="state.pending() || state.conflict()"
+            hasPopup="dialog"
+            (activated)="templateEditor.set(state.selected())"
+            ><erp-icon buttonIcon name="upload"
           /></erp-button>
         }
       </ng-container>
@@ -162,3 +129,12 @@
     ></erp-report-workspace>
   }
 </main>
+@if (templateEditor(); as report) {
+  @defer (when templateEditor()) {
+    <erp-global-report-template-editor [report]="report" (closed)="closeTemplateEditor()" />
+  } @loading {
+    <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
+  } @error {
+    <erp-feedback-state kind="error" [title]="'common.error' | uiText" />
+  }
+}

@@ -1,0 +1,105 @@
+@if (view() === 'grid') {
+  <erp-data-table
+    [toolbarVisible]="filtersVisible()"
+    [source]="reads.source()"
+    [label]="captions.text('title')"
+    [columns]="columns()"
+    [advancedFilters]="true"
+    [filters]="reads.columnFilters()"
+    (filtersChange)="reads.changeColumnFilters($event)"
+    [rowId]="id"
+    [rowLabel]="label"
+    dataKey="id"
+    rowActivation="double-click"
+    [pageSizes]="[10, 25, 50, 100]"
+    [recordNavigation]="true"
+    [selectionEnabled]="false"
+    [search]="search()"
+    [cellContextFilter]="false"
+    (pageChange)="reads.changePage($event)"
+    (searchChange)="reads.changeSearch($event)"
+    (retry)="reads.retry()"
+  >
+    @if (filtersVisible()) {
+      <div toolbarFilters><erp-error-log-criteria /></div>
+    }
+    @if (filtersVisible()) {
+      <div toolbarContent>
+        <erp-button [label]="captions.text('reset')" variant="text" (activated)="reads.reset()" />
+        @if (settingsAllowed()) {
+          <erp-button
+            [label]="captions.settingsText('title')"
+            variant="text"
+            (activated)="settingsRequested.emit()"
+          />
+        }
+      </div>
+    }
+    <ng-template [erpCollectionCell]="columns() | collectionColumn: 'severity'" let-row
+      ><erp-status-badge
+        [label]="captions.text('severities.' + row.severity)"
+        [accent]="row.severity === 'error' ? 'var(--destructive)' : 'var(--warning)'"
+        [pill]="true"
+    /></ng-template>
+    <ng-template [erpCollectionCell]="columns() | collectionColumn: 'details'" let-row>
+      @if (detail.canOpen()) {
+        <erp-button [label]="captions.text('view')" variant="text" (activated)="detail.open(row)" />
+      }
+    </ng-template>
+    <ng-template erpCollectionEmpty
+      ><erp-feedback-state kind="empty" [title]="captions.text('empty')"
+    /></ng-template>
+  </erp-data-table>
+} @else {
+  <erp-card-list
+    [toolbarVisible]="filtersVisible()"
+    [source]="reads.source()"
+    [label]="captions.text('title')"
+    [rowId]="id"
+    [rowLabel]="label"
+    [pageSizes]="[10, 25, 50, 100]"
+    [recordNavigation]="true"
+    [selectionEnabled]="false"
+    [search]="search()"
+    appearance="entity"
+    layout="fit"
+    [minCardWidth]="280"
+    (pageChange)="reads.changePage($event)"
+    (searchChange)="reads.changeSearch($event)"
+    (retry)="reads.retry()"
+  >
+    @if (filtersVisible()) {
+      <div toolbarFilters><erp-error-log-criteria /></div>
+    }
+    @if (filtersVisible()) {
+      <div toolbarContent>
+        <erp-button [label]="captions.text('reset')" variant="text" (activated)="reads.reset()" />
+        @if (settingsAllowed()) {
+          <erp-button
+            [label]="captions.settingsText('title')"
+            variant="text"
+            (activated)="settingsRequested.emit()"
+          />
+        }
+      </div>
+    }
+    <ng-template [erpCollectionCardHeader]="reads.source()" let-row>
+      <erp-error-log-card-header [entry]="row" />
+    </ng-template>
+    <ng-template [erpCollectionCard]="reads.source()" let-row>
+      <erp-record-summary title="" density="compact" [fields]="cardFields(row)" />
+    </ng-template>
+    <ng-template [erpCollectionCardFooter]="reads.source()" let-row>
+      @if (detail.canOpen()) {
+        <erp-button
+          [label]="captions.text('view')"
+          variant="outlined"
+          (activated)="detail.open(row)"
+        />
+      }
+    </ng-template>
+    <ng-template erpCollectionEmpty
+      ><erp-feedback-state kind="empty" [title]="captions.text('empty')"
+    /></ng-template>
+  </erp-card-list>
+}

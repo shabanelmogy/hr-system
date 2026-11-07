@@ -1,7 +1,19 @@
-<strong>{{ title() }}</strong>
+@if (title()) {
+  <strong>{{ title() }}</strong>
+}
 @if (description()) {
   <span>{{ description() }}</span>
 }
 @if (metadata()) {
   <small>{{ metadata() }}</small>
+}
+@if (fields().length) {
+  <dl>
+    @for (field of fields(); track field.id) {
+      <div [class.full-width]="field.fullWidth">
+        <dt>{{ field.label }}</dt>
+        <dd [dir]="field.direction ?? 'auto'">{{ field.value }}</dd>
+      </div>
+    }
+  </dl>
 }

@@ -1,0 +1,17 @@
+<erp-dialog-panel
+  [open]="!state.detailOpen() || !!failure()"
+  [title]="'globalTemplates.upload' | uiText: 'reporting'"
+  [closeLabel]="'actions.close' | uiText"
+  [showFooter]="false"
+  [pending]="state.pending()"
+  (closeRequested)="closed.emit()"
+>
+  <erp-feedback-state
+    [kind]="failure() ? 'error' : 'loading'"
+    [title]="failure() ? (failure() | uiText: 'reporting') : ('common.loading' | uiText)"
+  />
+</erp-dialog-panel>
+<erp-global-template-upload-dialog />
+@if (!failure()) {
+  <erp-global-template-detail-dialog initialTab="versions" />
+}

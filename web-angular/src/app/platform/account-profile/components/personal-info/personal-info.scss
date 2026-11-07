@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+.profile-fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+@media (max-width: 899px) {
+  .profile-fields {
+    grid-template-columns: 1fr;
+  }
+}

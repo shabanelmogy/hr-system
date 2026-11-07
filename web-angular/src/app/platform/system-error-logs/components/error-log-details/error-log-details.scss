@@ -1,0 +1,10 @@
+:host {
+  display: block;
+  min-inline-size: 0;
+}
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block-end: 12px;
+}

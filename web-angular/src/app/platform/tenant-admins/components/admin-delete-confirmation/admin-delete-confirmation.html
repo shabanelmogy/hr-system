@@ -1,0 +1,35 @@
+@if (state.active()) {
+  @if (state.uncertain() || !state.canWrite()) {
+    <erp-dialog-panel
+      [open]="true"
+      [title]="text('deleteTitle')"
+      [closeLabel]="'actions.close' | uiText"
+      (closeRequested)="state.close()"
+    >
+      <erp-feedback-state kind="error" [title]="feedback()" />
+      <erp-button dialogActions [label]="'actions.close' | uiText" (activated)="state.close()" />
+    </erp-dialog-panel>
+  } @else {
+    <erp-confirmation-dialog
+      [open]="true"
+      [title]="text('deleteTitle')"
+      [description]="
+        text('deleteHint') +
+        ' ' +
+        (state.record()?.firstName ?? '') +
+        ' ' +
+        (state.record()?.lastName ?? '')
+      "
+      [confirmLabel]="'actions.delete' | uiText"
+      [cancelLabel]="'actions.cancel' | uiText"
+      severity="danger"
+      [pending]="state.pending()"
+      (confirmed)="state.confirm()"
+      (cancelled)="state.close()"
+    >
+      @if (state.feedback()) {
+        <erp-feedback-state kind="error" layout="inline" [title]="feedback()" />
+      }
+    </erp-confirmation-dialog>
+  }
+}

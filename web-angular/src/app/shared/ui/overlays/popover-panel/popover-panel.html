@@ -1,6 +1,7 @@
 <erp-button
   #trigger
-  [label]="label()"
+  [label]="triggerText() ?? label()"
+  [accessibleLabel]="label()"
   [appearance]="triggerAppearance()"
   variant="text"
   [expanded]="opened()"
@@ -16,5 +17,5 @@
   [style]="{ width: '340px', maxWidth: 'calc(100vw - 24px)' }"
   (onShow)="opened.set(true)"
   (onHide)="hidden()"
-  ><ng-content
-/></p-popover>
+  ><div class="popover-content"><ng-content /></div
+></p-popover>

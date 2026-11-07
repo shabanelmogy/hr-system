@@ -7,6 +7,12 @@ Reviewed: 2026-08-23
 
 ## 1. Review Manifest
 
+Current Angular Import presentation/diagnostics maintenance2026-11-05 is recorded
+in documentation/modules/platform/features/angular-countries-import-view/IMPORT_WORKSPACE_2026-11-05.md.
+It retains the same six fields, Create authority, valid-subset bulk transaction,
+uncertainty/replay and actor-lifetime rules. No API/schema or Next/Mobile business
+runtime change; Web translation catalog synchronization retains PROD-019.
+
 | Item | Decision |
 |---|---|
 | Capability | Manage global country reference data |

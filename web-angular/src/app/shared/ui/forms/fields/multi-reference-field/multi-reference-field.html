@@ -1,0 +1,33 @@
+<label [id]="id + '-label'" [for]="id"
+  >{{ label() }}
+  @if (required()) {
+    <span aria-hidden="true"> *</span>
+  }
+</label>
+<p-multiselect
+  [formControl]="control"
+  [options]="displayOptions()"
+  optionLabel="label"
+  optionValue="value"
+  optionDisabled="disabled"
+  [inputId]="id"
+  [ariaLabelledBy]="id + '-label'"
+  [attr.aria-describedby]="describedBy()"
+  [readonly]="isReadOnly()"
+  [required]="required()"
+  appendTo="body"
+  scrollHeight="min(20rem,45dvh)"
+  [invalid]="!!error()"
+  [filter]="filter()"
+  [showClear]="clearable()"
+  display="chip"
+  [fluid]="true"
+  [pt]="attributes()"
+  (onBlur)="blur()"
+/>
+@if (help()) {
+  <p class="help" [id]="id + '-help'">{{ help() }}</p>
+}
+@if (error(); as message) {
+  <p class="error" [id]="id + '-error'">{{ message }}</p>
+}

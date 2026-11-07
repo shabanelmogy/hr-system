@@ -25,6 +25,7 @@ import {
   OptionSelect,
   PalettePicker,
   PopoverPanel,
+  ViewportDebugger,
   type NavigationEntry,
 } from '../../../shared/ui/public-api';
 import { ThemeService } from '../../../../theme/public-api';
@@ -44,6 +45,7 @@ import { ThemeService } from '../../../../theme/public-api';
     OptionSelect,
     PalettePicker,
     PopoverPanel,
+    ViewportDebugger,
   ],
   providers: [
     { provide: SHELL_DATA_NAVIGATION, useFactory: () => inject(MainShell).dataNavigation },
@@ -52,19 +54,14 @@ import { ThemeService } from '../../../../theme/public-api';
   styleUrl: './main-shell.scss',
 })
 export class MainShell {
+  readonly development = isDevMode();
   readonly additionalNavigation = inject(SHELL_ADDITIONAL_NAVIGATION);
   readonly frame = viewChild.required<ApplicationFrame>('frame');
   private readonly dataOpened = signal(false);
   private readonly dataBranchIds = Object.freeze(['data', 'global-geography']);
-  readonly dataAvailable = computed(() => {
-    const actor = this.auth.readIdentity();
-    return (
-      isDevMode() &&
-      actor !== null &&
-      actor.roles.some((role) => role.trim().toLowerCase() === 'super_admin') &&
-      actor.permissions.includes('Countries:View')
-    );
-  });
+  readonly dataAvailable = computed(
+    () => (this.additionalNavigation?.dataEntries?.().length ?? 0) > 0,
+  );
   readonly expandedEntries = computed(() => (this.dataOpened() ? this.dataBranchIds : []));
   readonly dataNavigation = {
     available: this.dataAvailable,
@@ -89,6 +86,19 @@ export class MainShell {
     ),
     { initialValue: this.router.url.split('?')[0] ?? '' },
   );
+  readonly workspacePresentation = computed(() => {
+    this.path();
+    let route = this.router.routerState.snapshot.root;
+    let fill = false;
+    let compact = false;
+    while (true) {
+      if (route.data['workspaceLayout'] === 'fill') fill = true;
+      if (route.data['workspaceDensity'] === 'compact') compact = true;
+      if (!route.firstChild) break;
+      route = route.firstChild;
+    }
+    return { fill, compact };
+  });
   readonly settings = viewChild.required<PopoverPanel>('settings');
   readonly name = computed(() => {
     const u = this.auth.user();
@@ -130,21 +140,7 @@ export class MainShell {
             id: 'data',
             label: this.locale.translate('menu.basicData'),
             icon: 'dataset' as const,
-            children: [
-              {
-                id: 'global-geography',
-                label: this.locale.translate('menu.globalGeography'),
-                icon: 'globe' as const,
-                children: [
-                  {
-                    id: 'countries',
-                    label: this.locale.translate('menu.countries'),
-                    icon: 'flag' as const,
-                    selected: this.path() === '/dev/countries',
-                  },
-                ],
-              },
-            ],
+            children: this.additionalNavigation?.dataEntries?.() ?? [],
           },
         ]
       : []),
@@ -159,7 +155,6 @@ export class MainShell {
         ]
       : []),
     ...(this.additionalNavigation?.entries() ?? []),
-    { id: 'preferences', label: this.locale.translate('menu.settings'), icon: 'settings' },
   ]);
   readonly paletteLabels = computed(
     () =>
@@ -187,10 +182,7 @@ export class MainShell {
   activate(id: string): void {
     if (!this.auth.user() || this.auth.pending()) return;
     if (this.additionalNavigation?.activate(id)) return;
-    if (id === 'countries' && this.dataAvailable())
-      void this.router.navigateByUrl('/dev/countries');
-    else if (id === 'preferences') this.settings().open();
-    else if (id === 'home' || (id === 'apps' && tenantWorkspaceAllowed(this.auth.user())))
+    if (id === 'home' || (id === 'apps' && tenantWorkspaceAllowed(this.auth.user())))
       void this.router.navigateByUrl(id === 'home' ? '/home' : '/apps');
   }
   language(value: string): void {
@@ -207,5 +199,9 @@ export class MainShell {
     this.settings().close();
     await this.auth.logout();
     if (!this.auth.user()) await this.router.navigateByUrl('/login');
+  }
+  profile(): void {
+    this.settings().close();
+    void this.router.navigateByUrl('/profile');
   }
 }

@@ -1,0 +1,423 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-05T20:39:48.0698519Z",
+  "scope": "Requester-authorized compact full-height Angular Import workspace and actionable file/row/batch feedback.",
+  "unitAndBuild": {
+    "command": "npm run check",
+    "exitCode": 0,
+    "files": 99,
+    "tests": 573,
+    "architectureTests": 30,
+    "format": true,
+    "lint": true,
+    "strictTypesAndTemplates": true,
+    "productionBuild": true,
+    "initialRawKB": 574.5,
+    "warning": "Existing initial 500kB warning RISK-020; unchanged budget.",
+    "log": "compact-import-2026-11-05/angular-check.txt"
+  },
+  "browser": {
+    "source": "Development Angular app on temporary port4220; all API requests intercepted, no real writes.",
+    "matrix": {
+      "date": "2026-11-05T20:30:54.566Z",
+      "results": [
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 390,
+          "template": true,
+          "valid": 12,
+          "invalid": 2,
+          "measured": {
+            "railAtEnd": false,
+            "vertical": true,
+            "compactCards": true,
+            "headerSingleRow": false,
+            "actionsAtEnd": false,
+            "mobilePreviewFirst": true,
+            "previewTop": 436.5,
+            "cardBottom": 768,
+            "viewportHeight": 780,
+            "bodyHeight": 86.125,
+            "verificationFits": true,
+            "separator": 1
+          },
+          "oneBatch": true,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 1440,
+          "template": true,
+          "valid": 12,
+          "invalid": 2,
+          "measured": {
+            "railAtEnd": true,
+            "vertical": true,
+            "compactCards": true,
+            "headerSingleRow": true,
+            "actionsAtEnd": true,
+            "mobilePreviewFirst": false,
+            "previewTop": 387,
+            "cardBottom": 1026,
+            "viewportHeight": 1050,
+            "bodyHeight": 488.625,
+            "verificationFits": true,
+            "separator": 1
+          },
+          "oneBatch": true,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 390,
+          "template": true,
+          "valid": 12,
+          "invalid": 2,
+          "measured": {
+            "railAtEnd": false,
+            "vertical": true,
+            "compactCards": true,
+            "headerSingleRow": false,
+            "actionsAtEnd": false,
+            "mobilePreviewFirst": true,
+            "previewTop": 436.5,
+            "cardBottom": 768,
+            "viewportHeight": 780,
+            "bodyHeight": 86.125,
+            "verificationFits": true,
+            "separator": 1
+          },
+          "oneBatch": true,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 1440,
+          "template": true,
+          "valid": 12,
+          "invalid": 2,
+          "measured": {
+            "railAtEnd": true,
+            "vertical": true,
+            "compactCards": true,
+            "headerSingleRow": true,
+            "actionsAtEnd": true,
+            "mobilePreviewFirst": false,
+            "previewTop": 387,
+            "cardBottom": 1026,
+            "viewportHeight": 1050,
+            "bodyHeight": 488.625,
+            "verificationFits": true,
+            "separator": 1
+          },
+          "oneBatch": true,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 390,
+          "template": true,
+          "valid": 12,
+          "invalid": 2,
+          "measured": {
+            "railAtEnd": false,
+            "vertical": true,
+            "compactCards": true,
+            "headerSingleRow": false,
+            "actionsAtEnd": false,
+            "mobilePreviewFirst": true,
+            "previewTop": 436.5,
+            "cardBottom": 768,
+            "viewportHeight": 780,
+            "bodyHeight": 86.125,
+            "verificationFits": true,
+            "separator": 1
+          },
+          "oneBatch": true,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 1440,
+          "template": true,
+          "valid": 12,
+          "invalid": 2,
+          "measured": {
+            "railAtEnd": true,
+            "vertical": true,
+            "compactCards": true,
+            "headerSingleRow": true,
+            "actionsAtEnd": true,
+            "mobilePreviewFirst": false,
+            "previewTop": 387,
+            "cardBottom": 1026,
+            "viewportHeight": 1050,
+            "bodyHeight": 488.625,
+            "verificationFits": true,
+            "separator": 1
+          },
+          "oneBatch": true,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 390,
+          "template": true,
+          "valid": 12,
+          "invalid": 2,
+          "measured": {
+            "railAtEnd": false,
+            "vertical": true,
+            "compactCards": true,
+            "headerSingleRow": false,
+            "actionsAtEnd": false,
+            "mobilePreviewFirst": true,
+            "previewTop": 436.5,
+            "cardBottom": 768,
+            "viewportHeight": 780,
+            "bodyHeight": 86.125,
+            "verificationFits": true,
+            "separator": 1
+          },
+          "oneBatch": true,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 1440,
+          "template": true,
+          "valid": 12,
+          "invalid": 2,
+          "measured": {
+            "railAtEnd": true,
+            "vertical": true,
+            "compactCards": true,
+            "headerSingleRow": true,
+            "actionsAtEnd": true,
+            "mobilePreviewFirst": false,
+            "previewTop": 387,
+            "cardBottom": 1026,
+            "viewportHeight": 1050,
+            "bodyHeight": 488.625,
+            "verificationFits": true,
+            "separator": 1
+          },
+          "oneBatch": true,
+          "passed": true
+        }
+      ]
+    },
+    "focused": {
+      "date": "2026-11-05T20:23:01.665Z",
+      "results": [
+        {
+          "action": "duplicate",
+          "passed": true
+        },
+        {
+          "action": "field",
+          "passed": true
+        },
+        {
+          "action": "denied",
+          "passed": true
+        },
+        {
+          "action": "server",
+          "passed": true
+        },
+        {
+          "action": "network",
+          "passed": true
+        },
+        {
+          "action": "malformed",
+          "passed": true
+        },
+        {
+          "action": "delay",
+          "passed": true
+        },
+        {
+          "scenario": "extension",
+          "passed": true
+        },
+        {
+          "scenario": "headers",
+          "passed": true
+        },
+        {
+          "scenario": "formula",
+          "passed": true
+        },
+        {
+          "scenario": "limit",
+          "passed": true
+        },
+        {
+          "scenario": "empty",
+          "passed": true
+        },
+        {
+          "scenario": "zip",
+          "passed": true
+        },
+        {
+          "scenario": "no-create",
+          "passed": true
+        },
+        {
+          "scenario": "read-only",
+          "passed": true
+        },
+        {
+          "scenario": "discard",
+          "passed": true
+        }
+      ]
+    },
+    "journeys": {
+      "date": "2026-11-05T20:23:19.259Z",
+      "results": [
+        {
+          "scenario": "file-replacement",
+          "passed": true
+        },
+        {
+          "scenario": "view-discard",
+          "passed": true
+        },
+        {
+          "scenario": "permission-revocation",
+          "passed": true
+        },
+        {
+          "scenario": "pending-permission-revocation",
+          "passed": true
+        },
+        {
+          "scenario": "keyboard-paging",
+          "passed": true
+        }
+      ]
+    },
+    "finalMatrixSource": "Includes the final 11.5rem rail, separator, full-height body, header actions and VERIFICATION word bounds.",
+    "scope": "Earlier focused/journey runs retain their timestamps; the final matrix rechecks final presentation and unchanged service/authority behavior.",
+    "temporaryServerStopped": true,
+    "userPort4210Untouched": true
+  },
+  "review": {
+    "boundedPeerReview": "No remaining actionable findings in shared layout, typed diagnostics, exact-path whitelist, batch uncertainty or accepted-row duplicates.",
+    "screenshots": [
+      "compact-import-2026-11-05/en-light-1440-result.png",
+      "compact-import-2026-11-05/ar-dark-390-result.png"
+    ]
+  },
+  "catalog": {
+    "webVersion": "eea286406511d755715ce5333508bbc8602e0bb482060631319ab63ea423850a",
+    "sources": 21,
+    "entries": 7382,
+    "canonicalGeneratorCheck": true,
+    "angularCatalogCheck": true,
+    "hostedDeployment": "Pending under PROD-019"
+  },
+  "limitations": [
+    "No hosted API/SQL import or Crystal/native acceptance.",
+    "No new dependencies, domain schema, endpoints, permission grants or submission/retry behavior.",
+    "One earlier full gate timed out in an existing Reporting metadata test while tests and browser/dev workloads overlapped; final complete gate passed after isolated rerun without changing its timeout."
+  ],
+  "sourceHashes": [
+    {
+      "path": "web-angular/src/app/shared/ui/imports/spreadsheet-import-panel/spreadsheet-import-panel.ts",
+      "sha256": "67f3d3ee44d8663a442d2c274de519e8fd9729d80875a66516b18ef012bbeb22"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/imports/spreadsheet-import-panel/spreadsheet-import-panel.html",
+      "sha256": "10ec979f33fee2f186d2c3195e2e6562206591a42945b13b6838ab214b612851"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/imports/spreadsheet-import-panel/spreadsheet-import-panel.scss",
+      "sha256": "ee4fc8c22a4b776d574fdb597cba68aaa7215b1d77910bd95a0677b3b57a1629"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/cards/metric-card/metric-card.ts",
+      "sha256": "b24efcc775d6e226cec944005bcb22474750366166901045ea592e4255ab9a34"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/cards/metric-card/metric-card.scss",
+      "sha256": "2df3e3933a17e430b2c2f445ad7eb1f0fd5d1cb9ed49708ca991a3ffd6581bb2"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state/feedback-state.scss",
+      "sha256": "706ffa424ae0a1352a644dc721cded4d43b59a6c48e5de6ef83e4cd5b0985ed3"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-import-view/country-import-view.ts",
+      "sha256": "c642335d3d6b2c8981dca75c297974ccc42e579d1c7ed28d35dc1430b31f9b97"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-import-view/country-import-view.html",
+      "sha256": "f8d693fb3218a84fd3e783a8e74b762de75a3166e33fcb55d54fc70390f72ebc"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-import-view/country-import-view.scss",
+      "sha256": "2ee39a9440f954dd28a6768a2d61b41d2f4809d1d90a951fa0d40c84cef5c29d"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-import-state.ts",
+      "sha256": "7bcd0020e0508527bfdbae5ad6564fe9a4ad8d30c73a6dd5a4fe98ad14d9621c"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/validation/country-import.ts",
+      "sha256": "69437392b6b57015ce0f8333f49e45ce495ec0e75a085566e3da0d1330d908ed"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/validation/country-import-feedback.ts",
+      "sha256": "8e88c31d886e3a615782f504a85b94f49f96252716e4a2ab5fc0adf7aa1f9e19"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-service.ts",
+      "sha256": "0d2325877dcaa26c863d6f727875905f7d3bd212814ea8febf80df85b9700af4"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/spreadsheet-parser.ts",
+      "sha256": "3059e33e36a251b5a408f8168291441d96fdce4a9d7e34608fe5b7f3fafd1291"
+    },
+    {
+      "path": "web-angular/scripts/verify-country-import-browser.mjs",
+      "sha256": "358c9a9a3b91a8805783670448b50d101710f9b97e59188bbb8f7a9456935a95"
+    },
+    {
+      "path": "web-next/src/locales/resources/core/en.json",
+      "sha256": "fc86a7d4c58982b859f6472016250d73be1d01c7cdf468efbfc02fb6b181b61b"
+    },
+    {
+      "path": "web-next/src/locales/resources/core/ar.json",
+      "sha256": "aca7931f6188cdeda1c33a92c175b694e0ec2e8d44a3240dade75eacc604353d"
+    },
+    {
+      "path": "web-next/src/locales/resources/reference-countries/en.json",
+      "sha256": "a362383c816764e201984a7e651aa3afc1406fe4313898e18d4cfd9d36ac9bbd"
+    },
+    {
+      "path": "web-next/src/locales/resources/reference-countries/ar.json",
+      "sha256": "89fab467eaf20c94bdbbca104ceb5914c48db4402698215aaa47df97b97c74d0"
+    }
+  ]
+}

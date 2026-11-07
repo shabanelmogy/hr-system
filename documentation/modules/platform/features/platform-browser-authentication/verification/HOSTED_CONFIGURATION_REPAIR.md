@@ -123,6 +123,49 @@ Do not disable the authorization fallback or infer that an anonymous session401
 means the login controller is broken. PROD-019 remains open for broader hosted
 acceptance. No Swagger exposure/configuration change was made in this audit.
 
+## Hosted origin regression — 2026-11-06
+
+The requester again reported CSRF403 from `https://localhost:4210`. Fresh anonymous
+HTTP probes reproduce `Authentication.BrowserOriginDenied` with no
+Access-Control-Allow-Origin or Access-Control-Allow-Credentials. OPTIONS returns204
+without allow-origin, so preflight status alone is not acceptance. Exact HTTPS4220
+and HTTPS3000 are also denied; neither is added by this correction. These probes
+do not read effective remote settings and cannot independently distinguish an
+unapproved browser origin from incorrectly forwarded HTTPS in the browser guard.
+
+Verified local configuration cause: ignored, publish-owned
+`api/ErpSystem.Api/appsettings.json` has reverted to a CORS list without4210 and
+no BrowserAuthentication section. Development settings contain4210 in both lists,
+but `ErpSystem.Api.csproj` explicitly excludes appsettings.Development.json from
+publish. The base settings file is included by default when PublishAppSettings is
+true. This explains why local Development settings alone cannot repair the host;
+it does not prove how the remote settings changed.
+
+Corrected only the existing local publish-owned configuration: append exact
+`https://localhost:4210` to CorsSettings:AllowedOrigins, add it to
+BrowserAuthentication:AllowedOrigins and set UseCrossSiteCookies=true for the
+already approved localhost/hosted test topology. Preserve all other settings and
+existing CORS entries. No wildcard, client proxy, Origin spoofing, CSRF bypass,
+authentication middleware change, schema change or Angular runtime change.
+The local file contains deployment secrets and remains ignored; never copy its
+full contents into tracked evidence.
+
+Verification: JSON/exact HTTPS origin/browser-subset/CrossSite/publish-selection
+checks pass; existing BrowserAuthenticationCookieTests pass19/19, zero skipped,
+using the previously built Release assembly (no new build claimed). Documentation
+baseline passes516 recipes. Portable receipt:
+`results/hosted-origin-regression-2026-11-06.json`.
+
+Remote correction is still PROD-019: Operations must apply the same non-secret
+settings to the hosted API configuration, preserving its other approved origins,
+then restart the application through the normal deployment process. Review
+environment-variable overrides because they supersede JSON. Do not republish
+unaccepted collection-export source merely to deploy this configuration fix.
+Acceptance: exact4210 GET csrf200 with matching allow-origin and credentials=true;
+unknown Origin remains denied; owned auth/antiforgery Cookies retain
+Secure/HttpOnly/SameSite=None; then verify actual browser login/session/logout.
+No deployment or hosted restart was performed; a current hosted pass is not claimed.
+
 ### Explicit test-host Swagger request
 
 The requester then explicitly requested Swagger on the hosted test site. The

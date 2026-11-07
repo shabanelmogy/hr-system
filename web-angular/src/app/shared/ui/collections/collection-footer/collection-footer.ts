@@ -61,61 +61,32 @@ export class CollectionFooter<T> {
     this.pageSizes().map((value) => ({ value: String(value), label: this.number(value) })),
   );
   readonly nativePageSizes = computed(() => [...this.pageSizes()]);
-  readonly pageReport = computed(() =>
-    this.recordNavigation()
-      ? '{currentPage} / {totalRecords}'
-      : this.locale.translate('pagination.page') +
-        ' {currentPage} ' +
-        this.locale.translate('pagination.of') +
-        ' {totalPages}',
+  readonly pageReport = computed(
+    () =>
+      this.locale.translate('pagination.page') +
+      ' {currentPage} ' +
+      this.locale.translate('pagination.of') +
+      ' {totalPages}',
   );
   readonly paginatorLabels = computed(() => {
-    const records = this.recordNavigation(),
-      view = this.controller().view();
-    const action = (record: RecordAction, page: string, order: number) => ({
-      'aria-label': this.locale.translate(
-        records
-          ? 'pagination.goTo' + record.charAt(0).toUpperCase() + record.slice(1) + 'Record'
-          : 'pagination.' + page,
-      ),
-      ...(records ? { style: { order: String(order) } } : {}),
+    const view = this.controller().view();
+    const action = (page: string) => ({
+      'aria-label': this.locale.translate('pagination.' + page),
     });
     return {
       root: {
-        'aria-label': this.locale.translate(
-          records ? 'collections.recordNavigation' : 'pagination.goToPage',
-        ),
+        'aria-label': this.locale.translate('pagination.goToPage'),
       },
-      contentStart: { class: 'collection-nav-space', style: { order: '-1' } },
       current: {
         class: 'collection-page-report',
-        ...(records
-          ? {
-              style: {
-                order: '2',
-                direction: 'ltr',
-                padding: '6px 10px',
-                margin: '0 4px',
-                borderRadius: '6px',
-                background: 'var(--muted)',
-                minWidth: '60px',
-                textAlign: 'center',
-                fontVariantNumeric: 'tabular-nums',
-                fontWeight: '600',
-              },
-            }
-          : {}),
       },
       first: {
-        ...action('first', 'first', 0),
-        disabled:
-          this.blocked() ||
-          (records ? !this.controller().canNavigate('first') : view.query.pageIndex === 0),
+        ...action('first'),
+        disabled: this.blocked() || view.query.pageIndex === 0,
       },
-      prev: action('previous', 'previous', 1),
-      next: action('next', 'next', 3),
-      last: action('last', 'last', 4),
-      contentEnd: { class: 'collection-size-slot', style: { order: '5' } },
+      prev: action('previous'),
+      next: action('next'),
+      last: action('last'),
       pcRowPerPageDropdown: {
         root: { style: { width: '80px', height: '36px', fontSize: '14px' } },
         label: { style: { padding: '6px 10px' } },
@@ -137,11 +108,6 @@ export class CollectionFooter<T> {
       typeof value.rows !== 'number'
     )
       return;
-    if (this.recordNavigation()) {
-      if (value.rows === 1 && Number.isSafeInteger(value.page))
-        this.controller().navigateIndex(value.page);
-      return;
-    }
     if (!this.pageSizes().includes(value.rows)) return;
     this.controller().page({
       pageIndex: value.rows === this.controller().view().query.pageSize ? value.page : 0,

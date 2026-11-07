@@ -6,6 +6,7 @@ import { sessionFixture } from '../src/app/platform/auth/auth.fixture.ts';
 
 const root = path.resolve(import.meta.dirname, '..');
 const origin = process.env.ANGULAR_PREVIEW_ORIGIN ?? 'https://localhost:4210';
+const api = process.env.ANGULAR_API_ORIGIN ?? 'https://shabanhrms.runasp.net';
 const output = path.join(root, '../.codex-tmp/angular-modules');
 fs.mkdirSync(output, { recursive: true });
 const core = JSON.parse(
@@ -85,7 +86,7 @@ async function context(language = 'en', width = 1440, mode = 'light') {
   return c;
 }
 async function configure(c, state) {
-  await c.route('https://localhost:7037/api/**', async (route) => {
+  await c.route(api + '/api/**', async (route) => {
     const request = route.request(),
       pathname = new URL(request.url()).pathname;
     let status = 200,
@@ -163,9 +164,9 @@ try {
           await expect(p.locator('main')).toContainText(
             text(language, 'modules.noAvailableFeatures'),
           );
-          await p.locator('.browser-navigation button').click();
+          await p.locator('erp-page-header erp-back-button button').click();
           await expect(p).toHaveURL(origin + '/apps/hr');
-          await p.locator('.browser-navigation button').click();
+          await p.locator('erp-launcher-grid erp-back-button button').click();
           await expect(p).toHaveURL(origin + '/apps');
           await p.goto(origin + '/apps/hr/denied-area');
           await expect(
@@ -243,7 +244,7 @@ try {
     await expect(p.locator('.launcher-tile').first()).toBeVisible();
     await expect(p.locator('.workspace-topbar')).toBeVisible();
     assert.ok(statuses.includes(200));
-    const session = await c.request.get('https://localhost:7037/api/v1/browser-auth/session', {
+    const session = await c.request.get(api + '/api/v1/browser-auth/session', {
       headers: { Origin: origin },
     });
     assert.equal(session.status(), 200);

@@ -1,0 +1,59 @@
+
+> erp-angular@0.0.0 pretest
+> npm run configure:license
+
+
+> erp-angular@0.0.0 configure:license
+> node --env-file-if-exists=.env.local scripts/configure-license.mjs
+
+PrimeUI local license configured (value omitted).
+
+> erp-angular@0.0.0 test
+> node scripts/run-angular.mjs test --watch=false --include=src/app/platform/tenants/management/services/tenant-management-service.spec.ts
+
+API target: host (https://shabanhrms.runasp.net)
+> Building...
+√ Building...
+Application bundle generation complete. [8.361 seconds] - 2026-11-06T00:53:35.656Z
+
+
+ RUN  v5.0.5 F:/Portofolio Projects/ERPSYSTEM/web-angular
+
+ ❯ |erp-angular| src/app/platform/tenants/management/services/tenant-management-service.spec.ts (4 tests | 1 failed) 57ms
+   ❯ Tenant management cookie transport (4)
+     × retains exact public Tenant ProblemDetails codes without exposing the diagnostic detail 16ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |erp-angular| src/app/platform/tenants/management/services/tenant-management-service.spec.ts > Tenant management cookie transport > retains exact public Tenant ProblemDetails codes without exposing the diagnostic detail
+AssertionError: expected Error: Command rejected { …(4) } to match object { outcome: 'rejected', …(1) }
+(2 matching properties omitted from actual)
+
+- Expected
++ Received
+
+- {
+-   "codes": [
+-     "Tenant.ConcurrencyConflict",
+-   ],
++ CommandFailure {
++   "codes": [],
+    "outcome": "rejected",
+  }
+
+ ❯ src/app/platform/tenants/management/services/tenant-management-service.spec.ts:136:21
+    134|     const failure = await outcome;
+    135|     expect(failure).toBeInstanceOf(CommandFailure);
+    136|     expect(failure).toMatchObject({ outcome: 'rejected', codes: ['Tena…
+       |                     ^
+    137|     expect(String(failure)).not.toContain('Private storage');
+    138|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  02:53:36
+   Duration  3.42s (environment 61%, setup 27%, transform 6%, import 3%, tests 2%, worker 1%)
+

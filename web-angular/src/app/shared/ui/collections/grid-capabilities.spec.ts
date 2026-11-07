@@ -56,6 +56,8 @@ class Fixture {
   readonly grouping = signal<GridRowGroup | null>(null);
   readonly frozen = signal<readonly CollectionId[]>([]);
   readonly selectionMode = signal<GridSelectionMode>('multiple');
+  readonly selectable = signal<(row: Row) => boolean>(() => true);
+  readonly selectionEnabled = signal(true);
 }
 describe('Real shared Table capability composition', () => {
   beforeEach(async () => {
@@ -81,6 +83,65 @@ describe('Real shared Table capability composition', () => {
   afterEach(() => {
     TestBed.resetTestingModule();
     vi.unstubAllGlobals();
+  });
+  it('selects the current eligible page from the column header and keeps count/clear in the footer', async () => {
+    const fixture = TestBed.createComponent(Fixture);
+    await fixture.whenStable();
+    const root = fixture.nativeElement as HTMLElement;
+    const grid = fixture.componentInstance.grid();
+    const header = root.querySelector<HTMLInputElement>(
+      'thead th.selection-cell input[type="checkbox"]',
+    );
+    expect(header).not.toBeNull();
+    expect(root.querySelector('.selection-bar')).toBeNull();
+    expect(root.querySelector('erp-collection-footer .selection-summary')).not.toBeNull();
+    root.querySelector<HTMLInputElement>('tbody td.selection-cell input[type="checkbox"]')?.click();
+    await fixture.whenStable();
+    expect(grid.controller.selectedIds()).toEqual([1]);
+    expect(header?.getAttribute('aria-checked')).toBe('mixed');
+    expect(root.querySelector('thead svg[data-p-icon="minus"]')).not.toBeNull();
+    header?.click();
+    await fixture.whenStable();
+    expect(grid.controller.selectedIds()).toEqual([1, 2]);
+    expect(header?.checked).toBe(true);
+    expect(header?.getAttribute('aria-checked')).toBe('true');
+    root.querySelector<HTMLButtonElement>('.selection-summary button')?.click();
+    await fixture.whenStable();
+    expect(grid.controller.selectedIds()).toEqual([]);
+    expect(header?.checked).toBe(false);
+  });
+  it('disables header selection outside a ready eligible page and omits select-all in single/radio modes', async () => {
+    const fixture = TestBed.createComponent(Fixture);
+    await fixture.whenStable();
+    const owner = fixture.componentInstance;
+    const root = fixture.nativeElement as HTMLElement;
+    const header = () =>
+      root.querySelector<HTMLInputElement>('thead th.selection-cell input[type="checkbox"]');
+    owner.selectable.set((row) => row.id === 1);
+    await fixture.whenStable();
+    expect(header()).not.toBeNull();
+    header()?.click();
+    await fixture.whenStable();
+    expect(owner.grid().controller.selectedIds()).toEqual([1]);
+    expect(header()?.checked).toBe(true);
+    owner.selectable.set(() => false);
+    await fixture.whenStable();
+    expect(header()?.disabled).toBe(true);
+    expect(owner.grid().controller.selectedIds()).toEqual([]);
+    for (const kind of ['loading', 'error', 'forbidden'] as const) {
+      owner.source.set({ query, kind });
+      await fixture.whenStable();
+      expect(header()?.disabled).toBe(true);
+    }
+    for (const mode of ['single', 'radio'] as const) {
+      owner.selectionMode.set(mode);
+      await fixture.whenStable();
+      expect(header()).toBeNull();
+    }
+    owner.selectionMode.set('multiple');
+    owner.selectionEnabled.set(false);
+    await fixture.whenStable();
+    expect(header()).toBeNull();
   });
   it('retains the actual row element when a fresh snapshot replaces objects with the same typed record IDs', async () => {
     const fixture = TestBed.createComponent(MyDataGrid<Row>),
@@ -164,7 +225,7 @@ describe('Real shared Table capability composition', () => {
       show.mockRestore();
     }
   });
-  it('uses native record indices without confusing them with the server page size', () => {
+  it('keeps shared record actions independent of server page-size controls', async () => {
     const source = signal<CollectionSource<Row>>({
         query,
         kind: 'ready',
@@ -183,13 +244,16 @@ describe('Real shared Table capability composition', () => {
     const fixture = TestBed.createComponent(CollectionFooter<Row>);
     fixture.componentRef.setInput('controller', model);
     fixture.componentRef.setInput('recordNavigation', true);
-    fixture.componentInstance.paginate({ page: 1, rows: 1 });
+    await fixture.whenStable();
+    const root = fixture.nativeElement as HTMLElement;
+    const recordButtons = () => root.querySelectorAll<HTMLButtonElement>('.record-controls button');
+    recordButtons()[2]?.click();
     expect(model.activeId()).toBe(2);
     expect(page).not.toHaveBeenCalled();
-    fixture.componentInstance.paginate({ page: 11, rows: 1 });
+    recordButtons()[3]?.click();
     expect(page).toHaveBeenCalledExactlyOnceWith({ pageIndex: 1, pageSize: 10 });
     page.mockClear();
-    fixture.componentInstance.paginate({ page: 1, rows: 10 });
+    fixture.componentInstance.resize(1);
     expect(page).not.toHaveBeenCalled();
     fixture.componentRef.setInput('recordNavigation', false);
     fixture.componentInstance.paginate({ page: 1, rows: 10 });

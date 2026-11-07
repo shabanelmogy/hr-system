@@ -1,6 +1,27 @@
 # Component composition maintenance — D41
 
-Date: 2026-11-04. Branch: `codex/angular-foundation-hardening`.
+## D41 follow-up — 2026-11-05
+
+The approved follow-up keeps the same ownership rules while reducing the size of the reporting and collection composition roots. `MyDataGrid` now delegates query normalization, context-menu leases, expansion/grouping, geometry, and projected-template indexing to per-instance helpers. Its public API, PrimeNG table template, source identity fences, and viewport ownership remain in the component. `GlobalReportCriteria` owns only typed controls and events; `GlobalReportView` remains the Signal Forms and submission owner. The global template manager page composes list, registration, upload, detail, overview, versions, and confirmation components while providing `GlobalTemplateState` and `GlobalTemplateAccessState` exactly once.
+
+This is a structural and maintainability refactor. No new domain capability, API contract, dependency, or form engine was added. The existing lightweight Signal Forms boundary remains the project standard.
+
+### Follow-up verification
+
+`npm run check` completed successfully after the final source change: 98 test files and 560 tests passed, architecture and TypeScript checks passed, and the production build completed. The build still reports the existing 500 kB initial-budget warning at 574.45 kB; the budget was not relaxed. The Grid smoke browser check passed and the manager pagination browser matrix passed in six fixture cases. The focused report browser harness still expects the download anchor inside `erp-pdf-viewer`; the current shared workspace intentionally renders those links in the sidebar/options region when criteria are visible. The focused `GlobalReportView` suite passed all 14 tests, including this placement contract, so this harness result is recorded as a verification-script mismatch rather than a runtime regression.
+
+The current follow-up branch is `codex/angular-component-composition`. The guide
+[current execution report](../../../../guides/web/architecture/ANGULAR_COMPONENT_DECOMPOSITION_2026-11-05.md)
+owns this increment's checks and server diagnostics. FOLLOW-026 was subsequently
+Verified after the reporting browser-harness update and eight focused lifecycle cases.
+The requester-authorized Reporting evidence baseline
+now registers current existing sources while FOLLOW-025 retains unavailable raw-log
+limitations; see documentation/modules/reporting/CURRENT_EVIDENCE_BASELINE_2026-11-05.md.
+The older source hashes below belong to the historical D41 increment.
+
+## Historical D41 increment — 2026-11-04
+
+Branch at that time: `codex/angular-foundation-hardening`.
 
 ## Scope and authorization
 

@@ -1,0 +1,20 @@
+<erp-dialog-panel
+  [open]="editor.active()"
+  [title]="captions.text('edit')"
+  [closeLabel]="'actions.close' | uiText"
+  [pending]="editor.pending() || (container()?.checking() ?? false)"
+  [showFooter]="false"
+  (closeRequested)="closeGuard().requestClose()"
+>
+  @if (editor.active()) {
+    <erp-retention-form (cancelled)="closeGuard().requestClose()" />
+  }
+</erp-dialog-panel>
+<erp-form-close-guard
+  [identity]="editor.identity()"
+  [revision]="editor.revision()"
+  [active]="editor.active()"
+  [unsaved]="editor.unsaved()"
+  [pending]="editor.pending() || (container()?.checking() ?? false)"
+  (closed)="editor.close($event)"
+/>

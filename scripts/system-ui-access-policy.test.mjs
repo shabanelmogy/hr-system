@@ -3,6 +3,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { systemUiPermissions } from './system-ui-access-policy.mjs';
 test('global catalog authority is explicit, screen-specific and fail closed', () => {
+ assert.deepEqual(systemUiPermissions('web','platform-auth','accountProfile.personalInfo'),[]);
+ assert.equal(systemUiPermissions('web','platform-auth','unknownAccount.title'),null);
  assert.deepEqual(systemUiPermissions('web','core','menu.countries'),['Countries:View']);
  assert.deepEqual(systemUiPermissions('web','core','actions.save'),[]);
  assert.equal(systemUiPermissions('web','core','menu.users'),null);

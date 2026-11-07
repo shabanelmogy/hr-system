@@ -5,6 +5,13 @@
 src/platform/modules owns schemas, API calls, queries, launchers, and submodule
 entry behavior. Route files remain thin adapters.
 
+Angular Tenant foundation2026-11-06: a narrow owner-scoped client now reads the
+existing /modules/tenant-entitlements catalog independently of navigation's
+/modules/accessible. Typed module/submodule validation and native form grant-set
+helpers exist; no Angular Tenant customer editor or grant UI is accepted yet.
+Checkpoint: documentation/modules/platform/features/angular-tenant-management-workspace/
+TENANT_FOUNDATION_2026-11-06.md. API/domain/Next/native semantics remain unchanged.
+
 ## 2. Expo Router layout
 
 Routes are /apps, /apps/[moduleCode], and

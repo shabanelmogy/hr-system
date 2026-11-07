@@ -167,7 +167,20 @@
         "empty": "No active countries are available. Create or restore a country before importing states.",
         "forbidden": "States import requires Countries:View so country names can be validated. Ask an administrator for this permission.",
         "error": "The active country lookup could not be loaded. No rows have been validated as unknown. Retry the lookup."
-      }
-    }
+      },
+      "ambiguousCountry": "This country name matches more than one active country. Use a unique Arabic or English name.",
+      "duplicateField": "Duplicates the value in row {{row}} within the same country.",
+      "duplicateOnServer": "One or more submitted states already exist in the selected country. The batch was rejected; review the state names and codes."
+    },
+    "detailLoadError": "The state details could not be loaded. Retry before editing.",
+    "mutationUncertain": "The server response was not received. Close this form and refresh the list to verify the result before submitting again.",
+    "lifecycleUncertain": "The operation result could not be confirmed. Refresh and verify the record status before repeating it.",
+    "invalidCode": "Use 2 to 10 letters, numbers or hyphens for the state code.",
+    "duplicate": "A state with the same Arabic name, English name or code already exists in this country.",
+    "countryUnavailable": "Choose an active country that you are authorized to view.",
+    "allCountries": "All countries",
+    "districtsFilter": "Districts",
+    "hasDistricts": "Has districts",
+    "withoutDistricts": "No districts"
   }
 }
