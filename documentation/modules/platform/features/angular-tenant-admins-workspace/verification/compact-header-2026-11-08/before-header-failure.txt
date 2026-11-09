@@ -1,0 +1,22 @@
+(node:41028) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/src/app/platform/auth/auth.fixture.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\F:\Portofolio Projects\ERPSYSTEM\web-angular\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/verify-tenant-admins-browser.mjs:469
+          throw Error(`Tenant Admins ${language}/${mode}/${width} at ${stage}: ${error}`, {
+                ^
+
+Error: Tenant Admins en/light/555 at load: AssertionError [ERR_ASSERTION]: {"buttons":[{"label":"Add tenant administrator","centerY":95,"left":500,"right":536},{"label":"Export","centerY":137.328125,"left":470,"right":502},{"label":"Refresh","centerY":137.328125,"left":504,"right":536}],"left":12,"right":543}
+    at file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/verify-tenant-admins-browser.mjs:469:17 {
+  [cause]: AssertionError [ERR_ASSERTION]: {"buttons":[{"label":"Add tenant administrator","centerY":95,"left":500,"right":536},{"label":"Export","centerY":137.328125,"left":470,"right":502},{"label":"Refresh","centerY":137.328125,"left":504,"right":536}],"left":12,"right":543}
+      at file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/verify-tenant-admins-browser.mjs:217:18 {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+}
+
+Node.js v24.18.1

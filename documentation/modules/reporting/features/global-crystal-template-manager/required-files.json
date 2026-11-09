@@ -3221,6 +3221,180 @@
       "layer": "api",
       "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportDatabaseVerificationTests.cs",
       "purpose": "Verify Database and automatic publication current implementation or orchestration evidence"
+    },
+    {
+      "id": "entity-fingerprint-repair-0",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/ENTITY_FINGERPRINT_REPAIR.md",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-1",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/verification.json",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-0",
+      "layer": "api",
+      "path": "api/ErpSystem.Api/web.config",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-1",
+      "layer": "api",
+      "path": "api/Tests/ErpSystem.IntegrationTests/RealtimeHostingConfigurationTests.cs",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-2",
+      "layer": "api",
+      "path": "api/scripts/Configure-CrystalReportPublish.ps1",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-3",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/RUNTIME_KEY_REPAIR_2026-11-07.md",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-4",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/hosted-query-boundary.json",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-5",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/hosted-query-length.json",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-6",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/hosted-render.json",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-7",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/hosted-runtime.json",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-8",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/hosted-transports.json",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-9",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/local-iis-results.json",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-10",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/logs/angular-script-format.log",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-11",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/logs/api-build.log",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-12",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/logs/api-restore.log",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-13",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/logs/api-tests.log",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-14",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/logs/erp-profile-stage.log",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-15",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/logs/hub-source-green.log",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-16",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/logs/hub-source-red.log",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-17",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/logs/prepare.log",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-18",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/logs/runtime-profile-stage.log",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-19",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/private-package-manifest.json",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-20",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/publish-pipeline.json",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-21",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/verification.json",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-22",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-super-admin-hosted-read.mjs",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-final-proof-1",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/logs/documentation-check.log",
+      "purpose": "Executed final x64 runtime/documentation acceptance"
+    },
+    {
+      "id": "runtime-key-final-proof-2",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/logs/planning-check.log",
+      "purpose": "Executed final x64 runtime/documentation acceptance"
+    },
+    {
+      "id": "runtime-key-final-proof-3",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/logs/runtime-harness-build.log",
+      "purpose": "Executed final x64 runtime/documentation acceptance"
+    },
+    {
+      "id": "runtime-key-final-proof-4",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/logs/runtime-harness.log",
+      "purpose": "Executed final x64 runtime/documentation acceptance"
     }
   ],
   "finalizationChecklist": [

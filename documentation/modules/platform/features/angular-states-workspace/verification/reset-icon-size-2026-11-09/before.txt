@@ -1,0 +1,35 @@
+(node:23768) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/src/app/platform/auth/auth.fixture.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\F:\Portofolio Projects\ERPSYSTEM\web-angular\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/verify-states-browser.mjs:575
+          throw Error(`States ${language}/${mode}/${width} at ${stage}: ${error}`, {
+                ^
+
+Error: States en/light/1440 at navigate: AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
+  {
++   height: 24,
++   width: 24
+-   height: 18,
+-   width: 18
+  }
+
+    at file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/verify-states-browser.mjs:575:17 {
+  [cause]: AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   height: 24,
+  +   width: 24
+  -   height: 18,
+  -   width: 18
+    }
+  
+      at verifyCollectionSearchLayout (file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/support/collection-search-layout.mjs:69:18)
+      at async file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/verify-states-browser.mjs:292:34 {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { width: 24, height: 24 },
+    expected: { width: 18, height: 18 },

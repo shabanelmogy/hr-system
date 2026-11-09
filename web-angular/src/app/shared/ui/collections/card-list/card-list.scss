@@ -3,21 +3,26 @@
 }
 .cards.responsive {
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 16px;
   padding: 12px;
 }
-@media (min-width: 600px) {
+@container collection-cards (min-width: 36rem) {
   .cards.responsive {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-@media (min-width: 900px) {
+@container collection-cards (min-width: 54rem) {
   .cards.responsive {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
-@media (min-width: 1200px) {
+@container collection-cards (min-width: 72rem) {
   .cards.responsive {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@container collection-cards (max-width: 790px) {
+  .cards.compact-single-column {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

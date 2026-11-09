@@ -2,6 +2,7 @@ import { Component, input } from '@angular/core';
 
 // Material icon paths retain the accompanying MIT LICENSE.
 const paths = {
+  sort: 'M3 18h6v-2H3zm0-12v2h18V6zm0 7h12v-2H3z',
   // mui/material-ui packages/mui-icons-material/lib/ContentCopy.js and Warning.js (MIT).
   copy: 'M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2m0 16H8V7h11z',
   warning: 'M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z',

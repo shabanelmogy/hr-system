@@ -1,4 +1,5 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, viewChild, TemplateRef } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import { FileUpload } from 'primeng/fileupload';
 import type { FileSelectEvent } from 'primeng/types/fileupload';
 import type { ImportRowStatus } from '../../../data/spreadsheet-public-api';
@@ -22,11 +23,14 @@ import { StatusBadge } from '../../feedback/status-badge/status-badge';
     StatusBadge,
     SurfaceCard,
     UiTextPipe,
+    NgTemplateOutlet,
   ],
   templateUrl: './spreadsheet-import-panel.html',
   styleUrl: './spreadsheet-import-panel.scss',
 })
 export class SpreadsheetImportPanel {
+  readonly externalActions = input(false);
+  readonly actionsTemplate = viewChild.required('importActions', { read: TemplateRef });
   readonly maxSizeMb = input(5);
   readonly maxRows = input(100);
   readonly canSubmit = input(true);

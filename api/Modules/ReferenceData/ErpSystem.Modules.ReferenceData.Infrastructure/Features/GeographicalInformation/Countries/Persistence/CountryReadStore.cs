@@ -197,6 +197,8 @@ public sealed class CountryReadStore(
         var descending = string.Equals(sortDirection, "DESC", StringComparison.OrdinalIgnoreCase);
         return (sortBy?.ToUpperInvariant(), descending) switch
         {
+            ("ID", false) => query.OrderBy(item => item.Id),
+            ("ID", true) => query.OrderByDescending(item => item.Id),
             ("NAMEAR", false) => query.OrderBy(country => country.NameAr).ThenBy(country => country.Id),
             ("NAMEAR", true) => query.OrderByDescending(country => country.NameAr).ThenByDescending(country => country.Id),
             ("ALPHA2CODE", false) => query.OrderBy(country => country.Alpha2Code).ThenBy(country => country.Id),

@@ -2,7 +2,11 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { chromium, expect } from '@playwright/test';
+import { serveAngularFixtureBuild } from './angular-build-browser-fixture.mjs';
+import { verifyResponsiveGridActions, activateGridRowAction } from './support/grid-row-actions.mjs';
 import { utils, write } from 'xlsx';
+import { verifyCollectionSearchLayout } from './support/collection-search-layout.mjs';
+import { verifyCollectionSortCycle } from './support/collection-sort-cycle.mjs';
 import { sessionFixture } from '../src/app/platform/auth/auth.fixture.ts';
 import { globalReportFixture } from '../src/app/modules/reporting/global-reports/report.fixture.ts';
 
@@ -57,16 +61,29 @@ function pdfFixture() {
 }
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 const results = [];
+const actionsOnly = process.argv.includes('--actions');
+const searchOnly = process.argv.includes('--search');
+const sortOnly = process.argv.includes('--sort-cycle');
 try {
   for (const language of process.argv.includes('--smoke') ? ['en'] : ['en', 'ar'])
     for (const mode of process.argv.includes('--smoke') ? ['light'] : ['light', 'dark'])
-      for (const width of process.argv.includes('--smoke') ? [1440] : [390, 1440]) {
+      for (const width of process.argv.includes('--smoke') || actionsOnly || searchOnly || sortOnly
+        ? [1440]
+        : [390, 1440]) {
         const context = await browser.newContext({
           ignoreHTTPSErrors: true,
           viewport: { width, height: 1050 },
           reducedMotion: 'reduce',
           acceptDownloads: true,
         });
+        await serveAngularFixtureBuild(
+          context,
+          root,
+          origin,
+          process.env.ANGULAR_FIXTURE_BUILD
+            ? path.resolve(process.env.ANGULAR_FIXTURE_BUILD)
+            : undefined,
+        );
         await context.addCookies(
           Object.entries({ i18next: language, currentMode: mode, themePalette: 'green' }).map(
             ([name, value]) => ({ name, value, url: origin }),
@@ -109,6 +126,7 @@ try {
                   ...sessionFixture,
                   roles: ['super_admin'],
                   permissions: [
+                    ...(searchOnly ? ['GlobalDataExports:Export'] : []),
                     'States:View',
                     'States:Create',
                     'States:Edit',
@@ -168,9 +186,11 @@ try {
                 direction = url.searchParams.get('sortDirection') === 'desc' ? -1 : 1;
               matching.sort(
                 (a, b) =>
-                  String(sort === 'country' ? a.country.nameEn : a[sort]).localeCompare(
-                    String(sort === 'country' ? b.country.nameEn : b[sort]),
-                  ) * direction,
+                  (sort === 'id'
+                    ? a.id - b.id
+                    : String(sort === 'country' ? a.country.nameEn : a[sort]).localeCompare(
+                        String(sort === 'country' ? b.country.nameEn : b[sort]),
+                      )) * direction,
               );
               body = {
                 items: matching.slice((page - 1) * size, page * size),
@@ -272,6 +292,38 @@ try {
           await page.goto(origin + '/super-admin/geography/states');
           await expect(workspace).toHaveAttribute('data-kind', 'ready', { timeout: 60000 });
           await expect(workspace.locator('tbody [data-collection-row]')).toHaveCount(10);
+          if (sortOnly) {
+            await verifyCollectionSortCycle(workspace, header, queries, 17, text);
+            assert.deepEqual(errors, []);
+            results.push({ language, mode, width, passed: true });
+            console.log(`states sort cycle passed ${language}/${mode}/${width}`);
+            continue;
+          }
+          if (searchOnly) {
+            const measurements = await verifyCollectionSearchLayout(
+              page,
+              workspace,
+              header,
+              text,
+              output,
+              language,
+              mode,
+            );
+            assert.deepEqual(errors, []);
+            results.push({ language, mode, measurements, passed: true });
+            console.log(`states search layout passed ${language}/${mode}`);
+            continue;
+          }
+          if (actionsOnly) {
+            const measurements = await verifyResponsiveGridActions(page, workspace, text);
+            assert.deepEqual(errors, []);
+            results.push({ language, mode, measurements, passed: true });
+            await page.screenshot({
+              path: path.join(output, `${language}-${mode}-responsive-actions.png`),
+            });
+            console.log(`states responsive actions passed ${language}/${mode}`);
+            continue;
+          }
           stage = 'selection';
           await workspace.locator('thead th.selection-cell input').check();
           await expect(workspace.locator('.selection-summary')).toContainText('10');
@@ -288,6 +340,9 @@ try {
           stage = 'cards';
           await pick('cards');
           await expect(page.locator('erp-state-card-header').first()).toBeVisible();
+          const filter = header.locator('.filter button');
+          await expect(filter).toHaveAttribute('aria-expanded', 'false');
+          await filter.click();
           await workspace.getByTestId('status').getByRole('combobox').click();
           await page
             .getByRole('option', { name: stateText['states.status.archived'], exact: true })
@@ -319,7 +374,12 @@ try {
             fullPage: true,
           });
           stage = 'detail';
-          await row().getByRole('button', { name: text['actions.view'], exact: true }).click();
+          await activateGridRowAction(
+            page,
+            row(),
+            text['actions.view'],
+            text['collections.rowActions'],
+          );
           await expect(
             page.getByRole('dialog', { name: stateText['states.view'], exact: true }),
           ).toBeVisible();
@@ -364,7 +424,12 @@ try {
           await expect(editor).toHaveCount(0);
           assert.equal(writes.filter((write) => write.method === 'create').length, 1);
           stage = 'edit';
-          await row().getByRole('button', { name: text['actions.edit'], exact: true }).click();
+          await activateGridRowAction(
+            page,
+            row(),
+            text['actions.edit'],
+            text['collections.rowActions'],
+          );
           const edit = page.getByRole('dialog', { name: stateText['states.edit'], exact: true });
           await expect(edit.getByLabel(text['general.nameEn'], { exact: false })).toHaveValue(
             'Browser State',
@@ -375,7 +440,12 @@ try {
           await edit.getByRole('button', { name: text['actions.save'], exact: true }).click();
           await expect(edit).toHaveCount(0);
           stage = 'archive';
-          await row().getByRole('button', { name: text['actions.archive'], exact: true }).click();
+          await activateGridRowAction(
+            page,
+            row(),
+            text['actions.archive'],
+            text['collections.rowActions'],
+          );
           const confirmation = page.getByRole('dialog', {
             name: stateText['states.archiveTitle'],
             exact: true,
@@ -389,7 +459,12 @@ try {
           await page
             .getByRole('option', { name: stateText['states.status.archived'], exact: true })
             .click();
-          await row().getByRole('button', { name: text['actions.restore'], exact: true }).click();
+          await activateGridRowAction(
+            page,
+            row(),
+            text['actions.restore'],
+            text['collections.rowActions'],
+          );
           const restore = page.getByRole('dialog', {
             name: stateText['states.restoreTitle'],
             exact: true,
@@ -429,21 +504,29 @@ try {
           await pick('report');
           await expect.poll(() => renders.length).toBe(1);
           assert.equal(renders[0].entityKey, 'states');
-          await page
+          const reportDownload = header.locator('a[download]');
+          const reportCriterion = workspace
             .locator('erp-global-report-view')
-            .getByRole('tab', { name: text['reports.viewerOptions'], exact: true })
-            .click();
-          await expect(page.locator('erp-global-report-view aside a[download]')).toBeVisible();
+            .getByTestId('nameAr')
+            .locator('input');
+          await expect(reportDownload).toBeVisible();
+          await expect(reportCriterion).toBeVisible();
+          await filter.click();
+          await expect(filter).toHaveAttribute('aria-expanded', 'false');
+          await expect(reportCriterion).toBeHidden();
+          await expect(reportDownload).toBeVisible();
+          await pick('cards');
+          await expect(filter).toHaveAttribute('aria-expanded', 'true');
           stage = 'import';
           await pick('import');
           const view = page.locator('erp-state-import-view');
-          await view.locator('input[type=file]').setInputFiles({
+          await header.locator('input[type=file]').setInputFiles({
             name: 'states.xlsx',
             mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             buffer: workbook(),
           });
           await expect(view.locator('tbody tr')).toHaveCount(4);
-          await view.getByTestId('import-submit').getByRole('button').click();
+          await header.getByTestId('import-submit').getByRole('button').click();
           await expect(view).toContainText(stateText['states.import.unknownCountry']);
           await expect(view).toContainText(
             stateText['states.import.duplicateField'].replace('{{row}}', '2'),
@@ -508,7 +591,18 @@ try {
         }
       }
   fs.writeFileSync(
-    path.join(output, process.argv.includes('--smoke') ? 'smoke-results.json' : 'results.json'),
+    path.join(
+      output,
+      sortOnly
+        ? 'sort-cycle-results.json'
+        : searchOnly
+          ? 'search-layout-results.json'
+          : actionsOnly
+            ? 'responsive-actions-results.json'
+            : process.argv.includes('--smoke')
+              ? 'smoke-results.json'
+              : 'results.json',
+    ),
     JSON.stringify(results, null, 2),
   );
 } finally {

@@ -1,0 +1,7 @@
+{
+  "inputText": {
+    "valid": true,
+    "scope": "Directive-only metadata. Native value/placeholder/disabled/readOnly properties are checked by Angular/browser evidence, not generated directive metadata."
+  },
+  "reference": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/flex-grow"
+}

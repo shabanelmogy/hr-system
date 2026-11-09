@@ -18,17 +18,22 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Checkbox } from 'primeng/checkbox';
 import { ToggleSwitch } from 'primeng/toggleswitch';
+import { NgTemplateOutlet } from '@angular/common';
 import { FormFieldControl } from '../../form-field-control';
 
 @Component({
   selector: 'erp-boolean-field',
-  imports: [ReactiveFormsModule, Checkbox, ToggleSwitch],
+  imports: [ReactiveFormsModule, Checkbox, ToggleSwitch, NgTemplateOutlet],
   providers: [{ provide: FormFieldControl, useExisting: forwardRef(() => BooleanField) }],
   templateUrl: './boolean-field.html',
   styleUrl: './boolean-field.scss',
-  host: { '[class.compact-field]': "density()==='compact'" },
+  host: {
+    '[class.compact-field]': "density()==='compact'",
+    '[class.above-label]': "labelPlacement()==='above'",
+  },
 })
 export class BooleanField extends FormFieldControl<boolean> implements OnDestroy {
+  readonly labelPlacement = input<'inline' | 'above'>('inline');
   readonly density = input<'standard' | 'compact'>('standard');
   readonly kind = input<'checkbox' | 'switch'>('checkbox');
   readonly value = model(false);

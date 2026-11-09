@@ -46,7 +46,7 @@ realtime, notification, localization, report, or Import integration is reachable
 | angular-countries-import-view-master | 4 | `53e60870bac7336b7b85981032dd3b9944a2a288a91459982cb0a8c20142c42c` |
 | angular-countries-import-view-master | 5 | `3673a2c7c459efed4be5b56d814d01b31e1291b7cc3c645b9106386457f5d443` |
 | angular-countries-import-view-master | 6 | `3cb1ce59d5da20c1c670d16496538c270effb436933ee0e13048f912397e6a61` |
-| angular-countries-import-view-master | 7 | `d667c3b49da126015c07b08178f7c3e09adbff8f2ec2eb39ef3b1f4aa520e1a4` |
+| angular-countries-import-view-master | 7 | `19d1a25a2d02717bc26c96f2207373eee86a5a2dc4cc5440e012ce32bcac8c81` |
 | angular-countries-import-view-master | 9 | `bbba187c534e0637214cb864a3f268ffdf3dca121eaad7f9d413334fe10dea0d` |
 | angular-countries-import-view-api | 8 | `b3c4409235a89b89abcc628d2a834a38b5c30d5793e24bfb207a2c9bcd6f1677` |
 | angular-countries-import-view-api | 9 | `bbba187c534e0637214cb864a3f268ffdf3dca121eaad7f9d413334fe10dea0d` |
@@ -54,7 +54,7 @@ realtime, notification, localization, report, or Import integration is reachable
 | angular-countries-import-view-web | 8 | `b3c4409235a89b89abcc628d2a834a38b5c30d5793e24bfb207a2c9bcd6f1677` |
 | angular-countries-import-view-web | 10 | `47e64969da4971e661128ac73ad0f901ccfd17949c2856ffdd37c0c37bda76c3` |
 | angular-countries-import-view-web | 13 | `4d7bd414678262665b7f89f01a552b43bf3120d65e993916c20f11e45fdc0743` |
-| angular-countries-import-view-mobile | 2 | `422a13518e26e2c6ee47d12275238b34fbaf7a75dfb45e65d77f1376c4515e5f` |
+| angular-countries-import-view-mobile | 2 | `c96148e173107ae3b96ee6247440e6b3d9d69cb7fbba1304df5e66e4328111e2` |
 | angular-countries-import-view-mobile | 11 | `6cb7786af1c177babf51eb605ea16c9cb5f85484c6a2a6d6ea138e39cbf67aa0` |
 | angular-countries-import-view-mobile | 12 | `ec1a71bb79a1df59c7669872683dbb8180c0c987562423a18eb8b0e64c12b4be` |
 | angular-countries-import-view-mobile | 15 | `2f531c9e1a7906ca3b77d3d7d45409b64b8d6e107eae70cfc1b6a511ac1c9e8e` |

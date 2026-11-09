@@ -102,7 +102,11 @@ export function createLocalCollection<T>(options: LocalCollectionOptions<T>) {
         return;
       criteria.update((value) => ({ ...value, ...page }));
     },
-    changeSort: (sort: CollectionSort): void => {
+    changeSort: (sort: CollectionSort | null): void => {
+      if (sort === null) {
+        criteria.update((value) => ({ ...value, pageIndex: 0, sort: undefined }));
+        return;
+      }
       if (
         !Object.hasOwn(options.sortValues, sort.field) ||
         (sort.direction !== 'asc' && sort.direction !== 'desc')

@@ -22,6 +22,7 @@ export class SurfaceCard<T = unknown> {
   readonly subtitle = input('');
   readonly entity = input(false, { transform: booleanAttribute });
   readonly title = input.required<string>();
+  readonly headerVisible = input(true);
   readonly compact = input(false, { transform: booleanAttribute });
   readonly fill = input(false, { transform: booleanAttribute });
   readonly contentSizing = input<'bounded' | 'natural'>('bounded');

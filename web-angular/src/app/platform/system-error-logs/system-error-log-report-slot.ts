@@ -1,8 +1,9 @@
-import { InjectionToken, type Type } from '@angular/core';
+import { InjectionToken, type TemplateRef, type Type } from '@angular/core';
 import type { Session } from '../auth/session.public-api';
 
 export interface SystemErrorLogReportAdapter {
   readonly component: Type<unknown>;
+  readonly headerActions?: (component: unknown) => TemplateRef<unknown> | null;
   allowed(actor: Session | null): boolean;
 }
 

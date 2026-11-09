@@ -366,6 +366,7 @@ public sealed class ManagedCrystalTemplateValidationHandlerTests
     {
         public int SchemaVersion => 1;
         public string Fingerprint { get; } = fingerprint;
+        public string GetFingerprint(string entityKey) => Fingerprint;
         public IReadOnlyCollection<ManagedCrystalReportEntityDescriptor> EntityDescriptors { get; } =
             supportedEntities.Select(entity => new ManagedCrystalReportEntityDescriptor(
                 entity,

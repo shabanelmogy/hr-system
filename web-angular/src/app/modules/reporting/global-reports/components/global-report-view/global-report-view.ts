@@ -62,11 +62,16 @@ export class GlobalReportView {
   readonly chooseEntity = input(false);
   readonly externalCriteria = input<ReportFilters>();
   readonly embedded = input(false);
+  /** The embedding page projects headerActions into its existing PageHeader. */
+  readonly externalActions = input(false);
   readonly showFilterBar = input(true);
   readonly catalogErrorMessage = input('');
   readonly unavailableMessage = input('');
   readonly state = inject(GlobalReportState);
   readonly pdfViewer = viewChild(PdfViewer);
+  readonly headerActions = computed(() =>
+    this.document() ? (this.pdfViewer()?.actionsTemplate() ?? null) : null,
+  );
   readonly sidebarTab = signal('criteria');
   readonly criteriaVisible = computed(
     () =>
@@ -89,6 +94,12 @@ export class GlobalReportView {
       globalTemplateAllowed(this.auth.readIdentity(), report.entityKey, 'Upload')
     );
   });
+  readonly optionsVisible = computed(
+    () =>
+      !!this.state.selected()?.canDownloadSource ||
+      this.canUploadSource() ||
+      (this.embedded() && !this.externalActions()),
+  );
   closeTemplateEditor(): void {
     this.templateEditor.set(null);
     this.state.reload();

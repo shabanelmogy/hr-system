@@ -9,6 +9,13 @@
   height: 100%;
   width: 100%;
 }
+.hide-native-scrollbar {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
 .scroll-content {
   display: flex;
   flex-direction: column;

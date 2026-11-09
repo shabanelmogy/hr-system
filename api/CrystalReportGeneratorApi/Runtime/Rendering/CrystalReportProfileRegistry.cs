@@ -1,4 +1,6 @@
 using Newtonsoft.Json;
+using ErpSystem.Modules.Reporting.Contracts.Features.Analytics.CrystalReports;
+using System.Globalization;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -33,6 +35,39 @@ namespace CrystalReportGeneratorApi.Runtime.Rendering
         public int SchemaVersion { get; private set; }
         public string Fingerprint { get; private set; }
         public int Count { get { return _profiles.Count; } }
+
+        public string GetFingerprint(string entityKey)
+        {
+            return EntityContractFingerprint.Compute(SchemaVersion, DefinitionFields(GetRequired(entityKey)));
+        }
+
+        private static IEnumerable<string> DefinitionFields(CrystalReportProfile profile)
+        {
+            yield return profile.EntityKey;
+            yield return profile.Scope;
+            yield return profile.TableName;
+            yield return profile.MaximumRows.ToString(CultureInfo.InvariantCulture);
+            yield return profile.Columns.Count.ToString(CultureInfo.InvariantCulture);
+            foreach (var column in profile.Columns)
+            {
+                yield return column.Name;
+                yield return column.Type;
+                yield return column.Nullable ? "1" : "0";
+            }
+            yield return profile.Filters.Count.ToString(CultureInfo.InvariantCulture);
+            foreach (var filter in profile.Filters) yield return filter;
+            yield return profile.Parameters.Count.ToString(CultureInfo.InvariantCulture);
+            foreach (var parameter in profile.Parameters)
+            {
+                yield return parameter.Name;
+                yield return parameter.Type;
+                yield return parameter.Required ? "1" : "0";
+                yield return parameter.AllowMultipleValues ? "1" : "0";
+                yield return parameter.DiscreteOnly ? "1" : "0";
+                yield return parameter.AllowedValues.Count.ToString(CultureInfo.InvariantCulture);
+                foreach (var value in parameter.AllowedValues) yield return value;
+            }
+        }
 
         public CrystalReportProfile GetRequired(string entityKey)
         {

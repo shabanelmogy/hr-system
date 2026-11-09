@@ -1,17 +1,35 @@
-<p-tabs [value]="active()" [dt]="tokens" (valueChange)="select($event)">
+<p-tabs
+  [value]="active()"
+  [dt]="tokens"
+  [pt]="fill() ? fillRoot : undefined"
+  (valueChange)="select($event)"
+>
   <p-tablist>
     @for (tab of tabs(); track tab.id) {
       <p-tab [value]="tab.id">{{ tab.label }}</p-tab>
     }
   </p-tablist>
-  <p-tabpanels>
+  <p-tabpanels [pt]="fill() ? fillPanels : undefined">
     @for (tab of tabs(); track tab.id) {
-      <p-tabpanel [value]="tab.id">
+      <p-tabpanel [value]="tab.id" [pt]="fill() ? fillPanel : undefined">
         @if (keepAlive() || active() === tab.id) {
-          <ng-container
-            [ngTemplateOutlet]="content()"
-            [ngTemplateOutletContext]="{ $implicit: tab.id }"
-          />
+          @if (fill()) {
+            <div
+              class="fill-content"
+              [class.compact-padding]="contentPadding() === 'compact'"
+              [class.no-padding]="contentPadding() === 'none'"
+            >
+              <ng-container
+                [ngTemplateOutlet]="content()"
+                [ngTemplateOutletContext]="{ $implicit: tab.id }"
+              />
+            </div>
+          } @else {
+            <ng-container
+              [ngTemplateOutlet]="content()"
+              [ngTemplateOutletContext]="{ $implicit: tab.id }"
+            />
+          }
         }
       </p-tabpanel>
     }

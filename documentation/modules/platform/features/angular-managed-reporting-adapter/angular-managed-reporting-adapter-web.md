@@ -2,6 +2,32 @@
 
 ## 1. Ownership
 
+### Header actions and bounded viewer maintenance — 2026-11-08
+
+GlobalReportView exposes its current PdfViewer action template as `headerActions`.
+Embedded consumers opt into `externalActions` and render that exact template in
+their existing PageHeader. Standalone reporting renders it in its own title card.
+The generic PdfViewer toolbar appearance keeps translated link names/titles,
+compact text/icon presentation and44px coarse-pointer targets. The existing Blob
+lease, open/download behavior, error masking and revocation remain authoritative.
+Countries/States/Districts compose this through Reporting's public API; System
+Error Logs receives an optional header-template callback through its existing
+composition adapter, without importing the Reporting owner into Platform.
+The reference workspace reduces its sidebar/gap to260px/16px and stacks bounded
+criteria/document rows below54rem of actual content width. Its existing scroll
+viewport owns criteria scrolling. Existing RPT source download/upload permissions
+and dialogs remain in the sidebar. No API/schema/permission/Next/Mobile change.
+The sidebar omits its tab strip when no RPT source operations remain; criteria
+stay directly available, and permission-controlled source actions restore tabs.
+The existing standalone `verify-reporting-browser.mjs --focused` harness now
+targets header links and intercepted built assets. It retains eight EN/AR,
+Light/Dark open/download/lifecycle checks with exact downloaded fixture bytes.
+The standalone route explicitly selects the authenticated fill workspace; its
+facade supplies the available-height contract to GlobalReportView. The direct
+development route falls back to100dvh. Neither route relies on an auto-height
+ancestor to size the PDF panel. Standalone browser acceptance checks bounded
+full-height workspace geometry as well as horizontal containment.
+
 Entity initialization correction2026-11-06: GlobalReportState starts catalog reads only after setEntity configures the consumer. A State workspace no longer issues an incidental Countries catalog request before its input effect. Existing entity switch, form reset, ACL and PDF semantics remain; the regression failed before the fix and27focused report tests pass afterward. Current full/client/browser evidence is owned by angular-states-workspace/STATES_WORKSPACE_2026-11-06.md. No Reporting API, native or provider deployment change.
 
 ### Report sidebar version management — 2026-11-05

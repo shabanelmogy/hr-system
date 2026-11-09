@@ -4,6 +4,9 @@
   [submitLabel]="'actions.save' | uiText"
   [appearance]="appearance()"
   [fillContent]="appearance() === 'page'"
+  [contentScroll]="false"
+  [footerVisible]="selected() !== 'administrators'"
+  [showSubmit]="selected() !== 'administrators'"
   [hideHeader]="true"
   [pending]="editor.pending()"
   [readOnly]="editor.uncertain() || editor.conflict()"
@@ -26,18 +29,40 @@
     [selected]="selected()"
     (selectedChange)="chooseSection($event)"
     [keepAlive]="true"
+    fill
     [content]="sectionContent"
   />
   <ng-template #sectionContent let-section>
+    @if (section === 'administrators') {
+      @if (administratorsOpened()) {
+        @if (tenantId(); as id) {
+          <erp-tenant-admins-page [tenantId]="id" />
+        } @else {
+          <erp-feedback-state
+            kind="empty"
+            [title]="captions.text('saveBeforeAdministrators')"
+            [message]="captions.text('saveBeforeAdministratorsDescription')"
+            [actionLabel]="captions.text('tabs.identity')"
+            (action)="chooseSection('identity')"
+          />
+        }
+      }
+    } @else {
+      <erp-scroll-viewport [label]="captions.text('tabs.' + section)">
+        <ng-container
+          [ngTemplateOutlet]="fields"
+          [ngTemplateOutletContext]="{ $implicit: section }"
+        />
+      </erp-scroll-viewport>
+    }
+  </ng-template>
+  <ng-template #fields let-section>
     @switch (section) {
       @case ('identity') {
         <erp-tenant-identity-fields formSection="identity" />
       }
       @case ('subscription') {
         <erp-tenant-subscription-fields formSection="subscription" />
-      }
-      @case ('contact') {
-        <erp-tenant-contact-fields formSection="contact" />
       }
       @case ('entitlements') {
         <erp-tenant-entitlement-field
@@ -48,9 +73,6 @@
           [messages]="captions.messages()"
           [readOnly]="editor.locked()"
         />
-      }
-      @case ('notes') {
-        <erp-tenant-notes-fields formSection="notes" />
       }
     }
   </ng-template>

@@ -52,7 +52,7 @@ namespace CrystalReportGeneratorApi.Runtime.Inspection
                             : report.SummaryInfo.ReportSubject),
                         SubreportCount = 0,
                         ContractSchemaVersion = _profiles.SchemaVersion,
-                        ContractFingerprint = _profiles.Fingerprint,
+                        ContractFingerprint = _profiles.GetFingerprint(entityKey),
                         Failure = CrystalReportTemplateValidationFailure.None
                     };
                 }

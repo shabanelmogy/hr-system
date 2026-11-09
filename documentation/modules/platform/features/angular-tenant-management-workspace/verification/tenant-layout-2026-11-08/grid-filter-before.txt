@@ -1,0 +1,23 @@
+(node:5244) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/src/app/platform/auth/auth.fixture.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\F:\Portofolio Projects\ERPSYSTEM\web-angular\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/verify-states-browser.mjs:564
+          throw Error(`States ${language}/${mode}/${width} at ${stage}: ${error}`, {
+                ^
+
+Error: States en/light/1440 at navigate: Error: expect(locator).toBeVisible() failed
+
+Locator: locator('.workspace[data-testid=states]').locator('.collection-toolbar').getByTestId('reset').locator('button')
+Expected: visible
+Timeout: 5000ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toBeVisible" locator('.workspace[data-testid=states]').locator('.collection-toolbar').getByTestId('reset').locator('button') with timeout 5000ms
+  - waiting for locator('.workspace[data-testid=states]').locator('.collection-toolbar').getByTestId('reset').locator('button')
+
+    at file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/verify-states-browser.mjs:564:17 {
+  [cause]: ExpectError: expect(locator).toBeVisible() failed
+  
+  Locator: locator('.workspace[data-testid=states]').locator('.collection-toolbar').getByTestId('reset').locator('button')

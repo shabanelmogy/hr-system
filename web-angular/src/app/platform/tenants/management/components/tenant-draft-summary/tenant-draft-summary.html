@@ -3,7 +3,17 @@
   [subtitle]="'tenantManagement.summaryDescription' | uiText: 'platform-tenants'"
   icon="company"
   [compact]="true"
+  [fill]="fill()"
 >
+  @if (fill()) {
+    <erp-scroll-viewport [label]="'tenantManagement.summaryTitle' | uiText: 'platform-tenants'">
+      <ng-container [ngTemplateOutlet]="summary" />
+    </erp-scroll-viewport>
+  } @else {
+    <ng-container [ngTemplateOutlet]="summary" />
+  }
+</erp-surface-card>
+<ng-template #summary>
   <div class="summary-content">
     <div class="tenant-identity">
       <h3>
@@ -33,4 +43,4 @@
     </div>
     <p class="summary-note">{{ 'tenantManagement.summaryNote' | uiText: 'platform-tenants' }}</p>
   </div>
-</erp-surface-card>
+</ng-template>

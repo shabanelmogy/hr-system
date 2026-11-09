@@ -442,6 +442,42 @@
       "layer": "documentation",
       "path": "documentation/modules/platform/features/platform-browser-authentication/verification/results/hosted-origin-regression-2026-11-06.json",
       "purpose": "Sanitized hosted CSRF403 regression, local publish settings repair and 19 Cookie test receipt"
+    },
+    {
+      "id": "runtime-key-hub-repair-0",
+      "layer": "api",
+      "path": "api/ErpSystem.Api/web.config",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-1",
+      "layer": "api",
+      "path": "api/Tests/ErpSystem.IntegrationTests/RealtimeHostingConfigurationTests.cs",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-2",
+      "layer": "api",
+      "path": "api/scripts/Configure-CrystalReportPublish.ps1",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-3",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/RUNTIME_KEY_REPAIR_2026-11-07.md",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-4",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/verification.json",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-5",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-super-admin-hosted-read.mjs",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
     }
   ],
   "finalizationChecklist": [

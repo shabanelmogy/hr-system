@@ -54,6 +54,19 @@ describe('Tenant authoritative list lifetime', () => {
     };
     return { state, identity, calls, page, ready };
   }
+  it('clears explicit sorting to the server default and can start another sort', () => {
+    const { state, ready } = setup();
+    ready();
+    state.changeSort({ field: 'identifier', direction: 'desc' });
+    expect(state.sort()).toEqual({ field: 'identifier', direction: 'desc' });
+    state.changeSort(null);
+    expect(state.sort()).toBeNull();
+    expect(state.query()).toEqual(defaultTenantQuery);
+    state.changeSort({ field: 'identifier', direction: 'asc' });
+    expect(state.sort()).toEqual({ field: 'identifier', direction: 'asc' });
+    state.reset();
+    expect(state.sort()).not.toBeNull();
+  });
   afterEach(() => {
     TestBed.resetTestingModule();
     vi.useRealTimers();

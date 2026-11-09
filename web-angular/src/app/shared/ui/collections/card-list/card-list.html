@@ -1,11 +1,13 @@
 <erp-collection-frame
   [controller]="controller"
+  [appearance]="frameAppearance()"
   [label]="label()"
   [search]="search()"
   [searchMaxWidth]="searchMaxWidth()"
   [pageSizes]="pageSizes()"
   [recordNavigation]="recordNavigation()"
   [selectionEnabled]="selectionEnabled()"
+  [selectionPlacement]="showFooter() ? 'footer' : 'bar'"
   [toolbarVisible]="toolbarVisible()"
   [showFooter]="showFooter()"
   [toolbarLayout]="toolbarLayout()"
@@ -14,12 +16,13 @@
   <div toolbarContent class="collection-actions"><ng-content select="[toolbarContent]" /></div>
   <div toolbarFilters class="collection-filters"><ng-content select="[toolbarFilters]" /></div>
   <div collectionBody class="cards-body">
-    <erp-scroll-viewport [label]="label()">
+    <erp-scroll-viewport [label]="label()" [scrollbar]="scrollbar()">
       @if (controller.view().kind === 'ready' && controller.view().rows.length) {
         <div
           class="cards"
           [class.responsive]="layout() === 'responsive'"
           [class.fit]="layout() === 'fit'"
+          [class.compact-single-column]="compactLayout() === 'single-column'"
           [style.--card-min-width]="minCardWidth() + 'px'"
           role="list"
         >
@@ -44,18 +47,23 @@
                 [footerTemplate]="footer()?.template ?? null"
                 [templateContext]="{ $implicit: row }"
               >
-                @if (selectionEnabled()) {
-                  <p-checkbox
-                    [binary]="true"
-                    [ngModelOptions]="{ standalone: true }"
-                    [ngModel]="controller.selectedIds().includes(rowId()(row))"
-                    [disabled]="!selectable()(row)"
-                    [ariaLabel]="
-                      'collections.selectRecord' | uiText: 'core' : { record: rowLabel()(row) }
-                    "
-                    (ngModelChange)="controller.toggle(rowId()(row), $event === true)"
-                  />
-                }
+                <div surfaceHeaderActions>
+                  @if (selectionEnabled()) {
+                    <label class="card-selection" [for]="selectionPrefix + '-' + $index">
+                      <p-checkbox
+                        [inputId]="selectionPrefix + '-' + $index"
+                        [binary]="true"
+                        [ngModelOptions]="{ standalone: true }"
+                        [ngModel]="controller.selectedIds().includes(rowId()(row))"
+                        [disabled]="!selectable()(row)"
+                        [ariaLabel]="
+                          'collections.selectRecord' | uiText: 'core' : { record: rowLabel()(row) }
+                        "
+                        (ngModelChange)="controller.toggle(rowId()(row), $event === true)"
+                      />
+                    </label>
+                  }
+                </div>
                 @if (card(); as template) {
                   <ng-container
                     *ngTemplateOutlet="template.template; context: { $implicit: row }"

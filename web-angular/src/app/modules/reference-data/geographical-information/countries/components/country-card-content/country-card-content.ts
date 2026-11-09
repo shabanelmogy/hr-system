@@ -27,6 +27,10 @@ export class CountryCardContent {
       .translate('general.' + this.quality().level)
       .toLocaleUpperCase(this.locale.language()),
   );
+  readonly qualityLabel = computed(
+    () =>
+      countryNumber(this.quality().quality, this.locale.language()) + '% · ' + this.qualityLevel(),
+  );
   readonly statesCount = computed(() =>
     countryNumber(this.country().statesCount, this.locale.language()),
   );

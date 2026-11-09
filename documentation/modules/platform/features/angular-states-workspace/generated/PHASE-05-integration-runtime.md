@@ -46,7 +46,7 @@ realtime, notification, localization, report, or Import integration is reachable
 | angular-states-workspace-master | 4 | `337cd6781195f95a821c1ce670cfe9c86930d82007f1e1152f2b9855e12cefd1` |
 | angular-states-workspace-master | 5 | `658b5a249ccf0aab79700f4874f371d4aff3484f7b02ffbdaf51459bddf7b503` |
 | angular-states-workspace-master | 6 | `f1fa81a7964badb1ca8ccf5e92bac1822e68362601b9fc3708f45b3048f97f5b` |
-| angular-states-workspace-master | 7 | `7584691b6644143db3b466beaf52ff38ce7802770143b488a1cf4cc9ed53251b` |
+| angular-states-workspace-master | 7 | `501a10a08c373e454ebac69f367245279aecf89c8a2b9c44928c8a67c720c492` |
 | angular-states-workspace-master | 9 | `a300cf55dc219cefbfc033db706b12fccb640c2805d7cd8e010ccea1c298a2bb` |
 | angular-states-workspace-api | 8 | `a2711720a0f2987543734da15a69eb1eb2596157145afa8a1fc4e852ea8d6ab5` |
 | angular-states-workspace-api | 9 | `a300cf55dc219cefbfc033db706b12fccb640c2805d7cd8e010ccea1c298a2bb` |

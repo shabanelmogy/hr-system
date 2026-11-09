@@ -1,4 +1,8 @@
 @use '../field-chrome';
+input::placeholder,
+textarea::placeholder {
+  font-size: var(--field-placeholder-font-size, inherit);
+}
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -26,6 +30,7 @@
   border-color: var(--destructive);
 }
 input {
+  font-size: var(--field-font-size, 1rem);
   min-inline-size: 0;
   inline-size: 100%;
   flex: 1;
@@ -43,7 +48,15 @@ input:focus {
   padding-block: var(--field-padding-y, var(--p-inputtext-padding-y));
 }
 .input-row.multiline {
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+.multiline textarea {
+  grid-column: 1 / -1;
+}
+.multiline:has(.counter, .field-action) textarea {
+  border-block-end: 1px solid var(--border);
 }
 textarea {
   min-inline-size: 0;
@@ -66,7 +79,20 @@ textarea:focus {
 }
 .multiline .counter,
 .multiline .field-action {
-  margin-block-start: 0.5rem;
+  margin-block: 0;
+  align-self: center;
+}
+.multiline .counter {
+  display: flex;
+  align-items: center;
+  min-block-size: var(--touch-target);
+  grid-column: 1;
+  justify-self: start;
+  margin-inline: 12px;
+}
+.multiline .field-action {
+  grid-column: 2;
+  justify-self: end;
 }
 .field-action {
   flex: 0 0 var(--touch-target);
@@ -120,15 +146,15 @@ svg {
   margin: 0;
 }
 :host(.floating) .input-row {
-  border-radius: 1rem;
-  block-size: 3.5rem;
+  border-radius: var(--field-floating-radius, 1rem);
+  block-size: var(--field-floating-height, 3.5rem);
   background: transparent;
   border-color: color-mix(in srgb, var(--foreground) 23%, transparent);
 }
 :host(.floating) input {
   min-block-size: 0;
-  block-size: 3.375rem;
-  padding-block: 1rem;
+  block-size: var(--field-floating-input-height, 3.375rem);
+  padding-block: var(--field-floating-padding-y, 1rem);
   padding-inline: 0;
 }
 :host(.floating) .input-row.multiline {

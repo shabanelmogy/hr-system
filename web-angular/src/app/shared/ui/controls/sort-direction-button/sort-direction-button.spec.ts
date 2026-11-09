@@ -3,6 +3,24 @@ import { provideAppTheme } from '../../../../../theme/public-api';
 import { LocalizationRuntime } from '../../../../platform/localization/public-api';
 import { SortDirectionButton } from './sort-direction-button';
 describe('Shared compact sort direction', () => {
+  it('clears descending sorting before starting another ascending cycle', async () => {
+    TestBed.configureTestingModule({ providers: [provideAppTheme()] });
+    const fixture = TestBed.createComponent(SortDirectionButton);
+    const changed = vi.fn();
+    fixture.componentInstance.directionChange.subscribe(changed);
+    fixture.componentRef.setInput('direction', 'desc');
+    await fixture.whenStable();
+    const button = (fixture.nativeElement as HTMLElement).querySelector('button');
+    expect(button).not.toBeNull();
+    button?.click();
+    expect(changed).toHaveBeenLastCalledWith(null);
+    fixture.componentRef.setInput('direction', null);
+    await fixture.whenStable();
+    button?.click();
+    expect(changed).toHaveBeenLastCalledWith('asc');
+    fixture.destroy();
+    TestBed.resetTestingModule();
+  });
   it('combines controlled direction, icon, short text and full bilingual accessible labels without emitting on repaint', async () => {
     TestBed.configureTestingModule({ providers: [provideAppTheme()] });
     const locale = TestBed.inject(LocalizationRuntime);

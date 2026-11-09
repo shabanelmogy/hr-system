@@ -56,6 +56,13 @@ export function inspectTemplate(template, relative = 'src/app/shared/ui/template
   // Test hosts deliberately exercise native inputs and projected fixture content.
   if (/\.spec(?:\.[^/]+)?\.html$/.test(relative)) return [];
   const violations = [];
+  if (
+    /^src\/app\/(?:modules|platform)\//.test(relative) &&
+    /<erp-data-table\b[^>]*\bactionDisplay\s*=\s*["']inline["']/.test(template)
+  )
+    violations.push(
+      'Grid row action responsiveness belongs to MyDataGrid; inherit its shared default',
+    );
   if (/\[erpCollection(?:Cell|ColumnHeader|ColumnFooter)\]=["'][^"']*columns\(\)\[/.test(template))
     violations.push(
       'collection templates bind by stable column key; use the shared collectionColumn pipe',

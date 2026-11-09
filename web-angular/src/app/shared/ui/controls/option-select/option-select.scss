@@ -8,9 +8,9 @@
 label {
   position: absolute;
   z-index: 1;
-  inset-inline-start: 0.625rem;
+  inset-inline-start: var(--option-label-inset, 0.625rem);
   top: -0.5rem;
-  max-inline-size: calc(100% - 1.25rem);
+  max-inline-size: calc(100% - 2 * var(--option-label-inset, 0.625rem));
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -24,10 +24,29 @@ label {
   min-inline-size: 0;
   max-inline-size: none;
 }
+:host(.label-above) .preference-select {
+  display: flex;
+  flex-direction: column;
+  gap: var(--option-label-gap, 6px);
+}
+:host(.label-above) label {
+  position: static;
+  order: -1;
+  max-inline-size: 100%;
+  padding: 0;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: var(--option-label-font-size, 0.8125rem);
+  line-height: 20px;
+  white-space: normal;
+}
 .option-copy {
   display: flex;
   flex-direction: column;
   gap: 2px;
+}
+.selected-value {
+  font-size: var(--option-font-size, inherit);
 }
 small {
   font-size: 12px;

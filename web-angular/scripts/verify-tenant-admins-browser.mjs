@@ -5,6 +5,7 @@ import { chromium, expect } from '@playwright/test';
 import { sessionFixture } from '../src/app/platform/auth/auth.fixture.ts';
 import { adminFixture } from '../src/app/platform/tenant-admins/tenant-admin.fixture.ts';
 import { tenantFixture } from '../src/app/platform/tenants/management/tenant.fixture.ts';
+import { serveAngularFixtureBuild } from './angular-build-browser-fixture.mjs';
 const root = path.resolve(import.meta.dirname, '..');
 const origin = process.env.ANGULAR_PREVIEW_ORIGIN ?? 'https://localhost:4220';
 const api = process.env.ANGULAR_API_ORIGIN ?? 'https://shabanhrms.runasp.net';
@@ -18,17 +19,36 @@ const version = fs
   .readFileSync(path.join(root, 'src/app/platform/localization/catalog.generated.ts'), 'utf8')
   .match(/[a-f0-9]{64}/)[0];
 const smoke = process.argv.includes('--smoke');
+const compact = process.argv.includes('--compact');
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 const results = [];
 try {
   for (const language of smoke ? ['en'] : ['en', 'ar'])
     for (const mode of smoke ? ['light'] : ['light', 'dark'])
-      for (const width of smoke ? [1440] : [390, 1440]) {
+      for (const width of compact ? [790, 555, 320, 390, 844] : smoke ? [1440] : [390, 900, 1440]) {
+        const height =
+          width === 320
+            ? 720
+            : width === 844
+              ? 390
+              : width === 900
+                ? 640
+                : width === 555 || width === 790
+                  ? 823
+                  : 844;
         const context = await browser.newContext({
           ignoreHTTPSErrors: true,
           reducedMotion: 'reduce',
-          viewport: { width, height: 1050 },
+          viewport: { width, height },
         });
+        await serveAngularFixtureBuild(
+          context,
+          root,
+          origin,
+          process.env.ANGULAR_FIXTURE_BUILD
+            ? path.resolve(process.env.ANGULAR_FIXTURE_BUILD)
+            : undefined,
+        );
         await context.addCookies(
           Object.entries({ i18next: language, currentMode: mode, themePalette: 'green' }).map(
             ([name, value]) => ({ name, value, url: origin }),
@@ -37,7 +57,23 @@ try {
         const rows = [
           adminFixture,
           { ...adminFixture, id: 'disabled', firstName: 'Disabled', isDisabled: true },
-          { ...adminFixture, id: 'locked', firstName: 'Locked', isLocked: true },
+          {
+            ...adminFixture,
+            id: 'locked',
+            firstName: 'Locked',
+            isLocked: true,
+            tenants: [
+              ...adminFixture.tenants,
+              { id: 'b', name: 'Beta', identifier: 'beta', isDefault: false },
+            ],
+          },
+          {
+            ...adminFixture,
+            id: 'unassigned',
+            firstName: 'Unassigned',
+            defaultTenantId: '',
+            tenants: [],
+          },
         ].map((row) => ({ ...row }));
         const tenants = [
           { ...tenantFixture, id: 't', name: 'Alpha', identifier: 'alpha' },
@@ -61,7 +97,7 @@ try {
                 user: {
                   ...sessionFixture,
                   roles: ['super_admin'],
-                  permissions: [],
+                  permissions: ['GlobalDataExports:Export'],
                   tenantReadOnly: false,
                 },
               };
@@ -150,36 +186,205 @@ try {
           await combobox.press('ArrowDown');
           await expect(combobox).toHaveAttribute('aria-expanded', 'true');
           await page.getByRole('option', { name: label, exact: true }).click();
-          await page.keyboard.press('Escape');
+          await combobox.press('Escape');
           // Wait for the body-attached overlay to finish leaving before reopening.
-          await expect(page.getByRole('listbox')).toHaveCount(0);
+          await expect(page.locator('.p-multiselect-overlay')).toHaveCount(0);
         };
         let stage = 'load';
         try {
           await page.goto(origin + '/super-admin/tenant-admins');
+          await expect(page).toHaveURL(origin + '/super-admin/tenant-admins');
+          await expect(
+            page.locator('.workspace-sidebar [data-nav-id="tenant-admins"]'),
+          ).toHaveCount(0);
           await expect(workspace).toHaveAttribute('data-kind', 'ready', { timeout: 60000 });
-          await expect(workspace.locator('[data-collection-row]')).toHaveCount(3);
-          await expect(workspace.locator('erp-collection-footer')).toHaveCount(0);
-          if (width === 1440) {
-            const cards = await workspace.locator('[data-collection-row]').evaluateAll((elements) =>
-              elements.map((element) => {
-                const { top, width } = element.getBoundingClientRect();
-                return { top, width };
-              }),
+          if (width >= 900)
+            await expect(page.locator('.workspace-sidebar')).not.toContainText(
+              text['menu.tenantAdminManagement'],
             );
-            assert.ok(cards.every((card) => Math.abs(card.top - cards[0].top) <= 1));
-            const layout = await workspace.locator('.cards').evaluate((element) => ({
+          await expect(page.locator('erp-page-header .view-badge')).toHaveCount(0);
+          await expect(workspace.locator('[data-collection-row]')).toHaveCount(3);
+          const cardsFrame = workspace.locator('erp-card-list .collection-shell');
+          await expect(cardsFrame).toHaveCSS('border-radius', '0px');
+          await expect(cardsFrame).toHaveCSS('border-top-width', '0px');
+          if (language === 'en')
+            await expect(page.locator('erp-page-header h1')).toHaveText('Tenant Administrators');
+          const directory = workspace.locator('erp-selection-workspace');
+          const searchField = directory.locator('erp-text-field');
+          const search = searchField.getByRole('textbox', { name: caption('searchTenants') });
+          const alpha = directory.getByRole('option', { name: 'Alpha', exact: true });
+          const beta = directory.getByRole('option', { name: 'Beta', exact: true });
+          const list = directory.getByRole('listbox');
+          const exportTrigger = page.locator('erp-page-header').getByRole('button', {
+            name: text['actions.export'],
+            exact: true,
+          });
+          await expect(exportTrigger).toBeVisible();
+          const headerGeometry = await page.locator('erp-page-header').evaluate((element) => {
+            const header = element.getBoundingClientRect();
+            const buttons = [
+              ...element.querySelectorAll(
+                '.primary-action button, erp-collection-export-menu button, .refresh button',
+              ),
+            ].map((button) => {
+              const box = button.getBoundingClientRect();
+              return {
+                label: button.getAttribute('aria-label') || button.textContent.trim(),
+                centerY: box.y + box.height / 2,
+                left: box.left,
+                right: box.right,
+              };
+            });
+            return {
+              buttons,
+              left: header.left,
+              right: header.right,
               classes: element.className,
-              minimum: getComputedStyle(element).getPropertyValue('--card-min-width'),
-              columns: getComputedStyle(element).gridTemplateColumns,
-            }));
-            assert.ok(cards[0].width >= 320, JSON.stringify({ cards, layout }));
-            const row = await workspace.locator('.cards').boundingBox();
+              controlsDisplay: getComputedStyle(element.querySelector('.header-controls')).display,
+            };
+          });
+          assert.ok(headerGeometry.buttons.length >= 3);
+          assert.ok(
+            Math.max(...headerGeometry.buttons.map((box) => box.centerY)) -
+              Math.min(...headerGeometry.buttons.map((box) => box.centerY)) <
+              1,
+            JSON.stringify(headerGeometry),
+          );
+          assert.ok(
+            headerGeometry.buttons.every(
+              (box) => box.left >= headerGeometry.left && box.right <= headerGeometry.right,
+            ),
+            JSON.stringify(headerGeometry),
+          );
+          await expect(alpha).toHaveAttribute('aria-selected', 'true');
+          const readDirectoryGeometry = () =>
+            directory.evaluate((element) => {
+              const field = element
+                .querySelector('erp-text-field .input-row')
+                .getBoundingClientRect();
+              const icon = element.querySelector('erp-text-field erp-icon').getBoundingClientRect();
+              const selected = element.querySelector('[role="option"][aria-selected="true"]');
+              const other = element.querySelector('[role="option"][aria-selected="false"]');
+              const sidebar = element.querySelector('aside').getBoundingClientRect();
+              return {
+                searchInset: Math.min(field.left - sidebar.left, sidebar.right - field.right),
+                searchLeftInset: field.left - sidebar.left,
+                searchRightInset: sidebar.right - field.right,
+                iconInset: Math.min(icon.left - field.left, field.right - icon.right),
+                optionPadding: parseFloat(getComputedStyle(selected).paddingInlineStart),
+                selectedColor: getComputedStyle(selected).backgroundColor,
+                unselectedColor: getComputedStyle(other).backgroundColor,
+                listPaddingToken: getComputedStyle(selected).getPropertyValue(
+                  '--p-listbox-list-padding',
+                ),
+              };
+            });
+          const checkDirectoryGeometry = async () => {
+            const geometry = await readDirectoryGeometry();
+            assert.ok(geometry.searchInset >= 8, JSON.stringify(geometry));
             assert.ok(
-              cards[0].width * 3 + 32 >= row.width - 33,
-              'Cards must fill the available row',
+              Math.abs(geometry.searchLeftInset - geometry.searchRightInset) < 1,
+              JSON.stringify(geometry),
+            );
+            assert.ok(geometry.iconInset >= 8, JSON.stringify(geometry));
+            assert.ok(geometry.optionPadding >= 8, JSON.stringify(geometry));
+            assert.notEqual(
+              geometry.selectedColor,
+              geometry.unselectedColor,
+              JSON.stringify(geometry),
+            );
+          };
+          await checkDirectoryGeometry();
+          if (width >= 900) {
+            const toggleNavigation = page.locator('.drawer-toggle button');
+            const shellWidth = () =>
+              page.locator('.workspace-sidebar').evaluate((element) => element.clientWidth);
+            await toggleNavigation.click();
+            await expect.poll(shellWidth).toBeGreaterThan(200);
+            await checkDirectoryGeometry();
+            await toggleNavigation.click();
+            await expect.poll(shellWidth).toBeLessThan(100);
+          }
+          await search.fill('beta');
+          await expect(list.getByRole('option')).toHaveCount(1);
+          await expect(beta).toBeVisible();
+          const listViewport = directory.locator('.p-listbox-list-container');
+          await expect
+            .poll(() =>
+              listViewport.evaluate((element) => element.scrollHeight - element.clientHeight),
+            )
+            .toBeLessThanOrEqual(1);
+          await searchField.getByRole('button', { name: text['general.clear'] }).click();
+          await expect(search).toHaveValue('');
+          await expect(search).toBeFocused();
+          await expect(list.getByRole('option')).toHaveCount(3);
+          if (width === 320) {
+            await expect
+              .poll(() =>
+                listViewport.evaluate((element) => element.scrollHeight - element.clientHeight),
+              )
+              .toBeGreaterThan(1);
+          }
+          if (width < 600 || height < 480) {
+            const triggerBox = await exportTrigger.boundingBox();
+            assert.ok(
+              triggerBox && triggerBox.width <= 36 && triggerBox.height <= 36,
+              JSON.stringify(triggerBox),
             );
           }
+          await exportTrigger.click();
+          await expect(
+            page.getByRole('menuitem', {
+              name: text['collectionExport.excel'],
+              exact: true,
+            }),
+          ).toBeVisible();
+          await expect(
+            page.getByRole('menuitem', {
+              name: text['collectionExport.csv'],
+              exact: true,
+            }),
+          ).toBeVisible();
+          await exportTrigger.click();
+          await expect(exportTrigger).toHaveAttribute('aria-expanded', 'false');
+          await expect(directory).toContainText('Alpha');
+          await expect(directory).toContainText('Beta');
+          await expect(directory).toContainText(caption('unassignedTenant'));
+          await directory.getByRole('option', { name: 'Beta', exact: true }).click();
+          await expect(workspace.locator('[data-collection-row]')).toHaveCount(1);
+          if (width === 1440) {
+            const card = await workspace.locator('[data-collection-row]').boundingBox();
+            assert.ok(
+              card && card.width >= 260 && card.width < 360 && card.height <= 240,
+              JSON.stringify(card),
+            );
+          }
+          const cardGeometry = await workspace
+            .locator('erp-card-list .cards')
+            .evaluate((element) => {
+              const style = getComputedStyle(element);
+              const available =
+                element.clientWidth -
+                parseFloat(style.paddingLeft) -
+                parseFloat(style.paddingRight);
+              return {
+                available,
+                widths: [...element.querySelectorAll('article')].map(
+                  (article) => article.getBoundingClientRect().width,
+                ),
+              };
+            });
+          if (width <= 790)
+            assert.ok(
+              cardGeometry.widths.every(
+                (cardWidth) => Math.abs(cardWidth - cardGeometry.available) < 1,
+              ),
+              JSON.stringify(cardGeometry),
+            );
+          await directory.getByRole('option', { name: 'Alpha', exact: true }).click();
+          await expect(workspace.locator('[data-collection-row]')).toHaveCount(3);
+          assert.equal(writes.length, 0);
+          await expect(workspace.locator('erp-collection-footer')).toHaveCount(0);
           await expect(workspace).toContainText(caption('disabled'));
           await expect(workspace).toContainText(caption('locked'));
           await expect(workspace).toContainText(caption('default'));
@@ -187,6 +392,29 @@ try {
             path: path.join(output, `${language}-${mode}-${width}-cards.png`),
             fullPage: true,
           });
+          if (compact) {
+            assert.ok(
+              await page.evaluate(
+                () =>
+                  document.documentElement.scrollWidth <= innerWidth + 1 &&
+                  document.documentElement.scrollHeight <= innerHeight + 1,
+              ),
+              'The compact workspace must keep scrolling inside its panels',
+            );
+            assert.deepEqual(errors, []);
+            results.push({
+              language,
+              mode,
+              width,
+              height,
+              headerGeometry,
+              directoryGeometry: await readDirectoryGeometry(),
+              cardGeometry,
+              passed: true,
+            });
+            console.log(`Tenant Admins compact passed ${language}/${mode}/${width}×${height}`);
+            continue;
+          }
           stage = 'create validation';
           await page
             .locator('erp-page-header')
@@ -220,7 +448,7 @@ try {
           await chooseTenant(editor, 'Beta (beta)');
           await editor.locator('erp-reference-field p-select').click();
           await page.getByRole('option', { name: 'Beta (beta)', exact: true }).click();
-          await expect(page.getByRole('listbox')).toHaveCount(0);
+          await expect(page.locator('.p-select-overlay')).toHaveCount(0);
           await chooseTenant(editor, 'Beta (beta)');
           await expect(editor.locator('erp-reference-field')).toContainText('Alpha (alpha)');
           stage = 'dirty protection';
@@ -276,8 +504,24 @@ try {
           assert.ok(
             await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1),
           );
+          assert.ok(
+            await page.evaluate(() => document.documentElement.scrollHeight <= innerHeight + 1),
+            'Outer application must not scroll',
+          );
           assert.deepEqual(errors, []);
-          results.push({ language, mode, width, passed: true, detailCalls, listCalls, writes });
+          results.push({
+            language,
+            mode,
+            width,
+            height,
+            passed: true,
+            detailCalls,
+            listCalls,
+            writes,
+            groups: 3,
+            uniqueAdmins: 4,
+            membershipCards: 5,
+          });
           console.log(`Tenant Admins passed ${language}/${mode}/${width}`);
         } catch (error) {
           await page
@@ -292,7 +536,10 @@ try {
       }
 } finally {
   fs.writeFileSync(
-    path.join(output, smoke ? 'smoke-results.json' : 'results.json'),
+    path.join(
+      output,
+      compact ? 'compact-results.json' : smoke ? 'smoke-results.json' : 'results.json',
+    ),
     JSON.stringify(results, null, 2),
   );
   await browser.close();

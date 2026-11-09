@@ -411,6 +411,606 @@
       "layer": "documentation",
       "path": "documentation/plans/business/web-angular-migration/education/angular-districts-workspace.md",
       "purpose": "Verified customer workflows after Phase06 Verified"
+    },
+    {
+      "id": "shared-row-actions-20261108-0",
+      "path": "documentation/modules/platform/features/angular-states-workspace/SHARED_GRID_ACTIONS_2026-11-08.md",
+      "layer": "documentation",
+      "purpose": "Shared responsive action defaults, guarded disabled commands and regression prevention"
+    },
+    {
+      "id": "shared-row-actions-20261108-1",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.ts",
+      "layer": "web",
+      "purpose": "Shared responsive action defaults, guarded disabled commands and regression prevention"
+    },
+    {
+      "id": "shared-row-actions-20261108-2",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.html",
+      "layer": "web",
+      "purpose": "Shared responsive action defaults, guarded disabled commands and regression prevention"
+    },
+    {
+      "id": "shared-row-actions-20261108-3",
+      "path": "web-angular/src/app/shared/ui/collections/grid-capabilities.spec.ts",
+      "layer": "web",
+      "purpose": "Shared responsive action defaults, guarded disabled commands and regression prevention"
+    },
+    {
+      "id": "shared-row-actions-20261108-4",
+      "path": "web-angular/scripts/support/grid-row-actions.mjs",
+      "layer": "web",
+      "purpose": "Shared responsive action defaults, guarded disabled commands and regression prevention"
+    },
+    {
+      "id": "shared-row-actions-20261108-5",
+      "path": "web-angular/scripts/architecture-rules.mjs",
+      "layer": "web",
+      "purpose": "Shared responsive action defaults, guarded disabled commands and regression prevention"
+    },
+    {
+      "id": "shared-row-actions-20261108-6",
+      "path": "web-angular/scripts/architecture-rules.test.mjs",
+      "layer": "web",
+      "purpose": "Shared responsive action defaults, guarded disabled commands and regression prevention"
+    },
+    {
+      "id": "shared-grid-actions-proof-20261108-0",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-grid-actions-2026-11-08/angular-check.txt",
+      "layer": "verification",
+      "purpose": "Executed shared responsive/default/disabled action acceptance and full Angular quality gate"
+    },
+    {
+      "id": "shared-grid-actions-proof-20261108-1",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-grid-actions-2026-11-08/districts-ar-dark-responsive-actions.png",
+      "layer": "verification",
+      "purpose": "Executed shared responsive/default/disabled action acceptance and full Angular quality gate"
+    },
+    {
+      "id": "shared-grid-actions-proof-20261108-2",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-grid-actions-2026-11-08/districts-en-light-responsive-actions.png",
+      "layer": "verification",
+      "purpose": "Executed shared responsive/default/disabled action acceptance and full Angular quality gate"
+    },
+    {
+      "id": "shared-grid-actions-proof-20261108-3",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-grid-actions-2026-11-08/districts-responsive-actions-results.json",
+      "layer": "verification",
+      "purpose": "Executed shared responsive/default/disabled action acceptance and full Angular quality gate"
+    },
+    {
+      "id": "shared-grid-actions-proof-20261108-4",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-grid-actions-2026-11-08/grid-actions-architecture-rules.txt",
+      "layer": "verification",
+      "purpose": "Executed shared responsive/default/disabled action acceptance and full Angular quality gate"
+    },
+    {
+      "id": "shared-grid-actions-proof-20261108-5",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-grid-actions-2026-11-08/grid-actions-districts-browser-final.txt",
+      "layer": "verification",
+      "purpose": "Executed shared responsive/default/disabled action acceptance and full Angular quality gate"
+    },
+    {
+      "id": "shared-grid-actions-proof-20261108-6",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-grid-actions-2026-11-08/grid-actions-language-browser-verified.txt",
+      "layer": "verification",
+      "purpose": "Executed shared responsive/default/disabled action acceptance and full Angular quality gate"
+    },
+    {
+      "id": "shared-grid-actions-proof-20261108-7",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-grid-actions-2026-11-08/grid-actions-states-browser-final.txt",
+      "layer": "verification",
+      "purpose": "Executed shared responsive/default/disabled action acceptance and full Angular quality gate"
+    },
+    {
+      "id": "shared-grid-actions-proof-20261108-8",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-grid-actions-2026-11-08/language-translation-results.json",
+      "layer": "verification",
+      "purpose": "Executed shared responsive/default/disabled action acceptance and full Angular quality gate"
+    },
+    {
+      "id": "shared-grid-actions-proof-20261108-9",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-grid-actions-2026-11-08/states-ar-dark-responsive-actions.png",
+      "layer": "verification",
+      "purpose": "Executed shared responsive/default/disabled action acceptance and full Angular quality gate"
+    },
+    {
+      "id": "shared-grid-actions-proof-20261108-10",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-grid-actions-2026-11-08/states-en-light-responsive-actions.png",
+      "layer": "verification",
+      "purpose": "Executed shared responsive/default/disabled action acceptance and full Angular quality gate"
+    },
+    {
+      "id": "shared-grid-actions-proof-20261108-11",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-grid-actions-2026-11-08/states-responsive-actions-results.json",
+      "layer": "verification",
+      "purpose": "Executed shared responsive/default/disabled action acceptance and full Angular quality gate"
+    },
+    {
+      "id": "shared-search-20261108-0",
+      "path": "documentation/modules/platform/features/angular-states-workspace/SHARED_COLLECTION_SEARCH_2026-11-08.md",
+      "layer": "documentation",
+      "purpose": "Generic adaptive criteria sizing/wrapping, consistent density and Chart default, with acceptance"
+    },
+    {
+      "id": "shared-search-20261108-1",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.ts",
+      "layer": "web",
+      "purpose": "Generic adaptive criteria sizing/wrapping, consistent density and Chart default, with acceptance"
+    },
+    {
+      "id": "shared-search-20261108-2",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.html",
+      "layer": "web",
+      "purpose": "Generic adaptive criteria sizing/wrapping, consistent density and Chart default, with acceptance"
+    },
+    {
+      "id": "shared-search-20261108-3",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-search.scss",
+      "layer": "web",
+      "purpose": "Generic adaptive criteria sizing/wrapping, consistent density and Chart default, with acceptance"
+    },
+    {
+      "id": "shared-search-20261108-4",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.ts",
+      "layer": "web",
+      "purpose": "Generic adaptive criteria sizing/wrapping, consistent density and Chart default, with acceptance"
+    },
+    {
+      "id": "shared-search-20261108-5",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.html",
+      "layer": "web",
+      "purpose": "Generic adaptive criteria sizing/wrapping, consistent density and Chart default, with acceptance"
+    },
+    {
+      "id": "shared-search-20261108-6",
+      "path": "web-angular/src/app/shared/ui/charts/collection-chart-view/collection-chart-view.ts",
+      "layer": "web",
+      "purpose": "Generic adaptive criteria sizing/wrapping, consistent density and Chart default, with acceptance"
+    },
+    {
+      "id": "shared-search-20261108-7",
+      "path": "web-angular/src/app/shared/ui/charts/collection-chart-view/collection-chart-view.spec.ts",
+      "layer": "web",
+      "purpose": "Generic adaptive criteria sizing/wrapping, consistent density and Chart default, with acceptance"
+    },
+    {
+      "id": "shared-search-20261108-8",
+      "path": "web-angular/scripts/support/collection-search-layout.mjs",
+      "layer": "web",
+      "purpose": "Generic adaptive criteria sizing/wrapping, consistent density and Chart default, with acceptance"
+    },
+    {
+      "id": "shared-search-proof-20261108-0",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-search-2026-11-08/countries-search-layout-results.json",
+      "layer": "verification",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-1",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-search-2026-11-08/districts-search-ar-dark-cards-900x640-open.png",
+      "layer": "verification",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-2",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-search-2026-11-08/districts-search-ar-dark-grid-390x844-closed.png",
+      "layer": "verification",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-3",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-search-2026-11-08/districts-search-en-light-cards-676x823-closed.png",
+      "layer": "verification",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-4",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-search-2026-11-08/districts-search-en-light-grid-676x823-closed.png",
+      "layer": "verification",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-5",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-search-2026-11-08/districts-search-layout-results.json",
+      "layer": "verification",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-6",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-search-2026-11-08/primeng-select-metadata-validation.json",
+      "layer": "verification",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-7",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-search-2026-11-08/search-layout-countries-verified.txt",
+      "layer": "verification",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-8",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-search-2026-11-08/search-layout-districts-verified.txt",
+      "layer": "verification",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-9",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-search-2026-11-08/search-layout-states-before.txt",
+      "layer": "verification",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-10",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-search-2026-11-08/search-layout-states-flatten-before.txt",
+      "layer": "verification",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-11",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-search-2026-11-08/search-layout-states-verified.txt",
+      "layer": "verification",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-12",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-search-2026-11-08/search-layout-tenants-final.txt",
+      "layer": "verification",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-13",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-search-2026-11-08/states-search-ar-dark-cards-900x640-open.png",
+      "layer": "verification",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-14",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-search-2026-11-08/states-search-ar-dark-grid-390x844-closed.png",
+      "layer": "verification",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-15",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-search-2026-11-08/states-search-en-light-cards-676x823-closed.png",
+      "layer": "verification",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-16",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-search-2026-11-08/states-search-en-light-grid-676x823-closed.png",
+      "layer": "verification",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-17",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-search-2026-11-08/states-search-layout-results.json",
+      "layer": "verification",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-18",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-search-2026-11-08/tenants-search-layout-results.json",
+      "layer": "verification",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-19",
+      "path": "web-angular/scripts/verify-countries-browser.mjs",
+      "layer": "web",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-20",
+      "path": "web-angular/scripts/verify-tenant-management-browser.mjs",
+      "layer": "web",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-proof-20261108-22",
+      "path": "web-angular/src/app/shared/ui/collections/grid-capabilities.spec.html",
+      "layer": "web",
+      "purpose": "Current no-overlap/density/Chart and compatibility evidence for shared collection search"
+    },
+    {
+      "id": "shared-search-angular-gate-20261108",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/shared-search-2026-11-08/angular-check.txt",
+      "layer": "verification",
+      "purpose": "Final full1003-test Angular quality gate; unchanged budgets, current warnings retained"
+    },
+    {
+      "id": "shared-search-placeholder-style-20261108",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.scss",
+      "layer": "web",
+      "purpose": "Generic inherited placeholder font-size hook; compact search opts in without changing entered text or forms"
+    },
+    {
+      "id": "two-row-search-20261108-0",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/two-row-search-2026-11-08/countries-browser.txt",
+      "layer": "verification",
+      "purpose": "Final two-row, all-width fill and compact-placeholder acceptance; earlier evidence retained"
+    },
+    {
+      "id": "two-row-search-20261108-1",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/two-row-search-2026-11-08/countries-results.json",
+      "layer": "verification",
+      "purpose": "Final two-row, all-width fill and compact-placeholder acceptance; earlier evidence retained"
+    },
+    {
+      "id": "two-row-search-20261108-2",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/two-row-search-2026-11-08/districts-browser.txt",
+      "layer": "verification",
+      "purpose": "Final two-row, all-width fill and compact-placeholder acceptance; earlier evidence retained"
+    },
+    {
+      "id": "two-row-search-20261108-3",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/two-row-search-2026-11-08/districts-results.json",
+      "layer": "verification",
+      "purpose": "Final two-row, all-width fill and compact-placeholder acceptance; earlier evidence retained"
+    },
+    {
+      "id": "two-row-search-20261108-4",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/two-row-search-2026-11-08/districts-search-ar-dark-grid-555x823-closed.png",
+      "layer": "verification",
+      "purpose": "Final two-row, all-width fill and compact-placeholder acceptance; earlier evidence retained"
+    },
+    {
+      "id": "two-row-search-20261108-5",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/two-row-search-2026-11-08/districts-search-en-light-cards-1332x823-closed.png",
+      "layer": "verification",
+      "purpose": "Final two-row, all-width fill and compact-placeholder acceptance; earlier evidence retained"
+    },
+    {
+      "id": "two-row-search-20261108-6",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/two-row-search-2026-11-08/districts-search-en-light-grid-1332x823-closed.png",
+      "layer": "verification",
+      "purpose": "Final two-row, all-width fill and compact-placeholder acceptance; earlier evidence retained"
+    },
+    {
+      "id": "two-row-search-20261108-7",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/two-row-search-2026-11-08/districts-search-en-light-grid-555x823-closed.png",
+      "layer": "verification",
+      "purpose": "Final two-row, all-width fill and compact-placeholder acceptance; earlier evidence retained"
+    },
+    {
+      "id": "two-row-search-20261108-8",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/two-row-search-2026-11-08/metadata-scope.json",
+      "layer": "verification",
+      "purpose": "Final two-row, all-width fill and compact-placeholder acceptance; earlier evidence retained"
+    },
+    {
+      "id": "two-row-search-20261108-9",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/two-row-search-2026-11-08/states-browser.txt",
+      "layer": "verification",
+      "purpose": "Final two-row, all-width fill and compact-placeholder acceptance; earlier evidence retained"
+    },
+    {
+      "id": "two-row-search-20261108-10",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/two-row-search-2026-11-08/states-results.json",
+      "layer": "verification",
+      "purpose": "Final two-row, all-width fill and compact-placeholder acceptance; earlier evidence retained"
+    },
+    {
+      "id": "two-row-search-20261108-11",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/two-row-search-2026-11-08/states-search-ar-dark-grid-555x823-closed.png",
+      "layer": "verification",
+      "purpose": "Final two-row, all-width fill and compact-placeholder acceptance; earlier evidence retained"
+    },
+    {
+      "id": "two-row-search-20261108-12",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/two-row-search-2026-11-08/states-search-en-light-cards-1332x823-closed.png",
+      "layer": "verification",
+      "purpose": "Final two-row, all-width fill and compact-placeholder acceptance; earlier evidence retained"
+    },
+    {
+      "id": "two-row-search-20261108-13",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/two-row-search-2026-11-08/states-search-en-light-grid-1332x823-closed.png",
+      "layer": "verification",
+      "purpose": "Final two-row, all-width fill and compact-placeholder acceptance; earlier evidence retained"
+    },
+    {
+      "id": "two-row-search-20261108-14",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/two-row-search-2026-11-08/states-search-en-light-grid-555x823-closed.png",
+      "layer": "verification",
+      "purpose": "Final two-row, all-width fill and compact-placeholder acceptance; earlier evidence retained"
+    },
+    {
+      "id": "two-row-search-20261108-15",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/two-row-search-2026-11-08/tenants-browser.txt",
+      "layer": "verification",
+      "purpose": "Final two-row, all-width fill and compact-placeholder acceptance; earlier evidence retained"
+    },
+    {
+      "id": "two-row-search-20261108-16",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/two-row-search-2026-11-08/tenants-results.json",
+      "layer": "verification",
+      "purpose": "Final two-row, all-width fill and compact-placeholder acceptance; earlier evidence retained"
+    },
+    {
+      "id": "two-row-search-angular-gate-20261108",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/two-row-search-2026-11-08/angular-check.txt",
+      "layer": "verification",
+      "purpose": "Final standalone full Angular gate for the unified two-row shared-search contract"
+    },
+    {
+      "id": "compact-status-20261108-0",
+      "path": "documentation/modules/platform/features/angular-districts-workspace/DISTRICTS_COMPACT_STATUS_2026-11-08.md",
+      "layer": "verification",
+      "purpose": "Approved Districts compact Status/search-operator placement and shared-layout regression evidence"
+    },
+    {
+      "id": "compact-status-20261108-1",
+      "path": "documentation/modules/platform/features/angular-districts-workspace/verification/compact-status-2026-11-08/angular-check.txt",
+      "layer": "verification",
+      "purpose": "Approved Districts compact Status/search-operator placement and shared-layout regression evidence"
+    },
+    {
+      "id": "compact-status-20261108-2",
+      "path": "documentation/modules/platform/features/angular-districts-workspace/verification/compact-status-2026-11-08/before-layout-failure.txt",
+      "layer": "verification",
+      "purpose": "Approved Districts compact Status/search-operator placement and shared-layout regression evidence"
+    },
+    {
+      "id": "compact-status-20261108-3",
+      "path": "documentation/modules/platform/features/angular-districts-workspace/verification/compact-status-2026-11-08/districts-browser.txt",
+      "layer": "verification",
+      "purpose": "Approved Districts compact Status/search-operator placement and shared-layout regression evidence"
+    },
+    {
+      "id": "compact-status-20261108-4",
+      "path": "documentation/modules/platform/features/angular-districts-workspace/verification/compact-status-2026-11-08/districts-results.json",
+      "layer": "verification",
+      "purpose": "Approved Districts compact Status/search-operator placement and shared-layout regression evidence"
+    },
+    {
+      "id": "compact-status-20261108-5",
+      "path": "documentation/modules/platform/features/angular-districts-workspace/verification/compact-status-2026-11-08/search-ar-dark-grid-555x823-closed.png",
+      "layer": "verification",
+      "purpose": "Approved Districts compact Status/search-operator placement and shared-layout regression evidence"
+    },
+    {
+      "id": "compact-status-20261108-6",
+      "path": "documentation/modules/platform/features/angular-districts-workspace/verification/compact-status-2026-11-08/search-en-light-cards-555x823-closed.png",
+      "layer": "verification",
+      "purpose": "Approved Districts compact Status/search-operator placement and shared-layout regression evidence"
+    },
+    {
+      "id": "compact-status-20261108-7",
+      "path": "documentation/modules/platform/features/angular-districts-workspace/verification/compact-status-2026-11-08/search-en-light-grid-1440x900-closed.png",
+      "layer": "verification",
+      "purpose": "Approved Districts compact Status/search-operator placement and shared-layout regression evidence"
+    },
+    {
+      "id": "compact-status-20261108-8",
+      "path": "documentation/modules/platform/features/angular-districts-workspace/verification/compact-status-2026-11-08/search-en-light-grid-320x720-closed.png",
+      "layer": "verification",
+      "purpose": "Approved Districts compact Status/search-operator placement and shared-layout regression evidence"
+    },
+    {
+      "id": "compact-status-20261108-9",
+      "path": "documentation/modules/platform/features/angular-districts-workspace/verification/compact-status-2026-11-08/search-en-light-grid-390x844-closed.png",
+      "layer": "verification",
+      "purpose": "Approved Districts compact Status/search-operator placement and shared-layout regression evidence"
+    },
+    {
+      "id": "compact-status-20261108-10",
+      "path": "documentation/modules/platform/features/angular-districts-workspace/verification/compact-status-2026-11-08/search-en-light-grid-555x823-closed.png",
+      "layer": "verification",
+      "purpose": "Approved Districts compact Status/search-operator placement and shared-layout regression evidence"
+    },
+    {
+      "id": "compact-status-20261108-11",
+      "path": "documentation/modules/platform/features/angular-districts-workspace/verification/compact-status-2026-11-08/states-browser.txt",
+      "layer": "verification",
+      "purpose": "Approved Districts compact Status/search-operator placement and shared-layout regression evidence"
+    },
+    {
+      "id": "compact-status-20261108-12",
+      "path": "documentation/modules/platform/features/angular-districts-workspace/verification/compact-status-2026-11-08/states-results.json",
+      "layer": "verification",
+      "purpose": "Approved Districts compact Status/search-operator placement and shared-layout regression evidence"
+    },
+    {
+      "id": "tenant-final-layout-aa5ceacccb85",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/TENANT_TABS_AND_EDIT_2026-11-08.md",
+      "layer": "verification",
+      "purpose": "Final shared header and Tenant layout acceptance; runtime scope and earlier evidence remain explicit"
+    },
+    {
+      "id": "tenant-final-layout-192d802b8ad7",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-layout-2026-11-08/districts-results.json",
+      "layer": "verification",
+      "purpose": "Final shared header and Tenant layout acceptance; runtime scope and earlier evidence remain explicit"
+    },
+    {
+      "id": "tenant-final-layout-ddb2f7d13fe4",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-layout-2026-11-08/districts-workflow-results.json",
+      "layer": "verification",
+      "purpose": "Final shared header and Tenant layout acceptance; runtime scope and earlier evidence remain explicit"
+    },
+    {
+      "id": "toolbar-icon-193b4b222d7d",
+      "path": "web-angular/src/app/shared/ui/icons/app-icon/app-icon.scss",
+      "layer": "web",
+      "purpose": "Shared collection toolbar glyph dimensions and rendered Reset parity"
+    },
+    {
+      "id": "toolbar-icon-7a34b971c456",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.scss",
+      "layer": "web",
+      "purpose": "Shared collection toolbar glyph dimensions and rendered Reset parity"
+    },
+    {
+      "id": "toolbar-icon-f4be2fca2064",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.scss",
+      "layer": "web",
+      "purpose": "Shared collection toolbar glyph dimensions and rendered Reset parity"
+    },
+    {
+      "id": "toolbar-icon-6581fee1e904",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/reset-icon-size-2026-11-09/angular-check.txt",
+      "layer": "verification",
+      "purpose": "Shared collection toolbar glyph dimensions and rendered Reset parity"
+    },
+    {
+      "id": "toolbar-icon-0f2989b2a43a",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/reset-icon-size-2026-11-09/before.txt",
+      "layer": "verification",
+      "purpose": "Shared collection toolbar glyph dimensions and rendered Reset parity"
+    },
+    {
+      "id": "toolbar-icon-a9df028b7766",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/reset-icon-size-2026-11-09/countries-browser.txt",
+      "layer": "verification",
+      "purpose": "Shared collection toolbar glyph dimensions and rendered Reset parity"
+    },
+    {
+      "id": "toolbar-icon-31937b164a15",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/reset-icon-size-2026-11-09/districts-browser.txt",
+      "layer": "verification",
+      "purpose": "Shared collection toolbar glyph dimensions and rendered Reset parity"
+    },
+    {
+      "id": "toolbar-icon-d175bf54dc7c",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/reset-icon-size-2026-11-09/measurements.json",
+      "layer": "verification",
+      "purpose": "Shared collection toolbar glyph dimensions and rendered Reset parity"
+    },
+    {
+      "id": "toolbar-icon-c8cac00e746b",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/reset-icon-size-2026-11-09/scope.json",
+      "layer": "verification",
+      "purpose": "Shared collection toolbar glyph dimensions and rendered Reset parity"
+    },
+    {
+      "id": "toolbar-icon-63c5f6a4abc1",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/reset-icon-size-2026-11-09/source-hashes.json",
+      "layer": "verification",
+      "purpose": "Shared collection toolbar glyph dimensions and rendered Reset parity"
+    },
+    {
+      "id": "toolbar-icon-e2d0b8d61654",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/reset-icon-size-2026-11-09/states-browser.txt",
+      "layer": "verification",
+      "purpose": "Shared collection toolbar glyph dimensions and rendered Reset parity"
+    },
+    {
+      "id": "geography-sort-e899c57f869b",
+      "path": "documentation/modules/platform/features/angular-states-workspace/GEOGRAPHY_SORT_2026-11-09.md",
+      "layer": "verification",
+      "purpose": "Three-state sorting and numeric ID acceptance"
+    },
+    {
+      "id": "geography-sort-cfa1a648121d",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/geography-sort-2026-11-09.json",
+      "layer": "verification",
+      "purpose": "Three-state sorting and numeric ID acceptance"
+    },
+    {
+      "id": "geography-sort-88a1a5b5a937",
+      "path": "web-angular/scripts/support/collection-sort-cycle.mjs",
+      "layer": "verification",
+      "purpose": "Three-state sorting and numeric ID acceptance"
     }
   ],
   "finalizationChecklist": [

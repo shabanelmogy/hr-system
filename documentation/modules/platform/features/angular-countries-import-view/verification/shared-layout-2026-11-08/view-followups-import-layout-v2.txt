@@ -1,0 +1,53 @@
+(node:48312) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/src/app/platform/auth/auth.fixture.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\F:\Portofolio Projects\ERPSYSTEM\web-angular\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Import layout passed en/light/320x720/false
+Import layout passed en/light/390x844/false
+Import layout passed en/light/571x823/false
+Import layout passed en/light/690x823/false
+Import layout passed en/light/800x823/false
+Import layout passed en/light/900x640/false
+Import layout passed en/light/900x640/true
+Import layout passed en/light/1012x823/false
+Import layout passed en/light/1012x823/true
+Import layout passed en/light/1440x900/false
+Import layout passed en/light/1440x900/true
+Import layout passed en/light/844x390/false
+Import layout passed ar/light/320x720/false
+Import layout passed ar/light/390x844/false
+Import layout passed ar/light/571x823/false
+Import layout passed ar/light/690x823/false
+Import layout passed ar/light/800x823/false
+Import layout passed ar/light/900x640/false
+Import layout passed ar/light/900x640/true
+Import layout passed ar/light/1012x823/false
+Import layout passed ar/light/1012x823/true
+Import layout passed ar/light/1440x900/false
+Import layout passed ar/light/1440x900/true
+Import layout passed ar/light/844x390/false
+Import layout passed en/dark/320x720/false
+Import layout passed en/dark/390x844/false
+Import layout passed en/dark/571x823/false
+Import layout passed en/dark/690x823/false
+Import layout passed en/dark/800x823/false
+Import layout passed en/dark/900x640/false
+Import layout passed en/dark/900x640/true
+Import layout passed en/dark/1012x823/false
+Import layout passed en/dark/1012x823/true
+Import layout passed en/dark/1440x900/false
+Import layout passed en/dark/1440x900/true
+Import layout passed en/dark/844x390/false
+Import layout passed ar/dark/320x720/false
+Import layout passed ar/dark/390x844/false
+Import layout passed ar/dark/571x823/false
+Import layout passed ar/dark/690x823/false
+Import layout passed ar/dark/800x823/false
+Import layout passed ar/dark/900x640/false
+Import layout passed ar/dark/900x640/true
+Import layout passed ar/dark/1012x823/false
+Import layout passed ar/dark/1012x823/true
+Import layout passed ar/dark/1440x900/false
+Import layout passed ar/dark/1440x900/true
+Import layout passed ar/dark/844x390/false
+Countries Import 48 browser cases passed.

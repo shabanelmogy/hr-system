@@ -703,6 +703,18 @@
       "layer": "documentation",
       "path": "documentation/plans/business/global-crystal-template-management/OPTIONAL_RPT_LANGUAGE_2026-11-03.md",
       "purpose": "Optional report Language binding and independent native verification"
+    },
+    {
+      "id": "entity-fingerprint-repair-0",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/ENTITY_FINGERPRINT_REPAIR.md",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-1",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/verification.json",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
     }
   ]
 }

@@ -680,6 +680,24 @@
       "layer": "documentation",
       "path": "documentation/modules/platform/features/angular-states-workspace/STATES_WORKSPACE_2026-11-06.md",
       "purpose": "Current Angular migration acceptance and hosted/fixture boundaries"
+    },
+    {
+      "id": "geography-sort-e899c57f869b",
+      "path": "documentation/modules/platform/features/angular-states-workspace/GEOGRAPHY_SORT_2026-11-09.md",
+      "layer": "verification",
+      "purpose": "Three-state sorting and numeric ID acceptance"
+    },
+    {
+      "id": "geography-sort-cfa1a648121d",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/geography-sort-2026-11-09.json",
+      "layer": "verification",
+      "purpose": "Three-state sorting and numeric ID acceptance"
+    },
+    {
+      "id": "geography-sort-e4a1fa8dcffd",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/GeographyIdSortTests.cs",
+      "layer": "verification",
+      "purpose": "Three-state sorting and numeric ID acceptance"
     }
   ]
 }

@@ -1,0 +1,254 @@
+[
+  {
+    "language": "en",
+    "scenario": "read-only",
+    "passed": true,
+    "writes": 0,
+    "detailCalls": 0,
+    "catalogCalls": 2,
+    "pageCalls": 2
+  },
+  {
+    "language": "en",
+    "scenario": "list-forbidden",
+    "passed": true,
+    "writes": 0,
+    "detailCalls": 0,
+    "catalogCalls": 1,
+    "pageCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "catalog-forbidden",
+    "passed": true,
+    "writes": 0,
+    "detailCalls": 0,
+    "catalogCalls": 1,
+    "pageCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "catalog-error",
+    "passed": true,
+    "writes": 0,
+    "detailCalls": 0,
+    "catalogCalls": 2,
+    "pageCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "detail-forbidden",
+    "passed": true,
+    "writes": 0,
+    "detailCalls": 1,
+    "catalogCalls": 2,
+    "pageCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "detail-error",
+    "passed": true,
+    "writes": 0,
+    "detailCalls": 2,
+    "catalogCalls": 2,
+    "pageCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "catalog-incompatible",
+    "passed": true,
+    "writes": 0,
+    "detailCalls": 2,
+    "catalogCalls": 3,
+    "pageCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "field",
+    "passed": true,
+    "writes": 1,
+    "detailCalls": 0,
+    "catalogCalls": 2,
+    "pageCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "duplicate",
+    "passed": true,
+    "writes": 1,
+    "detailCalls": 0,
+    "catalogCalls": 2,
+    "pageCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "seat",
+    "passed": true,
+    "writes": 1,
+    "detailCalls": 1,
+    "catalogCalls": 2,
+    "pageCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "conflict",
+    "passed": true,
+    "writes": 1,
+    "detailCalls": 1,
+    "catalogCalls": 2,
+    "pageCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "uncertain",
+    "passed": true,
+    "writes": 1,
+    "detailCalls": 0,
+    "catalogCalls": 2,
+    "pageCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "mutation-forbidden",
+    "passed": true,
+    "writes": 1,
+    "detailCalls": 0,
+    "catalogCalls": 2,
+    "pageCalls": 1
+  },
+  {
+    "language": "en",
+    "scenario": "pending",
+    "passed": true,
+    "writes": 1,
+    "detailCalls": 0,
+    "catalogCalls": 3,
+    "pageCalls": 2
+  },
+  {
+    "language": "ar",
+    "scenario": "read-only",
+    "passed": true,
+    "writes": 0,
+    "detailCalls": 0,
+    "catalogCalls": 2,
+    "pageCalls": 2
+  },
+  {
+    "language": "ar",
+    "scenario": "list-forbidden",
+    "passed": true,
+    "writes": 0,
+    "detailCalls": 0,
+    "catalogCalls": 1,
+    "pageCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "catalog-forbidden",
+    "passed": true,
+    "writes": 0,
+    "detailCalls": 0,
+    "catalogCalls": 1,
+    "pageCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "catalog-error",
+    "passed": true,
+    "writes": 0,
+    "detailCalls": 0,
+    "catalogCalls": 2,
+    "pageCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "detail-forbidden",
+    "passed": true,
+    "writes": 0,
+    "detailCalls": 1,
+    "catalogCalls": 2,
+    "pageCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "detail-error",
+    "passed": true,
+    "writes": 0,
+    "detailCalls": 2,
+    "catalogCalls": 2,
+    "pageCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "catalog-incompatible",
+    "passed": true,
+    "writes": 0,
+    "detailCalls": 2,
+    "catalogCalls": 3,
+    "pageCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "field",
+    "passed": true,
+    "writes": 1,
+    "detailCalls": 0,
+    "catalogCalls": 2,
+    "pageCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "duplicate",
+    "passed": true,
+    "writes": 1,
+    "detailCalls": 0,
+    "catalogCalls": 2,
+    "pageCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "seat",
+    "passed": true,
+    "writes": 1,
+    "detailCalls": 1,
+    "catalogCalls": 2,
+    "pageCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "conflict",
+    "passed": true,
+    "writes": 1,
+    "detailCalls": 1,
+    "catalogCalls": 2,
+    "pageCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "uncertain",
+    "passed": true,
+    "writes": 1,
+    "detailCalls": 0,
+    "catalogCalls": 2,
+    "pageCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "mutation-forbidden",
+    "passed": true,
+    "writes": 1,
+    "detailCalls": 0,
+    "catalogCalls": 2,
+    "pageCalls": 1
+  },
+  {
+    "language": "ar",
+    "scenario": "pending",
+    "passed": true,
+    "writes": 1,
+    "detailCalls": 0,
+    "catalogCalls": 3,
+    "pageCalls": 2
+  }
+]

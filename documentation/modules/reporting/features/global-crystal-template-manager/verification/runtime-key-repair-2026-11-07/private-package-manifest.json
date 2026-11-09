@@ -1,0 +1,13 @@
+{
+  "RuntimeAssemblySha256": "c2780cc950a1ff1a7085e8ec0453fb16028feaf93e21ce989847ff204852a363",
+  "RuntimeBaseUrl": "https://crystalreport-generator.runasp.net/",
+  "RuntimeBuildId": "278fb45a-1a7c-43f2-8fa3-05564d4a00c6",
+  "RequiresMatchingPrivateConfiguration": true,
+  "Published": false,
+  "PreserveHostedDirectories": [
+    "Reports",
+    "App_Data"
+  ],
+  "ContractFingerprint": "2e0dfd64ef9fc69fbc45c19542ae157bcfb88564114a40a9edc8c566253f6b89",
+  "CreatedUtc": "2026-11-07T12:25:40.0124735Z"
+}

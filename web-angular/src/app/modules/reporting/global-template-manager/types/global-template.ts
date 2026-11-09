@@ -73,6 +73,7 @@ export const globalTemplateVersionSchema = z.object({
   validationReason: z.string().nullable(),
   validationContractSchemaVersion: z.number().nullable(),
   validationContractFingerprint: z.string().nullable(),
+  isContractCurrent: z.boolean().nullish(),
   isPublished: z.boolean(),
   createdOn: z.string(),
 });
@@ -155,6 +156,16 @@ export function parseGlobalTemplateCandidates(
 export type GlobalTemplateRow = z.infer<typeof globalTemplateRowSchema>;
 export type GlobalTemplateDetail = z.infer<typeof globalTemplateDetailSchema>;
 export type GlobalTemplateVersion = z.infer<typeof globalTemplateVersionSchema>;
+export function isGlobalTemplateVersionCurrent(
+  version: GlobalTemplateVersion,
+  fingerprint: string | undefined,
+): boolean {
+  return (
+    !!fingerprint &&
+    version.validationStatus === 'Valid' &&
+    (version.isContractCurrent ?? version.validationContractFingerprint === fingerprint)
+  );
+}
 export type GlobalTemplateContract = z.infer<typeof globalTemplateEntitySchema>;
 export const globalTemplateDesignSourceSchema = z.object({
   bindingKind: z

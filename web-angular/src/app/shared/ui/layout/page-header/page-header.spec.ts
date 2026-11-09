@@ -1,25 +1,49 @@
-import { PageHeader, partitionPageViews, type PageViewOption } from './page-header';
+import { PageHeader, type PageViewOption } from './page-header';
 import { TestBed } from '@angular/core/testing';
 import { provideAppTheme } from '../../../../../theme/public-api';
-describe('Shared collection header mobile view partition', () => {
+describe('Shared collection header views', () => {
+  afterEach(() => TestBed.resetTestingModule());
   const options: readonly PageViewOption[] = ['grid', 'cards', 'chart', 'report', 'import'].map(
     (id) => ({ id, label: id, icon: 'apps' }),
   );
-  it('keeps the active overflow view visible in the last compact slot without changing source order', () => {
-    const result = partitionPageViews(options, 'report', 2);
-    expect(result.visible.map((item) => item.id)).toEqual(['grid', 'report']);
-    expect(result.overflow.map((item) => item.id)).toEqual(['cards', 'chart', 'import']);
-    expect(options.map((item) => item.id)).toEqual(['grid', 'cards', 'chart', 'report', 'import']);
-  });
-  it('retains all small sets and never produces an empty visible slot when the limit is zero', () => {
-    expect(partitionPageViews(options.slice(0, 2), 'grid', 2).overflow).toEqual([]);
-    expect(partitionPageViews(options, 'import', 0).visible.map((item) => item.id)).toEqual([
-      'import',
-    ]);
+  it('renders every available view in order and emits a change from its direct button', async () => {
+    TestBed.configureTestingModule({ providers: [provideAppTheme()] });
+    const fixture = TestBed.createComponent(PageHeader);
+    fixture.componentRef.setInput('title', 'Countries');
+    fixture.componentRef.setInput('variant', 'collection');
+    fixture.componentRef.setInput('views', options);
+    fixture.componentRef.setInput('view', 'report');
+    const changed = vi.fn();
+    fixture.componentInstance.viewChange.subscribe(changed);
+    await fixture.whenStable();
+    const root = fixture.nativeElement as HTMLElement;
+    const buttons = [...root.querySelectorAll<HTMLElement>('[data-view]')];
+    expect(buttons.map((button) => button.dataset['view'])).toEqual(
+      options.map((option) => option.id),
+    );
+    expect(root.querySelector('[data-view="report"] button')?.getAttribute('aria-pressed')).toBe(
+      'true',
+    );
+    root.querySelector<HTMLButtonElement>('[data-view="import"] button')?.click();
+    expect(changed).toHaveBeenCalledWith('import');
   });
 });
 describe('Shared page title and back navigation', () => {
   afterEach(() => TestBed.resetTestingModule());
+  it('renders a view badge only when the current view has a label', async () => {
+    TestBed.configureTestingModule({ providers: [provideAppTheme()] });
+    const fixture = TestBed.createComponent(PageHeader);
+    fixture.componentRef.setInput('title', 'Tenant Administrators');
+    fixture.componentRef.setInput('variant', 'collection');
+    await fixture.whenStable();
+    const root = fixture.nativeElement as HTMLElement;
+    expect(root.querySelector('.view-badge')).toBeNull();
+
+    fixture.componentRef.setInput('views', [{ id: 'cards', label: 'Cards', icon: 'cards' }]);
+    fixture.componentRef.setInput('view', 'cards');
+    await fixture.whenStable();
+    expect(root.querySelector('.view-badge')?.textContent).toContain('Cards');
+  });
   it('omits a fabricated count when a cursor collection has no known total', async () => {
     TestBed.configureTestingModule({ providers: [provideAppTheme()] });
     const fixture = TestBed.createComponent(PageHeader);

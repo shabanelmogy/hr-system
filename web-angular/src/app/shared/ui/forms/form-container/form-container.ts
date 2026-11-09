@@ -46,6 +46,8 @@ export class FormContainer {
   readonly submitFullWidth = input(false);
   readonly showSubmit = input(true);
   readonly fillContent = input(false);
+  readonly contentScroll = input(true);
+  readonly footerVisible = input(true);
   readonly validSubmit = output<void>();
   readonly sectionFocusRequested = output<string>();
   private readonly registry = inject(FormFieldRegistry);

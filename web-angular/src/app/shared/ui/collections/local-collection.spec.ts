@@ -2,6 +2,16 @@ import { signal } from '@angular/core';
 import { createLocalCollection } from './local-collection';
 
 describe('Loaded local collection adapter', () => {
+  it('clears sorting to the source order and resets paging while retaining filters', () => {
+    const { collection } = setup();
+    collection.changeFilter({ field: 'label', operator: 'contains', values: ['l'] });
+    collection.changeSort({ field: 'value', direction: 'asc' });
+    collection.changeSort(null);
+    expect(collection.sort()).toBeUndefined();
+    expect(collection.filter()).not.toBeNull();
+    expect(collection.source().query.pageIndex).toBe(0);
+    expect(collection.source().result?.rows.map((row) => row.id)).toEqual([0, 2]);
+  });
   const initialRows = [
     { id: 0, label: 'Zulu', value: 10 },
     { id: 1, label: null, value: 2 },

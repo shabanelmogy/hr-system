@@ -1,4 +1,5 @@
 import { Component, computed, effect, inject, signal, untracked, viewChild } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   LocalizationRuntime,
   UiTextPipe,
@@ -12,7 +13,6 @@ import {
   PageHeader,
   CollectionEmptyTemplate,
   type PageViewOption,
-  type CollectionSearch,
 } from '../../../../../../shared/ui/public-api';
 import { CollectionChartView } from '../../../../../../shared/ui/charts/public-api';
 import { GlobalReportView, globalReportAllowed } from '../../../../../reporting/public-api';
@@ -21,17 +21,12 @@ import { DistrictStatesState } from '../../state/district-states-state';
 import { DistrictEditorState, type DistrictSaved } from '../../state/district-editor-state';
 import { DistrictLifecycleState } from '../../state/district-lifecycle-state';
 import { DistrictCollectionView } from '../../components/district-collection-view/district-collection-view';
-import { DistrictListCriteria } from '../../components/district-list-criteria/district-list-criteria';
 import { DistrictEditor } from '../../components/district-editor/district-editor';
 import { DistrictDetailDialog } from '../../components/district-detail-dialog/district-detail-dialog';
 import { DistrictLifecycleConfirmation } from '../../components/district-lifecycle-confirmation/district-lifecycle-confirmation';
 import { DistrictImportView } from '../../components/district-import-view/district-import-view';
 import { districtChartData } from '../../utils/district-chart-data';
-import {
-  districtSearchFields,
-  districtSearchOperators,
-  type DistrictListItem,
-} from '../../types/district';
+import { type DistrictListItem } from '../../types/district';
 
 type DistrictView = 'grid' | 'cards' | 'chart' | 'report' | 'import';
 
@@ -45,11 +40,11 @@ type DistrictView = 'grid' | 'cards' | 'chart' | 'report' | 'import';
     CollectionRecordFeedback,
   ],
   imports: [
+    NgTemplateOutlet,
     PageHeader,
     FeedbackState,
     CollectionEmptyTemplate,
     DistrictCollectionView,
-    DistrictListCriteria,
     DistrictEditor,
     DistrictDetailDialog,
     DistrictLifecycleConfirmation,
@@ -79,6 +74,13 @@ export class DistrictsPage {
   private readonly notices = inject(FeedbackNotifications);
   private readonly drafts = inject(UnsavedChanges);
   private readonly report = viewChild<GlobalReportView>('districtReport');
+  private readonly importView = viewChild<DistrictImportView>('districtImport');
+  readonly importHeaderActions = computed(() =>
+    this.view() === 'import' ? (this.importView()?.headerActions() ?? null) : null,
+  );
+  readonly reportHeaderActions = computed(() =>
+    this.view() === 'report' ? (this.report()?.headerActions() ?? null) : null,
+  );
   private readonly preference = createViewPreference<DistrictView>({
     storageKey: 'erp-angular:views:districts-view-layout',
     defaultValue: 'grid',
@@ -91,7 +93,11 @@ export class DistrictsPage {
       !this.drafts.dirty(),
   });
   readonly view = this.preference.value;
-  readonly toolbarVisible = signal(true);
+  readonly searchVisible = signal(false);
+  readonly reportFiltersVisible = signal(true);
+  readonly filtersVisible = computed(() =>
+    this.view() === 'report' ? this.reportFiltersVisible() : this.searchVisible(),
+  );
   readonly canReport = computed(
     () => this.state.canRead() && globalReportAllowed(this.auth.readIdentity(), 'districts'),
   );
@@ -128,32 +134,7 @@ export class DistrictsPage {
         )
       : { metrics: [], plots: [] };
   });
-  readonly chartSearch = computed<CollectionSearch>(() => ({
-    value: this.state.searchDraft(),
-    maxLength: 200,
-    placeholder: this.districtText('districts.search.placeholder'),
-    field: {
-      label: this.text('search.searchField'),
-      value: this.state.query().searchField,
-      options: districtSearchFields.map((value) => ({
-        value,
-        label:
-          value === 'all'
-            ? this.text('common.all')
-            : value === 'nameAr' || value === 'nameEn'
-              ? this.text('general.' + value)
-              : this.districtText('districts.' + value),
-      })),
-    },
-    operator: {
-      label: this.text('search.searchType'),
-      value: this.state.query().searchOperator,
-      options: districtSearchOperators.map((value) => ({
-        value,
-        label: this.districtText('districts.search.operators.' + value),
-      })),
-    },
-  }));
+
   constructor() {
     effect(() => {
       if (this.state.parentRevision() > 0) untracked(() => this.parents.invalidate());
@@ -169,6 +150,10 @@ export class DistrictsPage {
           this.state.changePage({ pageIndex: 0, pageSize: this.state.query().pageSize });
       });
     });
+  }
+  toggleFilters(): void {
+    const visible = this.view() === 'report' ? this.reportFiltersVisible : this.searchVisible;
+    visible.update((open) => !open);
   }
   async chooseView(value: string): Promise<void> {
     if (

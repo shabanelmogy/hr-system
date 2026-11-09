@@ -58,7 +58,7 @@ import { StateCardContent } from '../state-card-content/state-card-content';
 })
 export class StateCollectionView {
   readonly kind = input<'grid' | 'cards'>('grid');
-  readonly toolbarVisible = input(true);
+  readonly searchVisible = input(false);
   readonly state = inject(StateReadState);
   readonly editor = inject(StateEditorState);
   readonly lifecycle = inject(StateLifecycleState);
@@ -87,10 +87,7 @@ export class StateCollectionView {
       status: this.status,
     }),
   );
-  readonly sort = computed(() => ({
-    field: this.state.query().sortBy,
-    direction: this.state.query().sortDirection,
-  }));
+  readonly sort = this.state.sort;
   readonly search = computed<CollectionSearch>(() => ({
     value: this.state.searchDraft(),
     maxLength: 200,

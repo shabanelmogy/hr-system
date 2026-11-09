@@ -50,6 +50,16 @@ namespace CrystalReportGeneratorApi.ContractTests
                 Assert(registry.Count == 6, "Exactly six entity profiles are required.");
                 Assert(registry.Fingerprint == ComputeSha256(sourceBytes),
                     "Registry fingerprint is not the SHA-256 of the exact artifact bytes.");
+                var builtRegistryType = runtimeAssembly.GetType("CrystalReportGeneratorApi.Runtime.Rendering.CrystalReportProfileRegistry", true);
+                var builtRegistry = builtRegistryType.GetMethod("CreateDefault").Invoke(null, null);
+                foreach (var entity in new[] { "countries", "states", "districts", "system-error-logs", "addresstypes", "fiscalyears" })
+                {
+                    var fingerprint = registry.GetFingerprint(entity);
+                    Assert(fingerprint != registry.Fingerprint, "Entity and deployment fingerprints must be separate.");
+                    Assert((string)builtRegistryType.GetMethod("GetFingerprint").Invoke(builtRegistry, new object[] { entity }) == fingerprint,
+                        "Built runtime entity fingerprint differs from the linked contract harness.");
+                    Console.WriteLine("entity-fingerprint:" + entity + "=" + fingerprint);
+                }
 
                 var countries = registry.GetRequired("COUNTRIES");
                 Assert(countries.Scope == "global", "Countries must remain global.");

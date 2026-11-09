@@ -24,7 +24,7 @@ export function collectionRowInteraction(event: Event): boolean {
   return (
     event.target instanceof Element &&
     !!event.target.closest(
-      'button,a,input,select,textarea,p-checkbox,p-radiobutton,p-select,[role="checkbox"],[role="combobox"],[role="button"],[role="menuitem"],[role="textbox"],[contenteditable]:not([contenteditable="false"])',
+      'button,a,input,label,select,textarea,p-checkbox,p-radiobutton,p-select,[role="checkbox"],[role="combobox"],[role="button"],[role="menuitem"],[role="textbox"],[contenteditable]:not([contenteditable="false"])',
     )
   );
 }

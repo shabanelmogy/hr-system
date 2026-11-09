@@ -26,6 +26,8 @@ public sealed class ManagedCrystalReportContractRegistry : IManagedCrystalReport
         RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     private readonly IReadOnlyDictionary<string, ManagedCrystalReportEntityContract> _entities;
+    private readonly IReadOnlyDictionary<string, string> _entityFingerprints;
+    private readonly Dictionary<string, HashSet<string>> _compatibleFingerprints;
 
     private ManagedCrystalReportContractRegistry(
         int schemaVersion,
@@ -35,6 +37,10 @@ public sealed class ManagedCrystalReportContractRegistry : IManagedCrystalReport
         SchemaVersion = schemaVersion;
         Fingerprint = fingerprint;
         _entities = entities;
+        _entityFingerprints = entities.ToDictionary(pair => pair.Key,
+            pair => EntityContractFingerprint.Compute(schemaVersion, DefinitionFields(pair.Value)), StringComparer.OrdinalIgnoreCase);
+        _compatibleFingerprints = _entityFingerprints.ToDictionary(pair => pair.Key,
+            pair => new HashSet<string>([pair.Value, fingerprint], StringComparer.Ordinal), StringComparer.OrdinalIgnoreCase);
     }
 
     public int SchemaVersion { get; }
@@ -51,10 +57,15 @@ public sealed class ManagedCrystalReportContractRegistry : IManagedCrystalReport
                 entity.Filters.ToArray()))
             .ToArray();
 
-    public static ManagedCrystalReportContractRegistry LoadEmbedded() =>
-        Load(ManagedCrystalReportContractArtifact.ReadAllBytes());
+    public string GetFingerprint(string entityKey) => _entityFingerprints[GetRequired(entityKey).EntityKey];
 
-    public static ManagedCrystalReportContractRegistry Load(byte[] artifactBytes)
+    public bool IsCompatibleFingerprint(string entityKey, string? fingerprint) =>
+        fingerprint is not null && _compatibleFingerprints.TryGetValue(entityKey, out var accepted) && accepted.Contains(fingerprint);
+
+    public static ManagedCrystalReportContractRegistry LoadEmbedded() =>
+        Load(ManagedCrystalReportContractArtifact.ReadAllBytes(), ManagedCrystalReportContractArtifact.ReadLegacyArtifacts());
+
+    public static ManagedCrystalReportContractRegistry Load(byte[] artifactBytes, IEnumerable<byte[]>? legacyArtifacts = null)
     {
         ArgumentNullException.ThrowIfNull(artifactBytes);
         if (artifactBytes.Length == 0)
@@ -98,10 +109,60 @@ public sealed class ManagedCrystalReportContractRegistry : IManagedCrystalReport
 
         var fingerprint = Convert.ToHexString(SHA256.HashData(artifactBytes))
             .ToLowerInvariant();
-        return new ManagedCrystalReportContractRegistry(
+        var registry = new ManagedCrystalReportContractRegistry(
             document.SchemaVersion,
             fingerprint,
             new ReadOnlyDictionary<string, ManagedCrystalReportEntityContract>(entities));
+        foreach (var legacyBytes in legacyArtifacts ?? [])
+        {
+            var legacy = Load(legacyBytes);
+            var legacyHashes = HistoricalByteFingerprints(legacyBytes);
+            foreach (var entity in entities.Keys)
+                if (legacy.Supports(entity) && legacy.GetFingerprint(entity) == registry.GetFingerprint(entity))
+                    registry._compatibleFingerprints[entity].UnionWith(legacyHashes);
+        }
+        return registry;
+    }
+
+    private static IEnumerable<string> HistoricalByteFingerprints(byte[] bytes)
+    {
+        yield return Convert.ToHexString(SHA256.HashData(bytes)).ToLowerInvariant();
+        // Released Windows and Git checkouts can package CRLF or LF without a semantic change.
+        var text = Encoding.UTF8.GetString(bytes).TrimStart('\uFEFF').Replace("\r\n", "\n", StringComparison.Ordinal);
+        foreach (var newlineText in new[] { text, text.Replace("\n", "\r\n", StringComparison.Ordinal) })
+        {
+            var encoded = Encoding.UTF8.GetBytes(newlineText);
+            yield return Convert.ToHexString(SHA256.HashData(encoded)).ToLowerInvariant();
+            yield return Convert.ToHexString(SHA256.HashData(new byte[] { 0xef, 0xbb, 0xbf }.Concat(encoded).ToArray())).ToLowerInvariant();
+        }
+    }
+
+    private static IEnumerable<string> DefinitionFields(ManagedCrystalReportEntityContract profile)
+    {
+        yield return profile.EntityKey;
+        yield return profile.Scope;
+        yield return profile.TableName;
+        yield return profile.MaxRows.ToString(CultureInfo.InvariantCulture);
+        yield return profile.Columns.Count.ToString(CultureInfo.InvariantCulture);
+        foreach (var column in profile.Columns)
+        {
+            yield return column.Name;
+            yield return column.Type;
+            yield return column.Nullable ? "1" : "0";
+        }
+        yield return profile.Filters.Count.ToString(CultureInfo.InvariantCulture);
+        foreach (var filter in profile.Filters) yield return filter;
+        yield return profile.Parameters.Count.ToString(CultureInfo.InvariantCulture);
+        foreach (var parameter in profile.Parameters)
+        {
+            yield return parameter.Name;
+            yield return parameter.Type;
+            yield return parameter.Required ? "1" : "0";
+            yield return parameter.AllowMultipleValues ? "1" : "0";
+            yield return parameter.DiscreteOnly ? "1" : "0";
+            yield return parameter.AllowedValues.Count.ToString(CultureInfo.InvariantCulture);
+            foreach (var value in parameter.AllowedValues) yield return value;
+        }
     }
 
     public ManagedCrystalReportEntityContract GetRequired(string entityKey)

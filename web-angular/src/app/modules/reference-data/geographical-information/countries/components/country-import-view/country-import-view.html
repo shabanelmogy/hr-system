@@ -1,5 +1,6 @@
 @if (state.allowed()) {
   <erp-spreadsheet-import-panel
+    [externalActions]="externalActions()"
     [headers]="state.policy.headers.join(', ')"
     [fileName]="state.fileName()"
     [rowCount]="state.rows().length"

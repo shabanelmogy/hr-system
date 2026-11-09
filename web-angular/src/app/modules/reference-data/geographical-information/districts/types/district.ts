@@ -46,7 +46,7 @@ export const districtSearchOperators = [
   'startsWith',
   'endsWith',
 ] as const;
-export const districtSortFields = ['nameEn', 'nameAr', 'code', 'state', 'createdOn'] as const;
+export const districtSortFields = ['id', 'nameEn', 'nameAr', 'code', 'state', 'createdOn'] as const;
 export const districtQuerySchema = z.strictObject({
   pageNumber: int32,
   pageSize: z.int().check(z.minimum(1), z.maximum(5000)),

@@ -1,4 +1,5 @@
 import { Component, computed, inject, input } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   ActionButton,
   CardList,
@@ -49,6 +50,7 @@ import { TenantCardContent } from '../tenant-card-content/tenant-card-content';
   styleUrl: './tenant-collection-view.scss',
 })
 export class TenantCollectionView {
+  private readonly router = inject(Router);
   readonly kind = input<'grid' | 'cards'>('grid');
   readonly toolbarVisible = input(true);
   readonly reads = inject(TenantReadState);
@@ -64,10 +66,7 @@ export class TenantCollectionView {
       (value) => this.date(value),
     ),
   );
-  readonly sort = computed(() => ({
-    field: this.reads.query().columnName,
-    direction: this.reads.query().sortDirection === 'DESC' ? ('desc' as const) : ('asc' as const),
-  }));
+  readonly sort = this.reads.sort;
   readonly search = computed<CollectionSearch>(() => ({
     value: this.reads.searchDraft(),
     maxLength: 200,
@@ -83,9 +82,12 @@ export class TenantCollectionView {
     if (
       event.action === 'edit' &&
       source.kind === 'ready' &&
-      source.result?.rows.some((row) => row.id === event.row.id)
+      source.result?.rows.some(
+        (row) => row.id === event.row.id && row.lifecycleStatus === 'active',
+      ) &&
+      this.editor.canCreate()
     )
-      this.editor.edit(event.row.id);
+      void this.router.navigate(['/super-admin/tenants', event.row.id, 'edit']);
   }
   text(key: string): string {
     return this.locale.translate(

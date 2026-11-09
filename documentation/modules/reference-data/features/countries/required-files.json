@@ -55,6 +55,12 @@
   ],
   "requiredFiles": [
     {
+      "id": "angular-collection-views-design-contract",
+      "path": "documentation/guides/web/architecture/ANGULAR_COLLECTION_VIEWS.md",
+      "layer": "documentation",
+      "purpose": "Current five-view design matrix, reusable rules and separately owned open findings"
+    },
+    {
       "id": "root-agent-guidance",
       "layer": "configuration",
       "path": "AGENTS.md",
@@ -907,6 +913,12 @@
       "purpose": "Actual shell/sidebar/filter/options/browser verification"
     },
     {
+      "id": "current-grid-layout-assertions",
+      "path": "web-angular/scripts/country-grid-layout-assertions.mjs",
+      "layer": "web",
+      "purpose": "Responsive Grid layout, touch density, row menu, selection, keyboard sort and server-filter browser assertions"
+    },
+    {
       "id": "current-grid-api-filter-contract",
       "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountries/CountryGridFilters.cs",
       "layer": "api",
@@ -1607,6 +1619,30 @@
       "layer": "api",
       "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Migrations/20261102143015_AddGlobalReferenceReportViews.Designer.cs",
       "purpose": "ReferenceData-owned schema-bound navigation reporting View and verification"
+    },
+    {
+      "id": "shared-import-layout-20261108-contract",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/IMPORT_LAYOUT_2026-11-08.md",
+      "layer": "documentation",
+      "purpose": "Current shared Import commands/status row and header count/touch corrections with executed evidence"
+    },
+    {
+      "id": "geography-sort-e899c57f869b",
+      "path": "documentation/modules/platform/features/angular-states-workspace/GEOGRAPHY_SORT_2026-11-09.md",
+      "layer": "verification",
+      "purpose": "Three-state sorting and numeric ID acceptance"
+    },
+    {
+      "id": "geography-sort-cfa1a648121d",
+      "path": "documentation/modules/platform/features/angular-states-workspace/verification/geography-sort-2026-11-09.json",
+      "layer": "verification",
+      "purpose": "Three-state sorting and numeric ID acceptance"
+    },
+    {
+      "id": "geography-sort-e4a1fa8dcffd",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/GeographyIdSortTests.cs",
+      "layer": "verification",
+      "purpose": "Three-state sorting and numeric ID acceptance"
     }
   ]
 }

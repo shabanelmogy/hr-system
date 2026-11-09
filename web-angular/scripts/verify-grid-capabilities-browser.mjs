@@ -131,26 +131,34 @@ try {
               column = document.querySelector('th[data-column-key=name]'),
               style = getComputedStyle(title);
             const badges = header.querySelector('.header-badges').getBoundingClientRect(),
-              controls = header.querySelector('.header-controls').getBoundingClientRect();
+              actions = header.querySelector('.header-actions').getBoundingClientRect(),
+              views = header.querySelector('.view-toggles').getBoundingClientRect();
             return {
               headerHeight: header.getBoundingClientRect().height,
-              titleFontSize: style.fontSize,
+              titleFontSize: parseFloat(style.fontSize),
               titleWeight: style.fontWeight,
               columnHeight: column.getBoundingClientRect().height,
               badgesTop: badges.top,
-              controlsBottom: controls.bottom,
+              badgesBottom: badges.bottom,
+              actionsTop: actions.top,
+              viewsTop: views.top,
+              titleBottom: title.getBoundingClientRect().bottom,
               documentWidth: document.documentElement.scrollWidth,
               viewport: innerWidth,
             };
           });
           assert.ok(geometry.documentWidth <= width + 1);
           assert.equal(geometry.columnHeight, 56);
-          assert.equal(geometry.titleFontSize, width === 390 ? '16px' : '18px');
+          if (width === 390)
+            assert.ok(geometry.titleFontSize >= 12 && geometry.titleFontSize <= 14);
+          else assert.equal(geometry.titleFontSize, 18);
           assert.equal(geometry.titleWeight, '600');
           if (width === 390)
             assert.ok(
-              geometry.badgesTop >= geometry.controlsBottom,
-              'Mobile badges occupy their own row below controls',
+              geometry.badgesTop >= geometry.titleBottom &&
+                geometry.actionsTop >= geometry.badgesBottom &&
+                geometry.viewsTop >= geometry.titleBottom,
+              'Mobile badges follow the title and collection controls share the second row',
             );
           await page.screenshot({
             path: path.join(output, `${palette}-${mode}-${language}-${width}-grid.png`),

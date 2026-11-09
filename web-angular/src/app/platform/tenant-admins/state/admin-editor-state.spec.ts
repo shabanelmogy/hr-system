@@ -42,6 +42,16 @@ describe('Tenant administrator command lifetime', () => {
     return { state, identity, service, detail, command, refresh };
   }
   afterEach(() => TestBed.resetTestingModule());
+  it('prefills a known tenant for scoped creation and rejects an unknown tenant', () => {
+    const { state, service } = setup();
+    state.create('unknown');
+    expect(state.active()).toBe(false);
+    state.create('t');
+    expect(state.form.tenantIds().value()).toEqual(['t']);
+    expect(state.form.defaultTenantId().value()).toBe('t');
+    expect(state.unsaved()).toBe(false);
+    expect(service.create).not.toHaveBeenCalled();
+  });
   const fill = (state: AdminEditorState) =>
     state.form().value.set({
       firstName: 'Ali',

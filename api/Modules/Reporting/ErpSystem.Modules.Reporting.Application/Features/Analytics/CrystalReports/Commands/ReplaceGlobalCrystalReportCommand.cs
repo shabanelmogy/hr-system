@@ -49,7 +49,7 @@ public sealed class ReplaceGlobalCrystalReportCommandHandler(IGlobalCrystalRepor
         var committed = false;
         try
         {
-            if (file.ValidationContractSchemaVersion != contracts.SchemaVersion || file.ValidationContractFingerprint != contracts.Fingerprint)
+            if (file.ValidationContractSchemaVersion != contracts.SchemaVersion || !contracts.IsCompatibleFingerprint(snapshot.EntityKey, file.ValidationContractFingerprint))
                 return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportContractStale);
             var result = await unitOfWork.ExecuteAtomicallyAsync([$"global-crystal:report:{request.ReportId:N}"], async token =>
             {
@@ -64,7 +64,7 @@ public sealed class ReplaceGlobalCrystalReportCommandHandler(IGlobalCrystalRepor
                 report.AddVersion(version);
                 store.AddVersion(version);
                 store.ApplyRowVersion(report, expected);
-                report.Publish(version, contracts.Fingerprint);
+                report.Publish(version, version.ValidationContractFingerprint ?? string.Empty);
                 await unitOfWork.SaveChangesAsync(token);
                 return Result.Success();
             }, cancellationToken);

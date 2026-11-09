@@ -66,7 +66,7 @@ public sealed class GlobalCrystalReportReplacementTests
     {
         await using var context = Context();
         var report = await SeedAsync(context);
-        var result = await new GetGlobalCrystalReportUploadTargetQueryHandler(new GlobalCrystalReportStore(context),
+        var result = await new GetGlobalCrystalReportUploadTargetQueryHandler(new GlobalCrystalReportStore(context, ManagedCrystalReportContractRegistry.LoadEmbedded()),
             Policy(), new GlobalCrystalReportTestAccess(), Errors()).Handle(
             new GetGlobalCrystalReportUploadTargetQuery(entity, fileName), default);
 
@@ -142,7 +142,7 @@ public sealed class GlobalCrystalReportReplacementTests
         var files = new GlobalCrystalReportTestFiles();
         var policy = Policy(ReportingPermissions.EditGlobalCrystalReportAccess);
         var access = new GlobalCrystalReportTestAccess { Granted = true, Rights = right };
-        var result = await new ReplaceGlobalCrystalReportCommandHandler(new GlobalCrystalReportStore(context), files,
+        var result = await new ReplaceGlobalCrystalReportCommandHandler(new GlobalCrystalReportStore(context, ManagedCrystalReportContractRegistry.LoadEmbedded()), files,
             context, policy, Contracts, Errors(), access).Handle(
             new ReplaceGlobalCrystalReportCommand(report.Id, Convert.ToBase64String(report.RowVersion), Upload()), default);
 
@@ -153,7 +153,7 @@ public sealed class GlobalCrystalReportReplacementTests
 
     private static ReplaceGlobalCrystalReportCommandHandler Handler(ReportingDbContext context,
         GlobalCrystalReportTestFiles files, GlobalCrystalReportPolicy? policy = null) =>
-        new(new GlobalCrystalReportStore(context), files, context, policy ?? Policy(), Contracts, Errors(), new GlobalCrystalReportTestAccess());
+        new(new GlobalCrystalReportStore(context, ManagedCrystalReportContractRegistry.LoadEmbedded()), files, context, policy ?? Policy(), Contracts, Errors(), new GlobalCrystalReportTestAccess());
 
     private static async Task<GlobalCrystalReport> SeedAsync(ReportingDbContext context)
     {

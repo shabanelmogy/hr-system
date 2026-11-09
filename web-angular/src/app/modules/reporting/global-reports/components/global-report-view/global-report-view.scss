@@ -1,12 +1,7 @@
-:host {
-  display: block;
-  min-width: 0;
-}
-main {
-  padding: 24px;
-  max-width: 1600px;
-  margin: auto;
-  min-width: 0;
+@use '../../../../../shared/ui/layout/collection-page';
+@include collection-page.shell;
+:host:not(.embedded) {
+  block-size: var(--report-viewport-height, 100dvh);
 }
 .actions {
   display: flex;
@@ -16,25 +11,7 @@ main {
 erp-pdf-viewer {
   display: block;
 }
-@media (max-width: 600px) {
-  main {
-    padding: 12px;
-  }
-}
-:host.embedded {
-  height: 100%;
-  min-height: 0;
-}
-main.embedded {
-  height: 100%;
-  min-height: 0;
-  padding: 0;
-  max-width: none;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-main.embedded erp-report-workspace {
+erp-report-workspace {
   flex: 1;
   min-height: 0;
 }

@@ -1,0 +1,7182 @@
+[
+  {
+    "language": "en",
+    "mode": "light",
+    "measurements": [
+      {
+        "kind": "grid",
+        "width": 390,
+        "height": 844,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 340,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 25,
+              "y": 188.53125,
+              "right": 191,
+              "bottom": 232.53125,
+              "width": 166,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 199,
+              "y": 188.53125,
+              "right": 365,
+              "bottom": 232.53125,
+              "width": 166,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 25,
+              "y": 240.53125,
+              "right": 365,
+              "bottom": 284.53125,
+              "width": 340,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 25,
+              "y": 292.53125,
+              "right": 169,
+              "bottom": 336.53125,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 265,
+              "y": 292.53125,
+              "right": 309,
+              "bottom": 336.53125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 317,
+              "y": 292.53125,
+              "right": 365,
+              "bottom": 336.53125,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 571,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 521,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 25,
+              "y": 193.65625,
+              "right": 281.5,
+              "bottom": 237.65625,
+              "width": 256.5,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 289.5,
+              "y": 193.65625,
+              "right": 546,
+              "bottom": 237.65625,
+              "width": 256.5,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 25,
+              "y": 245.65625,
+              "right": 546,
+              "bottom": 289.65625,
+              "width": 521,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 25,
+              "y": 297.65625,
+              "right": 169,
+              "bottom": 341.65625,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 446,
+              "y": 297.65625,
+              "right": 490,
+              "bottom": 341.65625,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 498,
+              "y": 297.65625,
+              "right": 546,
+              "bottom": 341.65625,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 676,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 610,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 33,
+              "y": 225.3125,
+              "right": 145,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 153,
+              "y": 225.3125,
+              "right": 281,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 289,
+              "y": 225.3125,
+              "right": 510,
+              "bottom": 269.3125,
+              "width": 221,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 518,
+              "y": 225.3125,
+              "right": 643,
+              "bottom": 269.3125,
+              "width": 125,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 543,
+              "y": 283.3125,
+              "right": 587,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 595,
+              "y": 283.3125,
+              "right": 643,
+              "bottom": 327.3125,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 690,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 624,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 33,
+              "y": 225.3125,
+              "right": 145,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 153,
+              "y": 225.3125,
+              "right": 281,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 289,
+              "y": 225.3125,
+              "right": 517,
+              "bottom": 269.3125,
+              "width": 228,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 525,
+              "y": 225.3125,
+              "right": 657,
+              "bottom": 269.3125,
+              "width": 132,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 557,
+              "y": 283.3125,
+              "right": 601,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 609,
+              "y": 283.3125,
+              "right": 657,
+              "bottom": 327.3125,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 800,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 734,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 33,
+              "y": 225.3125,
+              "right": 145,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 153,
+              "y": 225.3125,
+              "right": 281,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 289,
+              "y": 225.3125,
+              "right": 518,
+              "bottom": 269.3125,
+              "width": 229,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 526,
+              "y": 225.3125,
+              "right": 659,
+              "bottom": 269.3125,
+              "width": 133,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 667,
+              "y": 225.3125,
+              "right": 711,
+              "bottom": 269.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 719,
+              "y": 225.3125,
+              "right": 767,
+              "bottom": 269.3125,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 754,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 105,
+              "y": 246.984375,
+              "right": 217,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 225,
+              "y": 246.984375,
+              "right": 353,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 361,
+              "y": 246.984375,
+              "right": 600,
+              "bottom": 290.984375,
+              "width": 239,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 608,
+              "y": 246.984375,
+              "right": 751,
+              "bottom": 290.984375,
+              "width": 143,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 759,
+              "y": 246.984375,
+              "right": 803,
+              "bottom": 290.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 811,
+              "y": 246.984375,
+              "right": 859,
+              "bottom": 290.984375,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 538,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 321,
+              "y": 240.984375,
+              "right": 586,
+              "bottom": 284.984375,
+              "width": 265,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 594,
+              "y": 240.984375,
+              "right": 859,
+              "bottom": 284.984375,
+              "width": 265,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 321,
+              "y": 292.984375,
+              "right": 859,
+              "bottom": 336.984375,
+              "width": 538,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 321,
+              "y": 344.984375,
+              "right": 465,
+              "bottom": 388.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 759,
+              "y": 344.984375,
+              "right": 803,
+              "bottom": 388.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 811,
+              "y": 344.984375,
+              "right": 859,
+              "bottom": 388.984375,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 866,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 105,
+              "y": 246.984375,
+              "right": 217,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 225,
+              "y": 246.984375,
+              "right": 353,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 361,
+              "y": 246.984375,
+              "right": 711,
+              "bottom": 290.984375,
+              "width": 350,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 719,
+              "y": 246.984375,
+              "right": 863,
+              "bottom": 290.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 871,
+              "y": 246.984375,
+              "right": 915,
+              "bottom": 290.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 923,
+              "y": 246.984375,
+              "right": 971,
+              "bottom": 290.984375,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 650,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 321,
+              "y": 246.984375,
+              "right": 433,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 441,
+              "y": 246.984375,
+              "right": 569,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 577,
+              "y": 246.984375,
+              "right": 792,
+              "bottom": 290.984375,
+              "width": 215,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 800,
+              "y": 246.984375,
+              "right": 919,
+              "bottom": 290.984375,
+              "width": 119,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 927,
+              "y": 246.984375,
+              "right": 971,
+              "bottom": 290.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 321,
+              "y": 304.984375,
+              "right": 369,
+              "bottom": 348.984375,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 1294,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 105,
+              "y": 209,
+              "right": 217,
+              "bottom": 253,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 229,
+              "y": 209,
+              "right": 357,
+              "bottom": 253,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 369,
+              "y": 209,
+              "right": 745,
+              "bottom": 253,
+              "width": 376,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 757,
+              "y": 209,
+              "right": 901,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 1248.265625,
+              "y": 209,
+              "right": 1339,
+              "bottom": 253,
+              "width": 90.734375,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 1351,
+              "y": 209,
+              "right": 1399,
+              "bottom": 253,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 1078,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 321,
+              "y": 209,
+              "right": 433,
+              "bottom": 253,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 445,
+              "y": 209,
+              "right": 573,
+              "bottom": 253,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 585,
+              "y": 209,
+              "right": 961,
+              "bottom": 253,
+              "width": 376,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 973,
+              "y": 209,
+              "right": 1117,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 1248.265625,
+              "y": 209,
+              "right": 1339,
+              "bottom": 253,
+              "width": 90.734375,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 1351,
+              "y": 209,
+              "right": 1399,
+              "bottom": 253,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 844,
+        "height": 390,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 778,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 33,
+              "y": 176,
+              "right": 145,
+              "bottom": 220,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 153,
+              "y": 176,
+              "right": 281,
+              "bottom": 220,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 289,
+              "y": 176,
+              "right": 551,
+              "bottom": 220,
+              "width": 262,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 559,
+              "y": 176,
+              "right": 703,
+              "bottom": 220,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 711,
+              "y": 176,
+              "right": 755,
+              "bottom": 220,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 763,
+              "y": 176,
+              "right": 811,
+              "bottom": 220,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 390,
+        "height": 844,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 340,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 25,
+              "y": 188.53125,
+              "right": 191,
+              "bottom": 232.53125,
+              "width": 166,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 199,
+              "y": 188.53125,
+              "right": 365,
+              "bottom": 232.53125,
+              "width": 166,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 25,
+              "y": 240.53125,
+              "right": 365,
+              "bottom": 284.53125,
+              "width": 340,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 25,
+              "y": 292.53125,
+              "right": 139,
+              "bottom": 336.53125,
+              "width": 114,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 147,
+              "y": 292.53125,
+              "right": 261,
+              "bottom": 336.53125,
+              "width": 114,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 269,
+              "y": 292.53125,
+              "right": 313,
+              "bottom": 336.53125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 321,
+              "y": 292.53125,
+              "right": 365,
+              "bottom": 336.53125,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 571,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 521,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 25,
+              "y": 193.65625,
+              "right": 281.5,
+              "bottom": 237.65625,
+              "width": 256.5,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 289.5,
+              "y": 193.65625,
+              "right": 546,
+              "bottom": 237.65625,
+              "width": 256.5,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 25,
+              "y": 245.65625,
+              "right": 546,
+              "bottom": 289.65625,
+              "width": 521,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 25,
+              "y": 297.65625,
+              "right": 169,
+              "bottom": 341.65625,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 177,
+              "y": 297.65625,
+              "right": 321,
+              "bottom": 341.65625,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 329,
+              "y": 297.65625,
+              "right": 373,
+              "bottom": 341.65625,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 381,
+              "y": 297.65625,
+              "right": 425,
+              "bottom": 341.65625,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 676,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 610,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 33,
+              "y": 225.3125,
+              "right": 145,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 153,
+              "y": 225.3125,
+              "right": 281,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 289,
+              "y": 225.3125,
+              "right": 510,
+              "bottom": 269.3125,
+              "width": 221,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 518,
+              "y": 225.3125,
+              "right": 643,
+              "bottom": 269.3125,
+              "width": 125,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 33,
+              "y": 283.3125,
+              "right": 177,
+              "bottom": 327.3125,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 185,
+              "y": 283.3125,
+              "right": 229,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 237,
+              "y": 283.3125,
+              "right": 281,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 690,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 624,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 33,
+              "y": 225.3125,
+              "right": 145,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 153,
+              "y": 225.3125,
+              "right": 281,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 289,
+              "y": 225.3125,
+              "right": 517,
+              "bottom": 269.3125,
+              "width": 228,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 525,
+              "y": 225.3125,
+              "right": 657,
+              "bottom": 269.3125,
+              "width": 132,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 33,
+              "y": 283.3125,
+              "right": 177,
+              "bottom": 327.3125,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 185,
+              "y": 283.3125,
+              "right": 229,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 237,
+              "y": 283.3125,
+              "right": 281,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 800,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 734,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 33,
+              "y": 225.3125,
+              "right": 145,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 153,
+              "y": 225.3125,
+              "right": 281,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 289,
+              "y": 225.3125,
+              "right": 507,
+              "bottom": 269.3125,
+              "width": 218,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 515,
+              "y": 225.3125,
+              "right": 637,
+              "bottom": 269.3125,
+              "width": 122,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 645,
+              "y": 225.3125,
+              "right": 767,
+              "bottom": 269.3125,
+              "width": 122,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 33,
+              "y": 283.3125,
+              "right": 77,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 85,
+              "y": 283.3125,
+              "right": 129,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 754,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 105,
+              "y": 246.984375,
+              "right": 217,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 225,
+              "y": 246.984375,
+              "right": 353,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 361,
+              "y": 246.984375,
+              "right": 585.65625,
+              "bottom": 290.984375,
+              "width": 224.65625,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 593.65625,
+              "y": 246.984375,
+              "right": 722.328125,
+              "bottom": 290.984375,
+              "width": 128.671875,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 730.328125,
+              "y": 246.984375,
+              "right": 859,
+              "bottom": 290.984375,
+              "width": 128.671875,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 105,
+              "y": 304.984375,
+              "right": 149,
+              "bottom": 348.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 157,
+              "y": 304.984375,
+              "right": 201,
+              "bottom": 348.984375,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 538,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 321,
+              "y": 240.984375,
+              "right": 586,
+              "bottom": 284.984375,
+              "width": 265,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 594,
+              "y": 240.984375,
+              "right": 859,
+              "bottom": 284.984375,
+              "width": 265,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 321,
+              "y": 292.984375,
+              "right": 859,
+              "bottom": 336.984375,
+              "width": 538,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 321,
+              "y": 344.984375,
+              "right": 465,
+              "bottom": 388.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 473,
+              "y": 344.984375,
+              "right": 617,
+              "bottom": 388.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 625,
+              "y": 344.984375,
+              "right": 669,
+              "bottom": 388.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 677,
+              "y": 344.984375,
+              "right": 721,
+              "bottom": 388.984375,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 866,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 105,
+              "y": 246.984375,
+              "right": 217,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 225,
+              "y": 246.984375,
+              "right": 353,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 361,
+              "y": 246.984375,
+              "right": 585.65625,
+              "bottom": 290.984375,
+              "width": 224.65625,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 593.65625,
+              "y": 246.984375,
+              "right": 722.328125,
+              "bottom": 290.984375,
+              "width": 128.671875,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 730.328125,
+              "y": 246.984375,
+              "right": 859,
+              "bottom": 290.984375,
+              "width": 128.671875,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 867,
+              "y": 246.984375,
+              "right": 911,
+              "bottom": 290.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 919,
+              "y": 246.984375,
+              "right": 963,
+              "bottom": 290.984375,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 650,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 321,
+              "y": 246.984375,
+              "right": 433,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 441,
+              "y": 246.984375,
+              "right": 569,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 577,
+              "y": 246.984375,
+              "right": 819,
+              "bottom": 290.984375,
+              "width": 242,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 827,
+              "y": 246.984375,
+              "right": 971,
+              "bottom": 290.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 321,
+              "y": 304.984375,
+              "right": 465,
+              "bottom": 348.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 473,
+              "y": 304.984375,
+              "right": 517,
+              "bottom": 348.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 525,
+              "y": 304.984375,
+              "right": 569,
+              "bottom": 348.984375,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 1294,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 105,
+              "y": 209,
+              "right": 217,
+              "bottom": 253,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 229,
+              "y": 209,
+              "right": 357,
+              "bottom": 253,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 369,
+              "y": 209,
+              "right": 745,
+              "bottom": 253,
+              "width": 376,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 757,
+              "y": 209,
+              "right": 901,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 913,
+              "y": 209,
+              "right": 1057,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 1069,
+              "y": 209,
+              "right": 1159.484375,
+              "bottom": 253,
+              "width": 90.484375,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 1171.484375,
+              "y": 209,
+              "right": 1268.21875,
+              "bottom": 253,
+              "width": 96.734375,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 1078,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 321,
+              "y": 209,
+              "right": 433,
+              "bottom": 253,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 445,
+              "y": 209,
+              "right": 573,
+              "bottom": 253,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 585,
+              "y": 209,
+              "right": 863.78125,
+              "bottom": 253,
+              "width": 278.78125,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 875.78125,
+              "y": 209,
+              "right": 1019.78125,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 1031.78125,
+              "y": 209,
+              "right": 1175.78125,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 1187.78125,
+              "y": 209,
+              "right": 1278.265625,
+              "bottom": 253,
+              "width": 90.484375,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 1290.265625,
+              "y": 209,
+              "right": 1387,
+              "bottom": 253,
+              "width": 96.734375,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 844,
+        "height": 390,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 778,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 33,
+              "y": 176,
+              "right": 145,
+              "bottom": 220,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 153,
+              "y": 176,
+              "right": 281,
+              "bottom": 220,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 289,
+              "y": 176,
+              "right": 504.328125,
+              "bottom": 220,
+              "width": 215.328125,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 512.328125,
+              "y": 176,
+              "right": 631.671875,
+              "bottom": 220,
+              "width": 119.34375,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 639.671875,
+              "y": 176,
+              "right": 759,
+              "bottom": 220,
+              "width": 119.328125,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 767,
+              "y": 176,
+              "right": 811,
+              "bottom": 220,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 33,
+              "y": 234,
+              "right": 77,
+              "bottom": 278,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      }
+    ],
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "measurements": [
+      {
+        "kind": "grid",
+        "width": 390,
+        "height": 844,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 340,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 199,
+              "y": 188.53125,
+              "right": 365,
+              "bottom": 232.53125,
+              "width": 166,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 25,
+              "y": 188.53125,
+              "right": 191,
+              "bottom": 232.53125,
+              "width": 166,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 25,
+              "y": 240.53125,
+              "right": 365,
+              "bottom": 284.53125,
+              "width": 340,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 221,
+              "y": 292.53125,
+              "right": 365,
+              "bottom": 336.53125,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 81,
+              "y": 292.53125,
+              "right": 125,
+              "bottom": 336.53125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 25,
+              "y": 292.53125,
+              "right": 73,
+              "bottom": 336.53125,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 571,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 521,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 289.5,
+              "y": 193.65625,
+              "right": 546,
+              "bottom": 237.65625,
+              "width": 256.5,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 25,
+              "y": 193.65625,
+              "right": 281.5,
+              "bottom": 237.65625,
+              "width": 256.5,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 25,
+              "y": 245.65625,
+              "right": 546,
+              "bottom": 289.65625,
+              "width": 521,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 402,
+              "y": 297.65625,
+              "right": 546,
+              "bottom": 341.65625,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 81,
+              "y": 297.65625,
+              "right": 125,
+              "bottom": 341.65625,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 25,
+              "y": 297.65625,
+              "right": 73,
+              "bottom": 341.65625,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 676,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 610,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 531,
+              "y": 225.3125,
+              "right": 643,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 395,
+              "y": 225.3125,
+              "right": 523,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 166,
+              "y": 225.3125,
+              "right": 387,
+              "bottom": 269.3125,
+              "width": 221,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 33,
+              "y": 225.3125,
+              "right": 158,
+              "bottom": 269.3125,
+              "width": 125,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 89,
+              "y": 283.3125,
+              "right": 133,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 33,
+              "y": 283.3125,
+              "right": 81,
+              "bottom": 327.3125,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 690,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 624,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 545,
+              "y": 225.3125,
+              "right": 657,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 409,
+              "y": 225.3125,
+              "right": 537,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 173,
+              "y": 225.3125,
+              "right": 401,
+              "bottom": 269.3125,
+              "width": 228,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 33,
+              "y": 225.3125,
+              "right": 165,
+              "bottom": 269.3125,
+              "width": 132,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 89,
+              "y": 283.3125,
+              "right": 133,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 33,
+              "y": 283.3125,
+              "right": 81,
+              "bottom": 327.3125,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 800,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 734,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 655,
+              "y": 225.3125,
+              "right": 767,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 519,
+              "y": 225.3125,
+              "right": 647,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 282,
+              "y": 225.3125,
+              "right": 511,
+              "bottom": 269.3125,
+              "width": 229,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 141,
+              "y": 225.3125,
+              "right": 274,
+              "bottom": 269.3125,
+              "width": 133,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 89,
+              "y": 225.3125,
+              "right": 133,
+              "bottom": 269.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 33,
+              "y": 225.3125,
+              "right": 81,
+              "bottom": 269.3125,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 754,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 683,
+              "y": 246.984375,
+              "right": 795,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 547,
+              "y": 246.984375,
+              "right": 675,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 300,
+              "y": 246.984375,
+              "right": 539,
+              "bottom": 290.984375,
+              "width": 239,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 149,
+              "y": 246.984375,
+              "right": 292,
+              "bottom": 290.984375,
+              "width": 143,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 97,
+              "y": 246.984375,
+              "right": 141,
+              "bottom": 290.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 246.984375,
+              "right": 89,
+              "bottom": 290.984375,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 538,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 314,
+              "y": 240.984375,
+              "right": 579,
+              "bottom": 284.984375,
+              "width": 265,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 41,
+              "y": 240.984375,
+              "right": 306,
+              "bottom": 284.984375,
+              "width": 265,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 41,
+              "y": 292.984375,
+              "right": 579,
+              "bottom": 336.984375,
+              "width": 538,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 435,
+              "y": 344.984375,
+              "right": 579,
+              "bottom": 388.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 97,
+              "y": 344.984375,
+              "right": 141,
+              "bottom": 388.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 344.984375,
+              "right": 89,
+              "bottom": 388.984375,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 866,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 795,
+              "y": 246.984375,
+              "right": 907,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 659,
+              "y": 246.984375,
+              "right": 787,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 301,
+              "y": 246.984375,
+              "right": 651,
+              "bottom": 290.984375,
+              "width": 350,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 149,
+              "y": 246.984375,
+              "right": 293,
+              "bottom": 290.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 97,
+              "y": 246.984375,
+              "right": 141,
+              "bottom": 290.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 246.984375,
+              "right": 89,
+              "bottom": 290.984375,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 650,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 579,
+              "y": 246.984375,
+              "right": 691,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 443,
+              "y": 246.984375,
+              "right": 571,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 220,
+              "y": 246.984375,
+              "right": 435,
+              "bottom": 290.984375,
+              "width": 215,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 93,
+              "y": 246.984375,
+              "right": 212,
+              "bottom": 290.984375,
+              "width": 119,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 41,
+              "y": 246.984375,
+              "right": 85,
+              "bottom": 290.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 643,
+              "y": 304.984375,
+              "right": 691,
+              "bottom": 348.984375,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 1294,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 1223,
+              "y": 209,
+              "right": 1335,
+              "bottom": 253,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 1083,
+              "y": 209,
+              "right": 1211,
+              "bottom": 253,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 695,
+              "y": 209,
+              "right": 1071,
+              "bottom": 253,
+              "width": 376,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 539,
+              "y": 209,
+              "right": 683,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 101,
+              "y": 209,
+              "right": 220.28125,
+              "bottom": 253,
+              "width": 119.28125,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 209,
+              "right": 89,
+              "bottom": 253,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 1078,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 1007,
+              "y": 209,
+              "right": 1119,
+              "bottom": 253,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 867,
+              "y": 209,
+              "right": 995,
+              "bottom": 253,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 479,
+              "y": 209,
+              "right": 855,
+              "bottom": 253,
+              "width": 376,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 323,
+              "y": 209,
+              "right": 467,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 101,
+              "y": 209,
+              "right": 220.28125,
+              "bottom": 253,
+              "width": 119.28125,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 209,
+              "right": 89,
+              "bottom": 253,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 844,
+        "height": 390,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 778,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 699,
+              "y": 176,
+              "right": 811,
+              "bottom": 220,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 563,
+              "y": 176,
+              "right": 691,
+              "bottom": 220,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 293,
+              "y": 176,
+              "right": 555,
+              "bottom": 220,
+              "width": 262,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 141,
+              "y": 176,
+              "right": 285,
+              "bottom": 220,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 89,
+              "y": 176,
+              "right": 133,
+              "bottom": 220,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 33,
+              "y": 176,
+              "right": 81,
+              "bottom": 220,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 390,
+        "height": 844,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 340,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 199,
+              "y": 188.53125,
+              "right": 365,
+              "bottom": 232.53125,
+              "width": 166,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 25,
+              "y": 188.53125,
+              "right": 191,
+              "bottom": 232.53125,
+              "width": 166,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 25,
+              "y": 240.53125,
+              "right": 365,
+              "bottom": 284.53125,
+              "width": 340,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 251,
+              "y": 292.53125,
+              "right": 365,
+              "bottom": 336.53125,
+              "width": 114,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 129,
+              "y": 292.53125,
+              "right": 243,
+              "bottom": 336.53125,
+              "width": 114,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 77,
+              "y": 292.53125,
+              "right": 121,
+              "bottom": 336.53125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 25,
+              "y": 292.53125,
+              "right": 69,
+              "bottom": 336.53125,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 571,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 521,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 289.5,
+              "y": 193.65625,
+              "right": 546,
+              "bottom": 237.65625,
+              "width": 256.5,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 25,
+              "y": 193.65625,
+              "right": 281.5,
+              "bottom": 237.65625,
+              "width": 256.5,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 25,
+              "y": 245.65625,
+              "right": 546,
+              "bottom": 289.65625,
+              "width": 521,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 402,
+              "y": 297.65625,
+              "right": 546,
+              "bottom": 341.65625,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 250,
+              "y": 297.65625,
+              "right": 394,
+              "bottom": 341.65625,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 198,
+              "y": 297.65625,
+              "right": 242,
+              "bottom": 341.65625,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 146,
+              "y": 297.65625,
+              "right": 190,
+              "bottom": 341.65625,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 676,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 610,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 531,
+              "y": 225.3125,
+              "right": 643,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 395,
+              "y": 225.3125,
+              "right": 523,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 166,
+              "y": 225.3125,
+              "right": 387,
+              "bottom": 269.3125,
+              "width": 221,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 33,
+              "y": 225.3125,
+              "right": 158,
+              "bottom": 269.3125,
+              "width": 125,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 499,
+              "y": 283.3125,
+              "right": 643,
+              "bottom": 327.3125,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 447,
+              "y": 283.3125,
+              "right": 491,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 395,
+              "y": 283.3125,
+              "right": 439,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 690,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 624,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 545,
+              "y": 225.3125,
+              "right": 657,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 409,
+              "y": 225.3125,
+              "right": 537,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 173,
+              "y": 225.3125,
+              "right": 401,
+              "bottom": 269.3125,
+              "width": 228,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 33,
+              "y": 225.3125,
+              "right": 165,
+              "bottom": 269.3125,
+              "width": 132,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 513,
+              "y": 283.3125,
+              "right": 657,
+              "bottom": 327.3125,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 461,
+              "y": 283.3125,
+              "right": 505,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 409,
+              "y": 283.3125,
+              "right": 453,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 800,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 734,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 655,
+              "y": 225.3125,
+              "right": 767,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 519,
+              "y": 225.3125,
+              "right": 647,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 293,
+              "y": 225.3125,
+              "right": 511,
+              "bottom": 269.3125,
+              "width": 218,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 163,
+              "y": 225.3125,
+              "right": 285,
+              "bottom": 269.3125,
+              "width": 122,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 33,
+              "y": 225.3125,
+              "right": 155,
+              "bottom": 269.3125,
+              "width": 122,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 723,
+              "y": 283.3125,
+              "right": 767,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 671,
+              "y": 283.3125,
+              "right": 715,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 754,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 683,
+              "y": 246.984375,
+              "right": 795,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 547,
+              "y": 246.984375,
+              "right": 675,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 314.34375,
+              "y": 246.984375,
+              "right": 539,
+              "bottom": 290.984375,
+              "width": 224.65625,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 177.671875,
+              "y": 246.984375,
+              "right": 306.34375,
+              "bottom": 290.984375,
+              "width": 128.671875,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 41,
+              "y": 246.984375,
+              "right": 169.671875,
+              "bottom": 290.984375,
+              "width": 128.671875,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 751,
+              "y": 304.984375,
+              "right": 795,
+              "bottom": 348.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 699,
+              "y": 304.984375,
+              "right": 743,
+              "bottom": 348.984375,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 538,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 314,
+              "y": 240.984375,
+              "right": 579,
+              "bottom": 284.984375,
+              "width": 265,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 41,
+              "y": 240.984375,
+              "right": 306,
+              "bottom": 284.984375,
+              "width": 265,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 41,
+              "y": 292.984375,
+              "right": 579,
+              "bottom": 336.984375,
+              "width": 538,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 435,
+              "y": 344.984375,
+              "right": 579,
+              "bottom": 388.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 283,
+              "y": 344.984375,
+              "right": 427,
+              "bottom": 388.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 231,
+              "y": 344.984375,
+              "right": 275,
+              "bottom": 388.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 179,
+              "y": 344.984375,
+              "right": 223,
+              "bottom": 388.984375,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 866,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 795,
+              "y": 246.984375,
+              "right": 907,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 659,
+              "y": 246.984375,
+              "right": 787,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 426.34375,
+              "y": 246.984375,
+              "right": 651,
+              "bottom": 290.984375,
+              "width": 224.65625,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 289.671875,
+              "y": 246.984375,
+              "right": 418.34375,
+              "bottom": 290.984375,
+              "width": 128.671875,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 153,
+              "y": 246.984375,
+              "right": 281.671875,
+              "bottom": 290.984375,
+              "width": 128.671875,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 101,
+              "y": 246.984375,
+              "right": 145,
+              "bottom": 290.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 49,
+              "y": 246.984375,
+              "right": 93,
+              "bottom": 290.984375,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 650,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 579,
+              "y": 246.984375,
+              "right": 691,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 443,
+              "y": 246.984375,
+              "right": 571,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 193,
+              "y": 246.984375,
+              "right": 435,
+              "bottom": 290.984375,
+              "width": 242,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 41,
+              "y": 246.984375,
+              "right": 185,
+              "bottom": 290.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 547,
+              "y": 304.984375,
+              "right": 691,
+              "bottom": 348.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 495,
+              "y": 304.984375,
+              "right": 539,
+              "bottom": 348.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 443,
+              "y": 304.984375,
+              "right": 487,
+              "bottom": 348.984375,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 1294,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 1223,
+              "y": 209,
+              "right": 1335,
+              "bottom": 253,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 1083,
+              "y": 209,
+              "right": 1211,
+              "bottom": 253,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 695,
+              "y": 209,
+              "right": 1071,
+              "bottom": 253,
+              "width": 376,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 539,
+              "y": 209,
+              "right": 683,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 383,
+              "y": 209,
+              "right": 527,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 285.21875,
+              "y": 209,
+              "right": 371,
+              "bottom": 253,
+              "width": 85.78125,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 147.9375,
+              "y": 209,
+              "right": 273.21875,
+              "bottom": 253,
+              "width": 125.28125,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 1078,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 1007,
+              "y": 209,
+              "right": 1119,
+              "bottom": 253,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 867,
+              "y": 209,
+              "right": 995,
+              "bottom": 253,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 600.0625,
+              "y": 209,
+              "right": 855,
+              "bottom": 253,
+              "width": 254.9375,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 444.0625,
+              "y": 209,
+              "right": 588.0625,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 288.0625,
+              "y": 209,
+              "right": 432.0625,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 190.28125,
+              "y": 209,
+              "right": 276.0625,
+              "bottom": 253,
+              "width": 85.78125,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 53,
+              "y": 209,
+              "right": 178.28125,
+              "bottom": 253,
+              "width": 125.28125,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 844,
+        "height": 390,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 778,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 699,
+              "y": 176,
+              "right": 811,
+              "bottom": 220,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 563,
+              "y": 176,
+              "right": 691,
+              "bottom": 220,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 339.671875,
+              "y": 176,
+              "right": 555,
+              "bottom": 220,
+              "width": 215.328125,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 212.328125,
+              "y": 176,
+              "right": 331.671875,
+              "bottom": 220,
+              "width": 119.34375,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 85,
+              "y": 176,
+              "right": 204.328125,
+              "bottom": 220,
+              "width": 119.328125,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 33,
+              "y": 176,
+              "right": 77,
+              "bottom": 220,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 767,
+              "y": 234,
+              "right": 811,
+              "bottom": 278,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      }
+    ],
+    "passed": true
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "measurements": [
+      {
+        "kind": "grid",
+        "width": 390,
+        "height": 844,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 340,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 25,
+              "y": 188.53125,
+              "right": 191,
+              "bottom": 232.53125,
+              "width": 166,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 199,
+              "y": 188.53125,
+              "right": 365,
+              "bottom": 232.53125,
+              "width": 166,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 25,
+              "y": 240.53125,
+              "right": 365,
+              "bottom": 284.53125,
+              "width": 340,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 25,
+              "y": 292.53125,
+              "right": 169,
+              "bottom": 336.53125,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 265,
+              "y": 292.53125,
+              "right": 309,
+              "bottom": 336.53125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 317,
+              "y": 292.53125,
+              "right": 365,
+              "bottom": 336.53125,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 571,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 521,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 25,
+              "y": 193.65625,
+              "right": 281.5,
+              "bottom": 237.65625,
+              "width": 256.5,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 289.5,
+              "y": 193.65625,
+              "right": 546,
+              "bottom": 237.65625,
+              "width": 256.5,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 25,
+              "y": 245.65625,
+              "right": 546,
+              "bottom": 289.65625,
+              "width": 521,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 25,
+              "y": 297.65625,
+              "right": 169,
+              "bottom": 341.65625,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 446,
+              "y": 297.65625,
+              "right": 490,
+              "bottom": 341.65625,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 498,
+              "y": 297.65625,
+              "right": 546,
+              "bottom": 341.65625,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 676,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 610,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 33,
+              "y": 225.3125,
+              "right": 145,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 153,
+              "y": 225.3125,
+              "right": 281,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 289,
+              "y": 225.3125,
+              "right": 510,
+              "bottom": 269.3125,
+              "width": 221,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 518,
+              "y": 225.3125,
+              "right": 643,
+              "bottom": 269.3125,
+              "width": 125,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 543,
+              "y": 283.3125,
+              "right": 587,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 595,
+              "y": 283.3125,
+              "right": 643,
+              "bottom": 327.3125,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 690,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 624,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 33,
+              "y": 225.3125,
+              "right": 145,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 153,
+              "y": 225.3125,
+              "right": 281,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 289,
+              "y": 225.3125,
+              "right": 517,
+              "bottom": 269.3125,
+              "width": 228,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 525,
+              "y": 225.3125,
+              "right": 657,
+              "bottom": 269.3125,
+              "width": 132,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 557,
+              "y": 283.3125,
+              "right": 601,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 609,
+              "y": 283.3125,
+              "right": 657,
+              "bottom": 327.3125,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 800,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 734,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 33,
+              "y": 225.3125,
+              "right": 145,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 153,
+              "y": 225.3125,
+              "right": 281,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 289,
+              "y": 225.3125,
+              "right": 518,
+              "bottom": 269.3125,
+              "width": 229,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 526,
+              "y": 225.3125,
+              "right": 659,
+              "bottom": 269.3125,
+              "width": 133,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 667,
+              "y": 225.3125,
+              "right": 711,
+              "bottom": 269.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 719,
+              "y": 225.3125,
+              "right": 767,
+              "bottom": 269.3125,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 754,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 105,
+              "y": 246.984375,
+              "right": 217,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 225,
+              "y": 246.984375,
+              "right": 353,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 361,
+              "y": 246.984375,
+              "right": 600,
+              "bottom": 290.984375,
+              "width": 239,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 608,
+              "y": 246.984375,
+              "right": 751,
+              "bottom": 290.984375,
+              "width": 143,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 759,
+              "y": 246.984375,
+              "right": 803,
+              "bottom": 290.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 811,
+              "y": 246.984375,
+              "right": 859,
+              "bottom": 290.984375,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 538,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 321,
+              "y": 240.984375,
+              "right": 586,
+              "bottom": 284.984375,
+              "width": 265,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 594,
+              "y": 240.984375,
+              "right": 859,
+              "bottom": 284.984375,
+              "width": 265,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 321,
+              "y": 292.984375,
+              "right": 859,
+              "bottom": 336.984375,
+              "width": 538,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 321,
+              "y": 344.984375,
+              "right": 465,
+              "bottom": 388.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 759,
+              "y": 344.984375,
+              "right": 803,
+              "bottom": 388.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 811,
+              "y": 344.984375,
+              "right": 859,
+              "bottom": 388.984375,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 866,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 105,
+              "y": 246.984375,
+              "right": 217,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 225,
+              "y": 246.984375,
+              "right": 353,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 361,
+              "y": 246.984375,
+              "right": 711,
+              "bottom": 290.984375,
+              "width": 350,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 719,
+              "y": 246.984375,
+              "right": 863,
+              "bottom": 290.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 871,
+              "y": 246.984375,
+              "right": 915,
+              "bottom": 290.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 923,
+              "y": 246.984375,
+              "right": 971,
+              "bottom": 290.984375,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 650,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 321,
+              "y": 246.984375,
+              "right": 433,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 441,
+              "y": 246.984375,
+              "right": 569,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 577,
+              "y": 246.984375,
+              "right": 792,
+              "bottom": 290.984375,
+              "width": 215,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 800,
+              "y": 246.984375,
+              "right": 919,
+              "bottom": 290.984375,
+              "width": 119,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 927,
+              "y": 246.984375,
+              "right": 971,
+              "bottom": 290.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 321,
+              "y": 304.984375,
+              "right": 369,
+              "bottom": 348.984375,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 1294,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 105,
+              "y": 209,
+              "right": 217,
+              "bottom": 253,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 229,
+              "y": 209,
+              "right": 357,
+              "bottom": 253,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 369,
+              "y": 209,
+              "right": 745,
+              "bottom": 253,
+              "width": 376,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 757,
+              "y": 209,
+              "right": 901,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 1248.265625,
+              "y": 209,
+              "right": 1339,
+              "bottom": 253,
+              "width": 90.734375,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 1351,
+              "y": 209,
+              "right": 1399,
+              "bottom": 253,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 1078,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 321,
+              "y": 209,
+              "right": 433,
+              "bottom": 253,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 445,
+              "y": 209,
+              "right": 573,
+              "bottom": 253,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 585,
+              "y": 209,
+              "right": 961,
+              "bottom": 253,
+              "width": 376,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 973,
+              "y": 209,
+              "right": 1117,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 1248.265625,
+              "y": 209,
+              "right": 1339,
+              "bottom": 253,
+              "width": 90.734375,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 1351,
+              "y": 209,
+              "right": 1399,
+              "bottom": 253,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 844,
+        "height": 390,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 778,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 33,
+              "y": 176,
+              "right": 145,
+              "bottom": 220,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 153,
+              "y": 176,
+              "right": 281,
+              "bottom": 220,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 289,
+              "y": 176,
+              "right": 551,
+              "bottom": 220,
+              "width": 262,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 559,
+              "y": 176,
+              "right": 703,
+              "bottom": 220,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 711,
+              "y": 176,
+              "right": 755,
+              "bottom": 220,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Grid options",
+              "x": 763,
+              "y": 176,
+              "right": 811,
+              "bottom": 220,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 390,
+        "height": 844,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 340,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 25,
+              "y": 188.53125,
+              "right": 191,
+              "bottom": 232.53125,
+              "width": 166,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 199,
+              "y": 188.53125,
+              "right": 365,
+              "bottom": 232.53125,
+              "width": 166,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 25,
+              "y": 240.53125,
+              "right": 365,
+              "bottom": 284.53125,
+              "width": 340,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 25,
+              "y": 292.53125,
+              "right": 139,
+              "bottom": 336.53125,
+              "width": 114,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 147,
+              "y": 292.53125,
+              "right": 261,
+              "bottom": 336.53125,
+              "width": 114,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 269,
+              "y": 292.53125,
+              "right": 313,
+              "bottom": 336.53125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 321,
+              "y": 292.53125,
+              "right": 365,
+              "bottom": 336.53125,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 571,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 521,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 25,
+              "y": 193.65625,
+              "right": 281.5,
+              "bottom": 237.65625,
+              "width": 256.5,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 289.5,
+              "y": 193.65625,
+              "right": 546,
+              "bottom": 237.65625,
+              "width": 256.5,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 25,
+              "y": 245.65625,
+              "right": 546,
+              "bottom": 289.65625,
+              "width": 521,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 25,
+              "y": 297.65625,
+              "right": 169,
+              "bottom": 341.65625,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 177,
+              "y": 297.65625,
+              "right": 321,
+              "bottom": 341.65625,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 329,
+              "y": 297.65625,
+              "right": 373,
+              "bottom": 341.65625,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 381,
+              "y": 297.65625,
+              "right": 425,
+              "bottom": 341.65625,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 676,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 610,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 33,
+              "y": 225.3125,
+              "right": 145,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 153,
+              "y": 225.3125,
+              "right": 281,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 289,
+              "y": 225.3125,
+              "right": 510,
+              "bottom": 269.3125,
+              "width": 221,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 518,
+              "y": 225.3125,
+              "right": 643,
+              "bottom": 269.3125,
+              "width": 125,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 33,
+              "y": 283.3125,
+              "right": 177,
+              "bottom": 327.3125,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 185,
+              "y": 283.3125,
+              "right": 229,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 237,
+              "y": 283.3125,
+              "right": 281,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 690,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 624,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 33,
+              "y": 225.3125,
+              "right": 145,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 153,
+              "y": 225.3125,
+              "right": 281,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 289,
+              "y": 225.3125,
+              "right": 517,
+              "bottom": 269.3125,
+              "width": 228,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 525,
+              "y": 225.3125,
+              "right": 657,
+              "bottom": 269.3125,
+              "width": 132,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 33,
+              "y": 283.3125,
+              "right": 177,
+              "bottom": 327.3125,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 185,
+              "y": 283.3125,
+              "right": 229,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 237,
+              "y": 283.3125,
+              "right": 281,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 800,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 734,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 33,
+              "y": 225.3125,
+              "right": 145,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 153,
+              "y": 225.3125,
+              "right": 281,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 289,
+              "y": 225.3125,
+              "right": 507,
+              "bottom": 269.3125,
+              "width": 218,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 515,
+              "y": 225.3125,
+              "right": 637,
+              "bottom": 269.3125,
+              "width": 122,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 645,
+              "y": 225.3125,
+              "right": 767,
+              "bottom": 269.3125,
+              "width": 122,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 33,
+              "y": 283.3125,
+              "right": 77,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 85,
+              "y": 283.3125,
+              "right": 129,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 754,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 105,
+              "y": 246.984375,
+              "right": 217,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 225,
+              "y": 246.984375,
+              "right": 353,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 361,
+              "y": 246.984375,
+              "right": 585.65625,
+              "bottom": 290.984375,
+              "width": 224.65625,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 593.65625,
+              "y": 246.984375,
+              "right": 722.328125,
+              "bottom": 290.984375,
+              "width": 128.671875,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 730.328125,
+              "y": 246.984375,
+              "right": 859,
+              "bottom": 290.984375,
+              "width": 128.671875,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 105,
+              "y": 304.984375,
+              "right": 149,
+              "bottom": 348.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 157,
+              "y": 304.984375,
+              "right": 201,
+              "bottom": 348.984375,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 538,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 321,
+              "y": 240.984375,
+              "right": 586,
+              "bottom": 284.984375,
+              "width": 265,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 594,
+              "y": 240.984375,
+              "right": 859,
+              "bottom": 284.984375,
+              "width": 265,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 321,
+              "y": 292.984375,
+              "right": 859,
+              "bottom": 336.984375,
+              "width": 538,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 321,
+              "y": 344.984375,
+              "right": 465,
+              "bottom": 388.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 473,
+              "y": 344.984375,
+              "right": 617,
+              "bottom": 388.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 625,
+              "y": 344.984375,
+              "right": 669,
+              "bottom": 388.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 677,
+              "y": 344.984375,
+              "right": 721,
+              "bottom": 388.984375,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 866,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 105,
+              "y": 246.984375,
+              "right": 217,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 225,
+              "y": 246.984375,
+              "right": 353,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 361,
+              "y": 246.984375,
+              "right": 585.65625,
+              "bottom": 290.984375,
+              "width": 224.65625,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 593.65625,
+              "y": 246.984375,
+              "right": 722.328125,
+              "bottom": 290.984375,
+              "width": 128.671875,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 730.328125,
+              "y": 246.984375,
+              "right": 859,
+              "bottom": 290.984375,
+              "width": 128.671875,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 867,
+              "y": 246.984375,
+              "right": 911,
+              "bottom": 290.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 919,
+              "y": 246.984375,
+              "right": 963,
+              "bottom": 290.984375,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 650,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 321,
+              "y": 246.984375,
+              "right": 433,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 441,
+              "y": 246.984375,
+              "right": 569,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 577,
+              "y": 246.984375,
+              "right": 819,
+              "bottom": 290.984375,
+              "width": 242,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 827,
+              "y": 246.984375,
+              "right": 971,
+              "bottom": 290.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 321,
+              "y": 304.984375,
+              "right": 465,
+              "bottom": 348.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 473,
+              "y": 304.984375,
+              "right": 517,
+              "bottom": 348.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 525,
+              "y": 304.984375,
+              "right": 569,
+              "bottom": 348.984375,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 1294,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 105,
+              "y": 209,
+              "right": 217,
+              "bottom": 253,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 229,
+              "y": 209,
+              "right": 357,
+              "bottom": 253,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 369,
+              "y": 209,
+              "right": 745,
+              "bottom": 253,
+              "width": 376,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 757,
+              "y": 209,
+              "right": 901,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 913,
+              "y": 209,
+              "right": 1057,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 1069,
+              "y": 209,
+              "right": 1159.484375,
+              "bottom": 253,
+              "width": 90.484375,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 1171.484375,
+              "y": 209,
+              "right": 1268.21875,
+              "bottom": 253,
+              "width": 96.734375,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 1078,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 321,
+              "y": 209,
+              "right": 433,
+              "bottom": 253,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 445,
+              "y": 209,
+              "right": 573,
+              "bottom": 253,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 585,
+              "y": 209,
+              "right": 863.78125,
+              "bottom": 253,
+              "width": 278.78125,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 875.78125,
+              "y": 209,
+              "right": 1019.78125,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 1031.78125,
+              "y": 209,
+              "right": 1175.78125,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 1187.78125,
+              "y": 209,
+              "right": 1278.265625,
+              "bottom": 253,
+              "width": 90.484375,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 1290.265625,
+              "y": 209,
+              "right": 1387,
+              "bottom": 253,
+              "width": 96.734375,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 844,
+        "height": 390,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 778,
+          "boxes": [
+            {
+              "label": "All",
+              "x": 33,
+              "y": 176,
+              "right": 145,
+              "bottom": 220,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "Contains",
+              "x": 153,
+              "y": 176,
+              "right": 281,
+              "bottom": 220,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 289,
+              "y": 176,
+              "right": 504.328125,
+              "bottom": 220,
+              "width": 215.328125,
+              "height": 44
+            },
+            {
+              "label": "Active",
+              "x": 512.328125,
+              "y": 176,
+              "right": 631.671875,
+              "bottom": 220,
+              "width": 119.34375,
+              "height": 44
+            },
+            {
+              "label": "Created On",
+              "x": 639.671875,
+              "y": 176,
+              "right": 759,
+              "bottom": 220,
+              "width": 119.328125,
+              "height": 44
+            },
+            {
+              "label": "Sort descending",
+              "x": 767,
+              "y": 176,
+              "right": 811,
+              "bottom": 220,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 33,
+              "y": 234,
+              "right": 77,
+              "bottom": 278,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      }
+    ],
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "measurements": [
+      {
+        "kind": "grid",
+        "width": 390,
+        "height": 844,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 340,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 199,
+              "y": 188.53125,
+              "right": 365,
+              "bottom": 232.53125,
+              "width": 166,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 25,
+              "y": 188.53125,
+              "right": 191,
+              "bottom": 232.53125,
+              "width": 166,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 25,
+              "y": 240.53125,
+              "right": 365,
+              "bottom": 284.53125,
+              "width": 340,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 221,
+              "y": 292.53125,
+              "right": 365,
+              "bottom": 336.53125,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 81,
+              "y": 292.53125,
+              "right": 125,
+              "bottom": 336.53125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 25,
+              "y": 292.53125,
+              "right": 73,
+              "bottom": 336.53125,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 571,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 521,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 289.5,
+              "y": 193.65625,
+              "right": 546,
+              "bottom": 237.65625,
+              "width": 256.5,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 25,
+              "y": 193.65625,
+              "right": 281.5,
+              "bottom": 237.65625,
+              "width": 256.5,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 25,
+              "y": 245.65625,
+              "right": 546,
+              "bottom": 289.65625,
+              "width": 521,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 402,
+              "y": 297.65625,
+              "right": 546,
+              "bottom": 341.65625,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 81,
+              "y": 297.65625,
+              "right": 125,
+              "bottom": 341.65625,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 25,
+              "y": 297.65625,
+              "right": 73,
+              "bottom": 341.65625,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 676,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 610,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 531,
+              "y": 225.3125,
+              "right": 643,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 395,
+              "y": 225.3125,
+              "right": 523,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 166,
+              "y": 225.3125,
+              "right": 387,
+              "bottom": 269.3125,
+              "width": 221,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 33,
+              "y": 225.3125,
+              "right": 158,
+              "bottom": 269.3125,
+              "width": 125,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 89,
+              "y": 283.3125,
+              "right": 133,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 33,
+              "y": 283.3125,
+              "right": 81,
+              "bottom": 327.3125,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 690,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 624,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 545,
+              "y": 225.3125,
+              "right": 657,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 409,
+              "y": 225.3125,
+              "right": 537,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 173,
+              "y": 225.3125,
+              "right": 401,
+              "bottom": 269.3125,
+              "width": 228,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 33,
+              "y": 225.3125,
+              "right": 165,
+              "bottom": 269.3125,
+              "width": 132,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 89,
+              "y": 283.3125,
+              "right": 133,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 33,
+              "y": 283.3125,
+              "right": 81,
+              "bottom": 327.3125,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 800,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 734,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 655,
+              "y": 225.3125,
+              "right": 767,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 519,
+              "y": 225.3125,
+              "right": 647,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 282,
+              "y": 225.3125,
+              "right": 511,
+              "bottom": 269.3125,
+              "width": 229,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 141,
+              "y": 225.3125,
+              "right": 274,
+              "bottom": 269.3125,
+              "width": 133,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 89,
+              "y": 225.3125,
+              "right": 133,
+              "bottom": 269.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 33,
+              "y": 225.3125,
+              "right": 81,
+              "bottom": 269.3125,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 754,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 683,
+              "y": 246.984375,
+              "right": 795,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 547,
+              "y": 246.984375,
+              "right": 675,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 300,
+              "y": 246.984375,
+              "right": 539,
+              "bottom": 290.984375,
+              "width": 239,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 149,
+              "y": 246.984375,
+              "right": 292,
+              "bottom": 290.984375,
+              "width": 143,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 97,
+              "y": 246.984375,
+              "right": 141,
+              "bottom": 290.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 246.984375,
+              "right": 89,
+              "bottom": 290.984375,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 538,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 314,
+              "y": 240.984375,
+              "right": 579,
+              "bottom": 284.984375,
+              "width": 265,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 41,
+              "y": 240.984375,
+              "right": 306,
+              "bottom": 284.984375,
+              "width": 265,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 41,
+              "y": 292.984375,
+              "right": 579,
+              "bottom": 336.984375,
+              "width": 538,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 435,
+              "y": 344.984375,
+              "right": 579,
+              "bottom": 388.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 97,
+              "y": 344.984375,
+              "right": 141,
+              "bottom": 388.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 344.984375,
+              "right": 89,
+              "bottom": 388.984375,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 866,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 795,
+              "y": 246.984375,
+              "right": 907,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 659,
+              "y": 246.984375,
+              "right": 787,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 301,
+              "y": 246.984375,
+              "right": 651,
+              "bottom": 290.984375,
+              "width": 350,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 149,
+              "y": 246.984375,
+              "right": 293,
+              "bottom": 290.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 97,
+              "y": 246.984375,
+              "right": 141,
+              "bottom": 290.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 246.984375,
+              "right": 89,
+              "bottom": 290.984375,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 650,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 579,
+              "y": 246.984375,
+              "right": 691,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 443,
+              "y": 246.984375,
+              "right": 571,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 220,
+              "y": 246.984375,
+              "right": 435,
+              "bottom": 290.984375,
+              "width": 215,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 93,
+              "y": 246.984375,
+              "right": 212,
+              "bottom": 290.984375,
+              "width": 119,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 41,
+              "y": 246.984375,
+              "right": 85,
+              "bottom": 290.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 643,
+              "y": 304.984375,
+              "right": 691,
+              "bottom": 348.984375,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 1294,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 1223,
+              "y": 209,
+              "right": 1335,
+              "bottom": 253,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 1083,
+              "y": 209,
+              "right": 1211,
+              "bottom": 253,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 695,
+              "y": 209,
+              "right": 1071,
+              "bottom": 253,
+              "width": 376,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 539,
+              "y": 209,
+              "right": 683,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 101,
+              "y": 209,
+              "right": 220.28125,
+              "bottom": 253,
+              "width": 119.28125,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 209,
+              "right": 89,
+              "bottom": 253,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 1078,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 1007,
+              "y": 209,
+              "right": 1119,
+              "bottom": 253,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 867,
+              "y": 209,
+              "right": 995,
+              "bottom": 253,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 479,
+              "y": 209,
+              "right": 855,
+              "bottom": 253,
+              "width": 376,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 323,
+              "y": 209,
+              "right": 467,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 101,
+              "y": 209,
+              "right": 220.28125,
+              "bottom": 253,
+              "width": 119.28125,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 209,
+              "right": 89,
+              "bottom": 253,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 844,
+        "height": 390,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 778,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 699,
+              "y": 176,
+              "right": 811,
+              "bottom": 220,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 563,
+              "y": 176,
+              "right": 691,
+              "bottom": 220,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 293,
+              "y": 176,
+              "right": 555,
+              "bottom": 220,
+              "width": 262,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 141,
+              "y": 176,
+              "right": 285,
+              "bottom": 220,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 89,
+              "y": 176,
+              "right": 133,
+              "bottom": 220,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 33,
+              "y": 176,
+              "right": 81,
+              "bottom": 220,
+              "width": 48,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 390,
+        "height": 844,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 340,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 199,
+              "y": 188.53125,
+              "right": 365,
+              "bottom": 232.53125,
+              "width": 166,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 25,
+              "y": 188.53125,
+              "right": 191,
+              "bottom": 232.53125,
+              "width": 166,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 25,
+              "y": 240.53125,
+              "right": 365,
+              "bottom": 284.53125,
+              "width": 340,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 251,
+              "y": 292.53125,
+              "right": 365,
+              "bottom": 336.53125,
+              "width": 114,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 129,
+              "y": 292.53125,
+              "right": 243,
+              "bottom": 336.53125,
+              "width": 114,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 77,
+              "y": 292.53125,
+              "right": 121,
+              "bottom": 336.53125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 25,
+              "y": 292.53125,
+              "right": 69,
+              "bottom": 336.53125,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 571,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 521,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 289.5,
+              "y": 193.65625,
+              "right": 546,
+              "bottom": 237.65625,
+              "width": 256.5,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 25,
+              "y": 193.65625,
+              "right": 281.5,
+              "bottom": 237.65625,
+              "width": 256.5,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 25,
+              "y": 245.65625,
+              "right": 546,
+              "bottom": 289.65625,
+              "width": 521,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 402,
+              "y": 297.65625,
+              "right": 546,
+              "bottom": 341.65625,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 250,
+              "y": 297.65625,
+              "right": 394,
+              "bottom": 341.65625,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 198,
+              "y": 297.65625,
+              "right": 242,
+              "bottom": 341.65625,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 146,
+              "y": 297.65625,
+              "right": 190,
+              "bottom": 341.65625,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 676,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 610,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 531,
+              "y": 225.3125,
+              "right": 643,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 395,
+              "y": 225.3125,
+              "right": 523,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 166,
+              "y": 225.3125,
+              "right": 387,
+              "bottom": 269.3125,
+              "width": 221,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 33,
+              "y": 225.3125,
+              "right": 158,
+              "bottom": 269.3125,
+              "width": 125,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 499,
+              "y": 283.3125,
+              "right": 643,
+              "bottom": 327.3125,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 447,
+              "y": 283.3125,
+              "right": 491,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 395,
+              "y": 283.3125,
+              "right": 439,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 690,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 624,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 545,
+              "y": 225.3125,
+              "right": 657,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 409,
+              "y": 225.3125,
+              "right": 537,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 173,
+              "y": 225.3125,
+              "right": 401,
+              "bottom": 269.3125,
+              "width": 228,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 33,
+              "y": 225.3125,
+              "right": 165,
+              "bottom": 269.3125,
+              "width": 132,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 513,
+              "y": 283.3125,
+              "right": 657,
+              "bottom": 327.3125,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 461,
+              "y": 283.3125,
+              "right": 505,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 409,
+              "y": 283.3125,
+              "right": 453,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 800,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 734,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 655,
+              "y": 225.3125,
+              "right": 767,
+              "bottom": 269.3125,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 519,
+              "y": 225.3125,
+              "right": 647,
+              "bottom": 269.3125,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 293,
+              "y": 225.3125,
+              "right": 511,
+              "bottom": 269.3125,
+              "width": 218,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 163,
+              "y": 225.3125,
+              "right": 285,
+              "bottom": 269.3125,
+              "width": 122,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 33,
+              "y": 225.3125,
+              "right": 155,
+              "bottom": 269.3125,
+              "width": 122,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 723,
+              "y": 283.3125,
+              "right": 767,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 671,
+              "y": 283.3125,
+              "right": 715,
+              "bottom": 327.3125,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 754,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 683,
+              "y": 246.984375,
+              "right": 795,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 547,
+              "y": 246.984375,
+              "right": 675,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 314.34375,
+              "y": 246.984375,
+              "right": 539,
+              "bottom": 290.984375,
+              "width": 224.65625,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 177.671875,
+              "y": 246.984375,
+              "right": 306.34375,
+              "bottom": 290.984375,
+              "width": 128.671875,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 41,
+              "y": 246.984375,
+              "right": 169.671875,
+              "bottom": 290.984375,
+              "width": 128.671875,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 751,
+              "y": 304.984375,
+              "right": 795,
+              "bottom": 348.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 699,
+              "y": 304.984375,
+              "right": 743,
+              "bottom": 348.984375,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 538,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 314,
+              "y": 240.984375,
+              "right": 579,
+              "bottom": 284.984375,
+              "width": 265,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 41,
+              "y": 240.984375,
+              "right": 306,
+              "bottom": 284.984375,
+              "width": 265,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 41,
+              "y": 292.984375,
+              "right": 579,
+              "bottom": 336.984375,
+              "width": 538,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 435,
+              "y": 344.984375,
+              "right": 579,
+              "bottom": 388.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 283,
+              "y": 344.984375,
+              "right": 427,
+              "bottom": 388.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 231,
+              "y": 344.984375,
+              "right": 275,
+              "bottom": 388.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 179,
+              "y": 344.984375,
+              "right": 223,
+              "bottom": 388.984375,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 866,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 795,
+              "y": 246.984375,
+              "right": 907,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 659,
+              "y": 246.984375,
+              "right": 787,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 426.34375,
+              "y": 246.984375,
+              "right": 651,
+              "bottom": 290.984375,
+              "width": 224.65625,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 289.671875,
+              "y": 246.984375,
+              "right": 418.34375,
+              "bottom": 290.984375,
+              "width": 128.671875,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 153,
+              "y": 246.984375,
+              "right": 281.671875,
+              "bottom": 290.984375,
+              "width": 128.671875,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 101,
+              "y": 246.984375,
+              "right": 145,
+              "bottom": 290.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 49,
+              "y": 246.984375,
+              "right": 93,
+              "bottom": 290.984375,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 650,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 579,
+              "y": 246.984375,
+              "right": 691,
+              "bottom": 290.984375,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 443,
+              "y": 246.984375,
+              "right": 571,
+              "bottom": 290.984375,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 193,
+              "y": 246.984375,
+              "right": 435,
+              "bottom": 290.984375,
+              "width": 242,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 41,
+              "y": 246.984375,
+              "right": 185,
+              "bottom": 290.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 547,
+              "y": 304.984375,
+              "right": 691,
+              "bottom": 348.984375,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 495,
+              "y": 304.984375,
+              "right": 539,
+              "bottom": 348.984375,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 443,
+              "y": 304.984375,
+              "right": 487,
+              "bottom": 348.984375,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 1294,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 1223,
+              "y": 209,
+              "right": 1335,
+              "bottom": 253,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 1083,
+              "y": 209,
+              "right": 1211,
+              "bottom": 253,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 695,
+              "y": 209,
+              "right": 1071,
+              "bottom": 253,
+              "width": 376,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 539,
+              "y": 209,
+              "right": 683,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 383,
+              "y": 209,
+              "right": 527,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 285.21875,
+              "y": 209,
+              "right": 371,
+              "bottom": 253,
+              "width": 85.78125,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 147.9375,
+              "y": 209,
+              "right": 273.21875,
+              "bottom": 253,
+              "width": 125.28125,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 1078,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 1007,
+              "y": 209,
+              "right": 1119,
+              "bottom": 253,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 867,
+              "y": 209,
+              "right": 995,
+              "bottom": 253,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 600.0625,
+              "y": 209,
+              "right": 855,
+              "bottom": 253,
+              "width": 254.9375,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 444.0625,
+              "y": 209,
+              "right": 588.0625,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 288.0625,
+              "y": 209,
+              "right": 432.0625,
+              "bottom": 253,
+              "width": 144,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 190.28125,
+              "y": 209,
+              "right": 276.0625,
+              "bottom": 253,
+              "width": 85.78125,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 53,
+              "y": 209,
+              "right": 178.28125,
+              "bottom": 253,
+              "width": 125.28125,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 844,
+        "height": 390,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "wrap",
+          "contentWidth": 778,
+          "boxes": [
+            {
+              "label": "الكل",
+              "x": 699,
+              "y": 176,
+              "right": 811,
+              "bottom": 220,
+              "width": 112,
+              "height": 44
+            },
+            {
+              "label": "يحتوى على",
+              "x": 563,
+              "y": 176,
+              "right": 691,
+              "bottom": 220,
+              "width": 128,
+              "height": 44
+            },
+            {
+              "label": "",
+              "x": 339.671875,
+              "y": 176,
+              "right": 555,
+              "bottom": 220,
+              "width": 215.328125,
+              "height": 44
+            },
+            {
+              "label": "نشطة",
+              "x": 212.328125,
+              "y": 176,
+              "right": 331.671875,
+              "bottom": 220,
+              "width": 119.34375,
+              "height": 44
+            },
+            {
+              "label": "تاريخ الإنشاء",
+              "x": 85,
+              "y": 176,
+              "right": 204.328125,
+              "bottom": 220,
+              "width": 119.328125,
+              "height": 44
+            },
+            {
+              "label": "ترتيب تنازلي",
+              "x": 33,
+              "y": 176,
+              "right": 77,
+              "bottom": 220,
+              "width": 44,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 767,
+              "y": 234,
+              "right": 811,
+              "bottom": 278,
+              "width": 44,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      }
+    ],
+    "passed": true
+  }
+]

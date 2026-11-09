@@ -22,18 +22,22 @@ export class AdminReadState {
   exportSource(
     columns: readonly TabularColumn<TenantAdmin>[],
     culture: 'en' | 'ar',
+    tenantId: string | null = null,
   ): TabularExportSource | null {
     const actor = this.auth.readIdentity(),
       view = this.view();
     if (!actor || !tenantAdminAllowed(actor) || view.kind !== 'ready') return null;
     return localTabularSource({
       actor,
-      criteriaKey: 'tenant-admins:all',
+      criteriaKey: 'tenant-admins:' + (tenantId ?? 'all'),
       fileName: 'tenant-admins',
       culture,
       columns,
-      rows: view.data,
-      isCurrent: () => this.auth.readIdentity() === actor && this.view().kind === 'ready',
+      rows:
+        tenantId === null
+          ? view.data
+          : view.data.filter((admin) => admin.tenants.some((tenant) => tenant.id === tenantId)),
+      isCurrent: () => this.auth.readIdentity() === actor && this.view() === view,
     });
   }
   readonly pending = this.read.pending;

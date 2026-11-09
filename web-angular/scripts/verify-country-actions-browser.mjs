@@ -607,6 +607,8 @@ try {
             .getByRole('button');
         const confirm = (title) => page.getByRole('dialog', { name: country[title], exact: true });
         const changeStatus = async (value) => {
+          const filter = page.locator('erp-page-header .filter button');
+          if ((await filter.getAttribute('aria-expanded')) === 'false') await filter.click();
           await page.getByTestId('status').getByRole('combobox').click();
           await page
             .getByRole('option', { name: country['countries.status.' + value], exact: true })

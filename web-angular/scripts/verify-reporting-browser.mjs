@@ -5,6 +5,7 @@ import { chromium, expect } from '@playwright/test';
 import { themePaletteOrder } from '@app/tokens';
 import { sessionFixture } from '../src/app/platform/auth/auth.fixture.ts';
 import { globalReportFixture } from '../src/app/modules/reporting/global-reports/report.fixture.ts';
+import { serveAngularFixtureBuild } from './angular-build-browser-fixture.mjs';
 
 const app = path.resolve(import.meta.dirname, '..');
 const origin = process.env.ANGULAR_PREVIEW_ORIGIN ?? 'https://localhost:4220';
@@ -56,6 +57,12 @@ try {
             reducedMotion: 'reduce',
             acceptDownloads: true,
           });
+          await serveAngularFixtureBuild(
+            context,
+            app,
+            origin,
+            path.resolve(app, '../.codex-tmp/report-header-dev/browser'),
+          );
           await context.addCookies(
             Object.entries({ themePalette: palette, currentMode: mode, i18next: language }).map(
               ([name, value]) => ({ name, value, url: origin }),
@@ -219,7 +226,7 @@ try {
           );
           const view = page.locator('erp-global-report-view'),
             viewer = page.locator('erp-pdf-viewer'),
-            actions = view.locator('aside');
+            actions = view.locator('erp-page-header');
           const input = (id) => page.getByTestId(id).locator('input');
           const button = (id) => page.getByTestId(id).getByRole('button');
           const search = () => page.getByTestId('criteria').locator('button[type=submit]').click();
@@ -274,20 +281,30 @@ try {
             );
           } else await expect(viewer.locator('iframe')).toHaveAttribute('src', currentUrl);
           assert.ok(
-            await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1),
+            await page.evaluate(
+              () =>
+                document.documentElement.scrollWidth <= innerWidth + 1 &&
+                document.documentElement.scrollHeight <= innerHeight + 1,
+            ),
           );
           const geometry = await page.locator('erp-report-workspace').evaluate((element) => ({
             width: element.getBoundingClientRect().width,
             viewport: innerWidth,
             page: document.documentElement.scrollWidth,
+            bottom: element.getBoundingClientRect().bottom,
+            height: element.getBoundingClientRect().height,
           }));
+          assert.ok(
+            geometry.height >= 300 && geometry.bottom >= 1000 && geometry.bottom <= 1051,
+            JSON.stringify(geometry),
+          );
           await page.screenshot({
             path: path.join(captures, `${palette}-${mode}-${language}-${width}-ready.png`),
             fullPage: true,
             animations: 'disabled',
           });
           if (focused) {
-            await actions.getByRole('tab').nth(1).click();
+            await expect(view.locator('aside').getByRole('tab')).toHaveCount(0);
             await expect(actions.locator('a[download]')).toBeVisible();
             const downloadPromise = page.waitForEvent('download');
             await actions.locator('a[download]').click();
@@ -298,7 +315,6 @@ try {
             );
             const downloaded = await download.path();
             assert.deepEqual(fs.readFileSync(downloaded), pdf);
-            await actions.getByRole('tab').nth(0).click();
             await input('nameAr').fill('مصر');
             let before = state.renders.length;
             await rendered(() => button('language').click());

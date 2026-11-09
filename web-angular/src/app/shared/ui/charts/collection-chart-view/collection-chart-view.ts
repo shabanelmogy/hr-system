@@ -28,7 +28,7 @@ export class CollectionChartView<T> {
   readonly plots = input<readonly ChartDefinition[]>([]);
   readonly metrics = input<readonly ChartMetric[]>([]);
   readonly search = input<CollectionSearch>();
-  readonly toolbarVisible = input(true);
+  readonly toolbarVisible = input(false);
   readonly retry = output<void>();
   readonly searchChange = output<CollectionSearchChange>();
   readonly empty = contentChild(CollectionEmptyTemplate);

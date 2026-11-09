@@ -28,7 +28,7 @@ public sealed class GetGlobalCrystalReportEntitiesQueryHandler(GlobalCrystalRepo
         CancellationToken cancellationToken) => Task.FromResult<IReadOnlyList<SupportedCrystalReportEntityResponse>>(
         contracts.EntityDescriptors.Where(entity => entity.Scope == "global" && policy.Allows(entity.EntityKey))
             .Select(entity => new SupportedCrystalReportEntityResponse(entity.EntityKey, entity.Scope, entity.Filters,
-                contracts.SchemaVersion, contracts.Fingerprint)).ToArray());
+                contracts.SchemaVersion, contracts.GetFingerprint(entity.EntityKey))).ToArray());
 }
 
 public sealed class GetGlobalCrystalReportManagementQueryHandler(IGlobalCrystalReportStore store,

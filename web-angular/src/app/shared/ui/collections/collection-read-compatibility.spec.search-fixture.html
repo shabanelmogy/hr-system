@@ -4,5 +4,7 @@
   [columns]="columns"
   [rowId]="id"
   [search]="search()"
+  [sort]="sort()"
+  (sortChange)="sort.set($event)"
   (searchChange)="changed($event)"
 />

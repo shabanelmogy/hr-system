@@ -27,6 +27,22 @@ class Composition {
   readonly messages = { required: 'Required fixture' };
 }
 describe('Strict BooleanField in shared forms', () => {
+  it('renders one associated label above a switch without changing its checked state', async () => {
+    const fixture = TestBed.createComponent(BooleanField);
+    fixture.componentRef.setInput('label', 'Login enabled');
+    fixture.componentRef.setInput('kind', 'switch');
+    fixture.componentRef.setInput('labelPlacement', 'above');
+    fixture.componentRef.setInput('value', false);
+    await fixture.whenStable();
+    const root = fixture.nativeElement as HTMLElement;
+    const label = root.querySelector('label');
+    const input = root.querySelector<HTMLInputElement>('input');
+    expect(root.querySelectorAll('label')).toHaveLength(1);
+    expect(label?.parentElement).toBe(root);
+    expect(label?.htmlFor).toBe(input?.id);
+    expect(input?.getAttribute('aria-labelledby')).toBe(label?.id);
+    expect(input?.checked).toBe(false);
+  });
   beforeEach(async () => {
     TestBed.configureTestingModule({ providers: [provideAppTheme()] });
     await TestBed.inject(LocalizationRuntime).loadNamespace('core');

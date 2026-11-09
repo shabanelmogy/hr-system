@@ -7,6 +7,7 @@ import { sessionFixture } from '../src/app/platform/auth/auth.fixture.ts';
 import { dashboardFixture } from '../src/app/platform/tenants/dashboard.fixture.ts';
 import { globalReportFixture as report } from '../src/app/modules/reporting/global-reports/report.fixture.ts';
 import { reportPdfFixture } from './support/report-pdf-fixture.mjs';
+import { serveAngularFixtureBuild } from './angular-build-browser-fixture.mjs';
 const root = path.resolve(import.meta.dirname, '..'),
   origin = process.env.ANGULAR_PREVIEW_ORIGIN ?? 'https://localhost:4220',
   api = process.env.ANGULAR_API_ORIGIN ?? 'https://shabanhrms.runasp.net';
@@ -22,7 +23,8 @@ const version = fs
   .readFileSync(path.join(root, 'src/app/platform/localization/catalog.generated.ts'), 'utf8')
   .match(/[a-f0-9]{64}/)[0];
 const smoke = process.argv.includes('--smoke'),
-  focused = process.argv.includes('--focused'),
+  layout = process.argv.includes('--layout'),
+  focused = layout || process.argv.includes('--focused'),
   pdf = reportPdfFixture(),
   results = [],
   browser = await chromium.launch({ channel: 'chrome', headless: true });
@@ -32,13 +34,33 @@ try {
       for (const language of smoke ? ['en'] : ['en', 'ar'])
         for (const width of smoke
           ? [process.argv.includes('--compact') ? 390 : 1440]
-          : [390, 1440]) {
+          : layout
+            ? [320, 690, 844, 1012, 1440]
+            : [390, 1440]) {
+          const height = layout
+            ? width === 844
+              ? 390
+              : width === 320
+                ? 720
+                : 823
+            : width === 390
+              ? 780
+              : 1050;
           const context = await browser.newContext({
             ignoreHTTPSErrors: true,
-            viewport: { width, height: width === 390 ? 780 : 1050 },
+            viewport: { width, height },
+            ...(layout && width < 900 ? { hasTouch: true, isMobile: true } : {}),
             reducedMotion: 'reduce',
             acceptDownloads: true,
           });
+          await serveAngularFixtureBuild(
+            context,
+            root,
+            origin,
+            process.env.ANGULAR_FIXTURE_BUILD
+              ? path.resolve(process.env.ANGULAR_FIXTURE_BUILD)
+              : path.resolve(root, '../.codex-tmp/report-header-dev/browser'),
+          );
           await context.addCookies(
             Object.entries({ themePalette: palette, currentMode: mode, i18next: language }).map(
               ([name, value]) => ({ name, value, url: origin }),
@@ -252,38 +274,39 @@ try {
                 .click();
             }
           };
-          const ready = () => expect(viewer.locator('a[download]')).toBeVisible();
+          const ready = () => expect(header.locator('a[download]')).toBeVisible();
           const enter = async () => {
-            await page.goto(origin + '/home');
-            await page.getByTestId('open-data').getByRole('button').click();
-            await page
-              .getByRole('complementary')
-              .getByRole('button', { name: text['menu.countries'], exact: true })
-              .click();
+            await page.goto(origin + '/dev/countries');
             await expect(page.getByTestId('countries')).toHaveAttribute('data-kind', 'ready');
-            if (width === 1440)
-              await page
-                .locator('.drawer-header')
-                .getByRole('button', { name: text['menu.closeSidebar'], exact: true })
-                .click();
+            const navigation = page.locator('.drawer-toggle button');
+            if (width >= 900 && (await navigation.getAttribute('aria-expanded')) === 'true')
+              await navigation.click();
             await pick('report');
+            await expect(header.locator('[data-view=report] button')).toHaveAttribute(
+              'aria-pressed',
+              'true',
+            );
+            await expect(view).toBeVisible();
           };
           const fresh = async () => {
             state.mode = 'ready';
             state.permitted = true;
             await enter();
             await ready();
+            const filters = header.locator('.filter button');
+            if ((await filters.getAttribute('aria-expanded')) !== 'true') await filters.click();
+            await expect(view.getByTestId('criteria').locator('form')).toBeVisible();
           };
           const rendered = async (action) => {
             const count = state.renders.length,
-              previous = (await viewer.locator('a[download]').count())
-                ? await viewer.locator('a[download]').getAttribute('href')
+              previous = (await header.locator('a[download]').count())
+                ? await header.locator('a[download]').getAttribute('href')
                 : null;
             await action();
             await expect.poll(() => state.renders.length).toBe(count + 1);
             await ready();
             if (previous)
-              await expect(viewer.locator('a[download]')).not.toHaveAttribute('href', previous);
+              await expect(header.locator('a[download]')).not.toHaveAttribute('href', previous);
           };
           const languageToggle = () =>
             page.evaluate(() => {
@@ -298,6 +321,7 @@ try {
           assert.equal(state.renders[0].expectedSha256, report.rowVersion);
           assert.equal(state.renders[0].language, language);
           await expect(header).toHaveCount(1);
+          await expect(header.locator('.total-badge')).toHaveCount(0);
           await expect(view.locator('erp-page-header')).toHaveCount(0);
           await expect(view.getByTestId('criteria').locator('form')).toHaveAttribute(
             'novalidate',
@@ -308,9 +332,11 @@ try {
             .locator('.form-content > [data-testid]')
             .evaluateAll((elements) => elements.map((element) => element.dataset.testid));
           assert.deepEqual(fields, ['report', 'nameAr', 'nameEn']);
-          const url = await viewer.locator('a[download]').getAttribute('href');
+          await expect(header.locator('nav a')).toHaveCount(2);
+          await expect(view.locator('nav a')).toHaveCount(0);
+          const url = await header.locator('a[download]').getAttribute('href');
           assert.ok(url.startsWith('blob:' + origin + '/'));
-          await expect(viewer.locator('a[target=_blank]')).toHaveAttribute(
+          await expect(header.locator('a[target=_blank]')).toHaveAttribute(
             'rel',
             'noopener noreferrer',
           );
@@ -332,26 +358,26 @@ try {
                 width: document.width,
                 height: document.height,
               },
-              frame: { height: frame.height, bottom: frame.bottom },
+              frame: { width: frame.width, height: frame.height, bottom: frame.bottom },
               viewport: { width: innerWidth, height: innerHeight },
               page: window.document.documentElement.scrollWidth,
             };
           });
           assert.ok(geometry.page <= width + 1);
-          assert.ok(geometry.document.height >= 150);
+          assert.ok(geometry.document.height >= (height <= 480 ? 48 : 150));
           assert.ok(geometry.frame.bottom <= geometry.viewport.height + 2);
-          if (width === 1440) {
-            assert.equal(geometry.panel.width, 280);
+          if (geometry.frame.width > 864) {
+            assert.equal(geometry.panel.width, 260);
             assert.ok(Math.abs(geometry.panel.y - geometry.document.y) < 2);
             const gap =
               language === 'en'
                 ? geometry.document.x - geometry.panel.x - geometry.panel.width
                 : geometry.panel.x - geometry.document.x - geometry.document.width;
-            assert.equal(gap, 64);
+            assert.equal(gap, 16);
           } else {
             assert.equal(
               Math.round(geometry.document.y - geometry.panel.y - geometry.panel.height),
-              64,
+              12,
             );
           }
           if (await viewer.locator('iframe').count())
@@ -373,6 +399,82 @@ try {
             fullPage: true,
             animations: 'disabled',
           });
+          if (layout) {
+            const frame = await viewer.locator('iframe').elementHandle();
+            const renders = state.renders.length;
+            const headerGeometry = await header.evaluate((element) => {
+              const box = element.getBoundingClientRect();
+              const links = [...element.querySelectorAll('nav a')].map((link) => {
+                const rect = link.getBoundingClientRect();
+                return {
+                  x: rect.x,
+                  right: rect.right,
+                  bottom: rect.bottom,
+                  width: rect.width,
+                  height: rect.height,
+                  name: link.getAttribute('aria-label'),
+                };
+              });
+              return {
+                links,
+                left: box.left,
+                right: box.right,
+                bottom: box.bottom,
+                touch: matchMedia('(pointer: coarse)').matches,
+              };
+            });
+            assert.equal(headerGeometry.links.length, 2);
+            for (const link of headerGeometry.links)
+              assert.ok(
+                link.name &&
+                  link.x >= headerGeometry.left &&
+                  link.right <= headerGeometry.right &&
+                  link.bottom <= headerGeometry.bottom &&
+                  link.width >= (headerGeometry.touch ? 44 : 36),
+                JSON.stringify(headerGeometry),
+              );
+            if (width >= 900) {
+              await page.locator('.drawer-toggle button').click();
+              await expect(page.locator('.drawer-toggle button')).toHaveAttribute(
+                'aria-expanded',
+                'true',
+              );
+              await expect
+                .poll(() =>
+                  page
+                    .locator('.workspace-sidebar')
+                    .evaluate((element) => Math.round(element.getBoundingClientRect().width)),
+                )
+                .toBe(280);
+              if (frame) assert.ok(await frame.evaluate((element) => element.isConnected));
+              assert.ok(
+                await page.evaluate(
+                  () =>
+                    document.documentElement.scrollWidth <= innerWidth + 1 &&
+                    document.documentElement.scrollHeight <= innerHeight + 1,
+                ),
+              );
+            }
+            await header.locator('.filter button').click();
+            await expect(view.locator('aside')).toHaveCount(0);
+            await expect(header.locator('a[download]')).toHaveAttribute('href', url);
+            assert.equal(state.renders.length, renders);
+            results.push({
+              palette,
+              mode,
+              language,
+              width,
+              height,
+              geometry,
+              headerGeometry,
+              headerActions: true,
+              passed: true,
+            });
+            console.log(`Report header layout passed ${language}/${mode}/${width}x${height}`);
+            assert.deepEqual(errors, []);
+            await context.close();
+            continue;
+          }
           await input('nameAr').fill('مصر');
           const renders = state.renders.length,
             catalogs = state.catalogs,
@@ -427,7 +529,7 @@ try {
           assert.deepEqual(state.renders.at(-1).filters, {});
           if (focused) {
             const downloadEvent = page.waitForEvent('download');
-            await viewer.locator('a[download]').click();
+            await header.locator('a[download]').click();
             const download = await downloadEvent;
             assert.equal(
               download.suggestedFilename(),
@@ -594,7 +696,13 @@ try {
   fs.writeFileSync(
     path.join(
       output,
-      smoke ? 'smoke-results.json' : focused ? 'focused-results.json' : 'results.json',
+      smoke
+        ? 'smoke-results.json'
+        : layout
+          ? 'header-layout-results.json'
+          : focused
+            ? 'focused-results.json'
+            : 'results.json',
     ),
     JSON.stringify(results, null, 2),
   );

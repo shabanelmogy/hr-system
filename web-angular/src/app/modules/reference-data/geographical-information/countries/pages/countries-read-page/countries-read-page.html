@@ -2,23 +2,27 @@
   <erp-page-header
     [exportSource]="exportSource()"
     variant="collection"
+    [actionsLayout]="view() === 'import' ? 'stacked' : 'adaptive'"
     [title]="'countries.viewTitle' | uiText: 'reference-countries'"
     [views]="views()"
     [view]="view()"
-    [total]="state.total()"
+    [total]="view() === 'report' || view() === 'import' ? null : state.total()"
     [totalLabel]="'pagination.items' | uiText"
     [filterable]="view() !== 'chart' && view() !== 'import'"
-    [filterVisible]="toolbarVisible()"
+    [filterVisible]="filtersVisible()"
     (viewChange)="chooseView($event)"
     (refresh)="refreshCurrent()"
-    (filterToggle)="toolbarVisible.set(!toolbarVisible())"
+    (filterToggle)="toggleFilters()"
     [primaryAction]="
       view() !== 'import' && editor.canCreate()
         ? { label: countryText('countries.add'), icon: 'add' }
         : null
     "
     (primaryActivated)="editor.create()"
-  />
+  >
+    <ng-container [ngTemplateOutlet]="reportHeaderActions()" />
+    <ng-container [ngTemplateOutlet]="importHeaderActions()" />
+  </erp-page-header>
   <ng-template #bulkAction>
     @if (lifecycle.selected().length) {
       <erp-button
@@ -27,7 +31,8 @@
           'countries.bulkArchiveAction'
             | uiText: 'reference-countries' : { count: lifecycle.selected().length }
         "
-        severity="warn"
+        variant="outlined"
+        [compactOnSmallScreens]="true"
         [disabled]="lifecycle.pending()"
         (activated)="lifecycle.requestBulk()"
         ><erp-icon buttonIcon name="archive"
@@ -37,7 +42,8 @@
   <ng-template #statusFilter
     ><erp-option-select
       data-testid="status"
-      [controlHeight]="view() === 'grid' ? 36 : 40"
+      [controlHeight]="44"
+      labelPlacement="floating"
       [label]="'countries.status.label' | uiText: 'reference-countries'"
       [value]="state.query().status"
       [options]="statuses()"
@@ -48,24 +54,30 @@
     @if (view() === 'cards' || view() === 'chart') {
       <erp-option-select
         data-testid="sort"
-        [controlWidth]="220"
+        [controlHeight]="44"
+        labelPlacement="floating"
         [label]="'general.sortBy' | uiText"
-        [value]="state.query().sortBy"
+        [value]="state.sortField()"
         [options]="sorts()"
         (valueChange)="chooseSort($event)"
       />
       <erp-sort-direction-button
         data-testid="direction"
-        [direction]="state.query().sortDirection"
-        (directionChange)="state.changeSort({ field: state.query().sortBy, direction: $event })"
+        [compactOnSmallScreens]="true"
+        [direction]="state.sort()?.direction ?? null"
+        (directionChange)="
+          state.changeSort($event ? { field: state.sortField(), direction: $event } : null)
+        "
       />
     }
     <erp-button
       data-testid="reset"
       [label]="'general.reset' | uiText"
+      [compactOnSmallScreens]="true"
       variant="text"
       (activated)="state.reset()"
-    />
+      ><erp-icon buttonIcon name="reset"
+    /></erp-button>
   </ng-template>
   <div class="collection" data-testid="countries" [attr.data-kind]="state.source().kind">
     @if (view() === 'grid') {
@@ -76,22 +88,20 @@
         (selectionChange)="lifecycle.select($event)"
         [recordNavigation]="true"
         appearance="reference"
-        toolbarLayout="single-row"
-        actionDisplay="inline"
+        toolbarLayout="adaptive"
         [stickyActions]="true"
         [contextActions]="actions"
         (rowAction)="act($event)"
         [advancedFilters]="true"
         [filters]="state.columnFilters()"
         (filtersChange)="state.changeColumnFilters($event)"
-        [toolbarVisible]="toolbarVisible()"
         [display]="{ resizableColumns: 'fit', reorderableColumns: true, columnManagement: true }"
         [source]="state.source()"
         [label]="'countries.viewTitle' | uiText: 'reference-countries'"
         [columns]="columns()"
         [rowId]="id"
         [rowLabel]="rowLabel"
-        [search]="search()"
+        [search]="searchVisible() ? search() : undefined"
         [sort]="sort()"
         (pageChange)="state.changePage($event)"
         (searchChange)="state.changeSearch($event)"
@@ -103,26 +113,29 @@
           <ng-container [ngTemplateOutlet]="bulkAction" /><erp-button
             data-testid="reset"
             [label]="'general.reset' | uiText"
+            [compactOnSmallScreens]="true"
             variant="text"
             (activated)="state.reset()"
             ><erp-icon buttonIcon name="reset"
           /></erp-button>
         </div>
-        <div toolbarFilters class="filters"><ng-container [ngTemplateOutlet]="statusFilter" /></div>
-        <ng-template [erpCollectionCell]="columns() | collectionColumn: 'nameAr'" let-row
-          ><span class="country-name"><erp-icon name="flag" />{{ row.nameAr }}</span></ng-template
-        >
-        <ng-template [erpCollectionCell]="columns() | collectionColumn: 'nameEn'" let-row
-          ><span class="country-name"><erp-icon name="flag" />{{ row.nameEn }}</span></ng-template
-        >
+        <div toolbarFilters class="filters">
+          @if (searchVisible()) {
+            <ng-container [ngTemplateOutlet]="statusFilter" />
+          }
+        </div>
         <ng-template [erpCollectionCell]="columns() | collectionColumn: 'phoneCode'" let-row>
           @if (row.phoneCode) {
             <erp-status-badge [label]="phone(row.phoneCode)" accent="var(--primary)" />
+          } @else {
+            <span>—</span>
           }
         </ng-template>
         <ng-template [erpCollectionCell]="columns() | collectionColumn: 'currencyCode'" let-row>
           @if (row.currencyCode) {
             <erp-status-badge [label]="row.currencyCode" accent="var(--primary)" />
+          } @else {
+            <span>—</span>
           }
         </ng-template>
         <ng-template [erpCollectionCell]="columns() | collectionColumn: 'statesCount'" let-row
@@ -144,8 +157,8 @@
     } @else if (view() === 'cards') {
       <erp-card-list
         [searchMaxWidth]="400"
-        [toolbarVisible]="toolbarVisible()"
-        toolbarLayout="single-row"
+        [toolbarVisible]="searchVisible() || lifecycle.selected().length > 0"
+        toolbarLayout="adaptive"
         [recordRequest]="records.request()"
         [selectionEnabled]="lifecycle.allowed()"
         [selectable]="lifecycle.selectable"
@@ -155,7 +168,7 @@
         [label]="'countries.viewTitle' | uiText: 'reference-countries'"
         [rowId]="id"
         [rowLabel]="rowLabel"
-        [search]="search()"
+        [search]="searchVisible() ? search() : undefined"
         layout="responsive"
         appearance="entity"
         (pageChange)="state.changePage($event)"
@@ -164,7 +177,11 @@
         (rowActivated)="state.open($event.id)"
       >
         <div toolbarContent><ng-container [ngTemplateOutlet]="bulkAction" /></div>
-        <div toolbarFilters class="filters"><ng-container [ngTemplateOutlet]="criteria" /></div>
+        <div toolbarFilters class="filters">
+          @if (searchVisible()) {
+            <ng-container [ngTemplateOutlet]="criteria" />
+          }
+        </div>
         <ng-template [erpCollectionCardHeader]="state.source()" let-row
           ><erp-country-card-header [country]="row"
         /></ng-template>
@@ -210,16 +227,21 @@
       }
     } @else if (view() === 'import') {
       @defer (on immediate) {
-        <erp-country-import-view (review)="chooseView('grid'); state.refresh()" />
+        <erp-country-import-view
+          #countryImport
+          [externalActions]="true"
+          (review)="chooseView('grid'); state.refresh()"
+        />
       } @placeholder {
         <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
       }
     } @else if (view() === 'report' && canReport()) {
       @defer (on immediate) {
         <erp-global-report-view
+          [externalActions]="true"
           #countryReport
           [embedded]="true"
-          [showFilterBar]="toolbarVisible()"
+          [showFilterBar]="reportFiltersVisible()"
           [catalogErrorMessage]="countryText('countries.reportCatalogError')"
           [unavailableMessage]="countryText('countries.reportUnavailable')"
         />

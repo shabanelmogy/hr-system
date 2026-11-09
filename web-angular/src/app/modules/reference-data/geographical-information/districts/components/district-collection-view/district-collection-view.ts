@@ -62,7 +62,7 @@ import { DistrictCardContent } from '../district-card-content/district-card-cont
 })
 export class DistrictCollectionView {
   readonly kind = input<'grid' | 'cards'>('grid');
-  readonly toolbarVisible = input(true);
+  readonly searchVisible = input(false);
   readonly state = inject(DistrictReadState);
   readonly editor = inject(DistrictEditorState);
   readonly lifecycle = inject(DistrictLifecycleState);
@@ -91,10 +91,7 @@ export class DistrictCollectionView {
       status: this.status,
     }),
   );
-  readonly sort = computed(() => ({
-    field: this.state.query().sortBy,
-    direction: this.state.query().sortDirection,
-  }));
+  readonly sort = this.state.sort;
   readonly search = computed<CollectionSearch>(() => ({
     value: this.state.searchDraft(),
     maxLength: 200,

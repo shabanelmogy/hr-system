@@ -1,34 +1,57 @@
 <ng-template #ownerFilters
   ><div class="filter-region"><ng-content select="[toolbarFilters]" /></div
 ></ng-template>
-<ng-template #selectionSummary>
-  <div class="selection-summary">
-    <span aria-live="polite">{{
-      'collections.selected' | uiText: 'core' : { count: controller().selectedIds().length }
-    }}</span>
-    <erp-button
-      [label]="'general.clear' | uiText"
-      variant="text"
-      [disabled]="!controller().selectedIds().length"
-      (activated)="controller().clearSelection()"
-    />
+<ng-template #selectionControls>
+  <div class="selection-controls">
+    @if (pageSelection()) {
+      <p-checkbox
+        [binary]="true"
+        [ngModelOptions]="{ standalone: true }"
+        [ngModel]="controller().allSelected()"
+        [indeterminate]="controller().partlySelected()"
+        [ariaLabel]="'collections.selectPage' | uiText"
+        [disabled]="controller().view().kind !== 'ready' || !controller().eligibleIds().length"
+        (ngModelChange)="controller().selectPage($event === true)"
+      />
+    }
+    <div class="selection-summary">
+      <span class="p-hidden-accessible" aria-live="polite">{{
+        'collections.selected' | uiText: 'core' : { count: controller().selectedIds().length }
+      }}</span>
+      <erp-button
+        [label]="'general.clear' | uiText"
+        [accessibleLabel]="'common.unselectAll' | uiText"
+        [compactOnSmallScreens]="true"
+        variant="text"
+        [disabled]="!controller().selectedIds().length"
+        (activated)="controller().clearSelection()"
+        ><erp-icon buttonIcon name="close"
+      /></erp-button>
+    </div>
   </div>
 </ng-template>
 <section
   class="collection-shell"
   [class.reference-shell]="appearance() === 'reference'"
   [class.plain-shell]="appearance() === 'plain'"
-  [class.single-row-toolbar]="toolbarLayout() === 'single-row'"
+  [class.single-row-toolbar]="toolbarLayout() !== 'responsive' && !adaptiveSearchEnabled()"
+  [class.adaptive-toolbar]="toolbarLayout() === 'adaptive'"
   [attr.aria-label]="label()"
 >
   @if (toolbarVisible()) {
-    <header class="collection-toolbar erp-native-scrollbar">
-      @if (search(); as criteria) {
+    @let criteria = search();
+    @let adaptiveSearch = adaptiveSearchEnabled();
+    <header
+      class="collection-toolbar erp-native-scrollbar"
+      [class.structured-search]="adaptiveSearch"
+    >
+      @if (criteria) {
         <div class="search-controls" [class.simple-search]="!criteria.field && !criteria.operator">
           @if (criteria.field; as field) {
             <erp-option-select
               class="search-field"
-              [controlHeight]="appearance() === 'reference' ? 36 : 40"
+              [controlHeight]="adaptiveSearch ? 44 : appearance() === 'reference' ? 36 : 40"
+              labelPlacement="floating"
               [label]="field.label"
               [value]="field.value"
               [options]="field.options"
@@ -38,7 +61,8 @@
           @if (criteria.operator; as operator) {
             <erp-option-select
               class="search-operator"
-              [controlHeight]="appearance() === 'reference' ? 36 : 40"
+              [controlHeight]="adaptiveSearch ? 44 : appearance() === 'reference' ? 36 : 40"
+              labelPlacement="floating"
               [label]="operator.label"
               [value]="operator.value"
               [options]="operator.options"
@@ -46,30 +70,36 @@
             />
           }
           <erp-text-field
-            labelVisibility="sr-only"
-            [style.max-width.px]="searchMaxWidth()"
+            [appearance]="adaptiveSearch ? 'floating' : 'default'"
+            [labelVisibility]="adaptiveSearch ? 'visible' : 'sr-only'"
+            [style.max-width.px]="adaptiveSearch ? null : searchMaxWidth()"
+            [name]="adaptiveSearch ? 'collection-search' : ''"
+            autocomplete="off"
             [label]="'general.search' | uiText"
             [placeholder]="criteria.placeholder"
             [maxLength]="searchLimit()"
             [messages]="searchMessages()"
             [formControl]="searchControl"
-            [clearVisibility]="appearance() === 'reference' ? 'always' : 'value'"
+            [clearVisibility]="appearance() === 'reference' && !adaptiveSearch ? 'always' : 'value'"
           >
-            @if (appearance() === 'reference') {
+            @if (appearance() === 'reference' || adaptiveSearch) {
               <erp-icon fieldIcon name="search" />
             }
           </erp-text-field>
         </div>
       }
-      @if (toolbarLayout() === 'single-row') {
+      @if (toolbarLayout() !== 'responsive') {
         <ng-container [ngTemplateOutlet]="ownerFilters" />
       }
       <div class="toolbar-content"><ng-content select="[toolbarContent]" /></div>
       @if (columns().length) {
         <erp-button
+          class="grid-options"
           appearance="quiet"
           variant="text"
           [label]="'actions.gridOptions' | uiText"
+          [accessibleLabel]="'actions.gridOptions' | uiText"
+          [attr.title]="'actions.gridOptions' | uiText"
           [expanded]="optionsOpen()"
           hasPopup="dialog"
           (activated)="optionsOpen.set(true)"
@@ -83,18 +113,7 @@
   }
   @if (selectionEnabled() && selectionPlacement() === 'bar') {
     <div class="selection-bar">
-      @if (pageSelection()) {
-        <p-checkbox
-          [binary]="true"
-          [ngModelOptions]="{ standalone: true }"
-          [ngModel]="controller().allSelected()"
-          [indeterminate]="controller().partlySelected()"
-          [ariaLabel]="'collections.selectPage' | uiText"
-          [disabled]="controller().view().kind !== 'ready' || !controller().eligibleIds().length"
-          (ngModelChange)="controller().selectPage($event === true)"
-        />
-      }
-      <ng-container [ngTemplateOutlet]="selectionSummary" />
+      <ng-container [ngTemplateOutlet]="selectionControls" />
     </div>
   }
   <ng-content select="[collectionBody]" />
@@ -105,7 +124,7 @@
       [recordNavigation]="recordNavigation()"
     >
       @if (selectionEnabled() && selectionPlacement() === 'footer') {
-        <ng-container [ngTemplateOutlet]="selectionSummary" />
+        <ng-container [ngTemplateOutlet]="selectionControls" />
       }
     </erp-collection-footer>
   }

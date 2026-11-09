@@ -1,0 +1,126 @@
+{
+  "date": "2026-11-09",
+  "api": {
+    "projects": 12,
+    "passed": 1348,
+    "skipped": 3,
+    "failed": 0
+  },
+  "angular": {
+    "fullGate": "passed",
+    "tests": 1013,
+    "productionBuild": "passed"
+  },
+  "browser": {
+    "scope": "Chromium with intercepted GET fixtures",
+    "scenarios": {
+      "countries": [
+        {
+          "language": "en",
+          "mode": "light",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "language": "en",
+          "mode": "light",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "language": "ar",
+          "mode": "light",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "language": "ar",
+          "mode": "light",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "language": "en",
+          "mode": "dark",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "language": "en",
+          "mode": "dark",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "language": "ar",
+          "mode": "dark",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "language": "ar",
+          "mode": "dark",
+          "width": 1440,
+          "passed": true
+        }
+      ],
+      "states": [
+        {
+          "language": "en",
+          "mode": "light",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "language": "en",
+          "mode": "dark",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "language": "ar",
+          "mode": "light",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "language": "ar",
+          "mode": "dark",
+          "width": 1440,
+          "passed": true
+        }
+      ],
+      "districts": [
+        {
+          "language": "en",
+          "mode": "light",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "language": "en",
+          "mode": "dark",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "language": "ar",
+          "mode": "light",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "language": "ar",
+          "mode": "dark",
+          "width": 1440,
+          "passed": true
+        }
+      ]
+    }
+  },
+  "primeng": {
+    "tableMetadata": "valid",
+    "scope": "Public component bindings only. Angular and browser tests verify the sort adapter."
+  },
+  "hostedAcceptance": "PROD-033"
+}

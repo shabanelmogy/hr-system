@@ -45,7 +45,7 @@ export const stateSearchOperators = [
   'startsWith',
   'endsWith',
 ] as const;
-export const stateSortFields = ['nameEn', 'nameAr', 'code', 'country', 'createdOn'] as const;
+export const stateSortFields = ['id', 'nameEn', 'nameAr', 'code', 'country', 'createdOn'] as const;
 export const stateQuerySchema = z.strictObject({
   pageNumber: int32,
   pageSize: z.int().check(z.minimum(1), z.maximum(5000)),

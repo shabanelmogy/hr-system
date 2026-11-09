@@ -67,7 +67,7 @@ realtime, notification, localization, report, or Import integration is reachable
 | global-crystal-template-manager-master | 36 | `8796d3e9f52ea1ca5aabf0a8dffd4e65e53673153ec4fcf6ac98a462813bbd87` |
 | global-crystal-template-manager-master | 37 | `a79c36efe60ac284e27acfb5c9a980a61479b5d2a9449629c0e97d11236d4e2f` |
 | global-crystal-template-manager-master | 38 | `d02b2b160aff790881be2aead2faed3e8103596027f40fc5d4e59b0c0cc2321e` |
-| global-crystal-template-manager-master | 39 | `a2e564da5d402ad1de9ab60dca78ac95acd385c2912eb989a68de38d35c0b739` |
+| global-crystal-template-manager-master | 39 | `704229906967a82264c6a1d057466df6626e9e541eb0d56e38232cb0b79062b0` |
 | global-crystal-template-manager-api | 8 | `5dd0aa68eb109a053078ffa2c9bc6547b32ca8dd0cd625efcace1e99a628cbcb` |
 | global-crystal-template-manager-api | 9 | `54fb944c835fa2f1a6f39945b9e482bbaff9b0946ae17f1af5da0401d128864e` |
 | global-crystal-template-manager-api | 10 | `20788af211baf295318e1079031ad92497e5d5bdb01560d787c226481c93ddef` |
@@ -89,7 +89,7 @@ realtime, notification, localization, report, or Import integration is reachable
 | global-crystal-template-manager-api | 36 | `8796d3e9f52ea1ca5aabf0a8dffd4e65e53673153ec4fcf6ac98a462813bbd87` |
 | global-crystal-template-manager-api | 37 | `49f902cc782b8a5c3124233b07bf12a82b4ff1a174a5d1a2bee8519747ed861b` |
 | global-crystal-template-manager-api | 38 | `b78bd8ddfc6fcbe593dc815ac4c3849fafeb0eae896199ce52568de6c8b9ab46` |
-| global-crystal-template-manager-api | 39 | `b91369d1b82101ed5dd44eb90c4e4a57483bcc094721ea18e9af66c3d9c3fcfa` |
+| global-crystal-template-manager-api | 39 | `1c087cf497f3e17f211d282ab56939b1437c3668325754a9cd446e1ab75f05b6` |
 | global-crystal-template-manager-web | 8 | `cfc6a4919c70651f613c31089806fae15a71b0ead56a50e5a2f50d8cd7e24ddc` |
 | global-crystal-template-manager-web | 10 | `b323da842f4aac08484becb9d7ec372a0086599e67539ba27bdf9325059339ff` |
 | global-crystal-template-manager-web | 13 | `df8c55f8fd9efccf72639dcc8fdbe8666a68a82bdfe04768f14115ddceeb04d2` |
@@ -112,7 +112,7 @@ realtime, notification, localization, report, or Import integration is reachable
 | global-crystal-template-manager-web | 36 | `8796d3e9f52ea1ca5aabf0a8dffd4e65e53673153ec4fcf6ac98a462813bbd87` |
 | global-crystal-template-manager-web | 37 | `a79c36efe60ac284e27acfb5c9a980a61479b5d2a9449629c0e97d11236d4e2f` |
 | global-crystal-template-manager-web | 38 | `d02b2b160aff790881be2aead2faed3e8103596027f40fc5d4e59b0c0cc2321e` |
-| global-crystal-template-manager-web | 39 | `a2e564da5d402ad1de9ab60dca78ac95acd385c2912eb989a68de38d35c0b739` |
+| global-crystal-template-manager-web | 39 | `704229906967a82264c6a1d057466df6626e9e541eb0d56e38232cb0b79062b0` |
 | global-crystal-template-manager-mobile | 2 | `64e9644cef9327ade39e4e236b87865f5f44a71af9a9c7019c428c5ffe4eb1a1` |
 | global-crystal-template-manager-mobile | 11 | `5e40f03c8972a8239cacd1daa199cf2acf0d52a312de4ba3aafb240dc2b20996` |
 | global-crystal-template-manager-mobile | 12 | `45febb7e13afb635fbf5e576665b86b0ae977f2038e9caca620f18df7bc28193` |
@@ -135,4 +135,4 @@ realtime, notification, localization, report, or Import integration is reachable
 | global-crystal-template-manager-mobile | 36 | `6a087d8bb9213147e95cdbee8a722dde678148658e0d127957e73286c0c897fa` |
 | global-crystal-template-manager-mobile | 37 | `baac7ac32df03957d65f5506a97715c7a366c98623b0656cbbb90906906caa6e` |
 | global-crystal-template-manager-mobile | 38 | `dd8dbf5659694990be83ebe696d7461715745e33dfacdf6109edd4904cf007d0` |
-| global-crystal-template-manager-mobile | 39 | `b91369d1b82101ed5dd44eb90c4e4a57483bcc094721ea18e9af66c3d9c3fcfa` |
+| global-crystal-template-manager-mobile | 39 | `1c087cf497f3e17f211d282ab56939b1437c3668325754a9cd446e1ab75f05b6` |

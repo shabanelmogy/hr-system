@@ -26,8 +26,8 @@ header > span:first-child {
   font-size: 12px;
   line-height: 1.429;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  text-transform: var(--metric-label-transform, uppercase);
+  letter-spacing: var(--metric-label-spacing, 0.5px);
   color: var(--muted-foreground);
   overflow-wrap: break-word;
 }
@@ -49,7 +49,8 @@ erp-icon {
 }
 strong {
   display: block;
-  font-size: 18px;
+  font-size: var(--metric-value-size, 18px);
+  font-variant-numeric: tabular-nums;
   line-height: 1.1;
   font-weight: 800;
   margin-bottom: 4px;
@@ -63,6 +64,35 @@ p {
 }
 footer {
   margin-block-start: 16px;
+}
+:host(.tile-metric) section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 6px;
+  min-block-size: 56px;
+  box-shadow: none;
+}
+:host(.tile-metric) header {
+  margin: 0;
+}
+:host(.tile-metric) header > span:first-child {
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: var(--metric-tile-label-size, 11px);
+  line-height: 1.3;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+:host(.tile-metric) .metric-icon {
+  display: none;
+}
+:host(.tile-metric) strong {
+  margin: 0;
+  font-size: 18px;
 }
 :host(.large-metric) section {
   padding: 20px;

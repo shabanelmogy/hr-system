@@ -2,6 +2,17 @@
 
 Execution order marker: API → Web → Mobile → integrated live verification → documentation/closure
 
+Current authorized Angular refinement (2026-11-08): Tenant Management opens its
+list directly without additional outer tabs. Add/Edit share one routed editor;
+its four tabs are Profile (identity, billing/contact and full-width Notes in one
+grid without sections), Subscription, Applications and Administrators. The latter
+scopes existing account operations to a saved Tenant's displayed memberships; a
+new unsaved Tenant requires its first save. The redundant card/page subtitles are
+omitted, overview/details heights match and shared controls own spacing/density.
+This explicit requester decision supersedes earlier dialog/five-tab presentation
+parity; business/API/mobile contracts remain unchanged. Current source/evidence:
+[tenant editor refinement](../../../../modules/platform/features/angular-tenant-management-workspace/TENANT_TABS_AND_EDIT_2026-11-08.md).
+
 ## 0. Contract metadata
 
 | Field | Value |

@@ -15,8 +15,41 @@
 />
 <erp-boolean-field
   kind="switch"
+  labelPlacement="above"
   [formField]="editor.form.isActive"
   [label]="captions.label('isActive')"
   [readOnly]="editor.locked()"
-  [help]="captions.text('sections.identityDescription')"
+/>
+<erp-text-field
+  [formField]="editor.form.billingEmail"
+  [label]="captions.label('billingEmail')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+  type="email"
+  textDirection="ltr"
+/>
+<erp-text-field
+  [formField]="editor.form.contactName"
+  [label]="captions.label('contactName')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+  [showCounter]="true"
+/>
+<erp-text-field
+  [formField]="editor.form.contactPhone"
+  [label]="captions.label('contactPhone')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+  inputMode="tel"
+  textDirection="ltr"
+/>
+<erp-text-field
+  class="field-span-full"
+  [formField]="editor.form.notes"
+  [label]="captions.label('notes')"
+  [messages]="captions.messages()"
+  [readOnly]="editor.locked()"
+  [multiline]="true"
+  [rows]="6"
+  [showCounter]="true"
 />

@@ -1,0 +1,23 @@
+(node:5956) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/src/app/platform/auth/auth.fixture.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\F:\Portofolio Projects\ERPSYSTEM\web-angular\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/verify-districts-browser.mjs:587
+          throw Error(`Districts ${language}/${mode}/${width} at ${stage}: ${error}`, {
+                ^
+
+Error: Districts en/light/1440 at navigate: AssertionError [ERR_ASSERTION]: {"kind":"grid","width":390,"open":false,"geometry":{"display":"flex","wrap":"wrap","contentWidth":340,"boxes":[{"label":"All","x":25,"y":188.53125,"right":191,"bottom":232.53125,"width":166,"height":44,"projectedSelect":false,"searchField":true,"searchCompanion":false},{"label":"Contains","x":199,"y":188.53125,"right":365,"bottom":232.53125,"width":166,"height":44,"projectedSelect":false,"searchField":true,"searchCompanion":false},{"label":"","x":25,"y":240.53125,"right":365,"bottom":284.53125,"width":340,"height":44,"projectedSelect":false,"searchField":true,"searchCompanion":false},{"label":"Active","x":25,"y":292.53125,"right":191,"bottom":336.53125,"width":166,"height":44,"projectedSelect":true,"searchField":false,"searchCompanion":true},{"label":"All States","x":199,"y":292.53125,"right":365,"bottom":336.53125,"width":166,"height":44,"projectedSelect":true,"searchField":false,"searchCompanion":false},{"label":"All","x":25,"y":344.53125,"right":204.265625,"bottom":388.53125,"width":179.265625,"height":44,"projectedSelect":true,"searchField":false,"searchCompanion":false},{"label":"Reset","x":212.265625,"y":344.53125,"right":309,"bottom":388.53125,"width":96.734375,"height":44,"projectedSelect":false,"searchField":false,"searchCompanion":false},{"label":"Grid options","x":317,"y":344.53125,"right":365,"bottom":388.53125,"width":48,"height":44,"projectedSelect":false,"searchField":false,"searchCompanion":false}],"overlaps":[],"outside":[],"outerOverflow":false,"filterRows":[{"left":25,"right":365},{"left":25,"right":365},{"left":25,"right":365}],"innerLeft":25,"innerRight":365,"placeholderSize":"12px","compactCompanion":true}}
+    at file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/verify-districts-browser.mjs:587:17 {
+  [cause]: AssertionError [ERR_ASSERTION]: {"kind":"grid","width":390,"open":false,"geometry":{"display":"flex","wrap":"wrap","contentWidth":340,"boxes":[{"label":"All","x":25,"y":188.53125,"right":191,"bottom":232.53125,"width":166,"height":44,"projectedSelect":false,"searchField":true,"searchCompanion":false},{"label":"Contains","x":199,"y":188.53125,"right":365,"bottom":232.53125,"width":166,"height":44,"projectedSelect":false,"searchField":true,"searchCompanion":false},{"label":"","x":25,"y":240.53125,"right":365,"bottom":284.53125,"width":340,"height":44,"projectedSelect":false,"searchField":true,"searchCompanion":false},{"label":"Active","x":25,"y":292.53125,"right":191,"bottom":336.53125,"width":166,"height":44,"projectedSelect":true,"searchField":false,"searchCompanion":true},{"label":"All States","x":199,"y":292.53125,"right":365,"bottom":336.53125,"width":166,"height":44,"projectedSelect":true,"searchField":false,"searchCompanion":false},{"label":"All","x":25,"y":344.53125,"right":204.265625,"bottom":388.53125,"width":179.265625,"height":44,"projectedSelect":true,"searchField":false,"searchCompanion":false},{"label":"Reset","x":212.265625,"y":344.53125,"right":309,"bottom":388.53125,"width":96.734375,"height":44,"projectedSelect":false,"searchField":false,"searchCompanion":false},{"label":"Grid options","x":317,"y":344.53125,"right":365,"bottom":388.53125,"width":48,"height":44,"projectedSelect":false,"searchField":false,"searchCompanion":false}],"overlaps":[],"outside":[],"outerOverflow":false,"filterRows":[{"left":25,"right":365},{"left":25,"right":365},{"left":25,"right":365}],"innerLeft":25,"innerRight":365,"placeholderSize":"12px","compactCompanion":true}}
+      at verifyCollectionSearchLayout (file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/support/collection-search-layout.mjs:140:20)
+      at async file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/verify-districts-browser.mjs:291:34 {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+}
+
+Node.js v24.18.1

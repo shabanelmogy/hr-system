@@ -1,0 +1,69 @@
+<section class="workspace" [class.no-selection]="!entries().length">
+  @if (entries().length) {
+    <aside [attr.aria-label]="label()">
+      <div class="directory-heading">
+        <h2>{{ label() }}</h2>
+        <span>{{ entries().length }}</span>
+      </div>
+      <div class="directory-list">
+        <p-listbox
+          [options]="options()"
+          [ngModel]="selected()"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="select($event)"
+          optionLabel="label"
+          optionValue="id"
+          [filter]="true"
+          [filterValue]="query().trim()"
+          filterBy="label,description"
+          [ariaLabel]="label()"
+          [emptyFilterMessage]="'common.noOptionsFound' | uiText"
+          [pt]="listPresentation"
+        >
+          <ng-template #filter>
+            <erp-text-field
+              [label]="searchLabel()"
+              labelVisibility="sr-only"
+              [placeholder]="'general.search' | uiText"
+              inputMode="search"
+              [(value)]="query"
+            >
+              <erp-icon fieldIcon name="search" />
+            </erp-text-field>
+          </ng-template>
+          <ng-template #item let-entry>
+            <span class="entry">
+              <span class="entry-identity">
+                <span class="entry-name">{{ entry.label }}</span>
+                @if (entry.description) {
+                  <span class="entry-description"
+                    ><bdi>{{ entry.description }}</bdi></span
+                  >
+                }
+              </span>
+              @if (entry.meta) {
+                <span class="entry-meta">{{ entry.meta }}</span>
+              }
+            </span>
+          </ng-template>
+        </p-listbox>
+      </div>
+    </aside>
+  }
+  <div class="detail">
+    @if (current(); as entry) {
+      <header class="detail-heading">
+        <div>
+          <h2>{{ entry.label }}</h2>
+          @if (entry.description) {
+            <p dir="auto">{{ entry.description }}</p>
+          }
+        </div>
+        @if (entry.meta) {
+          <span class="detail-meta">{{ entry.meta }}</span>
+        }
+      </header>
+    }
+    <div class="detail-content"><ng-content /></div>
+  </div>
+</section>

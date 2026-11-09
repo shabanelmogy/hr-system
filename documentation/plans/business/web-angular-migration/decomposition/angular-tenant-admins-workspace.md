@@ -2,6 +2,15 @@
 
 Execution order marker: API → Web → Mobile → integrated live verification → documentation/closure
 
+Current authorized Angular organization (2026-11-08): remove the standalone
+sidebar destination; Add/Edit Tenant exposes the existing administrator workspace
+as a scoped tab inside Tenant details. The Tenant list has no extra outer tabs.
+Preserve the existing global administrator URL for compatibility, account-wide
+operations and unassigned accounts. Display/count/export respect the supplied
+saved Tenant ID in the embedded workspace; existing multi-tenant account edits
+and account-wide archive confirmation remain unchanged. Current canonical source
+and verification: [tenant editor refinement](../../../../modules/platform/features/angular-tenant-management-workspace/TENANT_TABS_AND_EDIT_2026-11-08.md).
+
 ## 0. Contract metadata
 
 | Field | Value |

@@ -1,0 +1,6 @@
+{
+  "web-angular/src/app/shared/ui/icons/app-icon/app-icon.scss": "7442be53b620aa34afec413ad0b623336c8abf7ee59bae1bd997006f36cd7fe9",
+  "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.scss": "8b0e108da58e7e7d1aed9b98e1400ca996ee68f94d92b93a6fe18a2d6f1d1119",
+  "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.scss": "45327fbf44d524b094ce47c24ba7d2244a81e36ecf99ab9cbcfabb2631a8d98a",
+  "web-angular/scripts/support/collection-search-layout.mjs": "d0406d7277fd9facb0a71a3a296d89630842d7c83b0e7eafc7af155139882395"
+}

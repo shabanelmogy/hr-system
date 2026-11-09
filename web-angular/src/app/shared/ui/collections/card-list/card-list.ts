@@ -24,6 +24,7 @@ import {
   type CollectionSearch,
   type CollectionSearchChange,
   type CollectionSource,
+  type CollectionToolbarLayout,
 } from '../collection.types';
 @Component({
   selector: 'erp-card-list',
@@ -46,15 +47,20 @@ import {
   ],
 })
 export class CardList<T> {
+  private static sequence = 0;
+  readonly selectionPrefix = 'erp-card-selection-' + ++CardList.sequence;
   readonly toolbarVisible = input(true);
   readonly showFooter = input(true);
-  readonly toolbarLayout = input<'responsive' | 'single-row'>('responsive');
+  readonly toolbarLayout = input<CollectionToolbarLayout>('responsive');
   readonly searchMaxWidth = input<number | null>(null);
   readonly recordNavigation = input(false);
   readonly recordRequest = input<CollectionRecordRequest | null>(null);
   readonly layout = input<'auto' | 'responsive' | 'fit'>('auto');
+  readonly compactLayout = input<'auto' | 'single-column'>('auto');
   readonly minCardWidth = input(260, { transform: numberAttribute });
   readonly appearance = input<'compact' | 'entity'>('compact');
+  readonly frameAppearance = input<'standard' | 'plain'>('standard');
+  readonly scrollbar = input<'auto' | 'hidden'>('auto');
   private readonly locale = inject(UI_LOCALIZATION);
   readonly source = input.required<CollectionSource<T>>();
   readonly label = input.required<string>();

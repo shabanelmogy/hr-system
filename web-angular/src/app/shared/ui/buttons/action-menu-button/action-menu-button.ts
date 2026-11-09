@@ -22,6 +22,7 @@ export class ActionMenuButton<TAction extends string = string> {
   private static sequence = 0;
   readonly menuId = 'erp-action-menu-' + ++ActionMenuButton.sequence;
   readonly label = input.required<string>();
+  readonly compactIcon = input<AppIconName | null>(null);
   readonly actions = input.required<readonly ActionMenuItem<TAction>[]>();
   readonly disabled = input(false);
   readonly activated = output<TAction>();

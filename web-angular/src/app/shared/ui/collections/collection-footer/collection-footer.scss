@@ -1,6 +1,7 @@
 :host {
   display: block;
   flex-shrink: 0;
+  container: collection-footer / inline-size;
 }
 footer {
   min-height: 52px;
@@ -33,10 +34,17 @@ footer {
   background: var(--muted);
   border-radius: 6px;
   padding: 6px 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   order: 2;
 }
 .record-controls erp-button:nth-of-type(n + 3) {
   order: 3;
+}
+.record-controls span[buttonIcon],
+.cursor-page-controls span[buttonIcon] {
+  font-size: 1.125rem;
+  line-height: 1;
 }
 .rtl {
   display: inline-block;
@@ -64,6 +72,7 @@ erp-option-select {
   flex: 1;
   justify-content: center;
   max-width: 100%;
+  container: collection-paging / inline-size;
 }
 .native-page-controls {
   flex: 1;
@@ -78,8 +87,8 @@ p-paginator {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 12px;
-  white-space: nowrap;
+  gap: 4px 8px;
+  min-inline-size: 0;
 }
 .record-navigation-layout {
   display: grid;
@@ -99,47 +108,83 @@ p-paginator {
   color: var(--muted-foreground);
   font-size: 12px;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
-@media (max-width: 799px) {
+@container collection-paging (max-width: 38rem) {
+  .record-controls erp-button,
+  .cursor-page-controls erp-button {
+    --action-icon-size: 32px;
+  }
+}
+@container collection-paging (max-width: 32rem) {
   .record-navigation-layout {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 8px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px 12px;
   }
   .record-navigation-layout .record-controls {
+    grid-column: 1;
     grid-row: 1;
   }
-  .record-navigation-layout .size-settings,
-  .cursor-page-controls {
-    justify-content: center;
+  .record-navigation-layout .size-settings {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .page-context {
+    grid-column: 1 / -1;
+    grid-row: 2;
   }
   .page-context:empty {
     display: none;
   }
-  footer {
-    flex-wrap: wrap;
-    justify-content: center;
+}
+@container collection-paging (max-width: 26rem) {
+  .record-navigation-layout,
+  .record-controls {
+    gap: 2px;
   }
-  .page-controls {
-    flex: 1 1 100%;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 6px;
+  .record-controls erp-button,
+  .cursor-page-controls erp-button {
+    --action-icon-size: 24px;
+  }
+  .record-count {
+    min-width: 40px;
+    padding: 4px;
+    font-size: 11px;
+  }
+  .page-count {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  erp-option-select {
+    min-inline-size: 56px;
+    inline-size: 56px;
+  }
+  :host ::ng-deep .size-settings p-select {
+    --p-select-dropdown-width: 18px;
+    --p-select-font-size: 11px;
   }
   .native-page-controls {
-    inline-size: 100%;
+    --collection-native-nav-size: 24px;
+    --collection-native-page-size: 48px;
+    --collection-native-select-padding: 4px;
+    --collection-native-dropdown-size: 16px;
+    font-size: 11px;
+  }
+  :host ::ng-deep .native-page-controls .p-paginator {
+    flex-wrap: nowrap;
+  }
+  :host ::ng-deep .native-page-controls .p-paginator-pages {
+    display: none;
   }
 }
-@media (max-width: 599px) {
+@container collection-footer (max-width: 34rem) {
   footer {
-    padding: 10px 0;
-    gap: 8px;
+    min-height: 40px;
+    padding: 4px 0;
+    gap: 4px;
     font-size: 12px;
-  }
-  .page-controls {
-    width: 100%;
-  }
-  :host:not(:has(.with-record-navigation)) ::ng-deep .collection-page-report {
-    flex-basis: 100%;
-    text-align: center;
   }
 }

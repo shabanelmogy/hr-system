@@ -9,6 +9,32 @@ import { adminFixture } from '../tenant-admin.fixture';
 import { AdminReadState } from './admin-read-state';
 describe('Tenant administrator authoritative read lifetime', () => {
   afterEach(() => TestBed.resetTestingModule());
+  it('exports only memberships of the requested tenant and invalidates stale snapshots', async () => {
+    const identity = signal<Session | null>({ ...sessionFixture, roles: ['super_admin'] });
+    const response = new Subject<readonly TenantAdmin[]>();
+    TestBed.configureTestingModule({
+      providers: [
+        AdminReadState,
+        { provide: AuthSession, useValue: { readIdentity: identity } },
+        { provide: TenantAdminService, useValue: { all: () => response.asObservable() } },
+      ],
+    });
+    const reads = TestBed.inject(AdminReadState);
+    TestBed.tick();
+    response.next([
+      adminFixture,
+      { ...adminFixture, id: 'other', tenants: [], defaultTenantId: '' },
+    ]);
+    const source = reads.exportSource(
+      [{ key: 'id', header: 'ID', value: (admin) => admin.id }],
+      'en',
+      't',
+    );
+    expect(source).not.toBeNull();
+    expect(await source?.load(new AbortController().signal)).toEqual([{ ID: adminFixture.id }]);
+    identity.set(null);
+    expect(() => source?.load(new AbortController().signal)).toThrow();
+  });
   it('queues a successful-command refresh while an earlier background read is pending', () => {
     const identity = signal<Session | null>({ ...sessionFixture, roles: ['super_admin'] });
     const responses: Subject<readonly TenantAdmin[]>[] = [];

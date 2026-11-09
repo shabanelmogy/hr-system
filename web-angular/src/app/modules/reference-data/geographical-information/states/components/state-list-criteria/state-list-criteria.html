@@ -9,6 +9,7 @@
 <erp-option-select
   [controlHeight]="36"
   [label]="'states.country' | uiText: 'reference-states'"
+  [controlWidth]="168"
   [value]="state.query().countryId === undefined ? '' : '' + state.query().countryId"
   [options]="countryOptions()"
   [disabled]="parents.view().kind !== 'ready'"
@@ -26,18 +27,22 @@
     data-testid="sort"
     [controlHeight]="36"
     [label]="'general.sortBy' | uiText"
-    [value]="state.query().sortBy"
+    [value]="state.sortField()"
     [options]="sorts()"
     (valueChange)="chooseSort($event)"
   />
   <erp-sort-direction-button
-    [direction]="state.query().sortDirection"
-    (directionChange)="state.changeSort({ field: state.query().sortBy, direction: $event })"
+    [direction]="state.sort()?.direction ?? null"
+    (directionChange)="
+      state.changeSort($event ? { field: state.sortField(), direction: $event } : null)
+    "
   />
   <erp-button
     data-testid="reset"
     [label]="'general.reset' | uiText"
+    [compactOnSmallScreens]="true"
     variant="text"
     (activated)="state.reset()"
-  />
+    ><erp-icon buttonIcon name="reset"
+  /></erp-button>
 }

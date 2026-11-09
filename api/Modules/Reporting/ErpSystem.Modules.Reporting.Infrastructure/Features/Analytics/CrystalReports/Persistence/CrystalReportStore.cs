@@ -1,3 +1,4 @@
+using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Validation;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Abstractions;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Contracts;
 using ErpSystem.Modules.Reporting.Domain.Analytics.CrystalReports.Entities;
@@ -8,7 +9,7 @@ namespace ErpSystem.Modules.Reporting.Infrastructure.Features.Analytics.CrystalR
 public sealed class CrystalReportStore(
     ReportingDbContext context,
     ICurrentActor currentActor,
-    IPlatformAuthorizationSource platformAuthorization) : ICrystalReportStore
+    IPlatformAuthorizationSource platformAuthorization, IManagedCrystalReportContractSource contracts) : ICrystalReportStore
 {
     public Task<IReadOnlyList<CrystalReportListItemResponse>> ListPublishedAsync(
         string? entityKey, string? search, CrystalReportRight requiredRight,
@@ -136,7 +137,7 @@ public sealed class CrystalReportStore(
             report.Id, report.EntityKey, report.ReportKey, report.DisplayName,
             report.Description, currentVersion, report.CurrentPublishedVersionId.HasValue,
             report.IsDeleted, Convert.ToBase64String(report.RowVersion),
-            report.CreatedOn, report.UpdatedOn, versions, grants);
+            report.CreatedOn, report.UpdatedOn, versions.Select(version => version.WithCurrentContract(contracts, report.EntityKey)).ToArray(), grants);
     }
 
     public Task<CrystalReport?> GetForUpdateAsync(Guid id, CancellationToken cancellationToken) =>

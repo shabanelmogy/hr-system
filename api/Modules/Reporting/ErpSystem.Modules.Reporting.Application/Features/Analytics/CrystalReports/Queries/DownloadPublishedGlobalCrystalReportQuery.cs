@@ -31,8 +31,8 @@ public sealed class DownloadPublishedGlobalCrystalReportQueryHandler(GlobalCryst
             : await consumers.CatalogAsync(request.EntityKey, CrystalReportRight.Download, cancellationToken);
         var report = reports.SingleOrDefault(item => identities.SourceId(item.ReportId) == request.SourceId);
         var version = report?.PublishedVersion;
-        if (version == null || !version.IsValidFor(contracts.Fingerprint)) return Result.Failure<CrystalReportDownload>(errors.CrystalReportNotFound);
-        if (identities.Token(version.Id, contracts.Fingerprint, version.Sha256) != request.ExpectedSha256)
+        if (version == null || !version.IsValidFor(contracts, request.EntityKey)) return Result.Failure<CrystalReportDownload>(errors.CrystalReportNotFound);
+        if (identities.Token(version.Id, contracts.GetFingerprint(request.EntityKey), version.Sha256) != request.ExpectedSha256)
             return Result.Failure<CrystalReportDownload>(errors.CrystalReportDeploymentSourceChanged);
         var content = await files.OpenVerifiedReadAsync(version.StorageKey, version.Size, version.Sha256, cancellationToken);
         return content == null ? Result.Failure<CrystalReportDownload>(errors.CrystalReportSourceUnavailable)

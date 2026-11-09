@@ -11,10 +11,12 @@ import {
 // No business mutations, publication, job actions, tokens, report data or file bytes are recorded.
 const origin = 'https://localhost:4210';
 const api = 'https://shabanhrms.runasp.net';
-const output = path.resolve(
-  import.meta.dirname,
-  '../../documentation/modules/platform/features/angular-super-admin-final-review/hosted-read-2026-11-07.json',
-);
+const output =
+  process.env.ERP_PROBE_OUTPUT ??
+  path.resolve(
+    import.meta.dirname,
+    '../../documentation/modules/platform/features/angular-super-admin-final-review/hosted-read-2026-11-07.json',
+  );
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 const context = await browser.newContext({ ignoreHTTPSErrors: true });
 const page = await context.newPage();
@@ -65,6 +67,7 @@ async function request(endpoint, method = 'GET', body) {
       return {
         status: response.status,
         contentType,
+        correlationId: response.headers.get('x-correlation-id'),
         json,
         hangfireDocument: /Hangfire/i.test(text) && contentType.includes('text/html'),
       };
@@ -136,6 +139,8 @@ try {
             validationStatus: version.validationStatus,
             validationReasonPresent: !!version.validationReason,
             hasContractFingerprint: !!version.validationContractFingerprint,
+            validationContractFingerprint: version.validationContractFingerprint,
+            currentContractFingerprint: countryContractFingerprint,
             matchesCurrentContract:
               countryContractFingerprint !== null &&
               version.validationContractFingerprint === countryContractFingerprint,
@@ -190,7 +195,11 @@ try {
           status: response.status,
           bytes: response.bytes ?? 0,
           pdfSignature: response.pdfSignature ?? false,
-          publicCode: response.json?.code ?? null,
+          publicCode: response.json?.code ?? Object.keys(response.json?.errors ?? {})[0] ?? null,
+          publicCodes: Object.keys(response.json?.errors ?? {}).filter((code) =>
+            /^[A-Za-z0-9._-]{1,100}$/.test(code),
+          ),
+          correlationId: response.correlationId ?? null,
           publicTitle: response.status >= 400 ? (response.json?.title ?? null) : null,
         });
         console.log(`Hosted Countries render ${language}: ${response.status}`);

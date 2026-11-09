@@ -169,7 +169,7 @@ try {
           await choose('cards').click();
           if (screen.key === 'tenants-view-layout') {
             await root.locator('erp-page-header .primary-action button').click();
-            await expect(page.locator('erp-tenant-create-page')).toBeVisible();
+            await expect(page.locator('erp-tenant-editor-page')).toBeVisible();
           } else {
             await page
               .locator('.workspace-sidebar erp-navigation-list')

@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "entities": [
+    {
+      "entityKey": "countries",
+      "scope": "global",
+      "tableName": "ReportData",
+      "maxRows": 10000,
+      "columns": [
+        { "name": "CountryId", "type": "int32", "nullable": false },
+        { "name": "CountryAr", "type": "string", "nullable": false },
+        { "name": "CountryEn", "type": "string", "nullable": false },
+        { "name": "StateId", "type": "int32", "nullable": true },
+        { "name": "StateAr", "type": "string", "nullable": true },
+        { "name": "StateEn", "type": "string", "nullable": true }
+      ],
+      "filters": ["NameAr", "NameEn"],
+      "parameters": [
+        {
+          "name": "Language",
+          "type": "string",
+          "required": true,
+          "allowMultipleValues": false,
+          "discreteOnly": true,
+          "allowedValues": ["ar", "en"]
+        }
+      ]
+    },
+    {
+      "entityKey": "states",
+      "scope": "global",
+      "tableName": "ReportData",
+      "maxRows": 10000,
+      "columns": [
+        { "name": "StateId", "type": "int32", "nullable": false },
+        { "name": "StateAr", "type": "string", "nullable": false },
+        { "name": "StateEn", "type": "string", "nullable": false },
+        { "name": "StateCode", "type": "string", "nullable": false },
+        { "name": "CountryId", "type": "int32", "nullable": false },
+        { "name": "CountryAr", "type": "string", "nullable": false },
+        { "name": "CountryEn", "type": "string", "nullable": false }
+      ],
+      "filters": ["NameAr", "NameEn"],
+      "parameters": [
+        {
+          "name": "Language",
+          "type": "string",
+          "required": true,
+          "allowMultipleValues": false,
+          "discreteOnly": true,
+          "allowedValues": ["ar", "en"]
+        }
+      ]
+    },
+    {
+      "entityKey": "districts",
+      "scope": "global",
+      "tableName": "ReportData",
+      "maxRows": 10000,
+      "columns": [
+        { "name": "DistrictId", "type": "int32", "nullable": false },
+        { "name": "DistrictAr", "type": "string", "nullable": false },
+        { "name": "DistrictEn", "type": "string", "nullable": false },
+        { "name": "DistrictCode", "type": "string", "nullable": false },
+        { "name": "StateId", "type": "int32", "nullable": false },
+        { "name": "StateAr", "type": "string", "nullable": false },
+        { "name": "StateEn", "type": "string", "nullable": false },
+        { "name": "AddressesCount", "type": "int32", "nullable": false }
+      ],
+      "filters": ["NameAr", "NameEn", "StateAr", "StateEn"],
+      "parameters": [
+        {
+          "name": "Language",
+          "type": "string",
+          "required": true,
+          "allowMultipleValues": false,
+          "discreteOnly": true,
+          "allowedValues": ["ar", "en"]
+        }
+      ]
+    },
+    {
+      "entityKey": "addresstypes",
+      "scope": "tenant-company",
+      "tableName": "ReportData",
+      "maxRows": 10000,
+      "columns": [
+        { "name": "AddressTypeId", "type": "int32", "nullable": false },
+        { "name": "AddressTypeAr", "type": "string", "nullable": false },
+        { "name": "AddressTypeEn", "type": "string", "nullable": false },
+        { "name": "AddressesCount", "type": "int32", "nullable": false }
+      ],
+      "filters": ["NameAr", "NameEn"],
+      "parameters": [
+        {
+          "name": "Language",
+          "type": "string",
+          "required": true,
+          "allowMultipleValues": false,
+          "discreteOnly": true,
+          "allowedValues": ["ar", "en"]
+        }
+      ]
+    },
+    {
+      "entityKey": "fiscalyears",
+      "scope": "tenant-company",
+      "tableName": "ReportData",
+      "maxRows": 10000,
+      "columns": [
+        { "name": "FiscalYearId", "type": "int32", "nullable": false },
+        { "name": "FiscalYearCode", "type": "string", "nullable": false },
+        { "name": "FiscalYearAr", "type": "string", "nullable": false },
+        { "name": "FiscalYearEn", "type": "string", "nullable": false },
+        { "name": "FiscalYearStartDate", "type": "datetime", "nullable": false },
+        { "name": "FiscalYearEndDate", "type": "datetime", "nullable": false },
+        { "name": "PeriodFrequency", "type": "string", "nullable": false },
+        { "name": "FiscalYearStatus", "type": "string", "nullable": false },
+        { "name": "FiscalPeriodId", "type": "int32", "nullable": true },
+        { "name": "FiscalPeriodSequence", "type": "int32", "nullable": true },
+        { "name": "FiscalPeriodCode", "type": "string", "nullable": true },
+        { "name": "FiscalPeriodAr", "type": "string", "nullable": true },
+        { "name": "FiscalPeriodEn", "type": "string", "nullable": true },
+        { "name": "FiscalPeriodStartDate", "type": "datetime", "nullable": true },
+        { "name": "FiscalPeriodEndDate", "type": "datetime", "nullable": true },
+        { "name": "FiscalPeriodStatus", "type": "string", "nullable": true }
+      ],
+      "filters": ["Code", "NameAr", "NameEn"],
+      "parameters": [
+        {
+          "name": "Language",
+          "type": "string",
+          "required": true,
+          "allowMultipleValues": false,
+          "discreteOnly": true,
+          "allowedValues": ["ar", "en"]
+        }
+      ]
+    }
+  ]
+}

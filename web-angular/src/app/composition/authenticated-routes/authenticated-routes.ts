@@ -16,10 +16,7 @@ import {
   systemAuditAllowed,
   systemAuditGuard,
 } from '../../platform/system-audit/policy.public-api';
-import {
-  tenantAdminAllowed,
-  tenantAdminsGuard,
-} from '../../platform/tenant-admins/policy.public-api';
+import { tenantAdminsGuard } from '../../platform/tenant-admins/policy.public-api';
 import {
   tenantReadAllowed,
   tenantRouteGuard,
@@ -214,10 +211,6 @@ import {
               void router.navigateByUrl('/advanced-tools/hangfire-dashboard');
               return true;
             }
-            if (id === 'tenant-admins' && tenantAdminAllowed(auth.readIdentity())) {
-              void router.navigateByUrl('/super-admin/tenant-admins');
-              return true;
-            }
             if (id === 'tenants' && tenantReadAllowed(auth.readIdentity())) {
               void router.navigateByUrl('/super-admin/tenants');
               return true;
@@ -361,6 +354,8 @@ const workspaceRoutes: Routes = shellRoutes.map((route) => ({
           provide: SYSTEM_ERROR_LOG_REPORT,
           useValue: {
             component: GlobalReportView,
+            headerActions: (component: unknown) =>
+              component instanceof GlobalReportView ? component.headerActions() : null,
             allowed: (actor: ReturnType<AuthSession['readIdentity']>) =>
               globalReportAllowed(actor, 'system-error-logs'),
           },
@@ -387,8 +382,14 @@ const workspaceRoutes: Routes = shellRoutes.map((route) => ({
       path: 'super-admin/tenant-admins',
       data: { workspaceLayout: 'fill' },
       canActivate: [tenantAdminsGuard],
+      canDeactivate: [unsavedNavigationGuard],
       loadComponent: () =>
         import('../../platform/tenant-admins/public-api').then((module) => module.TenantAdminsPage),
+    },
+    {
+      path: 'super-admin/tenants/administrators',
+      pathMatch: 'full',
+      redirectTo: 'super-admin/tenant-admins',
     },
     {
       path: 'super-admin/tenants/new',
@@ -397,13 +398,24 @@ const workspaceRoutes: Routes = shellRoutes.map((route) => ({
       canDeactivate: [unsavedNavigationGuard],
       loadComponent: () =>
         import('../../platform/tenants/management/public-api').then(
-          (module) => module.TenantCreatePage,
+          (module) => module.TenantEditorPage,
+        ),
+    },
+    {
+      path: 'super-admin/tenants/:id/edit',
+      data: { workspaceLayout: 'fill', workspaceDensity: 'compact' },
+      canActivate: [tenantCreateRouteGuard],
+      canDeactivate: [unsavedNavigationGuard],
+      loadComponent: () =>
+        import('../../platform/tenants/management/public-api').then(
+          (module) => module.TenantEditorPage,
         ),
     },
     {
       path: 'super-admin/tenants',
       data: { workspaceLayout: 'fill' },
       canActivate: [tenantRouteGuard],
+      canDeactivate: [unsavedNavigationGuard],
       loadComponent: () =>
         import('../../platform/tenants/management/public-api').then(
           (module) => module.TenantManagementPage,
@@ -427,6 +439,7 @@ const workspaceRoutes: Routes = shellRoutes.map((route) => ({
     },
     {
       path: 'reports/global',
+      data: { workspaceLayout: 'fill' },
       canActivate: [globalReportConsumerGuard],
       loadComponent: () =>
         import('../../modules/reporting/public-api').then((module) => module.GlobalReportsPage),

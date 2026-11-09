@@ -52,6 +52,13 @@ export class CountryReadState {
   private readonly identityKeys = new WeakMap<Session, number>();
   private identitySequence = 0;
   readonly query = this.criteria.asReadonly();
+  private readonly clearedSortField = signal<string | null>(null);
+  readonly sortField = computed(() => this.clearedSortField() ?? this.query().sortBy);
+  readonly sort = computed<CollectionSort | null>(() =>
+    this.clearedSortField() !== null
+      ? null
+      : { field: this.query().sortBy, direction: this.query().sortDirection },
+  );
 
   exportSource(
     columns: readonly TabularColumn<CountryListItem>[],
@@ -291,8 +298,14 @@ export class CountryReadState {
     if (!change) return;
     this.patch({ ...change, pageNumber: 1 });
   }
-  changeSort(sort: CollectionSort): void {
-    this.patch({ sortBy: sort.field, sortDirection: sort.direction, pageNumber: 1 });
+  changeSort(sort: CollectionSort | null): void {
+    const previousField = this.sortField();
+    const sorting = sort ?? {
+      field: defaultCountryQuery.sortBy,
+      direction: defaultCountryQuery.sortDirection,
+    };
+    if (this.patch({ sortBy: sorting.field, sortDirection: sorting.direction, pageNumber: 1 }))
+      this.clearedSortField.set(sort === null ? previousField : null);
   }
   changePage(page: CollectionPageRequest): void {
     if (
@@ -308,6 +321,7 @@ export class CountryReadState {
     this.draft.set('');
     this.searchEvents.next('');
     this.criteria.set(defaultCountryQuery);
+    this.clearedSortField.set(null);
   }
   refresh(): void {
     if (this.allowed()) this.pageRead.refresh();

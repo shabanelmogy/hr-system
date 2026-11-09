@@ -44,6 +44,7 @@ export const countrySearchOperators = [
   'endsWith',
 ] as const;
 export const countrySortFields = [
+  'id',
   'nameEn',
   'nameAr',
   'alpha2Code',

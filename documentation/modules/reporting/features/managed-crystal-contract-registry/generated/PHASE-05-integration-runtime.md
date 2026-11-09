@@ -57,4 +57,4 @@ realtime, notification, localization, report, or Import integration is reachable
 | managed-crystal-contract-registry-mobile | 2 | `529b05ea902e1b72f795cc3b631837a039e1e417b35fdc41d130303fe6abc21f` |
 | managed-crystal-contract-registry-mobile | 11 | `cba911103ac459014c19924ea5628fb9673222c8e3e1d76ecc1cd49afa7c35f7` |
 | managed-crystal-contract-registry-mobile | 12 | `96bd27e203dfb9f94ae22fdc087b23d7b0b1129b646ef6400c09a86f743b5bb7` |
-| managed-crystal-contract-registry-mobile | 15 | `427b4e3385025a3de716d50a97c2fddb3cc82dd28705db33dc0ee3099a1b04ae` |
+| managed-crystal-contract-registry-mobile | 15 | `c06f3c847f35f24409dd6488d6970a068b3a4d03b8c674c38797f32b6c3c3375` |

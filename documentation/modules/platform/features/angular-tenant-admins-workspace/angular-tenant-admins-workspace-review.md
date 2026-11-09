@@ -18,7 +18,7 @@ API role super_admin only; readOnly bars commands. Unique email/username, select
 
 ## 5. Platform capability decisions
 
-Web Cards/create/edit/delete Required; Grid/Table/search/paging/standalone Detail/Chart/Tree/Report/Import/Export/restore/includeArchived/mock generator Excluded by current source. Native existing behavior retained; new native work Excluded.
+Web Cards/create/edit/delete and scoped shared export are Required. The current primary entry is the Administrators tab inside full-page Add/Edit Tenant, with a save-first state for new Tenants. The global route remains compatible without a sidebar entry. Grid/Table/paging/standalone Detail/Chart/Tree/Report/Import/restore/includeArchived/mock generator are Excluded. New native work is Excluded.
 
 ## 6. Transport
 
@@ -58,7 +58,13 @@ Phase07 Arabic customer education completed after the Phase06 Verified decision:
 
 ## 15. Handoff
 
-Navigation maintenance2026-11-06 groups both tenant destinations under Basic Data
+Approved Angular-only presentation correction 2026-11-08: Add, Export and Refresh
+share one header row; directory search fills the available width. Shared
+PageHeader and SelectionWorkspace own the implementation. See the
+[current verification](TENANT_ADMIN_COMPACT_HEADER_2026-11-08.md). Domain rules,
+services, permissions, Next/mobile contracts and database schema are unchanged.
+
+Historical navigation maintenance2026-11-06 groups both tenant destinations under Basic Data
 → Tenant administration. Existing owner policies and destinations remain; no
 root duplicates or new API/native work. See the management workspace's canonical
 verification/tenant-navigation-2026-11-06.json receipt and updated Arabic guide.
@@ -67,3 +73,19 @@ accept or resume the unfinished shared export slice. Historical closure totals
 below describe the earlier client acceptance.
 
 Tenant Administrators is Closed within the authorized Angular client contract. Tenant Management and States/Districts retain their existing accepted scopes. System audit trail is the next preflight; error logs/settings/system UI texts/advanced tools and the final whole-Super-Admin audit remain Required. Parent goal Active. No commit/push/merge/deployment or hosted business write. Existing PROD-019/028/025 and RISK-020 keep their exact external scopes.
+
+## Current tenant workspace organization — 2026-11-08
+
+The approved Angular workspace keeps the Tenant list directly under its one
+Tenant Management navigation destination, without extra outer tabs. The separate
+administrator sidebar entry is omitted; its existing global route remains
+compatible, and the temporary /tenants/administrators URL redirects there.
+Add/Edit use the same full-page editor; Administrators is a tab inside the Tenant
+details card. Tenant Profile combines identity, billing/contact and full-width
+Notes in one field grid without internal sections; only Profile, Subscription,
+Applications and Administrators remain as tabs. Existing saved-tenant membership filtering,
+scoped export and preselected administrator creation use the existing services.
+An unsaved tenant requires its first save. Tenant overview matches details height
+with internal scrolling; shared tabs own consistent panel insets.
+
+Current source and verification: [tenant tabs and full-page edit](../angular-tenant-management-workspace/TENANT_TABS_AND_EDIT_2026-11-08.md).

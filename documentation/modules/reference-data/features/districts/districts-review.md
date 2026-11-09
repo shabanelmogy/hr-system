@@ -1,5 +1,9 @@
 # Districts Feature — Full Cross-Platform Review
 
+The list API supports numeric `sortBy=id` before pagination. Angular Grid and
+Cards expose ascending, descending and cleared sorting. Current scope and
+acceptance are in the [geography sort record](../../../platform/features/angular-states-workspace/GEOGRAPHY_SORT_2026-11-09.md).
+
 ## 1. Purpose and scope
 
 Districts is global Platform geographical reference data below an active State and is managed only by `super_admin` with the applicable District permission. It is implemented in the API, Next.js, and Expo clients. Its fields are `NameAr`, `NameEn`, `Code`, and required `StateId`; it is not a copy of Countries or States and has no country, currency, or telephone fields. Web and mobile imports resolve the parent from a `stateName` spreadsheet column without adding that display-only field to the domain.

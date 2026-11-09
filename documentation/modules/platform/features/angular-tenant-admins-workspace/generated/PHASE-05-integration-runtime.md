@@ -44,7 +44,7 @@ realtime, notification, localization, report, or Import integration is reachable
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | angular-tenant-admins-workspace-master | 4 | `b312109aea85caea32a57fdcec24284fbf6883425ce0a13e933303f35fe09339` |
-| angular-tenant-admins-workspace-master | 5 | `d8074733d2bac92b22c630159b7a1315c740055c352ba47cff6d799d9fe7e9a0` |
+| angular-tenant-admins-workspace-master | 5 | `7e28de741932b6bec4bbec7f955d1734316c5b5a58bd5ab6f82944ec6a4c22db` |
 | angular-tenant-admins-workspace-master | 6 | `9d15f52db14b58a5e479be4391307c4b6c02b878731e5c7db257054d35ec6378` |
 | angular-tenant-admins-workspace-master | 7 | `2c923981c40da00473fa4db151327a1323a4a1cfd247879bb0ea9b8f7815b15c` |
 | angular-tenant-admins-workspace-master | 9 | `9fc33d645ccd7ddc8a3900ab3265c732e553c5894ab8e2219f201cfe91081800` |
@@ -57,4 +57,4 @@ realtime, notification, localization, report, or Import integration is reachable
 | angular-tenant-admins-workspace-mobile | 2 | `99920dbd79c8c9d191ef7c37a64abf24af13da54217b04b7dfd0328f44590f86` |
 | angular-tenant-admins-workspace-mobile | 11 | `3184a5fcf173d6e35813758be2a5dac2f5597db2363e9d87eb85cd51d2da6fb3` |
 | angular-tenant-admins-workspace-mobile | 12 | `5aa0ce96abf130008a81a0ba63b07ef8c7fadb966cd3d8a16b285f45d2b5edb8` |
-| angular-tenant-admins-workspace-mobile | 15 | `2b121f7823c8ea50c39cd05102a4b50a2f1a4ccf5fec49b34d130a3c89c56772` |
+| angular-tenant-admins-workspace-mobile | 15 | `02a57254ef009d0a91c8e06a109bc0b76c9bfb52ebdfd97976ec9cf4c1bebc4b` |

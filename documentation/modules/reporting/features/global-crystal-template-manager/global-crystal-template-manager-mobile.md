@@ -611,3 +611,48 @@ verification/manager-button-group/. No API/schema/Crystal change; mobile manager
 Excluded and Next runtime unchanged. Final Angular532test and6case browser proof
 retains existing permissions and metadata. Prior API suite finding stays section36;
 no API retest. Phase06 Not Verified, FOLLOW-024/PROD-028 Open, DEF-027/028 Deferred.
+
+## Entity-scoped validation repair — 2026-11-07
+
+The existing Reporting correction separates deployment identity (SHA256 of the
+complete artifact, retained for runtime health/parity) from entity validation
+identity. See [the corrective contract and evidence](../managed-crystal-contract-registry/ENTITY_FINGERPRINT_REPAIR.md).
+Inspection, entity/designer metadata and consumer tokens now use the individual
+entity's stable definition. Formatting and unrelated report additions cannot
+invalidate it. Real own-definition changes remain stale.
+
+Only two packaged historical artifacts can supply legacy whole-artifact aliases,
+and only when the entity's complete semantic definition still matches. LF/CRLF/BOM
+variants are bounded to those reviewed contents; unknown hashes remain rejected.
+The observed hosted Countries version3 hash exactly matches the pre-error-log CRLF
+artifact. No database evidence rewrite, schema change or migration is needed.
+Original fingerprints remain visible; version detail adds isContractCurrent and
+an effective NeedsRevalidation status for genuinely stale evidence. Angular uses
+that flag with strict old-server fallback and retains all ID/token/SHA/ACL checks.
+Next consumes effective status; native consumers keep existing API contracts and
+no new native management UI is introduced. Pre-upgrade open viewer tokens may need
+one refresh. Future unrelated entity additions preserve entity-based tokens.
+
+Canonical automated receipts belong to managed-crystal-contract-registry/verification/entity-fingerprint/.
+Coordinated API/Crystal/Angular publication and real hosted AR/EN RPT/PDF remain
+PROD-028/FOLLOW-024. Source verification does not claim deployment, native Verify
+Database or a rendered production report.
+
+## Current hosted runtime/key and Hub query correction — 2026-11-07
+
+The supplied render503 is reproduced as CrystalReport.RuntimeUnavailable. The
+downstream Crystal service itself returns crystal_runtime_api_key_not_configured.
+The existing Publish preparation/configuration scripts restore matching private
+transforms locally; actual WPP and SDK publish staging confirm both keys, enabled
+integration and the correct HTTPS target. No remote deployment or native PDF is
+claimed. The same investigation reproduces IIS's2048/2049query boundary with
+synthetic tokens. ERP web.config now provides a finite24576envelope only for
+hubs/company; other filtering/auth/CORS remains intact. Full API1342tests pass
+with3existing opt-in skips, local IIS4cases pass and final script format passes.
+Next/native APIs and permission semantics are unchanged; no new native screen or
+database/migration is introduced. This supersedes the unsupported expiry diagnosis.
+
+Canonical reproduction, repair, rollout and portable evidence:
+documentation/modules/reporting/features/global-crystal-template-manager/RUNTIME_KEY_REPAIR_2026-11-07.md.
+Publish Crystal site38634-WebDeploy (Release/x64) then ERP site84639-WebDeploy.
+PROD-028/029 and PROD-003 retain real deployed/runtime acceptance requirements.

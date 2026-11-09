@@ -3,6 +3,64 @@
 Non-blocking improvements that should be revisited, but are not yet formal Deferred
 business scope.
 
+## FOLLOW-031 — Intermittent Angular composition-test timeouts
+
+- Source/context: recurring 5000ms Countries-remount/report-manager composition
+  timeouts during 2026-11-08 UI gates; other unchanged runs pass. Owner: Web test
+  infrastructure + QA. Surface: Web. Priority: Medium. Status: Open.
+- Impact: full-gate reliability can vary. A focused/historical pass does not erase
+  a failing closure run. No test/timeout is suppressed or increased here.
+- Known evidence: some failures overlap browser/build work; root cause is not
+  established. The November 9 geography/Tenant run again observed the 5000ms
+  Countries remount timeout while browser verification was running. Final
+  standalone results belong to the current geography/Tenant receipt.
+- Reason not implemented now: scope is shared UI layout/documentation, not test
+  infrastructure redesign. Trigger: next 5000ms timeout or before relying on an
+  automated release gate. Target: next Web test reliability refinement; no date.
+- Resolution/closure evidence: identify setup/compilation or runtime-wait cause,
+  instrument it and prove full-gate stability without hiding assertions. Pending.
+- Canonical receipt: [shared search](../../modules/platform/features/angular-states-workspace/SHARED_COLLECTION_SEARCH_2026-11-08.md).
+
+## FOLLOW-028 — Header count scope outside list views
+
+- Source/context: 2026-11-08 five-view review found Countries list totals shown
+  during independent Report/Import workflows. Owner: Angular collections/feature UI.
+- Surface: Web. Status: Closed 2026-11-08. Priority: Medium.
+- Resolution: Countries, States and Districts supply null totals in Report/Import;
+  System Error Logs supplies null in Report. Shared PageHeader already omits null.
+- Closure evidence: 48 Import layouts and 20 Report layouts verify the absent count
+  in EN/AR and Light/Dark while existing criteria/submission owners remain intact.
+  [Current contract and receipts](../../modules/platform/features/angular-countries-import-view/IMPORT_LAYOUT_2026-11-08.md).
+- Reopen trigger: another consumer supplies an unrelated list count to a non-list view.
+
+## FOLLOW-029 — Compact Import summary and preview acceptance
+
+- Source/context: source/retained-capture review found a 184px desktop rail and 4rem
+  independently scrolling compact summary. Owner: Angular shared Import + QA.
+- Surface: Web. Status: Closed 2026-11-08. Priority: Medium.
+- Resolution: requester-approved one-row, five-column shared metric tiles at all
+  widths, compact localized captions with full accessible labels, a subtle divider
+  and at least 180px preview. Shared workspace owns short-window scrolling.
+- Closure evidence: 48 fresh layouts across EN/AR, Light/Dark, 320–1440px including
+  844×390 and 900×640, navigation open/closed at desktop widths; all five statuses
+  in one row, no summary/outer scroll, reachable grid footer and requirements.
+  Sixteen failure/authority cases plus five state-preservation journeys also pass.
+  [Current contract and receipts](../../modules/platform/features/angular-countries-import-view/IMPORT_LAYOUT_2026-11-08.md).
+- Reopen trigger: a new Import consumer breaks status/preview/keyboard reachability.
+
+## FOLLOW-030 — Compact PageHeader touch density
+
+- Source/context: compact PageHeader icons previously used 26–32px without a coarse
+  pointer exception. Owner: Angular shared layout/actions + accessibility QA.
+- Surface: Web. Status: Closed 2026-11-08. Priority: Medium.
+- Resolution: shared PageHeader and Import use 44px targets when any pointer is
+  coarse; compact fine-pointer density remains. Import icons/text are 16/12px.
+- Closure evidence: 48 touch-emulated Import layouts measure every header action;
+  no target below 44px, no outer overflow and all controls reachable at 320px and
+  short landscape.20 Report layouts guard document/header composition.
+  [Current contract and receipts](../../modules/platform/features/angular-countries-import-view/IMPORT_LAYOUT_2026-11-08.md).
+- Reopen trigger: another header action or density policy breaks this shared rule.
+
 ### FOLLOW-027 — collection view preference source parity
 
 Observed 2026-11-06 during S4-A4 Error Logs source preflight. Next's
@@ -54,7 +112,7 @@ The original structural increment and its limits are in
 | FOLLOW-022 | Web | Angular professional Clean Code hardening | CC-01..07 implemented and Verified: semantic lint, four stronger TS flags, selected Angular diagnostics, resolved owner/HTTP/stable-column guards, narrower public APIs, focused shared/feature extraction and typed test contracts. Final472unit tests/26architecture cases/122browser cases pass;84component folders;zero static or mixed cycles. | Angular Architecture + QA | High | Verified | Reopen on new quality-gate violations or a new owner/contract requirement; full pilot/release remains independently gated | `documentation/plans/business/web-angular-migration/CLEAN_CODE_IMPLEMENTATION.md` |
 | FOLLOW-021 | Web | Countries current browser harness acceptance | Current PageHeader/settings/toolbar/row/record selectors and full40palette read matrix plus8lifecycle and8actual-controls interaction cases passed2026-11-01. Current253case fixture acceptance has portable receipts; prior failures remain attributed. | Angular QA | Medium | Verified | Reopen on source/control/selector regression; hosted Crystal remains PROD-028 | `documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/FINAL_ACCEPTANCE.md` |
 | FOLLOW-020 | Web | Retained Next preview bootstrap | Historical source preview stalled before hydration. Requester D35 stops Next review as an Angular prerequisite; temporary Next config/E2E experiments reverted. No Next repair claimed. Preserve old diagnostics; revisit only in a separately requested Next task. | Next Web rendering + QA | Medium | Deferred | Explicit Next work or its separately owned release investigation; not an Angular acceptance gate under D35 | `documentation/modules/platform/features/angular-countries-import-view/SCOPE_CHANGE.md` |
-| FOLLOW-019 | Web | Angular initial bundle warning | Narrow shared unsaved public entry removes unnecessary eager data graph. Final post-D37 production build496.26kB/130.28kB transfer passes unchanged500kB warning and1MB error budgets, without warning. Historical larger measurements remain below as history. | Web Architecture | Medium | Verified | Reopen if initial bundle exceeds unchanged budget or eager shared graph regresses | `documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/CLEAN_CODE_FULL_CHECK.txt` |
+| FOLLOW-019 | Web | Angular bundle/style warnings | The Tenant layout gate records an initial bundle of 585.51kB above the 500kB warning. PageHeader (7.92kB), CollectionFrame (6.17kB) and collection-search (5.72kB) exceed the 4kB style warning. Error budgets remain in force. | Web Architecture | Medium | Open | Next shared performance refinement or before production size acceptance | `documentation/modules/platform/features/angular-tenant-management-workspace/TENANT_TABS_AND_EDIT_2026-11-08.md` |
 | FOLLOW-018 | Web | Historical verification-log portability | Checkout885753c1 references23 historical .log files absent from Git. Record exact unavailable paths in S3-A7 preflight evidence; remove nonexistent paths from current required-file manifests while retaining existing JSON/screenshots/reports. Historical result claims remain attributed to their reports, not rerun proof. | Web Architecture + QA | Medium | Open | Restore original logs from source workstation or replace with fresh owner-scoped runs before relying on raw historical logs/full release evidence | `documentation/modules/platform/features/angular-countries-import-view/verification/ENTRY_PORTABILITY.md` |
 | FOLLOW-017 | Web | Angular scoped lookup/live consumer acceptance | Existing scoped read foundation does not complete a real business lookup or SignalR subscription. Before actual consumer acceptance, register typed immutable scope identity, finite validated service snapshot/timeout, separate authorized watcher and teardown, hint coalescing/reconnect/missed-event reconciliation, old-response masking, selected-label retention and explicit local/page loading/retry. S1-A12 generic helper technically Verified264unit/read40+8/current context24/home14/company14/fiscal15/login10/language20; actual business acceptance remains separate. | Angular Shared + feature service owner + QA | High | Open | First actual S3 lookup/live consumer and each relevant route/session/context boundary; before SIG-01/02/03 consumer Verified | `documentation/plans/business/web-angular-migration/SIGMA_ACCEPTANCE.md`; `documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/SCOPED_READ_CONTRACT.md` |
 | FOLLOW-016 | Web | Advanced Angular collection capabilities | S1-A3 baseline is shared Table/Cards, controlled single-sort/paging/search, selection, density/visibility and feedback. S1-A11 opt-in typed public criteria/URL bridge technically Verified252unit/40+8browser; actual per-list privacy approval/API wire mapping/editor-return/export scope remains required in S3. User resize/reorder/pin, multi-sort/constraints/grouping, virtual/range/frozen/detail, context menu and server-wide selection remain owned opt-ins, not implied by PrimeNG availability. Editing also requires FOLLOW-014. | Angular Shared + consumer/API owner | Medium | Open | First actual consumer and supported API/selection/height/RTL/performance contract before enabling each option | `documentation/modules/platform/features/angular-collection-foundation/SHARED_COLLECTION_CONTRACT.md` |

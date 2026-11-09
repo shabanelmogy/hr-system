@@ -99,4 +99,4 @@ or feature-local document.
 | platform-browser-authentication-web | 13 | `1cfcfab5d3d3a982db267aaca6a4e6496779a4db82205c9bf95516df07040f0d` |
 | platform-browser-authentication-mobile | 1 | `58e42733026b5e36bbdd0667a33b854c4f2444ecba6daaae604c768274be6232` |
 | platform-browser-authentication-mobile | 14 | `85d161dbab052e01a1f442c1a697e2ade09ba3b4db08264aa940953cd598fd45` |
-| platform-browser-authentication-mobile | 15 | `8af0ef3df801ece28afe0c2530e18328fe178388112421d98303da529229d8ee` |
+| platform-browser-authentication-mobile | 15 | `3190c8de20efd23944f3a57fc437066bbf485bf26bc2868c35271da32d5469d7` |

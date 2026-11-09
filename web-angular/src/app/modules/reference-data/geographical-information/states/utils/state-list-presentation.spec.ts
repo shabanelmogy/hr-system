@@ -10,6 +10,7 @@ describe('State collection server capabilities', () => {
       status: (row) => (row.isDeleted ? 'archived' : 'active'),
     });
     expect(columns.flatMap((column) => (column.sortField ? [column.sortField] : []))).toEqual([
+      'id',
       'nameAr',
       'nameEn',
       'code',

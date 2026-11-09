@@ -1,3 +1,4 @@
+using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Validation;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Abstractions;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Contracts;
 using ErpSystem.Modules.Reporting.Domain.Analytics.CrystalReports.Entities;
@@ -5,7 +6,7 @@ using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.
 
 namespace ErpSystem.Modules.Reporting.Infrastructure.Features.Analytics.CrystalReports.Persistence;
 
-public sealed class GlobalCrystalReportStore(ReportingDbContext context) : IGlobalCrystalReportStore
+public sealed class GlobalCrystalReportStore(ReportingDbContext context, IManagedCrystalReportContractSource contracts) : IGlobalCrystalReportStore
 {
     public async Task<CrystalReportPageResponse> ListAsync(IReadOnlyCollection<string> entityKeys, string? search, int page, int pageSize,
         CancellationToken cancellationToken, string? status = null, IReadOnlyList<GlobalCrystalReportFilterGroup>? filters = null)
@@ -35,7 +36,7 @@ public sealed class GlobalCrystalReportStore(ReportingDbContext context) : IGlob
         return new CrystalReportDetailResponse(item.Id, item.EntityKey, item.ReportKey, item.DisplayName,
             item.Description, item.CurrentVersionNumber, item.IsPublished, item.IsArchived, item.RowVersion,
             report.CreatedOn, item.UpdatedOn, report.Versions.OrderByDescending(x => x.VersionNumber)
-                .Select(x => VersionItem(x, report.CurrentPublishedVersionId == x.Id)).ToArray(), [])
+                .Select(x => VersionItem(x, report.CurrentPublishedVersionId == x.Id).WithCurrentContract(contracts, report.EntityKey)).ToArray(), [])
         { ViewName = report.ViewName, ViewFingerprint = report.ViewFingerprint };
     }
 

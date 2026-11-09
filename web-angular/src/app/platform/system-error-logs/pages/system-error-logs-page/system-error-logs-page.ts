@@ -1,6 +1,6 @@
 import { Component, computed, inject, signal, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgComponentOutlet } from '@angular/common';
+import { NgComponentOutlet, NgTemplateOutlet } from '@angular/common';
 import { SYSTEM_ERROR_LOG_REPORT } from '../../system-error-log-report-slot';
 import { ErrorLogCriteria } from '../../components/error-log-criteria/error-log-criteria';
 import { AuthSession } from '../../../auth/session.public-api';
@@ -34,6 +34,7 @@ import { errorLogSettingsAllowed } from '../../system-error-log-access';
   ],
   imports: [
     NgComponentOutlet,
+    NgTemplateOutlet,
     ErrorLogCriteria,
     ActionButton,
     PageHeader,
@@ -70,6 +71,12 @@ export class SystemErrorLogsPage {
   readonly filtersVisible = signal(false);
   private readonly drafts = inject(UnsavedChanges);
   readonly reportAdapter = inject(SYSTEM_ERROR_LOG_REPORT);
+  private readonly reportOutlet = viewChild(NgComponentOutlet);
+  readonly reportHeaderActions = computed(() =>
+    this.view() === 'report'
+      ? (this.reportAdapter?.headerActions?.(this.reportOutlet()?.componentInstance) ?? null)
+      : null,
+  );
   readonly reportAllowed = computed(
     () => this.reportAdapter?.allowed(this.auth.readIdentity()) ?? false,
   );
@@ -82,6 +89,7 @@ export class SystemErrorLogsPage {
   readonly reportInputs = computed(() => ({
     entity: 'system-error-logs',
     embedded: true,
+    externalActions: !!this.reportAdapter?.headerActions,
     externalCriteria: this.reportCriteria(),
   }));
   readonly preference = createViewPreference<'grid' | 'cards' | 'report'>({

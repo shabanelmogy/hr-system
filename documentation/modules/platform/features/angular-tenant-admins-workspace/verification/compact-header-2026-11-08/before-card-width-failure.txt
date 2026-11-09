@@ -1,0 +1,22 @@
+(node:38316) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/src/app/platform/auth/auth.fixture.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\F:\Portofolio Projects\ERPSYSTEM\web-angular\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/verify-tenant-admins-browser.mjs:516
+          throw Error(`Tenant Admins ${language}/${mode}/${width} at ${stage}: ${error}`, {
+                ^
+
+Error: Tenant Admins en/light/790 at load: AssertionError [ERR_ASSERTION]: {"available":724,"widths":[354]}
+    at file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/verify-tenant-admins-browser.mjs:516:17 {
+  [cause]: AssertionError [ERR_ASSERTION]: {"available":724,"widths":[354]}
+      at file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/verify-tenant-admins-browser.mjs:366:20 {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+}
+
+Node.js v24.18.1

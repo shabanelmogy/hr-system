@@ -1,55 +1,78 @@
 <ng-template #importHeader>
   <div class="import-heading">
     <h2>{{ 'imports.workspaceTitle' | uiText }}</h2>
-    <div class="header-actions">
-      <p-fileupload
-        #picker
-        mode="basic"
-        [customUpload]="true"
-        [auto]="false"
-        [chooseButtonProps]="{ variant: 'outlined', severity: 'secondary' }"
-        [disabled]="busy() || locked() || disabled()"
-        [chooseLabel]="'imports.chooseFile' | uiText"
-        (onSelect)="select($event); picker.clear()"
-        ><ng-template #filelabel><span></span></ng-template
-      ></p-fileupload>
-      <erp-button
-        data-testid="import-template"
-        [compactOnSmallScreens]="true"
-        [label]="'imports.downloadTemplate' | uiText"
-        variant="outlined"
-        [disabled]="busy() || disabled()"
-        (activated)="downloadTemplate.emit()"
-      >
-        <erp-icon buttonIcon name="download" />
-      </erp-button>
-      <erp-button
-        data-testid="import-clear"
-        [compactOnSmallScreens]="true"
-        [label]="'imports.clearData' | uiText"
-        variant="text"
-        [disabled]="busy() || !fileName()"
-        (activated)="cleared.emit()"
-      >
-        <erp-icon buttonIcon name="reset" />
-      </erp-button>
-      <erp-button
-        data-testid="import-submit"
-        [compactOnSmallScreens]="true"
-        [label]="'imports.uploadData' | uiText"
-        [busy]="busy()"
-        [disabled]="disabled() || locked() || !rowCount() || !canSubmit()"
-        (activated)="submitted.emit()"
-      >
-        <erp-icon buttonIcon name="upload" />
-      </erp-button>
-    </div>
+    @if (!externalActions()) {
+      <ng-container [ngTemplateOutlet]="actionsTemplate()" />
+    }
+  </div>
+</ng-template>
+<ng-template #importActions>
+  <div class="import-actions">
+    <p-fileupload
+      #picker
+      mode="advanced"
+      [unstyled]="true"
+      [pt]="{
+        root: { style: { display: 'inline-flex' } },
+        input: { style: { display: 'none' } },
+        content: { style: { display: 'none' } },
+      }"
+      [customUpload]="true"
+      [auto]="false"
+      [disabled]="busy() || locked() || disabled()"
+      [chooseLabel]="'imports.chooseFile' | uiText"
+      (onSelect)="select($event); picker.clear()"
+    >
+      <ng-template #header let-choose="chooseCallback">
+        <erp-button
+          data-testid="import-choose"
+          [compactOnSmallScreens]="true"
+          [label]="'imports.chooseFile' | uiText"
+          variant="outlined"
+          [disabled]="busy() || locked() || disabled()"
+          (activated)="choose()"
+          ><erp-icon buttonIcon name="add"
+        /></erp-button>
+      </ng-template>
+      <ng-template #content><span></span></ng-template>
+    </p-fileupload>
+    <erp-button
+      data-testid="import-template"
+      [compactOnSmallScreens]="true"
+      [label]="'imports.downloadTemplate' | uiText"
+      variant="outlined"
+      [disabled]="busy() || disabled()"
+      (activated)="downloadTemplate.emit()"
+    >
+      <erp-icon buttonIcon name="download" />
+    </erp-button>
+    <erp-button
+      data-testid="import-clear"
+      [compactOnSmallScreens]="true"
+      [label]="'imports.clearData' | uiText"
+      variant="text"
+      [disabled]="busy() || !fileName()"
+      (activated)="cleared.emit()"
+    >
+      <erp-icon buttonIcon name="reset" />
+    </erp-button>
+    <erp-button
+      data-testid="import-submit"
+      [compactOnSmallScreens]="true"
+      [label]="'imports.uploadData' | uiText"
+      [busy]="busy()"
+      [disabled]="disabled() || locked() || !rowCount() || !canSubmit()"
+      (activated)="submitted.emit()"
+    >
+      <erp-icon buttonIcon name="upload" />
+    </erp-button>
   </div>
 </ng-template>
 <erp-surface-card
   [title]="'imports.workspaceTitle' | uiText"
   [compact]="true"
   [fill]="true"
+  [headerVisible]="!externalActions()"
   [headerTemplate]="importHeader"
 >
   <section class="import-workspace" [attr.aria-label]="'imports.workspaceTitle' | uiText">
@@ -98,26 +121,21 @@
       </section>
       <section class="status-summary" [attr.aria-label]="'imports.status' | uiText">
         @for (status of statusSummary; track status) {
+          @let accent =
+            status === 'failed' || status === 'invalid'
+              ? 'var(--destructive)'
+              : status === 'uncertain'
+                ? 'var(--warning)'
+                : status === 'uploaded'
+                  ? 'var(--success)'
+                  : 'var(--primary)';
           <erp-metric-card
-            [compact]="true"
+            class="summary-tile"
+            layout="tile"
+            [shortLabel]="status === 'uncertain' ? ('imports.uncertainShort' | uiText) : ''"
             [label]="'imports.' + status | uiText"
             [value]="(counts()[status] ?? 0).toLocaleString()"
-            [icon]="
-              status === 'failed' || status === 'invalid'
-                ? 'close'
-                : status === 'uploaded'
-                  ? 'check'
-                  : 'assessment'
-            "
-            [accent]="
-              status === 'failed' || status === 'invalid'
-                ? 'var(--destructive)'
-                : status === 'uncertain'
-                  ? 'var(--warning)'
-                  : status === 'uploaded'
-                    ? 'var(--success)'
-                    : 'var(--primary)'
-            "
+            [accent]="accent"
           />
         }
       </section>

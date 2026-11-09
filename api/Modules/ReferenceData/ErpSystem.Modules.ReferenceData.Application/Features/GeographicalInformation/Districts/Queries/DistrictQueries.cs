@@ -26,7 +26,7 @@ public sealed record GetDistrictsQuery : IQuery<PageResponse<DistrictListItemRes
 
 public sealed class GetDistrictsQueryValidator : AbstractValidator<GetDistrictsQuery>
 {
-    private static readonly string[] SortColumns = ["nameEn", "nameAr", "code", "state", "createdOn"];
+    private static readonly string[] SortColumns = ["id", "nameEn", "nameAr", "code", "state", "createdOn"];
 
     public GetDistrictsQueryValidator()
     {

@@ -59,3 +59,22 @@ Phase07 Arabic customer education completed after the Phase06 Verified decision:
 ## 15. Handoff
 
 Tenant Administrators is Closed within the authorized Angular client contract. Tenant Management and States/Districts retain their existing accepted scopes. System audit trail is the next preflight; error logs/settings/system UI texts/advanced tools and the final whole-Super-Admin audit remain Required. Parent goal Active. No commit/push/merge/deployment or hosted business write. Existing PROD-019/028/025 and RISK-020 keep their exact external scopes.
+
+## Current tenant workspace organization — 2026-11-08
+
+The approved Angular workspace keeps the Tenant list directly under its one
+Tenant Management navigation destination, without extra outer tabs. The separate
+administrator sidebar entry is omitted; its existing global route remains
+compatible, and the temporary /tenants/administrators URL redirects there.
+Add/Edit use the same full-page editor; Administrators is a tab inside the Tenant
+details card. Tenant Profile combines identity, billing/contact and full-width
+Notes in one field grid without internal sections; only Profile, Subscription,
+Applications and Administrators remain as tabs. Existing saved-tenant membership filtering,
+scoped export and preselected administrator creation use the existing services.
+An unsaved tenant requires its first save. Tenant overview matches details height
+with internal scrolling; shared tabs own consistent panel insets.
+
+This authorized organization change is Angular only. Native/mobile and Next
+workflows retain their existing contracts; parity is not asserted for this layout.
+
+Current source and verification: [tenant tabs and full-page edit](../angular-tenant-management-workspace/TENANT_TABS_AND_EDIT_2026-11-08.md).

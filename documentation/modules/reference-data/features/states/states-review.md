@@ -1,5 +1,9 @@
 # States Feature Full Review
 
+The list API supports numeric `sortBy=id` before pagination. Angular Grid and
+Cards expose ascending, descending and cleared sorting. Current scope and
+acceptance are in the [geography sort record](../../../platform/features/angular-states-workspace/GEOGRAPHY_SORT_2026-11-09.md).
+
 Status: applied cross-platform implementation profile. Review date: 2026-08-21.
 
 Countries is the architectural reference; States owns its own country and district rules.

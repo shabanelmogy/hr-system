@@ -1,5 +1,10 @@
 # تحسين مساحة الاستيراد ورسائل الأخطاء — 2026-11-05
 
+Presentation superseded by [the2026-11-08 shared layout contract](IMPORT_LAYOUT_2026-11-08.md).
+The former vertical/4rem status rail and local action heading below are historical.
+Submission/validation rules and dated receipts remain evidence at their revision.
+
+
 ## 1. النطاق المعتمد
 
 طلب المستخدم تحسين مكونات تاب Import ورسائل أخطائه، ثم تقليل المساحة المستهلكة بالتفاصيل: كروت عمودية، وأزرار في صف العنوان عند الجهة المقابلة، وكارت بارتفاع الشاشة المتاح، وفاصل خفيف بين الإحصائيات والجدول، وزيادة عرض عمود الكروت لتفادي التفاف آخر حرف من VERIFICATION. هذه صيانة للعرض والتشخيص ضمن Countries Import الحالي S3-A7، وليست وظيفة استيراد جديدة.

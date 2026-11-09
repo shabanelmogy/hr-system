@@ -18,7 +18,8 @@
     [dt]="tokens()"
     [pt]="valueAttributes()"
     [style]="{
-      height: appearance() === 'context' ? '36px' : height() + 'px',
+      height:
+        appearance() === 'context' ? '36px' : 'var(--option-control-height, ' + height() + 'px)',
       color: 'inherit',
       maxWidth: '100%',
     }"
@@ -27,7 +28,7 @@
       @if (appearance() === 'context') {
         <erp-context-badge [label]="label()" [value]="selectedLabel()" [icon]="icon()" />
       } @else {
-        {{ option?.label }}
+        <span class="selected-value" [title]="selectedLabel()">{{ option?.label }}</span>
       }
     </ng-template>
     @if (menuLabel()) {

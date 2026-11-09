@@ -95,3 +95,5 @@ Canonical deferral, current priority and reopening trigger:
 
 Canonical risk, owner and reassessment trigger:
 [RISK-019](KNOWN_RISKS.md#risk-019--original-rpt-source-contents).
+
+Current runtime key and Hub query repair2026-11-07: PROD-029/028 and PROD-003 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).

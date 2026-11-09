@@ -72,6 +72,9 @@ public interface IManagedCrystalReportContractSource
 {
     int SchemaVersion { get; }
     string Fingerprint { get; }
+    string GetFingerprint(string entityKey);
+    bool IsCompatibleFingerprint(string entityKey, string? fingerprint) =>
+        string.Equals(GetFingerprint(entityKey), fingerprint, StringComparison.Ordinal);
     IReadOnlyCollection<ManagedCrystalReportEntityDescriptor> EntityDescriptors { get; }
     bool Supports(string entityKey);
 }

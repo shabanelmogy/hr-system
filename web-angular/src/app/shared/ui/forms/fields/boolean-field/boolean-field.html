@@ -1,3 +1,6 @@
+@if (labelPlacement() === 'above') {
+  <ng-container [ngTemplateOutlet]="caption" />
+}
 <div
   class="boolean-control"
   [class.invalid]="!!error()"
@@ -31,13 +34,18 @@
       [pt]="attributes()"
     />
   }
+  @if (labelPlacement() === 'inline') {
+    <ng-container [ngTemplateOutlet]="caption" />
+  }
+</div>
+<ng-template #caption>
   <label [id]="id + '-label'" [for]="id"
     >{{ label() }}
     @if (required()) {
       <span aria-hidden="true"> *</span>
     }
   </label>
-</div>
+</ng-template>
 @if (help()) {
   <p class="help" [id]="id + '-help'">{{ help() }}</p>
 }

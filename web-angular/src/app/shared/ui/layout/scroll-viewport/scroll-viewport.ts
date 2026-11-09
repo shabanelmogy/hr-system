@@ -11,6 +11,7 @@ import { ScrollAreaModule } from 'primeng/scrollarea';
 export class ScrollViewport {
   readonly label = input.required<string>();
   readonly fillContent = input(false);
+  readonly scrollbar = input<'auto' | 'hidden'>('auto');
   readonly tokens = {
     root: {
       background: 'transparent',

@@ -5,6 +5,7 @@ import {
 } from '../../../../../../platform/localization/public-api';
 import {
   ActionButton,
+  AppIcon,
   OptionSelect,
   SortDirectionButton,
 } from '../../../../../../shared/ui/public-api';
@@ -14,7 +15,7 @@ import { districtSortFields } from '../../types/district';
 import { districtName } from '../../utils/district-presentation';
 @Component({
   selector: 'erp-district-list-criteria',
-  imports: [ActionButton, OptionSelect, SortDirectionButton, UiTextPipe],
+  imports: [ActionButton, AppIcon, OptionSelect, SortDirectionButton, UiTextPipe],
   templateUrl: './district-list-criteria.html',
   styleUrl: './district-list-criteria.scss',
 })
@@ -68,7 +69,7 @@ export class DistrictListCriteria {
   }
   chooseSort(value: string): void {
     if (districtSortFields.some((field) => field === value))
-      this.state.changeSort({ field: value, direction: this.state.query().sortDirection });
+      this.state.changeSort({ field: value, direction: this.state.sort()?.direction ?? 'asc' });
   }
 
   text(key: string): string {
@@ -78,7 +79,7 @@ export class DistrictListCriteria {
     return this.locale.translate(key, 'reference-districts');
   }
   fieldLabel(value: string): string {
-    return value === 'nameAr' || value === 'nameEn' || value === 'createdOn'
+    return value === 'id' || value === 'nameAr' || value === 'nameEn' || value === 'createdOn'
       ? this.text('general.' + value)
       : this.districtText('districts.' + value);
   }

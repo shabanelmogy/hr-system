@@ -146,7 +146,7 @@ public sealed class GlobalCrystalReportViewTests
         var draft = GlobalCrystalReport.CreateDraft("countries", "countries-manual-view", "Manual View", null, binding.ViewName, binding.Fingerprint);
         reports.GlobalCrystalReports.Add(draft);
         await reports.SaveChangesAsync();
-        var detail = await new GlobalCrystalReportStore(reports).DetailAsync(draft.Id, default);
+        var detail = await new GlobalCrystalReportStore(reports, ManagedCrystalReportContractRegistry.LoadEmbedded()).DetailAsync(draft.Id, default);
         Assert.Equal(binding.ViewName, detail!.ViewName);
         Assert.Empty(detail.Versions);
         reports.Entry(draft).Property(report => report.ViewName).CurrentValue = "dbo.other";

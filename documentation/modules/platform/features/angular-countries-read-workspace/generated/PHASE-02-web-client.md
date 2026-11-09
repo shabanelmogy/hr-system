@@ -107,13 +107,13 @@ failure into partial success.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | angular-countries-read-workspace-master | 3 | `900d99a68a5e3fb4b45f4d01d3278357a90c1bef05562b27edd672021635ebe6` |
-| angular-countries-read-workspace-master | 4 | `73f5a7101a9e9f4423d8539c612013ba7eb1541d388fb44669919a8f2779bc62` |
+| angular-countries-read-workspace-master | 4 | `a3c4874c8ef5b61dadfb9a1378ef859fe245886fbed15560d28092eb60f67341` |
 | angular-countries-read-workspace-master | 6 | `4aa2e516e6ef412cfb58f2d8ccc71961358af0545fb78f9128ec63fdfa43b512` |
 | angular-countries-read-workspace-master | 7 | `f8f062174e6a953312acd1c542cd22b3b57cc2266d47706b1ef9e44d24b882e7` |
 | angular-countries-read-workspace-web | 1 | `b5f697f101f4ffcc3964a2bdf2f34aad6a9afdf2f2ef8e519d939ab62aab7b03` |
 | angular-countries-read-workspace-web | 2 | `51f1e1d285b87461fffb80a80d433a26b836b3b254d99b2ede854d698aa9cc1e` |
 | angular-countries-read-workspace-web | 3 | `900d99a68a5e3fb4b45f4d01d3278357a90c1bef05562b27edd672021635ebe6` |
-| angular-countries-read-workspace-web | 4 | `73f5a7101a9e9f4423d8539c612013ba7eb1541d388fb44669919a8f2779bc62` |
+| angular-countries-read-workspace-web | 4 | `a3c4874c8ef5b61dadfb9a1378ef859fe245886fbed15560d28092eb60f67341` |
 | angular-countries-read-workspace-web | 5 | `3704acfa0146fdc1b48ca9f3465476082e5cce31454a7ab150b2149b60faf524` |
 | angular-countries-read-workspace-web | 6 | `4aa2e516e6ef412cfb58f2d8ccc71961358af0545fb78f9128ec63fdfa43b512` |
 | angular-countries-read-workspace-web | 7 | `f8f062174e6a953312acd1c542cd22b3b57cc2266d47706b1ef9e44d24b882e7` |

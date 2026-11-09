@@ -1,5 +1,15 @@
 # Web Notes Index
 
+Geography ID sorting rollout: PROD-033 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).
+
+Angular composition-test timeout reliability: FOLLOW-031 in [FOLLOW_UPS.md](FOLLOW_UPS.md).
+
+
+Collection view design corrections verified/closed 2026-11-08: FOLLOW-028
+(non-list header counts), FOLLOW-029 (compact Import summary/preview) and
+FOLLOW-030 (header touch density).
+Canonical details: [FOLLOW_UPS.md](FOLLOW_UPS.md).
+
 Angular Clean Code hardening: FOLLOW-022 in [FOLLOW_UPS.md](FOLLOW_UPS.md).
 Canonical audit and execution proposal: web-angular-migration/CLEAN_CODE_HARDENING.md.
 
@@ -109,3 +119,5 @@ Canonical deferral, current priority and reopening trigger:
 
 Canonical risk, owner and reassessment trigger:
 [RISK-019](KNOWN_RISKS.md#risk-019--original-rpt-source-contents).
+
+Current runtime key and Hub query repair2026-11-07: PROD-029/028 and PROD-003 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).

@@ -23,8 +23,18 @@ export interface ContentTab {
   selector: 'erp-content-tabs',
   styleUrl: './content-tabs.scss',
   templateUrl: './content-tabs.html',
+  host: { '[class.fill]': 'fill()' },
 })
 export class ContentTabs {
+  readonly fill = input(false, { transform: booleanAttribute });
+  readonly contentPadding = input<'comfortable' | 'compact' | 'none'>('comfortable');
+  readonly fillRoot = {
+    root: { style: { display: 'flex', flexDirection: 'column', height: '100%', minHeight: '0' } },
+  };
+  readonly fillPanels = {
+    root: { style: { flex: '1', minHeight: '0', overflow: 'hidden', padding: '0' } },
+  };
+  readonly fillPanel = { root: { style: { height: '100%', minHeight: '0' } } };
   readonly tabs = input.required<readonly ContentTab[]>();
   readonly content = input.required<TemplateRef<{ $implicit: string }>>();
   readonly selected = model('');

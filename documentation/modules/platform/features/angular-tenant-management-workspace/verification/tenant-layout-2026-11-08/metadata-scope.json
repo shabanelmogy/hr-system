@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-09",
+  "angularVersion": "22.2.3",
+  "primengVersion": "22.1.4",
+  "primengGeneratedApiValidation": {
+    "Button": "valid",
+    "Listbox": "valid",
+    "Tabs": "valid",
+    "ToggleSwitch": "valid",
+    "TextareaDirective": "valid"
+  },
+  "limits": [
+    "Generated metadata does not validate custom CSS, native attributes or browser geometry.",
+    "Countries remains an existing development-only route, so its real development build is used; production route availability is not claimed.",
+    "Browser fixtures serve built assets with intercepted API requests; no hosted business writes or physical-device acceptance."
+  ],
+  "apiExecution": "Final restore/build/test uses ignored api/bin/tenant-tabs-verification so source-discovery tests can locate the ancestor API solution. The first external artifacts path caused root-discovery failures; no test was changed to hide them.",
+  "angular": {
+    "tests": 1006,
+    "files": 196,
+    "fullGate": "passed"
+  },
+  "api": {
+    "tests": 1342,
+    "skips": 3,
+    "projects": 12,
+    "fullGate": "passed"
+  }
+}

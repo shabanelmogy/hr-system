@@ -117,6 +117,8 @@ public sealed class StateReadStore(ReferenceDataDbContext context, TypeAdapterCo
         var descending = string.Equals(sortDirection, "desc", StringComparison.OrdinalIgnoreCase);
         return (sortBy?.ToUpperInvariant(), descending) switch
         {
+            ("ID", false) => query.OrderBy(item => item.Id),
+            ("ID", true) => query.OrderByDescending(item => item.Id),
             ("NAMEAR", false) => query.OrderBy(state => state.NameAr).ThenBy(state => state.Id),
             ("NAMEAR", true) => query.OrderByDescending(state => state.NameAr).ThenByDescending(state => state.Id),
             ("CODE", false) => query.OrderBy(state => state.Code).ThenBy(state => state.Id),

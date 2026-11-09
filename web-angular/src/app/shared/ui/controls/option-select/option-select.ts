@@ -13,7 +13,9 @@ import { AppIcon } from '../../icons/app-icon/app-icon';
     '[style.width.px]': 'controlWidth()',
     '[style.flex-basis.px]': 'controlWidth()',
     '[style.flex-shrink]': "controlWidth()===null?null:'0'",
+    '[style.--option-preferred-width.px]': 'controlWidth()',
     '[class.context-control]': "appearance()==='context'",
+    '[class.label-above]': "labelPlacement()==='above'",
   },
   templateUrl: './option-select.html',
   styleUrl: './option-select.scss',
@@ -24,6 +26,7 @@ export class OptionSelect {
   readonly label = input.required<string>();
   readonly value = input.required<string>();
   readonly labelVisibility = input<'visible' | 'sr-only'>('visible');
+  readonly labelPlacement = input<'floating' | 'above'>('floating');
   readonly valueAlign = input<'start' | 'center'>('start');
   readonly valueAttributes = computed(() =>
     this.valueAlign() === 'center'

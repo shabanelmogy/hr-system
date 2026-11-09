@@ -63,7 +63,7 @@ public sealed class GlobalCrystalReportManagementTests
             GlobalCrystalReport.CreateDraft("countries", "countries-gamma", "Gamma", null),
             GlobalCrystalReport.CreateDraft("states", "states-alpha", "Alpha", null));
         await context.SaveChangesAsync();
-        var handler = new GetGlobalCrystalReportManagementQueryHandler(new GlobalCrystalReportStore(context), Policy(["Countries:Edit"]), Errors());
+        var handler = new GetGlobalCrystalReportManagementQueryHandler(new GlobalCrystalReportStore(context, ManagedCrystalReportContractRegistry.LoadEmbedded()), Policy(["Countries:Edit"]), Errors());
         var request = new GetGlobalCrystalReportManagementQuery(null, null, 2, 1)
         {
             Filters = [new("displayName", "or", [Filter("startsWith", "al"), Filter("endsWith", "TA")])]
@@ -87,7 +87,7 @@ public sealed class GlobalCrystalReportManagementTests
         var published = GlobalCrystalReport.Create("countries", "countries-published", null);
         var version = Version(published.Id, 2);
         published.AddVersion(version);
-        published.Publish(version, Contracts.Fingerprint);
+        published.Publish(version, Contracts.GetFingerprint("countries"));
         var rows = new[] { draft, published }.AsQueryable();
         Assert.Same(published, Assert.Single(GlobalCrystalReportFilterExpressions.Apply(rows,
             [new("currentVersionNumber", "and", [Filter("notEquals", 1)]), new("status", "and", [Filter("equals", "published")])])));
@@ -125,7 +125,7 @@ public sealed class GlobalCrystalReportManagementTests
     {
         await using var context = Context(Guid.NewGuid().ToString(), new Actor(true));
         var files = new GlobalCrystalReportTestFiles { Failure = CrystalReportFileFailure.SourceRejected };
-        var handler = new CreateGlobalCrystalReportCommandHandler(new GlobalCrystalReportStore(context), files, context, Policy(), Contracts, Errors());
+        var handler = new CreateGlobalCrystalReportCommandHandler(new GlobalCrystalReportStore(context, ManagedCrystalReportContractRegistry.LoadEmbedded()), files, context, Policy(), Contracts, Errors());
         var result = await handler.Handle(new CreateGlobalCrystalReportCommand("countries", null, Upload()), default);
         Assert.True(result.IsFailure);
         Assert.Equal("CrystalReport.SourceRejected", result.Error.Code);
@@ -142,7 +142,7 @@ public sealed class GlobalCrystalReportManagementTests
         var report = GlobalCrystalReport.Create("countries", "countries-directory", null);
         if (archived) report.Archive();
         await using var context = Context(Guid.NewGuid().ToString(), new Actor(true));
-        var store = new GlobalCrystalReportStore(context);
+        var store = new GlobalCrystalReportStore(context, ManagedCrystalReportContractRegistry.LoadEmbedded());
         store.Add(report);
         await context.SaveChangesAsync();
         var policy = new GlobalCrystalReportPolicy(new Actor(true), new Permissions([
@@ -184,7 +184,7 @@ public sealed class GlobalCrystalReportManagementTests
     public async Task RegisterExistingFile_CreatesDraftVersionOneAndNeverPublishesOrOverwritesIt()
     {
         await using var context = Context(Guid.NewGuid().ToString(), new Actor(true));
-        var store = new GlobalCrystalReportStore(context);
+        var store = new GlobalCrystalReportStore(context, ManagedCrystalReportContractRegistry.LoadEmbedded());
         var files = new GlobalCrystalReportTestFiles();
         var services = new ServiceCollection();
         services.AddMediatR(config => config.RegisterServicesFromAssemblyContaining<CreateGlobalCrystalReportCommand>());
@@ -277,7 +277,7 @@ public sealed class GlobalCrystalReportManagementTests
     public async Task UploadAppendsWithoutPublishing_AndPublishRequiresCurrentEvidenceAndRowVersion()
     {
         await using var context = Context(Guid.NewGuid().ToString(), new Actor(true));
-        var store = new GlobalCrystalReportStore(context);
+        var store = new GlobalCrystalReportStore(context, ManagedCrystalReportContractRegistry.LoadEmbedded());
         var files = new GlobalCrystalReportTestFiles();
         var policy = Policy();
         var create = new CreateGlobalCrystalReportCommandHandler(store, files, context, policy, Contracts, Errors());
@@ -303,7 +303,7 @@ public sealed class GlobalCrystalReportManagementTests
         Assert.Equal("CrystalReport.ConcurrencyConflict", stale.Error.Code);
         var version = await store.VersionAsync(report.Id, appended.Value.Versions[0].Id, default);
         Assert.NotNull(version);
-        version.RecordValidation(false, "Fixture invalid", 1, Contracts.Fingerprint);
+        version.RecordValidation(false, "Fixture invalid", 1, Contracts.GetFingerprint("countries"));
         await context.SaveChangesAsync();
         var invalid = await publish.Handle(new PublishGlobalCrystalReportVersionCommand(report.Id, version.Id,
             Convert.ToBase64String(report.RowVersion)), default);
@@ -320,7 +320,7 @@ public sealed class GlobalCrystalReportManagementTests
         context.GlobalCrystalReports.Add(report);
         await context.SaveChangesAsync();
         var files = new GlobalCrystalReportTestFiles();
-        var handler = new UploadGlobalCrystalReportVersionCommandHandler(new GlobalCrystalReportStore(context), files,
+        var handler = new UploadGlobalCrystalReportVersionCommandHandler(new GlobalCrystalReportStore(context, ManagedCrystalReportContractRegistry.LoadEmbedded()), files,
             context, Policy(["Countries:Edit"]), Contracts, Errors(), new GlobalCrystalReportTestAccess());
         var denied = await handler.Handle(new UploadGlobalCrystalReportVersionCommand(report.Id, Upload()), default);
         Assert.Equal("CrystalReport.NotFound", denied.Error.Code);
@@ -382,11 +382,11 @@ public sealed class GlobalCrystalReportManagementTests
     public async Task EmptyDraft_BindsApprovedSource_AndFirstUploadStartsAtVersionOne()
     {
         await using var context = Context(Guid.NewGuid().ToString(), new Actor(true));
-        var store = new GlobalCrystalReportStore(context);
+        var store = new GlobalCrystalReportStore(context, ManagedCrystalReportContractRegistry.LoadEmbedded());
         var handler = new CreateGlobalCrystalReportDraftCommandHandler(store, context, Policy(),
             new CrystalReportDesignSourceCatalog(Contracts), Errors(), new DraftViews());
         var request = new CreateGlobalCrystalReportDraftCommand("reference-data", "countries",
-            "countries-empty", "  Empty directory  ", "Draft description", Contracts.Fingerprint, "dbo.vw_Countries");
+            "countries-empty", "  Empty directory  ", "Draft description", Contracts.GetFingerprint("countries"), "dbo.vw_Countries");
         var result = await handler.Handle(request, default);
         Assert.True(result.IsSuccess);
         Assert.Equal("Empty directory", result.Value.DisplayName);
@@ -419,10 +419,10 @@ public sealed class GlobalCrystalReportManagementTests
         string module, string source, string key, string name, bool stale, string code)
     {
         await using var context = Context(Guid.NewGuid().ToString(), new Actor(true));
-        var handler = new CreateGlobalCrystalReportDraftCommandHandler(new GlobalCrystalReportStore(context),
+        var handler = new CreateGlobalCrystalReportDraftCommandHandler(new GlobalCrystalReportStore(context, ManagedCrystalReportContractRegistry.LoadEmbedded()),
             context, Policy(), new CrystalReportDesignSourceCatalog(Contracts), Errors());
         var result = await handler.Handle(new CreateGlobalCrystalReportDraftCommand(module, source, key, name,
-            null, stale ? new string('a', 64) : Contracts.Fingerprint), default);
+            null, stale ? new string('a', 64) : Contracts.GetFingerprint("countries")), default);
         Assert.Equal(code, result.Error.Code);
         Assert.Empty(await context.GlobalCrystalReports.ToArrayAsync());
     }
@@ -437,11 +437,11 @@ public sealed class GlobalCrystalReportManagementTests
         var grants = new List<string> { ReportingPermissions.ViewGlobalCrystalReports };
         if (create) grants.Add(ReportingPermissions.CreateGlobalCrystalReports);
         if (edit) grants.Add("Countries:Edit");
-        var handler = new CreateGlobalCrystalReportDraftCommandHandler(new GlobalCrystalReportStore(context), context,
+        var handler = new CreateGlobalCrystalReportDraftCommandHandler(new GlobalCrystalReportStore(context, ManagedCrystalReportContractRegistry.LoadEmbedded()), context,
             new GlobalCrystalReportPolicy(new Actor(role), new Permissions(grants.ToArray())),
             new CrystalReportDesignSourceCatalog(Contracts), Errors());
         var result = await handler.Handle(new CreateGlobalCrystalReportDraftCommand("reference-data", "countries",
-            "countries-empty", "Empty", null, Contracts.Fingerprint), default);
+            "countries-empty", "Empty", null, Contracts.GetFingerprint("countries")), default);
         Assert.Equal("CrystalReport.Forbidden", result.Error.Code);
         Assert.Empty(await context.GlobalCrystalReports.ToArrayAsync());
     }
@@ -457,7 +457,7 @@ public sealed class GlobalCrystalReportManagementTests
         Assert.Equal("countries", source.SourceKey);
         Assert.Equal(6, source.Columns.Count);
         Assert.Equal("Language", Assert.Single(source.Parameters).Name);
-        Assert.Equal(Contracts.Fingerprint, source.ContractFingerprint);
+        Assert.Equal(Contracts.GetFingerprint("countries"), source.ContractFingerprint);
         var handler = new DownloadGlobalCrystalReportDesignerPackageQueryHandler(catalog, Contracts, Policy(["Countries:Edit"]), Errors());
         var denied = await handler.Handle(new DownloadGlobalCrystalReportDesignerPackageQuery("states"), default);
         Assert.Equal("CrystalReport.Forbidden", denied.Error.Code);
@@ -470,7 +470,7 @@ public sealed class GlobalCrystalReportManagementTests
         Assert.Equal(Contracts.ExportSchema("countries"), schema.ToArray());
         using var metadata = new StreamReader(archive.GetEntry("source.json")!.Open());
         var json = await metadata.ReadToEndAsync();
-        Assert.Contains(Contracts.Fingerprint, json, StringComparison.Ordinal);
+        Assert.Contains(Contracts.GetFingerprint("countries"), json, StringComparison.Ordinal);
         Assert.DoesNotContain("connectionString", json, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("password", json, StringComparison.OrdinalIgnoreCase);
     }
@@ -483,7 +483,7 @@ public sealed class GlobalCrystalReportManagementTests
     {
         var validator = new CreateGlobalCrystalReportDraftCommandValidator();
         Assert.Equal(valid, validator.Validate(new CreateGlobalCrystalReportDraftCommand("reference-data", "countries",
-            key, name, null, Contracts.Fingerprint, "dbo.vw_Countries")).IsValid);
+            key, name, null, Contracts.GetFingerprint("countries"), "dbo.vw_Countries")).IsValid);
     }
 
     [Theory]
@@ -527,7 +527,7 @@ public sealed class GlobalCrystalReportManagementTests
         new(new DbContextOptionsBuilder<ReportingDbContext>().UseInMemoryDatabase(name).Options, actor);
     private static GlobalCrystalReportVersion Version(Guid id, int number) =>
         GlobalCrystalReportVersion.Create(id, number, $"{Guid.NewGuid():N}.rpt", "countries-directory.rpt", 32,
-            new string('b', 64), "Fixture", null, Contracts.SchemaVersion, Contracts.Fingerprint);
+            new string('b', 64), "Fixture", null, Contracts.SchemaVersion, Contracts.GetFingerprint("countries"));
     private static FileUpload Upload() => new("countries-directory.rpt", "application/octet-stream", 32,
         () => new MemoryStream(new byte[32]));
     private static GlobalCrystalReportPolicy Policy(string[]? entityPermissions = null) =>

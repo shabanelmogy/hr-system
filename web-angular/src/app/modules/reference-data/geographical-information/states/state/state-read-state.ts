@@ -51,6 +51,13 @@ export class StateReadState {
   private readonly identityKeys = new WeakMap<Session, number>();
   private identitySequence = 0;
   readonly query = this.criteria.asReadonly();
+  private readonly clearedSortField = signal<string | null>(null);
+  readonly sortField = computed(() => this.clearedSortField() ?? this.query().sortBy);
+  readonly sort = computed<CollectionSort | null>(() =>
+    this.clearedSortField() !== null
+      ? null
+      : { field: this.query().sortBy, direction: this.query().sortDirection },
+  );
 
   exportSource(
     columns: readonly TabularColumn<StateListItem>[],
@@ -302,8 +309,14 @@ export class StateReadState {
     if (value !== null && typeof value !== 'boolean') return;
     this.patch({ hasDistricts: value ?? undefined, pageNumber: 1 });
   }
-  changeSort(sort: CollectionSort): void {
-    this.patch({ sortBy: sort.field, sortDirection: sort.direction, pageNumber: 1 });
+  changeSort(sort: CollectionSort | null): void {
+    const previousField = this.sortField();
+    const sorting = sort ?? {
+      field: defaultStateQuery.sortBy,
+      direction: defaultStateQuery.sortDirection,
+    };
+    if (this.patch({ sortBy: sorting.field, sortDirection: sorting.direction, pageNumber: 1 }))
+      this.clearedSortField.set(sort === null ? previousField : null);
   }
   changePage(page: CollectionPageRequest): void {
     if (
@@ -319,6 +332,7 @@ export class StateReadState {
     this.draft.set('');
     this.searchEvents.next('');
     this.criteria.set(defaultStateQuery);
+    this.clearedSortField.set(null);
   }
   refresh(): void {
     if (this.allowed()) this.pageRead.refresh();

@@ -2,10 +2,13 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { chromium, expect } from '@playwright/test';
+import { activateGridRowAction } from './support/grid-row-actions.mjs';
 import { sessionFixture } from '../src/app/platform/auth/auth.fixture.ts';
 
 const root = path.resolve(import.meta.dirname, '..');
-const build = path.join(root, 'dist/erp-angular/browser');
+const build = process.env.ANGULAR_FIXTURE_BUILD
+  ? path.resolve(process.env.ANGULAR_FIXTURE_BUILD)
+  : path.join(root, 'dist/erp-angular/browser');
 const origin = 'https://localhost:4210';
 const output = path.resolve(
   root,
@@ -217,7 +220,12 @@ try {
         assert.equal(queries.at(-1).search, 'code.00');
         assert.equal(queries.at(-1).page, '1');
         const row = grid.locator('[data-collection-row]').first();
-        await row.getByRole('button', { name: text('edit'), exact: true }).click();
+        await activateGridRowAction(
+          page,
+          row,
+          text('edit'),
+          core[language]['collections.rowActions'],
+        );
         let dialog = page.getByRole('dialog').filter({ has: page.locator('erp-form') });
         const input = dialog.getByRole('textbox', { name: text('value'), exact: true });
         await input.fill(' ');
@@ -233,7 +241,12 @@ try {
         await expect(dialog).toHaveCount(0);
         await expect(row.locator('[data-cell-column=targetValue]')).toHaveText('تعديل {{code}}');
         assert.equal(writes.length, 1);
-        await row.getByRole('button', { name: text('reset'), exact: true }).click();
+        await activateGridRowAction(
+          page,
+          row,
+          text('reset'),
+          core[language]['collections.rowActions'],
+        );
         const confirm = page
           .getByRole('dialog')
           .filter({ hasText: auth[language]['systemUiTexts.resetTitle'] });
@@ -241,7 +254,12 @@ try {
         await expect(confirm).toHaveCount(0);
         await expect(row.locator('[data-cell-column=targetValue]')).toHaveText('الأصل {{code}} 0');
         conflict = true;
-        await row.getByRole('button', { name: text('edit'), exact: true }).click();
+        await activateGridRowAction(
+          page,
+          row,
+          text('edit'),
+          core[language]['collections.rowActions'],
+        );
         dialog = page.getByRole('dialog').filter({ has: page.locator('erp-form') });
         await dialog
           .getByRole('textbox', { name: text('value'), exact: true })
@@ -284,12 +302,16 @@ try {
         readOnly = true;
         await page.reload();
         await expect(grid.locator('[data-collection-row]')).toHaveCount(25);
-        await expect(
-          grid
-            .locator('[data-collection-row]')
-            .first()
-            .getByRole('button', { name: text('edit'), exact: true }),
-        ).toBeDisabled();
+        const firstRow = grid.locator('[data-collection-row]').first();
+        await expect
+          .poll(() =>
+            firstRow
+              .locator('.action-cell button')
+              .evaluateAll(
+                (buttons) => buttons.length > 0 && buttons.every((button) => button.disabled),
+              ),
+          )
+          .toBe(true);
         assert.deepEqual(errors, []);
         results.push({
           language,

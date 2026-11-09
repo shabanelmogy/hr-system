@@ -14,7 +14,7 @@
     "recentTenants": "Recent tenants",
     "seatsUsed": "{{used}} of {{limit}} used",
     "tenantAdmins": {
-      "title": "Tenant administrators",
+      "title": "Tenant Administrators",
       "subtitle": "Create tenant administrators and assign each account to one or more tenants.",
       "add": "Add tenant administrator",
       "edit": "Edit tenant administrator",
@@ -134,6 +134,8 @@
     "created": "Tenant created successfully.",
     "updated": "Tenant updated successfully.",
     "createIntro": "Create a workspace for a new tenant and configure its subscription and applications.",
+    "saveBeforeAdministrators": "Save the tenant before managing administrators",
+    "saveBeforeAdministratorsDescription": "Complete and save the tenant details first. Then open Edit tenant to add or manage its administrators.",
     "formTitle": "Tenant details",
     "summaryTitle": "Tenant overview",
     "summaryDescription": "A live summary of the details you are entering.",
@@ -143,7 +145,12 @@
     "selectedAreas": "Functional areas"
   },
   "tenantAdmins": {
-    "title": "Tenant administrators",
+    "unassignedTenant": "No assigned Tenant",
+    "groupCount": "{{count}} administrators",
+    "tenantDirectory": "Tenants",
+    "searchTenants": "Search by Tenant name or identifier",
+    "emptyTenant": "No administrators assigned to this Tenant",
+    "title": "Tenant Administrators",
     "subtitle": "Manage tenant administrator accounts",
     "add": "Add tenant administrator",
     "empty": "No tenant administrators found",

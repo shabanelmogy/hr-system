@@ -1,0 +1,160 @@
+{
+  "dateUtc": "2026-11-07T12:26:08.001Z",
+  "scope": "One isolated session, fresh short-lived token per transport, no business writes, no token/connection IDs persisted",
+  "outcomes": [
+    {
+      "operation": "login",
+      "status": 200
+    },
+    {
+      "mode": "automatic",
+      "connected": true,
+      "tokenCalls": 4,
+      "tokenRemainingSeconds": 300
+    },
+    {
+      "mode": "WebSockets",
+      "connected": false,
+      "tokenCalls": 2,
+      "tokenRemainingSeconds": 301,
+      "statusCode": null,
+      "errorType": "Error",
+      "mentions404": false,
+      "mentionsWebSocket": true
+    },
+    {
+      "mode": "ServerSentEvents",
+      "connected": false,
+      "tokenCalls": 1,
+      "tokenRemainingSeconds": 300,
+      "statusCode": null,
+      "errorType": "Error",
+      "mentions404": false,
+      "mentionsWebSocket": true
+    },
+    {
+      "mode": "LongPolling",
+      "connected": true,
+      "tokenCalls": 1,
+      "tokenRemainingSeconds": 300
+    },
+    {
+      "operation": "ownedLogout",
+      "status": 204
+    }
+  ],
+  "requests": [
+    {
+      "mode": "automatic",
+      "method": "POST",
+      "path": "/hubs/company/negotiate",
+      "status": 200,
+      "cors": "https://localhost:4210"
+    },
+    {
+      "mode": "automatic",
+      "method": "POST",
+      "path": "/hubs/company/negotiate",
+      "status": 200,
+      "cors": "https://localhost:4210"
+    },
+    {
+      "mode": "automatic",
+      "method": "POST",
+      "path": "/hubs/company/negotiate",
+      "status": 200,
+      "cors": "https://localhost:4210"
+    },
+    {
+      "mode": "automatic",
+      "method": "GET",
+      "path": "/hubs/company",
+      "status": 200,
+      "cors": "https://localhost:4210"
+    },
+    {
+      "mode": "automatic",
+      "method": "POST",
+      "path": "/hubs/company",
+      "status": 200,
+      "cors": "https://localhost:4210"
+    },
+    {
+      "mode": "automatic",
+      "method": "GET",
+      "path": "/hubs/company",
+      "status": 200,
+      "cors": "https://localhost:4210"
+    },
+    {
+      "mode": "automatic",
+      "method": "DELETE",
+      "path": "/hubs/company",
+      "status": 202,
+      "cors": "https://localhost:4210"
+    },
+    {
+      "mode": "automatic",
+      "method": "POST",
+      "path": "/hubs/company",
+      "status": 200,
+      "cors": "https://localhost:4210"
+    },
+    {
+      "mode": "WebSockets",
+      "method": "POST",
+      "path": "/hubs/company/negotiate",
+      "status": 200,
+      "cors": "https://localhost:4210"
+    },
+    {
+      "mode": "ServerSentEvents",
+      "method": "POST",
+      "path": "/hubs/company/negotiate",
+      "status": 200,
+      "cors": "https://localhost:4210"
+    },
+    {
+      "mode": "LongPolling",
+      "method": "POST",
+      "path": "/hubs/company/negotiate",
+      "status": 200,
+      "cors": "https://localhost:4210"
+    },
+    {
+      "mode": "LongPolling",
+      "method": "GET",
+      "path": "/hubs/company",
+      "status": 200,
+      "cors": "https://localhost:4210"
+    },
+    {
+      "mode": "LongPolling",
+      "method": "POST",
+      "path": "/hubs/company",
+      "status": 200,
+      "cors": "https://localhost:4210"
+    },
+    {
+      "mode": "LongPolling",
+      "method": "GET",
+      "path": "/hubs/company",
+      "status": 200,
+      "cors": "https://localhost:4210"
+    },
+    {
+      "mode": "LongPolling",
+      "method": "DELETE",
+      "path": "/hubs/company",
+      "status": 202,
+      "cors": "https://localhost:4210"
+    },
+    {
+      "mode": "LongPolling",
+      "method": "POST",
+      "path": "/hubs/company",
+      "status": 404,
+      "cors": "https://localhost:4210"
+    }
+  ]
+}

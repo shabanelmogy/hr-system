@@ -1,0 +1,59 @@
+(node:50016) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/src/app/platform/auth/auth.fixture.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\F:\Portofolio Projects\ERPSYSTEM\web-angular\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/verify-states-browser.mjs:553
+          throw Error(`States ${language}/${mode}/${width} at ${stage}: ${error}`, {
+                ^
+
+Error: States en/light/1440 at navigate: AssertionError [ERR_ASSERTION]: {"kind":"grid","width":900,"open":false,"geometry":{"contentWidth":754,"boxes":[{"label":"Search Field","x":106,"y":247.984375,"right":188,"bottom":289.984375,"width":82,"height":42},{"label":"Search Type","x":234,"y":247.984375,"right":340,"bottom":289.984375,"width":106,"height":42},{"label":"","x":416,"y":247.984375,"right":544,"bottom":289.984375,"width":128,"height":42},{"label":"Status","x":343.234375,"y":251.984375,"right":449.234375,"bottom":285.984375,"width":106,"height":34},{"label":"Country","x":495.234375,"y":251.984375,"right":601.234375,"bottom":285.984375,"width":106,"height":34},{"label":"Districts","x":647.234375,"y":251.984375,"right":753.234375,"bottom":285.984375,"width":106,"height":34},{"label":"Reset","x":686.265625,"y":250.484375,"right":803,"bottom":286.484375,"width":116.734375,"height":36},{"label":"Grid options","x":811,"y":250.484375,"right":859,"bottom":286.484375,"width":48,"height":36}],"overlaps":[["","Status"],["","Country"],["Districts","Reset"]],"outside":[],"outerOverflow":false}}
++ actual - expected
+
++ [
++   [
++     '',
++     'Status'
++   ],
++   [
++     '',
++     'Country'
++   ],
++   [
++     'Districts',
++     'Reset'
++   ]
++ ]
+- []
+
+    at file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/verify-states-browser.mjs:553:17 {
+  [cause]: AssertionError [ERR_ASSERTION]: {"kind":"grid","width":900,"open":false,"geometry":{"contentWidth":754,"boxes":[{"label":"Search Field","x":106,"y":247.984375,"right":188,"bottom":289.984375,"width":82,"height":42},{"label":"Search Type","x":234,"y":247.984375,"right":340,"bottom":289.984375,"width":106,"height":42},{"label":"","x":416,"y":247.984375,"right":544,"bottom":289.984375,"width":128,"height":42},{"label":"Status","x":343.234375,"y":251.984375,"right":449.234375,"bottom":285.984375,"width":106,"height":34},{"label":"Country","x":495.234375,"y":251.984375,"right":601.234375,"bottom":285.984375,"width":106,"height":34},{"label":"Districts","x":647.234375,"y":251.984375,"right":753.234375,"bottom":285.984375,"width":106,"height":34},{"label":"Reset","x":686.265625,"y":250.484375,"right":803,"bottom":286.484375,"width":116.734375,"height":36},{"label":"Grid options","x":811,"y":250.484375,"right":859,"bottom":286.484375,"width":48,"height":36}],"overlaps":[["","Status"],["","Country"],["Districts","Reset"]],"outside":[],"outerOverflow":false}}
+  + actual - expected
+  
+  + [
+  +   [
+  +     '',
+  +     'Status'
+  +   ],
+  +   [
+  +     '',
+  +     'Country'
+  +   ],
+  +   [
+  +     'Districts',
+  +     'Reset'
+  +   ]
+  + ]
+  - []
+  
+      at verifyCollectionSearchLayout (file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/support/collection-search-layout.mjs:40:16)
+      at async file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/scripts/verify-states-browser.mjs:289:34 {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ [ '', 'Status' ], [ '', 'Country' ], [ 'Districts', 'Reset' ] ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+}
+
+Node.js v24.18.1

@@ -10,4 +10,7 @@
       grid-template-columns: 1fr;
     }
   }
+  :host > .field-span-full {
+    grid-column: 1 / -1;
+  }
 }

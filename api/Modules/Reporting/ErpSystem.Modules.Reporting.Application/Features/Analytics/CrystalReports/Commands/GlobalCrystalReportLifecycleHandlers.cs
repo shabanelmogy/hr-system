@@ -30,9 +30,9 @@ public sealed class PublishGlobalCrystalReportVersionCommandHandler(IGlobalCryst
             var version = await store.VersionAsync(report.Id, request.VersionId, token);
             if (version is null) return Result.Failure(errors.CrystalReportNotFound);
             if (version.ValidationStatus != CrystalReportValidationStatus.Valid) return Result.Failure(errors.CrystalReportVersionNotValidated);
-            if (!version.IsValidFor(contracts.Fingerprint)) return Result.Failure(errors.CrystalReportContractStale);
+            if (!version.IsValidFor(contracts, report.EntityKey)) return Result.Failure(errors.CrystalReportContractStale);
             store.ApplyRowVersion(report, rowVersion);
-            report.Publish(version, contracts.Fingerprint);
+            report.Publish(version, version.ValidationContractFingerprint ?? string.Empty);
             await unitOfWork.SaveChangesAsync(token);
             return Result.Success();
         }, cancellationToken);
@@ -64,7 +64,7 @@ public sealed class RevalidateGlobalCrystalReportVersionCommandHandler(IGlobalCr
             new FileUpload(version.OriginalFileName, "application/octet-stream", version.Size, () => source), cancellationToken);
         if (inspection is null) return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportInspectorUnavailable);
         if (inspection.IsValid && (inspection.Failure != CrystalReportInspectionFailure.None ||
-            inspection.ContractSchemaVersion != contracts.SchemaVersion || inspection.ContractFingerprint != contracts.Fingerprint))
+            inspection.ContractSchemaVersion != contracts.SchemaVersion || !contracts.IsCompatibleFingerprint(detail.EntityKey, inspection.ContractFingerprint)))
             return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportContractStale);
         var recorded = await unitOfWork.ExecuteAtomicallyAsync([$"global-crystal:report:{request.ReportId:N}"], async token =>
         {
@@ -73,7 +73,7 @@ public sealed class RevalidateGlobalCrystalReportVersionCommandHandler(IGlobalCr
                 !policy.BypassesRoleGrants(report.EntityKey) && !await access.HasRightAsync(report.Id, CrystalReportRight.Upload, token))
                 return false;
             version.RecordValidation(inspection.IsValid, inspection.ValidationReason ?? errors.CrystalReportInvalidFile.Description,
-                contracts.SchemaVersion, contracts.Fingerprint);
+                contracts.SchemaVersion, contracts.GetFingerprint(detail.EntityKey));
             await unitOfWork.SaveChangesAsync(token);
             return true;
         }, cancellationToken);
@@ -136,7 +136,7 @@ public sealed class VerifyDatabaseGlobalCrystalReportVersionCommandHandler(
         try
         {
             if (file.ValidationContractSchemaVersion != contracts.SchemaVersion ||
-                file.ValidationContractFingerprint != contracts.Fingerprint)
+                !contracts.IsCompatibleFingerprint(detail.EntityKey, file.ValidationContractFingerprint))
                 return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportContractStale);
             var result = await unitOfWork.ExecuteAtomicallyAsync(
                 [$"global-crystal:report:{request.ReportId:N}"],
@@ -155,7 +155,7 @@ public sealed class VerifyDatabaseGlobalCrystalReportVersionCommandHandler(
                     var version = CreateGlobalCrystalReportCommandHandler.NewVersion(report.Id, number, file);
                     report.AddVersion(version);
                     store.AddVersion(version);
-                    report.Publish(version, contracts.Fingerprint);
+                    report.Publish(version, version.ValidationContractFingerprint ?? string.Empty);
                     await unitOfWork.SaveChangesAsync(token);
                     return Result.Success();
                 }, cancellationToken);

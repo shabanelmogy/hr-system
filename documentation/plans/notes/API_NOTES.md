@@ -2,6 +2,8 @@
 
 This is the API-focused index into the central note registries.
 
+Geography ID sorting rollout: PROD-033 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).
+
 Shared all-filtered collection export rollout: PROD-032 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).
 
 System log advanced query rollout: PROD-030 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).
@@ -101,3 +103,5 @@ Canonical deferral, current priority and reopening trigger:
 
 Canonical risk, owner and reassessment trigger:
 [RISK-019](KNOWN_RISKS.md#risk-019--original-rpt-source-contents).
+
+Current runtime key and Hub query repair2026-11-07: PROD-029/028 and PROD-003 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).

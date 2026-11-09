@@ -2,6 +2,10 @@
   display: block;
   min-inline-size: 0;
 }
+:host(.fill) {
+  block-size: 100%;
+  min-block-size: 0;
+}
 .summary-content {
   display: grid;
   gap: 1.25rem;

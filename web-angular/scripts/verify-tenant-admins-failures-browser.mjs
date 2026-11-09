@@ -5,6 +5,7 @@ import { chromium, expect } from '@playwright/test';
 import { sessionFixture } from '../src/app/platform/auth/auth.fixture.ts';
 import { adminFixture } from '../src/app/platform/tenant-admins/tenant-admin.fixture.ts';
 import { tenantFixture } from '../src/app/platform/tenants/management/tenant.fixture.ts';
+import { serveAngularFixtureBuild } from './angular-build-browser-fixture.mjs';
 const root = path.resolve(import.meta.dirname, '..');
 const origin = process.env.ANGULAR_PREVIEW_ORIGIN ?? 'https://localhost:4220';
 const api = process.env.ANGULAR_API_ORIGIN ?? 'https://shabanhrms.runasp.net';
@@ -45,6 +46,7 @@ try {
         reducedMotion: 'reduce',
         viewport: { width: 1440, height: 1050 },
       });
+      await serveAngularFixtureBuild(context, root, origin);
       await context.addCookies(
         Object.entries({
           i18next: language,

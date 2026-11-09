@@ -1,0 +1,9 @@
+(node:2624) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/src/app/platform/auth/auth.fixture.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\F:\Portofolio Projects\ERPSYSTEM\web-angular\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Countries search layout passed en/light
+Countries search layout passed ar/light
+Countries search layout passed en/dark
+Countries search layout passed ar/dark
+Countries read: 4 visual cases passed; intercepted GET fixtures only.

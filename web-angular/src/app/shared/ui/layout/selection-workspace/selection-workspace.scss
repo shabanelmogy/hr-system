@@ -1,0 +1,133 @@
+:host {
+  display: block;
+  block-size: 100%;
+  min-block-size: 0;
+  min-inline-size: 0;
+  container: selection-workspace / inline-size;
+}
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  gap: 12px;
+  block-size: 100%;
+  min-block-size: 0;
+}
+.workspace.no-selection {
+  grid-template-columns: minmax(0, 1fr);
+}
+aside,
+.detail {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  min-block-size: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface);
+}
+.directory-list,
+.detail-content {
+  flex: 1;
+  min-block-size: 0;
+  min-inline-size: 0;
+}
+.directory-list erp-text-field {
+  flex: 1;
+  inline-size: 100%;
+  min-inline-size: 0;
+  --touch-target: 36px;
+  --field-padding-y: 6px;
+}
+.directory-list erp-icon {
+  inline-size: 16px;
+  block-size: 16px;
+  margin-inline-start: 10px;
+  flex-shrink: 0;
+  color: var(--muted-foreground);
+}
+.directory-heading,
+.detail-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-block-end: 1px solid var(--border);
+}
+h2 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.detail-heading h2 {
+  color: var(--primary);
+  font-size: 17px;
+}
+.detail-heading p {
+  margin: 3px 0 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+.detail-heading > div {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+.directory-heading > span,
+.entry-meta,
+.detail-meta {
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, var(--surface));
+  border-radius: 999px;
+  padding: 4px 8px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.entry {
+  display: flex;
+  align-items: center;
+  gap: 6px 8px;
+  flex-wrap: wrap;
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+.entry-identity {
+  display: grid;
+  flex: 1 1 7rem;
+  gap: 3px;
+  min-inline-size: 0;
+}
+.entry-name {
+  font-size: 14px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.entry-description {
+  font-size: 12px;
+  opacity: 0.75;
+  overflow-wrap: anywhere;
+}
+.entry-meta {
+  margin-inline-start: auto;
+  max-inline-size: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+@container selection-workspace (max-width: 759px) {
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: fit-content(max(11rem, 30%)) minmax(0, 1fr);
+    gap: 8px;
+  }
+  .workspace.no-selection {
+    grid-template-rows: minmax(0, 1fr);
+  }
+  .directory-heading,
+  .detail-heading {
+    padding: 8px 12px;
+  }
+  .detail-heading h2 {
+    font-size: 15px;
+  }
+}

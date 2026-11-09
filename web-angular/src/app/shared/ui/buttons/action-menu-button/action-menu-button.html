@@ -1,14 +1,26 @@
 <erp-button
   [label]="label()"
+  [appearance]="compactIcon() ? 'icon' : 'default'"
+  [variant]="compactIcon() ? 'text' : 'contained'"
+  [attr.title]="compactIcon() ? label() : null"
   [disabled]="disabled() || !model().length"
   [expanded]="opened()"
   [controls]="menuId"
   hasPopup="menu"
   (activated)="toggle($event)"
 >
-  <span buttonEndIcon class="action-menu-indicator" [class.expanded]="opened()" aria-hidden="true">
-    <erp-icon name="chevronDown" />
-  </span>
+  @if (compactIcon(); as icon) {
+    <erp-icon buttonIcon class="compact-icon" [name]="icon" />
+  } @else {
+    <span
+      buttonEndIcon
+      class="action-menu-indicator"
+      [class.expanded]="opened()"
+      aria-hidden="true"
+    >
+      <erp-icon name="chevronDown" />
+    </span>
+  }
 </erp-button>
 <p-menu
   [id]="menuId"

@@ -93,6 +93,8 @@ foreach ($entry in $environmentSettings.GetEnumerator()) {
 Save-PrivateXml $erpTransform (Join-Path $erpProject 'web.Crystal.publish-private.config')
 
 [xml]$runtimePublish = Get-Content -LiteralPath $runtimeProfilePath -Raw
+Set-ProfileProperty $runtimePublish 'LastUsedBuildConfiguration' 'Release'
+Set-ProfileProperty $runtimePublish 'LastUsedPlatform' 'x64'
 Set-ProfileProperty $runtimePublish 'ProjectProfileTransformFileName' 'Web.Crystal.publish-private.config'
 Set-ProfileProperty $runtimePublish 'EnableMsDeployAppOffline' 'true'
 Set-ProfileProperty $runtimePublish 'SiteUrlToLaunchAfterPublish' $runtimeUri.AbsoluteUri

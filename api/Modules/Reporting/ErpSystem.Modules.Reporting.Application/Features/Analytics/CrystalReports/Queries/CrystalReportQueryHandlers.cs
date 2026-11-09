@@ -36,7 +36,7 @@ public sealed class GetSupportedCrystalReportEntitiesQueryHandler(
                     entity.Scope,
                     entity.Filters,
                     contracts.SchemaVersion,
-                    contracts.Fingerprint))
+                    contracts.GetFingerprint(entity.EntityKey)))
                 .ToArray());
 }
 
@@ -66,14 +66,14 @@ public sealed class GetGlobalCrystalReportsQueryHandler(
             ? (consumerPolicy.PlatformReader ? managed : await consumers.CatalogAsync(entityKey, CrystalReportRight.Download, cancellationToken))
                 .Select(item => item.ReportId).ToHashSet()
             : [];
-        var managedReports = managed.Where(item => item.PublishedVersion?.IsValidFor(contracts.Fingerprint) == true)
+        var managedReports = managed.Where(item => item.PublishedVersion?.IsValidFor(contracts, entityKey) == true)
             .Select(item =>
             {
                 var version = item.PublishedVersion!;
                 return new GlobalCrystalReportListItemResponse(identities.SourceId(item.ReportId),
                     item.EntityKey, item.ReportKey, item.DisplayName, version.SummaryTitle, version.SummarySubject,
                     item.Description, version.VersionNumber, true, false,
-                    identities.Token(version.Id, contracts.Fingerprint, version.Sha256), item.UpdatedOn)
+                    identities.Token(version.Id, contracts.GetFingerprint(entityKey), version.Sha256), item.UpdatedOn)
                     { CanDownloadSource = downloadable.Contains(item.ReportId) };
             });
         return Result.Success<IReadOnlyList<GlobalCrystalReportListItemResponse>>(
@@ -114,8 +114,8 @@ public sealed class RenderGlobalCrystalReportQueryHandler(
         RenderGlobalCrystalReportQuery request, CancellationToken cancellationToken)
     {
         var version = template.PublishedVersion;
-        if (version is null || !version.IsValidFor(contracts.Fingerprint) ||
-            request.ExpectedSha256 != identities.Token(version.Id, contracts.Fingerprint, version.Sha256))
+        if (version is null || !version.IsValidFor(contracts, template.EntityKey) ||
+            request.ExpectedSha256 != identities.Token(version.Id, contracts.GetFingerprint(template.EntityKey), version.Sha256))
             return Result.Failure<CrystalReportDownload>(errors.CrystalReportDeploymentSourceChanged);
         await using var source = await storage.OpenVerifiedReadAsync(version.StorageKey, version.Size, version.Sha256, cancellationToken);
         if (source is null) return Result.Failure<CrystalReportDownload>(errors.CrystalReportSourceUnavailable);
@@ -279,7 +279,7 @@ public sealed class RenderCrystalReportQueryHandler(
             return Result.Failure<CrystalReportDownload>(errors.CrystalReportNotFound);
         if (version.ValidationStatus != CrystalReportValidationStatus.Valid)
             return Result.Failure<CrystalReportDownload>(errors.CrystalReportVersionNotValidated);
-        if (!version.IsValidFor(contracts.Fingerprint))
+        if (!version.IsValidFor(contracts, report.EntityKey))
             return Result.Failure<CrystalReportDownload>(errors.CrystalReportContractStale);
 
         await using var source = await fileStorage.OpenVerifiedReadAsync(

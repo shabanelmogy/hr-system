@@ -1,5 +1,12 @@
 # Countries Full-Stack Web and Mobile Implementation Profile
 
+Angular five-view design review 2026-11-08: current reusable presentation and
+intentional Grid/Cards/Chart/Report/Import differences are consolidated in
+[Angular collection views](../../../../guides/web/architecture/ANGULAR_COLLECTION_VIEWS.md).
+The requester subsequently authorized shared header/Import corrections for
+FOLLOW-028/029/030. Current runtime scope and executed evidence are recorded in
+[the Import layout contract](../../../platform/features/angular-countries-import-view/IMPORT_LAYOUT_2026-11-08.md); historical review receipts remain dated.
+
 | Item | Value |
 |---|---|
 | Status | Applied reference with documented follow-up findings |
@@ -19,6 +26,43 @@ in documentation/modules/platform/features/angular-countries-import-view/IMPORT_
 It retains the same six fields, Create authority, valid-subset bulk transaction,
 uncertainty/replay and actor-lifetime rules. No API/schema or Next/Mobile business
 runtime change; Web translation catalog synchronization retains PROD-019.
+
+Angular Card presentation maintenance2026-11-08: Countries retains the same
+server-managed criteria, selection controller, permissions and row actions. The
+shared CardList places its explicitly labelled 44px selection target in the
+SurfaceCard header. Country names use two lines with full-name title attributes;
+metadata uses aligned label/value columns, and quality appears once beside the
+progress meter. Shared compact insets and 44px/8px row-action targets/spacing
+apply through the existing entity-card and RowActions owners. The browser command
+`node scripts/verify-countries-screen-browser.mjs --card-layout` covers EN/AR,
+Light/Dark, 320/690/1012px, navigation open/closed at1012px, long names, selection
+label clicks and keyboard selection. No API/schema, Next or Mobile runtime change.
+
+Angular Grid presentation maintenance2026-11-08: the existing MyDataGrid owns the
+theme-derived header surface, visible sort affordance, tabular figures, enlarged
+selection labels and row-action targets. Countries uses its responsive action
+presentation (inline from600px actual content width; shared menu below600px),
+retaining the supplied permissions and actions. Both name columns use the shared
+optional icon/default-text renderer with logical start alignment, ellipsis,
+complete-value titles and bidirectional isolation. Missing phone/currency values
+display an em dash. The shared frozen action boundary remains visible while data
+scrolls. Verification command: `node scripts/verify-countries-screen-browser.mjs
+--grid-layout`; its fixture covers EN/AR, Light/Dark,320/690/844/1012/1440px,
+844×390 landscape, navigation open/closed from1012px, long names, touch targets,
+page/individual selection, sticky headers/actions and contained scrolling. The
+domain/API/schema and Next/Mobile runtime contracts remain unchanged.
+
+Search label maintenance2026-11-08: shared structured search uses floating labels
+in control borders, including Countries status and sort selectors. Below34rem of
+actual collection-panel width, labels are visually hidden while their native
+associations and accessible names remain. Empty text search shows its placeholder;
+dropdowns retain their current selection. The compact14px control text,44px
+targets, criteria persistence and clear behavior remain. From46rem of actual
+panel width in Grid, or54rem when Cards adds sorting controls,
+search/status/sort/actions share one row. Field/operator/select widths are bounded
+at120px/144px/144px; query text expands from a160px minimum. Below that the toolbar
+wraps. Verification uses `--pagination-layout` and `--search-layout` for Grid/Cards in EN/AR and
+Light/Dark. No API/schema or Next/Mobile runtime change.
 
 This is the feature-specific review artifact for Countries. Its manifest,
 explicit contracts, platform profiles, findings, and reconciliation checklist

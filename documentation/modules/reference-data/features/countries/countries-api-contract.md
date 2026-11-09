@@ -51,7 +51,7 @@ There is deliberately no count endpoint and no toggle-delete operation. Page met
 | `status` | `active` | `active`, `archived`, or `all` |
 | `currencyCode` | — | Optional exact three-letter code; normalized uppercase |
 | `hasStates` | — | Optional boolean; counts active states |
-| `sortBy` | `nameEn` | `nameEn`, `nameAr`, `alpha2Code`, `alpha3Code`, `currencyCode`, or `createdOn` |
+| `sortBy` | `nameEn` | `id`, `nameEn`, `nameAr`, `alpha2Code`, `alpha3Code`, `currencyCode`, or `createdOn` |
 | `sortDirection` | `asc` | `asc` or `desc` |
 
 Example:

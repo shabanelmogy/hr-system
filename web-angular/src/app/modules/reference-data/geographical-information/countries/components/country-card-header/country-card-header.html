@@ -1,14 +1,8 @@
 <div class="card-heading">
   <div>
-    <h2 dir="auto">{{ title() }}</h2>
-    <p dir="auto">{{ subtitle() }}</p>
+    <h2 dir="auto" [title]="title()">{{ title() }}</h2>
+    <p dir="auto" [title]="subtitle()">{{ subtitle() }}</p>
   </div>
-  <erp-status-badge
-    appearance="solid"
-    [contrast]="quality().contrast"
-    [label]="qualityLabel()"
-    [accent]="quality().accent"
-  />
 </div>
 <div class="chips">
   @if (country().alpha2Code; as code) {

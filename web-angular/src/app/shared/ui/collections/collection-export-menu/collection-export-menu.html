@@ -1,11 +1,21 @@
 @if (export.available()) {
   <erp-action-menu-button
     [label]="(export.pending() ? 'collectionExport.preparing' : 'actions.export') | uiText"
+    [compactIcon]="compact() ? 'download' : null"
     [actions]="formats()"
     [disabled]="export.pending()"
     (activated)="export.run($event)"
   />
   @if (export.pending()) {
-    <erp-button [label]="'actions.cancel' | uiText" variant="text" (activated)="export.cancel()" />
+    <erp-button
+      [label]="'actions.cancel' | uiText"
+      [appearance]="compact() ? 'icon' : 'default'"
+      variant="text"
+      (activated)="export.cancel()"
+    >
+      @if (compact()) {
+        <erp-icon buttonIcon name="close" />
+      }
+    </erp-button>
   }
 }

@@ -6,7 +6,7 @@
         'districts.bulkArchiveAction'
           | uiText: 'reference-districts' : { count: lifecycle.selected().length }
       "
-      severity="warn"
+      variant="outlined"
       [disabled]="lifecycle.pending()"
       (activated)="lifecycle.requestBulk()"
       ><erp-icon buttonIcon name="archive"
@@ -22,19 +22,17 @@
       (selectionChange)="lifecycle.select($event)"
       [recordNavigation]="true"
       appearance="reference"
-      toolbarLayout="single-row"
-      actionDisplay="inline"
+      toolbarLayout="adaptive"
       [stickyActions]="true"
       [contextActions]="actions"
       (rowAction)="act($event)"
-      [toolbarVisible]="toolbarVisible()"
       [display]="{ resizableColumns: 'fit', reorderableColumns: true, columnManagement: true }"
       [source]="state.source()"
       [label]="'districts.viewTitle' | uiText: 'reference-districts'"
       [columns]="columns()"
       [rowId]="id"
       [rowLabel]="rowLabel"
-      [search]="search()"
+      [search]="searchVisible() ? search() : undefined"
       [sort]="sort()"
       (pageChange)="state.changePage($event)"
       (searchChange)="state.changeSearch($event)"
@@ -46,12 +44,17 @@
         <ng-container [ngTemplateOutlet]="bulkAction" /><erp-button
           data-testid="reset"
           [label]="'general.reset' | uiText"
+          [compactOnSmallScreens]="true"
           variant="text"
           (activated)="state.reset()"
           ><erp-icon buttonIcon name="reset"
         /></erp-button>
       </div>
-      <div toolbarFilters class="filters"><erp-district-list-criteria /></div>
+      <div toolbarFilters class="filters">
+        @if (searchVisible()) {
+          <erp-district-list-criteria />
+        }
+      </div>
       <ng-template [erpCollectionCell]="columns() | collectionColumn: 'nameAr'" let-row
         ><span class="collection-cell-label"
           ><erp-icon name="location" />{{ row.nameAr }}</span
@@ -88,8 +91,7 @@
   } @else if (kind() === 'cards') {
     <erp-card-list
       [searchMaxWidth]="400"
-      [toolbarVisible]="toolbarVisible()"
-      toolbarLayout="single-row"
+      toolbarLayout="adaptive"
       [recordRequest]="records.request()"
       [selectionEnabled]="lifecycle.allowed()"
       [selectable]="lifecycle.selectable"
@@ -99,7 +101,7 @@
       [label]="'districts.viewTitle' | uiText: 'reference-districts'"
       [rowId]="id"
       [rowLabel]="rowLabel"
-      [search]="search()"
+      [search]="searchVisible() ? search() : undefined"
       layout="responsive"
       appearance="entity"
       (pageChange)="state.changePage($event)"
@@ -108,7 +110,11 @@
       (rowActivated)="state.open($event.id)"
     >
       <div toolbarContent><ng-container [ngTemplateOutlet]="bulkAction" /></div>
-      <div toolbarFilters class="filters"><erp-district-list-criteria [showSort]="true" /></div>
+      <div toolbarFilters class="filters">
+        @if (searchVisible()) {
+          <erp-district-list-criteria [showSort]="true" />
+        }
+      </div>
       <ng-template [erpCollectionCardHeader]="state.source()" let-row
         ><erp-district-card-header [state]="row"
       /></ng-template>

@@ -1,5 +1,16 @@
 # States complete Angular parity — mobile applied profile
 
+Current 2026-11-08 presentation correction: Grid actions inherit the shared
+responsive default, including disabled-menu semantics and an architecture guard.
+[Source contract and executed evidence](SHARED_GRID_ACTIONS_2026-11-08.md). API/domain/Next/native
+runtime is unchanged; new platform workflows are Excluded from this correction.
+Historical inline-action receipts retain their original revision.
+
+Current shared search/Chart correction: no overlapping projected criteria,
+44px controls, compact widths and a growing query. Chart search is off by default.
+[Current contract and acceptance](SHARED_COLLECTION_SEARCH_2026-11-08.md). API/domain/Next/native remain
+unchanged; this is a Web presentation correction.
+
 ## 1. Ownership
 
 Platform owns this Angular migration record; ReferenceData retains States business rules/persistence. Exact D42/S3-A9 scope and entry contract: documentation/plans/business/web-angular-migration/decomposition/angular-states-workspace.md.

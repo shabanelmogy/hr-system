@@ -118,6 +118,8 @@ public sealed class DistrictReadStore(ReferenceDataDbContext context, TypeAdapte
         var descending = string.Equals(sortDirection, "desc", StringComparison.OrdinalIgnoreCase);
         return (sortBy?.ToUpperInvariant(), descending) switch
         {
+            ("ID", false) => query.OrderBy(item => item.Id),
+            ("ID", true) => query.OrderByDescending(item => item.Id),
             ("NAMEAR", false) => query.OrderBy(district => district.NameAr).ThenBy(district => district.Id),
             ("NAMEAR", true) => query.OrderByDescending(district => district.NameAr).ThenByDescending(district => district.Id),
             ("CODE", false) => query.OrderBy(district => district.Code).ThenBy(district => district.Id),

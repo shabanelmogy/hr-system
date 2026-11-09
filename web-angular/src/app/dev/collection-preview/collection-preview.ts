@@ -64,7 +64,7 @@ export class CollectionPreview {
   readonly searchText = signal('');
   readonly field = signal('name');
   readonly operator = signal('contains');
-  readonly sort = signal<CollectionSort>({ field: 'id', direction: 'asc' });
+  readonly sort = signal<CollectionSort | null>({ field: 'id', direction: 'asc' });
   readonly source = signal<CollectionSource<SampleRecord>>({
     query: { scopeKey: 'fixture-a', criteriaKey: 'all', pageIndex: 0, pageSize: 10 },
     kind: 'loading',
@@ -148,7 +148,7 @@ export class CollectionPreview {
     this.source.update((source) => ({ ...source, query: { ...source.query, ...request } }));
     this.request();
   }
-  sortBy(sort: CollectionSort) {
+  sortBy(sort: CollectionSort | null) {
     this.sort.set(sort);
     this.commitCriteria();
   }
@@ -237,11 +237,12 @@ export class CollectionPreview {
                   .toLowerCase()
                   .includes(text))),
       );
-      all.sort(
-        (a, b) =>
-          (sort.field === 'name' ? a.name.localeCompare(b.name) : a.id - b.id) *
-          (sort.direction === 'asc' ? 1 : -1),
-      );
+      if (sort)
+        all.sort(
+          (a, b) =>
+            (sort.field === 'name' ? a.name.localeCompare(b.name) : a.id - b.id) *
+            (sort.direction === 'asc' ? 1 : -1),
+        );
       const available = scenario === 'empty' ? [] : all,
         start = query.pageIndex * query.pageSize;
       this.source.set({

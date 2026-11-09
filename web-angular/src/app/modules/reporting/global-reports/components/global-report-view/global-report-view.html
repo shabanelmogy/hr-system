@@ -1,15 +1,24 @@
 <main [class.embedded]="embedded()">
   @if (!embedded()) {
-    <erp-page-header [title]="'reports.reportViewer' | uiText"
+    <erp-page-header
+      variant="collection"
+      [refreshable]="false"
+      [filterable]="false"
+      [title]="'reports.reportViewer' | uiText"
       ><div class="actions">
+        <ng-container [ngTemplateOutlet]="headerActions()" />
         <erp-button
           data-testid="language"
+          variant="text"
+          [compactOnSmallScreens]="true"
           [label]="(locale.language() === 'en' ? 'common.arabic' : 'common.english') | uiText"
           (activated)="locale.setLanguage(locale.language() === 'en' ? 'ar' : 'en')"
           ><erp-icon buttonIcon name="language"
         /></erp-button>
         <erp-button
           data-testid="reload"
+          variant="text"
+          [compactOnSmallScreens]="true"
           [label]="'actions.refresh' | uiText"
           (activated)="state.reload()"
           ><erp-icon buttonIcon name="refresh"
@@ -25,9 +34,9 @@
     <erp-report-workspace
       [label]="'reports.reportViewer' | uiText"
       [criteriaLabel]="'general.search' | uiText"
-      [optionsLabel]="'reports.viewerOptions' | uiText"
+      [optionsLabel]="optionsVisible() ? ('reports.viewerOptions' | uiText) : ''"
       [(selectedTab)]="sidebarTab"
-      [appearance]="embedded() ? 'reference' : 'default'"
+      appearance="reference"
       [criteriaVisible]="criteriaVisible()"
     >
       <div reportCriteria>
@@ -47,11 +56,11 @@
         />
       </div>
       <ng-container reportActions>
-        @if (document()) {
+        @if (document() && embedded() && !externalActions()) {
           <ng-container
             [ngTemplateOutlet]="criteriaVisible() ? (pdfViewer()?.actionsTemplate() ?? null) : null"
           />
-        } @else {
+        } @else if (!document()) {
           <erp-feedback-state
             [kind]="state.view().kind === 'loading' ? 'loading' : 'empty'"
             [title]="
@@ -84,7 +93,7 @@
           /></erp-button>
         }
       </ng-container>
-      <div reportDocument data-testid="document" [class.contained-document]="embedded()">
+      <div reportDocument data-testid="document" class="contained-document">
         @switch (state.view().kind) {
           @case ('loading') {
             <erp-feedback-state kind="loading" [title]="'reports.generatingReport' | uiText" />
@@ -119,9 +128,15 @@
                 [document]="pdf"
                 [title]="'reports.reportViewer' | uiText"
                 [downloadName]="fileName()"
-                [fill]="embedded()"
-                [showActions]="!criteriaVisible()"
-                [actionsLayout]="criteriaVisible() ? 'stacked' : 'inline'"
+                [fill]="true"
+                [showActions]="embedded() && !externalActions() && !criteriaVisible()"
+                [actionsLayout]="
+                  !embedded() || externalActions()
+                    ? 'toolbar'
+                    : criteriaVisible()
+                      ? 'stacked'
+                      : 'inline'
+                "
               />
             }
           }

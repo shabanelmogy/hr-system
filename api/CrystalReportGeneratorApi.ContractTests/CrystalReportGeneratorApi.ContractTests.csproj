@@ -59,6 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
+    <Compile Include="..\Modules\Reporting\ErpSystem.Modules.Reporting.Contracts\Features\Analytics\CrystalReports\EntityContractFingerprint.cs">
+      <Link>Runtime\Rendering\EntityContractFingerprint.cs</Link>
+    </Compile>
     <Compile Include="CrystalReportDirectionTests.cs" />
     <Compile Include="RuntimeBoundaryTests.cs" />
     <Compile Include="..\CrystalReportGeneratorApi\Runtime\CrystalReportSourceMetadata.cs">

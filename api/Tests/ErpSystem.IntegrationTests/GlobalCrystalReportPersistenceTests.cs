@@ -28,7 +28,7 @@ public sealed class GlobalCrystalReportPersistenceTests
             setup.GlobalCrystalReports.Add(report);
             await setup.SaveChangesAsync();
             Assert.Equal(8, report.RowVersion.Length);
-            var store = new GlobalCrystalReportStore(setup);
+            var store = new GlobalCrystalReportStore(setup, ManagedCrystalReportContractRegistry.LoadEmbedded());
             Assert.Null(Assert.Single(await store.CatalogAsync("countries", default)).PublishedVersion);
             var drafts = await store.ListAsync(["countries"], null, 1, 10, default, "draft");
             Assert.False(Assert.Single(drafts.Items).IsPublished);
@@ -56,7 +56,7 @@ public sealed class GlobalCrystalReportPersistenceTests
             var first = await loser.GlobalCrystalReportVersions.SingleAsync(x => x.Id == firstId);
             // The real publish handler checks/advances the root even when the chosen
             // pointer matches this stale context's previously published version.
-            new GlobalCrystalReportStore(loser).ApplyRowVersion(stale, stale.RowVersion);
+            new GlobalCrystalReportStore(loser, ManagedCrystalReportContractRegistry.LoadEmbedded()).ApplyRowVersion(stale, stale.RowVersion);
             stale.Publish(first, fingerprint);
             await Assert.ThrowsAsync<DbUpdateConcurrencyException>(() => loser.SaveChangesAsync());
         }
@@ -81,7 +81,7 @@ public sealed class GlobalCrystalReportPersistenceTests
             var report = await archive.GlobalCrystalReports.SingleAsync(x => x.Id == reportId);
             report.Archive();
             await archive.SaveChangesAsync();
-            var store = new GlobalCrystalReportStore(archive);
+            var store = new GlobalCrystalReportStore(archive, ManagedCrystalReportContractRegistry.LoadEmbedded());
             Assert.Null(Assert.Single(await store.CatalogAsync("countries", default)).PublishedVersion);
             Assert.Empty((await store.ListAsync(["countries"], null, 1, 10, default)).Items);
             var archived = await store.ListAsync(["countries"], null, 1, 10, default, "archived");

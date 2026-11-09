@@ -1,3 +1,4 @@
+import { isGlobalTemplateVersionCurrent } from '../types/global-template';
 import type { GlobalTemplateDetail, GlobalTemplateViewerSource } from '../types/global-template';
 
 async function sha256(value: string): Promise<string> {
@@ -24,7 +25,7 @@ export async function matchesGlobalTemplateViewer(
   if (
     !published ||
     published.validationStatus !== 'Valid' ||
-    published.validationContractFingerprint !== fingerprint
+    !isGlobalTemplateVersionCurrent(published, fingerprint)
   )
     return false;
   const [id, token] = await Promise.all([

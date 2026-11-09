@@ -1,15 +1,23 @@
-import { Component, computed, inject } from '@angular/core';
-import { MetricCard, StatusBadge, SurfaceCard } from '../../../../../shared/ui/public-api';
+import { booleanAttribute, Component, computed, inject, input } from '@angular/core';
+import {
+  MetricCard,
+  StatusBadge,
+  SurfaceCard,
+  ScrollViewport,
+} from '../../../../../shared/ui/public-api';
+import { NgTemplateOutlet } from '@angular/common';
 import { LocalizationRuntime, UiTextPipe } from '../../../../localization/public-api';
 import { TenantEditorState } from '../../state/tenant-editor-state';
 
 @Component({
-  imports: [MetricCard, StatusBadge, SurfaceCard, UiTextPipe],
+  imports: [MetricCard, StatusBadge, SurfaceCard, UiTextPipe, ScrollViewport, NgTemplateOutlet],
+  host: { '[class.fill]': 'fill()' },
   selector: 'erp-tenant-draft-summary',
   styleUrl: './tenant-draft-summary.scss',
   templateUrl: './tenant-draft-summary.html',
 })
 export class TenantDraftSummary {
+  readonly fill = input(false, { transform: booleanAttribute });
   readonly editor = inject(TenantEditorState);
   readonly locale = inject(LocalizationRuntime);
   readonly draft = computed(() => this.editor.form().value());

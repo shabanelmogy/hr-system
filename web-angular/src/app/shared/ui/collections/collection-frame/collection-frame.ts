@@ -35,7 +35,7 @@ import {
     UiTextPipe,
   ],
   templateUrl: './collection-frame.html',
-  styleUrl: './collection-frame.scss',
+  styleUrls: ['./collection-frame.scss', './collection-search.scss'],
 })
 export class CollectionFrame<T> {
   readonly label = input.required<string>();
@@ -50,6 +50,10 @@ export class CollectionFrame<T> {
   readonly toolbarVisible = input(true);
   readonly appearance = input<'standard' | 'reference' | 'plain'>('standard');
   readonly toolbarLayout = input<CollectionToolbarLayout>('responsive');
+  readonly adaptiveSearchEnabled = computed(
+    () =>
+      this.toolbarLayout() === 'adaptive' && !!(this.search()?.field || this.search()?.operator),
+  );
   readonly recordNavigation = input(false);
   readonly showFooter = input(true);
   readonly searchMaxWidth = input<number | null>(null);

@@ -18,7 +18,7 @@ API role super_admin only; readOnly bars commands. Unique email/username, select
 
 ## 5. Platform capability decisions
 
-Web Cards/create/edit/delete Required; Grid/Table/search/paging/standalone Detail/Chart/Tree/Report/Import/Export/restore/includeArchived/mock generator Excluded by current source. Native existing behavior retained; new native work Excluded.
+Web Cards/create/edit/delete and scoped shared export are Required. The current primary entry is the Administrators tab inside full-page Add/Edit Tenant, with a save-first state for new Tenants. The global route remains compatible without a sidebar entry. Grid/Table/paging/standalone Detail/Chart/Tree/Report/Import/restore/includeArchived/mock generator are Excluded. New native work is Excluded.
 
 ## 6. Transport
 
@@ -26,7 +26,22 @@ GET tenantAdmins/getAll/get/id, POST create201+DTO, PUT update/id200+DTO, DELETE
 
 ## 7. Shared composition
 
-Reuse CardList/PageHeader/SurfaceCard/StatusBadge/RowActions/DialogPanel/FormContainer and shared fields/confirmation/dirty guards/scoped reads. CardList.showFooter=false supports the actual unpaged source. Generic layout=fit/minCardWidth320 matches the Next auto-fit320px card arrangement without altering existing defaults. MultiReferenceField uses installed PrimeNG MultiSelect, FormFieldControl and bounded Reactive Forms compatibility; no engine. MCP usage metadata validation passes; browser separately proves actual combobox help/error/invalid/required/readOnly/focus. The sparse central preset registers MultiSelect/Chip/IconField themes. Removing the local display:block rule restores native vendor chip/dropdown alignment with observed geometry red/green proof. Body-attached panels wait for exit before scripted reopen. Shared Angular headers/fields/cards/actions and contained scrolling follow requester-approved reuse/layout rules; no duplicate MUI shell is introduced. Domain components own no HTTP.
+The Tenant Administrators presentation now uses the shared `SelectionWorkspace`
+master-detail layout. The left directory is a searchable PrimeNG Listbox of all
+known Tenants; the selected Tenant's administrators render in the existing shared
+CardList in the detail pane. The directory search uses the shared TextField and its clear
+action. The compact CardList uses its automatic columns so a single result keeps
+the same track width as other cards when the available space can fit more columns.
+The directory remains visible for Tenants with zero
+administrators, while unassigned administrators are retained in an explicit
+fallback group. Multi-membership accounts are intentionally shown in each related
+Tenant view; the PageHeader total and export remain unique-source values. Below
+the compact responsive boundary, the workspace stacks the directory and detail
+with bounded regions and keeps page scrolling disabled. This is a presentation
+extension only: API contracts, permissions, mutations, and editor/delete state
+remain unchanged.
+
+Reuse CardList/PageHeader/SurfaceCard/StatusBadge/RowActions/DialogPanel/FormContainer and shared fields/confirmation/dirty guards/scoped reads. CardList.showFooter=false supports the actual unpaged source. MultiReferenceField uses installed PrimeNG MultiSelect, FormFieldControl and bounded Reactive Forms compatibility; no engine. MCP usage metadata validation passes; browser separately proves actual combobox help/error/invalid/required/readOnly/focus. The sparse central preset registers MultiSelect/Chip/IconField themes. Removing the local display:block rule restores native vendor chip/dropdown alignment with observed geometry red/green proof. Body-attached panels wait for exit before scripted reopen. Shared Angular headers/fields/cards/actions and contained scrolling follow requester-approved reuse/layout rules; no duplicate MUI shell is introduced. Domain components own no HTTP.
 
 ## 8. States and lifetime
 
@@ -58,7 +73,14 @@ Phase07 Arabic customer education completed after the Phase06 Verified decision:
 
 ## 15. Handoff
 
-Navigation maintenance2026-11-06: Tenant Administrators and Tenant Management now
+Compact presentation correction 2026-11-08: the page selects shared
+`PageHeader.actionsLayout="inline"` for Add/Export/Refresh. SelectionWorkspace's
+custom filter TextField fills the directory header with equal insets, including
+the stacked directory. Current scoped evidence is
+[compact header/search](TENANT_ADMIN_COMPACT_HEADER_2026-11-08.md); historical
+Phase06 totals elsewhere in this book are retained at their recorded revision.
+
+Historical navigation maintenance2026-11-06: Tenant Administrators and Tenant Management now
 share the Tenant administration branch below Basic Data, using existing core
 translation `modules.tenantAdministration`. Composition owns `tenant-navigation.ts`
 and applies each existing owner access policy independently. No root duplicates,
@@ -72,3 +94,19 @@ management workspace's verification/tenant-navigation-2026-11-06.json. Parent
 migration stays Paused and pending shared export acceptance is not promoted.
 
 Tenant Administrators is Closed within the authorized Angular client contract. Tenant Management and States/Districts retain their existing accepted scopes. System audit trail is the next preflight; error logs/settings/system UI texts/advanced tools and the final whole-Super-Admin audit remain Required. Parent goal Active. No commit/push/merge/deployment or hosted business write. Existing PROD-019/028/025 and RISK-020 keep their exact external scopes.
+
+## Current tenant workspace organization — 2026-11-08
+
+The approved Angular workspace keeps the Tenant list directly under its one
+Tenant Management navigation destination, without extra outer tabs. The separate
+administrator sidebar entry is omitted; its existing global route remains
+compatible, and the temporary /tenants/administrators URL redirects there.
+Add/Edit use the same full-page editor; Administrators is a tab inside the Tenant
+details card. Tenant Profile combines identity, billing/contact and full-width
+Notes in one field grid without internal sections; only Profile, Subscription,
+Applications and Administrators remain as tabs. Existing saved-tenant membership filtering,
+scoped export and preselected administrator creation use the existing services.
+An unsaved tenant requires its first save. Tenant overview matches details height
+with internal scrolling; shared tabs own consistent panel insets.
+
+Current source and verification: [tenant tabs and full-page edit](../angular-tenant-management-workspace/TENANT_TABS_AND_EDIT_2026-11-08.md).

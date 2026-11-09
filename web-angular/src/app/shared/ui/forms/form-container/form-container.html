@@ -15,19 +15,21 @@
       <ng-content select="[formHeader]" />
     </header>
   }
-  @if (fillContent()) {
+  @if (fillContent() && contentScroll()) {
     <erp-scroll-viewport class="form-scroll" [label]="title()">
       <ng-container [ngTemplateOutlet]="formBody" />
     </erp-scroll-viewport>
   } @else {
     <ng-container [ngTemplateOutlet]="formBody" />
   }
-  <footer>
-    <div class="form-tools"><ng-content select="[formTools]" /></div>
-    <ng-container [ngTemplateOutlet]="appearance() === 'sidebar' ? submitAction : null" />
-    <ng-content select="[formActions]" />
-    <ng-container [ngTemplateOutlet]="appearance() !== 'sidebar' ? submitAction : null" />
-  </footer>
+  @if (footerVisible()) {
+    <footer>
+      <div class="form-tools"><ng-content select="[formTools]" /></div>
+      <ng-container [ngTemplateOutlet]="appearance() === 'sidebar' ? submitAction : null" />
+      <ng-content select="[formActions]" />
+      <ng-container [ngTemplateOutlet]="appearance() !== 'sidebar' ? submitAction : null" />
+    </footer>
+  }
   <ng-content select="[afterSubmit]" />
 </form>
 <ng-template #formBody>
@@ -43,7 +45,9 @@
       {{ feedback() }}
     </p>
   }
-  <section class="form-content"><ng-content /></section>
+  <section class="form-content" [class.fill-body]="fillContent() && !contentScroll()">
+    <ng-content />
+  </section>
 </ng-template>
 <ng-template #submitAction>
   @if (showSubmit()) {

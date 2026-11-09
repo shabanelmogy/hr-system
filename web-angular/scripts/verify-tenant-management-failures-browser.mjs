@@ -4,6 +4,7 @@ import path from 'node:path';
 import { chromium, expect } from '@playwright/test';
 import { sessionFixture } from '../src/app/platform/auth/auth.fixture.ts';
 import { tenantFixture } from '../src/app/platform/tenants/management/tenant.fixture.ts';
+import { serveAngularFixtureBuild } from './angular-build-browser-fixture.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 const origin = process.env.ANGULAR_PREVIEW_ORIGIN ?? 'https://localhost:4220';
@@ -43,6 +44,14 @@ try {
         viewport: { width: 1440, height: 1050 },
         reducedMotion: 'reduce',
       });
+      await serveAngularFixtureBuild(
+        context,
+        root,
+        origin,
+        process.env.ANGULAR_FIXTURE_BUILD
+          ? path.resolve(process.env.ANGULAR_FIXTURE_BUILD)
+          : undefined,
+      );
       await context.addCookies(
         Object.entries({
           i18next: language,
@@ -105,7 +114,7 @@ try {
             body =
               status !== 200
                 ? {}
-                : scenario === 'catalog-incompatible' && catalogCalls > 1
+                : scenario === 'catalog-incompatible' && catalogCalls > 2
                   ? [
                       ...catalog,
                       {
@@ -227,7 +236,7 @@ try {
           if (scenario === 'read-only') {
             await page.goto(origin + '/super-admin/tenants/new');
             await expect(page).toHaveURL(origin + '/super-admin/tenants');
-            await expect(page.locator('erp-tenant-create-page')).toHaveCount(0);
+            await expect(page.locator('erp-tenant-editor-page')).toHaveCount(0);
           }
           assert.equal(writes.length, 0);
         } else if (scenario === 'catalog-error') {
@@ -249,12 +258,7 @@ try {
           ].includes(scenario);
           if (editing) await editAction.click();
           else await add.click();
-          const editor = editing
-            ? page.getByRole('dialog', {
-                name: captions['tenantManagement.editTenant'],
-                exact: true,
-              })
-            : page.locator('erp-tenant-create-page');
+          const editor = page.locator('erp-tenant-editor-page');
           const field = (key) =>
             editor.getByRole('textbox', {
               name: captions['tenantManagement.' + key],
@@ -277,7 +281,7 @@ try {
             await expect(field('name')).toHaveValue(tenant.name);
             assert.equal(detailCalls, 2);
             if (scenario === 'catalog-incompatible') {
-              assert.equal(catalogCalls, 2);
+              assert.equal(catalogCalls, 3);
               await tab('entitlements').click();
               await expect(
                 editor.getByRole('checkbox', { name: 'New module', exact: true }),

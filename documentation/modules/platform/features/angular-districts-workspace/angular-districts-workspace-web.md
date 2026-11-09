@@ -1,5 +1,16 @@
 # Districts complete Angular parity — web applied profile
 
+Current 2026-11-08 presentation correction: Grid actions inherit the shared
+responsive default, including disabled-menu semantics and an architecture guard.
+[Source contract and executed evidence](../angular-states-workspace/SHARED_GRID_ACTIONS_2026-11-08.md). API/domain/Next/native
+runtime is unchanged; new platform workflows are Excluded from this correction.
+Historical inline-action receipts retain their original revision.
+
+Current shared search/Chart correction: no overlapping projected criteria,
+44px controls, compact widths and a growing query. Chart search is off by default.
+[Current contract and acceptance](../angular-states-workspace/SHARED_COLLECTION_SEARCH_2026-11-08.md). API/domain/Next/native remain
+unchanged; this is a Web presentation correction.
+
 ## 1. Ownership
 
 Platform owns the Angular migration record; ReferenceData retains District rules, persistence and existing API. Exact authority is D42/S3-A10 and the version2 Screen/Workflow Contract.
@@ -25,6 +36,10 @@ Web Grid/Cards/Detail/Chart/managed Report/Import Required. Tree/standalone Expo
 Existing GET districts query with one-based page1/size10 and createdOn desc UI default; fields/operators/status/stateId/hasAddresses and exact DTO validation. HTTP only owner services, cookies/CSRF and current timeout. Atomic POST bulk {districts}, bulk archive {ids},100max; createdCount exact, archivedCount0..requested. No automatic replay.
 
 ## 7. Shared composition
+
+CollectionFrame owns toolbar glyph sizing through inherited `--app-icon-size`.
+Reset measures 18x18px in Grid and Cards, matching Countries. Its button retains
+the shared hit-area size. The shared search contract records pixel acceptance.
 
 Reuse MyDataGrid/CardList/PageHeader/CollectionChartView, native Signal Forms, DialogPanel/FormContainer/TextField/ReferenceField, shared confirmation, import parser/panel and GlobalReportView. Typed State lookup through a narrow public API. Feature data/state in focused folders, external HTML/SCSS. No CRUD/Form Engine.
 
@@ -66,6 +81,17 @@ Report entity districts supports NameAr/NameEn/StateAr/StateEn in existing API c
 Phase07 Arabic customer education completed after Phase06 Verified: documentation/plans/business/web-angular-migration/education/angular-districts-workspace.md. Canonical generation/check/planning and the next execution contract complete the sole-active handoff.
 
 ## 15. Handoff
+
+Compact search refinement 2026-11-08: Status opts into the shared compact-search
+companion layout in Grid and Cards. It appears beside Contains/operator only at
+collection widths through 34rem; the query stays full-width below. Through 28rem,
+the field selector gets its own row to preserve readable values. Wider layouts
+keep the approved two-row default. See [current evidence](DISTRICTS_COMPACT_STATUS_2026-11-08.md).
+
+Grid and Cards start with search collapsed, matching Countries. The Grid toggle
+hides search and domain criteria while keeping Reset and Grid Options available.
+Report criteria open by default and keep their own visibility. See the
+[shared search contract](../angular-states-workspace/SHARED_COLLECTION_SEARCH_2026-11-08.md).
 
 States and Districts clients are Closed within their verified contracts. S4-A1 Tenant Management is the sole Active successor; later Super Admin workflows and final comprehensive review remain Required. Parent goal remains Active.
 

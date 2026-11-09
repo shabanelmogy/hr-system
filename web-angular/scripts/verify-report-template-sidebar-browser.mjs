@@ -43,7 +43,9 @@ const version = {
   validationStatus: 'Valid',
   validationReason: null,
   validationContractSchemaVersion: 1,
-  validationContractFingerprint: hash,
+  // Preserved legacy inspection evidence; the API has proved this entity unchanged.
+  validationContractFingerprint: 'c'.repeat(64),
+  isContractCurrent: true,
   isPublished: true,
   createdOn: '2026-11-05T00:00:00Z',
 };

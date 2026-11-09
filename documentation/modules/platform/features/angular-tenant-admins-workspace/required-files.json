@@ -33,6 +33,18 @@
       "minimumFiles": 37,
       "layer": "web",
       "purpose": "Current implemented state/service/form/Cards/route/confirmation source and tests"
+    },
+    {
+      "id": "angular-selection-workspace-shared",
+      "path": "web-angular/src/app/shared/ui/layout/selection-workspace",
+      "patterns": [
+        "*.ts",
+        "*.html",
+        "*.scss"
+      ],
+      "minimumFiles": 3,
+      "layer": "web",
+      "purpose": "Shared searchable parent directory and responsive detail workspace used by Tenant Administrators"
     }
   ],
   "requiredFiles": [
@@ -401,6 +413,246 @@
       "layer": "documentation",
       "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-navigation-2026-11-06.json",
       "purpose": "Scoped Basic Data tenant navigation browser, source hashes and quality gate receipt"
+    },
+    {
+      "id": "compact-header-20261108-0",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/TENANT_ADMIN_COMPACT_HEADER_2026-11-08.md",
+      "layer": "verification",
+      "purpose": "Shared inline header, full-width directory search and compact administrator cards acceptance"
+    },
+    {
+      "id": "compact-header-20261108-1",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/compact-header-2026-11-08/angular-check.txt",
+      "layer": "verification",
+      "purpose": "Shared inline header, full-width directory search and compact administrator cards acceptance"
+    },
+    {
+      "id": "compact-header-20261108-2",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/compact-header-2026-11-08/ar-dark-790-cards.png",
+      "layer": "verification",
+      "purpose": "Shared inline header, full-width directory search and compact administrator cards acceptance"
+    },
+    {
+      "id": "compact-header-20261108-3",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/compact-header-2026-11-08/before-card-width-failure.txt",
+      "layer": "verification",
+      "purpose": "Shared inline header, full-width directory search and compact administrator cards acceptance"
+    },
+    {
+      "id": "compact-header-20261108-4",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/compact-header-2026-11-08/before-header-failure.txt",
+      "layer": "verification",
+      "purpose": "Shared inline header, full-width directory search and compact administrator cards acceptance"
+    },
+    {
+      "id": "compact-header-20261108-5",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/compact-header-2026-11-08/compact-browser.txt",
+      "layer": "verification",
+      "purpose": "Shared inline header, full-width directory search and compact administrator cards acceptance"
+    },
+    {
+      "id": "compact-header-20261108-6",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/compact-header-2026-11-08/compact-results.json",
+      "layer": "verification",
+      "purpose": "Shared inline header, full-width directory search and compact administrator cards acceptance"
+    },
+    {
+      "id": "compact-header-20261108-7",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/compact-header-2026-11-08/en-light-1440-cards.png",
+      "layer": "verification",
+      "purpose": "Shared inline header, full-width directory search and compact administrator cards acceptance"
+    },
+    {
+      "id": "compact-header-20261108-8",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/compact-header-2026-11-08/en-light-320-cards.png",
+      "layer": "verification",
+      "purpose": "Shared inline header, full-width directory search and compact administrator cards acceptance"
+    },
+    {
+      "id": "compact-header-20261108-9",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/compact-header-2026-11-08/en-light-555-cards.png",
+      "layer": "verification",
+      "purpose": "Shared inline header, full-width directory search and compact administrator cards acceptance"
+    },
+    {
+      "id": "compact-header-20261108-10",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/compact-header-2026-11-08/en-light-790-cards.png",
+      "layer": "verification",
+      "purpose": "Shared inline header, full-width directory search and compact administrator cards acceptance"
+    },
+    {
+      "id": "compact-header-20261108-11",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/compact-header-2026-11-08/states-browser.txt",
+      "layer": "verification",
+      "purpose": "Shared inline header, full-width directory search and compact administrator cards acceptance"
+    },
+    {
+      "id": "compact-header-20261108-12",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/compact-header-2026-11-08/states-results.json",
+      "layer": "verification",
+      "purpose": "Shared inline header, full-width directory search and compact administrator cards acceptance"
+    },
+    {
+      "id": "compact-header-20261108-13",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/compact-header-2026-11-08/workflow-browser.txt",
+      "layer": "verification",
+      "purpose": "Shared inline header, full-width directory search and compact administrator cards acceptance"
+    },
+    {
+      "id": "compact-header-20261108-14",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/compact-header-2026-11-08/workflow-results.json",
+      "layer": "verification",
+      "purpose": "Shared inline header, full-width directory search and compact administrator cards acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-0",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/TENANT_TABS_AND_EDIT_2026-11-08.md",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-4",
+      "path": "web-angular/src/app/platform/tenants/management/pages/tenant-editor-page/tenant-editor-page.html",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-5",
+      "path": "web-angular/src/app/platform/tenants/management/pages/tenant-editor-page/tenant-editor-page.scss",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-6",
+      "path": "web-angular/src/app/platform/tenants/management/pages/tenant-editor-page/tenant-editor-page.ts",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-7",
+      "path": "web-angular/src/app/platform/tenants/management/components/tenant-editor-workspace/tenant-editor-workspace.html",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-8",
+      "path": "web-angular/src/app/platform/tenants/management/components/tenant-editor-workspace/tenant-editor-workspace.scss",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-9",
+      "path": "web-angular/src/app/platform/tenants/management/components/tenant-editor-workspace/tenant-editor-workspace.spec.ts",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-10",
+      "path": "web-angular/src/app/platform/tenants/management/components/tenant-editor-workspace/tenant-editor-workspace.ts",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-11",
+      "path": "web-angular/src/app/shared/ui/navigation/content-tabs/content-tabs.html",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-12",
+      "path": "web-angular/src/app/shared/ui/navigation/content-tabs/content-tabs.scss",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-13",
+      "path": "web-angular/src/app/shared/ui/navigation/content-tabs/content-tabs.spec.host.html",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-14",
+      "path": "web-angular/src/app/shared/ui/navigation/content-tabs/content-tabs.spec.ts",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-15",
+      "path": "web-angular/src/app/shared/ui/navigation/content-tabs/content-tabs.ts",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-16",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.ts",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-17",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.html",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-18",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.scss",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-4c95ef5712bb",
+      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.ts",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-e2afc005a58d",
+      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.html",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-86f713c3143e",
+      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.scss",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-f15d482f1d87",
+      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.spec.ts",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-f93fa6bf5926",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.scss",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-tabs-20261108-0ea26c372e62",
+      "path": "web-angular/src/app/shared/ui/forms/_field-layout.scss",
+      "layer": "web",
+      "purpose": "Unified tenant tabs, routed Add/Edit, scoped administrators, shared fill/padding and current acceptance"
+    },
+    {
+      "id": "tenant-final-layout-e21246f5167b",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-layout-2026-11-08/administrators-results.json",
+      "layer": "verification",
+      "purpose": "Final shared header and Tenant layout acceptance; runtime scope and earlier evidence remain explicit"
+    },
+    {
+      "id": "tenant-final-layout-35abd523b00c",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-layout-2026-11-08/administrator-workflow-results.json",
+      "layer": "verification",
+      "purpose": "Final shared header and Tenant layout acceptance; runtime scope and earlier evidence remain explicit"
+    },
+    {
+      "id": "tenant-final-layout-1a497ec57502",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-layout-2026-11-08/angular-check.txt",
+      "layer": "verification",
+      "purpose": "Final shared header and Tenant layout acceptance; runtime scope and earlier evidence remain explicit"
     }
   ],
   "finalizationChecklist": [

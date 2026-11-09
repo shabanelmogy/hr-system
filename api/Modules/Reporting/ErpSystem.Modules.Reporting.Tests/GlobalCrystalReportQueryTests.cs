@@ -14,6 +14,43 @@ namespace ErpSystem.Modules.Reporting.Tests;
 
 public sealed class GlobalCrystalReportQueryTests
 {
+    [Fact]
+    public async Task CatalogPreservesReviewedLegacyPublicationAndTokenAfterAddingAnotherEntity()
+    {
+        var previousBytes = ErpSystem.Modules.Reporting.Contracts.Features.Analytics.CrystalReports.ManagedCrystalReportContractArtifact
+            .ReadLegacyArtifacts().Single(bytes => !System.Text.Encoding.UTF8.GetString(bytes).Contains("system-error-logs", StringComparison.Ordinal));
+        var previous = ManagedCrystalReportContractRegistry.Load(previousBytes);
+        var current = ManagedCrystalReportContractRegistry.LoadEmbedded();
+        var identities = new GlobalCrystalReportIdentity();
+        var entry = PublishedEntry("countries", "legacy-published", previous);
+        var originalFingerprint = entry.PublishedVersion!.ValidationContractFingerprint;
+        var store = new GlobalCrystalReportTestStore { Catalog = [entry] };
+        async Task<GlobalCrystalReportListItemResponse> Read(ManagedCrystalReportContractRegistry contracts)
+        {
+            var handler = new GetGlobalCrystalReportsQueryHandler(store, contracts, identities,
+                Errors(), GlobalCrystalReportTestAccess.PlatformPolicy, new GlobalCrystalReportTestAccess());
+            var result = await handler.Handle(new GetGlobalCrystalReportsQuery("countries"), default);
+            Assert.True(result.IsSuccess);
+            return Assert.Single(result.Value);
+        }
+        var before = await Read(previous);
+        var after = await Read(current);
+        Assert.Equal(before.Id, after.Id);
+        Assert.Equal(before.RowVersion, after.RowVersion);
+        Assert.Equal(originalFingerprint, entry.PublishedVersion.ValidationContractFingerprint);
+        Assert.True(entry.PublishedVersion.IsValidFor(current, "countries"));
+        var evidence = new CrystalReportVersionResponse(entry.PublishedVersion.Id, 1, "Countries.rpt", 32,
+            Sha256, null, null, "Valid", null, previous.SchemaVersion, originalFingerprint, true, DateTime.UtcNow)
+            .WithCurrentContract(current, "countries");
+        Assert.True(evidence.IsContractCurrent);
+        Assert.Equal("Valid", evidence.ValidationStatus);
+        Assert.Equal(originalFingerprint, evidence.ValidationContractFingerprint);
+        var unknown = (evidence with { ValidationContractFingerprint = new string('f', 64) })
+            .WithCurrentContract(current, "countries");
+        Assert.False(unknown.IsContractCurrent);
+        Assert.Equal("NeedsRevalidation", unknown.ValidationStatus);
+    }
+
     private const string SourceId = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
     private const string Sha256 = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
 
@@ -42,7 +79,7 @@ public sealed class GlobalCrystalReportQueryTests
         Assert.Equal(identities.SourceId(published.ReportId), report.Id);
         Assert.Equal("countries", report.EntityKey);
         Assert.Equal("published", report.ReportKey);
-        Assert.Equal(identities.Token(version.Id, contracts.Fingerprint, version.Sha256), report.RowVersion);
+        Assert.Equal(identities.Token(version.Id, contracts.GetFingerprint("countries"), version.Sha256), report.RowVersion);
         Assert.True(report.IsPublished);
         Assert.False(report.IsArchived);
         Assert.True(report.CanDownloadSource);
@@ -126,7 +163,7 @@ public sealed class GlobalCrystalReportQueryTests
             new GlobalCrystalReportTestFiles(), contracts, identities, Errors(),
             GlobalCrystalReportTestAccess.PlatformPolicy, new GlobalCrystalReportTestAccess());
         var result = await handler.Handle(new RenderGlobalCrystalReportQuery(identities.SourceId(report.ReportId),
-            "countries", identities.Token(version.Id, contracts.Fingerprint, version.Sha256), "en", null), default);
+            "countries", identities.Token(version.Id, contracts.GetFingerprint("countries"), version.Sha256), "en", null), default);
 
         Assert.False(result.IsSuccess);
         Assert.Equal(expectedCode, result.Error.Code);
@@ -156,7 +193,7 @@ public sealed class GlobalCrystalReportQueryTests
         var handler = new RenderGlobalCrystalReportQueryHandler(data, renderer,
             store, files, contracts, identities, Errors(), GlobalCrystalReportTestAccess.PlatformPolicy, new GlobalCrystalReportTestAccess());
         var result = await handler.Handle(new RenderGlobalCrystalReportQuery(identities.SourceId(reportId),
-            "countries", stale ? new string('f', 64) : identities.Token(version.Id, contracts.Fingerprint, version.Sha256),
+            "countries", stale ? new string('f', 64) : identities.Token(version.Id, contracts.GetFingerprint("countries"), version.Sha256),
             "ar", filters), default);
 
         Assert.Equal(!stale, result.IsSuccess);
@@ -200,7 +237,7 @@ public sealed class GlobalCrystalReportQueryTests
             store, new GlobalCrystalReportTestFiles(), contracts, identities, Errors(),
             GlobalCrystalReportTestAccess.PlatformPolicy, new GlobalCrystalReportTestAccess(), views);
         var result = await handler.Handle(new RenderGlobalCrystalReportQuery(identities.SourceId(reportId),
-            "countries", identities.Token(version.Id, contracts.Fingerprint, version.Sha256), "en", null), default);
+            "countries", identities.Token(version.Id, contracts.GetFingerprint("countries"), version.Sha256), "en", null), default);
         Assert.Equal(!rejectView, result.IsSuccess);
         Assert.Equal(("countries", "dbo.vw_Countries", new string('e', 64)), views.Binding);
         Assert.Null(data.EntityKey);
@@ -234,7 +271,7 @@ public sealed class GlobalCrystalReportQueryTests
         Assert.True(catalog.IsSuccess);
         Assert.Equal(granted ? 1 : 0, catalog.Value.Count);
         if (granted) Assert.False(catalog.Value[0].CanDownloadSource);
-        var token = stale ? new string('f', 64) : identities.Token(version.Id, contracts.Fingerprint, version.Sha256);
+        var token = stale ? new string('f', 64) : identities.Token(version.Id, contracts.GetFingerprint("countries"), version.Sha256);
         var render = await new RenderGlobalCrystalReportQueryHandler(new StubDataSource(), renderer,
             store, files, contracts, identities, Errors(), policy, access)
             .Handle(new RenderGlobalCrystalReportQuery(identities.SourceId(reportId), "countries", token, "en", null), default);

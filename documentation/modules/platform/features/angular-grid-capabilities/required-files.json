@@ -1050,6 +1050,12 @@
       "purpose": "Actual shell/sidebar/filter/options/browser verification"
     },
     {
+      "id": "current-grid-layout-assertions",
+      "path": "web-angular/scripts/country-grid-layout-assertions.mjs",
+      "layer": "web",
+      "purpose": "Responsive Grid layout, touch density, row menu, selection, keyboard sort and server-filter browser assertions"
+    },
+    {
       "id": "current-grid-primeng-workflow",
       "path": "documentation/guides/web/architecture/ANGULAR_PRIMENG_WORKFLOW.md",
       "layer": "documentation",

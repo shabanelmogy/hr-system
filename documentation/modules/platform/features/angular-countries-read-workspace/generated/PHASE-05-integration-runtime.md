@@ -43,7 +43,7 @@ realtime, notification, localization, report, or Import integration is reachable
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| angular-countries-read-workspace-master | 4 | `73f5a7101a9e9f4423d8539c612013ba7eb1541d388fb44669919a8f2779bc62` |
+| angular-countries-read-workspace-master | 4 | `a3c4874c8ef5b61dadfb9a1378ef859fe245886fbed15560d28092eb60f67341` |
 | angular-countries-read-workspace-master | 5 | `3704acfa0146fdc1b48ca9f3465476082e5cce31454a7ab150b2149b60faf524` |
 | angular-countries-read-workspace-master | 6 | `4aa2e516e6ef412cfb58f2d8ccc71961358af0545fb78f9128ec63fdfa43b512` |
 | angular-countries-read-workspace-master | 7 | `f8f062174e6a953312acd1c542cd22b3b57cc2266d47706b1ef9e44d24b882e7` |

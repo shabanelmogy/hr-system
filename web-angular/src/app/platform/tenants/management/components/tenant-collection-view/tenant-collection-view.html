@@ -1,8 +1,7 @@
 @if (kind() === 'grid') {
   <erp-data-table
     appearance="reference"
-    toolbarLayout="single-row"
-    actionDisplay="inline"
+    toolbarLayout="adaptive"
     [stickyActions]="true"
     [recordNavigation]="true"
     [recordRequest]="records.request()"
@@ -51,7 +50,8 @@
   <erp-card-list
     appearance="entity"
     layout="responsive"
-    toolbarLayout="single-row"
+    scrollbar="hidden"
+    toolbarLayout="adaptive"
     [recordNavigation]="true"
     [recordRequest]="records.request()"
     [source]="reads.source()"

@@ -1,5 +1,8 @@
 # Districts API — Frontend Integration Guide
 
+List requests accept `sortBy=id` with `sortDirection=asc` or `desc`.
+The numeric ID ordering applies to all matching rows before paging.
+
 ## Overview
 
 Manages district records. Each district belongs to a state.  

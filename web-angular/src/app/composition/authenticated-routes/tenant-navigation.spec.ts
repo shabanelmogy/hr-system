@@ -4,14 +4,18 @@ import { tenantAdministrationEntries } from './tenant-navigation';
 describe('Tenant workflows in Basic Data', () => {
   const text = (key: string) => key;
   const actor = { ...sessionFixture, roles: ['super_admin'] };
-  it('groups both existing destinations and selects management on its nested creation route', () => {
+  it('exposes only management and selects it for nested tenant workflows', () => {
     const entries = tenantAdministrationEntries(actor, text, '/super-admin/tenants/new');
-    expect(entries.map((entry) => entry.id)).toEqual(['tenant-administration']);
-    expect(entries[0]?.label).toBe('modules.tenantAdministration');
-    expect(entries[0]?.children?.map((entry) => entry.id)).toEqual(['tenant-admins', 'tenants']);
-    expect(entries[0]?.children?.map((entry) => entry.selected)).toEqual([false, true]);
-    const administrators = tenantAdministrationEntries(actor, text, '/super-admin/tenant-admins');
-    expect(administrators[0]?.children?.map((entry) => entry.selected)).toEqual([true, false]);
+    expect(entries.map((entry) => entry.id)).toEqual(['tenants']);
+    expect(entries[0]?.label).toBe('menu.tenantManagement');
+    expect(entries[0]?.children).toBeUndefined();
+    expect(entries[0]?.selected).toBe(true);
+    const administrators = tenantAdministrationEntries(
+      actor,
+      text,
+      '/super-admin/tenants/administrators',
+    );
+    expect(administrators[0]?.selected).toBe(true);
   });
   it('omits the whole branch for anonymous and tenant-scoped actors', () => {
     expect(tenantAdministrationEntries(null, text, '')).toEqual([]);

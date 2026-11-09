@@ -57,10 +57,23 @@ p {
   color: var(--muted-foreground);
 }
 .header-controls,
+.secondary-controls,
 .header-actions {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+:host(.collection-header) .header-controls {
+  --header-action-size: 36px;
+  --action-min-height: var(--header-action-size);
+  --action-icon-size: var(--header-action-size);
+  --action-menu-icon-size: var(--header-action-size);
+  --action-line-height: 20px;
+  --action-padding-y: 4px;
+}
+.header-actions:empty,
+.secondary-controls:not(:has(.header-actions:not(:empty), .view-toggles)) {
+  display: none;
 }
 @media (max-width: 899px) {
   header {
@@ -98,24 +111,14 @@ p {
 :host(.collection-header) header {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-rows: auto auto;
   padding: 10px;
   column-gap: 8px;
   row-gap: 2px;
   min-height: 70px;
   box-sizing: border-box;
 }
-:host(.collection-header) .title-block {
-  grid-column: 1;
-  grid-row: 1;
-}
-:host(.collection-header) .header-badges {
-  grid-column: 1;
-  grid-row: 2;
-}
-:host(.collection-header) .header-controls {
-  grid-column: 2;
-  grid-row: 1 / span 2;
+:host(.collection-header) {
+  container: collection-header / inline-size;
 }
 :host(.collection-header) h1 {
   color: var(--foreground);
@@ -151,20 +154,16 @@ p {
 }
 .view-toggles erp-button {
   --action-label-display: block;
-  --action-min-height: 36px;
+  --action-min-height: var(--header-action-size, 36px);
   --action-font-size: 13px;
   --action-line-height: 1.429;
   --action-toggle-padding-x: 10px;
   margin-inline: 1px;
 }
-.view-toggles erp-icon {
-  width: 20px;
-  height: 20px;
-}
 .header-actions erp-button {
-  --action-icon-size: 32px;
+  --action-icon-size: var(--header-action-size, 32px);
 }
-.header-actions erp-icon {
+.header-controls erp-icon {
   width: 20px;
   height: 20px;
 }
@@ -174,14 +173,13 @@ p {
   color: var(--muted-foreground);
 }
 .filter {
-  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  background: var(--secondary);
   border-radius: 50%;
-  color: var(--primary);
+  color: var(--muted-foreground);
 }
-.overflow-views {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.filter.filters-expanded {
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  color: var(--primary);
 }
 @media (min-width: 900px) {
   .header-controls {
@@ -217,15 +215,7 @@ p {
     min-width: 0;
   }
   :host(.collection-header) .header-controls {
-    grid-row: 1;
-    gap: 4px;
-  }
-  :host(.collection-header) .header-badges {
-    grid-column: 1 / -1;
-    margin-bottom: 8px;
-  }
-  .header-divider {
-    display: none;
+    --header-action-size: 32px;
   }
   .header-badges .total-badge {
     display: flex;
@@ -243,8 +233,140 @@ p {
     --action-toggle-padding-x: 6px;
   }
 }
+@mixin secondary-row {
+  row-gap: 4px;
+
+  .header-controls {
+    display: contents;
+  }
+  .primary-action {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    --action-icon-size: var(--header-action-size, 36px);
+  }
+  .secondary-controls {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .header-actions {
+    margin-inline-start: auto;
+  }
+  .header-actions,
+  .view-toggles {
+    flex-wrap: wrap;
+  }
+  .view-toggles erp-button {
+    --action-label-display: none;
+  }
+  .header-divider {
+    display: none;
+  }
+  .header-badges {
+    flex-wrap: wrap;
+  }
+}
+@container collection-header (max-width: 64rem) {
+  :host(.collection-header) header {
+    @include secondary-row;
+  }
+}
+:host(.collection-header.stacked-actions) header {
+  @include secondary-row;
+}
+:host(.collection-header.inline-actions) header {
+  .header-controls {
+    display: flex;
+    align-self: center;
+  }
+  .primary-action {
+    --action-icon-size: var(--header-action-size, 36px);
+  }
+  .secondary-controls {
+    flex-wrap: nowrap;
+  }
+  .header-actions {
+    margin-inline-start: 0;
+    flex-wrap: nowrap;
+  }
+}
+@container collection-header (max-width: 35rem) {
+  :host(.collection-header) header {
+    gap: 2px;
+    padding: 8px 6px;
+
+    h1 {
+      font-size: clamp(0.75rem, 2.6cqi, 0.875rem);
+    }
+
+    .header-controls {
+      --header-action-size: clamp(28px, 8cqi, 32px);
+      --action-icon-size: var(--header-action-size);
+      --action-menu-icon-size: var(--header-action-size);
+    }
+    .secondary-controls,
+    .header-actions,
+    .view-toggles {
+      gap: 2px;
+    }
+    .view-toggles erp-button {
+      --action-min-height: var(--header-action-size);
+      --action-toggle-min-width: var(--header-action-size);
+      --action-toggle-padding-x: 4px;
+      margin-inline: 0;
+    }
+    .header-controls erp-icon {
+      inline-size: 16px;
+      block-size: 16px;
+    }
+    .header-badges {
+      min-height: 20px;
+    }
+  }
+}
+@media (max-height: 480px) and (orientation: landscape) {
+  :host(.collection-header) {
+    margin-block-end: 8px;
+  }
+  :host(.collection-header) header {
+    padding-block: 5px;
+    row-gap: 2px;
+  }
+  :host(.collection-header) .title-block {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2px 8px;
+  }
+  :host(.collection-header) .header-controls {
+    --header-action-size: 32px;
+  }
+  .view-toggles erp-button {
+    --action-min-height: var(--header-action-size, 32px);
+  }
+}
 .primary-action {
   --action-icon-background: var(--primary);
   --action-icon-color: var(--primary-foreground);
   --action-icon-radius: 8px;
+}
+
+@media (any-pointer: coarse) {
+  :host(.collection-header) header {
+    .header-controls {
+      --header-action-size: 44px;
+      --action-icon-size: 44px;
+      --action-menu-icon-size: 44px;
+      --action-min-height: 44px;
+    }
+    .primary-action {
+      --action-icon-size: 44px;
+    }
+    .view-toggles erp-button {
+      --action-min-height: 44px;
+      --action-toggle-min-width: 44px;
+    }
+  }
 }

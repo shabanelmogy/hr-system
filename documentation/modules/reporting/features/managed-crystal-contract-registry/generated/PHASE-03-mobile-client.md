@@ -83,4 +83,4 @@ profile and do not leave an unreachable route, component, or translation surface
 | managed-crystal-contract-registry-mobile | 12 | `96bd27e203dfb9f94ae22fdc087b23d7b0b1129b646ef6400c09a86f743b5bb7` |
 | managed-crystal-contract-registry-mobile | 13 | `298f3812a386f03d60599d17f6ad282fe90fcecbd61a0a3e69ab228877c01cba` |
 | managed-crystal-contract-registry-mobile | 14 | `706f30fc618ce61509ac8893ffbde1db1bdc3dc6a3c66bdff62e0b7064f82c13` |
-| managed-crystal-contract-registry-mobile | 15 | `427b4e3385025a3de716d50a97c2fddb3cc82dd28705db33dc0ee3099a1b04ae` |
+| managed-crystal-contract-registry-mobile | 15 | `c06f3c847f35f24409dd6488d6970a068b3a4d03b8c674c38797f32b6c3c3375` |

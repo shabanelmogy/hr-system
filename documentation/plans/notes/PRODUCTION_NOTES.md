@@ -3,6 +3,15 @@
 Central registry for work that cannot be proven completely by source tests or PR CI
 and must be verified against staging/Production.
 
+### PROD-033 — Geography ID sorting rollout
+
+Surface API/Web. Owners ReferenceData, Web and Operations. Status Open.
+Deploy the additive `sortBy=id` API support before or with the Angular client
+that enables the ID column. Once the updated API and authorized staging actor
+are available, verify numeric ascending and descending IDs across pages for
+Countries, States and Districts, then verify clearing in Angular preserves the
+active criteria and restores its default order.
+
 ### PROD-019 — hosted browser origin regression2026-11-06
 
 Surface API/Web; owner Platform + Operations + QA; status Open. The requester’s
@@ -36,10 +45,11 @@ hosted-read-2026-11-07.json under documentation/modules/platform/features/.
 | PROD-032 | API/Web | Shared all-filtered collection export rollout | Local Angular fixtures and loopback Reporting controller/CQRS/writer prove all-pages Excel/CSV, cancellation and authorization boundaries. Before hosted acceptance, deploy coordinated Reporting/Angular sources, seed the catalog-owned GlobalDataExports:Export permission and assign it explicitly to the intended Super Admin actor, then verify credentialed CSRF, source-view permission plus formatter permission, filtered real-data exports and unchanged tenant denial. The loopback fixture authentication does not prove the production browser-auth pipeline. No schema change or migration is required by this export capability. | Reporting + Platform + Operations + QA | Open | Yes for hosted shared export acceptance; does not block bounded local client closure | Reviewed coordinated deployment and authorized staging actor/data are available | `documentation/modules/platform/features/angular-collection-export/angular-collection-export-review.md` |
 | PROD-031 | Cross-platform | System Error Logs managed RPT/PDF acceptance | Before enabling the new diagnostic report source, complete managed artifact/provider/binding/client integration, apply the reviewed Reporting entity CHECK migration to the intended database, deploy matching ERP and Crystal contract fingerprints, publish a real inspected RPT, and verify permitted filtered PDF/RPT operations plus tenant/missing-source-grant denial. Current safe Platform source adapter has local tests only; it is not activated as a report source or UI. | Platform + Reporting + Web + Operations + QA | Open | Yes for System Error Logs managed reporting release; does not block local source-adapter development | Reviewed integrated source/migration candidate, target database authorization, matching provider and a real RPT are available | `documentation/modules/platform/features/angular-system-error-log-reports/angular-system-error-log-reports-review.md` |
 | PROD-030 | Cross-platform | System log advanced filters rollout | Deploy coordinated Platform API query/export-query endpoints and Angular clients, then verify real SQL scope/filter/count/cursor/export semantics on the hosted origin. Local actual controller/store fixtures use synthetic in-memory data; native/Next requests retain optional criteria compatibility. | Platform + Web + Operations + QA | Open | Yes before claiming hosted advanced-filter acceptance; does not block bounded local implementation | Reviewed API/Angular deployment candidate and approved test actor/rows are available | `documentation/modules/platform/features/angular-system-log-collection-consistency/angular-system-log-collection-consistency-review.md` |
-| PROD-029 | API | Crystal runtime deployed authentication/version mismatch | Verified2026-11-01 after requester publication:20real hosted missing/wrong/duplicate/valid-key cases pass, health MVID matches current published assembly and canonical fingerprint, exactly5current internal routes and catalog200with2original reports preserved. The earlier VS skipaction incompatibility is corrected through the tested WPP CLI branch. ERP publication/native AR-EN execution remain separately PROD-028/025. | Reporting Runtime + Operations + Security + QA | Verified | Reopen on deployed auth/build/route regression | New runtime deployment or changed key/profile/source package | `documentation/plans/business/managed-crystal-reporting-reliability/PUBLISH_READY_2026-11-01.md` |
+| PROD-029 | API | Crystal runtime internal authentication configuration | Reopened2026-11-07: actual runtime health/catalog return503 crystal_runtime_api_key_not_configured. Earlier2026-11-01 auth/version acceptance is historical. Matching private Publish transforms are restored and staged locally; coordinated remote publication/health/key-denial proof remains open. | Reporting Runtime + Operations + Security + QA | Open | Yes for managed report generation | Publish prepared matching Crystal/ERP profiles, then run authenticated health/catalog and AR/EN PDF | `documentation/modules/reporting/features/global-crystal-template-manager/RUNTIME_KEY_REPAIR_2026-11-07.md` |
 | PROD-001 | Web | Observability | Verify real Collector routing, dashboards, retention, and alert destinations. | Deployment/Operations | Open | Yes for external production launch | Production/staging environment is provisioned | `documentation/guides/web/architecture/frontend-architecture-reference.md` |
 | PROD-002 | Web | Authentication | Exercise real authenticated Google popup flow. | Web/Platform | Open | Yes when Google auth is enabled for release | Target origin + real OAuth client + test account available | `documentation/guides/web/ERP_FRONTEND_MASTER_PLAN.md` |
 | PROD-003 | Web | Realtime | Verify production SignalR negotiation/connect/reconnect through deployed origin. | Web/Platform | Open | Yes when realtime is enabled | Target hub/proxy deployed with valid session | `documentation/guides/web/ERP_FRONTEND_MASTER_PLAN.md` |
+
 | PROD-004 | Web | Reporting | Verify real report/PDF viewers with representative data and CSP. | Reporting/Web | Open | Yes when reporting is enabled | Deployed report services and sample report exist | `documentation/guides/web/ERP_FRONTEND_MASTER_PLAN.md` |
 | PROD-005 | Web | Files/Media | Verify upload/download/range-stream/media viewers in deployed environment. | Platform/Web | Open | Yes when file features are enabled | Production-like storage/provider is connected | `documentation/guides/web/WEB_API_READINESS_REVIEW.md` |
 | PROD-006 | Web | Background jobs | Verify deployed Hangfire access/session/CSP behavior. | Platform/Operations | Open | Yes when Hangfire UI is exposed | Deployed Hangfire endpoint exists | `documentation/guides/web/ERP_FRONTEND_MASTER_PLAN.md` |
@@ -346,3 +356,33 @@ render acceptance; /manage/deployment-candidates currently returns503, so runtim
 availability still needs owner investigation. No native Verify Database, hosted
 revalidation/publication, deployment or PDF render was performed in this read-only
 probe. Evidence: documentation/modules/platform/features/angular-super-admin-final-review/hosted-read-2026-11-07.json.
+
+
+PROD-028 entity fingerprint correction2026-11-07: requester authorizes the local
+fix. Reporting and Crystal separate whole-artifact deployment identity from entity
+validation identity, with bounded compatibility for reviewed unchanged historical
+profiles. Observed published Countries version3 matches the pre-error-log CRLF
+artifact exactly. Recovery from that unrelated addition requires no DB edit or
+RPT re-upload/republication after rollout. Coordinated API/Crystal/Angular
+publication and fresh hosted catalog/AR-EN rendering remain open. No remote
+mutation was performed. Canonical correction:
+documentation/modules/reporting/features/managed-crystal-contract-registry/ENTITY_FINGERPRINT_REPAIR.md.
+
+
+PROD-003 corrected diagnosis2026-11-07: the earlier inference that the pasted
+request failed because its token was expired is withdrawn. A token expiring before
+the agent reads a log does not date the failed request. Fresh300-second tokens
+still fail WebSockets/SSE while LongPolling and automatic fallback succeed. Actual
+synthetic requests prove query2048characters reaches ASP.NET401with exact CORS;
+2049returns IIS404HTML without CORS. The permissions JWT plus connection/query
+fields crosses this inherited IIS limit. A finite Hub-only24576envelope is now
+source-tested and verified using actual local IIS; deployment remains open.
+
+PROD-028/029 current runtime failure2026-11-07: Countries catalog now200/one
+published report, so the entity-fingerprint fix is active on ERP. EN/ARrender503
+is CrystalReport.RuntimeUnavailable. Direct downstream health/catalog503reports
+crystal_runtime_api_key_not_configured; root200does not prove runtime readiness.
+Matching local private Publish transforms/keys and actual staged output are
+prepared. No hosted deployment/native execution was performed. These findings
+and PROD-003 share canonical evidence in
+documentation/modules/reporting/features/global-crystal-template-manager/RUNTIME_KEY_REPAIR_2026-11-07.md.

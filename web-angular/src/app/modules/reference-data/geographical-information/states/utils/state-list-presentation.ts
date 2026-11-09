@@ -13,6 +13,7 @@ export function stateColumns(
   return [
     {
       key: 'id',
+      sortField: 'id',
       header: presentation.text('general.id'),
       value: (row) => row.id,
       align: 'center',

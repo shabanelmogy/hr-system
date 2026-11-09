@@ -26,6 +26,15 @@ Existing managed catalog/version/preview routes and DTO envelopes remain the tar
 
 ## 7. Shared composition
 
+Header action maintenance2026-11-08: the existing composition adapter optionally
+supplies a `headerActions(unknown)` callback. Application composition narrows the
+instance to GlobalReportView and returns its existing current-PDF template.
+SystemErrorLogsPage projects that template into PageHeader and opts into
+externalActions only when the callback exists. Platform imports no Reporting
+owner, and existing adapter mocks/consumers retain their compatible fallback.
+The shared report workspace and PDF toolbar provide responsive sizing and bounded
+scrolling; source/report grants and structured criteria remain unchanged.
+
 Reuse PageHeader, GlobalReportView, existing managed template dialogs and PDF viewer. Feature owns criteria and permission bindings only. Extend shared typed entity/filter APIs coherently; no local viewer or raw HTTP UI.
 
 ## 8. UX and errors

@@ -1,0 +1,234 @@
+{
+  "dateUtc": "2026-11-07T13:03:19.924933+02:00",
+  "feature": "managed-crystal-contract-registry",
+  "scope": "Bounded entity-fingerprint correction; original hosted/native release acceptance remains PROD-028/FOLLOW-024",
+  "api": {
+    "passed": 1341,
+    "skippedOptInBrowser": 3,
+    "buildErrors": 0,
+    "lastIncrementalBuildWarnings": 101,
+    "reportingFocusedPassed": 262,
+    "lastTestOnlyChange": "LF/CRLF portability of the historical fixture; focused Reporting suite rerun after full solution pass"
+  },
+  "angular": {
+    "fullCheckExitCode": 0,
+    "tests": 997,
+    "files": 195,
+    "architectureTests": 32,
+    "finalFormatExitCode": 0,
+    "initialBundleKB": 581.99,
+    "knownBudgetWarning": "RISK-020"
+  },
+  "crystal": {
+    "buildExitCode": 0,
+    "harnessExitCode": 0,
+    "entityParity": {
+      "countries": "fd41d2f934fb79e13d145108b92cad4c8a012a45bb123a78850bc75f9254f106",
+      "states": "526f88b03a25a3fd99f039eb260257d61252f7709d8134a8fe3da52979b1b036",
+      "districts": "e0be7c8c187fe22e0d90cd5e26be10314335030246d15b70b3135a944acf1710",
+      "addresstypes": "91682afc8a5606a3c732714308be1ed8ecd285f82136bea0ed9cf4cf20dd14e8",
+      "fiscalyears": "48fade5926e701536a2aa8a890131b7ad4283221b8f5be1a7f3ff6dcc1d22e0c",
+      "system-error-logs": "595f12e450f7edba0ec74bb65046246d18b20ce5effac52cdfa812d7c17b361c"
+    },
+    "actualBuiltRuntimeReflectionChecked": true,
+    "runtimeAssemblySha256": "6f767dc0d751a3ff279fa1c42eb3b2dd51170830a9a46c816c99c761c538c41c",
+    "nativeRPTVerification": false
+  },
+  "browser": {
+    "cases": 12,
+    "legacyValidEvidence": true,
+    "readerDenialStaleAndWrongIdentityCovered": true,
+    "source": "actual production Angular assets; intercepted business APIs"
+  },
+  "observedHostedLegacy": {
+    "publishedVersion": 3,
+    "storedFingerprint": "0fe8d65f181bef35dcd8e97d4e453014cdc9c7f8d795d0923a04bfe12e7a3015",
+    "reviewedMatches": [
+      {
+        "artifact": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/Features/Analytics/CrystalReports/Compatibility/before-system-error-logs.v1.json",
+        "lineEnding": "CRLF",
+        "entityDefinitionMatches": true
+      }
+    ],
+    "publishedToHost": false
+  },
+  "review": {
+    "noSchemaChange": true,
+    "noMigrationsNeeded": true,
+    "noEvidenceRewrite": true,
+    "unchangedPermissions": true,
+    "unknownHashAndChangedDefinitionRejected": true,
+    "nativeAndNextConsumers": "Effective server status and opaque scoped tokens; no new native/Next UI"
+  },
+  "sourceHashes": [
+    {
+      "path": "api/CrystalReportGeneratorApi.ContractTests/CrystalReportGeneratorApi.ContractTests.csproj",
+      "sha256": "fa93be22c9d1c70e8b1f1a214092a3885d50e94d126287a7c27a1df2aee28c2b"
+    },
+    {
+      "path": "api/CrystalReportGeneratorApi.ContractTests/Program.cs",
+      "sha256": "88da5df7e927c6f967a3a8c5aee6e9b8b5702f145a41f4372117bbf3e3f1a398"
+    },
+    {
+      "path": "api/CrystalReportGeneratorApi/CrystalReportGeneratorApi.csproj",
+      "sha256": "60b8ee188cb4b1fb86811ad5a8f1736debe55400727342dcf1b9e69ef574c99e"
+    },
+    {
+      "path": "api/CrystalReportGeneratorApi/Runtime/Inspection/CrystalReportInspectionService.cs",
+      "sha256": "120e546f748003aa1d93816b4aea246209e0799f792962e736bd2e4cad05dd1f"
+    },
+    {
+      "path": "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportProfileRegistry.cs",
+      "sha256": "b332c860a6924227fcf1fa5e86d49ef033033e9b4fe4ed66ea58fbc92447fb68"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Abstractions/ICrystalReportStore.cs",
+      "sha256": "69642aa934466d268832e91b3e3bc0b17f1549323c515548bf4724c6da47036d"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Commands/CrystalReportCommandHandlers.cs",
+      "sha256": "cc9054a7ce4bc6f5082f583431293c076bde8d8c87bdb55210babf9ea8b083fd"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Commands/GlobalCrystalReportLifecycleHandlers.cs",
+      "sha256": "c3a2ffd6929ef1e1a039b014cf1c4466e0b9fcf625d84cc6a19ff342ca6c714f"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Commands/GlobalCrystalReportUploadHandlers.cs",
+      "sha256": "8a8011c0d483aa5d6286f2751c04dad916f2f82533cca9746c53de25be2b8115"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Commands/ReplaceGlobalCrystalReportCommand.cs",
+      "sha256": "df576425d09d8c0ad9425c915012a74f7ff8ace494bd4cff07a59c30adf84430"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Contracts/CrystalReportContracts.cs",
+      "sha256": "a8bb3c82a9c7ebabe8561fe84eb64288926dbd44f35997a6f398601b5b0ee0ce"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Queries/CrystalReportQueryHandlers.cs",
+      "sha256": "d078ccae6ded133c612dbe5696866749fe4e054bcfec093a741b1e2af839b38c"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Queries/DownloadPublishedGlobalCrystalReportQuery.cs",
+      "sha256": "e5827f84bc9baf160072ab3c584f01af2861804edcedeb6def0d485478ec7bf5"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Queries/GlobalCrystalReportManagementHandlers.cs",
+      "sha256": "3eb6fb1f23d09a9213ebbf5e17c5b3b85c62967cd8e0425b1c175afaaa548e7e"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Validation/CrystalReportContractCompatibility.cs",
+      "sha256": "d3792eab5b4f4f76ff37241e8c530244a7ed9317f848727dd9835f946d86e065"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/ErpSystem.Modules.Reporting.Contracts.csproj",
+      "sha256": "240b13ab89b5a21e739839a9fd8411447a9d5fa354b3e80d4aa580d8fd40ba44"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/Features/Analytics/CrystalReports/Compatibility/before-system-error-logs.v1.json",
+      "sha256": "4d7511139871f7f745560191fafb51a4ccdf963a41740d8cc14ba1b07769573c"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/Features/Analytics/CrystalReports/Compatibility/with-system-error-logs.v1.json",
+      "sha256": "18ecea0ae2f227bd3f97575616e5ff8c22982f3e437c1a40a9726afa6f2e56e6"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/Features/Analytics/CrystalReports/EntityContractFingerprint.cs",
+      "sha256": "03fd1cec2cd4ecc8b342240bcf8a3e842dd16abadc29e3db169c19a02c72e931"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/Features/Analytics/CrystalReports/ManagedCrystalReportContractArtifact.cs",
+      "sha256": "4cd4610e668cc4d8185ac17063a033ec9d95c117b3c07216f9a49b7161761b48"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDesignSourceCatalog.cs",
+      "sha256": "a6e5ab7b2d7ccbad85ecf9ffd7db182760f9f7bf1f2e91a4faa2e2c06dc49ad7"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportStore.cs",
+      "sha256": "14c217b6608796788b4a0863290620b0c808879bc699c6a0b5ebc75bcf649757"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/GlobalCrystalReportStore.cs",
+      "sha256": "6ef025ce4afb2107ca61fa7ab2ebc99b5bb7e0af6c799ac05e6f408b1c71ea00"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/ManagedCrystalReportContractRegistry.cs",
+      "sha256": "d9916ac5b536aa62177a9ce4218b8a79bc0f381d6b9c27bd3cf15c290a997bbe"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/CrystalReportValidationTests.cs",
+      "sha256": "4ba1b91971592af3f815fec1612c474c9b774ad20acef8f439b86c5d2e942436"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportManagementTests.cs",
+      "sha256": "1cb90dbd9f498094b858a1faf4068859bc2dca7c8a2c52e35533622bec7bebd7"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportQueryTests.cs",
+      "sha256": "f5afda3cb44408946d4fed55a5ab8b4c2b5720c6543ae518f9cbacf6a6e91e9c"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportReplacementTests.cs",
+      "sha256": "5678c855d8ecc8b9823d2d0db90ccb5193921ad95a33a14fb386e191a9012c50"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ManagedCrystalReportContractRegistryTests.cs",
+      "sha256": "e0a9374f704a6f3b916854a7ee52d5fbf0d25f46c3784c5ebd7f37713c5bb59a"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ManagedCrystalTemplateValidationHandlerTests.cs",
+      "sha256": "e87a8b5eaea48f8301e176379d13283c99620999ed1b5e14a285853753260ecb"
+    },
+    {
+      "path": "api/Tests/ErpSystem.IntegrationTests/GlobalCrystalReportAccessPersistenceTests.cs",
+      "sha256": "de6a03d277015b84946f68e8d3787ae31e15cdc2b310367fcbbf9ed649925929"
+    },
+    {
+      "path": "api/Tests/ErpSystem.IntegrationTests/GlobalCrystalReportPersistenceTests.cs",
+      "sha256": "28d9a7cb6d4a59ec65fecd7cb294ebe65154d3cbde0a16c10ad85dbf2a5160cf"
+    },
+    {
+      "path": "api/Tests/ErpSystem.IntegrationTests/GlobalCrystalReportReplacementPersistenceTests.cs",
+      "sha256": "f82f3ac8ecfcacf847d2f31d347c9979cdaa12b8c016667c01c08492caab00ff"
+    },
+    {
+      "path": "api/Tests/ErpSystem.IntegrationTests/GlobalCrystalReportViewTests.cs",
+      "sha256": "fc3fc44cc450c6c5b076442847ca87fb09fea32481f47823f1001e321a4901c3"
+    },
+    {
+      "path": "web-angular/scripts/verify-report-template-sidebar-browser.mjs",
+      "sha256": "2d6062ac7e909beff4527cb68da769aec3b2235036621e897f9aaa3f3f71e4a7"
+    },
+    {
+      "path": "web-angular/scripts/verify-super-admin-hosted-read.mjs",
+      "sha256": "83f7daa9b90892284e5daa5d804cd0b9f8407cf384829bec4c6ac31bf297ea3f"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/pages/global-template-manager/global-template-manager.spec.ts",
+      "sha256": "9510e94699c2efcb3d16c920e34301a43b1b2865cbd3b90c59de1c493972725a"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/state/global-template-state.ts",
+      "sha256": "2f5fc7fa96ebfbd3c4f0046576f8aa9f2f8a95d028f5f729f83707d5b989a5e5"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/types/global-template.ts",
+      "sha256": "ee3b28efdf99735914e4559fd4059583c2dc516f03421ab463d0d1947a5fc593"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/utils/global-template-viewer-identity.ts",
+      "sha256": "3cfa6a57ee57022c19461436dc6022646832d1c5ed63556fe79d3754dbed6e9a"
+    }
+  ],
+  "documentation": {
+    "recipes": 540,
+    "planning": "logs/fingerprint-planning-check.log",
+    "check": "logs/fingerprint-docs-check.log",
+    "inheritedPlanningWarnings": [
+      "education-module",
+      "erp-platform-template"
+    ]
+  }
+}

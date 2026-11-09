@@ -144,6 +144,8 @@ describe('Countries read composition', () => {
     await owner.chooseView('report');
     await fixture.whenStable();
     expect(root.querySelectorAll('erp-page-header')).toHaveLength(1);
+    expect(root.querySelectorAll('erp-page-header nav a')).toHaveLength(2);
+    expect(root.querySelector('erp-global-report-view nav')).toBeNull();
     expect(reports.catalog).toHaveBeenCalledOnce();
     expect(reports.render).toHaveBeenLastCalledWith(
       globalReportFixture,
@@ -154,11 +156,13 @@ describe('Countries read composition', () => {
     expect(service.page.mock.calls.length).toBe(reads);
     const report = fixture.debugElement.query(By.directive(GlobalReportView))
       .componentInstance as GlobalReportView;
+    expect(root.querySelector('erp-report-workspace aside')).not.toBeNull();
     report.form.nameEn().value.set('Draft');
-    owner.toolbarVisible.set(false);
+    owner.toggleFilters();
     await fixture.whenStable();
     expect(root.querySelector('erp-report-workspace aside')).toBeNull();
-    owner.toolbarVisible.set(true);
+    expect(root.querySelectorAll('erp-page-header nav a')).toHaveLength(2);
+    owner.toggleFilters();
     await fixture.whenStable();
     expect(report.form.nameEn().value()).toBe('Draft');
     expect(reports.render).toHaveBeenCalledOnce();
@@ -207,26 +211,38 @@ describe('Countries read composition', () => {
     await owner.chooseView('grid');
     expect(owner.view()).toBe('grid');
   });
-  it('keeps Cards criteria on one shared row and preserves the header toggle state across Grid/Cards', async () => {
+  it('keeps Cards criteria in the adaptive shared toolbar and preserves the header toggle state across Grid/Cards', async () => {
     const { fixture, owner, root } = await setup();
     await owner.chooseView('cards');
     await fixture.whenStable();
-    expect(root.querySelector('.single-row-toolbar .collection-toolbar')).not.toBeNull();
     const toggle = () => root.querySelector<HTMLButtonElement>('erp-page-header .filter button')!;
+    expect(toggle().getAttribute('aria-expanded')).toBe('false');
+    expect(root.querySelector('.collection-toolbar')).toBeNull();
+    toggle().click();
+    await fixture.whenStable();
+    expect(root.querySelector('.adaptive-toolbar .structured-search')).not.toBeNull();
+    expect(root.querySelector('.single-row-toolbar')).toBeNull();
     toggle().click();
     await fixture.whenStable();
     expect(root.querySelector('.collection-toolbar')).toBeNull();
     await owner.chooseView('grid');
     await fixture.whenStable();
-    expect(root.querySelector('.collection-toolbar')).toBeNull();
+    expect(root.querySelector('.search-controls')).toBeNull();
+    expect(root.querySelector('.grid-options button')).not.toBeNull();
     toggle().click();
     await fixture.whenStable();
     await owner.chooseView('cards');
     await fixture.whenStable();
-    expect(root.querySelector('.single-row-toolbar .collection-toolbar')).not.toBeNull();
+    expect(root.querySelector('.adaptive-toolbar .structured-search')).not.toBeNull();
+    expect(root.querySelector('.single-row-toolbar')).toBeNull();
     const direction = root.querySelector<HTMLButtonElement>('[data-testid=direction] button')!;
     expect(direction.textContent?.trim()).toBe('Desc');
     expect(direction.querySelector('svg')).not.toBeNull();
+    direction.click();
+    await fixture.whenStable();
+    expect(owner.state.sort()).toBeNull();
+    expect(owner.state.query().sortDirection).toBe('desc');
+    expect(direction.textContent?.trim()).toBe('Unsorted');
     direction.click();
     await fixture.whenStable();
     expect(owner.state.query().sortDirection).toBe('asc');

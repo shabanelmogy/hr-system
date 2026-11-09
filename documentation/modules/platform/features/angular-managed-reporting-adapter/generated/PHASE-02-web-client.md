@@ -110,7 +110,7 @@ failure into partial success.
 | angular-managed-reporting-adapter-master | 4 | `0d75a0cc98ed3a106e8343d19526c34b38a8aa4ce019633d33510a6df070b725` |
 | angular-managed-reporting-adapter-master | 6 | `06d8f06577f4e84c6027647d4beb9e7ffef745f41ec3424eb29cf6d408adcf4d` |
 | angular-managed-reporting-adapter-master | 7 | `a44d1692fdb21881f7be93156c32947a7512bb4ebda61fd6991de2106b999fe4` |
-| angular-managed-reporting-adapter-web | 1 | `5ffee957bea35b3a3655731b8d05ed4ed5d107d901622ac3ac6a2ecde60eb381` |
+| angular-managed-reporting-adapter-web | 1 | `9d56eecdc0035218b726854dcececab88cb3149de85a1464260839c3bd75c753` |
 | angular-managed-reporting-adapter-web | 2 | `bfad8afecaea948e75f03de736c5379d100b426827cb85889e5f14898235baae` |
 | angular-managed-reporting-adapter-web | 3 | `0a8d888ba28cd7d35ccaaf15d92162d047c48a3482e973322396688b5d08e520` |
 | angular-managed-reporting-adapter-web | 4 | `0d75a0cc98ed3a106e8343d19526c34b38a8aa4ce019633d33510a6df070b725` |

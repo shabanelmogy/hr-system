@@ -65,7 +65,7 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | angular-tenant-admins-workspace-api | 7 | `2c923981c40da00473fa4db151327a1323a4a1cfd247879bb0ea9b8f7815b15c` |
 | angular-tenant-admins-workspace-api | 8 | `1e18636edbe60a282f77f2ab441b85f2359c9ea6051fabca7360c592e925719f` |
 | angular-tenant-admins-workspace-web | 6 | `9d15f52db14b58a5e479be4391307c4b6c02b878731e5c7db257054d35ec6378` |
-| angular-tenant-admins-workspace-web | 7 | `2c923981c40da00473fa4db151327a1323a4a1cfd247879bb0ea9b8f7815b15c` |
+| angular-tenant-admins-workspace-web | 7 | `4ca6352bc1034a12c367821fe62724fede939f0faabee2baf4e9b4bf6d0173e9` |
 | angular-tenant-admins-workspace-web | 8 | `1e18636edbe60a282f77f2ab441b85f2359c9ea6051fabca7360c592e925719f` |
 | angular-tenant-admins-workspace-web | 9 | `9fc33d645ccd7ddc8a3900ab3265c732e553c5894ab8e2219f201cfe91081800` |
 | angular-tenant-admins-workspace-mobile | 9 | `9fc33d645ccd7ddc8a3900ab3265c732e553c5894ab8e2219f201cfe91081800` |

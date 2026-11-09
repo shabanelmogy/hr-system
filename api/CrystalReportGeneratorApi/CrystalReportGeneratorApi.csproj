@@ -199,6 +199,9 @@
     <Compile Include="Runtime\CrystalReportRuntimeSettings.cs" />
     <Compile Include="Runtime\Rendering\CrystalReportProfileRegistry.cs" />
     <Compile Include="Runtime\Rendering\ManagedCrystalReportContractArtifact.cs" />
+    <Compile Include="..\Modules\Reporting\ErpSystem.Modules.Reporting.Contracts\Features\Analytics\CrystalReports\EntityContractFingerprint.cs">
+      <Link>Runtime\Rendering\EntityContractFingerprint.cs</Link>
+    </Compile>
     <Compile Include="Runtime\Rendering\CrystalReportManagedParameters.cs" />
     <Compile Include="Runtime\Rendering\CrystalReportDirection.cs" />
     <Compile Include="Runtime\Rendering\CrystalReportDirectionGeometry.cs" />

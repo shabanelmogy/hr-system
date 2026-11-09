@@ -1,22 +1,30 @@
 <section [style.--card-accent]="accent()">
-  <header [class.custom-header]="headerTemplate() !== null">
-    @if (headerTemplate(); as template) {
-      <ng-container [ngTemplateOutlet]="template" [ngTemplateOutletContext]="templateContext()" />
-    } @else {
-      @if (icon(); as name) {
-        <span class="panel-icon"><erp-icon [name]="name" /></span>
-      }
-      <div class="surface-heading">
-        <h2>{{ title() }}</h2>
-        @if (subtitle() && appearance() !== 'chart') {
+  @if (headerVisible()) {
+    <header [class.custom-header]="headerTemplate() !== null">
+      @if (headerTemplate(); as template) {
+        <div class="surface-header-content">
+          <ng-container
+            [ngTemplateOutlet]="template"
+            [ngTemplateOutletContext]="templateContext()"
+          />
+        </div>
+      } @else {
+        @if (icon(); as name) {
+          <span class="panel-icon"><erp-icon [name]="name" /></span>
+        }
+        <div class="surface-heading">
+          <h2>{{ title() }}</h2>
+          @if (subtitle() && appearance() !== 'chart') {
+            <p class="surface-subtitle">{{ subtitle() }}</p>
+          }
+        </div>
+        @if (subtitle() && appearance() === 'chart') {
           <p class="surface-subtitle">{{ subtitle() }}</p>
         }
-      </div>
-      @if (subtitle() && appearance() === 'chart') {
-        <p class="surface-subtitle">{{ subtitle() }}</p>
       }
-    }
-  </header>
+      <div class="surface-header-actions"><ng-content select="[surfaceHeaderActions]" /></div>
+    </header>
+  }
   <div class="surface-content"><ng-content /></div>
   @if (footerTemplate(); as template) {
     <footer class="surface-footer">

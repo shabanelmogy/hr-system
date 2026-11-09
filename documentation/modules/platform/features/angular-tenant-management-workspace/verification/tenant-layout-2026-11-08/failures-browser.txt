@@ -1,0 +1,32 @@
+(node:3396) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///F:/Portofolio%20Projects/ERPSYSTEM/web-angular/src/app/platform/auth/auth.fixture.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\F:\Portofolio Projects\ERPSYSTEM\web-angular\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Tenant failure passed en/read-only
+Tenant failure passed en/list-forbidden
+Tenant failure passed en/catalog-forbidden
+Tenant failure passed en/catalog-error
+Tenant failure passed en/detail-forbidden
+Tenant failure passed en/detail-error
+Tenant failure passed en/catalog-incompatible
+Tenant failure passed en/field
+Tenant failure passed en/duplicate
+Tenant failure passed en/seat
+Tenant failure passed en/conflict
+Tenant failure passed en/uncertain
+Tenant failure passed en/mutation-forbidden
+Tenant failure passed en/pending
+Tenant failure passed ar/read-only
+Tenant failure passed ar/list-forbidden
+Tenant failure passed ar/catalog-forbidden
+Tenant failure passed ar/catalog-error
+Tenant failure passed ar/detail-forbidden
+Tenant failure passed ar/detail-error
+Tenant failure passed ar/catalog-incompatible
+Tenant failure passed ar/field
+Tenant failure passed ar/duplicate
+Tenant failure passed ar/seat
+Tenant failure passed ar/conflict
+Tenant failure passed ar/uncertain
+Tenant failure passed ar/mutation-forbidden
+Tenant failure passed ar/pending

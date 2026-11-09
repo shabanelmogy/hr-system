@@ -30,7 +30,7 @@ public sealed class CreateGlobalCrystalReportCommandHandler(IGlobalCrystalReport
         var committed = false;
         try
         {
-            if (file.ValidationContractSchemaVersion != contracts.SchemaVersion || file.ValidationContractFingerprint != contracts.Fingerprint)
+            if (file.ValidationContractSchemaVersion != contracts.SchemaVersion || !contracts.IsCompatibleFingerprint(request.EntityKey, file.ValidationContractFingerprint))
                 return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportContractStale);
             var id = await unitOfWork.ExecuteAtomicallyAsync(
                 [$"global-crystal:identity:{request.EntityKey}:{key}"], async token =>
@@ -83,7 +83,7 @@ public sealed class UploadGlobalCrystalReportVersionCommandHandler(IGlobalCrysta
         var committed = false;
         try
         {
-            if (file.ValidationContractSchemaVersion != contracts.SchemaVersion || file.ValidationContractFingerprint != contracts.Fingerprint)
+            if (file.ValidationContractSchemaVersion != contracts.SchemaVersion || !contracts.IsCompatibleFingerprint(snapshot.EntityKey, file.ValidationContractFingerprint))
                 return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportContractStale);
             var changed = await unitOfWork.ExecuteAtomicallyAsync([$"global-crystal:report:{request.ReportId:N}"],
                 async token =>

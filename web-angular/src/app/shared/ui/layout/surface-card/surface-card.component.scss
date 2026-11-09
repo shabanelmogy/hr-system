@@ -100,7 +100,17 @@ h2 {
   flex-shrink: 0;
 }
 :host(.compact-card) header.custom-header {
-  display: block;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 8px;
+}
+.surface-header-content {
+  min-inline-size: 0;
+}
+.surface-header-actions:empty,
+.surface-header-actions:has(> [surfaceHeaderActions]:empty) {
+  display: none;
 }
 @media (max-width: 599px) {
   header,

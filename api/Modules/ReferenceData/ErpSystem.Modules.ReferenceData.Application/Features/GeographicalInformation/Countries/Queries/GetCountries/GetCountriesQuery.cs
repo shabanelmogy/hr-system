@@ -44,6 +44,7 @@ public sealed class GetCountriesQueryValidator : AbstractValidator<GetCountriesQ
 {
     private static readonly string[] SortColumns =
     [
+        "id",
         "nameEn",
         "nameAr",
         "alpha2Code",

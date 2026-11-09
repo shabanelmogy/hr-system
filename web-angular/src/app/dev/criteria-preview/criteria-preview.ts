@@ -217,7 +217,7 @@ export class CriteriaPreview {
   async page(value: CollectionPageRequest) {
     this.result.set(await this.criteria.apply(value));
   }
-  async sort(value: CollectionSort) {
+  async sort(value: CollectionSort | null) {
     this.result.set(await this.criteria.apply({ sort: value }));
   }
   refresh() {

@@ -23,6 +23,7 @@ export function countryColumns(
   return [
     {
       key: 'id',
+      sortField: 'id',
       filter: countryFilter('id'),
       align: 'center',
       flex: 0.5,
@@ -31,8 +32,9 @@ export function countryColumns(
     },
     {
       key: 'nameAr',
+      icon: 'flag',
       filter: countryFilter('nameAr'),
-      align: 'center',
+      align: 'start',
       flex: 1,
       header: presentation.text('general.nameAr'),
       value: (row) => row.nameAr,
@@ -40,8 +42,9 @@ export function countryColumns(
     },
     {
       key: 'nameEn',
+      icon: 'flag',
       filter: countryFilter('nameEn'),
-      align: 'center',
+      align: 'start',
       flex: 1.5,
       header: presentation.text('general.nameEn'),
       value: (row) => row.nameEn,

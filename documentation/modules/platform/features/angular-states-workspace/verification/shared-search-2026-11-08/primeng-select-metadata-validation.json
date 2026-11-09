@@ -1,0 +1,6 @@
+{
+  "component": "Angular Select Component",
+  "valid": true,
+  "issues": [],
+  "scope": "Final Select supported properties and CSS-variable height fallback; browser geometry evidence is separate."
+}

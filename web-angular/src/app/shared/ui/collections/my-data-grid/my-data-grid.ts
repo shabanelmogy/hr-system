@@ -19,7 +19,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgTemplateOutlet } from '@angular/common';
-import { TableModule } from 'primeng/table';
+import { Table, TableModule } from 'primeng/table';
 import type { ColumnFilterPassThrough, TableFilterButtonPropsOptions } from 'primeng/types/table';
 import { Checkbox } from 'primeng/checkbox';
 import { RadioButton } from 'primeng/radiobutton';
@@ -121,7 +121,8 @@ export class MyDataGrid<T> {
   readonly rowLabel = input<(row: T) => string>((row) => String(this.rowId()(row)));
   readonly selectable = input<(row: T) => boolean>(() => true);
   readonly selectionEnabled = input(false);
-  readonly sort = input<CollectionSort>();
+  readonly sort = input<CollectionSort | null>();
+  private readonly table = viewChild(Table);
   readonly search = input<CollectionSearch>();
   readonly pageSizes = input<readonly number[]>(collectionPageSizes);
   readonly selectionMode = input<GridSelectionMode>('multiple');
@@ -135,15 +136,25 @@ export class MyDataGrid<T> {
   );
   readonly contextActions = input<((row: T) => readonly GridRowAction[]) | null>(null);
   readonly rowAction = output<{ readonly row: T; readonly action: string }>();
-  readonly actionDisplay = input<'menu' | 'inline'>('menu');
+  readonly actionDisplay = input<'menu' | 'inline' | 'responsive'>('responsive');
+  readonly resolvedActionDisplay = computed(() =>
+    this.actionDisplay() === 'responsive'
+      ? this.availableWidth() < 600
+        ? 'menu'
+        : 'inline'
+      : this.actionDisplay(),
+  );
   readonly stickyActions = input(false);
   readonly actionColumnWidth = computed(() =>
-    this.actionDisplay() === 'inline'
+    this.resolvedActionDisplay() === 'inline'
       ? Math.max(
           128,
-          ...this.rows().map((row) => (this.contextActions()?.(row).length ?? 0) * 36 + 16),
+          ...this.rows().map((row) => {
+            const count = this.contextActions()?.(row).length ?? 0;
+            return count * 44 + Math.max(0, count - 1) * 4 + 16;
+          }),
         )
-      : 50,
+      : 60,
   );
   readonly cellContextFilter = input(true);
   private readonly rowMenu = viewChild<ContextMenuPanel>('rowMenu');
@@ -204,6 +215,15 @@ export class MyDataGrid<T> {
     filtersChange: (value) => this.filtersChange.emit(value),
     sortsChange: (value) => this.sortsChange.emit(value),
     sortChange: (value) => this.sortChange.emit(value),
+    clearSortPresentation: () => {
+      const table = this.table();
+      if (!table) return;
+      // PrimeNG reset mutates filter values. Keep the current filter snapshot intact.
+      const filters = table.filters;
+      table.filters = {};
+      table.reset();
+      table.filters = filters;
+    },
   });
   readonly filterDefinitions = this.queryState.filterDefinitions;
   readonly filterContractValid = this.queryState.filterContractValid;
@@ -213,7 +233,7 @@ export class MyDataGrid<T> {
   readonly pageChange = output<CollectionPageRequest>();
   readonly activeChange = output<CollectionId | null>();
   readonly selectionChange = output<readonly CollectionId[]>();
-  readonly sortChange = output<CollectionSort>();
+  readonly sortChange = output<CollectionSort | null>();
   readonly searchChange = output<CollectionSearchChange>();
   readonly retry = output<void>();
   readonly rowActivated = output<T>();
@@ -268,8 +288,8 @@ export class MyDataGrid<T> {
   );
   readonly reservedWidth = computed(
     () =>
-      (this.selectionEnabled() ? 50 : 0) +
-      (this.details() ? 50 : 0) +
+      (this.selectionEnabled() ? 52 : 0) +
+      (this.details() ? 52 : 0) +
       (this.contextActions() ? this.actionColumnWidth() : 0),
   );
   private readonly geometry = new GridGeometry<T>({
@@ -302,7 +322,7 @@ export class MyDataGrid<T> {
   readonly tokens = computed(() => ({
     root: { borderColor: 'var(--border)' },
     headerCell: {
-      background: 'var(--surface)',
+      background: 'color-mix(in srgb, var(--muted) 60%, var(--surface))',
       color: this.appearance() === 'reference' ? 'var(--foreground)' : 'var(--muted-foreground)',
       borderColor: 'var(--border)',
       padding: this.appearance() === 'reference' ? '0px 10px' : '8px 16px',
@@ -425,6 +445,9 @@ export class MyDataGrid<T> {
   openContext(row: T, event: MouseEvent) {
     this.contextState.openContext(row, event);
   }
+  rowActionsDisabled(row: T): boolean {
+    return !(this.contextActions()?.(row).some((action) => !action.disabled) ?? false);
+  }
   runContextCommand(id: string) {
     this.contextState.runContextCommand(id);
   }
@@ -486,6 +509,9 @@ export class MyDataGrid<T> {
   }
   value(column: CollectionColumn<T>, row: T) {
     return String(column.value(row) ?? '—');
+  }
+  selectionInputId(row: T): string {
+    return this.selectionName + '-row-' + encodeURIComponent(this.controller.rowKey(row));
   }
   changeSort(event: unknown) {
     this.queryState.changeSort(event);

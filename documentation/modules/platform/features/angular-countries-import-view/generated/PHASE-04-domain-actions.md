@@ -59,13 +59,13 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | angular-countries-import-view-master | 3 | `78341b642b12c6c18a3247c7846ae2be0cff8c1786062f41075aa895918f5dc3` |
 | angular-countries-import-view-master | 4 | `53e60870bac7336b7b85981032dd3b9944a2a288a91459982cb0a8c20142c42c` |
 | angular-countries-import-view-master | 6 | `3cb1ce59d5da20c1c670d16496538c270effb436933ee0e13048f912397e6a61` |
-| angular-countries-import-view-master | 7 | `d667c3b49da126015c07b08178f7c3e09adbff8f2ec2eb39ef3b1f4aa520e1a4` |
+| angular-countries-import-view-master | 7 | `19d1a25a2d02717bc26c96f2207373eee86a5a2dc4cc5440e012ce32bcac8c81` |
 | angular-countries-import-view-master | 8 | `b3c4409235a89b89abcc628d2a834a38b5c30d5793e24bfb207a2c9bcd6f1677` |
 | angular-countries-import-view-api | 6 | `3cb1ce59d5da20c1c670d16496538c270effb436933ee0e13048f912397e6a61` |
-| angular-countries-import-view-api | 7 | `d667c3b49da126015c07b08178f7c3e09adbff8f2ec2eb39ef3b1f4aa520e1a4` |
+| angular-countries-import-view-api | 7 | `19d1a25a2d02717bc26c96f2207373eee86a5a2dc4cc5440e012ce32bcac8c81` |
 | angular-countries-import-view-api | 8 | `b3c4409235a89b89abcc628d2a834a38b5c30d5793e24bfb207a2c9bcd6f1677` |
 | angular-countries-import-view-web | 6 | `3cb1ce59d5da20c1c670d16496538c270effb436933ee0e13048f912397e6a61` |
-| angular-countries-import-view-web | 7 | `d667c3b49da126015c07b08178f7c3e09adbff8f2ec2eb39ef3b1f4aa520e1a4` |
+| angular-countries-import-view-web | 7 | `19d1a25a2d02717bc26c96f2207373eee86a5a2dc4cc5440e012ce32bcac8c81` |
 | angular-countries-import-view-web | 8 | `b3c4409235a89b89abcc628d2a834a38b5c30d5793e24bfb207a2c9bcd6f1677` |
 | angular-countries-import-view-web | 9 | `bbba187c534e0637214cb864a3f268ffdf3dca121eaad7f9d413334fe10dea0d` |
 | angular-countries-import-view-mobile | 9 | `bbba187c534e0637214cb864a3f268ffdf3dca121eaad7f9d413334fe10dea0d` |

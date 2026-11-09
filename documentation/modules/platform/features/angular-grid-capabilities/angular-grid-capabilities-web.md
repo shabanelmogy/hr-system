@@ -20,6 +20,22 @@ One coherent reusable technical component kit and dev-only neutral harness. CAPA
 
 Extend MyDataGrid/CollectionFrame/PageHeader/fields/ActionButton/OptionSelect/feedback/ScrollViewport/PopoverPanel/DialogPanel/controller; use typed config/templates/events. No raw-grid or parallel feature shell. Preserve defaults and current callers.
 
+Presentation maintenance 2026-11-08 adds optional `actionDisplay="responsive"`:
+inline actions from 600px of actual Grid content width, shared row menu below
+600px. Explicit inline/menu modes remain supported. The shared default cell
+renderer accepts an optional `CollectionColumn.icon`, isolates bidirectional
+text, truncates long values and retains their complete titles. Selection uses
+explicit labels with instance/row-key IDs, including frozen rows and radio mode.
+Coarse pointers use 44px selection/action targets and at least 52px rows even in
+compact density; standard pointers retain compact/standard density choices.
+Headers use scoped theme tokens and visible sort affordances, numeric cells use
+tabular figures and frozen actions retain a logical leading separator. Countries
+is the bounded consumer. Browser proof is
+`node scripts/verify-countries-screen-browser.mjs --grid-layout` (28 EN/AR,
+Light/Dark layout cases plus row-menu, compact-density, keyboard-sort and server
+filter interactions). This scoped presentation verification does not close the
+remaining complete-matrix capabilities or change API/schema/native ownership.
+
 ## 5. Data and query contract
 
 Explicit supplied-local versus controlled-remote modes. Shared emits immutable bounded typed filters/sort/range; owner serializes/queries. AND/OR per field reflects PrimeNG,not arbitrary nested SQL. No local filtering/sorting of a remote page or invented authoritative total.

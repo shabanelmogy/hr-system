@@ -13,6 +13,7 @@ viewport or available toolbar is at most1199px. See the current
 
 | Document | Use it for |
 | --- | --- |
+| [architecture/ANGULAR_COLLECTION_VIEWS.md](architecture/ANGULAR_COLLECTION_VIEWS.md) | Current Grid/Cards/Chart/Report/Import design contract, intentional differences and open findings |
 | [ANGULAR_ENVIRONMENT.md](ANGULAR_ENVIRONMENT.md) | Angular `.env` API selection: local or hosted test API |
 | [architecture/ANGULAR_CODE_STYLE.md](architecture/ANGULAR_CODE_STYLE.md) | Mandatory Angular Clean Code, external HTML/SCSS, formatting and checks |
 | [ANGULAR_AGENT_SKILLS.md](ANGULAR_AGENT_SKILLS.md) | Official Angular developer skill: usage, ERP integration, pinned source and updates |

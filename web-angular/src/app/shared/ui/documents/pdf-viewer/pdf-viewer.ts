@@ -28,7 +28,7 @@ export class PdfViewer {
   readonly title = input.required<string>();
   readonly downloadName = input('report.pdf');
   readonly showActions = input(true, { transform: booleanAttribute });
-  readonly actionsLayout = input<'inline' | 'stacked'>('inline');
+  readonly actionsLayout = input<'inline' | 'stacked' | 'toolbar'>('inline');
   /** Render these same document links in another shared layout region. */
   readonly actionsTemplate = viewChild.required<TemplateRef<unknown>>('actions');
   readonly inlineSupported =

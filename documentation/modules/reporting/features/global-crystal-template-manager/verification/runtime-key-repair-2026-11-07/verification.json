@@ -1,0 +1,67 @@
+{
+  "dateUtc": "2026-11-07T14:40:38.626759+02:00",
+  "scope": "Crystal missing internal key and IIS hub-only query envelope; local Publish prepared, no remote deployment",
+  "api": {
+    "passed": 1342,
+    "skipped": 3,
+    "buildErrors": 0,
+    "lastIncrementalWarnings": 11
+  },
+  "angular": {
+    "runtimeChangedThisSlice": false,
+    "verificationHarnessFormatExitCode": 0,
+    "lastRuntimeFullCheck": "998 tests/195 files in realtime-final-angular-check.log; no claim this slice reran that full client gate"
+  },
+  "runtime": {
+    "nativeProfileBuildAndWppStageExitCode": 0,
+    "matchingSecretsInActualPublishOutputs": true,
+    "profilesConfiguredLocally": true,
+    "nativePDFExecuted": false,
+    "nativeX64ContractHarnessExitCode": 0
+  },
+  "iis": {
+    "sourceRegressionRedThenGreen": true,
+    "actualStaticBoundaryCases": 4,
+    "ordinaryQueryLimitsRetained": true,
+    "hubQueryAndUrlLimit": 24576,
+    "localFixtureStopped": true
+  },
+  "hosted": {
+    "reportCatalogCount": 1,
+    "reportRenderCodes": [
+      "CrystalReport.RuntimeUnavailable"
+    ],
+    "runtimePublicCode": "crystal_runtime_api_key_not_configured",
+    "query2048": 401,
+    "query2049": 404,
+    "freshTokenLifetimeSeconds": 300,
+    "longPollingConnected": true,
+    "automaticFallbackConnected": true,
+    "expiryWasNotProvenAsRootCause": true
+  },
+  "sourceHashes": [
+    {
+      "path": "api/ErpSystem.Api/web.config",
+      "sha256": "b15f9eab0ce57ebb75c21c3109bde62937bf412d04504bc31f7864dbafa529b3"
+    },
+    {
+      "path": "api/scripts/Configure-CrystalReportPublish.ps1",
+      "sha256": "2a99dc623cc78f7f3d60c5e31d4ab3e624b5b4572acfa9d5d79d972fd5457435"
+    },
+    {
+      "path": "api/Tests/ErpSystem.IntegrationTests/RealtimeHostingConfigurationTests.cs",
+      "sha256": "416f9efdb4e4795899b7831c787ff301998e3771bce8905dd655aeaf9a4f1e2f"
+    },
+    {
+      "path": "web-angular/scripts/verify-super-admin-hosted-read.mjs",
+      "sha256": "92fa290fa8a2d3ea176c968aa315ffe09026cec8cbcc8d420ae71d0db14e8293"
+    }
+  ],
+  "secretsPersistedInCanonicalEvidence": false,
+  "hostedPublishPerformed": false,
+  "documentation": {
+    "diffCheck": 0,
+    "recipes": 540,
+    "planning": "passed with2inherited unrelated warnings"
+  }
+}

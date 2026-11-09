@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
   "versions": {
-    "web": "42da90d56f25f240d0173026a1cc75d540b72cc1bd610582c061bd27fe959c34",
+    "web": "c6cbdc5d98f73b6a580ce6bad61beaa6abe987eeccd4610724db0aefa58948ef",
     "mobile": "509b1f3679ad0290fbffe08a8a971e06718fd568016abb7057817fa3617a357f"
   },
   "sources": [
@@ -26519,6 +26519,13 @@
           "systemPermissions": null
         },
         {
+          "key": "collections.unsorted",
+          "en": "Unsorted",
+          "ar": "بدون ترتيب",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
           "key": "common.accessDenied",
           "en": "Access denied",
           "ar": "الوصول مرفوض",
@@ -29557,6 +29564,13 @@
           "systemPermissions": null
         },
         {
+          "key": "imports.uncertainShort",
+          "en": "Verify",
+          "ar": "تحقق",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
           "key": "imports.uploadData",
           "en": "Upload Data",
           "ar": "رفع البيانات",
@@ -30484,7 +30498,7 @@
         },
         {
           "key": "menu.tenantAdminManagement",
-          "en": "Tenant administrators",
+          "en": "Tenant Administrators",
           "ar": "إدارة مسؤولي المنشآت",
           "scope": "system",
           "systemPermissions": []
@@ -30960,7 +30974,7 @@
         },
         {
           "key": "modules.tenantAdministration",
-          "en": "Tenant administration",
+          "en": "Tenant Administration",
           "ar": "إدارة الـ Tenant",
           "scope": "shared",
           "systemPermissions": null
@@ -47734,7 +47748,7 @@
         },
         {
           "key": "superAdminDashboard.tenantAdmins.title",
-          "en": "Tenant administrators",
+          "en": "Tenant Administrators",
           "ar": "مسؤولو المنشآت",
           "scope": "system",
           "systemPermissions": []
@@ -47880,6 +47894,13 @@
           "systemPermissions": []
         },
         {
+          "key": "tenantAdmins.emptyTenant",
+          "en": "No administrators assigned to this Tenant",
+          "ar": "لا يوجد مسؤولون مرتبطون بهذا المستأجر",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
           "key": "tenantAdmins.errors.archived",
           "en": "This administrator has been archived and cannot be edited here.",
           "ar": "تمت أرشفة هذا المسؤول ولا يمكن تعديله من هنا.",
@@ -48020,6 +48041,13 @@
           "systemPermissions": []
         },
         {
+          "key": "tenantAdmins.groupCount",
+          "en": "{{count}} administrators",
+          "ar": "المسؤولون: {{count}}",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
           "key": "tenantAdmins.lastName",
           "en": "Last name",
           "ar": "اسم العائلة",
@@ -48069,9 +48097,23 @@
           "systemPermissions": []
         },
         {
+          "key": "tenantAdmins.searchTenants",
+          "en": "Search by Tenant name or identifier",
+          "ar": "ابحث باسم المستأجر أو معرّفه",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
           "key": "tenantAdmins.subtitle",
           "en": "Manage tenant administrator accounts",
           "ar": "إدارة حسابات مديري المنشآت",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.tenantDirectory",
+          "en": "Tenants",
+          "ar": "المستأجرون",
           "scope": "system",
           "systemPermissions": []
         },
@@ -48084,8 +48126,15 @@
         },
         {
           "key": "tenantAdmins.title",
-          "en": "Tenant administrators",
+          "en": "Tenant Administrators",
           "ar": "مديرو المنشآت",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantAdmins.unassignedTenant",
+          "en": "No assigned Tenant",
+          "ar": "بدون مستأجر مرتبط",
           "scope": "system",
           "systemPermissions": []
         },
@@ -48422,6 +48471,20 @@
           "key": "tenantManagement.reloadCurrent",
           "en": "Reload current tenant",
           "ar": "إعادة تحميل بيانات المستأجر الحالية",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.saveBeforeAdministrators",
+          "en": "Save the tenant before managing administrators",
+          "ar": "احفظ المستأجر قبل إدارة المسؤولين",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.saveBeforeAdministratorsDescription",
+          "en": "Complete and save the tenant details first. Then open Edit tenant to add or manage its administrators.",
+          "ar": "أكمل بيانات المستأجر واحفظها أولًا، ثم افتح تعديل المستأجر لإضافة المسؤولين عنه أو إدارتهم.",
           "scope": "system",
           "systemPermissions": []
         },

@@ -1,5 +1,19 @@
 # States complete Angular parity — web applied profile
 
+Current 2026-11-08 presentation correction: Grid actions inherit the shared
+responsive default, including disabled-menu semantics and an architecture guard.
+[Source contract and executed evidence](SHARED_GRID_ACTIONS_2026-11-08.md). API/domain/Next/native
+runtime is unchanged; new platform workflows are Excluded from this correction.
+Historical inline-action receipts retain their original revision.
+
+Current shared search/Chart correction: no overlapping projected criteria,
+44px controls, compact widths and a growing query. Chart search is off by default.
+Grid and Cards start with search collapsed, matching Countries. The Grid toggle
+hides search and domain criteria while keeping Reset and Grid Options available.
+Report criteria open by default and keep their own visibility.
+[Current contract and acceptance](SHARED_COLLECTION_SEARCH_2026-11-08.md). API/domain/Next/native remain
+unchanged; this is a Web presentation correction.
+
 ## 1. Ownership
 
 Platform owns this Angular migration record; ReferenceData retains States business rules/persistence. Exact D42/S3-A9 scope and entry contract: documentation/plans/business/web-angular-migration/decomposition/angular-states-workspace.md.
@@ -25,6 +39,10 @@ Angular Grid/Cards/Detail/Chart/managed Report/Import Required; new native UI Ex
 Direct existing HTTPS API via HttpClient service only, cookies/CSRF and10s timeout; source server query limits and metadata validation. No API/BFF replacement, no retry of dispatched writes.
 
 ## 7. Shared composition
+
+CollectionFrame owns toolbar glyph sizing through inherited `--app-icon-size`.
+Reset measures 18x18px in Grid and Cards, matching Countries. Its button retains
+the shared hit-area size. The shared search contract records pixel acceptance.
 
 Reuse MyDataGrid/CardList/PageHeader/FormContainer/TextField/ReferenceField/DialogPanel/FeedbackState/confirmation, compact SpreadsheetImportPanel and chart/Reporting owner. Focused feature folders/external HTML/SCSS, Signal Forms Option B.
 

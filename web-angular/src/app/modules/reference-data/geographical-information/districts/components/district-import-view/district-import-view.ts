@@ -1,4 +1,4 @@
-import { Component, computed, inject, output, signal } from '@angular/core';
+import { Component, computed, inject, input, output, signal, viewChild } from '@angular/core';
 import {
   LocalizationRuntime,
   UiTextPipe,
@@ -37,6 +37,9 @@ import type { DistrictImportIssue, DistrictImportRow } from '../../validation/di
   styleUrl: './district-import-view.scss',
 })
 export class DistrictImportView {
+  readonly externalActions = input(false);
+  private readonly panel = viewChild(SpreadsheetImportPanel);
+  readonly headerActions = computed(() => this.panel()?.actionsTemplate() ?? null);
   readonly state = inject(DistrictImportState);
   readonly locale = inject(LocalizationRuntime);
   readonly review = output<void>();

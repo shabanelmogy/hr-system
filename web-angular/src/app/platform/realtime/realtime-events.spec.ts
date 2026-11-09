@@ -192,6 +192,22 @@ describe('Actor-owned lazy realtime lease', () => {
     expect(s.connection.start).toHaveBeenCalledTimes(3);
     lease.unsubscribe();
   });
+  it('refreshes the short-lived hub token before expiry instead of retrying with the old token', async () => {
+    const s = setup();
+    vi.setSystemTime(new Date('2026-11-07T12:00:00.000Z'));
+    const payload = btoa(JSON.stringify({ exp: 12 * 60 * 60 + 5 }));
+    s.transport.realtimeToken.mockResolvedValue(`header.${payload}.signature`);
+    const lease = s.subscribe();
+    await settle();
+    await s.token();
+    await vi.advanceTimersByTimeAsync(6_000);
+    await settle();
+    await s.token();
+    expect(s.connection.stop).toHaveBeenCalled();
+    expect(s.connector).toHaveBeenCalledTimes(2);
+    expect(s.transport.realtimeToken).toHaveBeenCalledTimes(2);
+    lease.unsubscribe();
+  });
   it.each([401, 403])(
     'terminates hub start denial%s without repeatedly replacing a valid Cookie session',
     async (status) => {

@@ -1,5 +1,9 @@
 # Countries Feature Full Review
 
+The list API supports numeric `sortBy=id` before pagination. Angular Grid and
+Cards expose ascending, descending and cleared sorting. Current scope and
+acceptance are in the [geography sort record](../../../platform/features/angular-states-workspace/GEOGRAPHY_SORT_2026-11-09.md).
+
 Status: Canonical project-level reference for creating one feature across
 `api`, `web-next`, and `mobile-react` by following the current Countries slice.
 

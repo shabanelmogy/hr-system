@@ -1,0 +1,6 @@
+@use '../../../../../shared/ui/layout/collection-page';
+@include collection-page.shell;
+
+:host {
+  --report-viewport-height: 100%;
+}

@@ -3,7 +3,7 @@
     [exportSource]="exportSource()"
     variant="collection"
     [title]="captions.systemTitle()"
-    [total]="reads.total()"
+    [total]="view() === 'report' ? null : reads.total()"
     [views]="views()"
     [view]="view()"
     [filterVisible]="filtersVisible()"
@@ -11,6 +11,7 @@
     (viewChange)="selectView($event)"
     (refresh)="reads.refresh()"
   >
+    <ng-container [ngTemplateOutlet]="reportHeaderActions()" />
     @if (exports.allowed() && !generalExport()) {
       <erp-button
         [label]="captions.text('export')"

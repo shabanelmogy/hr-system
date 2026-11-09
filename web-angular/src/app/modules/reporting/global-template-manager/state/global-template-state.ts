@@ -33,6 +33,7 @@ import { GlobalTemplateAccessState } from './global-template-access-state';
 import { matchesGlobalTemplateViewer } from '../utils/global-template-viewer-identity';
 import {
   globalTemplateAllowed,
+  isGlobalTemplateVersionCurrent,
   globalTemplateFileError,
   globalTemplateManagerAllowed,
   type GlobalTemplateAction,
@@ -548,7 +549,7 @@ export class GlobalTemplateState {
               validated.isPublished &&
               validated.id === version.id &&
               validated.sha256 === version.sha256 &&
-              version.validationContractFingerprint === target.fingerprint,
+              isGlobalTemplateVersionCurrent(version, target.fingerprint),
           ),
       )
     );
@@ -703,7 +704,7 @@ export class GlobalTemplateState {
       !this.can('Publish') ||
       version.isPublished ||
       version.validationStatus !== 'Valid' ||
-      version.validationContractFingerprint !== contract?.contractFingerprint
+      !isGlobalTemplateVersionCurrent(version, contract?.contractFingerprint)
     )
       return;
     this.run(
@@ -723,13 +724,13 @@ export class GlobalTemplateState {
     return (
       !version.isPublished &&
       version.validationStatus === 'Valid' &&
-      version.validationContractFingerprint === contract?.contractFingerprint
+      isGlobalTemplateVersionCurrent(version, contract?.contractFingerprint)
     );
   }
   validationStatus(version: GlobalTemplateVersion): GlobalTemplateVersion['validationStatus'] {
     const contract = this.contracts().find((item) => item.entityKey === this.entity());
     return version.validationStatus === 'Valid' &&
-      version.validationContractFingerprint !== contract?.contractFingerprint
+      !isGlobalTemplateVersionCurrent(version, contract?.contractFingerprint)
       ? 'NeedsRevalidation'
       : version.validationStatus;
   }

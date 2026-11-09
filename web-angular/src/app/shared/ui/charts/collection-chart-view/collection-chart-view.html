@@ -11,23 +11,24 @@
   <div toolbarFilters><ng-content select="[toolbarFilters]" /></div>
   <div collectionBody class="analytics">
     @if (controller.view().kind === 'ready' && controller.view().rows.length) {
-      <div class="metrics">
-        @for (metric of metrics(); track metric.id) {
-          <erp-metric-card
-            appearance="raised"
-            [label]="metric.label"
-            [value]="metric.value"
-            [icon]="metric.icon"
-            [accent]="metric.accent"
-          />
-        }
-      </div>
       <div class="chart-scroll">
         <erp-scroll-viewport [label]="label()" [fillContent]="true"
-          ><div class="plots">
-            @for (plot of plots(); track plot.id) {
-              <erp-chart-panel [attr.data-chart-id]="plot.id" [definition]="plot" />
-            }</div
+          ><div class="chart-content">
+            <div class="metrics">
+              @for (metric of metrics(); track metric.id) {
+                <erp-metric-card
+                  [label]="metric.label"
+                  [value]="metric.value"
+                  [icon]="metric.icon"
+                  [accent]="metric.accent"
+                />
+              }
+            </div>
+            <div class="plots">
+              @for (plot of plots(); track plot.id) {
+                <erp-chart-panel [attr.data-chart-id]="plot.id" [definition]="plot" />
+              }
+            </div></div
         ></erp-scroll-viewport>
       </div>
     } @else {

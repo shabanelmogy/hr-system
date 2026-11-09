@@ -5,6 +5,7 @@ import { utils, write, read } from 'xlsx';
 import { chromium, expect } from '@playwright/test';
 import { themePaletteOrder } from '@app/tokens';
 import { sessionFixture } from '../src/app/platform/auth/auth.fixture.ts';
+import { serveAngularFixtureBuild } from './angular-build-browser-fixture.mjs';
 const root = path.resolve(import.meta.dirname, '..'),
   origin = process.env.ANGULAR_PREVIEW_ORIGIN ?? 'https://localhost:4220',
   api = process.env.ANGULAR_API_ORIGIN ?? 'https://shabanhrms.runasp.net';
@@ -41,7 +42,8 @@ const mixed = workbook([
   ['دولة مكررة', 'Country 1', '', '', '', ''],
   ['', 'Invalid', '', '', '', ''],
 ]);
-const focused = process.argv.includes('--focused'),
+const layout = process.argv.includes('--layout'),
+  focused = process.argv.includes('--focused'),
   compact = process.argv.includes('--compact'),
   smoke = process.argv.includes('--smoke'),
   journeys = process.argv.includes('--journeys'),
@@ -51,6 +53,9 @@ async function setup({
   language = 'en',
   mode = 'light',
   width = 1440,
+  height = width === 390 ? 780 : 1050,
+  touch = false,
+  navigationOpen = false,
   palette = 'green',
   action = 'success',
   permitted = true,
@@ -58,10 +63,18 @@ async function setup({
 } = {}) {
   const context = await browser.newContext({
     ignoreHTTPSErrors: true,
-    viewport: { width, height: width === 390 ? 780 : 1050 },
+    viewport: { width, height },
+    hasTouch: touch,
+    isMobile: touch,
     reducedMotion: 'reduce',
     acceptDownloads: true,
   });
+  await serveAngularFixtureBuild(
+    context,
+    root,
+    origin,
+    process.env.ANGULAR_FIXTURE_BUILD ? path.resolve(process.env.ANGULAR_FIXTURE_BUILD) : undefined,
+  );
   await context.addCookies(
     Object.entries({ i18next: language, currentMode: mode, themePalette: palette }).map(
       ([name, value]) => ({ name, value, url: origin }),
@@ -168,6 +181,11 @@ async function setup({
   await expect(p.getByTestId('countries')).toHaveAttribute('data-kind', 'ready', {
     timeout: 60000,
   });
+  if (width >= 900) {
+    const navigation = p.locator('.drawer-toggle button');
+    if ((await navigation.getAttribute('aria-expanded')) !== String(navigationOpen))
+      await navigation.click();
+  }
   const text = core[language],
     header = p.locator('erp-page-header'),
     view = p.locator('erp-country-import-view');
@@ -183,16 +201,135 @@ async function setup({
     }
   }
   const select = async (buffer = mixed, name = 'countries.xlsx') => {
-    await view
-      .locator('input[type=file]')
-      .setInputFiles({ name, mimeType: name.endsWith('.xlsx') ? mime : 'text/plain', buffer });
+    const request = p.waitForEvent('filechooser');
+    await p.getByTestId('import-choose').getByRole('button').click();
+    const chooser = await request;
+    await chooser.setFiles({
+      name,
+      mimeType: name.endsWith('.xlsx') ? mime : 'text/plain',
+      buffer,
+    });
   };
-  const submit = () => view.getByTestId('import-submit').getByRole('button').click(),
-    clear = () => view.getByTestId('import-clear').getByRole('button').click();
+  const submit = () => p.getByTestId('import-submit').getByRole('button').click(),
+    clear = () => p.getByTestId('import-clear').getByRole('button').click();
   return { p, context, state, errors, view, pick, select, submit, clear, text };
 }
 try {
-  if (!focused && !journeys)
+  if (layout) {
+    for (const mode of ['light', 'dark'])
+      for (const language of ['en', 'ar'])
+        for (const [width, height] of [
+          [320, 720],
+          [390, 844],
+          [571, 823],
+          [690, 823],
+          [800, 823],
+          [900, 640],
+          [1012, 823],
+          [1440, 900],
+          [844, 390],
+        ])
+          for (const navigationOpen of width >= 900 ? [false, true] : [false]) {
+            const f = await setup({ mode, language, width, height, touch: true, navigationOpen });
+            const { p, view, pick, select, submit, context, errors } = f;
+            await pick('import');
+            await expect(p.locator('erp-page-header .import-actions button')).toHaveCount(4);
+            await expect(p.locator('erp-page-header input[type=file]')).toBeHidden();
+            await expect(view.locator('.import-heading')).toHaveCount(0);
+            await expect(p.locator('erp-page-header .total-badge')).toHaveCount(0);
+            await expect(view.locator('.requirements')).not.toHaveAttribute('open');
+            await select();
+            await submit();
+            await expect(p.getByTestId('import-submit').getByRole('button')).toBeDisabled();
+            await expect(view).toContainText(
+              country[language]['countries.import.importSuccess'].replace('{{count}}', '12'),
+            );
+            await p.evaluate(() => document.fonts.ready);
+            const geometry = await view.evaluate((element) => {
+              const summary = element.querySelector('.status-summary');
+              const preview = element.querySelector('.preview');
+              const workspace = element.querySelector('.import-workspace');
+              const rect = summary.getBoundingClientRect();
+              const cells = [...summary.children].filter(
+                (node) => node.getBoundingClientRect().height,
+              );
+              const buttons = [...document.querySelectorAll('erp-page-header button')];
+              return {
+                width: element.clientWidth,
+                compact: getComputedStyle(summary).display === 'grid',
+                visibleStatuses: cells.length,
+                summaryScroll: summary.scrollHeight > summary.clientHeight + 1,
+                statusesFit: cells.every((node) => {
+                  const cell = node.getBoundingClientRect();
+                  return (
+                    cell.left >= rect.left - 1 &&
+                    cell.right <= rect.right + 1 &&
+                    cell.top >= rect.top - 1 &&
+                    cell.bottom <= rect.bottom + 1 &&
+                    node.scrollWidth <= node.clientWidth + 1
+                  );
+                }),
+                singleRow: cells.every(
+                  (node) =>
+                    Math.abs(
+                      node.getBoundingClientRect().top - cells[0].getBoundingClientRect().top,
+                    ) < 1,
+                ),
+                previewHeight: preview.getBoundingClientRect().height,
+                summaryBeforePreview: rect.bottom <= preview.getBoundingClientRect().top,
+                outerOverflow:
+                  document.documentElement.scrollHeight > innerHeight + 1 ||
+                  document.documentElement.scrollWidth > innerWidth + 1,
+                workspaceOverflow: workspace.scrollHeight > workspace.clientHeight + 1,
+                smallTargets: buttons
+                  .filter((button) => {
+                    const box = button.getBoundingClientRect();
+                    return box.width && (box.width < 43.5 || box.height < 43.5);
+                  })
+                  .map((button) => ({
+                    name: button.getAttribute('aria-label') || button.textContent,
+                    width: button.getBoundingClientRect().width,
+                    height: button.getBoundingClientRect().height,
+                  })),
+              };
+            });
+            assert.equal(geometry.visibleStatuses, 5, JSON.stringify(geometry));
+            assert.equal(geometry.summaryScroll, false, JSON.stringify(geometry));
+            assert.ok(geometry.statusesFit, JSON.stringify(geometry));
+            assert.ok(geometry.singleRow, JSON.stringify(geometry));
+            assert.ok(geometry.previewHeight >= 180, JSON.stringify(geometry));
+            assert.equal(geometry.outerOverflow, false, JSON.stringify(geometry));
+            assert.deepEqual(geometry.smallTargets, [], JSON.stringify(geometry));
+            if (geometry.compact)
+              assert.ok(geometry.summaryBeforePreview, JSON.stringify(geometry));
+            const footer = view.locator('erp-collection-footer');
+            await footer.scrollIntoViewIfNeeded();
+            await expect(footer).toBeInViewport();
+            await view.locator('.requirements summary').scrollIntoViewIfNeeded();
+            await view.locator('.requirements summary').focus();
+            await p.keyboard.press('Enter');
+            await expect(view.locator('.requirements')).toHaveAttribute('open', '');
+            await footer.scrollIntoViewIfNeeded();
+            await expect(footer).toBeInViewport();
+            await view.locator('.requirements summary').click();
+            await view.locator('.import-workspace').evaluate((node) => {
+              node.scrollTop = 0;
+            });
+            assert.deepEqual(errors, []);
+            await p.screenshot({
+              path: path.join(
+                output,
+                `layout-${language}-${mode}-${width}x${height}-${navigationOpen ? 'open' : 'closed'}.png`,
+              ),
+            });
+            results.push({ mode, language, width, height, navigationOpen, geometry, passed: true });
+            await context.close();
+            console.log(
+              `Import layout passed ${language}/${mode}/${width}x${height}/${navigationOpen}`,
+            );
+          }
+  }
+  if (!layout && !focused && !journeys)
     for (const palette of smoke || compact ? ['green'] : themePaletteOrder)
       for (const mode of smoke ? ['light'] : ['light', 'dark'])
         for (const language of smoke ? ['en'] : ['en', 'ar'])
@@ -201,7 +338,7 @@ try {
             const { p, view, state, pick, select, submit, context, errors, text } = f;
             await pick('import');
             await expect(view).toBeVisible();
-            const heading = view.locator('.import-heading');
+            const heading = p.locator('erp-page-header .import-actions');
             const actionButtons = heading.getByRole('button');
             await expect(actionButtons).toHaveCount(4);
             await expect(view.locator('.requirements')).not.toHaveAttribute('open');
@@ -210,9 +347,9 @@ try {
               await expect(view.locator('.requirements-content')).toBeVisible();
               await view.locator('.requirements summary').click();
             }
-            await expect(view.locator('p-fileupload')).toHaveCount(1);
+            await expect(p.locator('erp-page-header p-fileupload')).toHaveCount(1);
             const downloaded = p.waitForEvent('download');
-            await view.getByTestId('import-template').getByRole('button').click();
+            await p.getByTestId('import-template').getByRole('button').click();
             const download = await downloaded;
             assert.equal(download.suggestedFilename(), 'countries-import-template.xlsx');
             const book = read(fs.readFileSync(await download.path()));
@@ -244,77 +381,28 @@ try {
             );
             await expect(view).toContainText(country[language]['countries.import.errors.required']);
             const measured = await view.evaluate((element) => {
-              const rail = element.querySelector('.status-summary').getBoundingClientRect();
-              const railStyle = getComputedStyle(element.querySelector('.status-summary'));
+              const summary = element.querySelector('.status-summary');
+              const compact = getComputedStyle(summary).display === 'grid';
+              const rail = summary.getBoundingClientRect();
               const preview = element.querySelector('.preview').getBoundingClientRect();
-              const card = element
-                .querySelector('erp-surface-card > section')
-                .getBoundingClientRect();
-              const tableBody = element
-                .querySelector('.p-datatable-table-container')
-                .getBoundingClientRect();
-              const title = element.querySelector('.import-heading h2').getBoundingClientRect();
-              const buttons = [...element.querySelectorAll('.header-actions button')].map(
-                (button) => button.getBoundingClientRect(),
-              );
-              const cards = [...element.querySelectorAll('.status-summary erp-metric-card')].map(
-                (card) => card.getBoundingClientRect(),
-              );
-              const rtl = getComputedStyle(element).direction === 'rtl';
-              const verificationLabel = [
-                ...element.querySelectorAll('.status-summary header > span:first-child'),
-              ].find((label) => label.textContent.toLowerCase().includes('verification'));
-              let verificationFits = true;
-              if (verificationLabel?.firstChild) {
-                const range = document.createRange();
-                const text = verificationLabel.textContent;
-                range.setStart(
-                  verificationLabel.firstChild,
-                  text.toLowerCase().indexOf('verification'),
-                );
-                range.setEnd(verificationLabel.firstChild, text.length);
-                verificationFits = range.getClientRects().length === 1;
-              }
               return {
-                railAtEnd: rtl ? rail.right <= preview.left + 1 : rail.left >= preview.right - 1,
-                vertical: cards.every((card, i) => i === 0 || card.top >= cards[i - 1].bottom),
-                compactCards: cards.every((card) => card.height <= 72),
-                headerSingleRow: buttons.every(
-                  (button) =>
-                    Math.abs(button.y + button.height / 2 - title.y - title.height / 2) <= 4,
-                ),
-                actionsAtEnd: rtl
-                  ? buttons.every((button) => button.right <= title.left)
-                  : buttons.every((button) => button.left >= title.right),
-                mobilePreviewFirst: preview.bottom <= rail.top,
-                previewTop: preview.top,
-                cardBottom: card.bottom,
-                viewportHeight: innerHeight,
-                bodyHeight: tableBody.height,
-                verificationFits,
-                separator: Number.parseFloat(
-                  innerWidth > 899 ? railStyle.borderInlineStartWidth : railStyle.borderTopWidth,
-                ),
+                compact,
+                summaryFirst: rail.bottom <= preview.top,
+                bodyHeight: element
+                  .querySelector('.p-datatable-table-container')
+                  .getBoundingClientRect().height,
+                count: [...summary.children].filter((node) => node.getBoundingClientRect().height)
+                  .length,
+                outerOverflow: document.documentElement.scrollWidth > innerWidth + 1,
               };
             });
-            assert.ok(measured.vertical && measured.compactCards, JSON.stringify(measured));
+            assert.equal(measured.count, 5, JSON.stringify(measured));
             assert.ok(measured.bodyHeight >= 65, JSON.stringify(measured));
-            assert.ok(
-              Math.abs(measured.cardBottom - measured.viewportHeight) <= 32,
-              JSON.stringify(measured),
-            );
-            assert.equal(measured.separator, 1);
-            assert.ok(measured.verificationFits, JSON.stringify(measured));
-            if (width > 899) {
-              assert.ok(
-                measured.railAtEnd && measured.headerSingleRow && measured.actionsAtEnd,
-                JSON.stringify(measured),
-              );
-              assert.ok(measured.previewTop < 450, JSON.stringify(measured));
-            } else assert.ok(measured.mobilePreviewFirst, JSON.stringify(measured));
-            await expect(view.getByTestId('import-submit').getByRole('button')).toBeDisabled();
+            assert.equal(measured.outerOverflow, false, JSON.stringify(measured));
+            if (measured.compact) assert.ok(measured.summaryFirst, JSON.stringify(measured));
+            await expect(p.getByTestId('import-submit').getByRole('button')).toBeDisabled();
             assert.equal(state.posts.length, 1);
-            await expect(view.locator('p-fileupload button')).toBeEnabled();
+            await expect(p.locator('erp-page-header p-fileupload button')).toBeEnabled();
             assert.equal(
               await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
               true,
@@ -360,8 +448,8 @@ try {
       await submit();
       if (action === 'delay') {
         await expect.poll(() => state.posts.length).toBe(1);
-        await expect(view.getByTestId('import-clear').getByRole('button')).toBeDisabled();
-        await expect(view.locator('p-fileupload button')).toBeDisabled();
+        await expect(p.getByTestId('import-clear').getByRole('button')).toBeDisabled();
+        await expect(p.locator('erp-page-header p-fileupload button')).toBeDisabled();
         await pick('cards');
         await expect(view).toBeVisible();
         state.release();
@@ -377,10 +465,10 @@ try {
               ? 'This name is reserved. Choose another country name.'
               : text['imports.submissionUncertain'],
         );
-        await expect(view.getByTestId('import-submit').getByRole('button')).toBeDisabled();
+        await expect(p.getByTestId('import-submit').getByRole('button')).toBeDisabled();
         assert.equal(state.posts.length, 1);
         if (!['duplicate', 'field'].includes(action)) {
-          await expect(view.locator('p-fileupload button')).toBeDisabled();
+          await expect(p.locator('erp-page-header p-fileupload button')).toBeDisabled();
           await view
             .getByRole('button', { name: text['imports.reviewRecords'], exact: true })
             .click();
@@ -507,7 +595,9 @@ try {
         await pick('cards');
         await answer(true);
         await expect(view).toHaveCount(0);
+        await expect(p.locator('erp-page-header .import-actions')).toHaveCount(0);
         await pick('import');
+        await expect(p.locator('erp-page-header .import-actions')).toHaveCount(1);
         await expect(view.getByTestId('import-preview')).toHaveCount(0);
       } else if (scenario === 'keyboard-paging') {
         const size = preview.locator('erp-collection-footer [role=combobox]');
@@ -537,6 +627,7 @@ try {
         await p.evaluate(() => window.dispatchEvent(new Event('focus')));
         await expect.poll(() => state.sessions).toBeGreaterThan(previousSessions);
         await expect(view).toHaveCount(0);
+        await expect(p.locator('erp-page-header .import-actions')).toHaveCount(0);
         if (state.release) {
           state.release();
           await p.evaluate(
@@ -555,7 +646,13 @@ try {
   fs.writeFileSync(
     path.join(
       output,
-      journeys ? 'journey-results.json' : focused ? 'focused-results.json' : 'results.json',
+      layout
+        ? 'layout-results.json'
+        : journeys
+          ? 'journey-results.json'
+          : focused
+            ? 'focused-results.json'
+            : 'results.json',
     ),
     JSON.stringify({ date: new Date().toISOString(), results }, null, 2),
   );

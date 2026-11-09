@@ -32,6 +32,34 @@ nav.stacked a {
   white-space: normal;
   text-align: center;
 }
+nav.toolbar {
+  flex-wrap: nowrap;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+nav.toolbar a {
+  min-inline-size: 36px;
+  min-block-size: 36px;
+  padding: 6px 10px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+@media (max-width: 1199px) {
+  nav.toolbar a {
+    padding: 6px;
+  }
+  nav.toolbar a span {
+    display: none;
+  }
+}
+@media (pointer: coarse) {
+  nav.toolbar a {
+    min-inline-size: 44px;
+    min-block-size: 44px;
+  }
+}
 iframe {
   display: block;
   box-sizing: border-box;

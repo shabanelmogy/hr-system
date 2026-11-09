@@ -19,6 +19,9 @@ List rows contain State fields, parent `SimpleCountryResponse`, active `District
 
 ## 4. Paging, search, and sort
 
+`sortBy=id` uses numeric ascending or descending ID order across all matching
+rows before pagination. The existing `sortDirection` accepts `asc` and `desc`.
+
 `GetStatesQuery` validates positive page, size 1-5000, search at most 200 chars, allow-listed field/operator/status/sort values, optional positive CountryId, and ASC/DESC. Interactive clients use small authoritative server pages and do not use the ceiling as a fetch-all path. The read store applies the criteria before count/page projection and adds deterministic Id ordering.
 
 ## 5. Validation and normalization

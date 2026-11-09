@@ -245,6 +245,366 @@
       "layer": "mobile-react",
       "path": "mobile-react/src/modules/accounting/fiscal-years/presentation/components/FiscalYearReportView.tsx",
       "purpose": "Current stable fiscalyears Mobile entity key"
+    },
+    {
+      "id": "entity-fingerprint-repair-3",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Runtime/Inspection/CrystalReportInspectionService.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-5",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Abstractions/ICrystalReportStore.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-6",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Commands/CrystalReportCommandHandlers.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-7",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Commands/GlobalCrystalReportLifecycleHandlers.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-8",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Commands/GlobalCrystalReportUploadHandlers.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-9",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Commands/ReplaceGlobalCrystalReportCommand.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-10",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Contracts/CrystalReportContracts.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-11",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Queries/CrystalReportQueryHandlers.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-12",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Queries/DownloadPublishedGlobalCrystalReportQuery.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-13",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Queries/GlobalCrystalReportManagementHandlers.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-14",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Validation/CrystalReportContractCompatibility.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-16",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/Features/Analytics/CrystalReports/Compatibility/before-system-error-logs.v1.json",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-17",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/Features/Analytics/CrystalReports/Compatibility/with-system-error-logs.v1.json",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-18",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/Features/Analytics/CrystalReports/EntityContractFingerprint.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-20",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDesignSourceCatalog.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-21",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportStore.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-22",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/GlobalCrystalReportStore.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-24",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/CrystalReportValidationTests.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-25",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportManagementTests.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-26",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportQueryTests.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-27",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportReplacementTests.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-29",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ManagedCrystalTemplateValidationHandlerTests.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-30",
+      "layer": "api",
+      "path": "api/Tests/ErpSystem.IntegrationTests/GlobalCrystalReportAccessPersistenceTests.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-31",
+      "layer": "api",
+      "path": "api/Tests/ErpSystem.IntegrationTests/GlobalCrystalReportPersistenceTests.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-32",
+      "layer": "api",
+      "path": "api/Tests/ErpSystem.IntegrationTests/GlobalCrystalReportReplacementPersistenceTests.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-33",
+      "layer": "api",
+      "path": "api/Tests/ErpSystem.IntegrationTests/GlobalCrystalReportViewTests.cs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-34",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/ENTITY_FINGERPRINT_REPAIR.md",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-35",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/browser/ar-dark-1440-versions.png",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-36",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/browser/ar-dark-390-versions.png",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-37",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/browser/ar-light-1440-versions.png",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-38",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/browser/ar-light-390-versions.png",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-39",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/browser/en-dark-1440-versions.png",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-40",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/browser/en-dark-390-versions.png",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-41",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/browser/en-light-1440-versions.png",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-42",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/browser/en-light-390-versions.png",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-43",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/browser/results.json",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-44",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/hosted-before.json",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-45",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-angular-check.log",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-46",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-angular-red.log",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-47",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-api-final-build.log",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-48",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-api-final-tests.log",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-49",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-api-restore.log",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-50",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-crystal-build.log",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-51",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-crystal-harness-build.log",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-52",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-crystal-harness.log",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-53",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-hosted-read.log",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-54",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-last-format-check.log",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-55",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-modern-vectors.log",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-56",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-red.log",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-57",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-reporting-final.log",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-58",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-sidebar-browser.log",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-59",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/verification.json",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-60",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-report-template-sidebar-browser.mjs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-61",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-super-admin-hosted-read.mjs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-62",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/pages/global-template-manager/global-template-manager.spec.ts",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-63",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/state/global-template-state.ts",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-64",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/types/global-template.ts",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-65",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/utils/global-template-viewer-identity.ts",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "fingerprint-fingerprint-docs-check",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-docs-check.log",
+      "purpose": "Executed corrective documentation/planning acceptance"
+    },
+    {
+      "id": "fingerprint-fingerprint-planning-check",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-planning-check.log",
+      "purpose": "Executed corrective documentation/planning acceptance"
     }
   ]
 }

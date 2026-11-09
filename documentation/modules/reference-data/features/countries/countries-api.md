@@ -169,7 +169,7 @@ restore remain explicit use cases.
 | `status` | `active` | `active`, `archived`, `all` |
 | `currencyCode` | absent | Exactly three letters; normalized uppercase |
 | `hasStates` | absent | `true` means at least one active state; `false` means none |
-| `sortBy` | `nameEn` | `nameEn`, `nameAr`, `alpha2Code`, `alpha3Code`, `currencyCode`, `createdOn` |
+| `sortBy` | `nameEn` | `id`, `nameEn`, `nameAr`, `alpha2Code`, `alpha3Code`, `currencyCode`, `createdOn` |
 | `sortDirection` | `asc` | `asc`, `desc` |
 
 `CountryReadStore` starts with `AsNoTracking`, applies status, search and
@@ -181,7 +181,8 @@ operators combine fields with AND so every searchable property must fail the
 positive match. A nullable field counts as a non-match and therefore satisfies a
 negative condition. Field-specific search evaluates only that field.
 
-Every sort appends `Id` in the same direction. Unknown sort values cannot reach
+Sorting by `id` orders the filtered result numerically before paging. Other
+sorts append `Id` in the same direction. Unknown sort values cannot reach
 the store through a valid request; the store's fallback is `NameEn ASC, Id ASC`.
 
 ### Detail, relation and lookup

@@ -17,6 +17,8 @@ import {
   type GridFilters,
   type GridRowGroup,
   type CollectionId,
+  type CollectionSearch,
+  type CollectionToolbarLayout,
   type GridSelectionMode,
 } from '../public-api';
 interface Row {
@@ -33,6 +35,8 @@ const rows = [
   templateUrl: './grid-capabilities.spec.html',
 })
 class Fixture {
+  readonly toolbarLayout = signal<CollectionToolbarLayout>('responsive');
+  readonly search = signal<CollectionSearch | undefined>(undefined);
   readonly source = signal<CollectionSource<Row>>({
     query,
     kind: 'ready',
@@ -84,6 +88,24 @@ describe('Real shared Table capability composition', () => {
     TestBed.resetTestingModule();
     vi.unstubAllGlobals();
   });
+  it('keeps adaptive structured search separate from forced single-row presentation', async () => {
+    const fixture = TestBed.createComponent(Fixture);
+    await fixture.whenStable();
+    fixture.componentInstance.toolbarLayout.set('adaptive');
+    fixture.componentInstance.search.set({
+      value: '',
+      placeholder: 'Search records',
+      field: { label: 'Field', value: 'all', options: [{ value: 'all', label: 'All' }] },
+    });
+    await fixture.whenStable();
+    const root = fixture.nativeElement as HTMLElement;
+    expect(root.querySelector('.structured-search')).not.toBeNull();
+    expect(root.querySelector('.single-row-toolbar')).toBeNull();
+    fixture.componentInstance.toolbarLayout.set('single-row');
+    await fixture.whenStable();
+    expect(root.querySelector('.single-row-toolbar')).not.toBeNull();
+    expect(root.querySelector('.structured-search')).toBeNull();
+  });
   it('selects the current eligible page from the column header and keeps count/clear in the footer', async () => {
     const fixture = TestBed.createComponent(Fixture);
     await fixture.whenStable();
@@ -109,6 +131,31 @@ describe('Real shared Table capability composition', () => {
     await fixture.whenStable();
     expect(grid.controller.selectedIds()).toEqual([]);
     expect(header?.checked).toBe(false);
+  });
+  it('keeps selection labels unique and operable across frozen rows and radio mode', async () => {
+    const fixture = TestBed.createComponent(Fixture);
+    const owner = fixture.componentInstance;
+    owner.frozen.set([1]);
+    await fixture.whenStable();
+    const root = fixture.nativeElement as HTMLElement;
+    const labels = Array.from(root.querySelectorAll<HTMLLabelElement>('.grid-selection'));
+    expect(labels).toHaveLength(3);
+    expect(new Set(labels.map((label) => label.htmlFor)).size).toBe(3);
+    for (const label of labels) {
+      expect(label.control).toBe(label.querySelector('input'));
+    }
+    root.querySelector<HTMLLabelElement>('[data-collection-frozen="true"] label')?.click();
+    await fixture.whenStable();
+    expect(owner.grid().controller.selectedIds()).toEqual([1]);
+    owner.selectionMode.set('radio');
+    await fixture.whenStable();
+    const radioLabel = root.querySelector<HTMLLabelElement>(
+      '[data-collection-frozen="true"] label',
+    );
+    expect(radioLabel?.control?.getAttribute('type')).toBe('radio');
+    radioLabel?.click();
+    await fixture.whenStable();
+    expect(owner.grid().controller.selectedIds()).toEqual([1]);
   });
   it('disables header selection outside a ready eligible page and omits select-all in single/radio modes', async () => {
     const fixture = TestBed.createComponent(Fixture);
@@ -291,6 +338,14 @@ describe('Real shared Table capability composition', () => {
     fixture.componentInstance.activateRowAction(fixtureItem(rows, 0), 'edit');
     expect(callback).toHaveBeenCalledOnce();
     expect(fixture.componentInstance.actionColumnWidth()).toBeGreaterThanOrEqual(128);
+    fixture.componentRef.setInput('actionDisplay', 'menu');
+    fixture.componentRef.setInput('contextActions', () => [
+      { id: 'edit', label: 'Edit', icon: 'edit', disabled: true },
+    ]);
+    await fixture.whenStable();
+    expect(root.querySelector<HTMLButtonElement>('.action-cell button')?.disabled).toBe(true);
+    fixture.componentInstance.activateRowAction(fixtureItem(rows, 0), 'edit');
+    expect(callback).toHaveBeenCalledOnce();
     fixture.componentRef.setInput('grouping', { field: 'name', mode: 'subheader', scope: 'page' });
     await fixture.whenStable();
     expect(root.querySelector<HTMLTableCellElement>('.group-row td')?.colSpan).toBe(3);

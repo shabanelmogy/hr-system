@@ -1,6 +1,7 @@
 :host {
   display: block;
   min-width: 0;
+  container: report-layout / inline-size;
 }
 .workspace {
   display: grid;
@@ -36,8 +37,8 @@ erp-content-tabs {
 .workspace.reference {
   height: 100%;
   min-height: 0;
-  grid-template-columns: 280px minmax(0, 1fr);
-  gap: 64px;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 16px;
   align-items: stretch;
 }
 .reference aside {
@@ -56,15 +57,13 @@ erp-content-tabs {
 .workspace.reference.no-criteria {
   grid-template-columns: minmax(0, 1fr);
 }
-@media (max-width: 599px) {
-  .workspace.reference {
+@container report-layout (max-width: 54rem) {
+  .workspace.reference:not(.no-criteria) {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: minmax(0, auto) minmax(160px, 1fr);
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1.2fr);
+    gap: 12px;
   }
   .workspace.reference.no-criteria {
     grid-template-rows: minmax(0, 1fr);
-  }
-  .reference aside {
-    max-height: 60dvh;
   }
 }

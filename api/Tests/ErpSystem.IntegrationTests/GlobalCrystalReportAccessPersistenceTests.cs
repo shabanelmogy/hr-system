@@ -65,7 +65,7 @@ public sealed class GlobalCrystalReportAccessPersistenceTests
         }
         await using (var edit = new ReportingDbContext(options, admin))
         {
-            var store = new GlobalCrystalReportStore(edit);
+            var store = new GlobalCrystalReportStore(edit, ManagedCrystalReportContractRegistry.LoadEmbedded());
             var access = new GlobalCrystalReportAccessStore(edit, admin, roles);
             var handler = new ReplaceGlobalCrystalReportGrantsCommandHandler(store, access,
                 new GlobalCrystalReportPolicy(admin, permissions), edit, new CrystalReportErrors(new Echo()));
@@ -93,7 +93,7 @@ public sealed class GlobalCrystalReportAccessPersistenceTests
         await using (var archive = new ReportingDbContext(options, admin))
         {
             var report = await archive.GlobalCrystalReports.SingleAsync(report => report.Id == reportId);
-            var handler = new ArchiveGlobalCrystalReportCommandHandler(new GlobalCrystalReportStore(archive),
+            var handler = new ArchiveGlobalCrystalReportCommandHandler(new GlobalCrystalReportStore(archive, ManagedCrystalReportContractRegistry.LoadEmbedded()),
                 new GlobalCrystalReportPolicy(admin, permissions), archive, new CrystalReportErrors(new Echo()));
             Assert.True((await handler.Handle(new ArchiveGlobalCrystalReportCommand(reportId, Convert.ToBase64String(report.RowVersion)), default)).IsSuccess);
             Assert.NotNull(report.DeletedOn);

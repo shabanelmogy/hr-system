@@ -18,6 +18,9 @@
 @container (max-width: 599px) {
   @include compact-label;
 }
+@container collection-toolbar (max-width: 64rem) {
+  @include compact-label;
+}
 :host.erp-action-host-fluid,
 .erp-action-fluid {
   inline-size: 100%;
@@ -83,6 +86,7 @@ button[aria-pressed='true'] {
   display: none;
 }
 .quiet span[pButtonLabel] {
+  display: var(--action-quiet-label-display, block);
   flex: 0 1 auto;
   font-weight: inherit;
 }
@@ -91,7 +95,7 @@ button[aria-pressed='true'] {
   border: 1px solid var(--border);
   border-radius: 4px;
   padding: 5px var(--action-toggle-padding-x, 10px);
-  min-width: 32px;
+  min-width: var(--action-toggle-min-width, 32px);
   font-weight: 400;
   font-size: var(--action-font-size, 14px);
   line-height: var(--action-line-height, 1.75);

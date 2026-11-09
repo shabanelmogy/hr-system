@@ -57,4 +57,4 @@ realtime, notification, localization, report, or Import integration is reachable
 | platform-browser-authentication-mobile | 2 | `d830b4f3a096cd0ae552b4154e217df9fb96f59defcd268afdf26c5343cec898` |
 | platform-browser-authentication-mobile | 11 | `3b9b38136ee9eee63b85e9b06240286b646e8b78f3d34926eaea28e95760c620` |
 | platform-browser-authentication-mobile | 12 | `3308fb3907bfc143e813e7885d79a4f0a5deb686d1459079e2f47ef2cbddd72c` |
-| platform-browser-authentication-mobile | 15 | `8af0ef3df801ece28afe0c2530e18328fe178388112421d98303da529229d8ee` |
+| platform-browser-authentication-mobile | 15 | `3190c8de20efd23944f3a57fc437066bbf485bf26bc2868c35271da32d5469d7` |

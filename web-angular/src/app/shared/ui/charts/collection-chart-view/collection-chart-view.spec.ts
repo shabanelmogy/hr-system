@@ -59,6 +59,10 @@ describe('Shared collection chart composition', () => {
       fixture.componentRef.setInput(key, value);
     await fixture.whenStable();
     const root = fixture.nativeElement as HTMLElement;
+    expect(root.querySelector('.collection-toolbar')).toBeNull();
+    fixture.componentRef.setInput('toolbarVisible', true);
+    await fixture.whenStable();
+    expect(root.querySelector('.collection-toolbar')).not.toBeNull();
     expect(root.querySelectorAll('erp-metric-card')).toHaveLength(1);
     expect(root.querySelectorAll('erp-chart-panel')).toHaveLength(1);
     expect(root.querySelector('erp-collection-footer')).toBeNull();

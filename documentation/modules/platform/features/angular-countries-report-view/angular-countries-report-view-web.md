@@ -26,7 +26,20 @@ criteria without discarding form/selection or rerendering. No nested PageHeader.
 Reporting keeps existing catalog/service/PDF validation/cancellation. Applied filters
 and selected report now belong to the immutable actor; replacement clears them and
 draft fields. Explicit reload regenerates even if source/hash is unchanged. Shared
-ReportWorkspace reference appearance uses280px sidebar/gap64 and contained scrolling;
+Current user-approved presentation2026-11-08 supersedes the historical sidebar
+geometry: ReportWorkspace uses260px sidebar/gap16, with bounded stacked rows/gap12
+below54rem of actual workspace width. Open/Download PDF links are projected from
+GlobalReportView.headerActions into the existing Countries title card through
+externalActions. No duplicate header or PDF lease is created. The shared viewer
+uses compact toolbar links with translated accessible names; stale document links
+disappear during replacement/errors and are revoked by the existing PDF owner.
+The existing browser script uses intercepted development-build assets and its
+`--focused` mode verifies lifecycle/download/authority behavior in8 EN/AR,
+Light/Dark cases. `--layout` covers20 cases at320/690/844/1012/1440px, including
+844×390, coarse-pointer header targets, open navigation and retained iframe/URL
+while criteria visibility changes. Fixtures validate UI/resource handling; native
+PDF paint and live Crystal output remain distinct from these synthetic checks.
+ReportWorkspace reference appearance retains contained scrolling;
 FormContainer sidebar appearance keeps Search/Reset full width; PdfViewer fill mode
 retains safe open/download, capability fallback, lease cleanup and finite inline area.
 Existing standalone report defaults remain compatible; no new package or translation key.

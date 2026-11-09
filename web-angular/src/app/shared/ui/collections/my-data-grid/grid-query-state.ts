@@ -15,14 +15,15 @@ interface GridQueryOptions<T> {
   readonly advancedFilters: () => boolean;
   readonly filters: () => GridFilters;
   readonly sorts: () => readonly GridSortItem[];
-  readonly sort: () => CollectionSort | undefined;
+  readonly sort: () => CollectionSort | null | undefined;
   readonly sortMode: () => 'single' | 'multiple';
   readonly source: () => CollectionSource<T>;
   readonly ready: () => boolean;
   readonly locale: { translate(key: string): string };
   readonly filtersChange: (value: GridFilters) => void;
   readonly sortsChange: (value: readonly GridSortItem[]) => void;
-  readonly sortChange: (value: CollectionSort) => void;
+  readonly sortChange: (value: CollectionSort | null) => void;
+  readonly clearSortPresentation: () => void;
 }
 /** Per-grid vendor event normalization and deferred sort acceptance. */
 export class GridQueryState<T> {
@@ -108,8 +109,20 @@ export class GridQueryState<T> {
           }),
           this.options.columns().flatMap((column) => (column.sortField ? [column.sortField] : [])),
         );
-        if (JSON.stringify(sorts) !== JSON.stringify(this.options.sorts()))
-          this.options.sortsChange(sorts);
+        const next = sorts.filter(
+          (sort) =>
+            !this.options
+              .sorts()
+              .some(
+                (current) =>
+                  current.field === sort.field &&
+                  current.direction === 'desc' &&
+                  sort.direction === 'asc',
+              ),
+        );
+        if (next.length < sorts.length) this.options.clearSortPresentation();
+        if (JSON.stringify(next) !== JSON.stringify(this.options.sorts()))
+          this.options.sortsChange(next);
       } catch {
         /* Unsupported vendor sort never becomes owner criteria. */
       }
@@ -146,7 +159,13 @@ export class GridQueryState<T> {
           this.options.sort()?.direction === pending.value.direction)
       )
         return;
-      this.options.sortChange(pending.value);
+      const current = this.options.sort();
+      const cleared =
+        current?.field === pending.value.field &&
+        current.direction === 'desc' &&
+        pending.value.direction === 'asc';
+      if (cleared) this.options.clearSortPresentation();
+      this.options.sortChange(cleared ? null : pending.value);
     });
   }
 }

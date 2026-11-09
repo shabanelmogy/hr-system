@@ -6,7 +6,7 @@ Platform Tenants owns aggregate management; existing tenancy API/persistence, Mo
 
 ## 2. Verified source
 
-Tenant Management now has the guarded /super-admin/tenants page, shared Grid/Cards, server search/sort/page, five-tab create/edit, real detail rowVersion, nested entitlement selection, dashboard link and sidebar entry. TENANT_FOUNDATION_2026-11-06.md remains a historical foundation checkpoint. Current client acceptance is recorded separately in TENANT_WORKSPACE_2026-11-06.md. Existing API/domain/persistence and native screens remain unchanged; Next locale additions are canonical input to the generated catalog.
+Tenant Management uses the guarded /super-admin/tenants list with shared Grid/Cards, server search/sort/page and shared header export. Add/Edit share a full-page editor with Profile, Subscription, Applications and Administrators tabs, fresh detail rowVersion and interactive nested entitlements. It is a direct Basic Data sidebar entry. Current organization and acceptance are recorded in TENANT_TABS_AND_EDIT_2026-11-08.md. The November 6 receipts remain historical. Next locale resources feed the generated catalog.
 
 ## 3. Data contract
 
@@ -18,7 +18,7 @@ Existing super_admin role-only API; no Tenants:* grant invented. Positive Int32 
 
 ## 5. Platform decisions
 
-Web Grid/Cards and five-tab create/edit Required. Requester amendment2026-11-06 moves Add Tenant to /super-admin/tenants/new; Edit retains its dialog. C-01 permits this full-page container, with unchanged fields/atomic submission. Standalone Detail/Chart/Report/Import/Export/Tree/mock generator Excluded by current Next source. API archive/restore/purge/includeArchived UI Excluded in this parity slice. New native conversion Excluded.
+Web Grid/Cards, shared header export and full-page Add/Edit are Required under the approved client amendments. The editor uses four tabs, with billing/contact and full-width Notes inside Profile. Administrators is scoped to a saved Tenant and uses its existing account commands. Standalone Detail/Chart/Report/Import/Tree/mock generator and API archive/restore/purge/includeArchived UI are Excluded in this slice. New native conversion is Excluded.
 
 ## 6. Transport
 
@@ -26,7 +26,7 @@ GET /api/v1/tenants/getPage/get/{id}; POST /create; PUT /update/{id}. GET /modul
 
 ## 7. Shared composition
 
-Reuse MyDataGrid/CardList/PageHeader/DialogPanel/FormContainer/ContentTabs and shared text/boolean/numeric/date/reference fields. Focused owner components for identity/subscription/contact/entitlements/notes, card header/content and list criteria. FormSection and the nearest-form registry preserve shared summary/first-invalid focus across child component views. The aggregate entitlement field extends the public FormFieldControl contract and composes shared BooleanField controls. Catalog retry waits for its refreshed snapshot before fetching detail. The extracted TenantForm composition is reused by the create page and edit dialog. The create page uses shared PageHeader/SurfaceCard and FormContainer.appearance=page, plus a feature-owned live draft summary. It does not instantiate TenantReadState or fetch the list. Shared canDeactivate navigation guards protect dirty/pending drafts. Actor replacement starts a fresh draft only when the new authorized actor catalog is ready. Existing scoped read/dirty/close/error owners remain authoritative; no engine or duplicate visual shell.
+Reuse MyDataGrid/CardList/PageHeader/FormContainer/ContentTabs and shared text/boolean/numeric/date/reference fields. Focused owner components compose Profile, subscription, entitlements, cards and list criteria. FormSection and the nearest-form registry preserve error summaries and first-invalid focus across tabs. The aggregate entitlement field implements FormFieldControl with shared BooleanField controls. Catalog retry waits for the refreshed snapshot before fetching detail. TenantEditorPage keys TenantEditorWorkspace by route identity. Add and Edit share TenantForm, bounded filled tabs, shared SurfaceCard and a live draft summary matching the details height. Shared canDeactivate guards protect drafts and pending writes. The embedded administrator workspace retains its own state and body-appended dialog. Actor changes use the existing fresh-draft/catalog policy.
 
 ## 8. States and lifetime
 
@@ -54,8 +54,28 @@ Retain PROD-019 catalog publication, PROD-028/025 reporting/provider and RISK-02
 
 ## 14. Education
 
-Phase07 Arabic customer guide completed after the current Phase06 Verified decision: documentation/plans/business/web-angular-migration/education/angular-tenant-management-workspace.md. It documents full-page Add Tenant, retained edit dialog, all five tabs, live summary, shared validation/dirty/pending/conflict and exact hosted/native limits. The guide is registered as existing evidence.
+The Arabic customer guide is documentation/plans/business/web-angular-migration/education/angular-tenant-management-workspace.md. It documents the direct Basic Data entry, full-page Add/Edit, four tabs, Profile Notes, scoped administrators, live summary and shared validation/dirty/pending/conflict behavior. Execution receipts and hosted/native limits are recorded in TENANT_TABS_AND_EDIT_2026-11-08.md.
 
 ## 15. Handoff
 
 Tenant client runtime/verification and education are complete. Canonical documentation generation/check passes484recipes and planning passes with two inherited unrelated v2-contract warnings. Final source hashes match the current implementation. The active documentation stage transfers to the next sibling preflight in the parent sequence. Later Tenant-admin/audit/error/settings/operational tools and final comprehensive review remain Required under the Active parent goal; no sibling runtime was started. States/Districts remain Closed.
+
+## Current tenant workspace organization — 2026-11-08
+
+The approved Angular workspace keeps the Tenant list directly under its one
+Tenant Management navigation destination, without extra outer tabs. The separate
+administrator sidebar entry is omitted; its existing global route remains
+compatible, and the temporary /tenants/administrators URL redirects there.
+Add/Edit use the same full-page editor; Administrators is a tab inside the Tenant
+details card. Tenant Profile combines identity, billing/contact and full-width
+Notes in one field grid without internal sections; only Profile, Subscription,
+Applications and Administrators remain as tabs. Existing saved-tenant membership filtering,
+scoped export and preselected administrator creation use the existing services.
+An unsaved tenant requires its first save. Tenant overview matches details height
+with internal scrolling; shared tabs own consistent panel insets.
+
+No API/domain/schema change: current Tenant/TenantAdmin endpoints, rowVersion,
+authorization and account-wide administrator archive semantics are retained.
+Only canonical bilingual UI resources are regenerated; no hosted write.
+
+Current source and verification: [tenant tabs and full-page edit](TENANT_TABS_AND_EDIT_2026-11-08.md).

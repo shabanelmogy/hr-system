@@ -43,6 +43,7 @@
   min-width: max-content;
 }
 .collection-shell .collection-toolbar {
+  --app-icon-size: 18px;
   padding: 0 0 12px;
 }
 @media (max-width: 1199px) {
@@ -76,7 +77,7 @@
   padding-block: 8px 12px;
   overscroll-behavior-inline: contain;
 }
-.single-row-toolbar .collection-toolbar .search-controls {
+.single-row-toolbar .search-controls {
   flex: 1 0 540px;
   flex-direction: row;
   align-items: center;
@@ -84,35 +85,35 @@
   min-width: 540px;
   max-width: none;
 }
-.single-row-toolbar .collection-toolbar .search-controls .search-field {
+.single-row-toolbar .search-field {
   flex: 0 0 155px;
   width: auto;
 }
-.single-row-toolbar .collection-toolbar .search-controls .search-operator {
+.single-row-toolbar .search-operator {
   flex: 0 0 165px;
   width: auto;
 }
-.single-row-toolbar .collection-toolbar .search-controls erp-text-field {
+.single-row-toolbar .search-controls erp-text-field {
   flex: 1 0 220px;
   min-width: 220px;
   width: auto;
 }
-.single-row-toolbar .collection-toolbar .search-controls.simple-search {
+.single-row-toolbar .search-controls.simple-search {
   flex-basis: 220px;
   min-width: 220px;
 }
-.single-row-toolbar .collection-toolbar .filter-region {
+.single-row-toolbar .filter-region {
   flex: 0 0 auto;
   padding: 0;
 }
-.single-row-toolbar .collection-toolbar .toolbar-content {
+.single-row-toolbar .toolbar-content {
   flex: 0 0 auto;
   margin-inline-start: 0;
 }
 .single-row-toolbar .collection-toolbar > erp-button {
   flex-shrink: 0;
 }
-:host ::ng-deep .single-row-toolbar .filter-region [toolbarFilters] {
+:host ::ng-deep .single-row-toolbar [toolbarFilters] {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -126,6 +127,120 @@
   border: 0;
   border-radius: 0;
   background: transparent;
+}
+.adaptive-toolbar {
+  container: collection-toolbar / inline-size;
+}
+
+@container collection-toolbar (max-width: 520px) {
+  .collection-toolbar:has(.simple-search) {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    overflow-x: visible;
+    padding-block-end: 8px;
+
+    .search-controls,
+    .filter-region {
+      grid-column: 1 / -1;
+      min-inline-size: 0;
+    }
+
+    .search-controls {
+      flex-wrap: wrap;
+    }
+
+    .search-controls erp-text-field {
+      flex: 1 1 100%;
+      min-inline-size: 0;
+    }
+
+    .toolbar-content:has(> [toolbarContent]:empty) {
+      display: none;
+    }
+
+    .toolbar-content {
+      grid-column: 1;
+    }
+
+    > erp-button {
+      grid-column: 2;
+      justify-self: start;
+    }
+  }
+
+  :host ::ng-deep .filter-region [toolbarFilters] {
+    flex: 1 1 100%;
+    flex-wrap: wrap;
+    white-space: normal;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+
+    erp-option-select {
+      flex: 1 1 7.5rem;
+      min-inline-size: 0;
+    }
+  }
+}
+
+@media (max-width: 571px) {
+  @container collection-toolbar (min-width: 0px) {
+    .grid-options {
+      --action-quiet-label-display: none;
+      --action-padding-x: 9px;
+    }
+
+    .collection-toolbar:has(.simple-search) {
+      display: grid;
+      overflow-x: visible;
+
+      .search-controls.simple-search {
+        grid-column: 1;
+        min-inline-size: 0;
+      }
+
+      .search-controls erp-text-field {
+        flex: 1 1 auto;
+        min-inline-size: 0;
+      }
+
+      &:has(.grid-options) {
+        grid-template-columns: minmax(0, 1fr) auto auto;
+
+        .toolbar-content {
+          grid-column: 2;
+          grid-row: 1;
+        }
+
+        .grid-options {
+          grid-column: 3;
+          grid-row: 1;
+        }
+
+        .filter-region {
+          grid-column: 1 / -1;
+          grid-row: 2;
+        }
+      }
+
+      &:not(:has(.grid-options)) {
+        grid-template-columns: minmax(0, 1fr) clamp(10rem, 56%, 18rem);
+
+        .filter-region {
+          grid-column: 2;
+          grid-row: 1;
+          --action-icon-size: 32px;
+        }
+      }
+    }
+
+    :host
+      ::ng-deep
+      .collection-toolbar:has(.simple-search):not(:has(.grid-options))
+      [toolbarFilters] {
+      flex-wrap: nowrap;
+      gap: 4px;
+    }
+  }
 }
 
 :host {
@@ -187,11 +302,11 @@
   padding: 0 8px 8px;
   flex-shrink: 0;
 }
-.selection-bar,
+.selection-controls,
 .selection-summary {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
   font-size: 12px;
   flex-shrink: 0;
   white-space: nowrap;
@@ -200,12 +315,17 @@
   padding: 4px 12px;
   border-block: 1px solid var(--border);
 }
-.selection-bar .selection-summary {
-  flex: 1;
-}
 .selection-summary erp-button {
-  margin-inline-start: auto;
-  --action-min-height: 30px;
+  --action-icon-size: 24px;
+  --action-min-height: 24px;
+}
+@media (max-height: 480px) and (orientation: landscape) {
+  .collection-shell:not(.plain-shell) {
+    padding-block: 8px;
+  }
+  .collection-shell .collection-toolbar {
+    padding-block: 6px;
+  }
 }
 @media (max-width: 599px) {
   .collection-shell {

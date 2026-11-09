@@ -1,5 +1,18 @@
 @use '../../../../shared/ui/cards/entity-card';
 @include entity-card.header;
+.card-heading {
+  flex-wrap: wrap;
+}
+.card-heading > div {
+  flex: 1 1 8rem;
+}
+.card-heading > erp-status-badge {
+  position: static;
+  flex-shrink: 0;
+}
+.card-heading p {
+  margin-block-end: 4px;
+}
 .username {
   color: var(--muted-foreground);
   font-size: 0.875rem;

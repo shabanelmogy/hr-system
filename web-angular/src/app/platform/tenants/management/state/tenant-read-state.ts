@@ -42,6 +42,16 @@ export class TenantReadState {
   private readonly actorKeys = new WeakMap<Session, number>();
   private actorSequence = 0;
   readonly query = this.criteria.asReadonly();
+  private readonly clearedSortField = signal<string | null>(null);
+  readonly sortField = computed(() => this.clearedSortField() ?? this.query().columnName);
+  readonly sort = computed<CollectionSort | null>(() =>
+    this.clearedSortField() !== null
+      ? null
+      : {
+          field: this.query().columnName,
+          direction: this.query().sortDirection === 'DESC' ? 'desc' : 'asc',
+        },
+  );
 
   exportSource(
     columns: readonly TabularColumn<TenantRecord>[],
@@ -154,22 +164,33 @@ export class TenantReadState {
     });
   }
 
-  private patch(change: Partial<TenantQuery>): void {
-    if (!this.canRead()) return;
+  private patch(change: Partial<TenantQuery>): boolean {
+    if (!this.canRead()) return false;
     const parsed = tenantQuerySchema.safeParse({ ...this.criteria(), ...change });
-    if (parsed.success && JSON.stringify(parsed.data) !== JSON.stringify(this.criteria()))
+    if (!parsed.success) return false;
+    if (JSON.stringify(parsed.data) !== JSON.stringify(this.criteria()))
       this.criteria.set(parsed.data);
+    return true;
   }
   changePage(page: CollectionPageRequest): void {
     this.patch({ pageNumber: page.pageIndex + 1, pageSize: page.pageSize });
   }
-  changeSort(sort: CollectionSort): void {
-    if (sort.field !== 'name' && sort.field !== 'identifier' && sort.field !== 'createdOn') return;
-    this.patch({
-      columnName: sort.field,
-      sortDirection: sort.direction === 'desc' ? 'DESC' : 'ASC',
-      pageNumber: 1,
-    });
+  changeSort(sort: CollectionSort | null): void {
+    const previousField = this.sortField();
+    const sorting = sort ?? {
+      field: defaultTenantQuery.columnName,
+      direction: defaultTenantQuery.sortDirection === 'DESC' ? 'desc' : 'asc',
+    };
+    if (sorting.field !== 'name' && sorting.field !== 'identifier' && sorting.field !== 'createdOn')
+      return;
+    if (
+      this.patch({
+        columnName: sorting.field,
+        sortDirection: sorting.direction === 'desc' ? 'DESC' : 'ASC',
+        pageNumber: 1,
+      })
+    )
+      this.clearedSortField.set(sort === null ? previousField : null);
   }
   changeSearch(change: CollectionSearchChange): void {
     if (!this.canRead() || !('value' in change) || change.value.length > 200) return;
@@ -181,6 +202,7 @@ export class TenantReadState {
     this.searchEvents.next('');
     this.search.set('');
     this.criteria.set(defaultTenantQuery);
+    this.clearedSortField.set(null);
   }
   refresh(): void {
     const spec = this.spec();

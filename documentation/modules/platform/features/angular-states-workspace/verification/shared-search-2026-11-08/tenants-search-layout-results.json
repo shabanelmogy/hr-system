@@ -1,0 +1,4590 @@
+[
+  {
+    "language": "en",
+    "mode": "light",
+    "measurements": [
+      {
+        "kind": "grid",
+        "width": 390,
+        "height": 844,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "grid",
+          "wrap": "nowrap",
+          "contentWidth": 340,
+          "boxes": [
+            {
+              "label": "",
+              "x": 25,
+              "y": 196.03125,
+              "right": 222.265625,
+              "bottom": 232.03125,
+              "width": 197.265625,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 230.265625,
+              "y": 196.03125,
+              "right": 315,
+              "bottom": 232.03125,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 323,
+              "y": 195.53125,
+              "right": 365,
+              "bottom": 231.53125,
+              "width": 42,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 571,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "grid",
+          "wrap": "nowrap",
+          "contentWidth": 521,
+          "boxes": [
+            {
+              "label": "",
+              "x": 25,
+              "y": 200.15625,
+              "right": 403.265625,
+              "bottom": 236.15625,
+              "width": 378.265625,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 411.265625,
+              "y": 200.15625,
+              "right": 496,
+              "bottom": 236.15625,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 504,
+              "y": 199.65625,
+              "right": 546,
+              "bottom": 235.65625,
+              "width": 42,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 676,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 610,
+          "boxes": [
+            {
+              "label": "",
+              "x": 33,
+              "y": 225.8125,
+              "right": 414.703125,
+              "bottom": 261.8125,
+              "width": 381.703125,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 422.703125,
+              "y": 225.8125,
+              "right": 507.4375,
+              "bottom": 261.8125,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 515.4375,
+              "y": 225.3125,
+              "right": 643,
+              "bottom": 261.3125,
+              "width": 127.5625,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 690,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 624,
+          "boxes": [
+            {
+              "label": "",
+              "x": 33,
+              "y": 225.8125,
+              "right": 428.703125,
+              "bottom": 261.8125,
+              "width": 395.703125,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 436.703125,
+              "y": 225.8125,
+              "right": 521.4375,
+              "bottom": 261.8125,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 529.4375,
+              "y": 225.3125,
+              "right": 657,
+              "bottom": 261.3125,
+              "width": 127.5625,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 800,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 734,
+          "boxes": [
+            {
+              "label": "",
+              "x": 33,
+              "y": 225.8125,
+              "right": 538.703125,
+              "bottom": 261.8125,
+              "width": 505.703125,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 546.703125,
+              "y": 225.8125,
+              "right": 631.4375,
+              "bottom": 261.8125,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 639.4375,
+              "y": 225.3125,
+              "right": 767,
+              "bottom": 261.3125,
+              "width": 127.5625,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 754,
+          "boxes": [
+            {
+              "label": "",
+              "x": 105,
+              "y": 247.484375,
+              "right": 630.703125,
+              "bottom": 283.484375,
+              "width": 525.703125,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 638.703125,
+              "y": 247.484375,
+              "right": 723.4375,
+              "bottom": 283.484375,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 731.4375,
+              "y": 246.984375,
+              "right": 859,
+              "bottom": 282.984375,
+              "width": 127.5625,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 538,
+          "boxes": [
+            {
+              "label": "",
+              "x": 321,
+              "y": 247.484375,
+              "right": 630.703125,
+              "bottom": 283.484375,
+              "width": 309.703125,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 638.703125,
+              "y": 247.484375,
+              "right": 723.4375,
+              "bottom": 283.484375,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 731.4375,
+              "y": 246.984375,
+              "right": 859,
+              "bottom": 282.984375,
+              "width": 127.5625,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 866,
+          "boxes": [
+            {
+              "label": "",
+              "x": 105,
+              "y": 247.484375,
+              "right": 742.703125,
+              "bottom": 283.484375,
+              "width": 637.703125,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 750.703125,
+              "y": 247.484375,
+              "right": 835.4375,
+              "bottom": 283.484375,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 843.4375,
+              "y": 246.984375,
+              "right": 971,
+              "bottom": 282.984375,
+              "width": 127.5625,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 650,
+          "boxes": [
+            {
+              "label": "",
+              "x": 321,
+              "y": 247.484375,
+              "right": 742.703125,
+              "bottom": 283.484375,
+              "width": 421.703125,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 750.703125,
+              "y": 247.484375,
+              "right": 835.4375,
+              "bottom": 283.484375,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 843.4375,
+              "y": 246.984375,
+              "right": 971,
+              "bottom": 282.984375,
+              "width": 127.5625,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 1294,
+          "boxes": [
+            {
+              "label": "",
+              "x": 105,
+              "y": 209.5,
+              "right": 1170.703125,
+              "bottom": 245.5,
+              "width": 1065.703125,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 1178.703125,
+              "y": 209.5,
+              "right": 1263.4375,
+              "bottom": 245.5,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 1271.4375,
+              "y": 209,
+              "right": 1399,
+              "bottom": 245,
+              "width": 127.5625,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 1078,
+          "boxes": [
+            {
+              "label": "",
+              "x": 321,
+              "y": 209.5,
+              "right": 1170.703125,
+              "bottom": 245.5,
+              "width": 849.703125,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 1178.703125,
+              "y": 209.5,
+              "right": 1263.4375,
+              "bottom": 245.5,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 1271.4375,
+              "y": 209,
+              "right": 1399,
+              "bottom": 245,
+              "width": 127.5625,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 844,
+        "height": 390,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 778,
+          "boxes": [
+            {
+              "label": "",
+              "x": 33,
+              "y": 187.5,
+              "right": 582.703125,
+              "bottom": 223.5,
+              "width": 549.703125,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 590.703125,
+              "y": 187.5,
+              "right": 675.4375,
+              "bottom": 223.5,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 683.4375,
+              "y": 187,
+              "right": 811,
+              "bottom": 223,
+              "width": 127.5625,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 390,
+        "height": 844,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "grid",
+          "wrap": "nowrap",
+          "contentWidth": 340,
+          "boxes": [
+            {
+              "label": "",
+              "x": 25,
+              "y": 197.03125,
+              "right": 166.609375,
+              "bottom": 238.03125,
+              "width": 141.609375,
+              "height": 41
+            },
+            {
+              "label": "Tenant name",
+              "x": 174.609375,
+              "y": 199.53125,
+              "right": 293,
+              "bottom": 235.53125,
+              "width": 118.390625,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 297,
+              "y": 195.53125,
+              "right": 329,
+              "bottom": 239.53125,
+              "width": 32,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 333,
+              "y": 195.53125,
+              "right": 365,
+              "bottom": 239.53125,
+              "width": 32,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 571,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "grid",
+          "wrap": "nowrap",
+          "contentWidth": 521,
+          "boxes": [
+            {
+              "label": "",
+              "x": 25,
+              "y": 201.15625,
+              "right": 250,
+              "bottom": 242.15625,
+              "width": 225,
+              "height": 41
+            },
+            {
+              "label": "Tenant name",
+              "x": 258,
+              "y": 203.65625,
+              "right": 401.71875,
+              "bottom": 239.65625,
+              "width": 143.71875,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 405.71875,
+              "y": 199.65625,
+              "right": 437.71875,
+              "bottom": 243.65625,
+              "width": 32,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 441.71875,
+              "y": 199.65625,
+              "right": 473.71875,
+              "bottom": 243.65625,
+              "width": 32,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 676,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 610,
+          "boxes": [
+            {
+              "label": "",
+              "x": 33,
+              "y": 226.8125,
+              "right": 387.28125,
+              "bottom": 267.8125,
+              "width": 354.28125,
+              "height": 41
+            },
+            {
+              "label": "Tenant name",
+              "x": 395.28125,
+              "y": 229.3125,
+              "right": 539,
+              "bottom": 265.3125,
+              "width": 143.71875,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 547,
+              "y": 225.3125,
+              "right": 587,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 595,
+              "y": 225.3125,
+              "right": 635,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 690,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 624,
+          "boxes": [
+            {
+              "label": "",
+              "x": 33,
+              "y": 226.8125,
+              "right": 401.28125,
+              "bottom": 267.8125,
+              "width": 368.28125,
+              "height": 41
+            },
+            {
+              "label": "Tenant name",
+              "x": 409.28125,
+              "y": 229.3125,
+              "right": 553,
+              "bottom": 265.3125,
+              "width": 143.71875,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 561,
+              "y": 225.3125,
+              "right": 601,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 609,
+              "y": 225.3125,
+              "right": 649,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 800,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 734,
+          "boxes": [
+            {
+              "label": "",
+              "x": 33,
+              "y": 226.8125,
+              "right": 511.28125,
+              "bottom": 267.8125,
+              "width": 478.28125,
+              "height": 41
+            },
+            {
+              "label": "Tenant name",
+              "x": 519.28125,
+              "y": 229.3125,
+              "right": 663,
+              "bottom": 265.3125,
+              "width": 143.71875,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 671,
+              "y": 225.3125,
+              "right": 711,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 719,
+              "y": 225.3125,
+              "right": 759,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 754,
+          "boxes": [
+            {
+              "label": "",
+              "x": 105,
+              "y": 248.484375,
+              "right": 603.28125,
+              "bottom": 289.484375,
+              "width": 498.28125,
+              "height": 41
+            },
+            {
+              "label": "Tenant name",
+              "x": 611.28125,
+              "y": 250.984375,
+              "right": 755,
+              "bottom": 286.984375,
+              "width": 143.71875,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 763,
+              "y": 246.984375,
+              "right": 803,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 811,
+              "y": 246.984375,
+              "right": 851,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 538,
+          "boxes": [
+            {
+              "label": "",
+              "x": 321,
+              "y": 248.484375,
+              "right": 603.28125,
+              "bottom": 289.484375,
+              "width": 282.28125,
+              "height": 41
+            },
+            {
+              "label": "Tenant name",
+              "x": 611.28125,
+              "y": 250.984375,
+              "right": 755,
+              "bottom": 286.984375,
+              "width": 143.71875,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 763,
+              "y": 246.984375,
+              "right": 803,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 811,
+              "y": 246.984375,
+              "right": 851,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 866,
+          "boxes": [
+            {
+              "label": "",
+              "x": 105,
+              "y": 248.484375,
+              "right": 715.28125,
+              "bottom": 289.484375,
+              "width": 610.28125,
+              "height": 41
+            },
+            {
+              "label": "Tenant name",
+              "x": 723.28125,
+              "y": 250.984375,
+              "right": 867,
+              "bottom": 286.984375,
+              "width": 143.71875,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 875,
+              "y": 246.984375,
+              "right": 915,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 923,
+              "y": 246.984375,
+              "right": 963,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 650,
+          "boxes": [
+            {
+              "label": "",
+              "x": 321,
+              "y": 248.484375,
+              "right": 715.28125,
+              "bottom": 289.484375,
+              "width": 394.28125,
+              "height": 41
+            },
+            {
+              "label": "Tenant name",
+              "x": 723.28125,
+              "y": 250.984375,
+              "right": 867,
+              "bottom": 286.984375,
+              "width": 143.71875,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 875,
+              "y": 246.984375,
+              "right": 915,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 923,
+              "y": 246.984375,
+              "right": 963,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 1294,
+          "boxes": [
+            {
+              "label": "",
+              "x": 105,
+              "y": 209,
+              "right": 993.5625,
+              "bottom": 253,
+              "width": 888.5625,
+              "height": 44
+            },
+            {
+              "label": "Tenant name",
+              "x": 1001.5625,
+              "y": 213,
+              "right": 1156.96875,
+              "bottom": 249,
+              "width": 155.40625,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 1164.96875,
+              "y": 209,
+              "right": 1266.265625,
+              "bottom": 253,
+              "width": 101.296875,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 1274.265625,
+              "y": 209,
+              "right": 1391,
+              "bottom": 253,
+              "width": 116.734375,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 1078,
+          "boxes": [
+            {
+              "label": "",
+              "x": 321,
+              "y": 209,
+              "right": 993.5625,
+              "bottom": 253,
+              "width": 672.5625,
+              "height": 44
+            },
+            {
+              "label": "Tenant name",
+              "x": 1001.5625,
+              "y": 213,
+              "right": 1156.96875,
+              "bottom": 249,
+              "width": 155.40625,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 1164.96875,
+              "y": 209,
+              "right": 1266.265625,
+              "bottom": 253,
+              "width": 101.296875,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 1274.265625,
+              "y": 209,
+              "right": 1391,
+              "bottom": 253,
+              "width": 116.734375,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 844,
+        "height": 390,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 778,
+          "boxes": [
+            {
+              "label": "",
+              "x": 33,
+              "y": 188.5,
+              "right": 555.28125,
+              "bottom": 229.5,
+              "width": 522.28125,
+              "height": 41
+            },
+            {
+              "label": "Tenant name",
+              "x": 563.28125,
+              "y": 191,
+              "right": 707,
+              "bottom": 227,
+              "width": 143.71875,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 715,
+              "y": 187,
+              "right": 755,
+              "bottom": 231,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 763,
+              "y": 187,
+              "right": 803,
+              "bottom": 231,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      }
+    ],
+    "passed": true
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "measurements": [
+      {
+        "kind": "grid",
+        "width": 390,
+        "height": 844,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "grid",
+          "wrap": "nowrap",
+          "contentWidth": 340,
+          "boxes": [
+            {
+              "label": "",
+              "x": 25,
+              "y": 196.03125,
+              "right": 222.265625,
+              "bottom": 232.03125,
+              "width": 197.265625,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 230.265625,
+              "y": 196.03125,
+              "right": 315,
+              "bottom": 232.03125,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 323,
+              "y": 195.53125,
+              "right": 365,
+              "bottom": 231.53125,
+              "width": 42,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 571,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "grid",
+          "wrap": "nowrap",
+          "contentWidth": 521,
+          "boxes": [
+            {
+              "label": "",
+              "x": 25,
+              "y": 200.15625,
+              "right": 403.265625,
+              "bottom": 236.15625,
+              "width": 378.265625,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 411.265625,
+              "y": 200.15625,
+              "right": 496,
+              "bottom": 236.15625,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 504,
+              "y": 199.65625,
+              "right": 546,
+              "bottom": 235.65625,
+              "width": 42,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 676,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 610,
+          "boxes": [
+            {
+              "label": "",
+              "x": 33,
+              "y": 225.8125,
+              "right": 414.703125,
+              "bottom": 261.8125,
+              "width": 381.703125,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 422.703125,
+              "y": 225.8125,
+              "right": 507.4375,
+              "bottom": 261.8125,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 515.4375,
+              "y": 225.3125,
+              "right": 643,
+              "bottom": 261.3125,
+              "width": 127.5625,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 690,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 624,
+          "boxes": [
+            {
+              "label": "",
+              "x": 33,
+              "y": 225.8125,
+              "right": 428.703125,
+              "bottom": 261.8125,
+              "width": 395.703125,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 436.703125,
+              "y": 225.8125,
+              "right": 521.4375,
+              "bottom": 261.8125,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 529.4375,
+              "y": 225.3125,
+              "right": 657,
+              "bottom": 261.3125,
+              "width": 127.5625,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 800,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 734,
+          "boxes": [
+            {
+              "label": "",
+              "x": 33,
+              "y": 225.8125,
+              "right": 538.703125,
+              "bottom": 261.8125,
+              "width": 505.703125,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 546.703125,
+              "y": 225.8125,
+              "right": 631.4375,
+              "bottom": 261.8125,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 639.4375,
+              "y": 225.3125,
+              "right": 767,
+              "bottom": 261.3125,
+              "width": 127.5625,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 754,
+          "boxes": [
+            {
+              "label": "",
+              "x": 105,
+              "y": 247.484375,
+              "right": 630.703125,
+              "bottom": 283.484375,
+              "width": 525.703125,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 638.703125,
+              "y": 247.484375,
+              "right": 723.4375,
+              "bottom": 283.484375,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 731.4375,
+              "y": 246.984375,
+              "right": 859,
+              "bottom": 282.984375,
+              "width": 127.5625,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 538,
+          "boxes": [
+            {
+              "label": "",
+              "x": 321,
+              "y": 247.484375,
+              "right": 630.703125,
+              "bottom": 283.484375,
+              "width": 309.703125,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 638.703125,
+              "y": 247.484375,
+              "right": 723.4375,
+              "bottom": 283.484375,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 731.4375,
+              "y": 246.984375,
+              "right": 859,
+              "bottom": 282.984375,
+              "width": 127.5625,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 866,
+          "boxes": [
+            {
+              "label": "",
+              "x": 105,
+              "y": 247.484375,
+              "right": 742.703125,
+              "bottom": 283.484375,
+              "width": 637.703125,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 750.703125,
+              "y": 247.484375,
+              "right": 835.4375,
+              "bottom": 283.484375,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 843.4375,
+              "y": 246.984375,
+              "right": 971,
+              "bottom": 282.984375,
+              "width": 127.5625,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 650,
+          "boxes": [
+            {
+              "label": "",
+              "x": 321,
+              "y": 247.484375,
+              "right": 742.703125,
+              "bottom": 283.484375,
+              "width": 421.703125,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 750.703125,
+              "y": 247.484375,
+              "right": 835.4375,
+              "bottom": 283.484375,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 843.4375,
+              "y": 246.984375,
+              "right": 971,
+              "bottom": 282.984375,
+              "width": 127.5625,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 1294,
+          "boxes": [
+            {
+              "label": "",
+              "x": 105,
+              "y": 209.5,
+              "right": 1170.703125,
+              "bottom": 245.5,
+              "width": 1065.703125,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 1178.703125,
+              "y": 209.5,
+              "right": 1263.4375,
+              "bottom": 245.5,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 1271.4375,
+              "y": 209,
+              "right": 1399,
+              "bottom": 245,
+              "width": 127.5625,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 1078,
+          "boxes": [
+            {
+              "label": "",
+              "x": 321,
+              "y": 209.5,
+              "right": 1170.703125,
+              "bottom": 245.5,
+              "width": 849.703125,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 1178.703125,
+              "y": 209.5,
+              "right": 1263.4375,
+              "bottom": 245.5,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 1271.4375,
+              "y": 209,
+              "right": 1399,
+              "bottom": 245,
+              "width": 127.5625,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 844,
+        "height": 390,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 778,
+          "boxes": [
+            {
+              "label": "",
+              "x": 33,
+              "y": 187.5,
+              "right": 582.703125,
+              "bottom": 223.5,
+              "width": 549.703125,
+              "height": 36
+            },
+            {
+              "label": "Reset",
+              "x": 590.703125,
+              "y": 187.5,
+              "right": 675.4375,
+              "bottom": 223.5,
+              "width": 84.734375,
+              "height": 36
+            },
+            {
+              "label": "Grid options",
+              "x": 683.4375,
+              "y": 187,
+              "right": 811,
+              "bottom": 223,
+              "width": 127.5625,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 390,
+        "height": 844,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "grid",
+          "wrap": "nowrap",
+          "contentWidth": 340,
+          "boxes": [
+            {
+              "label": "",
+              "x": 25,
+              "y": 197.03125,
+              "right": 166.609375,
+              "bottom": 238.03125,
+              "width": 141.609375,
+              "height": 41
+            },
+            {
+              "label": "Tenant name",
+              "x": 174.609375,
+              "y": 199.53125,
+              "right": 293,
+              "bottom": 235.53125,
+              "width": 118.390625,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 297,
+              "y": 195.53125,
+              "right": 329,
+              "bottom": 239.53125,
+              "width": 32,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 333,
+              "y": 195.53125,
+              "right": 365,
+              "bottom": 239.53125,
+              "width": 32,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 571,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "grid",
+          "wrap": "nowrap",
+          "contentWidth": 521,
+          "boxes": [
+            {
+              "label": "",
+              "x": 25,
+              "y": 201.15625,
+              "right": 250,
+              "bottom": 242.15625,
+              "width": 225,
+              "height": 41
+            },
+            {
+              "label": "Tenant name",
+              "x": 258,
+              "y": 203.65625,
+              "right": 401.71875,
+              "bottom": 239.65625,
+              "width": 143.71875,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 405.71875,
+              "y": 199.65625,
+              "right": 437.71875,
+              "bottom": 243.65625,
+              "width": 32,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 441.71875,
+              "y": 199.65625,
+              "right": 473.71875,
+              "bottom": 243.65625,
+              "width": 32,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 676,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 610,
+          "boxes": [
+            {
+              "label": "",
+              "x": 33,
+              "y": 226.8125,
+              "right": 387.28125,
+              "bottom": 267.8125,
+              "width": 354.28125,
+              "height": 41
+            },
+            {
+              "label": "Tenant name",
+              "x": 395.28125,
+              "y": 229.3125,
+              "right": 539,
+              "bottom": 265.3125,
+              "width": 143.71875,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 547,
+              "y": 225.3125,
+              "right": 587,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 595,
+              "y": 225.3125,
+              "right": 635,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 690,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 624,
+          "boxes": [
+            {
+              "label": "",
+              "x": 33,
+              "y": 226.8125,
+              "right": 401.28125,
+              "bottom": 267.8125,
+              "width": 368.28125,
+              "height": 41
+            },
+            {
+              "label": "Tenant name",
+              "x": 409.28125,
+              "y": 229.3125,
+              "right": 553,
+              "bottom": 265.3125,
+              "width": 143.71875,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 561,
+              "y": 225.3125,
+              "right": 601,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 609,
+              "y": 225.3125,
+              "right": 649,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 800,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 734,
+          "boxes": [
+            {
+              "label": "",
+              "x": 33,
+              "y": 226.8125,
+              "right": 511.28125,
+              "bottom": 267.8125,
+              "width": 478.28125,
+              "height": 41
+            },
+            {
+              "label": "Tenant name",
+              "x": 519.28125,
+              "y": 229.3125,
+              "right": 663,
+              "bottom": 265.3125,
+              "width": 143.71875,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 671,
+              "y": 225.3125,
+              "right": 711,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 719,
+              "y": 225.3125,
+              "right": 759,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 754,
+          "boxes": [
+            {
+              "label": "",
+              "x": 105,
+              "y": 248.484375,
+              "right": 603.28125,
+              "bottom": 289.484375,
+              "width": 498.28125,
+              "height": 41
+            },
+            {
+              "label": "Tenant name",
+              "x": 611.28125,
+              "y": 250.984375,
+              "right": 755,
+              "bottom": 286.984375,
+              "width": 143.71875,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 763,
+              "y": 246.984375,
+              "right": 803,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 811,
+              "y": 246.984375,
+              "right": 851,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 538,
+          "boxes": [
+            {
+              "label": "",
+              "x": 321,
+              "y": 248.484375,
+              "right": 603.28125,
+              "bottom": 289.484375,
+              "width": 282.28125,
+              "height": 41
+            },
+            {
+              "label": "Tenant name",
+              "x": 611.28125,
+              "y": 250.984375,
+              "right": 755,
+              "bottom": 286.984375,
+              "width": 143.71875,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 763,
+              "y": 246.984375,
+              "right": 803,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 811,
+              "y": 246.984375,
+              "right": 851,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 866,
+          "boxes": [
+            {
+              "label": "",
+              "x": 105,
+              "y": 248.484375,
+              "right": 715.28125,
+              "bottom": 289.484375,
+              "width": 610.28125,
+              "height": 41
+            },
+            {
+              "label": "Tenant name",
+              "x": 723.28125,
+              "y": 250.984375,
+              "right": 867,
+              "bottom": 286.984375,
+              "width": 143.71875,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 875,
+              "y": 246.984375,
+              "right": 915,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 923,
+              "y": 246.984375,
+              "right": 963,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 650,
+          "boxes": [
+            {
+              "label": "",
+              "x": 321,
+              "y": 248.484375,
+              "right": 715.28125,
+              "bottom": 289.484375,
+              "width": 394.28125,
+              "height": 41
+            },
+            {
+              "label": "Tenant name",
+              "x": 723.28125,
+              "y": 250.984375,
+              "right": 867,
+              "bottom": 286.984375,
+              "width": 143.71875,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 875,
+              "y": 246.984375,
+              "right": 915,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 923,
+              "y": 246.984375,
+              "right": 963,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 1294,
+          "boxes": [
+            {
+              "label": "",
+              "x": 105,
+              "y": 209,
+              "right": 993.5625,
+              "bottom": 253,
+              "width": 888.5625,
+              "height": 44
+            },
+            {
+              "label": "Tenant name",
+              "x": 1001.5625,
+              "y": 213,
+              "right": 1156.96875,
+              "bottom": 249,
+              "width": 155.40625,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 1164.96875,
+              "y": 209,
+              "right": 1266.265625,
+              "bottom": 253,
+              "width": 101.296875,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 1274.265625,
+              "y": 209,
+              "right": 1391,
+              "bottom": 253,
+              "width": 116.734375,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 1078,
+          "boxes": [
+            {
+              "label": "",
+              "x": 321,
+              "y": 209,
+              "right": 993.5625,
+              "bottom": 253,
+              "width": 672.5625,
+              "height": 44
+            },
+            {
+              "label": "Tenant name",
+              "x": 1001.5625,
+              "y": 213,
+              "right": 1156.96875,
+              "bottom": 249,
+              "width": 155.40625,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 1164.96875,
+              "y": 209,
+              "right": 1266.265625,
+              "bottom": 253,
+              "width": 101.296875,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 1274.265625,
+              "y": 209,
+              "right": 1391,
+              "bottom": 253,
+              "width": 116.734375,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 844,
+        "height": 390,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 778,
+          "boxes": [
+            {
+              "label": "",
+              "x": 33,
+              "y": 188.5,
+              "right": 555.28125,
+              "bottom": 229.5,
+              "width": 522.28125,
+              "height": 41
+            },
+            {
+              "label": "Tenant name",
+              "x": 563.28125,
+              "y": 191,
+              "right": 707,
+              "bottom": 227,
+              "width": 143.71875,
+              "height": 36
+            },
+            {
+              "label": "Sort ascending",
+              "x": 715,
+              "y": 187,
+              "right": 755,
+              "bottom": 231,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "Reset",
+              "x": 763,
+              "y": 187,
+              "right": 803,
+              "bottom": 231,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      }
+    ],
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "measurements": [
+      {
+        "kind": "grid",
+        "width": 390,
+        "height": 844,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "grid",
+          "wrap": "nowrap",
+          "contentWidth": 340,
+          "boxes": [
+            {
+              "label": "",
+              "x": 196.28125,
+              "y": 196.03125,
+              "right": 365,
+              "bottom": 232.03125,
+              "width": 168.71875,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 75,
+              "y": 196.03125,
+              "right": 188.28125,
+              "bottom": 232.03125,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 25,
+              "y": 195.53125,
+              "right": 67,
+              "bottom": 231.53125,
+              "width": 42,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 571,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "grid",
+          "wrap": "nowrap",
+          "contentWidth": 521,
+          "boxes": [
+            {
+              "label": "",
+              "x": 196.28125,
+              "y": 200.15625,
+              "right": 546,
+              "bottom": 236.15625,
+              "width": 349.71875,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 75,
+              "y": 200.15625,
+              "right": 188.28125,
+              "bottom": 236.15625,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 25,
+              "y": 199.65625,
+              "right": 67,
+              "bottom": 235.65625,
+              "width": 42,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 676,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 610,
+          "boxes": [
+            {
+              "label": "",
+              "x": 291.375,
+              "y": 225.8125,
+              "right": 643,
+              "bottom": 261.8125,
+              "width": 351.625,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 170.09375,
+              "y": 225.8125,
+              "right": 283.375,
+              "bottom": 261.8125,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 33,
+              "y": 225.3125,
+              "right": 162.09375,
+              "bottom": 261.3125,
+              "width": 129.09375,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 690,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 624,
+          "boxes": [
+            {
+              "label": "",
+              "x": 291.375,
+              "y": 225.8125,
+              "right": 657,
+              "bottom": 261.8125,
+              "width": 365.625,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 170.09375,
+              "y": 225.8125,
+              "right": 283.375,
+              "bottom": 261.8125,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 33,
+              "y": 225.3125,
+              "right": 162.09375,
+              "bottom": 261.3125,
+              "width": 129.09375,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 800,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 734,
+          "boxes": [
+            {
+              "label": "",
+              "x": 291.375,
+              "y": 225.8125,
+              "right": 767,
+              "bottom": 261.8125,
+              "width": 475.625,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 170.09375,
+              "y": 225.8125,
+              "right": 283.375,
+              "bottom": 261.8125,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 33,
+              "y": 225.3125,
+              "right": 162.09375,
+              "bottom": 261.3125,
+              "width": 129.09375,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 754,
+          "boxes": [
+            {
+              "label": "",
+              "x": 299.375,
+              "y": 247.484375,
+              "right": 795,
+              "bottom": 283.484375,
+              "width": 495.625,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 178.09375,
+              "y": 247.484375,
+              "right": 291.375,
+              "bottom": 283.484375,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 246.984375,
+              "right": 170.09375,
+              "bottom": 282.984375,
+              "width": 129.09375,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 538,
+          "boxes": [
+            {
+              "label": "",
+              "x": 299.375,
+              "y": 247.484375,
+              "right": 579,
+              "bottom": 283.484375,
+              "width": 279.625,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 178.09375,
+              "y": 247.484375,
+              "right": 291.375,
+              "bottom": 283.484375,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 246.984375,
+              "right": 170.09375,
+              "bottom": 282.984375,
+              "width": 129.09375,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 866,
+          "boxes": [
+            {
+              "label": "",
+              "x": 299.375,
+              "y": 247.484375,
+              "right": 907,
+              "bottom": 283.484375,
+              "width": 607.625,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 178.09375,
+              "y": 247.484375,
+              "right": 291.375,
+              "bottom": 283.484375,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 246.984375,
+              "right": 170.09375,
+              "bottom": 282.984375,
+              "width": 129.09375,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 650,
+          "boxes": [
+            {
+              "label": "",
+              "x": 299.375,
+              "y": 247.484375,
+              "right": 691,
+              "bottom": 283.484375,
+              "width": 391.625,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 178.09375,
+              "y": 247.484375,
+              "right": 291.375,
+              "bottom": 283.484375,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 246.984375,
+              "right": 170.09375,
+              "bottom": 282.984375,
+              "width": 129.09375,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 1294,
+          "boxes": [
+            {
+              "label": "",
+              "x": 299.375,
+              "y": 209.5,
+              "right": 1335,
+              "bottom": 245.5,
+              "width": 1035.625,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 178.09375,
+              "y": 209.5,
+              "right": 291.375,
+              "bottom": 245.5,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 209,
+              "right": 170.09375,
+              "bottom": 245,
+              "width": 129.09375,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 1078,
+          "boxes": [
+            {
+              "label": "",
+              "x": 299.375,
+              "y": 209.5,
+              "right": 1119,
+              "bottom": 245.5,
+              "width": 819.625,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 178.09375,
+              "y": 209.5,
+              "right": 291.375,
+              "bottom": 245.5,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 209,
+              "right": 170.09375,
+              "bottom": 245,
+              "width": 129.09375,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 844,
+        "height": 390,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 778,
+          "boxes": [
+            {
+              "label": "",
+              "x": 291.375,
+              "y": 187.5,
+              "right": 811,
+              "bottom": 223.5,
+              "width": 519.625,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 170.09375,
+              "y": 187.5,
+              "right": 283.375,
+              "bottom": 223.5,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 33,
+              "y": 187,
+              "right": 162.09375,
+              "bottom": 223,
+              "width": 129.09375,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 390,
+        "height": 844,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "grid",
+          "wrap": "nowrap",
+          "contentWidth": 340,
+          "boxes": [
+            {
+              "label": "",
+              "x": 223.390625,
+              "y": 197.03125,
+              "right": 365,
+              "bottom": 238.03125,
+              "width": 141.609375,
+              "height": 41
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 97,
+              "y": 199.53125,
+              "right": 215.390625,
+              "bottom": 235.53125,
+              "width": 118.390625,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 61,
+              "y": 195.53125,
+              "right": 93,
+              "bottom": 239.53125,
+              "width": 32,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 25,
+              "y": 195.53125,
+              "right": 57,
+              "bottom": 239.53125,
+              "width": 32,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 571,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "grid",
+          "wrap": "nowrap",
+          "contentWidth": 521,
+          "boxes": [
+            {
+              "label": "",
+              "x": 321,
+              "y": 201.15625,
+              "right": 546,
+              "bottom": 242.15625,
+              "width": 225,
+              "height": 41
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 177.75,
+              "y": 203.65625,
+              "right": 313,
+              "bottom": 239.65625,
+              "width": 135.25,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 141.75,
+              "y": 199.65625,
+              "right": 173.75,
+              "bottom": 243.65625,
+              "width": 32,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 105.75,
+              "y": 199.65625,
+              "right": 137.75,
+              "bottom": 243.65625,
+              "width": 32,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 676,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 610,
+          "boxes": [
+            {
+              "label": "",
+              "x": 280.25,
+              "y": 226.8125,
+              "right": 643,
+              "bottom": 267.8125,
+              "width": 362.75,
+              "height": 41
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 137,
+              "y": 229.3125,
+              "right": 272.25,
+              "bottom": 265.3125,
+              "width": 135.25,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 89,
+              "y": 225.3125,
+              "right": 129,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 41,
+              "y": 225.3125,
+              "right": 81,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 690,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 624,
+          "boxes": [
+            {
+              "label": "",
+              "x": 280.25,
+              "y": 226.8125,
+              "right": 657,
+              "bottom": 267.8125,
+              "width": 376.75,
+              "height": 41
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 137,
+              "y": 229.3125,
+              "right": 272.25,
+              "bottom": 265.3125,
+              "width": 135.25,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 89,
+              "y": 225.3125,
+              "right": 129,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 41,
+              "y": 225.3125,
+              "right": 81,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 800,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 734,
+          "boxes": [
+            {
+              "label": "",
+              "x": 280.25,
+              "y": 226.8125,
+              "right": 767,
+              "bottom": 267.8125,
+              "width": 486.75,
+              "height": 41
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 137,
+              "y": 229.3125,
+              "right": 272.25,
+              "bottom": 265.3125,
+              "width": 135.25,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 89,
+              "y": 225.3125,
+              "right": 129,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 41,
+              "y": 225.3125,
+              "right": 81,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 754,
+          "boxes": [
+            {
+              "label": "",
+              "x": 288.25,
+              "y": 248.484375,
+              "right": 795,
+              "bottom": 289.484375,
+              "width": 506.75,
+              "height": 41
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 145,
+              "y": 250.984375,
+              "right": 280.25,
+              "bottom": 286.984375,
+              "width": 135.25,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 97,
+              "y": 246.984375,
+              "right": 137,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 49,
+              "y": 246.984375,
+              "right": 89,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 538,
+          "boxes": [
+            {
+              "label": "",
+              "x": 288.25,
+              "y": 248.484375,
+              "right": 579,
+              "bottom": 289.484375,
+              "width": 290.75,
+              "height": 41
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 145,
+              "y": 250.984375,
+              "right": 280.25,
+              "bottom": 286.984375,
+              "width": 135.25,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 97,
+              "y": 246.984375,
+              "right": 137,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 49,
+              "y": 246.984375,
+              "right": 89,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 866,
+          "boxes": [
+            {
+              "label": "",
+              "x": 288.25,
+              "y": 248.484375,
+              "right": 907,
+              "bottom": 289.484375,
+              "width": 618.75,
+              "height": 41
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 145,
+              "y": 250.984375,
+              "right": 280.25,
+              "bottom": 286.984375,
+              "width": 135.25,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 97,
+              "y": 246.984375,
+              "right": 137,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 49,
+              "y": 246.984375,
+              "right": 89,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 650,
+          "boxes": [
+            {
+              "label": "",
+              "x": 288.25,
+              "y": 248.484375,
+              "right": 691,
+              "bottom": 289.484375,
+              "width": 402.75,
+              "height": 41
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 145,
+              "y": 250.984375,
+              "right": 280.25,
+              "bottom": 286.984375,
+              "width": 135.25,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 97,
+              "y": 246.984375,
+              "right": 137,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 49,
+              "y": 246.984375,
+              "right": 89,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 1294,
+          "boxes": [
+            {
+              "label": "",
+              "x": 493.453125,
+              "y": 209,
+              "right": 1335,
+              "bottom": 253,
+              "width": 841.546875,
+              "height": 44
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 339.734375,
+              "y": 213,
+              "right": 485.453125,
+              "bottom": 249,
+              "width": 145.71875,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 202.28125,
+              "y": 209,
+              "right": 331.734375,
+              "bottom": 253,
+              "width": 129.453125,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 49,
+              "y": 209,
+              "right": 194.28125,
+              "bottom": 253,
+              "width": 145.28125,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 1078,
+          "boxes": [
+            {
+              "label": "",
+              "x": 493.453125,
+              "y": 209,
+              "right": 1119,
+              "bottom": 253,
+              "width": 625.546875,
+              "height": 44
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 339.734375,
+              "y": 213,
+              "right": 485.453125,
+              "bottom": 249,
+              "width": 145.71875,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 202.28125,
+              "y": 209,
+              "right": 331.734375,
+              "bottom": 253,
+              "width": 129.453125,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 49,
+              "y": 209,
+              "right": 194.28125,
+              "bottom": 253,
+              "width": 145.28125,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 844,
+        "height": 390,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 778,
+          "boxes": [
+            {
+              "label": "",
+              "x": 280.25,
+              "y": 188.5,
+              "right": 811,
+              "bottom": 229.5,
+              "width": 530.75,
+              "height": 41
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 137,
+              "y": 191,
+              "right": 272.25,
+              "bottom": 227,
+              "width": 135.25,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 89,
+              "y": 187,
+              "right": 129,
+              "bottom": 231,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 41,
+              "y": 187,
+              "right": 81,
+              "bottom": 231,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      }
+    ],
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "measurements": [
+      {
+        "kind": "grid",
+        "width": 390,
+        "height": 844,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "grid",
+          "wrap": "nowrap",
+          "contentWidth": 340,
+          "boxes": [
+            {
+              "label": "",
+              "x": 196.28125,
+              "y": 196.03125,
+              "right": 365,
+              "bottom": 232.03125,
+              "width": 168.71875,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 75,
+              "y": 196.03125,
+              "right": 188.28125,
+              "bottom": 232.03125,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 25,
+              "y": 195.53125,
+              "right": 67,
+              "bottom": 231.53125,
+              "width": 42,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 571,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "grid",
+          "wrap": "nowrap",
+          "contentWidth": 521,
+          "boxes": [
+            {
+              "label": "",
+              "x": 196.28125,
+              "y": 200.15625,
+              "right": 546,
+              "bottom": 236.15625,
+              "width": 349.71875,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 75,
+              "y": 200.15625,
+              "right": 188.28125,
+              "bottom": 236.15625,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 25,
+              "y": 199.65625,
+              "right": 67,
+              "bottom": 235.65625,
+              "width": 42,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 676,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 610,
+          "boxes": [
+            {
+              "label": "",
+              "x": 291.375,
+              "y": 225.8125,
+              "right": 643,
+              "bottom": 261.8125,
+              "width": 351.625,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 170.09375,
+              "y": 225.8125,
+              "right": 283.375,
+              "bottom": 261.8125,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 33,
+              "y": 225.3125,
+              "right": 162.09375,
+              "bottom": 261.3125,
+              "width": 129.09375,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 690,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 624,
+          "boxes": [
+            {
+              "label": "",
+              "x": 291.375,
+              "y": 225.8125,
+              "right": 657,
+              "bottom": 261.8125,
+              "width": 365.625,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 170.09375,
+              "y": 225.8125,
+              "right": 283.375,
+              "bottom": 261.8125,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 33,
+              "y": 225.3125,
+              "right": 162.09375,
+              "bottom": 261.3125,
+              "width": 129.09375,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 800,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 734,
+          "boxes": [
+            {
+              "label": "",
+              "x": 291.375,
+              "y": 225.8125,
+              "right": 767,
+              "bottom": 261.8125,
+              "width": 475.625,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 170.09375,
+              "y": 225.8125,
+              "right": 283.375,
+              "bottom": 261.8125,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 33,
+              "y": 225.3125,
+              "right": 162.09375,
+              "bottom": 261.3125,
+              "width": 129.09375,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 754,
+          "boxes": [
+            {
+              "label": "",
+              "x": 299.375,
+              "y": 247.484375,
+              "right": 795,
+              "bottom": 283.484375,
+              "width": 495.625,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 178.09375,
+              "y": 247.484375,
+              "right": 291.375,
+              "bottom": 283.484375,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 246.984375,
+              "right": 170.09375,
+              "bottom": 282.984375,
+              "width": 129.09375,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 538,
+          "boxes": [
+            {
+              "label": "",
+              "x": 299.375,
+              "y": 247.484375,
+              "right": 579,
+              "bottom": 283.484375,
+              "width": 279.625,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 178.09375,
+              "y": 247.484375,
+              "right": 291.375,
+              "bottom": 283.484375,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 246.984375,
+              "right": 170.09375,
+              "bottom": 282.984375,
+              "width": 129.09375,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 866,
+          "boxes": [
+            {
+              "label": "",
+              "x": 299.375,
+              "y": 247.484375,
+              "right": 907,
+              "bottom": 283.484375,
+              "width": 607.625,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 178.09375,
+              "y": 247.484375,
+              "right": 291.375,
+              "bottom": 283.484375,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 246.984375,
+              "right": 170.09375,
+              "bottom": 282.984375,
+              "width": 129.09375,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 650,
+          "boxes": [
+            {
+              "label": "",
+              "x": 299.375,
+              "y": 247.484375,
+              "right": 691,
+              "bottom": 283.484375,
+              "width": 391.625,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 178.09375,
+              "y": 247.484375,
+              "right": 291.375,
+              "bottom": 283.484375,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 246.984375,
+              "right": 170.09375,
+              "bottom": 282.984375,
+              "width": 129.09375,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 1294,
+          "boxes": [
+            {
+              "label": "",
+              "x": 299.375,
+              "y": 209.5,
+              "right": 1335,
+              "bottom": 245.5,
+              "width": 1035.625,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 178.09375,
+              "y": 209.5,
+              "right": 291.375,
+              "bottom": 245.5,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 209,
+              "right": 170.09375,
+              "bottom": 245,
+              "width": 129.09375,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 1078,
+          "boxes": [
+            {
+              "label": "",
+              "x": 299.375,
+              "y": 209.5,
+              "right": 1119,
+              "bottom": 245.5,
+              "width": 819.625,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 178.09375,
+              "y": 209.5,
+              "right": 291.375,
+              "bottom": 245.5,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 41,
+              "y": 209,
+              "right": 170.09375,
+              "bottom": 245,
+              "width": 129.09375,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "grid",
+        "width": 844,
+        "height": 390,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 778,
+          "boxes": [
+            {
+              "label": "",
+              "x": 291.375,
+              "y": 187.5,
+              "right": 811,
+              "bottom": 223.5,
+              "width": 519.625,
+              "height": 36
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 170.09375,
+              "y": 187.5,
+              "right": 283.375,
+              "bottom": 223.5,
+              "width": 113.28125,
+              "height": 36
+            },
+            {
+              "label": "خيارات الجدول",
+              "x": 33,
+              "y": 187,
+              "right": 162.09375,
+              "bottom": 223,
+              "width": 129.09375,
+              "height": 36
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 390,
+        "height": 844,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "grid",
+          "wrap": "nowrap",
+          "contentWidth": 340,
+          "boxes": [
+            {
+              "label": "",
+              "x": 223.390625,
+              "y": 197.03125,
+              "right": 365,
+              "bottom": 238.03125,
+              "width": 141.609375,
+              "height": 41
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 97,
+              "y": 199.53125,
+              "right": 215.390625,
+              "bottom": 235.53125,
+              "width": 118.390625,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 61,
+              "y": 195.53125,
+              "right": 93,
+              "bottom": 239.53125,
+              "width": 32,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 25,
+              "y": 195.53125,
+              "right": 57,
+              "bottom": 239.53125,
+              "width": 32,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 571,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "grid",
+          "wrap": "nowrap",
+          "contentWidth": 521,
+          "boxes": [
+            {
+              "label": "",
+              "x": 321,
+              "y": 201.15625,
+              "right": 546,
+              "bottom": 242.15625,
+              "width": 225,
+              "height": 41
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 177.75,
+              "y": 203.65625,
+              "right": 313,
+              "bottom": 239.65625,
+              "width": 135.25,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 141.75,
+              "y": 199.65625,
+              "right": 173.75,
+              "bottom": 243.65625,
+              "width": 32,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 105.75,
+              "y": 199.65625,
+              "right": 137.75,
+              "bottom": 243.65625,
+              "width": 32,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 676,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 610,
+          "boxes": [
+            {
+              "label": "",
+              "x": 280.25,
+              "y": 226.8125,
+              "right": 643,
+              "bottom": 267.8125,
+              "width": 362.75,
+              "height": 41
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 137,
+              "y": 229.3125,
+              "right": 272.25,
+              "bottom": 265.3125,
+              "width": 135.25,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 89,
+              "y": 225.3125,
+              "right": 129,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 41,
+              "y": 225.3125,
+              "right": 81,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 690,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 624,
+          "boxes": [
+            {
+              "label": "",
+              "x": 280.25,
+              "y": 226.8125,
+              "right": 657,
+              "bottom": 267.8125,
+              "width": 376.75,
+              "height": 41
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 137,
+              "y": 229.3125,
+              "right": 272.25,
+              "bottom": 265.3125,
+              "width": 135.25,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 89,
+              "y": 225.3125,
+              "right": 129,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 41,
+              "y": 225.3125,
+              "right": 81,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 800,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 734,
+          "boxes": [
+            {
+              "label": "",
+              "x": 280.25,
+              "y": 226.8125,
+              "right": 767,
+              "bottom": 267.8125,
+              "width": 486.75,
+              "height": 41
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 137,
+              "y": 229.3125,
+              "right": 272.25,
+              "bottom": 265.3125,
+              "width": 135.25,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 89,
+              "y": 225.3125,
+              "right": 129,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 41,
+              "y": 225.3125,
+              "right": 81,
+              "bottom": 269.3125,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 754,
+          "boxes": [
+            {
+              "label": "",
+              "x": 288.25,
+              "y": 248.484375,
+              "right": 795,
+              "bottom": 289.484375,
+              "width": 506.75,
+              "height": 41
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 145,
+              "y": 250.984375,
+              "right": 280.25,
+              "bottom": 286.984375,
+              "width": 135.25,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 97,
+              "y": 246.984375,
+              "right": 137,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 49,
+              "y": 246.984375,
+              "right": 89,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 900,
+        "height": 640,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 538,
+          "boxes": [
+            {
+              "label": "",
+              "x": 288.25,
+              "y": 248.484375,
+              "right": 579,
+              "bottom": 289.484375,
+              "width": 290.75,
+              "height": 41
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 145,
+              "y": 250.984375,
+              "right": 280.25,
+              "bottom": 286.984375,
+              "width": 135.25,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 97,
+              "y": 246.984375,
+              "right": 137,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 49,
+              "y": 246.984375,
+              "right": 89,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 866,
+          "boxes": [
+            {
+              "label": "",
+              "x": 288.25,
+              "y": 248.484375,
+              "right": 907,
+              "bottom": 289.484375,
+              "width": 618.75,
+              "height": 41
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 145,
+              "y": 250.984375,
+              "right": 280.25,
+              "bottom": 286.984375,
+              "width": 135.25,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 97,
+              "y": 246.984375,
+              "right": 137,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 49,
+              "y": 246.984375,
+              "right": 89,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1012,
+        "height": 823,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 650,
+          "boxes": [
+            {
+              "label": "",
+              "x": 288.25,
+              "y": 248.484375,
+              "right": 691,
+              "bottom": 289.484375,
+              "width": 402.75,
+              "height": 41
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 145,
+              "y": 250.984375,
+              "right": 280.25,
+              "bottom": 286.984375,
+              "width": 135.25,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 97,
+              "y": 246.984375,
+              "right": 137,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 49,
+              "y": 246.984375,
+              "right": 89,
+              "bottom": 290.984375,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 1294,
+          "boxes": [
+            {
+              "label": "",
+              "x": 493.453125,
+              "y": 209,
+              "right": 1335,
+              "bottom": 253,
+              "width": 841.546875,
+              "height": 44
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 339.734375,
+              "y": 213,
+              "right": 485.453125,
+              "bottom": 249,
+              "width": 145.71875,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 202.28125,
+              "y": 209,
+              "right": 331.734375,
+              "bottom": 253,
+              "width": 129.453125,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 49,
+              "y": 209,
+              "right": 194.28125,
+              "bottom": 253,
+              "width": 145.28125,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 1440,
+        "height": 900,
+        "navigationOpen": true,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 1078,
+          "boxes": [
+            {
+              "label": "",
+              "x": 493.453125,
+              "y": 209,
+              "right": 1119,
+              "bottom": 253,
+              "width": 625.546875,
+              "height": 44
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 339.734375,
+              "y": 213,
+              "right": 485.453125,
+              "bottom": 249,
+              "width": 145.71875,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 202.28125,
+              "y": 209,
+              "right": 331.734375,
+              "bottom": 253,
+              "width": 129.453125,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 49,
+              "y": 209,
+              "right": 194.28125,
+              "bottom": 253,
+              "width": 145.28125,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      },
+      {
+        "kind": "cards",
+        "width": 844,
+        "height": 390,
+        "navigationOpen": false,
+        "geometry": {
+          "display": "flex",
+          "wrap": "nowrap",
+          "contentWidth": 778,
+          "boxes": [
+            {
+              "label": "",
+              "x": 280.25,
+              "y": 188.5,
+              "right": 811,
+              "bottom": 229.5,
+              "width": 530.75,
+              "height": 41
+            },
+            {
+              "label": "اسم المستأجر",
+              "x": 137,
+              "y": 191,
+              "right": 272.25,
+              "bottom": 227,
+              "width": 135.25,
+              "height": 36
+            },
+            {
+              "label": "ترتيب تصاعدي",
+              "x": 89,
+              "y": 187,
+              "right": 129,
+              "bottom": 231,
+              "width": 40,
+              "height": 44
+            },
+            {
+              "label": "اعادة تعيين",
+              "x": 41,
+              "y": 187,
+              "right": 81,
+              "bottom": 231,
+              "width": 40,
+              "height": 44
+            }
+          ],
+          "overlaps": [],
+          "outside": [],
+          "outerOverflow": false
+        }
+      }
+    ],
+    "passed": true
+  }
+]

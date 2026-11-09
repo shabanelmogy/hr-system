@@ -26,7 +26,7 @@ public sealed record GetStatesQuery : IQuery<PageResponse<StateListItemResponse>
 
 public sealed class GetStatesQueryValidator : AbstractValidator<GetStatesQuery>
 {
-    private static readonly string[] SortColumns = ["nameEn", "nameAr", "code", "country", "createdOn"];
+    private static readonly string[] SortColumns = ["id", "nameEn", "nameAr", "code", "country", "createdOn"];
 
     public GetStatesQueryValidator()
     {

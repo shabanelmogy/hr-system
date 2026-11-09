@@ -2,3 +2,34 @@
   display: block;
   min-inline-size: 0;
 }
+:host(.fill) {
+  container-type: inline-size;
+  display: flex;
+  flex: 1;
+  min-block-size: 0;
+  overflow: hidden;
+}
+:host(.fill) p-tabs {
+  flex: 1;
+  min-inline-size: 0;
+}
+.fill-content {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+  min-block-size: 0;
+  min-inline-size: 0;
+  padding: 12px;
+  box-sizing: border-box;
+}
+.fill-content.compact-padding {
+  padding: 8px;
+}
+.fill-content.no-padding {
+  padding: 0;
+}
+@container (max-width: 40rem) {
+  .fill-content:not(.no-padding) {
+    padding: 8px;
+  }
+}

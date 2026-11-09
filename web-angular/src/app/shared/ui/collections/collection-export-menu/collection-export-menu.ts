@@ -3,15 +3,17 @@ import { ActionButton, ActionMenuButton, type ActionMenuItem } from '../../butto
 import { UI_LOCALIZATION, UiTextPipe } from '../../../localization/public-api';
 import type { TabularExportSource, TabularFormat } from '../../../data/public-api';
 import { createCollectionExport } from '../collection-export-state';
+import { AppIcon } from '../../icons/app-icon/app-icon';
 
 @Component({
-  imports: [ActionButton, ActionMenuButton, UiTextPipe],
+  imports: [ActionButton, ActionMenuButton, AppIcon, UiTextPipe],
   selector: 'erp-collection-export-menu',
   styleUrl: './collection-export-menu.scss',
   templateUrl: './collection-export-menu.html',
 })
 export class CollectionExportMenu {
   readonly source = input<TabularExportSource | null>(null);
+  readonly compact = input(false);
   private readonly locale = inject(UI_LOCALIZATION);
   readonly export = createCollectionExport(this.source);
   readonly formats = computed<readonly ActionMenuItem<TabularFormat>[]>(() => [

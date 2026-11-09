@@ -2,9 +2,10 @@
   <erp-page-header
     [exportSource]="exportSource()"
     variant="collection"
+    actionsLayout="inline"
     [title]="text('title')"
     [subtitle]="text('subtitle')"
-    [total]="reads.source().result?.total ?? 0"
+    [total]="tenantId() ? (tenantSource().result?.total ?? 0) : (reads.source().result?.total ?? 0)"
     [filterable]="false"
     [primaryAction]="editor.canWrite() ? { label: text('add'), icon: 'add' } : null"
     (primaryActivated)="create()"
@@ -27,31 +28,43 @@
     />
   }
   <div class="workspace" data-testid="tenant-admins" [attr.data-kind]="reads.view().kind">
-    <erp-card-list
-      appearance="entity"
-      layout="fit"
-      [minCardWidth]="320"
-      [source]="reads.source()"
-      [label]="text('title')"
-      [rowId]="id"
-      [rowLabel]="label"
-      [toolbarVisible]="false"
-      [showFooter]="false"
-      (retry)="reads.refresh()"
+    <erp-selection-workspace
+      [entries]="tenantId() ? [] : directory()"
+      [label]="text('tenantDirectory')"
+      [searchLabel]="text('searchTenants')"
+      [selected]="selectedTenant()?.id ?? null"
+      (selectionChange)="selectTenant($event)"
     >
-      <ng-template [erpCollectionCardHeader]="reads.source()" let-row
-        ><erp-admin-card-header [admin]="row"
-      /></ng-template>
-      <ng-template [erpCollectionCard]="reads.source()" let-row
-        ><erp-admin-card-content [admin]="row"
-      /></ng-template>
-      <ng-template [erpCollectionCardFooter]="reads.source()" let-row
-        ><erp-row-actions [actions]="actions(row)" [rowKey]="row.id" (activated)="act(row, $event)"
-      /></ng-template>
-      <ng-template erpCollectionEmpty
-        ><erp-feedback-state kind="empty" [title]="text('empty')"
-      /></ng-template>
-    </erp-card-list>
+      <erp-card-list
+        compactLayout="single-column"
+        frameAppearance="plain"
+        [source]="tenantSource()"
+        [label]="text('title')"
+        [rowId]="id"
+        [rowLabel]="label"
+        [toolbarVisible]="false"
+        [showFooter]="false"
+        (retry)="reads.refresh()"
+      >
+        <ng-template [erpCollectionCardHeader]="tenantSource()" let-row
+          ><erp-admin-card-header [admin]="row"
+        /></ng-template>
+        <ng-template [erpCollectionCard]="tenantSource()" let-row
+          ><erp-admin-card-content [admin]="row"
+        /></ng-template>
+        <ng-template [erpCollectionCardFooter]="tenantSource()" let-row
+          ><erp-row-actions
+            [actions]="actions(row)"
+            [rowKey]="row.id"
+            (activated)="act(row, $event)"
+        /></ng-template>
+        <ng-template erpCollectionEmpty
+          ><erp-feedback-state
+            kind="empty"
+            [title]="text(selectedTenant() ? 'emptyTenant' : 'empty')"
+        /></ng-template>
+      </erp-card-list>
+    </erp-selection-workspace>
   </div>
   <erp-admin-editor />
   <erp-admin-delete-confirmation />

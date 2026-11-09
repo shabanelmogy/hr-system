@@ -7,6 +7,7 @@
   min-width: 0;
 }
 .cards-body {
+  container: collection-cards / inline-size;
   flex: 1;
   min-height: 0;
   min-width: 0;
@@ -18,6 +19,8 @@
   padding: 16px;
 }
 article {
+  --row-action-size: 44px;
+  --row-action-gap: 8px;
   position: relative;
   border: 2px solid transparent;
   border-radius: 14px;
@@ -33,9 +36,17 @@ article:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
-p-checkbox {
-  float: inline-end;
-  margin-inline-start: 8px;
+.card-selection {
+  display: grid;
+  place-items: center;
+  inline-size: 44px;
+  block-size: 44px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.card-selection:hover,
+.card-selection:focus-within {
+  background: var(--accent);
 }
 @media (max-width: 599px) {
   .cards {

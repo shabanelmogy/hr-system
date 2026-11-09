@@ -1,0 +1,12 @@
+{
+  "verifiedUtc": "2026-11-07T12:37:36.4806202Z",
+  "actualRuntimeProfileTransformApplied": true,
+  "actualErpProfileTransformApplied": true,
+  "matchingNonemptyKeys": true,
+  "runtimeIntegrationEnabled": true,
+  "runtimeBaseUrl": "https://crystalreport-generator.runasp.net/",
+  "hubOnlyMaxQueryString": "24576",
+  "hubOnlyMaxUrl": "24576",
+  "remoteDeployment": false,
+  "secretValuesRecorded": false
+}

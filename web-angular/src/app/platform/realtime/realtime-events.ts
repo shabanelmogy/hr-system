@@ -84,10 +84,29 @@ export class RealtimeEvents {
         failures = 0;
       let connection: RealtimeConnection | undefined;
       let timer: ReturnType<typeof setTimeout> | undefined;
+      let expiryTimer: ReturnType<typeof setTimeout> | undefined;
       const seen = new Set<string>();
       const current = () => !disposed && !observer.closed && isCurrent();
       const stop = () => {
         if (connection) void connection.stop().catch(() => undefined);
+      };
+      const clearExpiryTimer = () => {
+        if (expiryTimer !== undefined) clearTimeout(expiryTimer);
+        expiryTimer = undefined;
+      };
+      const scheduleTokenRenewal = (value: string) => {
+        clearExpiryTimer();
+        const expiresAt = tokenExpiry(value);
+        if (expiresAt === undefined) return;
+        const delay = Math.max(0, expiresAt - Date.now() - 10_000);
+        expiryTimer = setTimeout(() => {
+          expiryTimer = undefined;
+          if (!current() || !connection) return;
+          const stale = connection;
+          connection = undefined;
+          void stale.stop().catch(() => undefined);
+          retry();
+        }, delay);
       };
       const terminate = (reauthenticate: boolean) => {
         if (!current()) return;
@@ -95,6 +114,7 @@ export class RealtimeEvents {
         disposed = true;
         if (timer !== undefined) clearTimeout(timer);
         stop();
+        clearExpiryTimer();
         observer.complete();
         if (reauthenticate) void this.auth.synchronizeContext().catch(() => undefined);
       };
@@ -112,6 +132,7 @@ export class RealtimeEvents {
         try {
           const value = await this.transport.realtimeToken();
           if (!current()) throw new Error('Realtime lease ended');
+          scheduleTokenRenewal(value);
           return value;
         } catch (error) {
           const status = statusOf(error);
@@ -143,6 +164,8 @@ export class RealtimeEvents {
             });
             connection.on('ReceiveTokenRevoked', () => terminate(true));
             connection.onclose(() => {
+              connection = undefined;
+              clearExpiryTimer();
               if (!starting) retry();
             });
           }
@@ -167,9 +190,33 @@ export class RealtimeEvents {
       return () => {
         disposed = true;
         if (timer !== undefined) clearTimeout(timer);
+        clearExpiryTimer();
         stop();
         seen.clear();
       };
     });
   }
+}
+
+function tokenExpiry(value: string): number | undefined {
+  const payload = value.split('.')[1];
+  if (!payload) return undefined;
+  try {
+    const normalized = payload
+      .replace(/-/g, '+')
+      .replace(/_/g, '/')
+      .padEnd(Math.ceil(payload.length / 4) * 4, '=');
+    const parsed: unknown = JSON.parse(atob(normalized));
+    if (
+      typeof parsed === 'object' &&
+      parsed !== null &&
+      'exp' in parsed &&
+      typeof parsed.exp === 'number' &&
+      Number.isFinite(parsed.exp)
+    )
+      return parsed.exp * 1000;
+  } catch {
+    // Opaque test tokens and malformed values are renewed on normal reconnect.
+  }
+  return undefined;
 }

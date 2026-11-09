@@ -47,7 +47,10 @@ public sealed record CrystalReportVersionResponse(
     int? ValidationContractSchemaVersion,
     string? ValidationContractFingerprint,
     bool IsPublished,
-    DateTime CreatedOn);
+    DateTime CreatedOn)
+{
+    public bool? IsContractCurrent { get; init; }
+}
 
 public sealed record CrystalReportRoleGrantResponse(
     string RoleId,

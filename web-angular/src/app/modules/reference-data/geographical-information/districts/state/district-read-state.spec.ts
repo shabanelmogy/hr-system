@@ -67,6 +67,28 @@ describe('Districts current actor and criteria read lifetime', () => {
     };
     return { state, identity, service, pages, details, ready, events, live };
   }
+  it('clears only explicit sorting and retains filters before accepting a new ID sort', () => {
+    const { state, ready } = setup();
+    ready();
+    state.changeStatus('all');
+    state.changeSort({ field: 'id', direction: 'asc' });
+    expect(state.sort()).toEqual({ field: 'id', direction: 'asc' });
+    expect(state.query().sortBy).toBe('id');
+    state.changeSort(null);
+    expect(state.sort()).toBeNull();
+    expect(state.query()).toMatchObject({
+      status: 'all',
+      sortBy: 'createdOn',
+      sortDirection: 'desc',
+      pageNumber: 1,
+    });
+    state.changeSort({ field: 'unknown', direction: 'asc' });
+    expect(state.sort()).toBeNull();
+    state.changeSort({ field: 'id', direction: 'desc' });
+    expect(state.sort()).toEqual({ field: 'id', direction: 'desc' });
+    state.reset();
+    expect(state.sort()).toEqual({ field: 'createdOn', direction: 'desc' });
+  });
   afterEach(() => {
     TestBed.resetTestingModule();
     vi.useRealTimers();

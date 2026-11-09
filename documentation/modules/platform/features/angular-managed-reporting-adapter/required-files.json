@@ -33,6 +33,18 @@
   ],
   "requiredFiles": [
     {
+      "id": "report-header-responsive-acceptance",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/HEADER_ACTIONS_2026-11-08.md",
+      "layer": "documentation",
+      "purpose": "Scoped report header and responsive search implementation/browser verification receipt"
+    },
+    {
+      "id": "report-facade-fill-layout",
+      "path": "web-angular/src/app/modules/reporting/global-reports/pages/global-reports-page/global-reports-page.scss",
+      "layer": "web",
+      "purpose": "Shared fill-shell composition for the authenticated standalone report route"
+    },
+    {
       "id": "report-sidebar-20261105-identity",
       "path": "web-angular/src/app/modules/reporting/global-template-manager/utils/global-template-viewer-identity.ts",
       "layer": "web",

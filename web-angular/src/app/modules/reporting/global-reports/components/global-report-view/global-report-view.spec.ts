@@ -191,7 +191,7 @@ describe('Managed report shared-form composition', () => {
     expect(owner.sidebarTab()).toBe('criteria');
   });
   it.each([false, true])(
-    'moves the shared actions between sidebar and preview without replacing the iframe (embedded=%s)',
+    'retains the shared PDF lease while toggling criteria (embedded=%s)',
     async (embedded) => {
       const { fixture, service, root } = await setup(true);
       fixture.componentRef.setInput('embedded', embedded);
@@ -200,20 +200,25 @@ describe('Managed report shared-form composition', () => {
       const source = frame?.src;
       const calls = service.render.mock.calls.length;
       expect(frame).not.toBeNull();
-      expect(root.querySelectorAll('aside nav a')).toHaveLength(2);
+      const actions = embedded ? 'aside nav' : 'erp-page-header nav';
+      expect(root.querySelectorAll(actions + ' a')).toHaveLength(2);
       expect(root.querySelector('erp-pdf-viewer nav')).toBeNull();
-      const open = root.querySelector('aside a[target="_blank"]');
+      const open = root.querySelector(actions + ' a[target="_blank"]');
       expect(open?.getAttribute('href')).toBe(source);
       expect(open?.getAttribute('rel')).toBe('noopener noreferrer');
-      expect(root.querySelector('aside a[download]')?.getAttribute('download')).toMatch(/\.pdf$/);
+      expect(root.querySelector(actions + ' a[download]')?.getAttribute('download')).toMatch(
+        /\.pdf$/,
+      );
       fixture.componentRef.setInput('showFilterBar', false);
       await fixture.whenStable();
       expect(root.querySelector('aside')).toBeNull();
-      expect(root.querySelectorAll('erp-pdf-viewer nav a')).toHaveLength(2);
+      expect(
+        root.querySelectorAll((embedded ? 'erp-pdf-viewer nav' : 'erp-page-header nav') + ' a'),
+      ).toHaveLength(2);
       expect(root.querySelector('iframe')).toBe(frame);
       fixture.componentRef.setInput('showFilterBar', true);
       await fixture.whenStable();
-      expect(root.querySelectorAll('aside nav a')).toHaveLength(2);
+      expect(root.querySelectorAll(actions + ' a')).toHaveLength(2);
       expect(root.querySelector('erp-pdf-viewer nav')).toBeNull();
       expect(root.querySelector('iframe')).toBe(frame);
       expect(service.render.mock.calls.length).toBe(calls);
@@ -221,18 +226,21 @@ describe('Managed report shared-form composition', () => {
       expect(URL.revokeObjectURL).not.toHaveBeenCalled();
     },
   );
-  it('removes sidebar document links while a replacement report is loading', async () => {
+  it('removes header document links while a replacement report is loading', async () => {
     const { fixture, owner, service, root } = await setup();
-    expect(root.querySelectorAll('aside nav a')).toHaveLength(2);
+    expect(root.querySelectorAll('erp-page-header nav a')).toHaveLength(2);
     service.render.mockReturnValue(NEVER);
     void owner.search();
     await fixture.whenStable();
     expect(root.querySelector('erp-pdf-viewer')).toBeNull();
+    expect(root.querySelector('erp-page-header nav')).toBeNull();
     expect(root.querySelector('aside nav')).toBeNull();
     expect(URL.revokeObjectURL).toHaveBeenCalledTimes(1);
   });
   it('keeps draft fields and the original document mounted while switching sidebar tabs', async () => {
     const { fixture, owner, service, root } = await setup(true);
+    fixture.componentRef.setInput('embedded', true);
+    await fixture.whenStable();
     const input = root.querySelector<HTMLInputElement>('[data-testid=nameEn] input');
     const frame = root.querySelector('iframe');
     const renders = service.render.mock.calls.length;
@@ -284,5 +292,26 @@ describe('Managed report shared-form composition', () => {
     identity.set({ ...identity(), companyId: 42 });
     await fixture.whenStable();
     expect(owner.form().value()).toEqual({ nameAr: '', nameEn: '', stateAr: '', stateEn: '' });
+  });
+  it('exposes header actions only for the current document and keeps the embedded viewer free of duplicate links', async () => {
+    const { fixture, owner, root, service } = await setup(true);
+    fixture.componentRef.setInput('embedded', true);
+    fixture.componentRef.setInput('externalActions', true);
+    await fixture.whenStable();
+    expect(owner.headerActions()).not.toBeNull();
+    expect(owner.optionsVisible()).toBe(false);
+    expect(root.querySelector('aside [role=tablist]')).toBeNull();
+    expect(root.querySelector('erp-pdf-viewer nav')).toBeNull();
+    expect(root.querySelector('aside nav')).toBeNull();
+    const frame = root.querySelector('iframe');
+    fixture.componentRef.setInput('showFilterBar', false);
+    await fixture.whenStable();
+    expect(root.querySelector('iframe')).toBe(frame);
+    expect(owner.headerActions()).not.toBeNull();
+    service.render.mockReturnValue(NEVER);
+    owner.reload();
+    await fixture.whenStable();
+    expect(owner.headerActions()).toBeNull();
+    expect(root.querySelector('iframe')).toBeNull();
   });
 });

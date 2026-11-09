@@ -1,0 +1,220 @@
+.collection-shell .collection-toolbar.structured-search {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 12px;
+  overflow-x: visible;
+  padding-block: 8px 16px;
+  border-block-end: 1px solid var(--border);
+  margin-block-end: 12px;
+  --action-icon-size: 44px;
+  --action-min-height: 44px;
+  --option-control-height: 44px;
+  --p-button-padding-x: 10px;
+}
+.collection-shell .structured-search .search-controls {
+  display: grid;
+  flex: 1 1 100%;
+  grid-template-columns: 112px 128px minmax(200px, 1fr);
+  align-items: end;
+  gap: 12px;
+  min-inline-size: min(100%, 464px);
+  max-inline-size: none;
+}
+.collection-shell .structured-search .search-controls > * {
+  min-inline-size: 0;
+  inline-size: 100%;
+}
+.collection-shell .structured-search .search-controls erp-text-field {
+  min-inline-size: 0;
+  --touch-target: 42px;
+  --field-control-height: 42px;
+  --field-padding-y: 8px;
+  --field-floating-height: 44px;
+  --field-floating-input-height: 42px;
+  --field-floating-padding-y: 8px;
+  --field-floating-radius: 8px;
+  --radius: 8px;
+}
+.collection-shell .structured-search .search-controls erp-icon {
+  inline-size: 18px;
+  block-size: 18px;
+  margin-inline: 12px 0;
+  color: var(--muted-foreground);
+}
+:host ::ng-deep .collection-shell .structured-search erp-text-field > label {
+  color: var(--muted-foreground);
+  font-size: var(--collection-search-label-size, 0.8125rem);
+  line-height: 16px;
+}
+.collection-shell .structured-search .filter-region {
+  display: contents;
+}
+.collection-shell .structured-search .toolbar-content {
+  display: contents;
+}
+.collection-shell .structured-search .toolbar-content:has(> [toolbarContent]:empty) {
+  display: none;
+}
+.collection-shell .structured-search .grid-options {
+  --action-quiet-label-display: none;
+  --action-padding-x: 12px;
+}
+:host ::ng-deep .collection-shell .structured-search [toolbarFilters],
+:host ::ng-deep .collection-shell .structured-search [toolbarContent] {
+  display: contents;
+}
+:host ::ng-deep .collection-shell .structured-search [toolbarFilters] erp-option-select {
+  flex: 1 1 var(--option-preferred-width, 112px);
+  min-inline-size: min(100%, var(--option-preferred-width, 112px));
+  max-inline-size: none;
+}
+:host ::ng-deep .collection-shell .structured-search erp-button {
+  --action-min-height: 44px;
+  --action-icon-size: 44px;
+}
+:host ::ng-deep .collection-shell .structured-search [toolbarContent] erp-button:first-child,
+:host ::ng-deep .collection-shell .structured-search erp-sort-direction-button {
+  margin-inline-start: auto;
+}
+.adaptive-toolbar .collection-toolbar:not(:has(.search-controls)) {
+  justify-content: flex-end;
+}
+@container collection-toolbar (min-width: 56rem) {
+  .collection-shell .structured-search .search-controls {
+    grid-template-columns: 144px 160px minmax(240px, 1fr);
+    min-inline-size: min(100%, 568px);
+  }
+  :host ::ng-deep .collection-shell .structured-search [toolbarFilters] erp-option-select {
+    flex-basis: var(--option-preferred-width, 144px);
+    min-inline-size: min(100%, var(--option-preferred-width, 144px));
+  }
+}
+@container collection-toolbar (max-width: 56rem) {
+  .collection-toolbar {
+    --field-font-size: 0.875rem;
+    --option-font-size: 0.875rem;
+    --option-label-font-size: 0.75rem;
+    --collection-search-label-size: 0.75rem;
+  }
+  .collection-shell .collection-toolbar.structured-search {
+    gap: 14px 8px;
+    padding-block: 8px 10px;
+    margin-block-end: 8px;
+  }
+  .collection-shell .structured-search .search-controls {
+    gap: 8px;
+  }
+}
+@container collection-toolbar (max-width: 34rem) {
+  .collection-shell .collection-toolbar .search-controls erp-text-field {
+    --field-placeholder-font-size: 12px;
+  }
+  :host ::ng-deep .collection-shell .structured-search erp-option-select label,
+  :host ::ng-deep .collection-shell .structured-search erp-text-field > label {
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .collection-shell .collection-toolbar.structured-search {
+    padding-block-start: 2px;
+  }
+  .collection-shell .structured-search .search-controls {
+    flex-basis: 100%;
+    min-inline-size: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .collection-shell .structured-search .search-controls erp-text-field {
+    grid-column: 1 / -1;
+  }
+  .collection-shell .collection-toolbar.structured-search {
+    gap: 8px;
+  }
+  .collection-shell .structured-search:has([data-collection-search-companion]) .search-controls {
+    display: contents;
+  }
+  .collection-shell
+    .structured-search:has([data-collection-search-companion])
+    .search-controls
+    > erp-option-select,
+  :host
+    ::ng-deep
+    .collection-shell
+    .structured-search
+    [toolbarFilters]
+    erp-option-select[data-collection-search-companion] {
+    flex: 1 1 calc((100% - 16px) / 3);
+    min-inline-size: 0;
+    inline-size: auto;
+    order: 0;
+  }
+  .collection-shell
+    .structured-search:has([data-collection-search-companion])
+    .search-controls
+    erp-text-field {
+    flex: 1 1 100%;
+    order: 1;
+  }
+  :host
+    ::ng-deep
+    .collection-shell
+    .structured-search:has([data-collection-search-companion])
+    [toolbarFilters]
+    erp-option-select:not([data-collection-search-companion]) {
+    flex-basis: calc((100% - 8px) / 2);
+    order: 2;
+  }
+  :host
+    ::ng-deep
+    .collection-shell
+    .structured-search:has([data-collection-search-companion])
+    erp-button,
+  :host
+    ::ng-deep
+    .collection-shell
+    .structured-search:has([data-collection-search-companion])
+    erp-sort-direction-button {
+    order: 3;
+  }
+}
+@container collection-toolbar (max-width: 28rem) {
+  .collection-shell
+    .structured-search:has([data-collection-search-companion])
+    .search-controls
+    > .search-field {
+    flex-basis: 100%;
+  }
+  .collection-shell
+    .structured-search:has([data-collection-search-companion])
+    .search-controls
+    > .search-operator,
+  :host
+    ::ng-deep
+    .collection-shell
+    .structured-search
+    [toolbarFilters]
+    erp-option-select[data-collection-search-companion] {
+    flex-basis: calc((100% - 8px) / 2);
+  }
+}
+
+@media (max-height: 480px) and (orientation: landscape) {
+  .adaptive-toolbar:has(.structured-search) {
+    overflow-y: auto;
+    overscroll-behavior-block: contain;
+  }
+  :host ::ng-deep .adaptive-toolbar:has(.structured-search) > [collectionBody] {
+    flex: 0 0 180px;
+    min-block-size: 180px;
+  }
+  .adaptive-toolbar:has(.structured-search) > erp-collection-footer {
+    position: sticky;
+    inset-block-end: 0;
+    z-index: 1;
+    margin-block-start: auto;
+  }
+}

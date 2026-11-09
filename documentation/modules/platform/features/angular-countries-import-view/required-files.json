@@ -724,6 +724,132 @@
       "layer": "web",
       "path": "web-angular/src/testing/fixture-item.ts",
       "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "shared-import-layout-20261108-0",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/IMPORT_LAYOUT_2026-11-08.md",
+      "layer": "documentation",
+      "purpose": "Current shared header command projection, compact five-status row and responsive acceptance"
+    },
+    {
+      "id": "shared-import-layout-20261108-1",
+      "path": "documentation/guides/web/architecture/ANGULAR_COLLECTION_VIEWS.md",
+      "layer": "documentation",
+      "purpose": "Current shared header command projection, compact five-status row and responsive acceptance"
+    },
+    {
+      "id": "shared-import-layout-20261108-2",
+      "path": "web-angular/src/app/shared/ui/layout/surface-card/surface-card.ts",
+      "layer": "web",
+      "purpose": "Current shared header command projection, compact five-status row and responsive acceptance"
+    },
+    {
+      "id": "shared-import-layout-20261108-3",
+      "path": "web-angular/src/app/shared/ui/layout/surface-card/surface-card.html",
+      "layer": "web",
+      "purpose": "Current shared header command projection, compact five-status row and responsive acceptance"
+    },
+    {
+      "id": "shared-import-layout-20261108-4",
+      "path": "web-angular/src/app/shared/ui/layout/page-header/page-header.ts",
+      "layer": "web",
+      "purpose": "Current shared header command projection, compact five-status row and responsive acceptance"
+    },
+    {
+      "id": "shared-import-layout-20261108-5",
+      "path": "web-angular/src/app/shared/ui/layout/page-header/page-header.scss",
+      "layer": "web",
+      "purpose": "Current shared header command projection, compact five-status row and responsive acceptance"
+    },
+    {
+      "id": "shared-import-layout-20261108-7",
+      "path": "web-angular/scripts/verify-country-report-browser.mjs",
+      "layer": "web",
+      "purpose": "Current shared header command projection, compact five-status row and responsive acceptance"
+    },
+    {
+      "id": "shared-layout-20261108-proof-0",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/shared-layout-2026-11-08/focused-results.json",
+      "layer": "verification",
+      "purpose": "Executed shared Import/status/header regression evidence; original source receipt timestamps retained"
+    },
+    {
+      "id": "shared-layout-20261108-proof-1",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/shared-layout-2026-11-08/journey-results.json",
+      "layer": "verification",
+      "purpose": "Executed shared Import/status/header regression evidence; original source receipt timestamps retained"
+    },
+    {
+      "id": "shared-layout-20261108-proof-2",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/shared-layout-2026-11-08/layout-ar-dark-390x844-closed.png",
+      "layer": "verification",
+      "purpose": "Executed shared Import/status/header regression evidence; original source receipt timestamps retained"
+    },
+    {
+      "id": "shared-layout-20261108-proof-3",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/shared-layout-2026-11-08/layout-ar-dark-844x390-closed.png",
+      "layer": "verification",
+      "purpose": "Executed shared Import/status/header regression evidence; original source receipt timestamps retained"
+    },
+    {
+      "id": "shared-layout-20261108-proof-4",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/shared-layout-2026-11-08/layout-en-light-320x720-closed.png",
+      "layer": "verification",
+      "purpose": "Executed shared Import/status/header regression evidence; original source receipt timestamps retained"
+    },
+    {
+      "id": "shared-layout-20261108-proof-5",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/shared-layout-2026-11-08/layout-en-light-571x823-closed.png",
+      "layer": "verification",
+      "purpose": "Executed shared Import/status/header regression evidence; original source receipt timestamps retained"
+    },
+    {
+      "id": "shared-layout-20261108-proof-6",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/shared-layout-2026-11-08/layout-results.json",
+      "layer": "verification",
+      "purpose": "Executed shared Import/status/header regression evidence; original source receipt timestamps retained"
+    },
+    {
+      "id": "shared-layout-20261108-proof-7",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/shared-layout-2026-11-08/primeng-metadata-validation.json",
+      "layer": "verification",
+      "purpose": "Executed shared Import/status/header regression evidence; original source receipt timestamps retained"
+    },
+    {
+      "id": "shared-layout-20261108-proof-8",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/shared-layout-2026-11-08/view-followups-import-focused-final.txt",
+      "layer": "verification",
+      "purpose": "Executed shared Import/status/header regression evidence; original source receipt timestamps retained"
+    },
+    {
+      "id": "shared-layout-20261108-proof-9",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/shared-layout-2026-11-08/view-followups-import-journeys-final.txt",
+      "layer": "verification",
+      "purpose": "Executed shared Import/status/header regression evidence; original source receipt timestamps retained"
+    },
+    {
+      "id": "shared-layout-20261108-proof-10",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/shared-layout-2026-11-08/view-followups-import-layout-v2.txt",
+      "layer": "verification",
+      "purpose": "Executed shared Import/status/header regression evidence; original source receipt timestamps retained"
+    },
+    {
+      "id": "shared-layout-20261108-proof-11",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/shared-layout-2026-11-08/view-followups-report-layout-final.txt",
+      "layer": "verification",
+      "purpose": "Executed shared Import/status/header regression evidence; original source receipt timestamps retained"
+    },
+    {
+      "id": "shared-layout-20261108-report-proof",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/shared-layout-2026-11-08/report-header-layout-results.json",
+      "layer": "verification",
+      "purpose": "Executed20 Report header layouts retaining independent report criteria, no list count, and document reachability"
+    },
+    {
+      "id": "shared-layout-20261108-angular-gate",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/shared-layout-2026-11-08/angular-check.txt",
+      "layer": "verification",
+      "purpose": "Final complete Angular format/lint/architecture/types/tests/build gate; warnings retained"
     }
   ]
 }

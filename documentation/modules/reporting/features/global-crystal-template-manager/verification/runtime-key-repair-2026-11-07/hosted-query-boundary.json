@@ -1,0 +1,14 @@
+[
+  {
+    "queryCharacters": 2048,
+    "status": 401,
+    "allowOrigin": "https://localhost:4210",
+    "expected": 401
+  },
+  {
+    "queryCharacters": 2049,
+    "status": 404,
+    "allowOrigin": "",
+    "expected": 404
+  }
+]

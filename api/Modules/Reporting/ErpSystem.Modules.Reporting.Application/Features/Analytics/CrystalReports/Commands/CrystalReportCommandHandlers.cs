@@ -238,10 +238,7 @@ public sealed class RevalidateCrystalReportVersionCommandHandler(
         var deterministicFailure = InspectionFailure(inspection, errors);
         if (isValid &&
             (inspection.ContractSchemaVersion != contracts.SchemaVersion ||
-             !string.Equals(
-                 inspection.ContractFingerprint,
-                 contracts.Fingerprint,
-                 StringComparison.Ordinal)))
+             !contracts.IsCompatibleFingerprint(snapshot.EntityKey, inspection.ContractFingerprint)))
         {
             return Result.Failure<CrystalReportVersionResponse>(errors.CrystalReportContractStale);
         }
@@ -276,7 +273,7 @@ public sealed class RevalidateCrystalReportVersionCommandHandler(
                 {
                     version.MarkValid(
                         inspection.ContractSchemaVersion!.Value,
-                        inspection.ContractFingerprint!);
+                        contracts.GetFingerprint(report.EntityKey));
                 }
                 else
                 {
@@ -341,11 +338,11 @@ public sealed class PublishCrystalReportVersionCommandHandler(
                     return Result.Failure<Guid>(errors.CrystalReportNotFound);
                 if (version.ValidationStatus != CrystalReportValidationStatus.Valid)
                     return Result.Failure<Guid>(errors.CrystalReportVersionNotValidated);
-                if (!version.IsValidFor(contracts.Fingerprint))
+                if (!version.IsValidFor(contracts, report.EntityKey))
                     return Result.Failure<Guid>(errors.CrystalReportContractStale);
 
                 store.ApplyOriginalRowVersion(report, rowVersion);
-                report.Publish(version, contracts.Fingerprint);
+                report.Publish(version, version.ValidationContractFingerprint ?? string.Empty);
                 await unitOfWork.SaveChangesAsync(token);
                 return Result.Success(report.Id);
             },

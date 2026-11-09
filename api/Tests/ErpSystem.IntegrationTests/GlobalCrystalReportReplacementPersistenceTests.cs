@@ -58,7 +58,7 @@ public sealed class GlobalCrystalReportReplacementPersistenceTests
         Assert.Equal(["replacement-1.rpt"], files.Deleted);
         await using (var verify = new ReportingDbContext(options, new Actor()))
         {
-            var detail = await new GlobalCrystalReportStore(verify).DetailAsync(reportId, default);
+            var detail = await new GlobalCrystalReportStore(verify, ManagedCrystalReportContractRegistry.LoadEmbedded()).DetailAsync(reportId, default);
             Assert.NotNull(detail);
             Assert.Equal(rowVersion, detail.RowVersion);
             Assert.Equal(firstId, Assert.Single(detail.Versions).Id);
@@ -74,7 +74,7 @@ public sealed class GlobalCrystalReportReplacementPersistenceTests
         }
         await using (var verify = new ReportingDbContext(options, new Actor()))
         {
-            var detail = await new GlobalCrystalReportStore(verify).DetailAsync(reportId, default);
+            var detail = await new GlobalCrystalReportStore(verify, ManagedCrystalReportContractRegistry.LoadEmbedded()).DetailAsync(reportId, default);
             Assert.NotNull(detail);
             Assert.Equal(2, detail.Versions.Count);
             Assert.Equal(2, Assert.Single(detail.Versions, version => version.IsPublished).VersionNumber);
@@ -90,7 +90,7 @@ public sealed class GlobalCrystalReportReplacementPersistenceTests
 
     private static ReplaceGlobalCrystalReportCommandHandler Handler(ReportingDbContext context, Files files,
         IReportingUnitOfWork unitOfWork, ManagedCrystalReportContractRegistry contracts) =>
-        new(new GlobalCrystalReportStore(context), files, unitOfWork,
+        new(new GlobalCrystalReportStore(context, ManagedCrystalReportContractRegistry.LoadEmbedded()), files, unitOfWork,
             new GlobalCrystalReportPolicy(new Actor(), new Permissions()), contracts,
             new CrystalReportErrors(new Echo()), new UnusedAccess());
 

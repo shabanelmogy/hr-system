@@ -456,6 +456,24 @@ describe('global versioned manager', () => {
     expect(
       state.validationStatus({ ...version, validationContractFingerprint: 'b'.repeat(64) }),
     ).toBe('NeedsRevalidation');
+    expect(
+      state.publishable({
+        ...version,
+        isPublished: false,
+        validationContractFingerprint: 'b'.repeat(64),
+        isContractCurrent: true,
+      }),
+    ).toBe(true);
+    expect(
+      state.validationStatus({
+        ...version,
+        validationContractFingerprint: 'b'.repeat(64),
+        isContractCurrent: true,
+      }),
+    ).toBe('Valid');
+    expect(state.publishable({ ...version, isPublished: false, isContractCurrent: false })).toBe(
+      false,
+    );
   });
   it('resolves a viewer template by exact report key and published hash before opening its editor', async () => {
     const { fixture, state, service } = await setup();

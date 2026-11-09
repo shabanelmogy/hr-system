@@ -12,16 +12,28 @@
 }
 <ng-template #actions>
   @if (current(); as resource) {
-    <nav [attr.aria-label]="title()" [class.stacked]="actionsLayout() === 'stacked'">
+    <nav
+      [attr.aria-label]="title()"
+      [class.stacked]="actionsLayout() === 'stacked'"
+      [class.toolbar]="actionsLayout() === 'toolbar'"
+    >
       <a
         pButton
         [href]="resource.url"
         target="_blank"
         rel="noopener noreferrer"
         referrerpolicy="no-referrer"
+        [attr.aria-label]="'reports.openPdf' | uiText"
+        [title]="'reports.openPdf' | uiText"
         ><erp-icon name="openInNew" /><span>{{ 'reports.openPdf' | uiText }}</span></a
       >
-      <a pButton variant="outlined" [href]="resource.url" [download]="downloadName()"
+      <a
+        pButton
+        variant="outlined"
+        [href]="resource.url"
+        [download]="downloadName()"
+        [attr.aria-label]="'common.downloadFile' | uiText"
+        [title]="'common.downloadFile' | uiText"
         ><erp-icon name="download" /><span>{{ 'common.downloadFile' | uiText }}</span></a
       >
     </nav>

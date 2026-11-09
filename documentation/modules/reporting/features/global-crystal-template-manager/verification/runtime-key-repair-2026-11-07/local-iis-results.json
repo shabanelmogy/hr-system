@@ -1,0 +1,30 @@
+[
+  {
+    "path": "/ordinary/index.html",
+    "syntheticQueryDataCharacters": 100,
+    "status": 200,
+    "expected": 200,
+    "passed": true
+  },
+  {
+    "path": "/ordinary/index.html",
+    "syntheticQueryDataCharacters": 2200,
+    "status": 404,
+    "expected": 404,
+    "passed": true
+  },
+  {
+    "path": "/hubs/company/index.html",
+    "syntheticQueryDataCharacters": 2200,
+    "status": 200,
+    "expected": 200,
+    "passed": true
+  },
+  {
+    "path": "/hubs/company/index.html",
+    "syntheticQueryDataCharacters": 25000,
+    "status": 414,
+    "expected": 414,
+    "passed": true
+  }
+]

@@ -1,0 +1,163 @@
+{
+  "date": "2026-11-07T10:54:48.848Z",
+  "source": "production build; all API writes intercepted",
+  "passed": 12,
+  "results": [
+    {
+      "language": "en",
+      "mode": "light",
+      "width": 390,
+      "policy": "admin",
+      "calls": {
+        "manage": 10,
+        "uploads": 1,
+        "publishes": 0,
+        "downloads": 1
+      },
+      "errors": []
+    },
+    {
+      "language": "en",
+      "mode": "light",
+      "width": 1440,
+      "policy": "admin",
+      "calls": {
+        "manage": 10,
+        "uploads": 1,
+        "publishes": 0,
+        "downloads": 1
+      },
+      "errors": []
+    },
+    {
+      "language": "en",
+      "mode": "dark",
+      "width": 390,
+      "policy": "admin",
+      "calls": {
+        "manage": 10,
+        "uploads": 1,
+        "publishes": 0,
+        "downloads": 1
+      },
+      "errors": []
+    },
+    {
+      "language": "en",
+      "mode": "dark",
+      "width": 1440,
+      "policy": "admin",
+      "calls": {
+        "manage": 10,
+        "uploads": 1,
+        "publishes": 0,
+        "downloads": 1
+      },
+      "errors": []
+    },
+    {
+      "language": "ar",
+      "mode": "light",
+      "width": 390,
+      "policy": "admin",
+      "calls": {
+        "manage": 10,
+        "uploads": 1,
+        "publishes": 0,
+        "downloads": 1
+      },
+      "errors": []
+    },
+    {
+      "language": "ar",
+      "mode": "light",
+      "width": 1440,
+      "policy": "admin",
+      "calls": {
+        "manage": 10,
+        "uploads": 1,
+        "publishes": 0,
+        "downloads": 1
+      },
+      "errors": []
+    },
+    {
+      "language": "ar",
+      "mode": "dark",
+      "width": 390,
+      "policy": "admin",
+      "calls": {
+        "manage": 10,
+        "uploads": 1,
+        "publishes": 0,
+        "downloads": 1
+      },
+      "errors": []
+    },
+    {
+      "language": "ar",
+      "mode": "dark",
+      "width": 1440,
+      "policy": "admin",
+      "calls": {
+        "manage": 10,
+        "uploads": 1,
+        "publishes": 0,
+        "downloads": 1
+      },
+      "errors": []
+    },
+    {
+      "language": "en",
+      "mode": "light",
+      "width": 1440,
+      "policy": "reader",
+      "calls": {
+        "manage": 0,
+        "uploads": 0,
+        "publishes": 0,
+        "downloads": 1
+      },
+      "errors": []
+    },
+    {
+      "language": "en",
+      "mode": "light",
+      "width": 1440,
+      "policy": "denied-acl",
+      "calls": {
+        "manage": 6,
+        "uploads": 0,
+        "publishes": 0,
+        "downloads": 1
+      },
+      "errors": []
+    },
+    {
+      "language": "en",
+      "mode": "light",
+      "width": 1440,
+      "policy": "stale",
+      "calls": {
+        "manage": 4,
+        "uploads": 0,
+        "publishes": 0,
+        "downloads": 1
+      },
+      "errors": []
+    },
+    {
+      "language": "en",
+      "mode": "light",
+      "width": 1440,
+      "policy": "different-id",
+      "calls": {
+        "manage": 4,
+        "uploads": 0,
+        "publishes": 0,
+        "downloads": 1
+      },
+      "errors": []
+    }
+  ]
+}

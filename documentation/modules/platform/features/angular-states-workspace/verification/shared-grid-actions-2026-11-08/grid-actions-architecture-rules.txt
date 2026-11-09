@@ -1,0 +1,37 @@
+✔ feature grids inherit responsive row actions instead of forcing inline presentation (3.4891ms)
+✔ barrel cycles are rejected, while type-only and lazy edges are independent (24.6251ms)
+✔ configured aliases cannot bypass ownership rules (2.1365ms)
+✔ owner dependencies cannot enter another owner internals or reverse layers (2.8565ms)
+✔ external feature forms obey the same shared field policy as inline forms (0.2627ms)
+✔ direct browser requests cannot bypass the service owner (2.0343ms)
+✔ projected collection columns use stable shared identity rather than numeric positions (0.1812ms)
+✔ aliased and constructor HTTP access stays in services (3.3693ms)
+✔ Angular components require external templates and styles, including test hosts (2.6439ms)
+✔ external component resources preserve supported Angular metadata (1.6347ms)
+✔ resource policy recognizes Angular import aliases and namespace imports (1.2389ms)
+✔ resource policy does not misidentify ordinary data or TestBed overrides as components (0.3831ms)
+✔ application components require matching folders while test fixtures stay with their owner (1.1315ms)
+✔ application components do not share an implementation file; related test hosts can (1.1028ms)
+✔ external feature templates retain shared form boundaries while test hosts can exercise native fixtures (0.151ms)
+✔ shared PrimeNG import and template are allowed (0.8882ms)
+✔ collection shells and external templates stay behind the shared public API (1.053ms)
+✔ aliased, dynamic and re-exported feature bypasses are rejected (0.5662ms)
+✔ only the theme owner can configure PrimeNG and templates cannot bypass shared adapters (0.3316ms)
+✔ AST distinguishes forbidden types and storage from innocent text and comments (0.8652ms)
+✔ presentation persistence is restricted to its declared shared owner (0.7222ms)
+✔ feature templates must compose shared form and fields (0.6647ms)
+✔ features cannot depend on shared folder internals (0.6257ms)
+✔ chart capability uses its lazy public entry and keeps native engines inside Shared (0.439ms)
+✔ composition can use the lightweight feedback public entry without importing native hosts (0.497ms)
+✔ bootstrap can import preview state through its narrow public contract while internals stay private (0.4361ms)
+✔ only application composition can inject a business context into generic Shell (0.4876ms)
+✔ module header and page must share the authenticated catalog provider (0.5893ms)
+✔ shared controls must enhance interactive widgets with PrimeNG (0.5502ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 556.8926

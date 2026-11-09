@@ -13,6 +13,7 @@ import {
   ProgressMeter,
   type CollectionColumn,
   type CollectionSearch,
+  type CollectionSort,
   type CollectionSource,
 } from '../public-api';
 import { CollectionFrame } from './collection-frame/collection-frame';
@@ -27,6 +28,7 @@ const query = { scopeKey: 'fixture', criteriaKey: 'all', pageIndex: 0, pageSize:
   templateUrl: './collection-read-compatibility.spec.search-fixture.html',
 })
 class SearchFixture {
+  readonly sort = signal<CollectionSort | null>(null);
   readonly source: CollectionSource<RecordFixture> = {
     query,
     kind: 'ready',
@@ -178,5 +180,27 @@ describe('Shared read-workspace compatibility extensions', () => {
     fixture.destroy();
     await Promise.resolve();
     expect(emitted).toHaveBeenCalledOnce();
+  });
+  it('cycles a controlled sortable header through ascending, descending and cleared', async () => {
+    const fixture = TestBed.createComponent(SearchFixture);
+    await fixture.whenStable();
+    const header =
+      (fixture.nativeElement as HTMLElement).querySelector('th[pSortableColumn]') ??
+      (fixture.nativeElement as HTMLElement).querySelector('th.p-datatable-sortable-column');
+    if (!header) throw Error('Expected sortable header');
+    header.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    await fixture.whenStable();
+    expect(fixture.componentInstance.sort()).toEqual({ field: 'name', direction: 'asc' });
+    header.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    await fixture.whenStable();
+    expect(fixture.componentInstance.sort()).toEqual({ field: 'name', direction: 'desc' });
+    header.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    await fixture.whenStable();
+    expect(fixture.componentInstance.sort()).toBeNull();
+    expect(header.getAttribute('aria-sort')).toBe('none');
+    header.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    await fixture.whenStable();
+    expect(fixture.componentInstance.sort()).toEqual({ field: 'name', direction: 'asc' });
+    fixture.destroy();
   });
 });

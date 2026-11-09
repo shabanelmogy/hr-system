@@ -95,6 +95,10 @@ export type {
 } from './collections/collection-templates';
 export { PdfViewer } from './documents/pdf-viewer/pdf-viewer';
 export { ReportWorkspace } from './layout/report-workspace/report-workspace';
+export {
+  SelectionWorkspace,
+  type SelectionWorkspaceEntry,
+} from './layout/selection-workspace/selection-workspace';
 export { ScrollViewport } from './layout/scroll-viewport/scroll-viewport';
 export { SurfaceCard } from './layout/surface-card/surface-card';
 export { SpreadsheetImportPanel } from './imports/spreadsheet-import-panel/spreadsheet-import-panel';

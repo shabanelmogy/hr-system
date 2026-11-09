@@ -46,3 +46,22 @@ Existing localized errors; no credentials in descriptions/logs.
 R1/R2 API Verified: final full Release 1157 tests passed, zero failed/skipped; actual Cookie controller/JWT/SQL/Chromium route proof and 17 Cookie cases. Angular consumer/provider/deployment acceptance remains separate; see verification/BROWSER_IMPLEMENTATION_REPORT.md.
 ## 15. Evidence and closure
 Manifest contains current sources only; extend with actual paths as implementation creates them.
+
+## Current hosted runtime/key and Hub query correction — 2026-11-07
+
+The supplied render503 is reproduced as CrystalReport.RuntimeUnavailable. The
+downstream Crystal service itself returns crystal_runtime_api_key_not_configured.
+The existing Publish preparation/configuration scripts restore matching private
+transforms locally; actual WPP and SDK publish staging confirm both keys, enabled
+integration and the correct HTTPS target. No remote deployment or native PDF is
+claimed. The same investigation reproduces IIS's2048/2049query boundary with
+synthetic tokens. ERP web.config now provides a finite24576envelope only for
+hubs/company; other filtering/auth/CORS remains intact. Full API1342tests pass
+with3existing opt-in skips, local IIS4cases pass and final script format passes.
+Next/native APIs and permission semantics are unchanged; no new native screen or
+database/migration is introduced. This supersedes the unsupported expiry diagnosis.
+
+Canonical reproduction, repair, rollout and portable evidence:
+documentation/modules/reporting/features/global-crystal-template-manager/RUNTIME_KEY_REPAIR_2026-11-07.md.
+Publish Crystal site38634-WebDeploy (Release/x64) then ERP site84639-WebDeploy.
+PROD-028/029 and PROD-003 retain real deployed/runtime acceptance requirements.

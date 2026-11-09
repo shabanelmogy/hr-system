@@ -1,6 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
 import {
   ActionButton,
+  AppIcon,
   OptionSelect,
   SortDirectionButton,
 } from '../../../../../shared/ui/public-api';
@@ -10,7 +11,7 @@ import { tenantSortColumns } from '../../types/tenant';
 
 @Component({
   selector: 'erp-tenant-list-criteria',
-  imports: [ActionButton, OptionSelect, SortDirectionButton, UiTextPipe],
+  imports: [ActionButton, AppIcon, OptionSelect, SortDirectionButton, UiTextPipe],
   templateUrl: './tenant-list-criteria.html',
   styleUrl: './tenant-list-criteria.scss',
 })
@@ -30,7 +31,7 @@ export class TenantListCriteria {
     if (tenantSortColumns.some((column) => column === value))
       this.reads.changeSort({
         field: value,
-        direction: this.reads.query().sortDirection === 'DESC' ? 'desc' : 'asc',
+        direction: this.reads.sort()?.direction ?? 'asc',
       });
   }
 }

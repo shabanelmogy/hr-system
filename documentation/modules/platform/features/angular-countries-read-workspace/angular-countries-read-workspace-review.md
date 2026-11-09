@@ -20,6 +20,11 @@ Grid/Cards/detail read Required at authenticated /dev/countries; production busi
 
 ## 4. Shared reuse
 
+CollectionFrame now owns the 18px toolbar glyph size through inherited
+`--app-icon-size`. The Countries-local icon-size override is removed, so Grid
+and Cards inherit the same Reset size as States and Districts. Button hit areas
+follow their shared density rules.
+
 Use the public MyDataGrid/CardList and existing collection frame/footer/navigation, PageHeader, OptionSelect, ActionButton, StatusBadge, DialogPanel and shared fields/feedback/scroll. Grid options composes native Dialog/Tabs/SelectButton in the shared frame; responsive insets, clear actions, filters and column controls are generic. Follow D19 and ANGULAR_PRIMENG_WORKFLOW. Features own business data/permissions/callbacks only.
 
 ## 5. Exact data and transport

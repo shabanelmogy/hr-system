@@ -2,28 +2,32 @@
   <erp-page-header
     [exportSource]="exportSource()"
     variant="collection"
+    [actionsLayout]="view() === 'import' ? 'stacked' : 'adaptive'"
     [title]="'districts.viewTitle' | uiText: 'reference-districts'"
     [views]="views()"
     [view]="view()"
-    [total]="state.total()"
+    [total]="view() === 'report' || view() === 'import' ? null : state.total()"
     [totalLabel]="'pagination.items' | uiText"
-    [filterable]="view() !== 'import'"
-    [filterVisible]="toolbarVisible()"
+    [filterable]="view() !== 'import' && view() !== 'chart'"
+    [filterVisible]="filtersVisible()"
     (viewChange)="chooseView($event)"
     (refresh)="refreshCurrent()"
-    (filterToggle)="toolbarVisible.set(!toolbarVisible())"
+    (filterToggle)="toggleFilters()"
     [primaryAction]="
       view() !== 'import' && editor.canCreate()
         ? { label: districtText('districts.add'), icon: 'add' }
         : null
     "
     (primaryActivated)="editor.create()"
-  />
+  >
+    <ng-container [ngTemplateOutlet]="reportHeaderActions()" />
+    <ng-container [ngTemplateOutlet]="importHeaderActions()" />
+  </erp-page-header>
   <div class="workspace" data-testid="districts" [attr.data-kind]="state.source().kind">
     @if (view() === 'grid' || view() === 'cards') {
       <erp-district-collection-view
         [kind]="view() === 'cards' ? 'cards' : 'grid'"
-        [toolbarVisible]="toolbarVisible()"
+        [searchVisible]="searchVisible()"
       />
     } @else if (view() === 'chart') {
       @defer (on immediate) {
@@ -31,14 +35,10 @@
           [source]="state.source()"
           [rowId]="id"
           [label]="'districts.charts.title' | uiText: 'reference-districts'"
-          [toolbarVisible]="toolbarVisible()"
-          [search]="chartSearch()"
           [metrics]="analytics().metrics"
           [plots]="analytics().plots"
-          (searchChange)="state.changeSearch($event)"
           (retry)="state.refresh()"
         >
-          <div toolbarFilters><erp-district-list-criteria [showSort]="true" /></div>
           <ng-template erpCollectionEmpty
             ><erp-feedback-state
               kind="empty"
@@ -50,17 +50,22 @@
       }
     } @else if (view() === 'import') {
       @defer (on immediate) {
-        <erp-district-import-view (review)="chooseView('grid'); state.refresh()" />
+        <erp-district-import-view
+          #districtImport
+          [externalActions]="true"
+          (review)="chooseView('grid'); state.refresh()"
+        />
       } @placeholder {
         <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
       }
     } @else if (view() === 'report' && canReport()) {
       @defer (on immediate) {
         <erp-global-report-view
+          [externalActions]="true"
           #districtReport
           entity="districts"
           [embedded]="true"
-          [showFilterBar]="toolbarVisible()"
+          [showFilterBar]="reportFiltersVisible()"
           [catalogErrorMessage]="districtText('districts.reportCatalogError')"
           [unavailableMessage]="districtText('districts.reportUnavailable')"
         />

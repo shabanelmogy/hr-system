@@ -2,20 +2,21 @@
 
 ## 1. Ownership
 
-Current requester-authorized maintenance2026-11-05 improves the Angular Import
-workspace, compact header actions, vertical status rail, available-height Table
-and actionable file/row/server diagnostics. The
-[current workspace contract](IMPORT_WORKSPACE_2026-11-05.md) owns these source and
-verification details. Existing submit/permission/uncertainty rules remain intact.
-API business/schema and Next/Mobile runtime are unchanged; canonical Web resources
-and generated catalog identity are synchronized for both Web clients (PROD-019
-host deployment remains required). Earlier receipts below retain their own dates.
+Current requester-authorized maintenance 2026-11-08 consolidates Import actions
+in the existing PageHeader and uses one row of compact shared status tiles.
+The [current shared layout contract](IMPORT_LAYOUT_2026-11-08.md) supersedes the
+2026-11-05 vertical/compact scrolling rail. Shared presentation applies to
+Countries, States and Districts. Submit/permission/uncertainty rules and all API
+business/schema, Next and native workflows remain unchanged. Their new runtime
+surfaces are Excluded from this visual correction. Bilingual core caption sources
+and their generated catalogs are synchronized. Historical receipts retain their
+own revision/date; current verification is recorded in the linked contract.
 
 ReferenceData Countries owns six flat fields, validation and Create authority. Platform migration owns shared adapters/evidence. This is exact S3-A7 only; API/Next/native runtime unchanged.
 
 ## 2. Reviewed source
 
-Current ImportCountries/useCountryImport/countryImport and shared excelService/SpreadsheetImportCard reviewed. P-001 embedded Import, same authenticated Countries workspace. Native Import retained. PrimeNG22.1.4 FileUpload MCP consulted through a direct stdio client, not native chat tools; official SheetJS0.20.3 tarball matches Next/native.
+Current ImportCountries/useCountryImport/countryImport and shared excelService/SpreadsheetImportCard reviewed. P-001 embedded Import, same authenticated Countries workspace. Native Import retained. Current native PrimeNG22.1.4 MCP metadata confirms header/chooseCallback, unstyled and named Pass Through sections; dated receipts retain their original MCP access mechanism; official SheetJS0.20.3 tarball matches Next/native.
 
 ## 3. Persistence
 
@@ -35,7 +36,7 @@ Shared parser lazy loads pinned SheetJS0.20.3; FileUpload custom local selection
 
 ## 7. Shared composition
 
-Create generic SpreadsheetImportPanel using existing SurfaceCard/buttons/feedback/progress and MyDataGrid preview. Feature supplies labels/rules/status/columns. PrimeNG FileUpload basic custom mode, native hidden file input internally only. Owner-scoped CountryImportState disposes operations/parse generations; shared UnsavedChanges fences route/context and view changes.
+Create generic SpreadsheetImportPanel using existing SurfaceCard/buttons/feedback/progress and MyDataGrid preview. Feature supplies labels/rules/status/columns. PrimeNG FileUpload uses a custom header/chooseCallback in unstyled advanced mode. Shared ActionButton is the visible trigger; documented Pass Through hides its internal native input and unused content. Owner-scoped CountryImportState disposes operations/parse generations; shared UnsavedChanges fences route/context and view changes.
 
 ## 8. States
 

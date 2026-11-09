@@ -36,8 +36,8 @@ export class CollectionFooter<T> {
   readonly tokens = {
     root: { padding: '0px', background: 'transparent', gap: '2px' },
     navButton: {
-      width: '32px',
-      height: '32px',
+      width: 'var(--collection-native-nav-size, 32px)',
+      height: 'var(--collection-native-nav-size, 32px)',
       color: 'var(--muted-foreground)',
       hoverBackground: 'var(--accent)',
       hoverColor: 'var(--foreground)',
@@ -88,9 +88,15 @@ export class CollectionFooter<T> {
       next: action('next'),
       last: action('last'),
       pcRowPerPageDropdown: {
-        root: { style: { width: '80px', height: '36px', fontSize: '14px' } },
-        label: { style: { padding: '6px 10px' } },
-        dropdown: { style: { width: '28px' } },
+        root: {
+          style: {
+            width: 'var(--collection-native-page-size, 80px)',
+            height: '36px',
+            fontSize: 'inherit',
+          },
+        },
+        label: { style: { padding: '6px var(--collection-native-select-padding, 10px)' } },
+        dropdown: { style: { width: 'var(--collection-native-dropdown-size, 28px)' } },
       },
     };
   });

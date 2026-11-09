@@ -1,0 +1,982 @@
+[
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 790,
+    "height": 823,
+    "headerGeometry": {
+      "buttons": [
+        {
+          "label": "Add tenant administrator",
+          "centerY": 113.15625,
+          "left": 426.96875,
+          "right": 687
+        },
+        {
+          "label": "Export",
+          "centerY": 113.65625,
+          "left": 695,
+          "right": 727
+        },
+        {
+          "label": "Refresh",
+          "centerY": 113.15625,
+          "left": 731,
+          "right": 763
+        }
+      ],
+      "left": 16,
+      "right": 774,
+      "classes": "collection-header inline-actions",
+      "controlsDisplay": "flex"
+    },
+    "directoryGeometry": {
+      "searchInset": 11,
+      "searchLeftInset": 11,
+      "searchRightInset": 11,
+      "iconInset": 11,
+      "optionPadding": 10,
+      "selectedColor": "rgb(234, 244, 241)",
+      "unselectedColor": "rgba(0, 0, 0, 0)",
+      "listPaddingToken": "0 10px 10px"
+    },
+    "cardGeometry": {
+      "available": 724,
+      "widths": [
+        724
+      ]
+    },
+    "passed": true
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 555,
+    "height": 823,
+    "headerGeometry": {
+      "buttons": [
+        {
+          "label": "Add tenant administrator",
+          "centerY": 98.15625,
+          "left": 430,
+          "right": 462
+        },
+        {
+          "label": "Export",
+          "centerY": 98.15625,
+          "left": 470,
+          "right": 502
+        },
+        {
+          "label": "Refresh",
+          "centerY": 98.15625,
+          "left": 504,
+          "right": 536
+        }
+      ],
+      "left": 12,
+      "right": 543,
+      "classes": "collection-header inline-actions",
+      "controlsDisplay": "flex"
+    },
+    "directoryGeometry": {
+      "searchInset": 11,
+      "searchLeftInset": 11,
+      "searchRightInset": 11,
+      "iconInset": 11,
+      "optionPadding": 10,
+      "selectedColor": "rgb(234, 244, 241)",
+      "unselectedColor": "rgba(0, 0, 0, 0)",
+      "listPaddingToken": "0 10px 10px"
+    },
+    "cardGeometry": {
+      "available": 513,
+      "widths": [
+        513
+      ]
+    },
+    "passed": true
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 320,
+    "height": 720,
+    "headerGeometry": {
+      "buttons": [
+        {
+          "label": "Add tenant administrator",
+          "centerY": 96.484375,
+          "left": 207,
+          "right": 235
+        },
+        {
+          "label": "Export",
+          "centerY": 95.984375,
+          "left": 243,
+          "right": 271
+        },
+        {
+          "label": "Refresh",
+          "centerY": 96.484375,
+          "left": 273,
+          "right": 301
+        }
+      ],
+      "left": 12,
+      "right": 308,
+      "classes": "collection-header inline-actions",
+      "controlsDisplay": "flex"
+    },
+    "directoryGeometry": {
+      "searchInset": 11,
+      "searchLeftInset": 11,
+      "searchRightInset": 11,
+      "iconInset": 11,
+      "optionPadding": 10,
+      "selectedColor": "rgb(234, 244, 241)",
+      "unselectedColor": "rgba(0, 0, 0, 0)",
+      "listPaddingToken": "0 10px 10px"
+    },
+    "cardGeometry": {
+      "available": 278,
+      "widths": [
+        278
+      ]
+    },
+    "passed": true
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "headerGeometry": {
+      "buttons": [
+        {
+          "label": "Add tenant administrator",
+          "centerY": 96.7734375,
+          "left": 273.671875,
+          "right": 302.78125
+        },
+        {
+          "label": "Export",
+          "centerY": 96.2734375,
+          "left": 310.78125,
+          "right": 339.890625
+        },
+        {
+          "label": "Refresh",
+          "centerY": 96.7734375,
+          "left": 341.890625,
+          "right": 371
+        }
+      ],
+      "left": 12,
+      "right": 378,
+      "classes": "collection-header inline-actions",
+      "controlsDisplay": "flex"
+    },
+    "directoryGeometry": {
+      "searchInset": 11,
+      "searchLeftInset": 11,
+      "searchRightInset": 11,
+      "iconInset": 11,
+      "optionPadding": 10,
+      "selectedColor": "rgb(234, 244, 241)",
+      "unselectedColor": "rgba(0, 0, 0, 0)",
+      "listPaddingToken": "0 10px 10px"
+    },
+    "cardGeometry": {
+      "available": 348,
+      "widths": [
+        348
+      ]
+    },
+    "passed": true
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 844,
+    "height": 390,
+    "headerGeometry": {
+      "buttons": [
+        {
+          "label": "Add tenant administrator",
+          "centerY": 102,
+          "left": 709,
+          "right": 741
+        },
+        {
+          "label": "Export",
+          "centerY": 102.5,
+          "left": 749,
+          "right": 781
+        },
+        {
+          "label": "Refresh",
+          "centerY": 102,
+          "left": 785,
+          "right": 817
+        }
+      ],
+      "left": 16,
+      "right": 828,
+      "classes": "collection-header inline-actions",
+      "controlsDisplay": "flex"
+    },
+    "directoryGeometry": {
+      "searchInset": 11,
+      "searchLeftInset": 11,
+      "searchRightInset": 11,
+      "iconInset": 11,
+      "optionPadding": 10,
+      "selectedColor": "rgb(234, 244, 241)",
+      "unselectedColor": "rgba(0, 0, 0, 0)",
+      "listPaddingToken": "0 10px 10px"
+    },
+    "cardGeometry": {
+      "available": 486,
+      "widths": [
+        486
+      ]
+    },
+    "passed": true
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 790,
+    "height": 823,
+    "headerGeometry": {
+      "buttons": [
+        {
+          "label": "Add tenant administrator",
+          "centerY": 113.15625,
+          "left": 426.96875,
+          "right": 687
+        },
+        {
+          "label": "Export",
+          "centerY": 113.65625,
+          "left": 695,
+          "right": 727
+        },
+        {
+          "label": "Refresh",
+          "centerY": 113.15625,
+          "left": 731,
+          "right": 763
+        }
+      ],
+      "left": 16,
+      "right": 774,
+      "classes": "collection-header inline-actions",
+      "controlsDisplay": "flex"
+    },
+    "directoryGeometry": {
+      "searchInset": 11,
+      "searchLeftInset": 11,
+      "searchRightInset": 11,
+      "iconInset": 11,
+      "optionPadding": 10,
+      "selectedColor": "rgb(33, 48, 44)",
+      "unselectedColor": "rgba(0, 0, 0, 0)",
+      "listPaddingToken": "0 10px 10px"
+    },
+    "cardGeometry": {
+      "available": 724,
+      "widths": [
+        724
+      ]
+    },
+    "passed": true
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 555,
+    "height": 823,
+    "headerGeometry": {
+      "buttons": [
+        {
+          "label": "Add tenant administrator",
+          "centerY": 98.15625,
+          "left": 430,
+          "right": 462
+        },
+        {
+          "label": "Export",
+          "centerY": 98.15625,
+          "left": 470,
+          "right": 502
+        },
+        {
+          "label": "Refresh",
+          "centerY": 98.15625,
+          "left": 504,
+          "right": 536
+        }
+      ],
+      "left": 12,
+      "right": 543,
+      "classes": "collection-header inline-actions",
+      "controlsDisplay": "flex"
+    },
+    "directoryGeometry": {
+      "searchInset": 11,
+      "searchLeftInset": 11,
+      "searchRightInset": 11,
+      "iconInset": 11,
+      "optionPadding": 10,
+      "selectedColor": "rgb(33, 48, 44)",
+      "unselectedColor": "rgba(0, 0, 0, 0)",
+      "listPaddingToken": "0 10px 10px"
+    },
+    "cardGeometry": {
+      "available": 513,
+      "widths": [
+        513
+      ]
+    },
+    "passed": true
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 320,
+    "height": 720,
+    "headerGeometry": {
+      "buttons": [
+        {
+          "label": "Add tenant administrator",
+          "centerY": 96.484375,
+          "left": 207,
+          "right": 235
+        },
+        {
+          "label": "Export",
+          "centerY": 95.984375,
+          "left": 243,
+          "right": 271
+        },
+        {
+          "label": "Refresh",
+          "centerY": 96.484375,
+          "left": 273,
+          "right": 301
+        }
+      ],
+      "left": 12,
+      "right": 308,
+      "classes": "collection-header inline-actions",
+      "controlsDisplay": "flex"
+    },
+    "directoryGeometry": {
+      "searchInset": 11,
+      "searchLeftInset": 11,
+      "searchRightInset": 11,
+      "iconInset": 11,
+      "optionPadding": 10,
+      "selectedColor": "rgb(33, 48, 44)",
+      "unselectedColor": "rgba(0, 0, 0, 0)",
+      "listPaddingToken": "0 10px 10px"
+    },
+    "cardGeometry": {
+      "available": 278,
+      "widths": [
+        278
+      ]
+    },
+    "passed": true
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "headerGeometry": {
+      "buttons": [
+        {
+          "label": "Add tenant administrator",
+          "centerY": 96.7734375,
+          "left": 273.671875,
+          "right": 302.78125
+        },
+        {
+          "label": "Export",
+          "centerY": 96.2734375,
+          "left": 310.78125,
+          "right": 339.890625
+        },
+        {
+          "label": "Refresh",
+          "centerY": 96.7734375,
+          "left": 341.890625,
+          "right": 371
+        }
+      ],
+      "left": 12,
+      "right": 378,
+      "classes": "collection-header inline-actions",
+      "controlsDisplay": "flex"
+    },
+    "directoryGeometry": {
+      "searchInset": 11,
+      "searchLeftInset": 11,
+      "searchRightInset": 11,
+      "iconInset": 11,
+      "optionPadding": 10,
+      "selectedColor": "rgb(33, 48, 44)",
+      "unselectedColor": "rgba(0, 0, 0, 0)",
+      "listPaddingToken": "0 10px 10px"
+    },
+    "cardGeometry": {
+      "available": 348,
+      "widths": [
+        348
+      ]
+    },
+    "passed": true
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 844,
+    "height": 390,
+    "headerGeometry": {
+      "buttons": [
+        {
+          "label": "Add tenant administrator",
+          "centerY": 102,
+          "left": 709,
+          "right": 741
+        },
+        {
+          "label": "Export",
+          "centerY": 102.5,
+          "left": 749,
+          "right": 781
+        },
+        {
+          "label": "Refresh",
+          "centerY": 102,
+          "left": 785,
+          "right": 817
+        }
+      ],
+      "left": 16,
+      "right": 828,
+      "classes": "collection-header inline-actions",
+      "controlsDisplay": "flex"
+    },
+    "directoryGeometry": {
+      "searchInset": 11,
+      "searchLeftInset": 11,
+      "searchRightInset": 11,
+      "iconInset": 11,
+      "optionPadding": 10,
+      "selectedColor": "rgb(33, 48, 44)",
+      "unselectedColor": "rgba(0, 0, 0, 0)",
+      "listPaddingToken": "0 10px 10px"
+    },
+    "cardGeometry": {
+      "available": 486,
+      "widths": [
+        486
+      ]
+    },
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 790,
+    "height": 823,
+    "headerGeometry": {
+      "buttons": [
+        {
+          "label": "إضافة مدير منشأة",
+          "centerY": 113.15625,
+          "left": 103,
+          "right": 286.546875
+        },
+        {
+          "label": "تصدير",
+          "centerY": 113.65625,
+          "left": 63,
+          "right": 95
+        },
+        {
+          "label": "تحديث",
+          "centerY": 113.15625,
+          "left": 27,
+          "right": 59
+        }
+      ],
+      "left": 16,
+      "right": 774,
+      "classes": "collection-header inline-actions",
+      "controlsDisplay": "flex"
+    },
+    "directoryGeometry": {
+      "searchInset": 11,
+      "searchLeftInset": 11,
+      "searchRightInset": 11,
+      "iconInset": 11,
+      "optionPadding": 10,
+      "selectedColor": "rgb(234, 244, 241)",
+      "unselectedColor": "rgba(0, 0, 0, 0)",
+      "listPaddingToken": "0 10px 10px"
+    },
+    "cardGeometry": {
+      "available": 724,
+      "widths": [
+        724
+      ]
+    },
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 555,
+    "height": 823,
+    "headerGeometry": {
+      "buttons": [
+        {
+          "label": "إضافة مدير منشأة",
+          "centerY": 98.15625,
+          "left": 93,
+          "right": 125
+        },
+        {
+          "label": "تصدير",
+          "centerY": 98.15625,
+          "left": 53,
+          "right": 85
+        },
+        {
+          "label": "تحديث",
+          "centerY": 98.15625,
+          "left": 19,
+          "right": 51
+        }
+      ],
+      "left": 12,
+      "right": 543,
+      "classes": "collection-header inline-actions",
+      "controlsDisplay": "flex"
+    },
+    "directoryGeometry": {
+      "searchInset": 11,
+      "searchLeftInset": 11,
+      "searchRightInset": 11,
+      "iconInset": 11,
+      "optionPadding": 10,
+      "selectedColor": "rgb(234, 244, 241)",
+      "unselectedColor": "rgba(0, 0, 0, 0)",
+      "listPaddingToken": "0 10px 10px"
+    },
+    "cardGeometry": {
+      "available": 513,
+      "widths": [
+        513
+      ]
+    },
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 320,
+    "height": 720,
+    "headerGeometry": {
+      "buttons": [
+        {
+          "label": "إضافة مدير منشأة",
+          "centerY": 96.484375,
+          "left": 85,
+          "right": 113
+        },
+        {
+          "label": "تصدير",
+          "centerY": 95.984375,
+          "left": 49,
+          "right": 77
+        },
+        {
+          "label": "تحديث",
+          "centerY": 96.484375,
+          "left": 19,
+          "right": 47
+        }
+      ],
+      "left": 12,
+      "right": 308,
+      "classes": "collection-header inline-actions",
+      "controlsDisplay": "flex"
+    },
+    "directoryGeometry": {
+      "searchInset": 11,
+      "searchLeftInset": 11,
+      "searchRightInset": 11,
+      "iconInset": 11,
+      "optionPadding": 10,
+      "selectedColor": "rgb(234, 244, 241)",
+      "unselectedColor": "rgba(0, 0, 0, 0)",
+      "listPaddingToken": "0 10px 10px"
+    },
+    "cardGeometry": {
+      "available": 278,
+      "widths": [
+        278
+      ]
+    },
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "headerGeometry": {
+      "buttons": [
+        {
+          "label": "إضافة مدير منشأة",
+          "centerY": 96.7734375,
+          "left": 87.21875,
+          "right": 116.328125
+        },
+        {
+          "label": "تصدير",
+          "centerY": 96.2734375,
+          "left": 50.109375,
+          "right": 79.21875
+        },
+        {
+          "label": "تحديث",
+          "centerY": 96.7734375,
+          "left": 19,
+          "right": 48.109375
+        }
+      ],
+      "left": 12,
+      "right": 378,
+      "classes": "collection-header inline-actions",
+      "controlsDisplay": "flex"
+    },
+    "directoryGeometry": {
+      "searchInset": 11,
+      "searchLeftInset": 11,
+      "searchRightInset": 11,
+      "iconInset": 11,
+      "optionPadding": 10,
+      "selectedColor": "rgb(234, 244, 241)",
+      "unselectedColor": "rgba(0, 0, 0, 0)",
+      "listPaddingToken": "0 10px 10px"
+    },
+    "cardGeometry": {
+      "available": 348,
+      "widths": [
+        348
+      ]
+    },
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 844,
+    "height": 390,
+    "headerGeometry": {
+      "buttons": [
+        {
+          "label": "إضافة مدير منشأة",
+          "centerY": 102,
+          "left": 103,
+          "right": 135
+        },
+        {
+          "label": "تصدير",
+          "centerY": 102.5,
+          "left": 63,
+          "right": 95
+        },
+        {
+          "label": "تحديث",
+          "centerY": 102,
+          "left": 27,
+          "right": 59
+        }
+      ],
+      "left": 16,
+      "right": 828,
+      "classes": "collection-header inline-actions",
+      "controlsDisplay": "flex"
+    },
+    "directoryGeometry": {
+      "searchInset": 11,
+      "searchLeftInset": 11,
+      "searchRightInset": 11,
+      "iconInset": 11,
+      "optionPadding": 10,
+      "selectedColor": "rgb(234, 244, 241)",
+      "unselectedColor": "rgba(0, 0, 0, 0)",
+      "listPaddingToken": "0 10px 10px"
+    },
+    "cardGeometry": {
+      "available": 486,
+      "widths": [
+        486
+      ]
+    },
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 790,
+    "height": 823,
+    "headerGeometry": {
+      "buttons": [
+        {
+          "label": "إضافة مدير منشأة",
+          "centerY": 113.15625,
+          "left": 103,
+          "right": 286.546875
+        },
+        {
+          "label": "تصدير",
+          "centerY": 113.65625,
+          "left": 63,
+          "right": 95
+        },
+        {
+          "label": "تحديث",
+          "centerY": 113.15625,
+          "left": 27,
+          "right": 59
+        }
+      ],
+      "left": 16,
+      "right": 774,
+      "classes": "collection-header inline-actions",
+      "controlsDisplay": "flex"
+    },
+    "directoryGeometry": {
+      "searchInset": 11,
+      "searchLeftInset": 11,
+      "searchRightInset": 11,
+      "iconInset": 11,
+      "optionPadding": 10,
+      "selectedColor": "rgb(33, 48, 44)",
+      "unselectedColor": "rgba(0, 0, 0, 0)",
+      "listPaddingToken": "0 10px 10px"
+    },
+    "cardGeometry": {
+      "available": 724,
+      "widths": [
+        724
+      ]
+    },
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 555,
+    "height": 823,
+    "headerGeometry": {
+      "buttons": [
+        {
+          "label": "إضافة مدير منشأة",
+          "centerY": 98.15625,
+          "left": 93,
+          "right": 125
+        },
+        {
+          "label": "تصدير",
+          "centerY": 98.15625,
+          "left": 53,
+          "right": 85
+        },
+        {
+          "label": "تحديث",
+          "centerY": 98.15625,
+          "left": 19,
+          "right": 51
+        }
+      ],
+      "left": 12,
+      "right": 543,
+      "classes": "collection-header inline-actions",
+      "controlsDisplay": "flex"
+    },
+    "directoryGeometry": {
+      "searchInset": 11,
+      "searchLeftInset": 11,
+      "searchRightInset": 11,
+      "iconInset": 11,
+      "optionPadding": 10,
+      "selectedColor": "rgb(33, 48, 44)",
+      "unselectedColor": "rgba(0, 0, 0, 0)",
+      "listPaddingToken": "0 10px 10px"
+    },
+    "cardGeometry": {
+      "available": 513,
+      "widths": [
+        513
+      ]
+    },
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 320,
+    "height": 720,
+    "headerGeometry": {
+      "buttons": [
+        {
+          "label": "إضافة مدير منشأة",
+          "centerY": 96.484375,
+          "left": 85,
+          "right": 113
+        },
+        {
+          "label": "تصدير",
+          "centerY": 95.984375,
+          "left": 49,
+          "right": 77
+        },
+        {
+          "label": "تحديث",
+          "centerY": 96.484375,
+          "left": 19,
+          "right": 47
+        }
+      ],
+      "left": 12,
+      "right": 308,
+      "classes": "collection-header inline-actions",
+      "controlsDisplay": "flex"
+    },
+    "directoryGeometry": {
+      "searchInset": 11,
+      "searchLeftInset": 11,
+      "searchRightInset": 11,
+      "iconInset": 11,
+      "optionPadding": 10,
+      "selectedColor": "rgb(33, 48, 44)",
+      "unselectedColor": "rgba(0, 0, 0, 0)",
+      "listPaddingToken": "0 10px 10px"
+    },
+    "cardGeometry": {
+      "available": 278,
+      "widths": [
+        278
+      ]
+    },
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "headerGeometry": {
+      "buttons": [
+        {
+          "label": "إضافة مدير منشأة",
+          "centerY": 96.7734375,
+          "left": 87.21875,
+          "right": 116.328125
+        },
+        {
+          "label": "تصدير",
+          "centerY": 96.2734375,
+          "left": 50.109375,
+          "right": 79.21875
+        },
+        {
+          "label": "تحديث",
+          "centerY": 96.7734375,
+          "left": 19,
+          "right": 48.109375
+        }
+      ],
+      "left": 12,
+      "right": 378,
+      "classes": "collection-header inline-actions",
+      "controlsDisplay": "flex"
+    },
+    "directoryGeometry": {
+      "searchInset": 11,
+      "searchLeftInset": 11,
+      "searchRightInset": 11,
+      "iconInset": 11,
+      "optionPadding": 10,
+      "selectedColor": "rgb(33, 48, 44)",
+      "unselectedColor": "rgba(0, 0, 0, 0)",
+      "listPaddingToken": "0 10px 10px"
+    },
+    "cardGeometry": {
+      "available": 348,
+      "widths": [
+        348
+      ]
+    },
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 844,
+    "height": 390,
+    "headerGeometry": {
+      "buttons": [
+        {
+          "label": "إضافة مدير منشأة",
+          "centerY": 102,
+          "left": 103,
+          "right": 135
+        },
+        {
+          "label": "تصدير",
+          "centerY": 102.5,
+          "left": 63,
+          "right": 95
+        },
+        {
+          "label": "تحديث",
+          "centerY": 102,
+          "left": 27,
+          "right": 59
+        }
+      ],
+      "left": 16,
+      "right": 828,
+      "classes": "collection-header inline-actions",
+      "controlsDisplay": "flex"
+    },
+    "directoryGeometry": {
+      "searchInset": 11,
+      "searchLeftInset": 11,
+      "searchRightInset": 11,
+      "iconInset": 11,
+      "optionPadding": 10,
+      "selectedColor": "rgb(33, 48, 44)",
+      "unselectedColor": "rgba(0, 0, 0, 0)",
+      "listPaddingToken": "0 10px 10px"
+    },
+    "cardGeometry": {
+      "available": 486,
+      "widths": [
+        486
+      ]
+    },
+    "passed": true
+  }
+]

@@ -1,6 +1,14 @@
 :host {
   display: inline-flex;
   flex-shrink: 0;
+  --action-icon-size: var(--action-menu-icon-size, 32px);
+  --action-icon-radius: 8px;
+  --action-icon-background: var(--accent);
+  --action-icon-color: var(--accent-foreground);
+}
+.compact-icon {
+  inline-size: 18px;
+  block-size: 18px;
 }
 .action-menu-indicator {
   display: inline-flex;

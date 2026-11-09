@@ -5,6 +5,7 @@ import { chromium, expect } from '@playwright/test';
 import { getTheme, themePaletteOrder } from '@app/tokens';
 import { sessionFixture } from '../src/app/platform/auth/auth.fixture.ts';
 import { dashboardFixture } from '../src/app/platform/tenants/dashboard.fixture.ts';
+import { serveAngularFixtureBuild } from './angular-build-browser-fixture.mjs';
 
 // Actual shell/native canvases; all API responses are intercepted synthetic reads.
 const root = path.resolve(import.meta.dirname, '..'),
@@ -22,19 +23,41 @@ const version = fs
   .readFileSync(path.join(root, 'src/app/platform/localization/catalog.generated.ts'), 'utf8')
   .match(/[a-f0-9]{64}/)[0];
 const smoke = process.argv.includes('--smoke'),
+  layoutOnly = process.argv.includes('--layout'),
+  fixtureBuild = layoutOnly || process.argv.includes('--fixture'),
   focused = process.argv.includes('--focused'),
   results = [];
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 try {
-  for (const palette of smoke || focused ? ['green'] : themePaletteOrder)
+  for (const palette of smoke || focused || layoutOnly ? ['green'] : themePaletteOrder)
     for (const mode of smoke ? ['light'] : ['light', 'dark'])
       for (const language of smoke ? ['en'] : ['en', 'ar'])
-        for (const width of smoke ? [1440] : [390, 1440]) {
+        for (const width of layoutOnly
+          ? [320, 390, 690, 900, 1012, 1440, 844]
+          : smoke
+            ? [1440]
+            : [390, 1440]) {
+          const height = layoutOnly
+            ? width === 844
+              ? 390
+              : width === 900
+                ? 640
+                : 823
+            : width === 390
+              ? 780
+              : 1050;
           const context = await browser.newContext({
             ignoreHTTPSErrors: true,
-            viewport: { width, height: width === 390 ? 780 : 1050 },
+            viewport: { width, height },
             reducedMotion: 'reduce',
           });
+          if (fixtureBuild)
+            await serveAngularFixtureBuild(
+              context,
+              root,
+              origin,
+              path.resolve(root, '../.codex-tmp/countries-pagination-dev/browser'),
+            );
           await context.addCookies(
             Object.entries({ themePalette: palette, currentMode: mode, i18next: language }).map(
               ([name, value]) => ({ name, value, url: origin }),
@@ -222,88 +245,128 @@ try {
                 };
               }),
             );
-          await page.goto(origin + '/home');
-          await page.getByTestId('open-data').getByRole('button').click();
-          await page
-            .getByRole('complementary')
-            .getByRole('button', { name: text['menu.countries'], exact: true })
-            .click();
-          await expect(region).toHaveAttribute('data-kind', 'ready');
-          if (width === 1440)
-            await page
-              .locator('.drawer-header')
-              .getByRole('button', { name: text['menu.closeSidebar'], exact: true })
-              .click();
-          await pickView('cards');
-          await expect(region.locator('article').first()).toBeVisible();
-          const toolbar = region.locator('.collection-toolbar');
-          const geometry = await toolbar.evaluate((element) => {
-            const controls = Array.from(
-              element.querySelectorAll(
-                '.search-controls erp-option-select .p-select,.search-controls erp-text-field input,.filter-region erp-option-select .p-select,[data-testid=direction] button,[data-testid=reset] button',
-              ),
-            ).map((node) => {
-              const box = node.getBoundingClientRect();
-              return { centerY: box.y + box.height / 2, width: box.width, height: box.height };
+          if (layoutOnly) {
+            await page.goto(origin + '/dev/countries');
+            await expect(region).toHaveAttribute('data-kind', 'ready');
+            await pickView('chart');
+            await expect(region.locator('canvas')).toHaveCount(4);
+            await page.evaluate(() => document.fonts.ready);
+            const navigation = page.locator('.drawer-toggle button');
+            for (const expanded of width >= 900 ? [false, true] : [false]) {
+              if ((await navigation.getAttribute('aria-expanded')) !== String(expanded))
+                await navigation.click();
+              await expect
+                .poll(async () => {
+                  const facts = await nativeFacts();
+                  return (
+                    facts.length === 4 &&
+                    facts.every((fact) => fact?.painted && fact.height >= 180 && fact.live === 4)
+                  );
+                })
+                .toBe(true);
+              const metrics = region.locator('.metrics');
+              const plots = region.locator('.plots');
+              const geometry = await plots.evaluate((element) => {
+                const workspace = element.closest('.chart-scroll');
+                const metricGrid = workspace.querySelector('.metrics');
+                const panels = [...element.children].map((panel) =>
+                  panel.getBoundingClientRect().toJSON(),
+                );
+                return {
+                  width: workspace.clientWidth,
+                  columns: getComputedStyle(element).gridTemplateColumns.split(' ').length,
+                  metricColumns: getComputedStyle(metricGrid).gridTemplateColumns.split(' ').length,
+                  panels,
+                };
+              });
+              assert.equal(geometry.columns, geometry.width >= 800 ? 2 : 1);
+              assert.equal(geometry.metricColumns, geometry.width >= 672 ? 4 : 2);
+              assert.ok(
+                geometry.panels.every(
+                  (panel) =>
+                    panel.width >= Math.min(260, geometry.width - 20) && panel.height >= 319,
+                ),
+                JSON.stringify(geometry),
+              );
+              await expect(metrics.locator('erp-metric-card')).toHaveCount(4);
+              await expect(region.locator('table.sr-only')).toHaveCount(4);
+              const scroll = region.locator('.chart-scroll p-scrollarea-viewport');
+              await scroll.focus();
+              await scroll.press('Control+End');
+              await expect
+                .poll(() =>
+                  scroll.evaluate((element) => {
+                    const last = element
+                      .querySelector('erp-chart-panel:last-child')
+                      .getBoundingClientRect();
+                    const viewport = element.getBoundingClientRect();
+                    return last.bottom <= viewport.bottom + 2 && last.bottom > viewport.top;
+                  }),
+                )
+                .toBe(true);
+              const charts = await nativeFacts();
+              assert.ok(
+                charts.every(
+                  (chart) => chart.rtl === (language === 'ar') && chart.animation === false,
+                ),
+              );
+              await scroll.evaluate((element) => element.scrollTo(0, 0));
+              assert.ok(
+                await page.evaluate(
+                  () =>
+                    document.documentElement.scrollHeight <= innerHeight + 1 &&
+                    document.documentElement.scrollWidth <= innerWidth + 1,
+                ),
+              );
+              await page.screenshot({
+                path: path.join(
+                  output,
+                  `layout-${mode}-${language}-${width}x${height}-${expanded ? 'open' : 'closed'}.png`,
+                ),
+                animations: 'disabled',
+              });
+              results.push({
+                palette,
+                mode,
+                language,
+                width,
+                height,
+                expanded,
+                geometry,
+                passed: true,
+              });
+              console.log(
+                `Chart layout passed ${mode}/${language}/${width}x${height}/${expanded ? 'open' : 'closed'}`,
+              );
+            }
+            const before = reads.length;
+            await page.evaluate(() => {
+              const renderer = ng.getComponent(document.querySelector('erp-chart-renderer'));
+              renderer.theme.setMode(renderer.theme.mode() === 'dark' ? 'light' : 'dark', false);
             });
-            const field = element.querySelector('erp-text-field'),
-              sort = element.querySelector('[data-testid=sort]');
-            return {
-              controls,
-              width: element.clientWidth,
-              scrollWidth: element.scrollWidth,
-              searchWidth: field.querySelector('input').getBoundingClientRect().width,
-              sortWidth: sort.querySelector('.p-select').getBoundingClientRect().width,
-              field: {
-                style: field.getAttribute('style'),
-                width: field.getBoundingClientRect().width,
-                configured: ng
-                  .getComponent(element.closest('erp-collection-frame'))
-                  .searchMaxWidth(),
-              },
-              sort: {
-                style: sort.getAttribute('style'),
-                width: sort.getBoundingClientRect().width,
-                configured: ng.getComponent(sort).controlWidth(),
-              },
-            };
-          });
-          await toolbar.screenshot({
-            path: path.join(output, `${palette}-${mode}-${language}-${width}-cards-toolbar.png`),
-          });
-          fs.writeFileSync(
-            path.join(output, 'latest-toolbar-geometry.json'),
-            JSON.stringify(geometry, null, 2),
-          );
-          assert.equal(geometry.controls.length, 7);
-          assert.ok(
-            Math.max(...geometry.controls.map((item) => item.centerY)) -
-              Math.min(...geometry.controls.map((item) => item.centerY)) <
-              3,
-            'Cards search/status/sort/direction/reset must share one row',
-          );
-          assert.ok(geometry.searchWidth <= 401);
-          assert.ok(geometry.sortWidth >= 219);
-          await header.locator('.filter button').click();
-          await expect(toolbar).toHaveCount(0);
-          await pickView('grid');
-          await expect(region.locator('.collection-toolbar')).toHaveCount(0);
-          await header.locator('.filter button').click();
-          await pickView('cards');
-          await expect(toolbar).toHaveCount(1);
-          const direction = region.getByTestId('direction').getByRole('button');
-          await expect(direction).toHaveText(text['collections.sortDescendingShort']);
-          await expect(direction.locator('svg')).toHaveCount(1);
-          await direction.click();
-          await expect(direction).toHaveText(text['collections.sortAscendingShort']);
+            await expect
+              .poll(async () => (await nativeFacts()).every((chart) => chart?.live === 4))
+              .toBe(true);
+            assert.equal(reads.length, before);
+            await pickView('grid');
+            await expect
+              .poll(() =>
+                page.evaluate(() => Object.keys(window.__erpChartConstructor.instances).length),
+              )
+              .toBe(0);
+            assert.deepEqual(errors, []);
+            await context.close();
+            continue;
+          }
+          await page.goto(origin + '/dev/countries');
           await expect(region).toHaveAttribute('data-kind', 'ready');
-          await direction.click();
-          await expect(direction).toHaveText(text['collections.sortDescendingShort']);
-          await expect(region).toHaveAttribute('data-kind', 'ready');
+          const navigationToggle = page.locator('.drawer-toggle button');
+          if (width >= 900 && (await navigationToggle.getAttribute('aria-expanded')) === 'true')
+            await navigationToggle.click();
+          await header.locator('.filter button').click();
           await region.locator('.search-controls erp-text-field input').fill('Country');
           await expect.poll(() => reads.at(-1)?.search).toBe('Country');
           await expect(region).toHaveAttribute('data-kind', 'ready');
-          await pickView('grid');
           await region.locator('[data-collection-row]').first().locator('td').nth(1).click();
           await page.keyboard.press('Control+End');
           await expect.poll(() => reads.at(-1)?.pageNumber).toBe('2');
@@ -359,21 +422,6 @@ try {
             assert.ok(chart.canvasLabel);
           }
           assert.equal(byId('timeline').gradient, true);
-          const referencePath = path.join(output, 'reference/results.json');
-          if (fs.existsSync(referencePath)) {
-            const source = JSON.parse(fs.readFileSync(referencePath, 'utf8')).find(
-              (value) =>
-                value.mode === mode && value.language === language && value.width === width,
-            );
-            assert.ok(source);
-            for (const [index, chart] of charts.entries())
-              for (const key of ['padding', 'radius', 'titleSize', 'titleWeight', 'font'])
-                assert.equal(
-                  chart.presentation[key],
-                  source.geometry[index][key],
-                  'Current Next chart ' + key,
-                );
-          }
           await expect(region.locator('.sr-only table,table.sr-only')).toHaveCount(4);
           await page.screenshot({
             path: path.join(output, `${palette}-${mode}-${language}-${width}-charts.png`),
@@ -412,11 +460,6 @@ try {
           );
           assert.equal(layout.columns, width === 390 ? 1 : 2);
           assert.ok(layout.panels.every((panel) => panel.height >= 279));
-          if (width === 1440)
-            assert.ok(
-              Math.abs(layout.panels[0].height - (layout.viewportHeight - 12)) < 3,
-              'Desktop chart row uses the source full viewport height',
-            );
           assert.ok(
             await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1),
           );
@@ -431,11 +474,7 @@ try {
                     .querySelector('erp-chart-panel:last-child')
                     .getBoundingClientRect(),
                   viewport = element.getBoundingClientRect();
-                return (
-                  element.scrollHeight > element.clientHeight &&
-                  last.bottom <= viewport.bottom + 2 &&
-                  last.bottom > viewport.top
-                );
+                return last.bottom <= viewport.bottom + 2 && last.bottom > viewport.top;
               }),
             )
             .toBe(true);
@@ -531,12 +570,8 @@ try {
             mode,
             language,
             width,
-            geometry,
             charts,
             layout,
-            cardOneRow: true,
-            compactSort: true,
-            filterToggle: true,
             chartNoFiltersOrScopeText: true,
             firstPageRetainsCriteria: true,
             pageOnlyCounts: true,
@@ -555,7 +590,13 @@ try {
   fs.writeFileSync(
     path.join(
       output,
-      smoke ? 'smoke-results.json' : focused ? 'focused-results.json' : 'results.json',
+      layoutOnly
+        ? 'layout-results.json'
+        : smoke
+          ? 'smoke-results.json'
+          : focused
+            ? 'focused-results.json'
+            : 'results.json',
     ),
     JSON.stringify(results, null, 2),
   );

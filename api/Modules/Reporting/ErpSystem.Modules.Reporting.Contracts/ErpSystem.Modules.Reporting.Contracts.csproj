@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Features\Analytics\CrystalReports\Compatibility\*.json"
+                      LogicalName="ErpSystem.Modules.Reporting.Contracts.Compatibility.%(Filename)%(Extension)" />
     <EmbeddedResource Include="Features\Analytics\CrystalReports\managed-crystal-report-contracts.v1.json"
                       LogicalName="ErpSystem.Modules.Reporting.Contracts.ManagedCrystalReportContracts.v1.json" />
   </ItemGroup>

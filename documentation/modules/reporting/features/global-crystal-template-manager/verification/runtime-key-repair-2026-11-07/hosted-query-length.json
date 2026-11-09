@@ -1,0 +1,33 @@
+{
+  "dateUtc": "2026-11-07T12:30:55.6942446Z",
+  "realTokensUsed": false,
+  "results": [
+    {
+      "syntheticTokenCharacters": 1800,
+      "queryCharacters": 1842,
+      "status": 401,
+      "allowOrigin": "https://localhost:4210",
+      "contentType": "",
+      "iisQueryLimitMessage": [],
+      "title": ""
+    },
+    {
+      "syntheticTokenCharacters": 2012,
+      "queryCharacters": 2054,
+      "status": 404,
+      "allowOrigin": "",
+      "contentType": "text/html",
+      "iisQueryLimitMessage": false,
+      "title": "404 - File or directory not found."
+    },
+    {
+      "syntheticTokenCharacters": 2200,
+      "queryCharacters": 2242,
+      "status": 404,
+      "allowOrigin": "",
+      "contentType": "text/html",
+      "iisQueryLimitMessage": false,
+      "title": "404 - File or directory not found."
+    }
+  ]
+}

@@ -2,28 +2,32 @@
   <erp-page-header
     [exportSource]="exportSource()"
     variant="collection"
+    [actionsLayout]="view() === 'import' ? 'stacked' : 'adaptive'"
     [title]="'states.viewTitle' | uiText: 'reference-states'"
     [views]="views()"
     [view]="view()"
-    [total]="state.total()"
+    [total]="view() === 'report' || view() === 'import' ? null : state.total()"
     [totalLabel]="'pagination.items' | uiText"
-    [filterable]="view() !== 'import'"
-    [filterVisible]="toolbarVisible()"
+    [filterable]="view() !== 'import' && view() !== 'chart'"
+    [filterVisible]="filtersVisible()"
     (viewChange)="chooseView($event)"
     (refresh)="refreshCurrent()"
-    (filterToggle)="toolbarVisible.set(!toolbarVisible())"
+    (filterToggle)="toggleFilters()"
     [primaryAction]="
       view() !== 'import' && editor.canCreate()
         ? { label: stateText('states.add'), icon: 'add' }
         : null
     "
     (primaryActivated)="editor.create()"
-  />
+  >
+    <ng-container [ngTemplateOutlet]="reportHeaderActions()" />
+    <ng-container [ngTemplateOutlet]="importHeaderActions()" />
+  </erp-page-header>
   <div class="workspace" data-testid="states" [attr.data-kind]="state.source().kind">
     @if (view() === 'grid' || view() === 'cards') {
       <erp-state-collection-view
         [kind]="view() === 'cards' ? 'cards' : 'grid'"
-        [toolbarVisible]="toolbarVisible()"
+        [searchVisible]="searchVisible()"
       />
     } @else if (view() === 'chart') {
       @defer (on immediate) {
@@ -31,14 +35,10 @@
           [source]="state.source()"
           [rowId]="id"
           [label]="'states.charts.title' | uiText: 'reference-states'"
-          [toolbarVisible]="toolbarVisible()"
-          [search]="chartSearch()"
           [metrics]="analytics().metrics"
           [plots]="analytics().plots"
-          (searchChange)="state.changeSearch($event)"
           (retry)="state.refresh()"
         >
-          <div toolbarFilters><erp-state-list-criteria [showSort]="true" /></div>
           <ng-template erpCollectionEmpty
             ><erp-feedback-state
               kind="empty"
@@ -50,17 +50,22 @@
       }
     } @else if (view() === 'import') {
       @defer (on immediate) {
-        <erp-state-import-view (review)="chooseView('grid'); state.refresh()" />
+        <erp-state-import-view
+          #stateImport
+          [externalActions]="true"
+          (review)="chooseView('grid'); state.refresh()"
+        />
       } @placeholder {
         <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
       }
     } @else if (view() === 'report' && canReport()) {
       @defer (on immediate) {
         <erp-global-report-view
+          [externalActions]="true"
           #stateReport
           entity="states"
           [embedded]="true"
-          [showFilterBar]="toolbarVisible()"
+          [showFilterBar]="reportFiltersVisible()"
           [catalogErrorMessage]="stateText('states.reportCatalogError')"
           [unavailableMessage]="stateText('states.reportUnavailable')"
         />

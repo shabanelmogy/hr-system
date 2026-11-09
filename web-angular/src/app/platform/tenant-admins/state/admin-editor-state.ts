@@ -107,10 +107,15 @@ export class AdminEditorState {
       this.accepted.complete();
     });
   }
-  create(): void {
+  create(tenantId: string | null = null): void {
     if (!this.canWrite() || this.active() || this.pending() || this.drafts.busy()) return;
+    if (tenantId !== null && !this.choices.tenants().some((tenant) => tenant.id === tenantId))
+      return;
     this.begin('create', null);
-    this.reset({ ...emptyAdminDraft });
+    this.reset({
+      ...emptyAdminDraft,
+      ...(tenantId ? { tenantIds: [tenantId], defaultTenantId: tenantId } : {}),
+    });
     this.phase.set('ready');
   }
   edit(id: string): void {

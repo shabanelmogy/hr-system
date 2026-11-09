@@ -139,6 +139,13 @@ export class CountriesReadPage {
     () => this.state.canRead() && globalReportAllowed(this.auth.readIdentity()),
   );
   private readonly reportView = viewChild<GlobalReportView>('countryReport');
+  private readonly importView = viewChild<CountryImportView>('countryImport');
+  readonly importHeaderActions = computed(() =>
+    this.view() === 'import' ? (this.importView()?.headerActions() ?? null) : null,
+  );
+  readonly reportHeaderActions = computed(() =>
+    this.view() === 'report' ? (this.reportView()?.headerActions() ?? null) : null,
+  );
   private readonly drafts = inject(UnsavedChanges);
   private readonly preference = createViewPreference<CountryView>({
     storageKey: 'erp-angular:views:countries-view-layout',
@@ -152,7 +159,11 @@ export class CountriesReadPage {
       !this.drafts.dirty(),
   });
   readonly view = this.preference.value;
-  readonly toolbarVisible = signal(true);
+  readonly searchVisible = signal(false);
+  readonly reportFiltersVisible = signal(true);
+  readonly filtersVisible = computed(() =>
+    this.view() === 'report' ? this.reportFiltersVisible() : this.searchVisible(),
+  );
   readonly views = computed<readonly PageViewOption<CountryView>[]>(() =>
     this.state.canRead()
       ? [
@@ -185,6 +196,10 @@ export class CountriesReadPage {
         )
       : { metrics: [], plots: [] };
   });
+  toggleFilters(): void {
+    const visible = this.view() === 'report' ? this.reportFiltersVisible : this.searchVisible;
+    visible.update((open) => !open);
+  }
   async chooseView(value: string): Promise<void> {
     if (
       !this.state.canRead() ||
@@ -220,10 +235,7 @@ export class CountriesReadPage {
   }
   readonly id = (row: CountryListItem) => row.id;
   readonly rowLabel = (row: CountryListItem) => countryName(row, this.locale.language());
-  readonly sort = computed(() => ({
-    field: this.state.query().sortBy,
-    direction: this.state.query().sortDirection,
-  }));
+  readonly sort = this.state.sort;
   readonly columns = computed(() =>
     countryColumns({
       text: (key) => this.text(key),
@@ -293,7 +305,7 @@ export class CountriesReadPage {
     return this.locale.translate(key, 'reference-countries');
   }
   fieldLabel(field: string): string {
-    return ['nameAr', 'nameEn', 'createdOn'].includes(field)
+    return ['id', 'nameAr', 'nameEn', 'createdOn'].includes(field)
       ? this.text('general.' + field)
       : this.countryText('countries.' + field);
   }
@@ -312,12 +324,6 @@ export class CountriesReadPage {
     return countryPhone(value);
   }
   chooseSort(field: string): void {
-    this.state.changeSort({ field, direction: this.state.query().sortDirection });
-  }
-  reverseSort(): void {
-    this.state.changeSort({
-      field: this.state.query().sortBy,
-      direction: this.state.query().sortDirection === 'asc' ? 'desc' : 'asc',
-    });
+    this.state.changeSort({ field, direction: this.state.sort()?.direction ?? 'asc' });
   }
 }

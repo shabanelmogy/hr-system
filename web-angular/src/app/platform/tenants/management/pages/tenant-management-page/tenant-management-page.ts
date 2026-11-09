@@ -1,11 +1,9 @@
 import { viewChild } from '@angular/core';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { createViewPreference, UnsavedChanges } from '../../../../../shared/data/public-api';
 import {
   CollectionRecordFeedback,
-  FeedbackNotifications,
   FeedbackState,
   PageHeader,
   type PageViewOption,
@@ -15,7 +13,6 @@ import { TenantReadState } from '../../state/tenant-read-state';
 import { TenantEntitlementsState } from '../../state/tenant-entitlements-state';
 import { TenantEditorState } from '../../state/tenant-editor-state';
 import { TenantCollectionView } from '../../components/tenant-collection-view/tenant-collection-view';
-import { TenantEditor } from '../../components/tenant-editor/tenant-editor';
 
 type TenantView = 'grid' | 'cards';
 
@@ -27,7 +24,7 @@ type TenantView = 'grid' | 'cards';
     TenantEditorState,
     CollectionRecordFeedback,
   ],
-  imports: [PageHeader, FeedbackState, UiTextPipe, TenantCollectionView, TenantEditor],
+  imports: [PageHeader, FeedbackState, UiTextPipe, TenantCollectionView],
   templateUrl: './tenant-management-page.html',
   styleUrl: './tenant-management-page.scss',
 })
@@ -44,7 +41,9 @@ export class TenantManagementPage {
   readonly catalog = inject(TenantEntitlementsState);
   readonly editor = inject(TenantEditorState);
   private readonly records = inject(CollectionRecordFeedback);
-  private readonly notices = inject(FeedbackNotifications);
+  private readonly returnedTenantId: unknown =
+    this.router.currentNavigation()?.extras.state?.['editedTenantId'];
+  private returnFeedbackApplied = false;
   readonly locale = inject(LocalizationRuntime);
   private readonly drafts = inject(UnsavedChanges);
   private readonly preference = createViewPreference<TenantView>({
@@ -66,13 +65,17 @@ export class TenantManagementPage {
   constructor() {
     void this.locale.loadNamespace('core');
     void this.locale.loadNamespace('platform-tenants');
-    this.editor.saved.pipe(takeUntilDestroyed()).subscribe((event) => {
-      if (event.mode === 'edit') this.records.edited(this.reads.source(), event.tenant.id);
-      this.reads.refresh();
-      this.notices.success(
-        event.mode === 'create' ? 'tenantManagement.created' : 'tenantManagement.updated',
-        'platform-tenants',
-      );
+    effect(() => {
+      const source = this.reads.source();
+      if (
+        !this.returnFeedbackApplied &&
+        typeof this.returnedTenantId === 'string' &&
+        source.kind === 'ready'
+      ) {
+        this.returnFeedbackApplied = true;
+        if (source.result?.rows.some((row) => row.id === this.returnedTenantId))
+          this.records.edited(source, this.returnedTenantId);
+      }
     });
   }
   choose(value: string): void {

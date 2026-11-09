@@ -1,5 +1,6 @@
 <erp-option-select
   data-testid="status"
+  data-collection-search-companion
   [controlHeight]="36"
   [label]="'districts.status.label' | uiText: 'reference-districts'"
   [value]="state.query().status"
@@ -26,18 +27,22 @@
     data-testid="sort"
     [controlHeight]="36"
     [label]="'general.sortBy' | uiText"
-    [value]="state.query().sortBy"
+    [value]="state.sortField()"
     [options]="sorts()"
     (valueChange)="chooseSort($event)"
   />
   <erp-sort-direction-button
-    [direction]="state.query().sortDirection"
-    (directionChange)="state.changeSort({ field: state.query().sortBy, direction: $event })"
+    [direction]="state.sort()?.direction ?? null"
+    (directionChange)="
+      state.changeSort($event ? { field: state.sortField(), direction: $event } : null)
+    "
   />
   <erp-button
     data-testid="reset"
     [label]="'general.reset' | uiText"
+    [compactOnSmallScreens]="true"
     variant="text"
     (activated)="state.reset()"
-  />
+    ><erp-icon buttonIcon name="reset"
+  /></erp-button>
 }

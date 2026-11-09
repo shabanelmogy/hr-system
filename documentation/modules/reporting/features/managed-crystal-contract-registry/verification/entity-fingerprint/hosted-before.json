@@ -1,0 +1,123 @@
+{
+  "dateUtc": "2026-11-07T10:50:19.084Z",
+  "scope": "Real credentialed browser reads and read-only Countries rendering; no business mutations/deployment/job actions",
+  "secretsRecorded": false,
+  "results": [
+    {
+      "operation": "single-demo-login",
+      "status": 200
+    },
+    {
+      "operation": "credentialed-browser-session",
+      "status": 200,
+      "authenticated": true,
+      "canExportGlobalData": true
+    },
+    {
+      "endpoint": "/health",
+      "status": 200,
+      "contentType": "application/json",
+      "hangfireDocument": false,
+      "publicCode": null,
+      "publicTitle": null,
+      "itemCount": null,
+      "totalCount": null,
+      "publishedCount": null,
+      "archivedCount": null
+    },
+    {
+      "endpoint": "/hangfire",
+      "status": 200,
+      "contentType": "text/html",
+      "hangfireDocument": true,
+      "publicCode": null,
+      "publicTitle": null,
+      "itemCount": null,
+      "totalCount": null,
+      "publishedCount": null,
+      "archivedCount": null
+    },
+    {
+      "endpoint": "/api/v1/global-crystal-reports/manage/design-sources",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "hangfireDocument": false,
+      "publicCode": null,
+      "publicTitle": null,
+      "itemCount": 4,
+      "totalCount": null,
+      "publishedCount": null,
+      "archivedCount": null
+    },
+    {
+      "endpoint": "/api/v1/global-crystal-reports/manage/entities",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "hangfireDocument": false,
+      "publicCode": null,
+      "publicTitle": null,
+      "itemCount": 4,
+      "totalCount": null,
+      "publishedCount": null,
+      "archivedCount": null
+    },
+    {
+      "endpoint": "/api/v1/global-crystal-reports/manage?entityKey=countries&search=&page=1&pageSize=100&status=",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "hangfireDocument": false,
+      "publicCode": null,
+      "publicTitle": null,
+      "itemCount": 1,
+      "totalCount": 1,
+      "publishedCount": 1,
+      "archivedCount": 0
+    },
+    {
+      "operation": "published-countries-version-validation",
+      "status": 200,
+      "versions": [
+        {
+          "versionNumber": 3,
+          "validationStatus": "Valid",
+          "validationReasonPresent": false,
+          "hasContractFingerprint": true,
+          "validationContractFingerprint": "0fe8d65f181bef35dcd8e97d4e453014cdc9c7f8d795d0923a04bfe12e7a3015",
+          "currentContractFingerprint": "2e0dfd64ef9fc69fbc45c19542ae157bcfb88564114a40a9edc8c566253f6b89",
+          "matchesCurrentContract": false
+        }
+      ]
+    },
+    {
+      "endpoint": "/api/v1/global-crystal-reports/manage/deployment-candidates?entityKey=countries&search=&page=1&pageSize=100",
+      "status": 503,
+      "contentType": "application/problem+json; charset=utf-8",
+      "hangfireDocument": false,
+      "publicCode": null,
+      "publicTitle": "Request failed",
+      "itemCount": null,
+      "totalCount": null,
+      "publishedCount": null,
+      "archivedCount": null
+    },
+    {
+      "operation": "actual-hangfire-iframe-document",
+      "visibleDocument": true,
+      "jobActions": false
+    },
+    {
+      "operation": "countries-catalog",
+      "status": 200,
+      "publicCode": null,
+      "publicTitle": null
+    },
+    {
+      "operation": "published-countries-reports",
+      "count": 0
+    },
+    {
+      "operation": "owned-logout",
+      "status": 204
+    }
+  ]
+}

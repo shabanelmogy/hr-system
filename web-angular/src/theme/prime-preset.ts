@@ -19,6 +19,7 @@ import AuraDatePicker from '@primeuix/themes/aura/datepicker';
 import AuraToggleSwitch from '@primeuix/themes/aura/toggleswitch';
 import AuraTextarea from '@primeuix/themes/aura/textarea';
 import AuraTabs from '@primeuix/themes/aura/tabs';
+import AuraListbox from '@primeuix/themes/aura/listbox';
 import AuraSelectButton from '@primeuix/themes/aura/selectbutton';
 import AuraToggleButton from '@primeuix/themes/aura/togglebutton';
 import type { ButtonDesignTokens, ButtonTokenSections } from '@primeuix/themes/types/button';
@@ -209,6 +210,7 @@ export function createPrimePreset(palette: ThemePalette): Preset {
         toggleswitch: AuraToggleSwitch,
         textarea: AuraTextarea,
         tabs: AuraTabs,
+        listbox: AuraListbox,
         selectbutton: AuraSelectButton,
         togglebutton: AuraToggleButton,
       },
@@ -246,6 +248,24 @@ export function createPrimePreset(palette: ThemePalette): Preset {
       },
       components: {
         button,
+        listbox: {
+          list: { padding: '0 10px 10px', gap: '4px', header: { padding: '10px' } },
+          option: {
+            padding: '8px 10px',
+            borderRadius: '8px',
+            fontSize: '0.875rem',
+            fontWeight: '400',
+            selectedFontWeight: '600',
+            color: '{text.color}',
+            focusColor: '{text.color}',
+            focusBackground: '{content.hover.background}',
+            selectedBackground: '{highlight.background}',
+            selectedColor: '{highlight.color}',
+            selectedFocusBackground: '{highlight.focus.background}',
+            selectedFocusColor: '{highlight.focus.color}',
+          },
+          emptyMessage: { padding: '8px 10px' },
+        },
         togglebutton: {
           root: {
             background: '{content.background}',

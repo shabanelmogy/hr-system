@@ -29,7 +29,7 @@ public sealed class CrystalReportDesignSourceCatalog(ManagedCrystalReportContrac
                 source.Parameters.Select(parameter => new CrystalReportDesignParameter(parameter.Name,
                     parameter.Type, parameter.Required, parameter.AllowMultipleValues,
                     parameter.DiscreteOnly, parameter.AllowedValues)).ToArray(),
-                contracts.SchemaVersion, contracts.Fingerprint)
+                contracts.SchemaVersion, contracts.GetFingerprint(source.EntityKey))
                 { BindingKind = entry.Key == "system-error-logs" ? "provider" : "database-view" };
         }).ToArray();
 }

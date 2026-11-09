@@ -5,12 +5,7 @@ import {
 } from '../../../../../../platform/localization/presentation.public-api';
 import { StatusBadge } from '../../../../../../shared/ui/public-api';
 import type { CountryListItem } from '../../types/country';
-import {
-  countryName,
-  countryOtherName,
-  countryNumber,
-  countryQualityAppearance,
-} from '../../utils/country-presentation';
+import { countryName, countryOtherName } from '../../utils/country-presentation';
 
 @Component({
   imports: [StatusBadge, UiTextPipe],
@@ -23,8 +18,4 @@ export class CountryCardHeader {
   private readonly locale = inject(LocalizationRuntime);
   readonly title = computed(() => countryName(this.country(), this.locale.language()));
   readonly subtitle = computed(() => countryOtherName(this.country(), this.locale.language()));
-  readonly quality = computed(() => countryQualityAppearance(this.country()));
-  readonly qualityLabel = computed(
-    () => countryNumber(this.quality().quality, this.locale.language()) + '%',
-  );
 }

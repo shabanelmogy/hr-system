@@ -1,4 +1,5 @@
 import { Component, computed, effect, inject, signal, untracked, viewChild } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   LocalizationRuntime,
   UiTextPipe,
@@ -12,7 +13,6 @@ import {
   PageHeader,
   CollectionEmptyTemplate,
   type PageViewOption,
-  type CollectionSearch,
 } from '../../../../../../shared/ui/public-api';
 import { CollectionChartView } from '../../../../../../shared/ui/charts/public-api';
 import { GlobalReportView, globalReportAllowed } from '../../../../../reporting/public-api';
@@ -21,13 +21,12 @@ import { StateCountriesState } from '../../state/state-countries-state';
 import { StateEditorState, type StateSaved } from '../../state/state-editor-state';
 import { StateLifecycleState } from '../../state/state-lifecycle-state';
 import { StateCollectionView } from '../../components/state-collection-view/state-collection-view';
-import { StateListCriteria } from '../../components/state-list-criteria/state-list-criteria';
 import { StateEditor } from '../../components/state-editor/state-editor';
 import { StateDetailDialog } from '../../components/state-detail-dialog/state-detail-dialog';
 import { StateLifecycleConfirmation } from '../../components/state-lifecycle-confirmation/state-lifecycle-confirmation';
 import { StateImportView } from '../../components/state-import-view/state-import-view';
 import { stateChartData } from '../../utils/state-chart-data';
-import { stateSearchFields, stateSearchOperators, type StateListItem } from '../../types/state';
+import { type StateListItem } from '../../types/state';
 
 type StateView = 'grid' | 'cards' | 'chart' | 'report' | 'import';
 
@@ -41,11 +40,11 @@ type StateView = 'grid' | 'cards' | 'chart' | 'report' | 'import';
     CollectionRecordFeedback,
   ],
   imports: [
+    NgTemplateOutlet,
     PageHeader,
     FeedbackState,
     CollectionEmptyTemplate,
     StateCollectionView,
-    StateListCriteria,
     StateEditor,
     StateDetailDialog,
     StateLifecycleConfirmation,
@@ -75,6 +74,13 @@ export class StatesPage {
   private readonly notices = inject(FeedbackNotifications);
   private readonly drafts = inject(UnsavedChanges);
   private readonly report = viewChild<GlobalReportView>('stateReport');
+  private readonly importView = viewChild<StateImportView>('stateImport');
+  readonly importHeaderActions = computed(() =>
+    this.view() === 'import' ? (this.importView()?.headerActions() ?? null) : null,
+  );
+  readonly reportHeaderActions = computed(() =>
+    this.view() === 'report' ? (this.report()?.headerActions() ?? null) : null,
+  );
   private readonly preference = createViewPreference<StateView>({
     storageKey: 'erp-angular:views:states-view-layout',
     defaultValue: 'grid',
@@ -87,7 +93,11 @@ export class StatesPage {
       !this.drafts.dirty(),
   });
   readonly view = this.preference.value;
-  readonly toolbarVisible = signal(true);
+  readonly searchVisible = signal(false);
+  readonly reportFiltersVisible = signal(true);
+  readonly filtersVisible = computed(() =>
+    this.view() === 'report' ? this.reportFiltersVisible() : this.searchVisible(),
+  );
   readonly canReport = computed(
     () => this.state.canRead() && globalReportAllowed(this.auth.readIdentity(), 'states'),
   );
@@ -124,32 +134,7 @@ export class StatesPage {
         )
       : { metrics: [], plots: [] };
   });
-  readonly chartSearch = computed<CollectionSearch>(() => ({
-    value: this.state.searchDraft(),
-    maxLength: 200,
-    placeholder: this.stateText('states.search.placeholder'),
-    field: {
-      label: this.text('search.searchField'),
-      value: this.state.query().searchField,
-      options: stateSearchFields.map((value) => ({
-        value,
-        label:
-          value === 'all'
-            ? this.text('common.all')
-            : value === 'nameAr' || value === 'nameEn'
-              ? this.text('general.' + value)
-              : this.stateText('states.' + value),
-      })),
-    },
-    operator: {
-      label: this.text('search.searchType'),
-      value: this.state.query().searchOperator,
-      options: stateSearchOperators.map((value) => ({
-        value,
-        label: this.stateText('states.search.operators.' + value),
-      })),
-    },
-  }));
+
   constructor() {
     effect(() => {
       if (this.state.parentRevision() > 0) untracked(() => this.parents.invalidate());
@@ -165,6 +150,10 @@ export class StatesPage {
           this.state.changePage({ pageIndex: 0, pageSize: this.state.query().pageSize });
       });
     });
+  }
+  toggleFilters(): void {
+    const visible = this.view() === 'report' ? this.reportFiltersVisible : this.searchVisible;
+    visible.update((open) => !open);
   }
   async chooseView(value: string): Promise<void> {
     if (

@@ -3,6 +3,26 @@ import test from 'node:test';
 import { inspectSource, inspectTemplate } from './architecture-rules.mjs';
 import { inspectProject } from './dependency-rules.mjs';
 
+test('feature grids inherit responsive row actions instead of forcing inline presentation', () => {
+  const feature = 'src/app/modules/reference-data/states/components/list/list.html';
+  const platform = 'src/app/platform/tenants/components/list/list.html';
+  for (const file of [feature, platform]) {
+    assert.ok(
+      inspectTemplate('<erp-data-table actionDisplay="inline" />', file).some((reason) =>
+        reason.includes('row action responsiveness'),
+      ),
+    );
+    assert.deepEqual(inspectTemplate('<erp-data-table [contextActions]="actions" />', file), []);
+  }
+  assert.deepEqual(
+    inspectTemplate(
+      '<erp-data-table actionDisplay="inline" />',
+      'src/app/shared/ui/collections/fixture.html',
+    ),
+    [],
+  );
+});
+
 test('barrel cycles are rejected, while type-only and lazy edges are independent', () => {
   const source = new Map([
     ['src/app/platform/auth/session.public-api.ts', 'export { Page } from "./pages/page";'],

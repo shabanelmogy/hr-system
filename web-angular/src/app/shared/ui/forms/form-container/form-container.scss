@@ -45,6 +45,13 @@ h2 {
   display: grid;
   gap: 1.5rem;
 }
+.form-content.fill-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-block-size: 0;
+  overflow: hidden;
+}
 footer {
   display: flex;
   flex-wrap: wrap;
@@ -140,5 +147,19 @@ erp-validation-summary,
   }
   :is(.dialog-form, .page-form) footer {
     gap: 10px;
+  }
+}
+@media (max-height: 480px) and (orientation: landscape) {
+  form.filled-form:has(.fill-body) {
+    overflow-y: auto;
+    overscroll-behavior-block: contain;
+  }
+  form.filled-form .form-content.fill-body {
+    flex: 0 0 180px;
+    min-block-size: 180px;
+  }
+  form.filled-form:has(.fill-body) footer {
+    position: sticky;
+    inset-block-end: 0;
   }
 }

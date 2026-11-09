@@ -20,8 +20,11 @@
   min-height: 0;
   min-width: 0;
   overflow: hidden;
-  --action-min-height: calc(var(--collection-row-height) - 10px);
-  --action-icon-size: min(36px, calc(var(--collection-row-height) - 10px));
+  --collection-row-height: var(--collection-density-height);
+  --row-action-size: min(36px, calc(var(--collection-row-height) - 4px));
+  --row-action-gap: 4px;
+  --action-min-height: var(--row-action-size);
+  --action-icon-size: var(--row-action-size);
   --action-padding-y: 0px;
 }
 p-table {
@@ -47,13 +50,9 @@ p-table {
 }
 
 th {
-  height: 56px;
-  padding: 8px 16px;
+  height: 52px;
   text-align: start;
-  background: var(--surface);
-  color: var(--muted-foreground);
   font-weight: 600;
-  border-bottom: 1px solid var(--border);
   white-space: nowrap;
 }
 td {
@@ -61,6 +60,7 @@ td {
   padding: 4px 16px;
   border-bottom: 1px solid var(--border);
   color: var(--foreground);
+  font-variant-numeric: tabular-nums;
   background: var(--surface);
 }
 tr.active-row td {
@@ -93,12 +93,42 @@ tr:hover td {
   background: color-mix(in srgb, var(--primary) 13%, var(--surface));
 }
 .selection-cell {
-  width: 48px;
-  min-width: 48px;
-  padding-inline: 12px;
+  width: 52px;
+  min-width: 52px;
+  padding-inline: 4px;
+}
+.reference-grid .selection-cell {
+  padding-inline: 4px;
+}
+.grid-selection {
+  display: grid;
+  place-items: center;
+  inline-size: var(--row-action-size);
+  block-size: var(--row-action-size);
+  margin-inline: auto;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.grid-selection:hover,
+.grid-selection:focus-within {
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+}
+.cell-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-inline-size: 100%;
+  vertical-align: middle;
+}
+.cell-label erp-icon {
+  flex-shrink: 0;
+  inline-size: 16px;
+  block-size: 16px;
+  color: var(--primary);
 }
 .cell-text {
   display: block;
+  min-inline-size: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -122,7 +152,7 @@ p-sorticon {
 .column-header {
   display: flex;
   align-items: center;
-  gap: 0;
+  gap: 4px;
   min-width: 0;
 }
 .column-header.center {
@@ -137,30 +167,15 @@ p-sorticon {
   flex-shrink: 0;
 }
 .reference-grid th {
-  padding: 0 10px;
-  color: var(--foreground);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 20px;
 }
-.reference-grid td {
-  padding: 0 10px;
-}
-.reference-grid th:not(.selection-cell)::after {
-  content: '';
-  position: absolute;
-  inset-inline-end: 0;
-  top: calc(50% - 8px);
-  height: 16px;
-  border-inline-end: 1px solid var(--border);
-}
-.reference-grid th:not(.p-datatable-frozen-column) {
-  position: relative;
-}
 .reference-grid p-sorticon {
-  opacity: 0;
+  opacity: 0.55;
 }
 .reference-grid th:hover p-sorticon,
+.reference-grid th:focus-within p-sorticon,
 .reference-grid th[aria-sort='ascending'] p-sorticon,
 .reference-grid th[aria-sort='descending'] p-sorticon {
   opacity: 1;
@@ -185,4 +200,16 @@ p-sorticon {
 .action-cell {
   text-align: center;
   padding-inline: 8px !important;
+}
+.action-cell.p-datatable-frozen-column {
+  border-inline-start: 1px solid var(--border);
+}
+@media (pointer: coarse) {
+  .table-body {
+    --collection-row-height: max(52px, var(--collection-density-height));
+    --row-action-size: 44px;
+  }
+  th {
+    height: 56px;
+  }
 }

@@ -1,4 +1,5 @@
 :host {
+  container: import-panel / inline-size;
   display: flex;
   flex-direction: column;
   block-size: 100%;
@@ -10,7 +11,7 @@ erp-surface-card {
   min-block-size: 0;
 }
 .import-heading,
-.header-actions,
+.import-actions,
 .file-information,
 .selected-file {
   display: flex;
@@ -26,11 +27,15 @@ erp-surface-card {
   font-size: 1rem;
   line-height: 1.5;
 }
-.header-actions {
+.import-actions {
   margin-inline-start: auto;
   flex-wrap: wrap;
   justify-content: flex-end;
-  --action-min-height: 36px;
+  --action-min-height: 32px;
+  --action-icon-size: 32px;
+  --p-button-padding-y: 0.375rem;
+  --p-button-padding-x: 0.625rem;
+  font-size: 0.75rem;
 }
 .import-workspace {
   display: flex;
@@ -39,6 +44,11 @@ erp-surface-card {
   min-block-size: 0;
   gap: 0.5rem;
   min-inline-size: 0;
+  overflow-y: auto;
+  overscroll-behavior-block: contain;
+}
+.import-workspace > erp-feedback-state {
+  flex-shrink: 0;
 }
 .file-information {
   flex-shrink: 0;
@@ -92,54 +102,52 @@ erp-surface-card {
 }
 .data-area {
   display: grid;
-  flex: 1;
-  min-block-size: 0;
-  grid-template-rows: minmax(0, 1fr);
-  grid-template-columns: minmax(0, 1fr) 11.5rem;
+  flex: 1 0 16rem;
+  min-block-size: 16rem;
+  grid-template-rows: auto minmax(180px, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   align-items: stretch;
   gap: 0.75rem;
   min-inline-size: 0;
 }
 .status-summary {
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 4px;
   min-inline-size: 0;
-  min-block-size: 0;
-  overflow-y: auto;
-  border-inline-start: 1px solid var(--border);
-  padding-inline-start: 0.75rem;
+  border-block-end: 1px solid var(--border);
+  padding-block-end: 8px;
+}
+.summary-tile {
+  min-inline-size: 0;
+}
+.import-actions erp-icon {
+  inline-size: 16px;
+  block-size: 16px;
 }
 .preview {
+  grid-row: 2;
   display: flex;
   flex-direction: column;
   min-block-size: 0;
   min-inline-size: 0;
   overflow: hidden;
 }
-@media (max-width: 899px) {
-  .data-area {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr) auto;
-  }
+@container import-panel (max-width: 38rem) {
   .status-summary {
-    max-block-size: 4rem;
-    border-inline-start: 0;
-    border-block-start: 1px solid var(--border);
-    padding-inline-start: 0;
-    padding-block-start: 0.5rem;
+    --metric-tile-label-size: 10px;
   }
 }
-@media (max-width: 599px) {
-  .header-actions {
-    inline-size: 100%;
-    gap: 0.375rem;
+@media (any-pointer: coarse) {
+  .import-actions {
+    --action-min-height: 44px;
+    --action-icon-size: 44px;
+    --p-button-padding-y: 0.625rem;
   }
-  .header-actions > * {
-    flex: 0 0 auto;
-    min-inline-size: 0;
-  }
-  .header-actions > p-fileupload {
-    margin-inline-end: auto;
+  .requirements summary {
+    min-block-size: 44px;
+    display: flex;
+    align-items: center;
   }
 }

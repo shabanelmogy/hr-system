@@ -26,7 +26,7 @@ Feature-owned records are in `Application/.../Districts/Contracts/DistrictManage
 
 ## 4. Read model
 
-`GetDistrictsQuery` is the only list query and supplies bounded server pagination, criteria, and allow-listed sorting. Lookup returns active Districts under active State/Country; the address detail endpoint returns address fields rather than a false District child model.
+`GetDistrictsQuery` is the only list query and supplies bounded server pagination, criteria, and allow-listed sorting. `sortBy=id` orders matching rows numerically before pagination in either supported `sortDirection`. Lookup returns active Districts under active State/Country. The address detail endpoint returns address fields.
 
 ## 5. Write model
 

@@ -2,6 +2,9 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { chromium, expect } from '@playwright/test';
+import { serveAngularFixtureBuild } from './angular-build-browser-fixture.mjs';
+import { verifyCollectionSearchLayout } from './support/collection-search-layout.mjs';
+import { verifyCollectionSortCycle } from './support/collection-sort-cycle.mjs';
 import { themePaletteOrder } from '@app/tokens';
 import { sessionFixture } from '../src/app/platform/auth/auth.fixture.ts';
 
@@ -10,6 +13,8 @@ const app = path.resolve(import.meta.dirname, '..');
 const origin = process.env.ANGULAR_PREVIEW_ORIGIN ?? 'https://localhost:4220';
 const apiOrigin = process.env.ANGULAR_API_ORIGIN ?? 'https://shabanhrms.runasp.net';
 const focused = process.argv.includes('--focused');
+const searchOnly = process.argv.includes('--search');
+const sortOnly = process.argv.includes('--sort-cycle');
 const output = path.resolve(app, '../.codex-tmp/angular-countries', focused ? 'focused' : 'full');
 fs.mkdirSync(output, { recursive: true });
 const core = JSON.parse(fs.readFileSync(path.join(app, 'src/locales/generated/core.json'), 'utf8'));
@@ -77,7 +82,10 @@ function pageResult(url, rows) {
   const sortBy = p.get('sortBy'),
     direction = p.get('sortDirection') === 'desc' ? -1 : 1;
   filtered.sort(
-    (a, b) => String(a[sortBy] ?? '').localeCompare(String(b[sortBy] ?? '')) * direction,
+    (a, b) =>
+      (sortBy === 'id'
+        ? a.id - b.id
+        : String(a[sortBy] ?? '').localeCompare(String(b[sortBy] ?? ''))) * direction,
   );
   const totalCount = filtered.length,
     totalPages = Math.ceil(totalCount / pageSize);
@@ -97,15 +105,23 @@ function pageResult(url, rows) {
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 const results = [];
 try {
-  for (const palette of focused ? ['green'] : themePaletteOrder)
+  for (const palette of focused || searchOnly || sortOnly ? ['green'] : themePaletteOrder)
     for (const mode of ['light', 'dark'])
       for (const language of ['en', 'ar'])
-        for (const width of [390, 1440]) {
+        for (const width of searchOnly ? [1440] : [390, 1440]) {
           const context = await browser.newContext({
             ignoreHTTPSErrors: true,
             viewport: { width, height: 1050 },
             reducedMotion: 'reduce',
           });
+          await serveAngularFixtureBuild(
+            context,
+            app,
+            origin,
+            process.env.ANGULAR_FIXTURE_BUILD
+              ? path.resolve(process.env.ANGULAR_FIXTURE_BUILD)
+              : undefined,
+          );
           await context.addCookies(
             Object.entries({ themePalette: palette, currentMode: mode, i18next: language }).map(
               ([name, value]) => ({ name, value, url: origin }),
@@ -146,7 +162,12 @@ try {
                 user: {
                   ...sessionFixture,
                   roles: state.role ? ['super_admin'] : ['user'],
-                  permissions: state.allowed ? ['Countries:View'] : [],
+                  permissions: state.allowed
+                    ? [
+                        'Countries:View',
+                        ...(searchOnly ? ['GlobalDataExports:Export', 'Countries:Create'] : []),
+                      ]
+                    : [],
                 },
               };
             } else if (pathname.endsWith('/runtime'))
@@ -306,6 +327,37 @@ try {
           };
           await page.goto(origin + '/dev/countries');
           await ready();
+          if (sortOnly) {
+            await verifyCollectionSortCycle(
+              region,
+              page.locator('erp-page-header'),
+              state.pageReads,
+              12,
+              text,
+            );
+            assert.deepEqual(errors, []);
+            results.push({ language, mode, width, passed: true });
+            await context.close();
+            console.log(`countries sort cycle passed ${language}/${mode}/${width}`);
+            continue;
+          }
+          if (searchOnly) {
+            const measurements = await verifyCollectionSearchLayout(
+              page,
+              region,
+              page.locator('erp-page-header'),
+              text,
+              output,
+              language,
+              mode,
+            );
+            assert.deepEqual(errors, []);
+            results.push({ language, mode, measurements, passed: true });
+            await context.close();
+            console.log(`Countries search layout passed ${language}/${mode}`);
+            continue;
+          }
+          await page.locator('erp-page-header .filter button').click();
           await expect(rows).toHaveCount(10);
           await page.evaluate(() => document.fonts.ready);
           assert.equal(
@@ -553,7 +605,17 @@ try {
           await context.close();
           console.log(`Countries read passed ${palette}/${mode}/${language}/${width}`);
         }
-  fs.writeFileSync(path.join(output, 'results.json'), JSON.stringify(results, null, 2));
+  fs.writeFileSync(
+    path.join(
+      output,
+      sortOnly
+        ? 'sort-cycle-results.json'
+        : searchOnly
+          ? 'search-layout-results.json'
+          : 'results.json',
+    ),
+    JSON.stringify(results, null, 2),
+  );
   console.log(
     `Countries read: ${results.length} ${focused ? 'focused lifecycle' : 'visual'} cases passed; intercepted GET fixtures only.`,
   );
