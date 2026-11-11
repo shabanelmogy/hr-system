@@ -1,0 +1,54 @@
+Test run for G:\test\ERPSYSTEM\ERPSYSTEM\api\.artifacts\system-session\bin\ErpSystem.Modules.Accounting.Tests\release\ErpSystem.Modules.Accounting.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    73, Skipped:     0, Total:    73, Duration: 2 s - ErpSystem.Modules.Accounting.Tests.dll (net10.0)
+Test run for G:\test\ERPSYSTEM\ERPSYSTEM\api\.artifacts\system-session\bin\ErpSystem.Modules.Contacts.Tests\release\ErpSystem.Modules.Contacts.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    12, Skipped:     0, Total:    12, Duration: 1 s - ErpSystem.Modules.Contacts.Tests.dll (net10.0)
+Test run for G:\test\ERPSYSTEM\ERPSYSTEM\api\.artifacts\system-session\bin\ErpSystem.Modules.CRM.Tests\release\ErpSystem.Modules.CRM.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    10, Skipped:     0, Total:    10, Duration: 1 s - ErpSystem.Modules.CRM.Tests.dll (net10.0)
+Test run for G:\test\ERPSYSTEM\ERPSYSTEM\api\.artifacts\system-session\bin\ErpSystem.Modules.HR.Tests\release\ErpSystem.Modules.HR.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:   150, Skipped:     0, Total:   150, Duration: 10 s - ErpSystem.Modules.HR.Tests.dll (net10.0)
+Test run for G:\test\ERPSYSTEM\ERPSYSTEM\api\.artifacts\system-session\bin\ErpSystem.Modules.Inventory.Tests\release\ErpSystem.Modules.Inventory.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    10, Skipped:     0, Total:    10, Duration: 1 s - ErpSystem.Modules.Inventory.Tests.dll (net10.0)
+Test run for G:\test\ERPSYSTEM\ERPSYSTEM\api\.artifacts\system-session\bin\ErpSystem.Modules.Platform.Tests\release\ErpSystem.Modules.Platform.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:   398, Skipped:     0, Total:   398, Duration: 6 s - ErpSystem.Modules.Platform.Tests.dll (net10.0)
+Test run for G:\test\ERPSYSTEM\ERPSYSTEM\api\.artifacts\system-session\bin\ErpSystem.Modules.PointOfSale.Tests\release\ErpSystem.Modules.PointOfSale.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:     1, Skipped:     0, Total:     1, Duration: 30 ms - ErpSystem.Modules.PointOfSale.Tests.dll (net10.0)
+Test run for G:\test\ERPSYSTEM\ERPSYSTEM\api\.artifacts\system-session\bin\ErpSystem.Modules.ReferenceData.Tests\release\ErpSystem.Modules.ReferenceData.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:   140, Skipped:     0, Total:   140, Duration: 2 s - ErpSystem.Modules.ReferenceData.Tests.dll (net10.0)
+Test run for G:\test\ERPSYSTEM\ERPSYSTEM\api\.artifacts\system-session\bin\ErpSystem.Modules.Reporting.Tests\release\ErpSystem.Modules.Reporting.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:   262, Skipped:     0, Total:   262, Duration: 3 s - ErpSystem.Modules.Reporting.Tests.dll (net10.0)
+Test run for G:\test\ERPSYSTEM\ERPSYSTEM\api\.artifacts\system-session\bin\ErpSystem.ArchitectureTests\release\ErpSystem.ArchitectureTests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    70, Skipped:     0, Total:    70, Duration: 44 s - ErpSystem.ArchitectureTests.dll (net10.0)
+Test run for G:\test\ERPSYSTEM\ERPSYSTEM\api\.artifacts\system-session\bin\ErpSystem.IntegrationTests\release\ErpSystem.IntegrationTests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:07.26]     ErpSystem.IntegrationTests.BrowserAuthenticationPreflightTests.HttpsBrowserProbe_VerifiesCredentialedCorsAndServerAntiforgery [SKIP]
+  Skipped ErpSystem.IntegrationTests.BrowserAuthenticationPreflightTests.HttpsBrowserProbe_VerifiesCredentialedCorsAndServerAntiforgery [1 ms]
+[xUnit.net 00:00:08.69]     ErpSystem.IntegrationTests.BrowserAuthenticationTransportTests.RealCrossSiteBrowser_UsesSecureNoneCookies_WithOriginAndCsrfEnforcement [SKIP]
+[xUnit.net 00:00:08.69]     ErpSystem.IntegrationTests.BrowserAuthenticationTransportTests.RealBrowser_UsesProductionRoutesJwtIdentityAndSql_WithoutCredentialJson [SKIP]
+  Skipped ErpSystem.IntegrationTests.BrowserAuthenticationTransportTests.RealCrossSiteBrowser_UsesSecureNoneCookies_WithOriginAndCsrfEnforcement [1 ms]
+  Skipped ErpSystem.IntegrationTests.BrowserAuthenticationTransportTests.RealBrowser_UsesProductionRoutesJwtIdentityAndSql_WithoutCredentialJson [1 ms]
+
+Passed!  - Failed:     0, Passed:   195, Skipped:     3, Total:   198, Duration: 34 s - ErpSystem.IntegrationTests.dll (net10.0)
+Test run for G:\test\ERPSYSTEM\ERPSYSTEM\api\.artifacts\system-session\bin\ErpSystem.BuildingBlocks.Tests\release\ErpSystem.BuildingBlocks.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    42, Skipped:     0, Total:    42, Duration: 2 s - ErpSystem.BuildingBlocks.Tests.dll (net10.0)

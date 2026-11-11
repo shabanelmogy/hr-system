@@ -20,6 +20,9 @@ const catalog = await fs.readFile(
   'utf8',
 );
 const catalogVersion = catalog.match(/[a-f0-9]{64}/)?.[0];
+const core = JSON.parse(
+  await fs.readFile(path.join(root, 'src/locales/generated/core.json'), 'utf8'),
+);
 const translations = JSON.parse(
   await fs.readFile(path.join(root, 'src/locales/generated/reporting.json'), 'utf8'),
 );
@@ -157,11 +160,19 @@ try {
       // The canonical catalog supplies the translated accessible label.
       const manager = page.locator('erp-global-template-manager');
       await manager.waitFor();
-      const trigger = manager.getByRole('button', {
-        name: translations[scenario.language]['globalTemplates.registerExisting'],
-        exact: true,
-      });
-      await trigger.click();
+      await manager
+        .locator('erp-action-menu-button')
+        .getByRole('button', {
+          name: core[scenario.language]['actions.buttons'],
+          exact: true,
+        })
+        .click();
+      await page
+        .getByRole('menuitem', {
+          name: translations[scenario.language]['globalTemplates.registerExisting'],
+          exact: true,
+        })
+        .click();
       const dialog = page.getByRole('dialog');
       await dialog.waitFor();
       try {

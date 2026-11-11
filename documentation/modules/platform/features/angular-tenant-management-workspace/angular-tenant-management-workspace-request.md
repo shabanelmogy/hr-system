@@ -68,3 +68,18 @@ G4 is external PROD-019/028/025/RISK-020. Phase00 generated/check/planning must 
 before runtime. Implement typed transport/helpers/tests, scoped read/lookup/editor,
 five-tab shared composition and actual route, then full verification and canonical
 Phase06; customer education only after Verified. No automatic commit/push/merge.
+
+## Existing-feature maintenance: Tenant access actions — 2026-11-09
+
+User authorized Activate/Deactivate as a Tenant Grid row action. Extend the current
+P-001 collection using MyDataGrid/RowActions and the same Cards callback; shared
+ConfirmationDialog/FeedbackState cover the existing `isActive` mutation. No new
+screen, lifecycle or permission. Reuse GET detail plus PUT update with fresh
+rowVersion, preserve every unrelated aggregate field and pass null entitlements
+to retain saved grants. Cancel writes on actor departure; reject read-only,
+foreign/stale rows and archived detail. One pending command; denied/concurrency/
+uncertain outcomes block replay until explicit close/refresh. Server page/search/
+sort remain authoritative. API/schema/migration N/A; Next workflow unchanged and
+native/mobile shortcut Excluded. Focused tests, full Angular check and EN/AR,
+Light/Dark, compact/short/wide Grid/Cards acceptance supply the verification.
+Current evidence: TENANT_ACCESS_ACTIONS_2026-11-09.md and required-files.json.

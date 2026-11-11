@@ -14,7 +14,7 @@ internal sealed class GlobalCrystalReportTestAccess : IGlobalCrystalReportAccess
     public IReadOnlyList<GlobalCrystalManagedCatalogEntry> Catalog { get; set; } = [];
     public Task<PlatformRoleScopePage> RolesAsync(string? search, int page, int pageSize, CancellationToken token) => Task.FromResult(new PlatformRoleScopePage([], 0));
     public Task<bool> RolesValidAsync(IReadOnlyCollection<string> roleIds, CancellationToken token) => Task.FromResult(roleIds.Count == 0);
-    public Task<IReadOnlyList<CrystalReportRoleGrantResponse>> GrantsAsync(Guid reportId, CancellationToken token) => Task.FromResult<IReadOnlyList<CrystalReportRoleGrantResponse>>([]);
+    public Task<IReadOnlyList<GlobalCrystalReportRoleGrantResponse>> GrantsAsync(Guid reportId, CancellationToken token) => Task.FromResult<IReadOnlyList<GlobalCrystalReportRoleGrantResponse>>([]);
     public Task<bool> HasRightAsync(Guid reportId, CrystalReportRight right, CancellationToken token) => Task.FromResult(Granted && Rights.HasFlag(right));
     public Task<IReadOnlyList<Guid>> GrantedReportIdsAsync(CrystalReportRight right, CancellationToken token) => Task.FromResult<IReadOnlyList<Guid>>(Granted ? Catalog.Select(item => item.ReportId).ToArray() : []);
     public Task ReplaceAsync(Guid reportId, IReadOnlyList<GlobalCrystalReportRoleGrant> grants, CancellationToken token) => throw new NotSupportedException();

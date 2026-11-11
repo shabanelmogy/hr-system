@@ -14,7 +14,7 @@ List item: moduleCode/id/entityName/entityKey/entityDisplay/action/userId/userNa
 
 ## 4. Business rules
 
-Read-only existing API. Global role super_admin AND SystemAuditTrail:View. Fixed50page size, opaque cursor, unknown total and deterministic server newest order. Search record key; module-dependent entity, action, local calendar start/end converted UTC. No data-entry invariant or write concurrency added.
+Read-only existing API. Global role super_admin AND SystemAuditTrail:View. Angular main-list fixed 25 page size (requester correction 2026-11-10), opaque sequential cursor, opt-in server total with an old-server unknown-total fallback, and deterministic server newest order. Search record key; module-dependent entity, action, local calendar start/end converted UTC. No data-entry invariant or write concurrency added.
 
 ## 5. Platform capability decisions
 
@@ -22,7 +22,7 @@ Angular Grid/Table and read-only field-change detail Required. Cards/Tree/Chart/
 
 ## 6. Transport and criteria
 
-Existing GET /api/v1/system-audit-trail, /filters, /moduleCode/id. Exact200, encoded path, credentials, finite timeout and unknown payload validation through owning service. No invented total/offset, no cursor decoding or new endpoint. Client sends only source UI filters and pageSize50. Actor and criteria own page-chain cancellation/cache.
+Existing GET /api/v1/system-audit-trail, /filters, /moduleCode/id. Exact200, encoded path, credentials, finite timeout and unknown payload validation through owning service. Interactive reads opt in to includeTotalCount=true; export reads omit it. The optional totalCount covers the same filters and trusted scope without the cursor. No invented total/offset or cursor decoding. Client sends typed source filters and pageSize25 through GET or the existing POST query boundary. Actor and criteria own page-chain cancellation/cache.
 
 ## 7. Shared composition
 
@@ -61,3 +61,29 @@ Phase07 Arabic customer education is complete after Phase06 Verified: documentat
 System Audit Trail client, verification, Arabic education and canonical closure are complete. Generation/check passes500recipes and planning checks pass with two inherited unrelated warnings. S4-A4 Error Logs/Settings source preflight is the next active child; no successor runtime before its own Phase00. Error logs/settings, system UI texts, advanced tools and the comprehensive whole-Super-Admin review remain Required; the parent goal remains Active. No commit/push/merge/deployment is claimed.
 
 Dated refinement2026-11-06: S4-A4b adds real bounded server column filters, shared pagination presentation and compact Error cards. Its own Phase06/Phase07 are Closed; see angular-system-log-collection-consistency/verification/acceptance-2026-11-06.json. Historical counts above are retained for their original acceptance, not current gate totals. Hosted SQL rollout remains PROD-030. S4-A4c managed reports is Active; this does not imply report completion.
+
+## 16. Corrective maintenance — 2026-11-09
+
+The requester-approved current review corrects export-read actor denial, displayed
+field-label filtering/sorting and compact collection controls. Reuse the existing
+AuditReadState authority, local collection accessor and shared CollectionFrame /
+ScrollViewport; no domain/API/schema/permission change is introduced. Angular is
+Required for this correction. Next and Mobile changes are Excluded from this
+bounded scope. See [current correction and verification](AUDIT_REVIEW_CORRECTIONS_2026-11-09.md).
+Historical acceptance above retains its original date and release boundaries.
+
+Requester correction 2026-11-10: the main Audit list, GET/POST query reads and
+response bound now use one feature-owned 25-record page size. Shared defaults,
+other screens and local detail paging are unchanged. Short landscape collections
+keep their footer in normal flow so it cannot cover data; rendered hit-testing
+and actual row/selection interaction are required acceptance evidence.
+
+## 17. Requested totals and compact footer — 2026-11-10
+
+The additional API/client authorization, ownership, rules, validation/impact and
+platform decisions are in [Audit totals](AUDIT_TOTALS_2026-11-10.md). The earlier
+no-API-change boundary in section 16 applies only to the initial correction; the
+new opt-in count is an additive read-contract extension. No schema change.
+
+
+Current local acceptance 2026-11-10: [executed evidence](verification/audit-review-2026-11-09/README.md) records full Angular/API/SQL gates, 8 normal + 8 compact + 32 negative Audit cases, 20 layout contexts/36 snapshots with 20 matching Countries comparisons and 16 Report Manager cases. Same-row search/settings at 390/493px, selection, uncut footer, real totals and sequential navigation are verified. Hosted totals and SQL-volume latency remain PROD-035; native zoom/assistive-technology acceptance is not claimed.

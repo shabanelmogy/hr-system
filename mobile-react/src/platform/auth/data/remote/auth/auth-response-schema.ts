@@ -11,24 +11,31 @@ import type {
 
 const dateString = z.string().refine((value) => !Number.isNaN(Date.parse(value)));
 const claimString = z.string().trim().min(1);
+const scopeFields = {
+  sessionScope: z.enum(['company', 'system']).optional(),
+  tenantId: z.string(), tenantName: z.string(), tenantPlanName: z.string(),
+  companyId: z.number().int(), companyCode: z.string(),
+  companyNameAr: z.string(), companyNameEn: z.string(),
+};
+function validScope(value: z.infer<z.ZodObject<typeof scopeFields>>): boolean {
+  return value.sessionScope === 'system'
+    ? value.tenantId === '' && value.tenantName === '' && value.tenantPlanName === '' &&
+      value.companyId === 0 && value.companyCode === '' && value.companyNameAr === '' && value.companyNameEn === ''
+    : value.tenantId.trim().length > 0 && value.tenantName.trim().length > 0 &&
+      value.tenantPlanName.trim().length > 0 && value.companyId > 0 && value.companyCode.trim().length > 0;
+}
 
 const authResponseSchema: z.ZodType<AuthResponse> = z.object({
+  ...scopeFields,
   id: z.string().min(1),
   userName: z.string().min(1),
   firstName: z.string(),
   lastName: z.string(),
-  tenantId: z.string().min(1),
-  tenantName: z.string().trim().min(1),
-  tenantPlanName: z.string().trim().min(1),
-  companyId: z.number().int().positive(),
-  companyCode: z.string().trim().min(1),
-  companyNameAr: z.string(),
-  companyNameEn: z.string(),
   token: z.string().min(1),
   tokenExpiration: dateString,
   refreshToken: z.string().min(1),
   refreshTokenExpiration: dateString,
-});
+}).refine(validScope, 'Invalid authentication scope.');
 
 const tenantSelectionSchema: z.ZodType<TenantSelectionResponse> = z.object({
   isAuthenticated: z.literal(false),
@@ -77,26 +84,27 @@ const companyOptionSchema = z.object({
 });
 
 const sessionResponseSchema: z.ZodType<SessionResponse> = z.object({
+  ...scopeFields,
   userId: z.string().min(1),
-  tenantId: z.string().min(1),
-  tenantName: z.string().trim().min(1),
-  tenantPlanName: z.string().trim().min(1),
-  companyId: z.number().int().positive(),
-  companyCode: z.string().trim().min(1),
-  companyNameAr: z.string(),
-  companyNameEn: z.string(),
-  companies: z.array(companyOptionSchema).min(1),
+  companies: z.array(companyOptionSchema),
   userName: z.string().min(1),
   email: z.string(),
   firstName: z.string(),
   lastName: z.string(),
   roles: z.array(claimString),
   permissions: z.array(claimString),
-  tenantSubscriptionStatus: z.string().min(1),
+  tenantSubscriptionStatus: z.string(),
   tenantSubscriptionEndsOn: dateString.nullable(),
   tenantReadOnly: z.boolean(),
   expiresAt: z.number().positive(),
 }).superRefine((value, context) => {
+  if (!validScope(value) || (value.sessionScope === 'system'
+    ? !value.roles.includes('super_admin') || value.companies.length !== 0 ||
+      value.tenantSubscriptionStatus !== '' || value.tenantSubscriptionEndsOn !== null || value.tenantReadOnly
+    : value.tenantSubscriptionStatus.length === 0)) {
+    context.addIssue({ code: 'custom', path: ['sessionScope'], message: 'Invalid session scope.' });
+  }
+  if (value.sessionScope === 'system') return;
   const companyIds = new Set(value.companies.map((company) => company.id));
   if (companyIds.size !== value.companies.length) {
     context.addIssue({

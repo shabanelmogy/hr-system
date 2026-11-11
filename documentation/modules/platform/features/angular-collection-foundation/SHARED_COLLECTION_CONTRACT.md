@@ -55,6 +55,24 @@ the PrimeNG Paginator adapter; unknown totals use shared PrimeNG-backed previous
 next controls and page-size select without a fake total or last-page action.
 All emit one controlled page request; a size change emits page0/new size together.
 
+An optional `CollectionQuery.pageAccess: 'sequential'` distinguishes cursor access
+from count availability. Such sources may provide a real total and page count
+while preserving authoritative hasNextPage, cached previous/first navigation and
+disabled last/arbitrary jumps. Existing sources default to random page access.
+The record footer shows current page of total pages for counted sequential sources
+using its existing page-count presentation; missing totals preserve the current
+page-only fallback. No Page menu or parallel navigation group is added.
+
+With record navigation enabled, CollectionFooter reuses the Countries composition:
+one record-arrow group and the existing OptionSelect for page size. The record
+controller crosses cursor pages at row boundaries. Do not add a second arrow
+group, Page action menu or parallel paginator. First/previous are disabled at the
+first record, next is disabled after the final row without hasNextPage, and all
+are blocked during loading/denial. Known totals keep their complete counter; unknown totals show only the current record number; compact
+layouts wrap record controls separately from page/size controls. EN/AR keyboard,
+cross-page record movement, selection and non-overlap require rendered acceptance
+under UI_REVIEW_ACCEPTANCE.md.
+
 Record First/Previous/Next/Last is separate from page movement and checkbox bulk
 selection. Keep an active record, initialize the first visible row, and retain
 an intended absolute record target across a requested page until its matching

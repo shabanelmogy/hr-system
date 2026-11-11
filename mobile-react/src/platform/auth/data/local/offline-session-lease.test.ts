@@ -36,6 +36,20 @@ describe('offline session lease', () => {
     mockPointerClear.mockResolvedValue(undefined);
   });
 
+  it('clears a previous offline lease pointer and never caches a system session', async () => {
+    const systemSession = {
+      ...session,
+      sessionScope: 'system' as const,
+      tenantId: '',
+      companyId: 0,
+      roles: ['super_admin'],
+    };
+    await expect(saveOfflineSessionLease({} as never, systemSession)).resolves.toBeNull();
+    expect(mockPointerClear).toHaveBeenCalledTimes(1);
+    expect(mockRecordPut).not.toHaveBeenCalled();
+    expect(mockPointerSet).not.toHaveBeenCalled();
+  });
+
   it('persists a scoped lease and pointer even when the access token is expired', async () => {
     await saveOfflineSessionLease({} as never, session);
     expect(mockRecordPut).toHaveBeenCalledWith(expect.objectContaining({

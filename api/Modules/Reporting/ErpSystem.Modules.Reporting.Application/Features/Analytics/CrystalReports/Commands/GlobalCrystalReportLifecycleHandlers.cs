@@ -111,6 +111,11 @@ public sealed class VerifyDatabaseGlobalCrystalReportVersionCommandHandler(
              !await access.HasRightAsync(detail.Id, CrystalReportRight.Publish, cancellationToken)))
             return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportNotFound);
 
+        if (!PublishCrystalReportVersionCommandHandler.TryDecodeRowVersion(request.RowVersion, out var rowVersion))
+            return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportInvalidRowVersion);
+        if (!string.Equals(detail.RowVersion, Convert.ToBase64String(rowVersion), StringComparison.Ordinal))
+            return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportConcurrencyConflict);
+
         var sourceVersion = await store.VersionAsync(detail.Id, request.VersionId, cancellationToken);
         if (sourceVersion is null)
             return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportNotFound);
@@ -151,6 +156,10 @@ public sealed class VerifyDatabaseGlobalCrystalReportVersionCommandHandler(
                          !await access.HasRightAsync(report.Id, CrystalReportRight.Publish, token)))
                         return Result.Failure(errors.CrystalReportNotFound);
 
+                    if (!report.RowVersion.SequenceEqual(rowVersion))
+                        return Result.Failure(errors.CrystalReportConcurrencyConflict);
+
+                    store.ApplyRowVersion(report, rowVersion);
                     var number = await store.NextVersionAsync(report.Id, token);
                     var version = CreateGlobalCrystalReportCommandHandler.NewVersion(report.Id, number, file);
                     report.AddVersion(version);

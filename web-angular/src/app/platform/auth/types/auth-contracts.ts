@@ -4,27 +4,47 @@ const text = z.string();
 const company = z.object({ id: z.int(), companyCode: text, nameAr: text, nameEn: text });
 export const sessionSchema = z.strictObject({
   isAuthenticated: z.literal(true),
-  user: z.object({
-    userId: text,
-    tenantId: text,
-    tenantName: text,
-    tenantPlanName: text,
-    companyId: z.int(),
-    companyCode: text,
-    companyNameAr: text,
-    companyNameEn: text,
-    companies: z.array(company),
-    userName: text,
-    email: text,
-    firstName: text,
-    lastName: text,
-    roles: z.array(text),
-    permissions: z.array(text),
-    tenantSubscriptionStatus: text,
-    tenantSubscriptionEndsOn: z.nullable(text),
-    tenantReadOnly: z.boolean(),
-    expiresAt: z.number(),
-  }),
+  user: z
+    .object({
+      userId: text,
+      sessionScope: z.optional(z.enum(['company', 'system'])),
+      tenantId: text,
+      tenantName: text,
+      tenantPlanName: text,
+      companyId: z.int(),
+      companyCode: text,
+      companyNameAr: text,
+      companyNameEn: text,
+      companies: z.array(company),
+      userName: text,
+      email: text,
+      firstName: text,
+      lastName: text,
+      roles: z.array(text),
+      permissions: z.array(text),
+      tenantSubscriptionStatus: text,
+      tenantSubscriptionEndsOn: z.nullable(text),
+      tenantReadOnly: z.boolean(),
+      expiresAt: z.number(),
+    })
+    .check(
+      z.refine((user) =>
+        user.sessionScope === 'system'
+          ? user.roles.includes('super_admin') &&
+            user.tenantId === '' &&
+            user.tenantName === '' &&
+            user.tenantPlanName === '' &&
+            user.companyId === 0 &&
+            user.companyCode === '' &&
+            user.companyNameAr === '' &&
+            user.companyNameEn === '' &&
+            user.companies.length === 0 &&
+            user.tenantSubscriptionStatus === '' &&
+            user.tenantSubscriptionEndsOn === null &&
+            !user.tenantReadOnly
+          : user.tenantId.trim().length > 0 && user.companyId > 0,
+      ),
+    ),
 });
 const tenantSchema = z.object({
   isAuthenticated: z.literal(false),

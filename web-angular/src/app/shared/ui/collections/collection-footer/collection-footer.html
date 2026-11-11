@@ -1,5 +1,8 @@
 <footer>
-  <ng-content />
+  <ng-template #selection><ng-content /></ng-template>
+  @if (!recordNavigation()) {
+    <ng-container [ngTemplateOutlet]="selection" />
+  }
   <ng-template #recordControls>
     <div
       class="record-controls"
@@ -19,15 +22,30 @@
         >
       }
       <span class="record-count" aria-live="polite"
-        >{{ number(controller().activeIndex() < 0 ? 0 : controller().activeIndex() + 1) }} /
-        {{ total() }}</span
-      >
+        >{{ number(controller().activeIndex() < 0 ? 0 : controller().activeIndex() + 1) }}
+        @if (controller().view().total !== null) {
+          / {{ total() }}
+        }
+      </span>
     </div>
   </ng-template>
   <ng-template #recordPageSize
     ><div class="size-settings">
-      @if (controller().view().total !== null) {
+      @if (
+        controller().view().total !== null && controller().view().query.pageAccess === 'sequential'
+      ) {
+        <span class="page-count" aria-live="polite"
+          >{{ 'pagination.page' | uiText }}
+          {{ number(controller().view().query.pageIndex + 1) }}
+          {{ 'pagination.of' | uiText }} {{ pageCount() }}</span
+        >
+      } @else if (controller().view().total !== null) {
         <span class="page-count">{{ 'pagination.pages' | uiText }}: {{ pageCount() }}</span>
+      } @else {
+        <span class="page-count" aria-live="polite"
+          >{{ 'pagination.page' | uiText }}
+          {{ number(controller().view().query.pageIndex + 1) }}</span
+        >
       }
       <erp-option-select
         labelVisibility="sr-only"
@@ -44,38 +62,7 @@
   <div class="page-controls">
     @if (recordNavigation()) {
       <div class="record-navigation-layout">
-        <div class="page-context">
-          @if (controller().view().total === null) {
-            <div
-              class="cursor-page-controls"
-              role="group"
-              [attr.aria-label]="'pagination.goToPage' | uiText"
-            >
-              @for (action of pageActions; track action.value) {
-                <erp-button
-                  appearance="icon"
-                  variant="text"
-                  [label]="action.label | uiText"
-                  [disabled]="
-                    blocked() ||
-                    (action.value === 'next'
-                      ? !controller().view().hasNextPage
-                      : controller().view().query.pageIndex === 0)
-                  "
-                  (activated)="unknownPage(action.value)"
-                >
-                  <span buttonIcon aria-hidden="true" [class.rtl]="locale.direction() === 'rtl'">{{
-                    action.icon
-                  }}</span>
-                </erp-button>
-              }
-              <span class="page-summary"
-                >{{ 'pagination.page' | uiText }}
-                {{ number(controller().view().query.pageIndex + 1) }}</span
-              >
-            </div>
-          }
-        </div>
+        <div class="page-context"><ng-container [ngTemplateOutlet]="selection" /></div>
         <ng-container [ngTemplateOutlet]="recordControls" />
         <ng-container [ngTemplateOutlet]="recordPageSize" />
       </div>

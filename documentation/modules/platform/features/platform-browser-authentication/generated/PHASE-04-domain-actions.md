@@ -58,13 +58,13 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | --- | ---: | --- |
 | platform-browser-authentication-master | 3 | `345220b1eaa0e529ed3d55776cd852c9a5c82af7c4d7972601479aca3f55dc9f` |
 | platform-browser-authentication-master | 4 | `0505f838bd9f13d3144554c0ec84c5ede68b9a4c88979c80f6692106e100f94f` |
-| platform-browser-authentication-master | 6 | `3f6972c09887aa9b387d77f91d23c2f2e48de37583bdb9cc0506f94dd1d5a8c4` |
+| platform-browser-authentication-master | 6 | `16f0d91ce6c1102f0369758b3987e54f305d9014de3bdc00bada7fddb55da5bb` |
 | platform-browser-authentication-master | 7 | `6390b0bf66b6037b53e9c024f398ba2c920c21acf87513c7525a99a3815032c9` |
 | platform-browser-authentication-master | 8 | `337efcf914ffbb3bf125b9eaebfeee31f1e1f3fddd41b636684f13739eb950c2` |
-| platform-browser-authentication-api | 6 | `0a34aee7b4d1e0ac784f4f0ade83e50ddf83b91678b6a3b4a8247bda1e8df0d9` |
+| platform-browser-authentication-api | 6 | `93d318fd086adbbf6896a848a727efafdea6521218d037b9ccd40bbdf8d407e6` |
 | platform-browser-authentication-api | 7 | `0f32a5dfac86eff41cdc984b55819fb02961dc8219b55db378d3c29ec470e842` |
 | platform-browser-authentication-api | 8 | `26cc4d301319e508521dc58bb8dcd580b32bb021be0b65eb63efb67d48ee244d` |
-| platform-browser-authentication-web | 6 | `0cb8d282665eab10947f26d8e7f8b61da88e4b155927725acaa99ecfadb65506` |
+| platform-browser-authentication-web | 6 | `822dd8997a784f0b7f344c50140074bc5ec7e84f03cd233ef162af494d3f7e11` |
 | platform-browser-authentication-web | 7 | `63b256feb8056824a70b3d6140fa09878174c6a4b109f18fbbc1546166185502` |
 | platform-browser-authentication-web | 8 | `3b480eab32b081a85dd0a739f8911bf49c01ab5032ce617f1d0330e32e9d0df6` |
 | platform-browser-authentication-web | 9 | `780e5ec310e9d4dd24dcffb501fd38b6fc98afa4bc795dc300b8e56832e62237` |

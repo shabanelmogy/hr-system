@@ -1,0 +1,52 @@
+{
+  "date": "2026-11-09",
+  "scope": "independent-super-admin-system-session",
+  "api": {
+    "restore": "passed",
+    "releaseBuild": "passed",
+    "passed": 1363,
+    "failed": 0,
+    "skipped": 3,
+    "skips": "existing opt-in Chromium/HTTPS probes",
+    "sql": "actual local SQL2017 disposable migrated databases",
+    "transportBoundary": "registered production Bearer callback exercised with actual signed JWT and SQL state; no hosted browser/API acceptance"
+  },
+  "angular": {
+    "fullCheck": "passed",
+    "testFiles": 197,
+    "tests": 1023,
+    "productionBuild": "passed",
+    "fixtureBrowserCases": 24,
+    "browserMatrix": "user/system Super Admin x EN/AR x light/dark x 390/900/1440",
+    "apiBoundary": "synthetic session/API responses against built production UI; no dev server",
+    "priorRun": "Countries5000ms timeout, FOLLOW-031; unchanged final full rerun passed"
+  },
+  "next": {
+    "focusedTests": 24,
+    "testFiles": 2,
+    "typeCheck": "passed"
+  },
+  "mobile": {
+    "sourceGates": "passed",
+    "fullCheck": "failed",
+    "testsPassed": 602,
+    "testsFailed": 1,
+    "testSuitesPassed": 194,
+    "testSuitesFailed": 1,
+    "failure": "existing missing GlobalDataExports:Export catalog constant, FOLLOW-034",
+    "authParserAndOfflineSuites": "passed",
+    "newNativeScreen": false
+  },
+  "documentation": {
+    "scopedRecipes": 8,
+    "scopedCheck": "passed",
+    "fullCheck": "blocked by pre-existing missing Reporting evidence, FOLLOW-033",
+    "planning": "passed with inherited education-module and erp-platform-template migration warnings"
+  },
+  "deployment": {
+    "hosted": "not deployed or verified",
+    "owner": "PROD-034",
+    "databaseMigrationRequired": false,
+    "reauthenticationRequired": true
+  }
+}

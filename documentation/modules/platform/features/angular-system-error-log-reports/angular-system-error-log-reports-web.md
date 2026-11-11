@@ -124,3 +124,7 @@ Phase06 Verified for bounded implementation; see verification/managed-report-202
 Real provider deployment/fingerprint/reinspection/real RPT/PDF remains PROD-031; it
 does not imply hosted render completion. Phase07 Arabic guide is registered after
 verification. Settings is the next child; no whole-Super-Admin closure is claimed.
+
+## Historical evidence availability — 2026-11-09
+
+The [dated registry repair](../../../reporting/CURRENT_EVIDENCE_REPAIR_2026-11-09.md) retains the original missing raw-log entries in a central inventory. No runtime behavior changes in this feature. Historical claims keep their original dates and are not new execution proof. Current documentary completeness does not close hosted/native or other feature-owned acceptance; FOLLOW-025 retains historical availability.

@@ -35,6 +35,7 @@ export class MultiReferenceField extends FormFieldControl<readonly ReferenceId[]
   readonly filter = input(true, { transform: booleanAttribute });
   readonly clearable = input(true, { transform: booleanAttribute });
   readonly placeholder = input('');
+  readonly searchLabel = computed(() => this.runtime.translate('general.search'));
   readonly control = new FormControl<ReferenceId[]>([], { nonNullable: true });
   private readonly select = viewChild(MultiSelect);
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
@@ -53,7 +54,12 @@ export class MultiReferenceField extends FormFieldControl<readonly ReferenceId[]
     return [...retained, ...available];
   });
   readonly attributes = computed(() => ({
-    root: { 'aria-describedby': this.describedBy(), 'aria-invalid': this.error() ? 'true' : null },
+    root: {
+      class: 'erp-multi-reference-select',
+      'aria-describedby': this.describedBy(),
+      'aria-invalid': this.error() ? 'true' : null,
+    },
+    overlay: { class: 'erp-multi-reference-overlay' },
     option: referenceOptionAttributes,
   }));
   constructor() {
@@ -86,6 +92,10 @@ export class MultiReferenceField extends FormFieldControl<readonly ReferenceId[]
   }
   focus(): void {
     this.host.nativeElement.querySelector<HTMLElement>('[role=combobox]')?.focus();
+  }
+  protectSelection(event: Event): void {
+    // PrimeNG's chip Enter handler removes the item but leaves native form submission enabled.
+    if (event instanceof KeyboardEvent && event.key === 'Enter') event.preventDefault();
   }
   choose(value: unknown): void {
     const next = normalize(value);

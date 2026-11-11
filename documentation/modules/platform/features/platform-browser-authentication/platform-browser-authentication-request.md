@@ -131,3 +131,7 @@ migrations were applied only to an isolated disposable SQL test database and it
 was removed. No new model/migration or application configuration changed. See
 [preflight proof report](verification/PREFLIGHT_PROOF_REPORT.md) for bounds and
 the distinction between proven primitives and pending actual adapter acceptance.
+
+## Corrective system-session increment — 2026-11-09
+
+2026-11-09 corrective system-session increment (FOLLOW-032): eligible Super Admin authenticates without any Tenant or company. Canonical current contract and verification boundary: [system-session execution](SUPER_ADMIN_SYSTEM_SESSION_2026-11-09.md). This supersedes earlier company-only descriptions for this actor. Hosted rollout remains PROD-034; repository documentation baseline remains FOLLOW-033.

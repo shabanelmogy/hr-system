@@ -1,0 +1,13 @@
+> Building...
+√ Building...
+Application bundle generation complete. [21.051 seconds] - 2026-11-09T12:38:57.916Z
+
+
+ RUN  v5.0.5 G:/test/ERPSYSTEM/ERPSYSTEM/web-angular
+
+
+ Test Files  11 passed (11)
+      Tests  102 passed (102)
+   Start at  14:38:58
+   Duration  23.38s (environment 30%, tests 28%, import 21%, transform 13%, setup 9%)
+

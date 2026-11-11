@@ -16,6 +16,10 @@ public static class AuthenticationSessionContextRequestFactory
             user.FindFirstValue(AuthenticationTokenClaimNames.FirstName) ?? string.Empty,
             user.FindFirstValue(AuthenticationTokenClaimNames.LastName) ?? string.Empty,
             user.FindAll(ClaimTypes.Role).Select(claim => claim.Value).Distinct().ToArray(),
-            user.FindAll(PermissionClaimNames.Permission).Select(claim => claim.Value).Distinct().ToArray(), expires * 1000);
+            user.FindAll(PermissionClaimNames.Permission).Select(claim => claim.Value).Distinct().ToArray(), expires * 1000)
+        {
+            SessionScope = user.FindFirstValue(AuthenticationTokenClaimNames.SessionScope)
+                ?? AuthenticationTokenClaimNames.CompanySession
+        };
     }
 }

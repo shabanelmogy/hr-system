@@ -455,6 +455,7 @@ const workspaceRoutes: Routes = shellRoutes.map((route) => ({
     },
     {
       path: 'administration/global-crystal-reports',
+      data: { workspaceLayout: 'fill' },
       canActivate: [globalTemplateManagerGuard],
       loadComponent: () =>
         import('../../modules/reporting/public-api').then((module) => module.GlobalTemplateManager),

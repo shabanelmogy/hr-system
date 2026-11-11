@@ -24,6 +24,7 @@ const version = fs
 const smoke = process.argv.includes('--smoke');
 const compact = process.argv.includes('--compact');
 const searchOnly = process.argv.includes('--search');
+const accessOnly = process.argv.includes('--access');
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 const results = [];
 try {
@@ -213,7 +214,12 @@ try {
               const previous = entries.find((entry) => entry.id === id);
               assert.equal(payload.rowVersion, previous.rowVersion);
               writes.push({ mode: 'edit', payload });
-              body = { ...previous, ...payload, rowVersion: 'updated-version' };
+              body = {
+                ...previous,
+                ...payload,
+                entitlements: payload.entitlements ?? previous.entitlements,
+                rowVersion: 'updated-version',
+              };
               Object.assign(previous, body);
             } else throw Error('Unexpected request: ' + endpoint);
             await route.fulfill({
@@ -279,6 +285,129 @@ try {
           );
           await expect(workspace).toHaveAttribute('data-kind', 'ready', { timeout: 60000 });
           await expect(workspace.locator('tbody [data-collection-row]')).toHaveCount(10);
+          if (accessOnly) {
+            stage = 'tenant access actions';
+            await workspace.locator('[data-collection-row]').last().click();
+            await workspace
+              .getByRole('button', { name: text['pagination.goToNextRecord'], exact: true })
+              .click();
+            await expect.poll(() => queries.at(-1)?.pageNumber).toBe('2');
+            await expect(workspace.locator('tbody [data-collection-row]')).toHaveCount(7);
+            const target = 'tenant-11';
+            const targetRow = () =>
+              workspace.locator('[data-collection-row]').filter({ hasText: 'Tenant 11' });
+            const clickAction = async (id) => {
+              const inline = workspace.locator(
+                `[data-action-row="${target}"][data-row-action="${id}"] button`,
+              );
+              const menuButton = targetRow().getByRole('button', {
+                name: text['collections.rowActions'],
+                exact: true,
+              });
+              await expect
+                .poll(async () => (await inline.count()) + (await menuButton.count()))
+                .toBe(1);
+              if (await inline.count()) await inline.click();
+              else {
+                await menuButton.click();
+                await page
+                  .getByRole('menuitem', { name: captions['tenantManagement.' + id], exact: true })
+                  .click();
+              }
+            };
+            const expectStatus = async (enabled) => {
+              await expect(
+                targetRow().getByText(
+                  captions['tenantManagement.' + (enabled ? 'enabled' : 'disabled')],
+                  { exact: true },
+                ),
+              ).toHaveCount(1);
+            };
+            await clickAction('deactivate');
+            let confirmation = page.getByRole('dialog', {
+              name: captions['tenantManagement.deactivate'],
+              exact: true,
+            });
+            await expect(confirmation).toContainText('Tenant 11');
+            await confirmation
+              .locator('.dialog-actions')
+              .getByRole('button', { name: text['actions.cancel'], exact: true })
+              .click();
+            assert.equal(writes.length, 0);
+            for (const [view, enabled] of [
+              ['grid', false],
+              ['cards', true],
+              ['cards', false],
+              ['grid', true],
+            ]) {
+              if (width >= 900) {
+                await page.locator('.drawer-toggle button').click();
+              }
+              await pick(view);
+              await expect(
+                workspace.locator(view === 'grid' ? 'erp-data-table' : 'erp-card-list'),
+              ).toBeVisible();
+              const id = enabled ? 'activate' : 'deactivate';
+              const label = captions['tenantManagement.' + id];
+              await clickAction(id);
+              confirmation = page.getByRole('dialog', { name: label, exact: true });
+              await expect(confirmation).toContainText('Tenant 11');
+              const bounds = await confirmation.boundingBox();
+              assert.ok(
+                bounds &&
+                  bounds.x >= -1 &&
+                  bounds.y >= -1 &&
+                  bounds.x + bounds.width <= width + 1 &&
+                  bounds.y + bounds.height <= height + 1,
+              );
+              await confirmation.getByRole('button', { name: label, exact: true }).click();
+              await expect(confirmation).toHaveCount(0);
+              await expectStatus(enabled);
+              const updated = writes.at(-1).payload;
+              assert.equal(updated.isActive, enabled);
+              assert.equal(updated.subscriptionStartedOn, tenantFixture.subscriptionStartedOn);
+              assert.equal(updated.subscriptionEndsOn, tenantFixture.subscriptionEndsOn);
+              assert.equal(updated.entitlements, null);
+              assert.equal(queries.at(-1).pageNumber, '2');
+              await expect(workspace.locator('[data-collection-row]')).toHaveCount(7);
+            }
+            assert.equal(writes.length, 4);
+            await workspace
+              .getByPlaceholder(captions['tenantManagement.searchPlaceholder'])
+              .fill('Tenant 11');
+            await expect(workspace.locator('tbody [data-collection-row]')).toHaveCount(1);
+            await clickAction('deactivate');
+            const label = captions['tenantManagement.deactivate'];
+            await page
+              .getByRole('dialog', { name: label, exact: true })
+              .getByRole('button', { name: label, exact: true })
+              .click();
+            await expectStatus(false);
+            assert.equal(queries.at(-1).searchValue, 'Tenant 11');
+            assert.equal(writes.length, 5);
+            await page.screenshot({
+              path: path.join(output, `${language}-${mode}-${width}-access.png`),
+              fullPage: true,
+            });
+            assert.ok(
+              await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1),
+            );
+            assert.deepEqual(errors, []);
+            results.push({
+              language,
+              mode,
+              width,
+              height,
+              passed: true,
+              cancelledWithoutWrite: true,
+              gridAndCards: true,
+              pageAndSearchPreserved: true,
+              navigationWidths: width >= 900 ? 'expanded-and-collapsed' : 'compact',
+              writes: writes.length,
+            });
+            console.log(`Tenant access actions passed ${language}/${mode}/${width}`);
+            continue;
+          }
           if (searchOnly) {
             const measurements = await verifyCollectionSearchLayout(
               page,
@@ -700,7 +829,48 @@ try {
             .click();
           stage = 'create submit';
           await save(editor).click();
-          await expect(editor).toHaveCount(0);
+          await expect(page).toHaveURL(
+            origin + '/super-admin/tenants/created-tenant/edit?tab=administrators',
+          );
+          const newlyCreated = page.locator('erp-tenant-editor-page');
+          const newAdministrators = newlyCreated.getByRole('tab', {
+            name: captions['tenantAdmins.title'],
+            exact: true,
+          });
+          await expect(newAdministrators).toHaveAttribute('aria-selected', 'true');
+          const newAdminWorkspace = newlyCreated.locator('erp-tenant-admins-page');
+          await expect(newAdminWorkspace).toBeVisible();
+          await expect(newAdminWorkspace).toContainText('Scoped Admin');
+          await expect(newAdminWorkspace).not.toContainText('Other Tenant Admin');
+          await expect(save(newlyCreated)).toHaveCount(0);
+          assert.equal(
+            queries.length,
+            listReadsBeforeCreate,
+            'Creation continues without list reads',
+          );
+          await newAdminWorkspace.locator('erp-page-header .primary-action button').click();
+          const newAdminDialog = page.getByRole('dialog', {
+            name: captions['tenantAdmins.add'],
+            exact: true,
+          });
+          await expect(newAdminDialog).toBeVisible();
+          await expect(newAdminDialog).toContainText('Browser Tenant');
+          await newAdminDialog
+            .getByRole('button', { name: text['actions.close'], exact: true })
+            .click();
+          await page.reload();
+          await expect(
+            newlyCreated.getByRole('tab', {
+              name: captions['tenantAdmins.title'],
+              exact: true,
+            }),
+          ).toHaveAttribute('aria-selected', 'true');
+          await expect(newlyCreated.locator('erp-tenant-admins-page')).toBeVisible();
+          await page.screenshot({
+            path: path.join(output, `${language}-${mode}-${width}-created-administrators.png`),
+          });
+          await newlyCreated.locator('erp-page-header .heading-row erp-back-button button').click();
+          await expect(page).toHaveURL(origin + '/super-admin/tenants');
           assert.equal(writes.length, 1);
           assert.equal(writes[0].payload.notes, 'Retained across tabs');
           stage = 'edit';
@@ -823,6 +993,7 @@ try {
             passed: true,
             queryCount: queries.length,
             writes: writes.map((item) => item.mode),
+            afterCreateAdministrators: true,
           });
           console.log(`Tenant Management passed ${language}/${mode}/${width}`);
         } catch (error) {
@@ -840,13 +1011,15 @@ try {
   fs.writeFileSync(
     path.join(
       output,
-      searchOnly
-        ? 'search-layout-results.json'
-        : compact
-          ? 'compact-results.json'
-          : smoke
-            ? 'smoke-results.json'
-            : 'results.json',
+      accessOnly
+        ? 'access-results.json'
+        : searchOnly
+          ? 'search-layout-results.json'
+          : compact
+            ? 'compact-results.json'
+            : smoke
+              ? 'smoke-results.json'
+              : 'results.json',
     ),
     JSON.stringify(results, null, 2),
   );

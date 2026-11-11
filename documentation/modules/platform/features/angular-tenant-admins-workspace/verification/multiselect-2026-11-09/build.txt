@@ -1,0 +1,59 @@
+
+> erp-angular@0.0.0 prebuild
+> npm run configure:license
+
+
+> erp-angular@0.0.0 configure:license
+> node --env-file-if-exists=.env.local scripts/configure-license.mjs
+
+PrimeUI local license configured (value omitted).
+
+> erp-angular@0.0.0 build
+> node scripts/run-angular.mjs build
+
+API target: host (https://shabanhrms.runasp.net)
+> Building...
+√ Building...
+Initial chunk files | Names                |  Raw size | Estimated transfer size
+main-4MQ7BW6I.js    | main                 | 242.72 kB |                59.91 kB
+chunk-Bk6kA5SI.js   | -                    | 232.47 kB |                66.20 kB
+chunk-CG97OsSv.js   | -                    |  87.50 kB |                21.86 kB
+styles-3VNRGVPT.css | styles               |  24.58 kB |                 2.78 kB
+chunk-C7rukAVN.js   | -                    |   1.42 kB |               567 bytes
+
+                    | Initial total        | 588.69 kB |               151.31 kB
+
+Lazy chunk files    | Names                |  Raw size | Estimated transfer size
+chunk-BxPZKOqm.js   | -                    |   1.61 MB |               264.88 kB
+chunk-BwAlQTPE.js   | xlsx                 | 494.25 kB |               134.12 kB
+chunk-yNwoYzrp.js   | -                    | 393.45 kB |                71.77 kB
+chunk-BvykHgAE.js   | chart-renderer       | 212.10 kB |                63.67 kB
+chunk-BwCtb0XU.js   | authenticated-routes | 150.05 kB |                32.24 kB
+chunk-D5UhkdX-.js   | core-json            | 124.64 kB |                25.53 kB
+chunk-CZZNXJcX.js   | platform-auth-json   |  76.75 kB |                14.51 kB
+chunk-DuqMGko8.js   | public-api           |  69.79 kB |                17.11 kB
+chunk-DKuc6RQk.js   | public-api           |  69.47 kB |                16.38 kB
+chunk-vRvBbTpQ.js   | public-api           |  69.11 kB |                16.39 kB
+chunk-CWiyOtxu.js   | public-api           |  69.04 kB |                15.84 kB
+chunk-C_sV42Y7.js   | hr-recruitment-json  |  57.72 kB |                10.86 kB
+chunk-BntD9XQh.js   | -                    |  56.73 kB |                13.31 kB
+chunk-5qxD2YIU.js   | index                |  56.12 kB |                12.72 kB
+chunk-CopPBigm.js   | hr-workforce-json    |  49.46 kB |                 7.65 kB
+...and 54 more lazy chunks files. Use "--verbose" to show all the files.
+
+Application bundle generation complete. [46.506 seconds] - 2026-11-09T14:35:05.997Z
+
+▲ [WARNING] bundle initial exceeded maximum budget. Budget 500.00 kB was not met by 88.69 kB with a total of 588.69 kB.
+
+
+▲ [WARNING] src/app/shared/ui/collections/collection-frame/collection-frame.scss exceeded maximum budget. Budget 4.00 kB was not met by 2.50 kB with a total of 6.50 kB.
+
+
+▲ [WARNING] src/app/shared/ui/collections/collection-frame/collection-search.scss exceeded maximum budget. Budget 4.00 kB was not met by 1.33 kB with a total of 5.33 kB.
+
+
+▲ [WARNING] src/app/shared/ui/layout/page-header/page-header.scss exceeded maximum budget. Budget 4.00 kB was not met by 3.92 kB with a total of 7.92 kB.
+
+
+Output location: G:\test\ERPSYSTEM\ERPSYSTEM\web-angular\dist\erp-angular
+

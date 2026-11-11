@@ -179,10 +179,21 @@ public sealed class AuditTrailTests
         Assert.Equal("Match latest", first.EntityDisplay);
         var next = Assert.Single(await source.ListAsync(filter with { After = new(first.OccurredOnUtc, "test", first.Id) }));
         Assert.Equal("Match first", next.EntityDisplay);
+        Assert.Equal(2L, await source.CountAsync(filter with
+        {
+            After = new(first.OccurredOnUtc, "test", first.Id),
+            Take = 0
+        }));
+        Assert.Equal(1L, await source.CountAsync(filter with { EntityKey = first.EntityKey }));
+        Assert.Equal(0L, await source.CountAsync(filter with { TenantId = "foreign-tenant" }));
+        Assert.Equal(0L, await source.CountAsync(filter with { CompanyId = 99 }));
+        Assert.Equal(0L, await source.CountAsync(filter with { MatchingUserIds = new[] { "foreign-user" } }));
+        Assert.Equal(0L, await source.CountAsync(filter with { FromUtc = first.OccurredOnUtc.AddSeconds(1) }));
         Assert.Empty(await source.ListAsync(filter with { MatchingUserIds = new[] { "foreign-user" } }));
         Assert.Empty(await source.ListAsync(filter with { CompanyId = 99 }));
         Assert.True(ErpSystem.BuildingBlocks.Application.Filtering.ColumnFilterSet.TryParse("""[{"field":"moduleCode","operator":"and","constraints":[{"matchMode":"equals","value":"other"}]}]""", AuditColumnFilters.Fields, out var moduleRules));
         Assert.Empty(await source.ListAsync(filter with { ColumnFilters = moduleRules }));
+        Assert.Equal(0L, await source.CountAsync(filter with { ColumnFilters = moduleRules }));
     }
 
     private static TestDbContext CreateContext(out ManualClock clock)

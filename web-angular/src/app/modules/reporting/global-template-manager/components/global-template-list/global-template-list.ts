@@ -1,9 +1,7 @@
 import { Component, computed, inject, viewChild } from '@angular/core';
 import { LocalizationRuntime, UiTextPipe } from '../../../../../platform/localization/public-api';
 import {
-  ActionButton,
   ActionMenuButton,
-  AppIcon,
   CollectionCell,
   CollectionColumnPipe,
   FeedbackState,
@@ -25,9 +23,7 @@ type TemplateToolbarAction = 'upload' | 'register' | 'design' | 'schema';
 
 @Component({
   imports: [
-    ActionButton,
     ActionMenuButton,
-    AppIcon,
     CollectionCell,
     CollectionColumnPipe,
     FeedbackState,
@@ -40,6 +36,7 @@ type TemplateToolbarAction = 'upload' | 'register' | 'design' | 'schema';
   ],
   selector: 'erp-global-template-list',
   templateUrl: './global-template-list.html',
+  styleUrl: './global-template-list.scss',
 })
 export class GlobalTemplateList {
   readonly state = inject(GlobalTemplateState);
@@ -47,6 +44,10 @@ export class GlobalTemplateList {
   readonly exportSource = computed(() =>
     this.state.exportSource(this.columns(), this.locale.language()),
   );
+  readonly total = computed(() => {
+    const source = this.state.source();
+    return source.kind === 'ready' ? (source.result?.total ?? null) : null;
+  });
   private readonly designer = viewChild(GlobalTemplateDesigner);
   readonly toolbarActions = computed<readonly ActionMenuItem<TemplateToolbarAction>[]>(() => {
     const create = this.state.filterEntity()

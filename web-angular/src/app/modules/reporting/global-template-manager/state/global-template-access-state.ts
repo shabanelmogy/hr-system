@@ -97,8 +97,9 @@ export class GlobalTemplateAccessState {
         : access.access.map((grant) => ({
             id: grant.roleId,
             name: grant.roleName,
-            tenantId: null,
-            tenantName: null,
+            tenantId: grant.tenantId ?? null,
+            tenantName: grant.tenantName ?? null,
+            scopeKnown: grant.scopeKnown ?? grant.tenantId !== undefined,
           }));
     const matchingRows = allRows.filter((role) =>
       role.name.toLocaleLowerCase().includes(criteria.search.trim().toLocaleLowerCase()),

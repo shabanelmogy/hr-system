@@ -33,7 +33,9 @@ describe('System audit read-only transport', () => {
         constraints: [{ matchMode: 'contains', value: 'Example' }],
       },
     ]);
-    const result = firstValueFrom(service.page({ columnFilters: filters }, 'opaque+/cursor=='));
+    const result = firstValueFrom(
+      service.page({ columnFilters: filters }, 'opaque+/cursor==', true),
+    );
     await Promise.resolve();
     const request = http.expectOne(origin + '/api/v1/system-audit-trail/query');
     expect(request.request.method).toBe('POST');
@@ -42,7 +44,8 @@ describe('System audit read-only transport', () => {
     expect(request.request.body).toEqual({
       columnFilters: filters,
       cursor: 'opaque+/cursor==',
-      pageSize: 50,
+      pageSize: 25,
+      includeTotalCount: true,
     });
     request.flush({ items: [], nextCursor: null });
     expect((await result).items).toEqual([]);
@@ -57,14 +60,26 @@ describe('System audit read-only transport', () => {
     );
     expect(request.request.method).toBe('GET');
     expect(request.request.withCredentials).toBe(true);
-    expect(request.request.params.get('pageSize')).toBe('50');
+    expect(request.request.params.get('pageSize')).toBe('25');
     expect(request.request.params.get('cursor')).toBe('opaque+/cursor==');
     expect(request.request.params.get('entityKey')).toBe('42');
     expect(request.request.params.get('action')).toBe('Modified');
     expect(request.request.params.has('pageNumber')).toBe(false);
     expect(request.request.params.has('tenantId')).toBe(false);
+    expect(request.request.params.has('includeTotalCount')).toBe(false);
     request.flush({ items: [], nextCursor: null });
     expect(await read).toEqual({ items: [], nextCursor: null });
+  });
+
+  it('opts interactive GET reads into real totals while preserving the response', async () => {
+    const result = firstValueFrom(service.page({}, null, true));
+    const request = http.expectOne(
+      (request) => request.url === origin + '/api/v1/system-audit-trail',
+    );
+    expect(request.request.params.get('includeTotalCount')).toBe('true');
+    expect(request.request.params.get('pageSize')).toBe('25');
+    request.flush({ items: [], nextCursor: null, totalCount: 0 });
+    expect((await result).totalCount).toBe(0);
   });
 
   it('requires exact successful status and validates the filters body', async () => {

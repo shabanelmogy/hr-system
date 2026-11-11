@@ -1,0 +1,66 @@
+[
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1213,
+    "passed": true,
+    "posts": 2,
+    "noApplicationServerStarted": true
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "passed": true,
+    "posts": 2,
+    "noApplicationServerStarted": true
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1213,
+    "passed": true,
+    "posts": 2,
+    "noApplicationServerStarted": true
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "passed": true,
+    "posts": 2,
+    "noApplicationServerStarted": true
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1213,
+    "passed": true,
+    "posts": 2,
+    "noApplicationServerStarted": true
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "passed": true,
+    "posts": 2,
+    "noApplicationServerStarted": true
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1213,
+    "passed": true,
+    "posts": 2,
+    "noApplicationServerStarted": true
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "passed": true,
+    "posts": 2,
+    "noApplicationServerStarted": true
+  }
+]

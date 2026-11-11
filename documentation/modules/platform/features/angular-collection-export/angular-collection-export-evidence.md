@@ -33,3 +33,7 @@ Phase07 completed after Phase06 Verified and540recipe check. Arabic customer edu
 S4-A4a bounded API/Web/integrated acceptance is Verified. New native functionality is Excluded and existing native consumers are retained; no device acceptance is implied. Documentation and Arabic education are Closed for the bounded local implementation. The final Super Admin review remains Required; production Countries and hosted/provider gates are separate and open.
 
 Verified current source paths are registered by required-files.json. The version2 contract owns exact rule/edge-case/impact/permission matrices. No optional business capability is inherited from Countries. Existing exporter is reused; no API/domain/native rewrite. The original Phase00 findings are resolved in source: CSV is escaped/protected, the independent authorized global formatter is implemented and Angular reads all filtered pages. Hosted publication remains PROD-032.
+
+## Historical evidence availability — 2026-11-09
+
+The [dated registry repair](../../../reporting/CURRENT_EVIDENCE_REPAIR_2026-11-09.md) retains the original missing raw-log entries in a central inventory. No runtime behavior changes in this feature. Historical claims keep their original dates and are not new execution proof. Current documentary completeness does not close hosted/native or other feature-owned acceptance; FOLLOW-025 retains historical availability.

@@ -30,9 +30,12 @@ feedback/retry and save behavior. TenantEditorState still owns fresh detail
 loading, Signal Forms validation, API field errors, rowVersion, conflict/reload,
 uncertain mutation state, pending writes and actor invalidation. Changing the
 route identity recreates the editor workspace; it cannot reuse a preceding
-tenant's loaded record or draft. Successful save returns to the list, refreshes
-through the normal routed read, shows the existing notice, and supplies the
-edited row identity for shared row feedback when it is on the loaded page.
+tenant's loaded record or draft. After confirmed creation, the workspace replaces
+the Add URL with `/super-admin/tenants/:id/edit?tab=administrators`, using the
+server-returned identity and opening the existing scoped Administrators tab.
+Reloading this URL retains that tab. A successful edit still returns to the list,
+refreshes through the normal routed read, shows the existing notice, and supplies
+the edited row identity for shared row feedback when it is on the loaded page.
 
 The editor has one tab strip inside the Tenant details card: Tenant Profile,
 subscription, applications and Tenant Administrators. Profile contains identity,
@@ -80,7 +83,12 @@ All administrator commands retain their own validation, unsaved and pending stat
 For an unsaved new tenant there is no server identity to bind administrators to.
 Its administrator tab explains in EN/AR that the tenant must be saved first and
 links back to its details. It does not create an administrator or fabricate a
-tenant identity. After saving, Edit exposes the working scoped administrator tab.
+tenant identity. After the first confirmed save, the working scoped administrator
+tab opens automatically; Add Administrator starts with this Tenant selected.
+Failed or uncertain creation retains the form and does not navigate.
+
+The November 9 follow-up is recorded in
+[create-to-administrators acceptance](TENANT_CREATE_ADMINISTRATORS_2026-11-09.md).
 
 ## Shared contracts and acceptance
 

@@ -6,6 +6,8 @@ export interface CollectionQuery {
   readonly criteriaKey: string;
   readonly pageIndex: number;
   readonly pageSize: number;
+  /** Sequential sources may expose a total without supporting arbitrary page jumps. */
+  readonly pageAccess?: 'random' | 'sequential';
 }
 export interface CollectionPage<T> {
   readonly query: CollectionQuery;

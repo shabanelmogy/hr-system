@@ -142,10 +142,15 @@ public sealed class PlatformModuleCatalogOwnershipTests
         using var noTenantProvider = noTenantServices.BuildServiceProvider();
 
         Assert.Null(await noTenantProvider.GetRequiredService<ISender>().Send(new GetAccessibleModulesQuery()));
+
+        policy.IsSuperAdmin = true;
+        Assert.NotEmpty((await noTenantProvider.GetRequiredService<ISender>().Send(new GetAccessibleModulesQuery()))!);
+        Assert.Equal(("user-1", "tenant-1"), policy.LastScope);
     }
 
     private sealed class RecordingPlatformCatalogPolicy : IModuleCatalogPolicy
     {
+        public bool IsSuperAdmin { get; set; }
         private static readonly ModuleCatalogItem Module = new(
             "hr",
             "HR",
@@ -190,7 +195,7 @@ public sealed class PlatformModuleCatalogOwnershipTests
         }
 
         public Task<bool> IsSuperAdminAsync(string userId, CancellationToken cancellationToken = default) =>
-            Task.FromResult(true);
+            Task.FromResult(IsSuperAdmin);
 
         public bool IsValidEntitlement(
             IReadOnlyCollection<TenantModuleEntitlementRequest> entitlements,

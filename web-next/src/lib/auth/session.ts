@@ -6,6 +6,7 @@ export type CompanyOption = {
 };
 
 export type SessionClaims = {
+  sessionScope?: "company" | "system";
   userId: string;
   tenantId: string;
   tenantName: string;
@@ -30,25 +31,36 @@ export type SessionClaims = {
 export function isSessionClaims(value: unknown): value is SessionClaims {
   if (!value || typeof value !== "object") return false;
   const candidate = value as Partial<SessionClaims>;
+  const system = candidate.sessionScope === "system";
+  const validScope = system
+    ? Array.isArray(candidate.roles) && candidate.roles.includes("super_admin") &&
+      candidate.tenantId === "" && candidate.tenantName === "" && candidate.tenantPlanName === "" &&
+      candidate.companyId === 0 && candidate.companyCode === "" &&
+      candidate.companyNameAr === "" && candidate.companyNameEn === "" &&
+      Array.isArray(candidate.companies) && candidate.companies.length === 0 &&
+      candidate.tenantSubscriptionStatus === "" && candidate.tenantSubscriptionEndsOn === null &&
+      candidate.tenantReadOnly === false
+    : (candidate.sessionScope === undefined || candidate.sessionScope === "company");
 
   return (
+    validScope &&
     // Critical fields must be non-empty strings
     typeof candidate.userId === "string" &&
     candidate.userId.length > 0 &&
     typeof candidate.tenantId === "string" &&
-    candidate.tenantId.length > 0 &&
+    (system || candidate.tenantId.length > 0) &&
     typeof candidate.tenantName === "string" &&
-    candidate.tenantName.length > 0 &&
+    (system || candidate.tenantName.length > 0) &&
     typeof candidate.tenantPlanName === "string" &&
-    candidate.tenantPlanName.length > 0 &&
+    (system || candidate.tenantPlanName.length > 0) &&
     typeof candidate.companyId === "number" &&
     Number.isInteger(candidate.companyId) &&
-    candidate.companyId > 0 &&
+    (system || candidate.companyId > 0) &&
     typeof candidate.companyCode === "string" &&
-    candidate.companyCode.trim().length > 0 &&
+    (system || candidate.companyCode.trim().length > 0) &&
     typeof candidate.companyNameAr === "string" &&
     typeof candidate.companyNameEn === "string" &&
-    isCompanyOptions(candidate.companies, candidate.companyId) &&
+    (system || isCompanyOptions(candidate.companies, candidate.companyId)) &&
     typeof candidate.userName === "string" &&
     candidate.userName.length > 0 &&
     typeof candidate.email === "string" &&
@@ -63,7 +75,7 @@ export function isSessionClaims(value: unknown): value is SessionClaims {
     Array.isArray(candidate.permissions) &&
     candidate.permissions.every((permission) => typeof permission === "string" && permission.length > 0) &&
     typeof candidate.tenantSubscriptionStatus === "string" &&
-    candidate.tenantSubscriptionStatus.length > 0 &&
+    (system || candidate.tenantSubscriptionStatus.length > 0) &&
     (candidate.tenantSubscriptionEndsOn === null ||
       (typeof candidate.tenantSubscriptionEndsOn === "string" &&
         Number.isFinite(Date.parse(candidate.tenantSubscriptionEndsOn)))) &&

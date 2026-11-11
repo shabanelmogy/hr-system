@@ -99,8 +99,8 @@ failure into partial success.
 
 ## Approved references
 
-- **Angular shared collection foundation cross-platform master review:** `../modules/platform/features/angular-collection-foundation/angular-collection-foundation-review.md` sections 3, 4, 6, 7
-- **Angular shared collection foundation Angular web implementation profile:** `../modules/platform/features/angular-collection-foundation/angular-collection-foundation-web.md` sections 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
+- **Angular shared collection foundation cross-platform master review:** `../modules/platform/features/angular-collection-foundation/angular-collection-foundation-review.md` sections 3, 4, 6, 7, 16, 17
+- **Angular shared collection foundation Angular web implementation profile:** `../modules/platform/features/angular-collection-foundation/angular-collection-foundation-web.md` sections 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17
 
 ## Source fingerprints
 
@@ -110,6 +110,8 @@ failure into partial success.
 | angular-collection-foundation-master | 4 | `3846922f56bb2f0dd5bc8f55b5c64f733b425d1ea2943bd56ea4c708751fc849` |
 | angular-collection-foundation-master | 6 | `983ed69fcd0a2160a70725c73120734deec395f8025415ca5e46661d4fec6f25` |
 | angular-collection-foundation-master | 7 | `7a56c143c9b13ea0dca88abb2f4e236fef9970f18c241f61176c360ae724c3e9` |
+| angular-collection-foundation-master | 16 | `fcb6649a75c6a69ee67dc2e6a4508edae519b87a9ee9de90b55153c92e55370f` |
+| angular-collection-foundation-master | 17 | `f16ffc8284c366335cec993fb5929aeac83c4f22d9af53fe4e1b8e1f423e21e1` |
 | angular-collection-foundation-web | 1 | `2e0e48c01277b5c96ad6e07f2117775fb0065ee4c6c6bae9464f9da59b88aaa9` |
 | angular-collection-foundation-web | 2 | `ab50d090b58609d2bd08a52ba5b40d1e7769f63398e9370d31c02347f9a60078` |
 | angular-collection-foundation-web | 3 | `bdac0a1efba83f9b9d2427afe0d8495ba77c34ff3774897c9e6c43ed082a5dfa` |
@@ -124,3 +126,5 @@ failure into partial success.
 | angular-collection-foundation-web | 12 | `01f711480bf46a59884a1c0ef5ecf9efadacc73f531d0c69236f14d5b91e43e9` |
 | angular-collection-foundation-web | 13 | `22c80fdb52fd1cf880f807ef351f9851f394bfa956c756b6ec4e84e9e22128a1` |
 | angular-collection-foundation-web | 14 | `2495418f57ef4e931d5971a7f5cf495934d28d1da4b34398894c657e7853a3fc` |
+| angular-collection-foundation-web | 16 | `fcb6649a75c6a69ee67dc2e6a4508edae519b87a9ee9de90b55153c92e55370f` |
+| angular-collection-foundation-web | 17 | `f16ffc8284c366335cec993fb5929aeac83c4f22d9af53fe4e1b8e1f423e21e1` |

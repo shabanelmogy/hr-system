@@ -12,6 +12,9 @@ Existing login/selection/access policy; refresh/logout/switch correctness implem
 Browser HTTP and retained Next/native regression Required; all new visual Web/Mobile views Excluded.
 ## 6. Contracts
 Current bearer wire retained; R2 typed sanitized browser Cookie routes implemented, no raw session credentials in JSON.
+
+2026-11-09 corrective system-session increment (FOLLOW-032): eligible Super Admin authenticates without any Tenant or company. Canonical current contract and verification boundary: [system-session execution](SUPER_ADMIN_SYSTEM_SESSION_2026-11-09.md). This supersedes earlier company-only descriptions for this actor. Hosted rollout remains PROD-034; repository documentation baseline remains FOLLOW-033.
+
 ## 7. UI composition
 N/A — technical unit. Existing Next/native shared UI unchanged; S2 owns Angular screens.
 ## 8. States
@@ -52,6 +55,8 @@ API session/browser increments R1/R2 Verified; technical acceptance documented, 
 Evidence ledger/required-files.json own current evidence; Phase 06 not Verified; technical education N/A.
 
 Optional S2-A4 consumer proof (2026-10-29): verification/browser-transport.mjs accepts ERPSYSTEM_TEST_ANGULAR_COMPANY_CONTEXT=1 to drive the built Angular UI with its existing trusted Chromium/SQL harness. Auth/challenges/CSRF/Cookies/company-switch/reload/two-tab/logout are real; catalog/localization reads are explicitly synthetic. The existing normal proof remains independent of Angular. Current redacted receipt and angular-company-context/IMPLEMENTATION_REPORT.md record 1/1 pass with SQL cleanup assertions unchanged.
+
+System-session source, regression tests and current portable verification are registered in required-files.json. Historical R1/R2 receipts do not prove this correction; see SUPER_ADMIN_SYSTEM_SESSION_2026-11-09.md for its actual gate results.
 
 ## Current hosted runtime/key and Hub query correction — 2026-11-07
 

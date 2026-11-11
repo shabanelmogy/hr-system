@@ -1,0 +1,27 @@
+
+> erp-angular@0.0.0 pretest
+> npm run configure:license
+
+
+> erp-angular@0.0.0 configure:license
+> node --env-file-if-exists=.env.local scripts/configure-license.mjs
+
+PrimeUI local license configured (value omitted).
+
+> erp-angular@0.0.0 test
+> node scripts/run-angular.mjs test --watch=false --include=src/app/shared/ui/forms/fields/multi-reference-field/multi-reference-field.spec.ts
+
+API target: host (https://shabanhrms.runasp.net)
+> Building...
+√ Building...
+Application bundle generation complete. [5.237 seconds] - 2026-11-09T14:33:53.133Z
+
+
+ RUN  v5.0.5 G:/test/ERPSYSTEM/ERPSYSTEM/web-angular
+
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  16:33:53
+   Duration  4.53s (environment 37%, import 21%, tests 20%, setup 16%, transform 6%, worker 1%)
+

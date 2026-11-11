@@ -1,0 +1,738 @@
+[
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "controls": [
+      {
+        "route": "/dev/references",
+        "selector": "[data-testid=finite] [role=combobox]",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(15, 118, 110)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 332,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/numbers",
+        "selector": "[data-testid=decimal] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(15, 118, 110)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 324,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/dates",
+        "selector": "[data-testid=start] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(15, 118, 110)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 324,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/multiline",
+        "selector": "[data-testid=floating] textarea",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "color(srgb 0.0901961 0.12549 0.14902 / 0.23)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 324,
+          "height": 106
+        }
+      },
+      {
+        "route": "/dev/booleans",
+        "selector": "[data-testid=checkbox] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(15, 118, 110)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 324,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/booleans",
+        "selector": "[data-testid=switch] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(15, 118, 110)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 324,
+          "height": 46
+        }
+      }
+    ],
+    "passed": true
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "controls": [
+      {
+        "route": "/dev/references",
+        "selector": "[data-testid=finite] [role=combobox]",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(15, 118, 110)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 589,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/numbers",
+        "selector": "[data-testid=decimal] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(15, 118, 110)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 952,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/dates",
+        "selector": "[data-testid=start] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(15, 118, 110)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 952,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/multiline",
+        "selector": "[data-testid=floating] textarea",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "color(srgb 0.0901961 0.12549 0.14902 / 0.23)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 952,
+          "height": 106
+        }
+      },
+      {
+        "route": "/dev/booleans",
+        "selector": "[data-testid=checkbox] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(15, 118, 110)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 952,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/booleans",
+        "selector": "[data-testid=switch] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(15, 118, 110)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 952,
+          "height": 46
+        }
+      }
+    ],
+    "passed": true
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "controls": [
+      {
+        "route": "/dev/references",
+        "selector": "[data-testid=finite] [role=combobox]",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(94, 234, 212)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 332,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/numbers",
+        "selector": "[data-testid=decimal] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(94, 234, 212)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 324,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/dates",
+        "selector": "[data-testid=start] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(94, 234, 212)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 324,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/multiline",
+        "selector": "[data-testid=floating] textarea",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "color(srgb 0.960784 0.968627 0.972549 / 0.23)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 324,
+          "height": 106
+        }
+      },
+      {
+        "route": "/dev/booleans",
+        "selector": "[data-testid=checkbox] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(94, 234, 212)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 324,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/booleans",
+        "selector": "[data-testid=switch] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(94, 234, 212)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 324,
+          "height": 46
+        }
+      }
+    ],
+    "passed": true
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "controls": [
+      {
+        "route": "/dev/references",
+        "selector": "[data-testid=finite] [role=combobox]",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(94, 234, 212)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 589,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/numbers",
+        "selector": "[data-testid=decimal] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(94, 234, 212)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 952,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/dates",
+        "selector": "[data-testid=start] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(94, 234, 212)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 952,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/multiline",
+        "selector": "[data-testid=floating] textarea",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "color(srgb 0.960784 0.968627 0.972549 / 0.23)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 952,
+          "height": 106
+        }
+      },
+      {
+        "route": "/dev/booleans",
+        "selector": "[data-testid=checkbox] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(94, 234, 212)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 952,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/booleans",
+        "selector": "[data-testid=switch] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(94, 234, 212)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 952,
+          "height": 46
+        }
+      }
+    ],
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "controls": [
+      {
+        "route": "/dev/references",
+        "selector": "[data-testid=finite] [role=combobox]",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(15, 118, 110)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 332,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/numbers",
+        "selector": "[data-testid=decimal] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(15, 118, 110)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 324,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/dates",
+        "selector": "[data-testid=start] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(15, 118, 110)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 324,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/multiline",
+        "selector": "[data-testid=floating] textarea",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "color(srgb 0.0901961 0.12549 0.14902 / 0.23)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 324,
+          "height": 106
+        }
+      },
+      {
+        "route": "/dev/booleans",
+        "selector": "[data-testid=checkbox] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(15, 118, 110)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 324,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/booleans",
+        "selector": "[data-testid=switch] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(15, 118, 110)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 324,
+          "height": 46
+        }
+      }
+    ],
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "controls": [
+      {
+        "route": "/dev/references",
+        "selector": "[data-testid=finite] [role=combobox]",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(15, 118, 110)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 589,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/numbers",
+        "selector": "[data-testid=decimal] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(15, 118, 110)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 952,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/dates",
+        "selector": "[data-testid=start] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(15, 118, 110)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 952,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/multiline",
+        "selector": "[data-testid=floating] textarea",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "color(srgb 0.0901961 0.12549 0.14902 / 0.23)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 952,
+          "height": 106
+        }
+      },
+      {
+        "route": "/dev/booleans",
+        "selector": "[data-testid=checkbox] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(15, 118, 110)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 952,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/booleans",
+        "selector": "[data-testid=switch] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(15, 118, 110)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(15, 118, 110)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 952,
+          "height": 46
+        }
+      }
+    ],
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "controls": [
+      {
+        "route": "/dev/references",
+        "selector": "[data-testid=finite] [role=combobox]",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(94, 234, 212)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 332,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/numbers",
+        "selector": "[data-testid=decimal] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(94, 234, 212)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 324,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/dates",
+        "selector": "[data-testid=start] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(94, 234, 212)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 324,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/multiline",
+        "selector": "[data-testid=floating] textarea",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "color(srgb 0.960784 0.968627 0.972549 / 0.23)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 324,
+          "height": 106
+        }
+      },
+      {
+        "route": "/dev/booleans",
+        "selector": "[data-testid=checkbox] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(94, 234, 212)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 324,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/booleans",
+        "selector": "[data-testid=switch] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(94, 234, 212)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 324,
+          "height": 46
+        }
+      }
+    ],
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "controls": [
+      {
+        "route": "/dev/references",
+        "selector": "[data-testid=finite] [role=combobox]",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(94, 234, 212)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 589,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/numbers",
+        "selector": "[data-testid=decimal] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(94, 234, 212)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 952,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/dates",
+        "selector": "[data-testid=start] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(94, 234, 212)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 952,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/multiline",
+        "selector": "[data-testid=floating] textarea",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "color(srgb 0.960784 0.968627 0.972549 / 0.23)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 952,
+          "height": 106
+        }
+      },
+      {
+        "route": "/dev/booleans",
+        "selector": "[data-testid=checkbox] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(94, 234, 212)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 952,
+          "height": 46
+        }
+      },
+      {
+        "route": "/dev/booleans",
+        "selector": "[data-testid=switch] input",
+        "focus": {
+          "outlineWidth": 2,
+          "outlineColor": "rgb(94, 234, 212)",
+          "outlineStyle": "solid",
+          "borderColor": "rgb(94, 234, 212)",
+          "outside": 0,
+          "clippedBy": [],
+          "width": 952,
+          "height": 46
+        }
+      }
+    ],
+    "passed": true
+  }
+]

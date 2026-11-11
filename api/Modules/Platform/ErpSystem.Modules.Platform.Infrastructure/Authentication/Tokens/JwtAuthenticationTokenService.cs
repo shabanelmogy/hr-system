@@ -122,7 +122,8 @@ public sealed class JwtAuthenticationTokenService(
             AuthenticationTokenClaimNames.SessionId,
             AuthenticationTokenClaimNames.SecurityStamp,
             AuthenticationTokenClaimNames.TenantId,
-            AuthenticationTokenClaimNames.CompanyId
+            AuthenticationTokenClaimNames.CompanyId,
+            AuthenticationTokenClaimNames.SessionScope
         };
         var claims = principalClaims
             .Where(claim =>
@@ -149,22 +150,24 @@ public sealed class JwtAuthenticationTokenService(
         var securityStamp = FindValue(principal, AuthenticationTokenClaimNames.SecurityStamp);
         var tenantId = FindValue(principal, AuthenticationTokenClaimNames.TenantId);
         var companyIdValue = FindValue(principal, AuthenticationTokenClaimNames.CompanyId);
+        var scope = FindValue(principal, AuthenticationTokenClaimNames.SessionScope);
 
         return string.IsNullOrWhiteSpace(userId) ||
                string.IsNullOrWhiteSpace(jwtId) ||
                string.IsNullOrWhiteSpace(sessionId) ||
                string.IsNullOrWhiteSpace(securityStamp) ||
-               string.IsNullOrWhiteSpace(tenantId) ||
-               !int.TryParse(companyIdValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out var companyId) ||
-               companyId <= 0
+               !AuthenticationSessionScope.TryResolve(scope, tenantId, companyIdValue, out var sessionScope, out var companyId) ||
+               principal.FindAll(AuthenticationTokenClaimNames.SessionScope).Skip(1).Any() ||
+               principal.FindAll(AuthenticationTokenClaimNames.CompanyId).Skip(1).Any() ||
+               principal.FindAll(AuthenticationTokenClaimNames.TenantId).Skip(1).Any()
             ? null
             : new AuthenticationValidatedAccessToken(
                 userId,
                 jwtId,
                 sessionId,
                 securityStamp,
-                tenantId,
-                companyId);
+                tenantId ?? string.Empty,
+                companyId) { SessionScope = sessionScope };
     }
 
     private ClaimsPrincipal? ValidateToken(

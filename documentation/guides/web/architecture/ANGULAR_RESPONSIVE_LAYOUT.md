@@ -1,5 +1,9 @@
 # Angular responsive layout contract
 
+Use [UI review acceptance](UI_REVIEW_ACCEPTANCE.md) for independent visual,
+functional and accessibility closure. Pagination, expanded criteria and nested
+detail Grids require their own acceptance; zero outer overflow alone is insufficient.
+
 The current Grid/Cards/Chart/Report/Import composition matrix and review findings
 are in [Angular collection views](ANGULAR_COLLECTION_VIEWS.md). Use it with this
 responsive sizing contract before copying an existing screen.

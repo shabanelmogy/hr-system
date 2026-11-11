@@ -11,7 +11,10 @@ public sealed record SessionValidationRequest(
     string SessionId,
     string SecurityStamp,
     string TenantId,
-    int CompanyId);
+    int CompanyId)
+{
+    public string SessionScope { get; init; } = "company";
+}
 
 /// <summary>
 /// Raw refresh-session persistence state. Activity is evaluated by Platform using
@@ -37,7 +40,12 @@ public sealed record SessionValidationSnapshot(
     TenantSubscriptionStatus? TenantSubscriptionStatus,
     bool HasCompanyAccess,
     bool IsCompanyActive,
-    IReadOnlyList<RefreshSessionSnapshot> RefreshSessions);
+    IReadOnlyList<RefreshSessionSnapshot> RefreshSessions)
+{
+    public bool IsSuperAdmin { get; init; }
+    public bool IsArchived { get; init; }
+    public bool EmailConfirmed { get; init; } = true;
+}
 
 /// <summary>
 /// Platform persistence source for bearer-session state.

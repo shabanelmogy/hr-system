@@ -130,7 +130,7 @@ public sealed class GlobalCrystalReportReplacementPersistenceTests
     {
         public Task<PlatformRoleScopePage> RolesAsync(string? search, int page, int pageSize, CancellationToken token) => throw new NotSupportedException();
         public Task<bool> RolesValidAsync(IReadOnlyCollection<string> roleIds, CancellationToken token) => throw new NotSupportedException();
-        public Task<IReadOnlyList<CrystalReportRoleGrantResponse>> GrantsAsync(Guid reportId, CancellationToken token) => throw new NotSupportedException();
+        public Task<IReadOnlyList<GlobalCrystalReportRoleGrantResponse>> GrantsAsync(Guid reportId, CancellationToken token) => throw new NotSupportedException();
         public Task<bool> HasRightAsync(Guid reportId, CrystalReportRight right, CancellationToken token) => throw new NotSupportedException();
         public Task<IReadOnlyList<Guid>> GrantedReportIdsAsync(CrystalReportRight right, CancellationToken token) => throw new NotSupportedException();
         public Task ReplaceAsync(Guid reportId, IReadOnlyList<GlobalCrystalReportRoleGrant> grants, CancellationToken token) => throw new NotSupportedException();

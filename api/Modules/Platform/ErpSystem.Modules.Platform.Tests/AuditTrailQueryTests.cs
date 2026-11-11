@@ -43,6 +43,41 @@ public sealed class AuditTrailQueryTests
         Assert.NotNull(page.Value.NextCursor);
         Assert.Equal(("tenant-1", 7), (hr.LastFilter!.TenantId, hr.LastFilter.CompanyId));
         Assert.Equal(4, hr.LastFilter.Take);
+        Assert.Null(page.Value.TotalCount);
+        Assert.Equal(0, hr.CountCalls);
+        Assert.Equal(0, acc.CountCalls);
+    }
+
+    [Fact]
+    public async Task Page_counts_selected_modules_with_the_same_scope_and_filters_without_cursor()
+    {
+        var hr = new FakeSource("hr", Record("hr", 1, 1), Record("hr", 2, 3));
+        var acc = new FakeSource("acc", Record("acc", 10, 2));
+        var handler = new GetAuditTrailQueryHandler([hr, acc], new FakeUsers(), new TestContext("tenant-1", 7));
+        var request = new AuditTrailQueryRequest
+        {
+            IncludeTotalCount = true,
+            ModuleCode = "hr",
+            EntityName = "Department",
+            UserId = "user-1",
+            PageSize = 1,
+            Cursor = AuditTrailCursorCodec.Encode(Record("hr", 2, 3))
+        };
+        var page = await handler.Handle(new(request), default);
+        Assert.True(page.IsSuccess);
+        Assert.Equal(2L, page.Value.TotalCount);
+        Assert.Single(page.Value.Items);
+        Assert.Equal(1, hr.CountCalls);
+        Assert.Equal(0, acc.CountCalls);
+        Assert.NotNull(hr.LastFilter!.After);
+        Assert.Equal(hr.LastFilter with { After = null }, hr.LastCountFilter);
+
+        var all = await handler.Handle(new(request with { ModuleCode = null, Cursor = null }), default);
+        Assert.Equal(3L, all.Value.TotalCount);
+        var empty = await handler.Handle(new(request with { ModuleCode = "missing", Cursor = null }), default);
+        Assert.Equal(0L, empty.Value.TotalCount);
+        Assert.Empty(empty.Value.Items);
+        Assert.Null(empty.Value.NextCursor);
     }
 
     [Fact]
@@ -80,6 +115,15 @@ public sealed class AuditTrailQueryTests
     {
         public string ModuleCode { get; } = moduleCode;
         public AuditTrailFilter? LastFilter { get; private set; }
+        public AuditTrailFilter? LastCountFilter { get; private set; }
+        public int CountCalls { get; private set; }
+
+        public Task<long> CountAsync(AuditTrailFilter filter, CancellationToken cancellationToken = default)
+        {
+            CountCalls++;
+            LastCountFilter = filter;
+            return Task.FromResult(records.LongLength);
+        }
 
         public Task<IReadOnlyList<AuditTrailRecord>> ListAsync(
             AuditTrailFilter filter,

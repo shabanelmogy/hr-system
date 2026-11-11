@@ -1,0 +1,2522 @@
+[
+  {
+    "language": "en",
+    "mode": "light",
+    "palette": "green",
+    "width": 1213,
+    "translatedTitle": "Register existing reports",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "palette": "green",
+    "width": 390,
+    "translatedTitle": "Register existing reports",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "palette": "orange",
+    "width": 1213,
+    "translatedTitle": "Register existing reports",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "palette": "orange",
+    "width": 390,
+    "translatedTitle": "Register existing reports",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "palette": "blue",
+    "width": 1213,
+    "translatedTitle": "Register existing reports",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "palette": "blue",
+    "width": 390,
+    "translatedTitle": "Register existing reports",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "palette": "navy",
+    "width": 1213,
+    "translatedTitle": "Register existing reports",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "palette": "navy",
+    "width": 390,
+    "translatedTitle": "Register existing reports",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "palette": "monochrome",
+    "width": 1213,
+    "translatedTitle": "Register existing reports",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "palette": "monochrome",
+    "width": 390,
+    "translatedTitle": "Register existing reports",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "palette": "green",
+    "width": 1213,
+    "translatedTitle": "Register existing reports",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "palette": "green",
+    "width": 390,
+    "translatedTitle": "Register existing reports",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "palette": "orange",
+    "width": 1213,
+    "translatedTitle": "Register existing reports",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "palette": "orange",
+    "width": 390,
+    "translatedTitle": "Register existing reports",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "palette": "blue",
+    "width": 1213,
+    "translatedTitle": "Register existing reports",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "palette": "blue",
+    "width": 390,
+    "translatedTitle": "Register existing reports",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "palette": "navy",
+    "width": 1213,
+    "translatedTitle": "Register existing reports",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "palette": "navy",
+    "width": 390,
+    "translatedTitle": "Register existing reports",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "palette": "monochrome",
+    "width": 1213,
+    "translatedTitle": "Register existing reports",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "palette": "monochrome",
+    "width": 390,
+    "translatedTitle": "Register existing reports",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "palette": "green",
+    "width": 1213,
+    "translatedTitle": "تسجيل التقارير الموجودة",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "palette": "green",
+    "width": 390,
+    "translatedTitle": "تسجيل التقارير الموجودة",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "palette": "orange",
+    "width": 1213,
+    "translatedTitle": "تسجيل التقارير الموجودة",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "palette": "orange",
+    "width": 390,
+    "translatedTitle": "تسجيل التقارير الموجودة",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "palette": "blue",
+    "width": 1213,
+    "translatedTitle": "تسجيل التقارير الموجودة",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "palette": "blue",
+    "width": 390,
+    "translatedTitle": "تسجيل التقارير الموجودة",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "palette": "navy",
+    "width": 1213,
+    "translatedTitle": "تسجيل التقارير الموجودة",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "palette": "navy",
+    "width": 390,
+    "translatedTitle": "تسجيل التقارير الموجودة",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "palette": "monochrome",
+    "width": 1213,
+    "translatedTitle": "تسجيل التقارير الموجودة",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "palette": "monochrome",
+    "width": 390,
+    "translatedTitle": "تسجيل التقارير الموجودة",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "palette": "green",
+    "width": 1213,
+    "translatedTitle": "تسجيل التقارير الموجودة",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "palette": "green",
+    "width": 390,
+    "translatedTitle": "تسجيل التقارير الموجودة",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "palette": "orange",
+    "width": 1213,
+    "translatedTitle": "تسجيل التقارير الموجودة",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "palette": "orange",
+    "width": 390,
+    "translatedTitle": "تسجيل التقارير الموجودة",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "palette": "blue",
+    "width": 1213,
+    "translatedTitle": "تسجيل التقارير الموجودة",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "palette": "blue",
+    "width": 390,
+    "translatedTitle": "تسجيل التقارير الموجودة",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "palette": "navy",
+    "width": 1213,
+    "translatedTitle": "تسجيل التقارير الموجودة",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "palette": "navy",
+    "width": 390,
+    "translatedTitle": "تسجيل التقارير الموجودة",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "palette": "monochrome",
+    "width": 1213,
+    "translatedTitle": "تسجيل التقارير الموجودة",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": true,
+          "columnWidth": 208
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "palette": "monochrome",
+    "width": 390,
+    "translatedTitle": "تسجيل التقارير الموجودة",
+    "before": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    },
+    "after": {
+      "controls": [
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        },
+        {
+          "visible": true,
+          "nowrap": true,
+          "frozen": true,
+          "labelVisible": false,
+          "columnWidth": 72
+        }
+      ],
+      "documentOverflow": false,
+      "dialogOverflow": false,
+      "labelUnclipped": true
+    }
+  }
+]

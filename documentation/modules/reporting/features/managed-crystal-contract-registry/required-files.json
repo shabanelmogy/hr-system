@@ -469,6 +469,62 @@
       "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
     },
     {
+      "id": "entity-fingerprint-repair-59",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/verification.json",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-60",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-report-template-sidebar-browser.mjs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-61",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-super-admin-hosted-read.mjs",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-62",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/pages/global-template-manager/global-template-manager.spec.ts",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-63",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/state/global-template-state.ts",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-64",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/types/global-template.ts",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "entity-fingerprint-repair-65",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/utils/global-template-viewer-identity.ts",
+      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
+    },
+    {
+      "id": "current-evidence-repair-20261109",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/CURRENT_EVIDENCE_REPAIR_2026-11-09.md",
+      "purpose": "Explicit historical raw-log loss and current proof/acceptance boundaries; no historical rerun is claimed"
+    },
+    {
+      "id": "historical-log-inventory-20261109",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/verification/MISSING_HISTORICAL_LOGS_2026-11-09.json",
+      "purpose": "Original unavailable required-file records retained verbatim with owner and date"
+    }
+  ],
+  "unavailableHistoricalEvidence": [
+    {
       "id": "entity-fingerprint-repair-45",
       "layer": "documentation",
       "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-angular-check.log",
@@ -553,48 +609,6 @@
       "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
     },
     {
-      "id": "entity-fingerprint-repair-59",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/verification.json",
-      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
-    },
-    {
-      "id": "entity-fingerprint-repair-60",
-      "layer": "web",
-      "path": "web-angular/scripts/verify-report-template-sidebar-browser.mjs",
-      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
-    },
-    {
-      "id": "entity-fingerprint-repair-61",
-      "layer": "web",
-      "path": "web-angular/scripts/verify-super-admin-hosted-read.mjs",
-      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
-    },
-    {
-      "id": "entity-fingerprint-repair-62",
-      "layer": "web",
-      "path": "web-angular/src/app/modules/reporting/global-template-manager/pages/global-template-manager/global-template-manager.spec.ts",
-      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
-    },
-    {
-      "id": "entity-fingerprint-repair-63",
-      "layer": "web",
-      "path": "web-angular/src/app/modules/reporting/global-template-manager/state/global-template-state.ts",
-      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
-    },
-    {
-      "id": "entity-fingerprint-repair-64",
-      "layer": "web",
-      "path": "web-angular/src/app/modules/reporting/global-template-manager/types/global-template.ts",
-      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
-    },
-    {
-      "id": "entity-fingerprint-repair-65",
-      "layer": "web",
-      "path": "web-angular/src/app/modules/reporting/global-template-manager/utils/global-template-viewer-identity.ts",
-      "purpose": "Current corrective implementation or executed entity-isolation/legacy compatibility acceptance"
-    },
-    {
       "id": "fingerprint-fingerprint-docs-check",
       "layer": "documentation",
       "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-docs-check.log",
@@ -606,5 +620,13 @@
       "path": "documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-planning-check.log",
       "purpose": "Executed corrective documentation/planning acceptance"
     }
-  ]
+  ],
+  "evidenceRepair20261109": {
+    "date": "2026-11-09",
+    "missingHistoricalLogs": 16,
+    "inventory": "documentation/modules/reporting/verification/MISSING_HISTORICAL_LOGS_2026-11-09.json",
+    "policy": "documentation/modules/reporting/CURRENT_EVIDENCE_REPAIR_2026-11-09.md",
+    "historicalRawEvidenceRecovered": false,
+    "nativeOrHostedRerunClaimed": false
+  }
 }

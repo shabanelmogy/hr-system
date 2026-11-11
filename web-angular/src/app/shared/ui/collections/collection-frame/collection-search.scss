@@ -201,20 +201,3 @@
     flex-basis: calc((100% - 8px) / 2);
   }
 }
-
-@media (max-height: 480px) and (orientation: landscape) {
-  .adaptive-toolbar:has(.structured-search) {
-    overflow-y: auto;
-    overscroll-behavior-block: contain;
-  }
-  :host ::ng-deep .adaptive-toolbar:has(.structured-search) > [collectionBody] {
-    flex: 0 0 180px;
-    min-block-size: 180px;
-  }
-  .adaptive-toolbar:has(.structured-search) > erp-collection-footer {
-    position: sticky;
-    inset-block-end: 0;
-    z-index: 1;
-    margin-block-start: auto;
-  }
-}

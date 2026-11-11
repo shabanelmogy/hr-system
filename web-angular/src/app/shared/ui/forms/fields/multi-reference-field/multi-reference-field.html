@@ -19,10 +19,15 @@
   scrollHeight="min(20rem,45dvh)"
   [invalid]="!!error()"
   [filter]="filter()"
+  [filterPlaceHolder]="searchLabel()"
+  [ariaFilterLabel]="searchLabel()"
   [showClear]="clearable()"
+  [placeholder]="placeholder()"
   display="chip"
+  [maxSelectedLabels]="null"
   [fluid]="true"
   [pt]="attributes()"
+  (onChange)="protectSelection($event.originalEvent)"
   (onBlur)="blur()"
 />
 @if (help()) {

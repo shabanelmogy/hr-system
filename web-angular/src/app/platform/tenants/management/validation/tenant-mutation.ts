@@ -57,7 +57,7 @@ export interface TenantMutation {
   readonly isActive: boolean;
   readonly subscriptionStatus: SubscriptionStatus;
   readonly subscriptionStartedOn: string;
-  readonly subscriptionEndsOn: string;
+  readonly subscriptionEndsOn: string | null;
   readonly planName: string | null;
   readonly maxAdmins: number;
   readonly maxUsers: number;
@@ -65,7 +65,7 @@ export interface TenantMutation {
   readonly contactName: string | null;
   readonly contactPhone: string | null;
   readonly notes: string | null;
-  readonly entitlements: readonly TenantEntitlementDraft[];
+  readonly entitlements: readonly TenantEntitlementDraft[] | null;
 }
 export interface TenantFormContext {
   readonly currentAdminCount?: number;

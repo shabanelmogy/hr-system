@@ -233,7 +233,8 @@ try {
       await view
         .getByRole('tab', { name: core[scenario.language]['reports.viewerOptions'], exact: true })
         .click();
-      await expect(view.locator('aside a[download]')).toBeVisible();
+      await expect(view.locator('erp-page-header a[download]')).toBeVisible();
+      await expect(view.locator('aside a[download]')).toHaveCount(0);
       const downloaded = page.waitForEvent('download');
       await view.getByTestId('download-source').getByRole('button').click();
       assert.equal((await downloaded).suggestedFilename(), row.reportKey + '.rpt');

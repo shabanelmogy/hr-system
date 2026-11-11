@@ -5,9 +5,10 @@ import { fileURLToPath } from 'node:url';
 import { chromium, expect } from '@playwright/test';
 import { sessionFixture } from '../src/app/platform/auth/auth.fixture.ts';
 import { dashboardFixture } from '../src/app/platform/tenants/dashboard.fixture.ts';
+import { serveAngularFixtureBuild } from './angular-build-browser-fixture.mjs';
 
 const app = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const output = path.resolve(app, '../.codex-tmp/angular-shell');
+const output = path.resolve(app, '../.codex-tmp/system-session-tests/angular-shell');
 fs.mkdirSync(output, { recursive: true });
 const origin = process.env.ANGULAR_PREVIEW_ORIGIN ?? 'https://localhost:4210';
 const api = process.env.ANGULAR_API_ORIGIN ?? 'https://localhost:7037';
@@ -29,6 +30,22 @@ async function configure(context, role) {
     tenantName: 'Verified tenant with a long descriptive name',
     companyNameEn: 'Verified company with a long descriptive name',
     companyNameAr: 'الشركة الموثوقة ذات الاسم الطويل',
+    ...(role === 'super_admin'
+      ? {
+          sessionScope: 'system',
+          tenantId: '',
+          tenantName: '',
+          tenantPlanName: '',
+          companyId: 0,
+          companyCode: '',
+          companyNameEn: '',
+          companyNameAr: '',
+          companies: [],
+          tenantSubscriptionStatus: '',
+          tenantSubscriptionEndsOn: null,
+          tenantReadOnly: false,
+        }
+      : {}),
   };
   await context.route(api + '/api/**', async (route) => {
     const request = route.request(),
@@ -83,6 +100,7 @@ try {
               ([name, value]) => ({ name, value, url: origin }),
             ),
           );
+          await serveAngularFixtureBuild(context, app, origin);
           await configure(context, role);
           const page = await context.newPage();
           page.on('pageerror', (e) => errors.push(e.message));
@@ -118,12 +136,10 @@ try {
               )
               .toBe(width - 281);
             const search = page.locator('.workspace-sidebar input');
-            await search.fill(text(language, 'menu.settings'));
+            await search.fill(text(language, 'general.home'));
             await expect(page.locator('.workspace-sidebar nav button')).toHaveCount(1);
             await search.fill('');
-            await expect(page.locator('.workspace-sidebar nav button')).toHaveCount(
-              role === 'super_admin' ? 2 : 3,
-            );
+            await expect(page.locator('.workspace-sidebar nav button')).toHaveCount(3);
             await noOverflow();
             await page.screenshot({
               path: path.join(output, `shell-${role}-${language}-${mode}-${width}.png`),
@@ -143,9 +159,14 @@ try {
             await toggle.click();
             await expect(drawer).toBeVisible();
             await drawer
-              .getByRole('button', { name: text(language, 'menu.settings'), exact: true })
+              .getByRole('button', { name: text(language, 'general.home'), exact: true })
               .click();
+            await expect(page).toHaveURL(origin + (role === 'super_admin' ? '/home' : '/apps'));
             await expect(drawer).toHaveCount(0);
+            if (role !== 'super_admin') {
+              await page.goto(origin + '/apps/hr');
+              await page.locator('.workspace-topbar').waitFor();
+            }
             await page.keyboard.press('Escape');
             await toggle.click();
             await expect(drawer).toBeVisible();

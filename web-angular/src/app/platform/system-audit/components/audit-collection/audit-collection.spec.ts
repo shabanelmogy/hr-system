@@ -26,7 +26,7 @@ describe('Audit authoritative collection composition', () => {
     const grid = fixture.debugElement.query(By.directive(MyDataGrid))
       .componentInstance as MyDataGrid<unknown>;
     expect(grid.rowActivation()).toBe('click');
-    expect(grid.pageSizes()).toEqual([50]);
+    expect(grid.pageSizes()).toEqual([25]);
     expect(grid.recordNavigation()).toBe(true);
     expect(grid.selectionEnabled()).toBe(true);
     expect(fixture.componentInstance.columns().every((column) => !column.sortField)).toBe(true);

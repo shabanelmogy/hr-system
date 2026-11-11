@@ -1,0 +1,322 @@
+[
+  {
+    "language": "en",
+    "scenario": "no-grant",
+    "passed": true,
+    "listCalls": 0,
+    "filterCalls": 0,
+    "detailCalls": 0,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "en",
+    "scenario": "wrong-role",
+    "passed": true,
+    "listCalls": 0,
+    "filterCalls": 0,
+    "detailCalls": 0,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "en",
+    "scenario": "read-only",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 1,
+    "detailCalls": 1,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "en",
+    "scenario": "empty",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 1,
+    "detailCalls": 0,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "en",
+    "scenario": "list-error",
+    "passed": true,
+    "listCalls": 2,
+    "filterCalls": 1,
+    "detailCalls": 0,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "en",
+    "scenario": "list-forbidden",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 1,
+    "detailCalls": 0,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "en",
+    "scenario": "filters-error",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 2,
+    "detailCalls": 0,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "en",
+    "scenario": "filters401",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 1,
+    "detailCalls": 0,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "en",
+    "scenario": "filters403",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 1,
+    "detailCalls": 0,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "en",
+    "scenario": "detail-error",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 1,
+    "detailCalls": 2,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "en",
+    "scenario": "detail404",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 1,
+    "detailCalls": 1,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "en",
+    "scenario": "detail403",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 1,
+    "detailCalls": 1,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "en",
+    "scenario": "detail-malformed",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 1,
+    "detailCalls": 1,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "en",
+    "scenario": "no-changes",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 1,
+    "detailCalls": 1,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "en",
+    "scenario": "next-error",
+    "passed": true,
+    "listCalls": 3,
+    "filterCalls": 1,
+    "detailCalls": 0,
+    "nextCalls": 2,
+    "businessWrites": 0
+  },
+  {
+    "language": "en",
+    "scenario": "invalid-range",
+    "passed": true,
+    "listCalls": 3,
+    "filterCalls": 1,
+    "detailCalls": 0,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "ar",
+    "scenario": "no-grant",
+    "passed": true,
+    "listCalls": 0,
+    "filterCalls": 0,
+    "detailCalls": 0,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "ar",
+    "scenario": "wrong-role",
+    "passed": true,
+    "listCalls": 0,
+    "filterCalls": 0,
+    "detailCalls": 0,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "ar",
+    "scenario": "read-only",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 1,
+    "detailCalls": 1,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "ar",
+    "scenario": "empty",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 1,
+    "detailCalls": 0,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "ar",
+    "scenario": "list-error",
+    "passed": true,
+    "listCalls": 2,
+    "filterCalls": 1,
+    "detailCalls": 0,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "ar",
+    "scenario": "list-forbidden",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 1,
+    "detailCalls": 0,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "ar",
+    "scenario": "filters-error",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 2,
+    "detailCalls": 0,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "ar",
+    "scenario": "filters401",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 1,
+    "detailCalls": 0,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "ar",
+    "scenario": "filters403",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 1,
+    "detailCalls": 0,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "ar",
+    "scenario": "detail-error",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 1,
+    "detailCalls": 2,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "ar",
+    "scenario": "detail404",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 1,
+    "detailCalls": 1,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "ar",
+    "scenario": "detail403",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 1,
+    "detailCalls": 1,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "ar",
+    "scenario": "detail-malformed",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 1,
+    "detailCalls": 1,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "ar",
+    "scenario": "no-changes",
+    "passed": true,
+    "listCalls": 1,
+    "filterCalls": 1,
+    "detailCalls": 1,
+    "nextCalls": 0,
+    "businessWrites": 0
+  },
+  {
+    "language": "ar",
+    "scenario": "next-error",
+    "passed": true,
+    "listCalls": 3,
+    "filterCalls": 1,
+    "detailCalls": 0,
+    "nextCalls": 2,
+    "businessWrites": 0
+  },
+  {
+    "language": "ar",
+    "scenario": "invalid-range",
+    "passed": true,
+    "listCalls": 3,
+    "filterCalls": 1,
+    "detailCalls": 0,
+    "nextCalls": 0,
+    "businessWrites": 0
+  }
+]

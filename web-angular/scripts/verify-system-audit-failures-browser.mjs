@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { chromium, expect } from '@playwright/test';
+import { serveAngularFixtureBuild } from './angular-build-browser-fixture.mjs';
 import { sessionFixture } from '../src/app/platform/auth/auth.fixture.ts';
 import {
   auditFixture,
@@ -11,7 +12,9 @@ import {
 const root = path.resolve(import.meta.dirname, '..');
 const origin = process.env.ANGULAR_PREVIEW_ORIGIN ?? 'https://localhost:4220';
 const api = process.env.ANGULAR_API_ORIGIN ?? 'https://shabanhrms.runasp.net';
-const output = path.resolve(root, '../.codex-tmp/angular-system-audit');
+const output = path.resolve(
+  process.env.AUDIT_BROWSER_ARTIFACTS ?? path.join(root, '../.codex-tmp/angular-system-audit'),
+);
 fs.mkdirSync(output, { recursive: true });
 const core = JSON.parse(
   fs.readFileSync(path.join(root, 'src/locales/generated/core.json'), 'utf8'),
@@ -52,6 +55,14 @@ try {
         reducedMotion: 'reduce',
         viewport: { width: 1440, height: 1050 },
       });
+      await serveAngularFixtureBuild(
+        context,
+        root,
+        origin,
+        process.env.ANGULAR_FIXTURE_BUILD
+          ? path.resolve(process.env.ANGULAR_FIXTURE_BUILD)
+          : undefined,
+      );
       await context.addCookies(
         Object.entries({
           i18next: language,

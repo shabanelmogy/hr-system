@@ -154,6 +154,7 @@
       min-inline-size: 0;
     }
 
+    .toolbar-content:empty,
     .toolbar-content:has(> [toolbarContent]:empty) {
       display: none;
     }
@@ -263,6 +264,11 @@
   background: var(--surface);
   color: var(--foreground);
 }
+.collection-controls {
+  flex: 0 0 auto;
+  min-block-size: 0;
+  container: collection-toolbar / inline-size;
+}
 .collection-toolbar {
   display: flex;
   align-items: center;
@@ -320,6 +326,17 @@
   --action-min-height: 24px;
 }
 @media (max-height: 480px) and (orientation: landscape) {
+  .collection-shell {
+    overflow-y: auto;
+    overscroll-behavior-block: contain;
+  }
+  :host ::ng-deep .collection-shell > [collectionBody] {
+    flex: 0 0 180px;
+    min-block-size: 180px;
+  }
+  .collection-shell > erp-collection-footer {
+    margin-block-start: auto;
+  }
   .collection-shell:not(.plain-shell) {
     padding-block: 8px;
   }

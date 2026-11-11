@@ -48,3 +48,14 @@ Current source paths only, updated buttons/forms/fields and stable public API. R
 S1-A8 shared-source evolution2026-10-30: TextField HTML moved unchanged to fields/text-field.html and reused by NumericField; generic inputMode/textDirection hints added. FormFieldControl can notify validation summaries on constraint-only changes without emitting value events. Existing form/date behavior retained; current acceptance belongs to angular-numeric-field-foundation/IMPLEMENTATION_REPORT.md after verification. No API/domain/native change to this foundation.
 
 S1-A10 shared-source evolution2026-10-30: TextField now supports an optional plain-text PrimeNG textarea branch in the same template/lifecycle, rows1..20/default3 and locked clear guard. NumericField explicitly remains single input; DateField retains its own date-only input template. Existing defaults retained; current206unit and multiline/form/numeric/date/retained browser acceptance belongs to angular-multiline-field-foundation/IMPLEMENTATION_REPORT.md. No API/schema/native/resource change.
+
+## Shared focus perimeter maintenance — 2026-11-09
+
+The requester-reported clipped Tenant Contact name border is corrected in the
+shared field chrome, using the single `fields/_field-focus.scss` rule. Text,
+multiline/floating, Numeric/Date, Reference and Boolean compound wrappers keep
+visible focus inside their border boxes and preserve destructive error color.
+No field-state, domain, schema, API, Next or Mobile runtime contract changed;
+migration is N/A. Angular-only presentation is Required. The canonical correction,
+regression commands and dated proof are in
+[FIELD_FOCUS_CORRECTION_2026-11-09.md](FIELD_FOCUS_CORRECTION_2026-11-09.md).

@@ -1,0 +1,29 @@
+(node:25852) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///G:/test/ERPSYSTEM/ERPSYSTEM/web-angular/src/app/platform/auth/auth.fixture.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\G:\test\ERPSYSTEM\ERPSYSTEM\web-angular\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Shell passed user/en/light/390
+Shell passed user/en/light/900
+Shell passed user/en/light/1440
+Shell passed user/en/dark/390
+Shell passed user/en/dark/900
+Shell passed user/en/dark/1440
+Shell passed user/ar/light/390
+Shell passed user/ar/light/900
+Shell passed user/ar/light/1440
+Shell passed user/ar/dark/390
+Shell passed user/ar/dark/900
+Shell passed user/ar/dark/1440
+Shell passed super_admin/en/light/390
+Shell passed super_admin/en/light/900
+Shell passed super_admin/en/light/1440
+Shell passed super_admin/en/dark/390
+Shell passed super_admin/en/dark/900
+Shell passed super_admin/en/dark/1440
+Shell passed super_admin/ar/light/390
+Shell passed super_admin/ar/light/900
+Shell passed super_admin/ar/light/1440
+Shell passed super_admin/ar/dark/390
+Shell passed super_admin/ar/dark/900
+Shell passed super_admin/ar/dark/1440
+Authenticated shell browser matrix passed: 24 cases.

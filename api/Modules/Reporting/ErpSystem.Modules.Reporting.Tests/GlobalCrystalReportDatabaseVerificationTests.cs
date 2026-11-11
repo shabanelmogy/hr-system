@@ -86,6 +86,42 @@ public sealed class GlobalCrystalReportDatabaseVerificationTests
         Assert.Equal(0, fixture.Verifier.Calls);
     }
 
+    [Theory]
+    [InlineData("", "CrystalReport.InvalidRowVersion")]
+    [InlineData("invalid", "CrystalReport.InvalidRowVersion")]
+    [InlineData("AQAAAAAAAAA=", "CrystalReport.ConcurrencyConflict")]
+    public async Task Verify_RejectsInvalidOrStaleTokenBeforeNativeWork(string token, string error)
+    {
+        var fixture = new Fixture();
+        var result = await fixture.Run(token);
+        Assert.True(result.IsFailure);
+        Assert.Equal(error, result.Error.Code);
+        Assert.Equal(0, fixture.Files.Reads);
+        Assert.Equal(0, fixture.Verifier.Calls);
+        Assert.Equal(0, fixture.UnitOfWork.Saves);
+    }
+
+    [Fact]
+    public async Task Verify_ConcurrentPublicationWinsAndStagedFileIsDeleted()
+    {
+        var fixture = new Fixture();
+        var competing = GlobalCrystalReportVersion.Create(fixture.Report.Id, 2, "concurrent.rpt", "concurrent.rpt",
+            8, new string('b', 64), "Concurrent", null, 1, new string('c', 64));
+        fixture.Files.BeforeStore = () =>
+        {
+            fixture.Report.AddVersion(competing);
+            fixture.Report.Publish(competing, new string('c', 64));
+            fixture.Report.RowVersion = [1, 0, 0, 0, 0, 0, 0, 0];
+        };
+        var result = await fixture.Run();
+        Assert.True(result.IsFailure);
+        Assert.Equal("CrystalReport.ConcurrencyConflict", result.Error.Code);
+        Assert.Equal(competing.Id, fixture.Report.CurrentPublishedVersionId);
+        Assert.Equal(2, fixture.Report.Versions.Count);
+        Assert.Equal(1, fixture.Files.Deletes);
+        Assert.Equal(0, fixture.UnitOfWork.Saves);
+    }
+
     private sealed class Fixture
     {
         public readonly GlobalCrystalReport Report = GlobalCrystalReport.Create("countries", "countries-fixture", null);
@@ -96,13 +132,14 @@ public sealed class GlobalCrystalReportDatabaseVerificationTests
         private readonly ManagedCrystalReportContractRegistry contracts = ManagedCrystalReportContractRegistry.LoadEmbedded();
         public Fixture()
         {
+            Report.RowVersion = new byte[8];
             var version = GlobalCrystalReportVersion.Create(Report.Id, 1, "original.rpt", "countries-fixture.rpt",
                 14, new string('a', 64), "Original", null, contracts.SchemaVersion, contracts.Fingerprint);
             Report.AddVersion(version);
             Report.Publish(version, contracts.Fingerprint);
         }
-        public Task<ErpSystem.BuildingBlocks.Application.Common.Errors.Result<CrystalReportDetailResponse>> Run() =>
-            Handler().Handle(new VerifyDatabaseGlobalCrystalReportVersionCommand(Report.Id, Report.Versions.First().Id), default);
+        public Task<ErpSystem.BuildingBlocks.Application.Common.Errors.Result<CrystalReportDetailResponse>> Run(string rowVersion = "AAAAAAAAAAA=") =>
+            Handler().Handle(new VerifyDatabaseGlobalCrystalReportVersionCommand(Report.Id, Report.Versions.First().Id, rowVersion), default);
 
         private VerifyDatabaseGlobalCrystalReportVersionCommandHandler Handler() => new(new Store(Report), Files,
             Verifier, UnitOfWork, new GlobalCrystalReportPolicy(new Actor(), Permissions), contracts,
@@ -142,7 +179,7 @@ public sealed class GlobalCrystalReportDatabaseVerificationTests
     private sealed class Store(GlobalCrystalReport report) : IGlobalCrystalReportStore
     {
         public Task<CrystalReportDetailResponse?> DetailAsync(Guid id, CancellationToken token) => Task.FromResult<CrystalReportDetailResponse?>(
-            new(report.Id, report.EntityKey, report.ReportKey, report.DisplayName, null, 1, true, report.IsDeleted, "", default, null, [], []));
+            new(report.Id, report.EntityKey, report.ReportKey, report.DisplayName, null, 1, true, report.IsDeleted, Convert.ToBase64String(report.RowVersion), default, null, [], []));
         public Task<GlobalCrystalReport?> FindAsync(Guid id, CancellationToken token) => Task.FromResult<GlobalCrystalReport?>(report);
         public Task<GlobalCrystalReportVersion?> VersionAsync(Guid id, Guid versionId, CancellationToken token) =>
             Task.FromResult(report.Versions.FirstOrDefault(version => version.Id == versionId));
@@ -154,7 +191,7 @@ public sealed class GlobalCrystalReportDatabaseVerificationTests
         public Task<bool> KeyExistsAsync(string entity, string key, CancellationToken token) => throw new NotSupportedException();
         public Task<IReadOnlyList<GlobalCrystalManagedCatalogEntry>> CatalogAsync(string entity, CancellationToken token) => throw new NotSupportedException();
         public void Add(GlobalCrystalReport value) => throw new NotSupportedException();
-        public void ApplyRowVersion(GlobalCrystalReport value, byte[] version) => throw new NotSupportedException();
+        public void ApplyRowVersion(GlobalCrystalReport value, byte[] version) => Assert.Equal(value.RowVersion, version);
     }
     private sealed class Localizer : IStringLocalizer<CrystalReportDetailResponse>
     {

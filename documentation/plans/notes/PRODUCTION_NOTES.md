@@ -3,6 +3,33 @@
 Central registry for work that cannot be proven completely by source tests or PR CI
 and must be verified against staging/Production.
 
+### PROD-035 — Audit matching-total rollout
+
+Surface API/Angular; owners Platform, Operations and client QA. Status Open.
+Publish the updated ErpSystem.Api before verifying Audit Trail totals on the Host.
+The existing GET/POST query accepts opt-in includeTotalCount and returns additive
+totalCount. Verify 25-row pages, full matching counts before cursor/Take, module,
+user-name, date and typed filters, and tenant/company denial. Check SQL query
+plans/latency with representative history volume; module counts are database
+aggregates, and their combined read is not an atomic cross-module snapshot.
+Old server responses retain a usable current-record-only Angular fallback.
+No schema migration is needed. Reopen when the operator publishes the corrected
+API and a permitted staging actor is available. Local implementation and
+verification: angular-system-audit-workspace/AUDIT_TOTALS_2026-11-10.md and its
+registered Audit review receipt. No deployment or live business mutation is claimed.
+
+### PROD-034 — Independent Super Admin system-session rollout
+
+Surface API/Web/retained Native. Owners Platform Security, Operations and client QA. Status Open.
+Deploy the corrected ErpSystem.Api with coordinated Angular/retained-client parser updates.
+Sign out and authenticate again to obtain session_scope=system; existing company-scoped
+sessions are not silently converted. Verify hosted browser login/session/reload/refresh/
+logout, global modules/localization/Tenant administration and denial of company-owned
+access without selected company scope. Use a controlled membership-free system actor
+rather than disabling a live Tenant to test. No schema migration is required.
+Local implementation and honest verification boundary: platform-browser-authentication/
+SUPER_ADMIN_SYSTEM_SESSION_2026-11-09.md; FOLLOW-032 owns the original incident.
+
 ### PROD-033 — Geography ID sorting rollout
 
 Surface API/Web. Owners ReferenceData, Web and Operations. Status Open.
@@ -13,6 +40,14 @@ Countries, States and Districts, then verify clearing in Angular preserves the
 active criteria and restores its default order.
 
 ### PROD-019 — hosted browser origin regression2026-11-06
+Tenant access actions update2026-11-09: the current generated Web catalog is
+`9ba843bffcbdaaa377e79d2aa188917be8fb54daed780b8abf76bbe7689531d3`
+(21 sources/7533 total Web+Mobile entries). This supersedes the dated catalog
+version in the table below. Angular Tenant Grid/Cards activation confirmations,
+labels and feedback are included. Publish the matching ErpSystem.Api embedded
+catalog with the Web clients; strict runtime version matching is preserved.
+No hosted publication or live Tenant mutation is claimed. Local evidence:
+`documentation/modules/platform/features/angular-tenant-management-workspace/TENANT_ACCESS_ACTIONS_2026-11-09.md`.
 
 Surface API/Web; owner Platform + Operations + QA; status Open. The requester’s
 exact HTTPS4210 CSRF request returned403 Authentication.BrowserOriginDenied on2026-11-06

@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { AuthSession, type Session } from '../../auth/session.public-api';
 import { sessionFixture } from '../../auth/auth.fixture';
 import { SystemAuditService } from '../services/system-audit-service';
-import type { AuditCriteria, AuditPage } from '../types/audit-trail';
+import type { AuditCriteria, AuditItem, AuditPage } from '../types/audit-trail';
 import { AuditReadState } from './audit-read-state';
 import { AuditDetailState } from './audit-detail-state';
 import { AuditFilterState } from './audit-filter-state';
@@ -29,6 +29,9 @@ const entry = {
   correlationId: null,
   changeCount: 1,
 };
+const exportColumns = [
+  { key: 'moduleCode', header: 'Module', value: (row: AuditItem) => row.moduleCode },
+];
 
 describe('Audit cursor pages and actor lifetime', () => {
   afterEach(() => {
@@ -66,10 +69,58 @@ describe('Audit cursor pages and actor lifetime', () => {
     TestBed.tick();
     return { state, identity, requests, page, detailResponse, filtersResponse, filters };
   }
+  it.each([401, 403])(
+    'masks all loaded audit data when an export read returns %s',
+    async (status) => {
+      const { state, requests, page, filtersResponse } = setup();
+      requests[0]?.response.next({ items: [entry], nextCursor: null });
+      const options = TestBed.inject(AuditFilterState);
+      TestBed.tick();
+      filtersResponse.next([{ moduleCode: 'hr', entityNames: ['Department'] }]);
+      const source = state.exportSource(exportColumns, 'en');
+      expect(source).not.toBeNull();
+      if (!source) throw Error('Expected an allowed export source');
+      const rejected = expect(source.load(new AbortController().signal)).rejects.toMatchObject({
+        status,
+      });
+      requests[1]?.response.error(new HttpErrorResponse({ status }));
+      await rejected;
+      expect(state.source().kind).toBe('forbidden');
+      expect(state.source().result).toBeUndefined();
+      expect(options.modules()).toEqual([]);
+      expect(state.exportSource(exportColumns, 'en')).toBeNull();
+      state.refresh();
+      state.retry();
+      TestBed.tick();
+      expect(page).toHaveBeenCalledTimes(2);
+    },
+  );
+  it('keeps loaded rows after a transient export failure and ignores an old actor denial', async () => {
+    const { state, requests, identity } = setup();
+    requests[0]?.response.next({ items: [entry], nextCursor: null });
+    const source = state.exportSource(exportColumns, 'en');
+    if (!source) throw Error('Expected an allowed export source');
+    const transient = expect(source.load(new AbortController().signal)).rejects.toMatchObject({
+      status: 500,
+    });
+    requests[1]?.response.error(new HttpErrorResponse({ status: 500 }));
+    await transient;
+    expect(state.source().result?.rows).toEqual([entry]);
+    const oldActor = expect(source.load(new AbortController().signal)).rejects.toMatchObject({
+      status: 403,
+    });
+    identity.set({ ...actor, userId: 'replacement' });
+    TestBed.tick();
+    requests[3]?.response.next({ items: [{ ...entry, id: 2 }], nextCursor: null });
+    requests[2]?.response.error(new HttpErrorResponse({ status: 403 }));
+    await oldActor;
+    expect(state.canRead()).toBe(true);
+    expect(state.source().result?.rows[0]?.id).toBe(2);
+  });
   it('resets cursor history for typed column criteria and never applies a local-page substitute', () => {
     const { state, requests } = setup();
     requests[0]?.response.next({ items: [entry], nextCursor: 'next-cursor' });
-    state.changePage({ pageIndex: 1, pageSize: 50 });
+    state.changePage({ pageIndex: 1, pageSize: 25 });
     requests[1]?.response.next({ items: [{ ...entry, id: 2 }], nextCursor: null });
     const rules = [
       { field: 'changeCount', operator: 'and', constraints: [{ matchMode: 'gte', value: 3 }] },
@@ -88,23 +139,32 @@ describe('Audit cursor pages and actor lifetime', () => {
     const { state, requests, page } = setup();
     requests[0]?.response.next({ items: [entry], nextCursor: 'next-cursor' });
     expect(state.source().result?.total).toBeNull();
-    state.changePage({ pageIndex: 4, pageSize: 50 });
+    state.changePage({ pageIndex: 4, pageSize: 25 });
     expect(page).toHaveBeenCalledTimes(1);
-    state.changePage({ pageIndex: 1, pageSize: 50 });
-    state.changePage({ pageIndex: 1, pageSize: 50 });
+    state.changePage({ pageIndex: 1, pageSize: 25 });
+    state.changePage({ pageIndex: 1, pageSize: 25 });
     expect(page).toHaveBeenCalledTimes(2);
     expect(requests[1]?.cursor).toBe('next-cursor');
     expect(state.source().query.pageIndex).toBe(0);
     requests[1]?.response.next({ items: [{ ...entry, id: 2 }], nextCursor: null });
     expect(state.source().query.pageIndex).toBe(1);
-    state.changePage({ pageIndex: 0, pageSize: 50 });
+    state.changePage({ pageIndex: 0, pageSize: 25 });
     expect(state.source().result?.rows[0]?.id).toBe(1);
     expect(page).toHaveBeenCalledTimes(2);
+  });
+  it('requests and exposes real totals without converting cursor access into random page access', () => {
+    const { state, requests, page } = setup();
+    expect(page).toHaveBeenCalledWith({}, null, true);
+    requests[0]?.response.next({ items: [entry], nextCursor: 'next-cursor', totalCount: 28 });
+    expect(state.source().result?.total).toBe(28);
+    expect(state.source().query).toMatchObject({ pageSize: 25, pageAccess: 'sequential' });
+    state.changePage({ pageIndex: 1, pageSize: 25 });
+    expect(page).toHaveBeenLastCalledWith({}, 'next-cursor', true);
   });
   it('does not advance a failed next read and explicitly retries that same cursor', () => {
     const { state, requests } = setup();
     requests[0]?.response.next({ items: [entry], nextCursor: 'next-cursor' });
-    state.changePage({ pageIndex: 1, pageSize: 50 });
+    state.changePage({ pageIndex: 1, pageSize: 25 });
     requests[1]?.response.error(new Error('PRIVATE_DIAGNOSTIC'));
     expect(state.source().query.pageIndex).toBe(0);
     expect(state.source().result?.rows).toEqual([entry]);
@@ -117,7 +177,7 @@ describe('Audit cursor pages and actor lifetime', () => {
   it('invalidates the cursor chain and cancels pending reads when criteria change', () => {
     const { state, requests } = setup();
     requests[0]?.response.next({ items: [entry], nextCursor: 'old' });
-    state.changePage({ pageIndex: 1, pageSize: 50 });
+    state.changePage({ pageIndex: 1, pageSize: 25 });
     state.patchFilters({ moduleCode: 'reference-data' });
     expect(state.source().result).toBeUndefined();
     TestBed.tick();
@@ -185,7 +245,7 @@ describe('Audit cursor pages and actor lifetime', () => {
     TestBed.tick();
     state.refresh();
     state.retry();
-    state.changePage({ pageIndex: 1, pageSize: 50 });
+    state.changePage({ pageIndex: 1, pageSize: 25 });
     options.refresh();
     detail.retry();
     expect(page).toHaveBeenCalledTimes(1);

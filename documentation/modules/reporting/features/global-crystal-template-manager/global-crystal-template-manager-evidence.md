@@ -783,3 +783,25 @@ manually and no repository generator behavior was changed. Final receipts are
 registered alongside this verification after the canonical checks complete.
 Overall Phase06 remains Not Verified, FOLLOW-024/PROD-028 Open, DEF-027/028 Deferred;
 prior section36 API-suite finding remains recorded. Phase07 not started.
+
+## Manager corrective review — 2026-11-09
+
+The six authorized corrections and title/header formatting are defined in
+[the current corrective contract](MANAGER_REVIEW_CORRECTIONS_2026-11-09.md).
+Verify Database now requires the report RowVersion and rejects competing writes;
+readonly global ACL grants preserve structured role scope. Shared PageHeader,
+collection layout and in-dialog feedback remain the Angular presentation owners.
+Next/mobile runtime is unchanged; native manager remains Excluded. No persistence
+model changes or migration are required. Current proof is separately dated under
+verification/manager-review-2026-11-09; historical missing logs are not recreated.
+Hosted/native acceptance remains FOLLOW-024/PROD-028, with overall Phase06 Not Verified.
+
+Final current execution: `npm run check` with `VITEST_MAX_WORKERS=2` exited0,
+1039tests/198files passed, with lint, architecture, formatting, strict types and
+production build. Four inherited build-budget warnings remain. Full API suite
+passed1368tests with three existing opt-in browser skips; clean Release build
+has zero errors and482existing analyzer warnings. Browser fixtures passed88cases,
+including a fresh16case manager rerun against the final production build. The
+dated corrective contract contains exact behavioral test names and evidence.
+FOLLOW-031 remains Open for runner reliability; neither assertions nor timeouts
+were changed. API and Angular require coordinated deployment for RowVersion.

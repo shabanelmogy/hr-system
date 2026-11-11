@@ -87,4 +87,4 @@ Record one outcome:
 | platform-browser-authentication-web | 13 | `1cfcfab5d3d3a982db267aaca6a4e6496779a4db82205c9bf95516df07040f0d` |
 | platform-browser-authentication-web | 14 | `52054271e7bba7e5aead9ec819e72dd70c20029dd4bf9fb490f4408a59ab53c4` |
 | platform-browser-authentication-mobile | 14 | `85d161dbab052e01a1f442c1a697e2ade09ba3b4db08264aa940953cd598fd45` |
-| platform-browser-authentication-mobile | 15 | `3190c8de20efd23944f3a57fc437066bbf485bf26bc2868c35271da32d5469d7` |
+| platform-browser-authentication-mobile | 15 | `9b8b57a30992aac7a6795b6a8440e333730508b008553635a9a15d1a7238728f` |

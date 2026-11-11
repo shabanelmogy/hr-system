@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
   "versions": {
-    "web": "c6cbdc5d98f73b6a580ce6bad61beaa6abe987eeccd4610724db0aefa58948ef",
+    "web": "9ba843bffcbdaaa377e79d2aa188917be8fb54daed780b8abf76bbe7689531d3",
     "mobile": "509b1f3679ad0290fbffe08a8a971e06718fd568016abb7057817fa3617a357f"
   },
   "sources": [
@@ -48146,9 +48146,51 @@
           "systemPermissions": []
         },
         {
+          "key": "tenantManagement.accessChange",
+          "en": "Change tenant access",
+          "ar": "تغيير حالة دخول المستأجر",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.accessDisabled",
+          "en": "Tenant access disabled.",
+          "ar": "تم إلغاء تفعيل المستأجر.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.accessEnabled",
+          "en": "Tenant access enabled.",
+          "ar": "تم تفعيل المستأجر.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.accessError",
+          "en": "Unable to change tenant access. Review the current record or try again.",
+          "ar": "تعذّر تغيير حالة المستأجر. راجع السجل الحالي أو حاول مرة أخرى.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
           "key": "tenantManagement.accessStatus",
           "en": "Access",
           "ar": "الوصول",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.activate",
+          "en": "Activate tenant",
+          "ar": "تفعيل المستأجر",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.activateHint",
+          "en": "Enable tenant access for its assigned users? Tenant:",
+          "ar": "هل تريد تفعيل دخول المستخدمين المعيّنين لهذا المستأجر؟ المستأجر:",
           "scope": "system",
           "systemPermissions": []
         },
@@ -48240,6 +48282,20 @@
           "key": "tenantManagement.created",
           "en": "Tenant created successfully.",
           "ar": "تم إنشاء المستأجر بنجاح.",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.deactivate",
+          "en": "Deactivate tenant",
+          "ar": "إلغاء تفعيل المستأجر",
+          "scope": "system",
+          "systemPermissions": []
+        },
+        {
+          "key": "tenantManagement.deactivateHint",
+          "en": "Disable tenant access for its assigned users? Independent Super Admin access remains available. Tenant:",
+          "ar": "هل تريد إلغاء تفعيل دخول المستخدمين المعيّنين لهذا المستأجر؟ يظل دخول مدير النظام المستقل متاحًا. المستأجر:",
           "scope": "system",
           "systemPermissions": []
         },

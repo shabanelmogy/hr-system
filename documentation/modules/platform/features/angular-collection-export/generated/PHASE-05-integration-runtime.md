@@ -57,4 +57,4 @@ realtime, notification, localization, report, or Import integration is reachable
 | angular-collection-export-mobile | 2 | `3d4d1cccf9731878c83a180ea9cf3da19bc60b22638d9ca80429936b688d972c` |
 | angular-collection-export-mobile | 11 | `be1f78514e46607c9b87c07d2f3512c055e814008c906d57690f5c96bbc11a4a` |
 | angular-collection-export-mobile | 12 | `ba0b2122f3a968f88a94c47f3a7c139acec2450c3fff68b282c846bf5e4e9201` |
-| angular-collection-export-mobile | 15 | `c6f23a863122898d678aee894212a77e203a6b299b7e7d345794c47d1265cfc6` |
+| angular-collection-export-mobile | 15 | `83d879e9ab7872435646db453eac0de0f0d0e57c04107249e9e8ebd6145164ce` |

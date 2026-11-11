@@ -46,7 +46,10 @@ export class GlobalTemplatePermissions {
     {
       key: 'tenant',
       header: this.text('globalTemplates.roleScope'),
-      value: (role) => role.tenantName || this.text('globalTemplates.platformRole'),
+      value: (role) =>
+        role.scopeKnown === false
+          ? '—'
+          : role.tenantName || (role.tenantId ? '—' : this.text('globalTemplates.platformRole')),
       minWidth: 190,
     },
     ...this.rights.map((right) => ({

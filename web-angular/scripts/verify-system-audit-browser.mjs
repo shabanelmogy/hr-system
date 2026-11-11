@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { chromium, expect } from '@playwright/test';
+import { serveAngularFixtureBuild } from './angular-build-browser-fixture.mjs';
 import { sessionFixture } from '../src/app/platform/auth/auth.fixture.ts';
 import {
   auditFixture,
@@ -11,7 +12,9 @@ import {
 const root = path.resolve(import.meta.dirname, '..');
 const origin = process.env.ANGULAR_PREVIEW_ORIGIN ?? 'https://localhost:4220';
 const api = process.env.ANGULAR_API_ORIGIN ?? 'https://shabanhrms.runasp.net';
-const output = path.resolve(root, '../.codex-tmp/angular-system-audit');
+const output = path.resolve(
+  process.env.AUDIT_BROWSER_ARTIFACTS ?? path.join(root, '../.codex-tmp/angular-system-audit'),
+);
 fs.mkdirSync(output, { recursive: true });
 const resources = (scope) =>
   JSON.parse(fs.readFileSync(path.join(root, `src/locales/generated/${scope}.json`), 'utf8'));
@@ -20,6 +23,7 @@ const version = fs
   .readFileSync(path.join(root, 'src/app/platform/localization/catalog.generated.ts'), 'utf8')
   .match(/[a-f0-9]{64}/)[0];
 const smoke = process.argv.includes('--smoke');
+const compact = process.argv.includes('--compact');
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 const results = [];
 try {
@@ -30,8 +34,16 @@ try {
           ignoreHTTPSErrors: true,
           reducedMotion: 'reduce',
           timezoneId: 'Africa/Cairo',
-          viewport: { width, height: 1050 },
+          viewport: { width, height: compact ? 740 : 1050 },
         });
+        await serveAngularFixtureBuild(
+          context,
+          root,
+          origin,
+          process.env.ANGULAR_FIXTURE_BUILD
+            ? path.resolve(process.env.ANGULAR_FIXTURE_BUILD)
+            : undefined,
+        );
         await context.addCookies(
           Object.entries({ i18next: language, currentMode: mode, themePalette: 'green' }).map(
             ([name, value]) => ({ name, value, url: origin }),
@@ -41,6 +53,8 @@ try {
           details = [],
           errors = [],
           writes = [];
+        let denyExportRead = false;
+        let deniedExportReads = 0;
         const text = core[language],
           caption = (key) => text['auditLog.' + key];
         await context.route('**/api/**', async (route) => {
@@ -49,7 +63,9 @@ try {
               url = new URL(request.url()),
               endpoint = url.pathname;
             assert.equal(url.origin, api);
-            if (!['GET', 'HEAD', 'OPTIONS'].includes(request.method())) {
+            const filteredRead =
+              request.method() === 'POST' && endpoint.endsWith('/system-audit-trail/query');
+            if (!['GET', 'HEAD', 'OPTIONS'].includes(request.method()) && !filteredRead) {
               writes.push(endpoint);
               throw Error('Unexpected mutation');
             }
@@ -61,7 +77,7 @@ try {
                 user: {
                   ...sessionFixture,
                   roles: ['super_admin'],
-                  permissions: ['SystemAuditTrail:View'],
+                  permissions: ['SystemAuditTrail:View', 'GlobalDataExports:Export'],
                   tenantReadOnly: false,
                 },
               };
@@ -79,16 +95,20 @@ try {
                   { moduleCode: 'reference-data', entityNames: ['Country', 'State'] },
                 ],
               };
-            else if (endpoint.endsWith('/system-audit-trail')) {
-              const query = Object.fromEntries(url.searchParams);
+            else if (endpoint.endsWith('/system-audit-trail') || filteredRead) {
+              const query = filteredRead
+                ? request.postDataJSON()
+                : Object.fromEntries(url.searchParams);
+              if (filteredRead)
+                assert.equal(request.headers()['x-erp-xsrf'], 'audit-fixture-token');
               queries.push(query);
-              assert.equal(query.pageSize, '50');
+              assert.equal(Number(query.pageSize), 25);
               assert.ok(!('pageNumber' in query));
-              let rows = Array.from({ length: query.cursor ? 3 : 50 }, (_, index) => ({
+              let rows = Array.from({ length: query.cursor ? 3 : 25 }, (_, index) => ({
                 ...auditFixture,
-                id: (query.cursor ? 51 : 1) + index,
-                entityKey: String((query.cursor ? 51 : 1) + index),
-                entityDisplay: 'Item ' + ((query.cursor ? 51 : 1) + index),
+                id: (query.cursor ? 26 : 1) + index,
+                entityKey: String((query.cursor ? 26 : 1) + index),
+                entityDisplay: 'Item ' + ((query.cursor ? 26 : 1) + index),
               }));
               if (query.cursor) assert.equal(query.cursor, 'opaque+/next==');
               else
@@ -104,8 +124,27 @@ try {
               if (query.entityName)
                 rows = rows.filter((row) => row.entityName === query.entityName);
               if (query.action) rows = rows.filter((row) => row.action === query.action);
+              if (query.columnFilters) {
+                const groups = JSON.parse(query.columnFilters);
+                assert.equal(groups.length, 1);
+                assert.equal(groups[0].field, 'changeCount');
+                assert.equal(groups[0].constraints[0].matchMode, 'equals');
+                rows = rows.filter((row) => row.changeCount === groups[0].constraints[0].value);
+              }
+              if (denyExportRead) {
+                deniedExportReads++;
+                await route.fulfill({
+                  status: language === 'en' ? 401 : 403,
+                  contentType: 'application/json',
+                  body: '{}',
+                });
+                return;
+              }
               body = {
                 items: rows,
+                ...(query.includeTotalCount
+                  ? { totalCount: query.cursor ? 28 : rows.length === 25 ? 28 : rows.length }
+                  : {}),
                 nextCursor:
                   query.cursor ||
                   query.entityKey ||
@@ -113,7 +152,8 @@ try {
                   query.entityName ||
                   query.action ||
                   query.fromUtc ||
-                  query.toUtc
+                  query.toUtc ||
+                  query.columnFilters
                     ? null
                     : 'opaque+/next==',
               };
@@ -155,7 +195,7 @@ try {
         try {
           await page.goto(origin + '/super-admin/audit-trail');
           await expect(workspace).toHaveAttribute('data-kind', 'ready', { timeout: 60000 });
-          await expect(rows).toHaveCount(50);
+          await expect(rows).toHaveCount(25);
           await expect(page.locator('erp-page-header .total-badge')).toHaveCount(0);
           stage = 'shared selection and record navigation';
           const selectPage = grid.getByRole('checkbox', {
@@ -163,7 +203,7 @@ try {
             exact: true,
           });
           await selectPage.check();
-          await expect(grid.locator('tbody [aria-selected="true"]')).toHaveCount(50);
+          await expect(grid.locator('tbody [aria-selected="true"]')).toHaveCount(25);
           await expect(page.getByRole('dialog')).toHaveCount(0);
           await selectPage.uncheck();
           await expect(grid.locator('tbody [aria-selected="true"]')).toHaveCount(0);
@@ -221,14 +261,18 @@ try {
             .click();
           await expect(grid.locator('th[data-column-key="changeCount"]')).toHaveCount(1);
           stage = 'cursor paging';
-          await grid.getByRole('button', { name: text['pagination.next'], exact: true }).click();
+          for (let record = 0; record < 25; record++) {
+            await grid
+              .getByRole('button', { name: text['pagination.goToNextRecord'], exact: true })
+              .click();
+          }
           await expect(rows).toHaveCount(3);
           assert.equal(queries.at(-1).cursor, 'opaque+/next==');
           const count = queries.length;
           await grid
             .getByRole('button', { name: text['pagination.goToFirstRecord'], exact: true })
             .click();
-          await expect(rows).toHaveCount(50);
+          await expect(rows).toHaveCount(25);
           assert.equal(queries.length, count);
           stage = 'single click and structured detail';
           await rows.first().click();
@@ -284,7 +328,7 @@ try {
           );
           await changes.locator('th[data-column-key="field"]').click();
           await expect(changes.locator('tbody [data-collection-row]').first()).toContainText(
-            'After 1',
+            language === 'en' ? '<script>literal text</script>' : 'After 1',
           );
           await changes
             .getByRole('button', {
@@ -292,9 +336,10 @@ try {
               exact: true,
             })
             .click();
-          await expect(changes.locator('tbody [data-collection-row]').last()).toContainText(
-            '<script>literal text</script>',
-          );
+          if (language === 'ar')
+            await expect(changes.locator('tbody [data-collection-row]').last()).toContainText(
+              '<script>literal text</script>',
+            );
           stage = 'detail local text filtering';
           const openLocalFilter = async () => {
             await changes
@@ -307,6 +352,15 @@ try {
             await localFilter.getByRole('combobox', { name: label, exact: true }).click();
             await localFilter.getByRole('option', { name: option, exact: true }).click();
           };
+          await localFilter
+            .getByRole('textbox', { name: text['collections.filterValue'], exact: true })
+            .fill(caption('fields.NameEn'));
+          await localFilter
+            .getByRole('button', { name: text['collections.apply'], exact: true })
+            .click();
+          await expect(changes.locator('tbody [data-collection-row]')).toHaveCount(1);
+          await expect(changes).toContainText('<script>literal text</script>');
+          localFilter = await openLocalFilter();
           await chooseLocal(text['collections.columns'], caption('oldValue'));
           await chooseLocal(text['collections.filterConstraint'], text['collections.isEmpty']);
           await localFilter
@@ -363,11 +417,30 @@ try {
           await page.keyboard.press('Escape');
           await expect(dialog).toHaveCount(0);
           stage = 'search';
-          await grid.getByPlaceholder(caption('recordKey')).fill('42');
+          await grid.getByPlaceholder(caption('recordKey')).fill('24');
           await expect(rows).toHaveCount(1);
-          assert.equal(queries.at(-1).entityKey, '42');
+          assert.equal(queries.at(-1).entityKey, '24');
           await grid.getByPlaceholder(caption('recordKey')).fill('');
-          await expect(rows).toHaveCount(50);
+          await expect(rows).toHaveCount(25);
+          stage = 'server column filter query';
+          await grid
+            .locator('th[data-column-key="changeCount"] .p-datatable-column-filter-button')
+            .click();
+          const columnMenu = page.locator('.p-datatable-filter-overlay');
+          await expect(columnMenu).toBeVisible();
+          await columnMenu
+            .getByRole('textbox', { name: caption('changes'), exact: true })
+            .fill('0');
+          await columnMenu
+            .getByRole('button', { name: text['collections.apply'], exact: true })
+            .click();
+          await expect(rows).toHaveCount(0);
+          assert.equal(JSON.parse(queries.at(-1).columnFilters)[0].constraints[0].value, 0);
+          await grid
+            .locator('th[data-column-key="changeCount"] .p-datatable-column-filter-button')
+            .click();
+          await columnMenu.locator('[data-pc-name="pcfilterclearbutton"]').click();
+          await expect(rows).toHaveCount(25);
           stage = 'dependent filters';
           await page
             .locator('erp-page-header')
@@ -388,12 +461,12 @@ try {
           assert.ok(!queries.at(-1).entityName);
           await expect(rows).toHaveCount(1);
           await choose(caption('module'), caption('all'));
-          await expect(rows).toHaveCount(50);
+          await expect(rows).toHaveCount(25);
           await choose(caption('action'), caption('actions.Created'));
           await expect.poll(() => queries.at(-1).action).toBe('Created');
           await expect(rows).toHaveCount(0);
           await choose(caption('action'), caption('all'));
-          await expect(rows).toHaveCount(50);
+          await expect(rows).toHaveCount(25);
           stage = 'date boundaries';
           await criteria
             .getByRole('textbox', { name: caption('from'), exact: true })
@@ -403,6 +476,30 @@ try {
             .getByRole('textbox', { name: caption('to'), exact: true })
             .fill('2026-11-06');
           await expect.poll(() => queries.at(-1).toUtc).toBe('2026-11-06T21:59:59.999Z');
+          const geometry = await grid.evaluate((element) => {
+            const body = element.querySelector('.table-body').getBoundingClientRect();
+            const header = element.querySelector('thead').getBoundingClientRect();
+            const controls = element.querySelector('.collection-controls p-scrollarea-viewport');
+            return {
+              bodyHeight: body.height,
+              headerHeight: header.height,
+              controlsHeight: controls.clientHeight,
+              controlsScrollHeight: controls.scrollHeight,
+            };
+          });
+          assert.ok(geometry.bodyHeight >= geometry.headerHeight + 52, JSON.stringify(geometry));
+          if (compact && width === 390)
+            assert.ok(geometry.controlsScrollHeight > geometry.controlsHeight);
+          // Focus must scroll the bounded controls region and leave the Grid usable.
+          for (const field of ['module', 'to']) {
+            const control =
+              field === 'module'
+                ? criteria.getByRole('combobox', { name: caption(field), exact: true })
+                : criteria.getByRole('textbox', { name: caption(field), exact: true });
+            await control.focus();
+            await expect(control).toBeFocused();
+            await expect(control).toBeInViewport();
+          }
           await page.screenshot({
             path: path.join(output, `${language}-${mode}-${width}-filters.png`),
             fullPage: true,
@@ -416,10 +513,24 @@ try {
           );
           assert.deepEqual(writes, []);
           assert.deepEqual(errors, []);
+          stage = 'export read actor-wide denial';
+          denyExportRead = true;
+          await page.locator('erp-collection-export-menu').getByRole('button').click();
+          await page
+            .getByRole('menuitem', { name: text['collectionExport.csv'], exact: true })
+            .click();
+          await expect.poll(() => deniedExportReads).toBe(1);
+          await expect(workspace).toHaveAttribute('data-kind', 'forbidden');
+          await expect(rows).toHaveCount(0);
+          await expect(page.locator('erp-collection-export-menu button')).toHaveCount(0);
+          assert.deepEqual(writes, []);
+          assert.deepEqual(errors, []);
           results.push({
             language,
             mode,
             width,
+            height: compact ? 740 : 1050,
+            geometry,
             passed: true,
             listRequests: queries.length,
             detailRequests: details.length,

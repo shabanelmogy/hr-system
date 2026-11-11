@@ -1,0 +1,242 @@
+[
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 320,
+    "passed": true,
+    "queryCount": 11,
+    "writes": [
+      "create",
+      "edit"
+    ],
+    "afterCreateAdministrators": true
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "passed": true,
+    "queryCount": 11,
+    "writes": [
+      "create",
+      "edit"
+    ],
+    "afterCreateAdministrators": true
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "passed": true,
+    "queryCount": 11,
+    "writes": [
+      "create",
+      "edit"
+    ],
+    "afterCreateAdministrators": true
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "passed": true,
+    "queryCount": 10,
+    "writes": [
+      "create",
+      "edit"
+    ],
+    "afterCreateAdministrators": true
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 844,
+    "passed": true,
+    "queryCount": 11,
+    "writes": [
+      "create",
+      "edit"
+    ],
+    "afterCreateAdministrators": true
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 320,
+    "passed": true,
+    "queryCount": 11,
+    "writes": [
+      "create",
+      "edit"
+    ],
+    "afterCreateAdministrators": true
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "passed": true,
+    "queryCount": 11,
+    "writes": [
+      "create",
+      "edit"
+    ],
+    "afterCreateAdministrators": true
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "passed": true,
+    "queryCount": 11,
+    "writes": [
+      "create",
+      "edit"
+    ],
+    "afterCreateAdministrators": true
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "passed": true,
+    "queryCount": 11,
+    "writes": [
+      "create",
+      "edit"
+    ],
+    "afterCreateAdministrators": true
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 844,
+    "passed": true,
+    "queryCount": 11,
+    "writes": [
+      "create",
+      "edit"
+    ],
+    "afterCreateAdministrators": true
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 320,
+    "passed": true,
+    "queryCount": 11,
+    "writes": [
+      "create",
+      "edit"
+    ],
+    "afterCreateAdministrators": true
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "passed": true,
+    "queryCount": 11,
+    "writes": [
+      "create",
+      "edit"
+    ],
+    "afterCreateAdministrators": true
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "passed": true,
+    "queryCount": 11,
+    "writes": [
+      "create",
+      "edit"
+    ],
+    "afterCreateAdministrators": true
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "passed": true,
+    "queryCount": 11,
+    "writes": [
+      "create",
+      "edit"
+    ],
+    "afterCreateAdministrators": true
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 844,
+    "passed": true,
+    "queryCount": 11,
+    "writes": [
+      "create",
+      "edit"
+    ],
+    "afterCreateAdministrators": true
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 320,
+    "passed": true,
+    "queryCount": 11,
+    "writes": [
+      "create",
+      "edit"
+    ],
+    "afterCreateAdministrators": true
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "passed": true,
+    "queryCount": 11,
+    "writes": [
+      "create",
+      "edit"
+    ],
+    "afterCreateAdministrators": true
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "passed": true,
+    "queryCount": 11,
+    "writes": [
+      "create",
+      "edit"
+    ],
+    "afterCreateAdministrators": true
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "passed": true,
+    "queryCount": 11,
+    "writes": [
+      "create",
+      "edit"
+    ],
+    "afterCreateAdministrators": true
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 844,
+    "passed": true,
+    "queryCount": 11,
+    "writes": [
+      "create",
+      "edit"
+    ],
+    "afterCreateAdministrators": true
+  }
+]

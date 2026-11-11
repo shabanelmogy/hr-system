@@ -10,7 +10,7 @@ public sealed record PublishGlobalCrystalReportVersionCommand(Guid ReportId, Gui
     : ICommand<Result<CrystalReportDetailResponse>>;
 public sealed record RevalidateGlobalCrystalReportVersionCommand(Guid ReportId, Guid VersionId)
     : ICommand<Result<CrystalReportDetailResponse>>;
-public sealed record VerifyDatabaseGlobalCrystalReportVersionCommand(Guid ReportId, Guid VersionId)
+public sealed record VerifyDatabaseGlobalCrystalReportVersionCommand(Guid ReportId, Guid VersionId, string RowVersion)
     : ICommand<Result<CrystalReportDetailResponse>>;
 public sealed record InspectGlobalCrystalReportCommand(string EntityKey, FileUpload File)
     : ICommand<Result<CrystalReportInspection>>;

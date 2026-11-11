@@ -71,23 +71,27 @@ existing-system review, implementation order, and Definition of Done.
 
 ## Approved references
 
-- **Super Admin System Audit Trail parity cross-platform master review:** `../modules/platform/features/angular-system-audit-workspace/angular-system-audit-workspace-review.md` sections 3, 4, 6
-- **Super Admin System Audit Trail parity API implementation profile:** `../modules/platform/features/angular-system-audit-workspace/angular-system-audit-workspace-api.md` sections 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+- **Super Admin System Audit Trail parity cross-platform master review:** `../modules/platform/features/angular-system-audit-workspace/angular-system-audit-workspace-review.md` sections 3, 4, 6, 16, 17
+- **Super Admin System Audit Trail parity API implementation profile:** `../modules/platform/features/angular-system-audit-workspace/angular-system-audit-workspace-api.md` sections 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 16, 17
 
 ## Source fingerprints
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | angular-system-audit-workspace-master | 3 | `533fc06c805178a7940bd29b028ccab1aa8c03323688c0ef84db7cfe11866f11` |
-| angular-system-audit-workspace-master | 4 | `0ca0921366f0d0203bf10ec88a16b5676345f89ab9076973861c17b47bda4646` |
-| angular-system-audit-workspace-master | 6 | `d011d247abc657b5c966a73d18c39821472514d0caf9456b02ae0249a098165e` |
+| angular-system-audit-workspace-master | 4 | `5c410a657baf4dc942706d66f6a50d6cac935de8897d25b3430d8ce58deaa78e` |
+| angular-system-audit-workspace-master | 6 | `0757cb85fb64ab8d3129445c494bb5332c468f7e14f2bb99dd45a9e1ebfdd85b` |
+| angular-system-audit-workspace-master | 16 | `7528ad6b5b17f2d048872b772d8fbb1c0b19eadd1b04f92b4541bf7b382cd705` |
+| angular-system-audit-workspace-master | 17 | `80c769644b662109d525c1e177fd65fbf0aca243f678aea7bdd177c82c1576aa` |
 | angular-system-audit-workspace-api | 1 | `30180a45e3e26ad0647e71a3cdfb4292151787ebf1c71e14939c79eb98e7c78a` |
 | angular-system-audit-workspace-api | 2 | `ec1abfdbe1d6f23f81c35becb8e10e65908b6e7253be193981561639cc70f3c5` |
 | angular-system-audit-workspace-api | 3 | `533fc06c805178a7940bd29b028ccab1aa8c03323688c0ef84db7cfe11866f11` |
-| angular-system-audit-workspace-api | 4 | `0ca0921366f0d0203bf10ec88a16b5676345f89ab9076973861c17b47bda4646` |
+| angular-system-audit-workspace-api | 4 | `5c410a657baf4dc942706d66f6a50d6cac935de8897d25b3430d8ce58deaa78e` |
 | angular-system-audit-workspace-api | 5 | `e8eefe6fd4499461e5ef5fee1027cece0a67a6eb23675be5e2a7da7dea4bd9b1` |
-| angular-system-audit-workspace-api | 6 | `d011d247abc657b5c966a73d18c39821472514d0caf9456b02ae0249a098165e` |
+| angular-system-audit-workspace-api | 6 | `0757cb85fb64ab8d3129445c494bb5332c468f7e14f2bb99dd45a9e1ebfdd85b` |
 | angular-system-audit-workspace-api | 7 | `da87f59916f591acee86e14bb3dd36aeda9bfc9ea39d1d8118b370e657f93cf4` |
 | angular-system-audit-workspace-api | 8 | `fe1dcbe0ed968bf0bd8847d263bcd2a32b5c1392f51e4ec8d7d72480c94d2008` |
 | angular-system-audit-workspace-api | 9 | `bfe3c56110cb9e2dd3ff1d6ae28f28e836cc6795916976cc5ea125d1960c2a97` |
 | angular-system-audit-workspace-api | 10 | `7bae6bcb1db81bd9577afd59216566fa86f1eca6cc68d0bf365b9bb35af8dc96` |
+| angular-system-audit-workspace-api | 16 | `7528ad6b5b17f2d048872b772d8fbb1c0b19eadd1b04f92b4541bf7b382cd705` |
+| angular-system-audit-workspace-api | 17 | `80c769644b662109d525c1e177fd65fbf0aca243f678aea7bdd177c82c1576aa` |

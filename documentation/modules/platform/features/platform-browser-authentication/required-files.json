@@ -478,6 +478,246 @@
       "layer": "web",
       "path": "web-angular/scripts/verify-super-admin-hosted-read.mjs",
       "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "system-session-0",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/SUPER_ADMIN_SYSTEM_SESSION_2026-11-09.md",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-1",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Contracts/Authentication/Tokens/AuthenticationSessionScope.cs",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-2",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Contracts/Authentication/Tokens/AuthenticationTokenClaimNames.cs",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-5",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Authentication/Tokens/AccessTokenClaimMaterialService.cs",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-6",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Authentication/Tokens/AuthenticationTokenContracts.cs",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-7",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/SessionValidation/SessionValidationContracts.cs",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-9",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Modules/ModuleCatalogRequests.cs",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-10",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Authentication/Tokens/JwtAuthenticationTokenService.cs",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-11",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Identity/PlatformContractSource.cs",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-14",
+      "layer": "test",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/AuthenticationSessionScopeTests.cs",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-15",
+      "layer": "test",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/PlatformSessionValidationOwnershipTests.cs",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-16",
+      "layer": "test",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/PlatformAccessTokenClaimMaterialOwnershipTests.cs",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-17",
+      "layer": "test",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/PlatformModuleCatalogOwnershipTests.cs",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-19",
+      "layer": "test",
+      "path": "api/Tests/ErpSystem.IntegrationTests/SuperAdminSystemSessionTests.cs",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-20",
+      "layer": "source",
+      "path": "web-angular/src/app/platform/auth/types/auth-contracts.ts",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-21",
+      "layer": "test",
+      "path": "web-angular/src/app/platform/auth/types/auth-contracts.spec.ts",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-22",
+      "layer": "source",
+      "path": "web-angular/scripts/verify-shell-browser.mjs",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-23",
+      "layer": "source",
+      "path": "web-next/src/lib/auth/session.ts",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-24",
+      "layer": "test",
+      "path": "web-next/src/lib/auth/session.test.ts",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-25",
+      "layer": "source",
+      "path": "mobile-react/src/platform/auth/domain/models/auth.ts",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-26",
+      "layer": "source",
+      "path": "mobile-react/src/platform/auth/data/remote/auth/auth-response-schema.ts",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-27",
+      "layer": "test",
+      "path": "mobile-react/src/platform/auth/data/remote/auth/auth-response-schema.test.ts",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-28",
+      "layer": "source",
+      "path": "mobile-react/src/platform/auth/data/local/offline-session-lease.ts",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-29",
+      "layer": "test",
+      "path": "mobile-react/src/platform/auth/data/local/offline-session-lease.test.ts",
+      "purpose": "Independent Super Admin system-session implementation, contract or regression evidence"
+    },
+    {
+      "id": "system-session-evidence-0",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/system-session-2026-11-09/angular-auth.txt",
+      "purpose": "Measured local corrective verification, actual pass/failure and acceptance boundary"
+    },
+    {
+      "id": "system-session-evidence-1",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/system-session-2026-11-09/angular-browser-final.txt",
+      "purpose": "Measured local corrective verification, actual pass/failure and acceptance boundary"
+    },
+    {
+      "id": "system-session-evidence-2",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/system-session-2026-11-09/angular-check-final.txt",
+      "purpose": "Measured local corrective verification, actual pass/failure and acceptance boundary"
+    },
+    {
+      "id": "system-session-evidence-3",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/system-session-2026-11-09/angular-check.txt",
+      "purpose": "Measured local corrective verification, actual pass/failure and acceptance boundary"
+    },
+    {
+      "id": "system-session-evidence-4",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/system-session-2026-11-09/angular-format-check-final.txt",
+      "purpose": "Measured local corrective verification, actual pass/failure and acceptance boundary"
+    },
+    {
+      "id": "system-session-evidence-5",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/system-session-2026-11-09/api-check-final.txt",
+      "purpose": "Measured local corrective verification, actual pass/failure and acceptance boundary"
+    },
+    {
+      "id": "system-session-evidence-6",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/system-session-2026-11-09/browser-results.json",
+      "purpose": "Measured local corrective verification, actual pass/failure and acceptance boundary"
+    },
+    {
+      "id": "system-session-evidence-7",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/system-session-2026-11-09/build-final.txt",
+      "purpose": "Measured local corrective verification, actual pass/failure and acceptance boundary"
+    },
+    {
+      "id": "system-session-evidence-8",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/system-session-2026-11-09/docs-full.txt",
+      "purpose": "Measured local corrective verification, actual pass/failure and acceptance boundary"
+    },
+    {
+      "id": "system-session-evidence-9",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/system-session-2026-11-09/docs-scoped-check.txt",
+      "purpose": "Measured local corrective verification, actual pass/failure and acceptance boundary"
+    },
+    {
+      "id": "system-session-evidence-10",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/system-session-2026-11-09/mobile-check.txt",
+      "purpose": "Measured local corrective verification, actual pass/failure and acceptance boundary"
+    },
+    {
+      "id": "system-session-evidence-11",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/system-session-2026-11-09/next-tests.txt",
+      "purpose": "Measured local corrective verification, actual pass/failure and acceptance boundary"
+    },
+    {
+      "id": "system-session-evidence-12",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/system-session-2026-11-09/next-types.txt",
+      "purpose": "Measured local corrective verification, actual pass/failure and acceptance boundary"
+    },
+    {
+      "id": "system-session-evidence-13",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/system-session-2026-11-09/planning.txt",
+      "purpose": "Measured local corrective verification, actual pass/failure and acceptance boundary"
+    },
+    {
+      "id": "system-session-evidence-14",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/system-session-2026-11-09/restore-final.txt",
+      "purpose": "Measured local corrective verification, actual pass/failure and acceptance boundary"
+    },
+    {
+      "id": "system-session-evidence-15",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/system-session-2026-11-09/verification.json",
+      "purpose": "Measured local corrective verification, actual pass/failure and acceptance boundary"
     }
   ],
   "finalizationChecklist": [

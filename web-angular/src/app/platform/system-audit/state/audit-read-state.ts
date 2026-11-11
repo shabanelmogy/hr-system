@@ -22,7 +22,13 @@ import {
   emptyAuditFilters,
   type AuditFilters,
 } from '../types/audit-criteria';
-import { auditKey, type AuditCriteria, type AuditItem, type AuditPage } from '../types/audit-trail';
+import {
+  auditKey,
+  auditPageSize,
+  type AuditCriteria,
+  type AuditItem,
+  type AuditPage,
+} from '../types/audit-trail';
 import { systemAuditAllowed } from '../system-audit-access';
 import { parseAuditColumnFilters, auditColumnFilterJson } from '../types/audit-column-filters';
 
@@ -84,7 +90,7 @@ export class AuditReadState {
                 JSON.stringify(this.scope()?.criteria) !== criteriaKey
               )
                 throw new DOMException('Audit export changed', 'AbortError');
-              const result = await exportRead(this.service.page(scope.criteria, cursor), signal);
+              const result = await this.exportPage(scope, cursor, signal);
               return {
                 rows: result.items.map((row) => ({ ...row, key: auditKey(row) })),
                 nextCursor: result.nextCursor,
@@ -93,6 +99,19 @@ export class AuditReadState {
           }),
         ),
     };
+  }
+  private async exportPage(
+    scope: AuditScope,
+    cursor: string | null,
+    signal: AbortSignal,
+  ): Promise<AuditPage> {
+    try {
+      return await exportRead(this.service.page(scope.criteria, cursor), signal);
+    } catch (error: unknown) {
+      if (error instanceof HttpErrorResponse && [401, 403].includes(error.status))
+        this.deny(scope.actor);
+      throw error;
+    }
   }
   private readonly auth = inject(AuthSession);
   private readonly service = inject(SystemAuditService);
@@ -152,7 +171,8 @@ export class AuditReadState {
       scopeKey: 'system-audit:' + (actor ? this.actors.get(actor) : 'anonymous'),
       criteriaKey: JSON.stringify([this.criteria(), this.appliedColumnFilters()]),
       pageIndex: current?.index ?? 0,
-      pageSize: 50,
+      pageSize: auditPageSize,
+      pageAccess: 'sequential' as const,
     };
     if (actor && !this.canRead()) return { query, kind: 'forbidden' };
     if (this.invalid()) return { query, kind: 'error' };
@@ -160,7 +180,12 @@ export class AuditReadState {
       return {
         query,
         kind: 'ready',
-        result: { query, rows: page.items, total: null, hasNextPage: page.nextCursor !== null },
+        result: {
+          query,
+          rows: page.items,
+          total: page.totalCount ?? null,
+          hasNextPage: page.nextCursor !== null,
+        },
       };
     return { query, kind: current?.phase === 'error' ? 'error' : 'loading' };
   });
@@ -194,7 +219,7 @@ export class AuditReadState {
       this.snapshot.set({ scope: request.scope, pages: [], index: 0, phase: 'loading' });
     this.request.set(request);
     this.operation = this.service
-      .page(request.scope.criteria, request.cursor)
+      .page(request.scope.criteria, request.cursor, true)
       .pipe(take(1), throwIfEmpty())
       .subscribe({
         next: (page) => {
@@ -231,7 +256,7 @@ export class AuditReadState {
       !scope ||
       snapshot?.scope !== scope ||
       this.pending() ||
-      page.pageSize !== 50 ||
+      page.pageSize !== auditPageSize ||
       !Number.isInteger(page.pageIndex) ||
       page.pageIndex < 0
     )

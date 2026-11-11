@@ -8,6 +8,19 @@
   (closeRequested)="closeGuard().requestClose()"
 >
   @if (state.detail()) {
+    @if (state.feedback(); as feedback) {
+      <erp-feedback-state
+        kind="error"
+        layout="inline"
+        [title]="
+          feedback.message ||
+          locale.translate(
+            feedback.key,
+            feedback.key.startsWith('globalTemplates.') ? 'reporting' : 'core'
+          )
+        "
+      />
+    }
     <erp-content-tabs
       [tabs]="tabs()"
       [(selected)]="selectedTab"

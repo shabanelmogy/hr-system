@@ -1,13 +1,4 @@
-import {
-  Component,
-  computed,
-  inject,
-  input,
-  linkedSignal,
-  output,
-  signal,
-  viewChild,
-} from '@angular/core';
+import { Component, computed, inject, input, linkedSignal, output, viewChild } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { FormField } from '@angular/forms/signals';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -28,9 +19,7 @@ import { TenantFormPresentation } from '../../presentation/tenant-form-presentat
 import { TenantIdentityFields } from '../tenant-identity-fields/tenant-identity-fields';
 import { TenantSubscriptionFields } from '../tenant-subscription-fields/tenant-subscription-fields';
 import { TenantEntitlementField } from '../tenant-entitlement-field/tenant-entitlement-field';
-
-const sectionIds = ['identity', 'subscription', 'entitlements', 'administrators'] as const;
-type TenantSection = (typeof sectionIds)[number];
+import { tenantSectionIds, type TenantSection } from '../../types/tenant';
 
 @Component({
   selector: 'erp-tenant-form',
@@ -57,17 +46,18 @@ type TenantSection = (typeof sectionIds)[number];
 })
 export class TenantForm {
   readonly tenantId = input<string | null>(null);
-  readonly administratorsOpened = signal(false);
+  readonly initialSection = input<TenantSection>('identity');
+  readonly administratorsOpened = linkedSignal(() => this.initialSection() === 'administrators');
   readonly appearance = input<'page' | 'dialog'>('page');
   readonly cancelled = output<void>();
   readonly editor = inject(TenantEditorState);
   readonly captions = inject(TenantFormPresentation);
   readonly selected = linkedSignal<TenantSection>(() => {
     this.editor.identity();
-    return 'identity';
+    return this.initialSection();
   });
   readonly tabs = computed<readonly ContentTab[]>(() =>
-    sectionIds.map((id) => ({
+    tenantSectionIds.map((id) => ({
       id,
       label:
         id === 'administrators'
@@ -82,7 +72,7 @@ export class TenantForm {
       .subscribe(() => this.container()?.revealErrors());
   }
   chooseSection(id: string): void {
-    const section = sectionIds.find((section) => section === id);
+    const section = tenantSectionIds.find((section) => section === id);
     if (section) {
       if (section === 'administrators') this.administratorsOpened.set(true);
       this.selected.set(section);

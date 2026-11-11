@@ -36,7 +36,7 @@ Platform audit read aggregates each module through IAuditTrailSource; reuse the 
 | Transaction rollback / commit failure | N/A: no commands or transaction in viewer | No write behavior | N/A | Existing writers unchanged | No business write assertion |
 | Post-commit side-effect failure | N/A: no post-commit behavior | No event/job/session effect | N/A | Existing writer owns effects | Source review |
 | Archive / restore / delete / dependency behavior | Deleted/Restored history action labels | Display only; no mutation action controls | N/A | Presentation/known enum | All action labels tests |
-| Paging / filtering / sorting / deterministic ordering / query shape | Opaque cursor with fixed50unknown total; back/next/filter/reset | Server ordering; exact cached previous/exact next, no offset/jump/sort | 200/AuditTrail.InvalidCursor400 | Query handler/client page-chain state | Cursor/unknown-total/browser paging |
+| Paging / filtering / sorting / deterministic ordering / query shape | Opaque cursor with fixed25 with optional server total and sequential cursor access; back/next/filter/reset | Server ordering; exact cached previous/exact next, no offset/jump/sort | 200/AuditTrail.InvalidCursor400 | Query handler/client page-chain state | Cursor/unknown-total/browser paging |
 | Money / quantity / UOM / rounding / currency | N/A: history values are textual snapshots | Render old/new as text; no calculations | N/A | Presentation | Escaped snapshot rendering test |
 | Dates / timezone / effective dates / closed periods | Local day boundaries including DST; invalid/inverted range | Correct UTC endpoints; no invalid GET | 400/native range feedback | Criteria helper/server validator | Local-day/DST/range tests |
 | Bulk / import / partial-versus-atomic behavior | N/A: no import or bulk action in source | No placeholder | N/A | Contract | Source/no-control assertions |
@@ -44,7 +44,7 @@ Platform audit read aggregates each module through IAuditTrailSource; reuse the 
 | File / security-sensitive input / ownership / unsafe paths or secrets | Module path/long snapshot strings/internal diagnostics | Encode module; text rendering; safe feedback | Bounded error, no raw detail | Service/presentation | Encoded path/redaction tests |
 | Compatibility / versioning / existing-data migration | Existing v1nullable text and unknown label names | Preserve nullable text and humanize labels; no schema migration | 200 | Typed boundary | Valid payload/fallback tests |
 | Cancellation / timeout / unexpected failure | Route destroy/detail close/network timeout | Abort owned read; no stale data or endless spinner | Bounded translated error | State/service | Destroy/close/timeout tests |
-| Scale / N+1 / hot-path index / operability / replay-recovery | 50row cursor requests; detail returned array | No all-pages fetch or per-row detail; virtual data panel | Existing server keyset read | Server/source unchanged; client service | Request count/browser and source review |
+| Scale / N+1 / hot-path index / operability / replay-recovery | 25-row cursor requests; detail returned array | No all-pages fetch or per-row detail; virtual data panel | Existing server keyset read | Server/source unchanged; client service | Request count/browser and source review |
 
 ## Impact Matrix
 

@@ -406,6 +406,108 @@
       "path": "documentation/modules/platform/features/angular-form-foundation/verification/signal-forms-summary.json",
       "layer": "documentation",
       "purpose": "Current native forms unit/browser evidence summary"
+    },
+    {
+      "id": "field-focus-20261109-_field-focus.scss",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/_field-focus.scss",
+      "purpose": "Shared focus perimeter corrective source, prevention rule or separately dated browser proof"
+    },
+    {
+      "id": "field-focus-20261109-reference-field.scss",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field/reference-field.scss",
+      "purpose": "Shared focus perimeter corrective source, prevention rule or separately dated browser proof"
+    },
+    {
+      "id": "field-focus-20261109-boolean-field.scss",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.scss",
+      "purpose": "Shared focus perimeter corrective source, prevention rule or separately dated browser proof"
+    },
+    {
+      "id": "field-focus-20261109-verify-field-focus-browser.mjs",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-field-focus-browser.mjs",
+      "purpose": "Shared focus perimeter corrective source, prevention rule or separately dated browser proof"
+    },
+    {
+      "id": "field-focus-20261109-ANGULAR_CODE_STYLE.md",
+      "layer": "documentation",
+      "path": "documentation/guides/web/architecture/ANGULAR_CODE_STYLE.md",
+      "purpose": "Shared focus perimeter corrective source, prevention rule or separately dated browser proof"
+    },
+    {
+      "id": "field-focus-20261109-FIELD_FOCUS_CORRECTION_2026-11-09.md",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-form-foundation/FIELD_FOCUS_CORRECTION_2026-11-09.md",
+      "purpose": "Shared focus perimeter corrective source, prevention rule or separately dated browser proof"
+    },
+    {
+      "id": "field-focus-20261109-after-contact-390.png",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-form-foundation/verification/field-focus-2026-11-09/after-contact-390.png",
+      "purpose": "Shared focus perimeter corrective source, prevention rule or separately dated browser proof"
+    },
+    {
+      "id": "field-focus-20261109-baseline-browser.txt",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-form-foundation/verification/field-focus-2026-11-09/baseline-browser.txt",
+      "purpose": "Shared focus perimeter corrective source, prevention rule or separately dated browser proof"
+    },
+    {
+      "id": "field-focus-20261109-before-contact-390.png",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-form-foundation/verification/field-focus-2026-11-09/before-contact-390.png",
+      "purpose": "Shared focus perimeter corrective source, prevention rule or separately dated browser proof"
+    },
+    {
+      "id": "field-focus-20261109-tenant-browser.json",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-form-foundation/verification/field-focus-2026-11-09/tenant-browser.json",
+      "purpose": "Shared focus perimeter corrective source, prevention rule or separately dated browser proof"
+    },
+    {
+      "id": "field-focus-20261109-tenant-browser.txt",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-form-foundation/verification/field-focus-2026-11-09/tenant-browser.txt",
+      "purpose": "Shared focus perimeter corrective source, prevention rule or separately dated browser proof"
+    },
+    {
+      "id": "field-focus-proof-after-contact-ar-dark-390.png",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-form-foundation/verification/field-focus-2026-11-09/after-contact-ar-dark-390.png",
+      "purpose": "Current separately dated focus corrective execution and actual browser evidence"
+    },
+    {
+      "id": "field-focus-proof-angular-check.txt",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-form-foundation/verification/field-focus-2026-11-09/angular-check.txt",
+      "purpose": "Current separately dated focus corrective execution and actual browser evidence"
+    },
+    {
+      "id": "field-focus-proof-controls-browser.json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-form-foundation/verification/field-focus-2026-11-09/controls-browser.json",
+      "purpose": "Current separately dated focus corrective execution and actual browser evidence"
+    },
+    {
+      "id": "field-focus-proof-controls-browser.txt",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-form-foundation/verification/field-focus-2026-11-09/controls-browser.txt",
+      "purpose": "Current separately dated focus corrective execution and actual browser evidence"
+    },
+    {
+      "id": "field-focus-proof-development-build.txt",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-form-foundation/verification/field-focus-2026-11-09/development-build.txt",
+      "purpose": "Current separately dated focus corrective execution and actual browser evidence"
+    },
+    {
+      "id": "field-focus-proof-verification.json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-form-foundation/verification/field-focus-2026-11-09/verification.json",
+      "purpose": "Current separately dated focus corrective execution and actual browser evidence"
     }
   ]
 }

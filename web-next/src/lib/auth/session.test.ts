@@ -24,6 +24,18 @@ const validSession = {
 };
 
 describe("isSessionClaims", () => {
+  it("accepts only explicitly unscoped system administrator sessions", () => {
+    const system = { ...validSession, sessionScope: "system", roles: ["super_admin"],
+      tenantId: "", tenantName: "", tenantPlanName: "", companyId: 0,
+      companyCode: "", companyNameAr: "", companyNameEn: "", companies: [],
+      tenantSubscriptionStatus: "" };
+    expect(isSessionClaims(system)).toBe(true);
+    expect(isSessionClaims({ ...system, tenantId: "borrowed" })).toBe(false);
+    expect(isSessionClaims({ ...system, companyId: 7 })).toBe(false);
+    expect(isSessionClaims({ ...system, roles: ["admin"] })).toBe(false);
+    expect(isSessionClaims({ ...system, sessionScope: "unknown" })).toBe(false);
+    expect(isSessionClaims({ ...system, roles: {} })).toBe(false);
+  });
   it("accepts a complete verified session response", () => {
     expect(isSessionClaims(validSession)).toBe(true);
   });

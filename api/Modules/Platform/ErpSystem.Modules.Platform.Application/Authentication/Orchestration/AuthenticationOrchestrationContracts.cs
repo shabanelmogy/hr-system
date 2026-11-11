@@ -92,7 +92,10 @@ public sealed record AuthenticationSessionResponse(
     string Token,
     DateTime TokenExpiration,
     string RefreshToken,
-    DateTime RefreshTokenExpiration);
+    DateTime RefreshTokenExpiration)
+{
+    public string SessionScope { get; init; } = "company";
+}
 
 public abstract record AuthenticationLoginResult;
 
@@ -206,7 +209,10 @@ public sealed record AuthenticationSessionContextRequest(
     string LastName,
     IReadOnlyCollection<string> Roles,
     IReadOnlyCollection<string> Permissions,
-    long ExpiresAt);
+    long ExpiresAt)
+{
+    public string SessionScope { get; init; } = "company";
+}
 
 public sealed record AuthenticationSessionContextResponse(
     string UserId,
@@ -227,7 +233,10 @@ public sealed record AuthenticationSessionContextResponse(
     string TenantSubscriptionStatus,
     DateTime? TenantSubscriptionEndsOn,
     bool TenantReadOnly,
-    long ExpiresAt);
+    long ExpiresAt)
+{
+    public string SessionScope { get; init; } = "company";
+}
 
 public sealed record AuthenticationRegisterRequest(
     string FirstName,

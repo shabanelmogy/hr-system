@@ -33,21 +33,7 @@ public sealed class AuditTrailSource<TContext> : IAuditTrailSource
         if (filter.Take <= 0)
             return [];
 
-        var query = Scoped(filter.TenantId, filter.CompanyId);
-        if (!string.IsNullOrWhiteSpace(filter.EntityName))
-            query = query.Where(entry => entry.EntityName == filter.EntityName);
-        if (!string.IsNullOrWhiteSpace(filter.EntityKey))
-            query = query.Where(entry => entry.EntityKey == filter.EntityKey);
-        if (filter.Action is { } action)
-            query = query.Where(entry => entry.Action == action);
-        if (!string.IsNullOrWhiteSpace(filter.UserId))
-            query = query.Where(entry => entry.UserId == filter.UserId);
-        if (filter.FromUtc is { } fromUtc)
-            query = query.Where(entry => entry.OccurredOnUtc >= fromUtc);
-        if (filter.ToUtc is { } toUtc)
-            query = query.Where(entry => entry.OccurredOnUtc <= toUtc);
-
-        query = AuditColumnFilterProjection.Apply(query, filter, ModuleCode);
+        var query = Filtered(filter);
 
         if (filter.After is { } after)
         {
@@ -81,6 +67,14 @@ public sealed class AuditTrailSource<TContext> : IAuditTrailSource
         return rows.Select(ToRecord).ToArray();
     }
 
+    public Task<long> CountAsync(
+        AuditTrailFilter filter,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(filter);
+        return Filtered(filter).LongCountAsync(cancellationToken);
+    }
+
     public async Task<AuditTrailRecordDetails?> GetAsync(
         long id,
         string? tenantId,
@@ -108,6 +102,24 @@ public sealed class AuditTrailSource<TContext> : IAuditTrailSource
             .OrderBy(name => name)
             .ToListAsync(cancellationToken)
             .ConfigureAwait(false);
+
+    private IQueryable<AuditTrailEntry> Filtered(AuditTrailFilter filter)
+    {
+        var query = Scoped(filter.TenantId, filter.CompanyId);
+        if (!string.IsNullOrWhiteSpace(filter.EntityName))
+            query = query.Where(entry => entry.EntityName == filter.EntityName);
+        if (!string.IsNullOrWhiteSpace(filter.EntityKey))
+            query = query.Where(entry => entry.EntityKey == filter.EntityKey);
+        if (filter.Action is { } action)
+            query = query.Where(entry => entry.Action == action);
+        if (!string.IsNullOrWhiteSpace(filter.UserId))
+            query = query.Where(entry => entry.UserId == filter.UserId);
+        if (filter.FromUtc is { } fromUtc)
+            query = query.Where(entry => entry.OccurredOnUtc >= fromUtc);
+        if (filter.ToUtc is { } toUtc)
+            query = query.Where(entry => entry.OccurredOnUtc <= toUtc);
+        return AuditColumnFilterProjection.Apply(query, filter, ModuleCode);
+    }
 
     private IQueryable<AuditTrailEntry> Scoped(string? tenantId, int? companyId)
     {

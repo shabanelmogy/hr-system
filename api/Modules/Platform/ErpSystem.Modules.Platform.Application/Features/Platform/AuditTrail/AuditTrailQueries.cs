@@ -23,6 +23,8 @@ public sealed record AuditTrailQueryRequest
     /// <summary>The <c>nextCursor</c> of the previous page; empty for the first page.</summary>
     public string? Cursor { get; init; }
     public int PageSize { get; init; } = DefaultPageSize;
+    /// <summary>Opt in to a current count of all matching rows, independent of the cursor.</summary>
+    public bool IncludeTotalCount { get; init; }
 }
 
 public sealed record AuditTrailItemResponse(
@@ -40,7 +42,8 @@ public sealed record AuditTrailItemResponse(
 
 public sealed record AuditTrailPageResponse(
     IReadOnlyList<AuditTrailItemResponse> Items,
-    string? NextCursor);
+    string? NextCursor,
+    long? TotalCount = null);
 
 public sealed record AuditTrailDetailsResponse(
     AuditTrailItemResponse Entry,
@@ -152,10 +155,15 @@ public sealed class GetAuditTrailQueryHandler(
 
         var moduleCode = AuditTrailReadScope.Normalize(request.ModuleCode);
         var merged = new List<AuditTrailRecord>();
+        long? totalCount = request.IncludeTotalCount ? 0 : null;
         foreach (var source in sources.Where(source =>
                      moduleCode is null || string.Equals(source.ModuleCode, moduleCode, StringComparison.Ordinal)))
         {
             merged.AddRange(await source.ListAsync(filter, cancellationToken).ConfigureAwait(false));
+            if (totalCount.HasValue)
+                totalCount = checked(totalCount.Value + await source
+                    .CountAsync(filter with { After = null }, cancellationToken)
+                    .ConfigureAwait(false));
         }
 
         var ordered = merged
@@ -174,7 +182,8 @@ public sealed class GetAuditTrailQueryHandler(
             : null;
         return Result.Success(new AuditTrailPageResponse(
             ordered.Select(record => AuditTrailReadScope.ToResponse(record, names)).ToArray(),
-            nextCursor));
+            nextCursor,
+            totalCount));
     }
 
     private static DateTime? AsUtc(DateTime? value) => value switch

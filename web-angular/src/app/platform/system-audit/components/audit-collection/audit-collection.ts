@@ -12,7 +12,7 @@ import {
 import { AuditReadState } from '../../state/audit-read-state';
 import { AuditDetailState } from '../../state/audit-detail-state';
 import { AuditPresentation } from '../../presentation/audit-presentation';
-import { auditKey, type AuditItem } from '../../types/audit-trail';
+import { auditKey, auditPageSize, type AuditItem } from '../../types/audit-trail';
 import { AuditCriteria } from '../audit-criteria/audit-criteria';
 import { auditColumnDefinitions } from '../../types/audit-column-filters';
 import { auditActions } from '../../types/audit-trail';
@@ -35,6 +35,7 @@ interface AuditRow extends AuditItem {
   styleUrl: './audit-collection.scss',
 })
 export class AuditCollection {
+  readonly pageSizes: readonly number[] = [auditPageSize];
   readonly reads = inject(AuditReadState);
   readonly detail = inject(AuditDetailState);
   readonly captions = inject(AuditPresentation);

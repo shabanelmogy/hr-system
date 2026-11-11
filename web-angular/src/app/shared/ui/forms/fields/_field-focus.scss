@@ -1,0 +1,14 @@
+// Compound controls own their focus perimeter. Keep it inside their border box
+// so scroll viewports cannot crop it, including at inline and scroll boundaries.
+@mixin control {
+  &:focus-within {
+    border-color: var(--ring);
+    outline: 2px solid var(--ring);
+    outline-offset: -2px;
+  }
+
+  &.invalid:focus-within {
+    border-color: var(--destructive);
+    outline-color: var(--destructive);
+  }
+}

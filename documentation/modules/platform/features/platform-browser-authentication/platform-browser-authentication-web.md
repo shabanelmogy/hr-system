@@ -10,8 +10,14 @@ Browser never owns identity/permission/company membership truth.
 Preserve temporary-outage distinction, request generation and no implicit write replay.
 ## 5. Client decisions
 New visual UI Excluded; actual browser HTTP harness and retained Next regression Required.
+
+Angular and retained Next parsers accept only explicit system responses with empty Tenant/company metadata, companyId=0, super_admin role, empty companies/subscription and readOnly=false. Unknown/mixed scope is rejected. Angular reuses its current global shell, role-aware headers and system localization; no replacement UI controls are added.
+
 ## 6. Contracts
 New browser API returns typed sanitized SessionContext; csrf bootstrap/in-memory X-ERP-XSRF and exact-origin credentials. Next backend-session/cookies remain their existing owner.
+
+2026-11-09 corrective system-session increment (FOLLOW-032): eligible Super Admin authenticates without any Tenant or company. Canonical current contract and verification boundary: [system-session execution](SUPER_ADMIN_SYSTEM_SESSION_2026-11-09.md). This supersedes earlier company-only descriptions for this actor. Hosted rollout remains PROD-034; repository documentation baseline remains FOLLOW-033.
+
 ## 7. UI composition
 No screen created; reuse current shared UI unchanged. S2 preserves current design.
 ## 8. States
@@ -30,6 +36,8 @@ Existing EN/AR/themes/RTL/focus unchanged; HTTP harness not visual proof.
 Web stage Queued until API/browser transport Verified; retained auth regression for the current API increment passed. No client implementation/UI change.
 ## 15. Evidence and closure
 Current Next evidence and isolated browser probe/results registered; no nonexistent Angular paths. See verification/PREFLIGHT_PROOF_REPORT.md.
+
+System-session source, regression tests and current portable verification are registered in required-files.json. Historical R1/R2 receipts do not prove this correction; see SUPER_ADMIN_SYSTEM_SESSION_2026-11-09.md for its actual gate results.
 
 ## Current hosted runtime/key and Hub query correction — 2026-11-07
 

@@ -1,5 +1,6 @@
 using ErpSystem.Modules.Platform.Application.SessionValidation;
 using ErpSystem.Modules.Platform.Application.Tenancy;
+using ErpSystem.Modules.Platform.Contracts.Authentication.Tokens;
 
 namespace ErpSystem.Modules.Platform.Application.SessionValidation;
 
@@ -12,6 +13,13 @@ internal sealed class SessionValidationService(
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(request);
+
+        var system = request.SessionScope == AuthenticationTokenClaimNames.SystemSession;
+        if (system
+                ? request.TenantId.Length != 0 || request.CompanyId != 0
+                : request.SessionScope != AuthenticationTokenClaimNames.CompanySession ||
+                  string.IsNullOrWhiteSpace(request.TenantId) || request.CompanyId <= 0)
+            return new SessionValidationResult(false);
 
         var snapshot = await source.GetAsync(
             request.UserId,
@@ -39,10 +47,11 @@ internal sealed class SessionValidationService(
 
         var isValid =
             !snapshot.IsDisabled &&
+            !snapshot.IsArchived &&
+            (!system || snapshot.EmailConfirmed) &&
             (snapshot.LockoutEnd is null || snapshot.LockoutEnd <= now) &&
             string.Equals(snapshot.SecurityStamp, request.SecurityStamp, StringComparison.Ordinal) &&
-            tenantEligible &&
-            companyEligible &&
+            (system ? snapshot.IsSuperAdmin : tenantEligible && companyEligible) &&
             hasActiveSession;
 
         return new SessionValidationResult(isValid);

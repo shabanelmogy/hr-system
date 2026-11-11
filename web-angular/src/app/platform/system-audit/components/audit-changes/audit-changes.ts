@@ -37,7 +37,7 @@ export class AuditChanges {
     pageSizes: [10, 25, 50],
     textFilterFields: ['field', 'oldValue', 'newValue'],
     sortValues: {
-      field: (row) => row.field,
+      field: this.label,
       oldValue: (row) => row.oldValue,
       newValue: (row) => row.newValue,
     },

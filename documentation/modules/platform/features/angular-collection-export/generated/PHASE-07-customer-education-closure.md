@@ -87,4 +87,4 @@ Record one outcome:
 | angular-collection-export-web | 13 | `55b050a45687faf98ffdae6c1e861adedf4af7806a6984385063f1574191dd04` |
 | angular-collection-export-web | 14 | `ceb7eed7e891ef5e995670ebd004160eaf1bdb2f13844b26e9409dfdeda6d173` |
 | angular-collection-export-mobile | 14 | `ceb7eed7e891ef5e995670ebd004160eaf1bdb2f13844b26e9409dfdeda6d173` |
-| angular-collection-export-mobile | 15 | `c6f23a863122898d678aee894212a77e203a6b299b7e7d345794c47d1265cfc6` |
+| angular-collection-export-mobile | 15 | `83d879e9ab7872435646db453eac0de0f0d0e57c04107249e9e8ebd6145164ce` |

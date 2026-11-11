@@ -1,0 +1,57 @@
+
+> erp-angular@0.0.0 prebuild
+> npm run configure:license
+
+
+> erp-angular@0.0.0 configure:license
+> node --env-file-if-exists=.env.local scripts/configure-license.mjs
+
+PrimeUI local license configured (value omitted).
+
+> erp-angular@0.0.0 build
+> node scripts/run-angular.mjs build --configuration development --output-path ../.codex-tmp/field-focus-development-build
+
+API target: host (https://shabanhrms.runasp.net)
+> Building...
+√ Building...
+Initial chunk files | Names              |  Raw size
+chunk-CLICJ22Q.js   | -                  |   1.27 MB | 
+chunk-7NGTMG3Y.js   | -                  | 216.80 kB | 
+chunk-HWKQHVEH.js   | -                  | 160.97 kB | 
+chunk-5LLR75KI.js   | -                  | 136.42 kB | 
+chunk-3CFCBUJD.js   | -                  |  56.86 kB | 
+styles.css          | styles             |  26.53 kB | 
+chunk-N3CY6T2D.js   | -                  |  11.39 kB | 
+main.js             | main               |  10.39 kB | 
+chunk-IW4PEJPC.js   | -                  |   7.34 kB | 
+chunk-75MN6O5J.js   | -                  |   6.00 kB | 
+chunk-OWMQ3D2X.js   | -                  |   1.94 kB | 
+chunk-3NVMFZ52.js   | -                  |   1.02 kB | 
+chunk-H2VE4UR7.js   | -                  |   1.01 kB | 
+chunk-KHSETI5I.js   | -                  |  92 bytes | 
+chunk-3MCV5PEA.js   | -                  |  92 bytes | 
+
+                    | Initial total      |   1.91 MB
+
+Lazy chunk files    | Names              |  Raw size
+chunk-T5I5W7TV.js   | -                  |   1.92 MB | 
+chunk-MZGUZPHC.js   | -                  |   1.59 MB | 
+chunk-SJULFRAO.js   | xlsx               | 994.14 kB | 
+chunk-2L43CZXB.js   | -                  | 681.43 kB | 
+chunk-CHTE456T.js   | chart-renderer     | 461.44 kB | 
+chunk-FNUYZEAU.js   | -                  | 343.04 kB | 
+chunk-A7ZB3WMC.js   | -                  | 272.39 kB | 
+chunk-OI37T3SK.js   | core-json          | 203.85 kB | 
+chunk-V4FA3ES5.js   | public-api         | 175.85 kB | 
+chunk-XVPMKMZP.js   | -                  | 171.41 kB | 
+chunk-RT42PLUR.js   | -                  | 146.17 kB | 
+chunk-2HTVQJJK.js   | public-api         | 142.47 kB | 
+chunk-TCWHZHZ5.js   | public-api         | 140.07 kB | 
+chunk-MKYDPAFD.js   | public-api         | 139.19 kB | 
+chunk-6L2XKMNI.js   | platform-auth-json | 127.19 kB | 
+...and 97 more lazy chunks files. Use "--verbose" to show all the files.
+
+Application bundle generation complete. [22.774 seconds] - 2026-11-09T13:43:44.448Z
+
+Output location: G:\test\ERPSYSTEM\ERPSYSTEM\.codex-tmp\field-focus-development-build
+

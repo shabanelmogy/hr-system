@@ -390,6 +390,24 @@
       "layer": "web",
       "path": "web-angular/src/testing/fixture-item.ts",
       "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "shared-focus-20261109-_field-focus.scss",
+      "layer": "documentation",
+      "path": "web-angular/src/app/shared/ui/forms/fields/_field-focus.scss",
+      "purpose": "Shared compound focus contract and canonical foundation proof; runtime behavior ownership unchanged"
+    },
+    {
+      "id": "shared-focus-20261109-FIELD_FOCUS_CORRECTION_2026-11-09.md",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-form-foundation/FIELD_FOCUS_CORRECTION_2026-11-09.md",
+      "purpose": "Shared compound focus contract and canonical foundation proof; runtime behavior ownership unchanged"
+    },
+    {
+      "id": "shared-focus-20261109-verification.json",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-form-foundation/verification/field-focus-2026-11-09/verification.json",
+      "purpose": "Shared compound focus contract and canonical foundation proof; runtime behavior ownership unchanged"
     }
   ],
   "finalizationChecklist": [

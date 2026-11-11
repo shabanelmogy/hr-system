@@ -14,6 +14,9 @@ public static class AuthenticationTokenClaimNames
     public const string CompanyId = "company_id";
     public const string TenantRoleId = "tenant_role_id";
     public const string Scope = "scope";
+    public const string SessionScope = "session_scope";
+    public const string SystemSession = "system";
+    public const string CompanySession = "company";
     public const string RealtimeScope = "signalr";
     public const string CompanySelectionScope = "company_selection";
     public const string TenantSelectionScope = "tenant_selection";

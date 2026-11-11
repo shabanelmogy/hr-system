@@ -127,3 +127,40 @@ defaults. MyDataGrid coalesces transient vendor field/order initialization into 
 committed controlled pair. Actual Countries consumer and generic collection8/home14/
 language20/context24/reporting8 acceptance: angular-countries-read-workspace/
 IMPLEMENTATION_REPORT.md. Domain data/score/permissions remain feature-owned.
+
+## 16. Bounded collection controls — 2026-11-09
+
+CollectionFrame now reuses ScrollViewport for its search/actions/projected
+criteria, with natural content height capped at40% of its observed available height.
+The body/footer keep usable space in compact windows. The optional ScrollViewport
+maxBlockSize input preserves fill behavior for existing consumers. ResizeObserver
+avoids size-containment collapse in content-sized dialog grids. CollectionFooter
+reuses the Countries record-arrow group and page-size OptionSelect, with no Page menu;
+known counters and compact spacing are retained; unknown totals show the current record number only. Presentation
+is generic for Grid/Card consumers; no feature-owned layout override, API/schema,
+permission or Next/Mobile runtime change is included. The authorized scope and
+executed proof are owned by [Audit review corrections](../angular-system-audit-workspace/AUDIT_REVIEW_CORRECTIONS_2026-11-09.md).
+
+Landscape correction 2026-11-10: the existing collection scroller keeps the
+footer in normal flow rather than pinning it over the data. Acceptance must
+verify actual cell hit targets and row actions as well as footer geometry.
+Global page-size defaults are unchanged; the 25-record request is Audit-only.
+
+## 17. Sequential totals and compact composition — 2026-11-10
+
+CollectionQuery.pageAccess optionally marks sequential sources. Their reported
+hasNextPage remains authoritative even with a known total; last-page/random jumps
+stay unavailable. CollectionFooter shows the real count and Page N of M through
+its existing page-count region, while other known-total consumers retain the
+Countries composition. Missing totals retain current-record-only fallback.
+Footer selection projects into the existing page-context region so selection,
+record arrows and size share available width without an independent sibling.
+Below 416px content width the existing compact two-row arrangement applies.
+ActionButton's existing compactOnSmallScreens input now wins over quiet-button
+label/padding rules. CollectionFrame's inline-size container covers responsive
+consumers too, keeping simple search and the settings icon on the same row.
+These are generic shared corrections; there is no feature-local presentation fork.
+See [the Audit totals contract](../angular-system-audit-workspace/AUDIT_TOTALS_2026-11-10.md)
+for ownership and current verification evidence.
+
+Current local acceptance 2026-11-10: [executed evidence](../angular-system-audit-workspace/verification/audit-review-2026-11-09/README.md) records full Angular/API/SQL gates, 8 normal + 8 compact + 32 negative Audit cases, 20 layout contexts/36 snapshots with 20 matching Countries comparisons and 16 Report Manager cases. Same-row search/settings at 390/493px, selection, uncut footer, real totals and sequential navigation are verified. Hosted totals and SQL-volume latency remain PROD-035; native zoom/assistive-technology acceptance is not claimed.

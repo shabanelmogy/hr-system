@@ -61,3 +61,7 @@ Phase07 completed after Phase06 Verified. Arabic education: documentation/plans/
 S4-A4b Verified/Closed within its bounded local acceptance; PROD-030 remains a release check. Export implementation stays preserved/Queued and not accepted. Managed Error RPT/PDF is the next exact contract, followed by Settings and separate Language/Translation under Administration. Health/docs/jobs and final comprehensive Super Admin review remain Required.
 
 Native UI implementation is Excluded for this Angular-only refinement. Existing native/Next GET callers remain compatible; full API tests cover their unchanged request boundary. No mobile create/edit/view/list/mock change applies because no business property or workflow changes.
+
+## Historical evidence availability — 2026-11-09
+
+The [dated registry repair](../../../reporting/CURRENT_EVIDENCE_REPAIR_2026-11-09.md) retains the original missing raw-log entries in a central inventory. No runtime behavior changes in this feature. Historical claims keep their original dates and are not new execution proof. Current documentary completeness does not close hosted/native or other feature-owned acceptance; FOLLOW-025 retains historical availability.

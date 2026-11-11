@@ -142,7 +142,15 @@
     "summaryNote": "Review the subscription limits and enabled applications before creating the tenant. All sections are saved together.",
     "newTenant": "Your new tenant",
     "selectedModules": "Applications",
-    "selectedAreas": "Functional areas"
+    "selectedAreas": "Functional areas",
+    "accessEnabled": "Tenant access enabled.",
+    "deactivateHint": "Disable tenant access for its assigned users? Independent Super Admin access remains available. Tenant:",
+    "activate": "Activate tenant",
+    "accessError": "Unable to change tenant access. Review the current record or try again.",
+    "accessChange": "Change tenant access",
+    "activateHint": "Enable tenant access for its assigned users? Tenant:",
+    "accessDisabled": "Tenant access disabled.",
+    "deactivate": "Deactivate tenant"
   },
   "tenantAdmins": {
     "unassignedTenant": "No assigned Tenant",

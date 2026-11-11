@@ -23,7 +23,7 @@ export async function auditTestSetup(beforeInject?: () => void) {
     },
   );
   const filters = signal<AuditFilters>(emptyAuditFilters);
-  const query = { scopeKey: 'audit-test', criteriaKey: 'all', pageIndex: 0, pageSize: 50 };
+  const query = { scopeKey: 'audit-test', criteriaKey: 'all', pageIndex: 0, pageSize: 25 };
   const optionView = signal<ReadState<readonly AuditModuleFilter[]>>({
     kind: 'ready',
     data: [

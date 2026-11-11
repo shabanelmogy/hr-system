@@ -1,0 +1,818 @@
+[
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "geometry": {
+      "iconInside": true,
+      "rows": [
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 62,
+          "padding": 12,
+          "gap": 10
+        }
+      ]
+    },
+    "badges": [
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 44
+      }
+    ],
+    "passed": true,
+    "writes": 0
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 900,
+    "height": 640,
+    "geometry": {
+      "iconInside": true,
+      "rows": [
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        }
+      ]
+    },
+    "badges": [
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      }
+    ],
+    "passed": true,
+    "writes": 0
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "height": 900,
+    "geometry": {
+      "iconInside": true,
+      "rows": [
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        }
+      ]
+    },
+    "badges": [
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      }
+    ],
+    "passed": true,
+    "writes": 0
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 844,
+    "height": 390,
+    "geometry": {
+      "iconInside": true,
+      "rows": [
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        }
+      ]
+    },
+    "badges": [
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      }
+    ],
+    "passed": true,
+    "writes": 0
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "geometry": {
+      "iconInside": true,
+      "rows": [
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 62,
+          "padding": 12,
+          "gap": 10
+        }
+      ]
+    },
+    "badges": [
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 44
+      }
+    ],
+    "passed": true,
+    "writes": 0
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 900,
+    "height": 640,
+    "geometry": {
+      "iconInside": true,
+      "rows": [
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        }
+      ]
+    },
+    "badges": [
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      }
+    ],
+    "passed": true,
+    "writes": 0
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "height": 900,
+    "geometry": {
+      "iconInside": true,
+      "rows": [
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        }
+      ]
+    },
+    "badges": [
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      }
+    ],
+    "passed": true,
+    "writes": 0
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 844,
+    "height": 390,
+    "geometry": {
+      "iconInside": true,
+      "rows": [
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        }
+      ]
+    },
+    "badges": [
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      }
+    ],
+    "passed": true,
+    "writes": 0
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "height": 844,
+    "geometry": {
+      "iconInside": true,
+      "rows": [
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        }
+      ]
+    },
+    "badges": [
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 44
+      }
+    ],
+    "passed": true,
+    "writes": 0
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 900,
+    "height": 640,
+    "geometry": {
+      "iconInside": true,
+      "rows": [
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        }
+      ]
+    },
+    "badges": [
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      }
+    ],
+    "passed": true,
+    "writes": 0
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "height": 900,
+    "geometry": {
+      "iconInside": true,
+      "rows": [
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        }
+      ]
+    },
+    "badges": [
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      }
+    ],
+    "passed": true,
+    "writes": 0
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 844,
+    "height": 390,
+    "geometry": {
+      "iconInside": true,
+      "rows": [
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        }
+      ]
+    },
+    "badges": [
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      }
+    ],
+    "passed": true,
+    "writes": 0
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "height": 844,
+    "geometry": {
+      "iconInside": true,
+      "rows": [
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        }
+      ]
+    },
+    "badges": [
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 44
+      }
+    ],
+    "passed": true,
+    "writes": 0
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 900,
+    "height": 640,
+    "geometry": {
+      "iconInside": true,
+      "rows": [
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        }
+      ]
+    },
+    "badges": [
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      }
+    ],
+    "passed": true,
+    "writes": 0
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "height": 900,
+    "geometry": {
+      "iconInside": true,
+      "rows": [
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        }
+      ]
+    },
+    "badges": [
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      }
+    ],
+    "passed": true,
+    "writes": 0
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 844,
+    "height": 390,
+    "geometry": {
+      "iconInside": true,
+      "rows": [
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        },
+        {
+          "height": 41,
+          "padding": 12,
+          "gap": 10
+        }
+      ]
+    },
+    "badges": [
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      },
+      {
+        "inside": true,
+        "height": 26
+      }
+    ],
+    "passed": true,
+    "writes": 0
+  }
+]

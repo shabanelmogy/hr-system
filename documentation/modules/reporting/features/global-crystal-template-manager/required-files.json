@@ -28,7 +28,8 @@
       "path": "web-angular/src/app/modules/reporting/global-template-manager/components",
       "patterns": [
         "**/*.ts",
-        "**/*.html"
+        "**/*.html",
+        "**/*.scss"
       ],
       "minimumFiles": 14,
       "layer": "web",
@@ -3295,6 +3296,254 @@
       "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
     },
     {
+      "id": "runtime-key-hub-repair-19",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/private-package-manifest.json",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-20",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/publish-pipeline.json",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-21",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/verification.json",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "runtime-key-hub-repair-22",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-super-admin-hosted-read.mjs",
+      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
+    },
+    {
+      "id": "current-evidence-repair-20261109",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/CURRENT_EVIDENCE_REPAIR_2026-11-09.md",
+      "purpose": "Explicit historical raw-log loss and current proof/acceptance boundaries; no historical rerun is claimed"
+    },
+    {
+      "id": "historical-log-inventory-20261109",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/verification/MISSING_HISTORICAL_LOGS_2026-11-09.json",
+      "purpose": "Original unavailable required-file records retained verbatim with owner and date"
+    },
+    {
+      "id": "manager-review-20261109-0",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/MANAGER_REVIEW_CORRECTIONS_2026-11-09.md",
+      "purpose": "Authorized manager corrective contract, shared presentation or behavioral regression evidence"
+    },
+    {
+      "id": "manager-review-20261109-1",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportAccessScopeTests.cs",
+      "purpose": "Authorized manager corrective contract, shared presentation or behavioral regression evidence"
+    },
+    {
+      "id": "manager-review-20261109-4",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/components/global-template-list/global-template-list.scss",
+      "purpose": "Authorized manager corrective contract, shared presentation or behavioral regression evidence"
+    },
+    {
+      "id": "manager-review-20261109-5",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-report-manager-review-browser.mjs",
+      "purpose": "Authorized manager corrective contract, shared presentation or behavioral regression evidence"
+    },
+    {
+      "id": "manager-review-proof-20261109-0",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/angular-build.txt",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-1",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/angular-check.txt",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-2",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/angular-focused.txt",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-3",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/api-build-release.txt",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-4",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/api-focused.txt",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-5",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/api-restore-release.txt",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-6",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/api-tests-release-local-sql.txt",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-7",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/api-trx-counters.json",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-8",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/audit-ar-dark-844x390.png",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-9",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/audit-en-light-1440x900.png",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-10",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/browser-designer.txt",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-11",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/browser-pagination.txt",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-12",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/browser-registration.txt",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-13",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/browser-review.txt",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-14",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/browser-sidebar.txt",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-15",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/designer-browser.json",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-16",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/docs-check.txt",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-17",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/manager-browser.json",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-18",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/pagination-browser.json",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-19",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/registration-browser.json",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-20",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/sidebar-browser.json",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-review-proof-20261109-21",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/verification.json",
+      "purpose": "Current dated corrective execution, initial-failure record, source hashes or browser fixture proof; no historical/native acceptance implied"
+    },
+    {
+      "id": "manager-final-proof-20261109-0",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/api-build-release-clean.txt",
+      "purpose": "Final clean rebuild, explicitly retained failed full Angular run, or current planning gate"
+    },
+    {
+      "id": "manager-final-proof-20261109-1",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/angular-check-final.txt",
+      "purpose": "Final clean rebuild, explicitly retained failed full Angular run, or current planning gate"
+    },
+    {
+      "id": "manager-final-proof-20261109-2",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/planning-check.txt",
+      "purpose": "Final clean rebuild, explicitly retained failed full Angular run, or current planning gate"
+    },
+    {
+      "id": "manager-review-final-angular-check-bounded-workers",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-review-2026-11-09/angular-check-bounded-workers.txt",
+      "purpose": "Dated final execution or retained unsuccessful attempt; no historical/native acceptance inferred"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in global-crystal-template-manager-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from global-crystal-template-manager-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/reporting/features/global-crystal-template-manager/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ],
+  "canonicalBooks": {
+    "master": "documentation/modules/reporting/features/global-crystal-template-manager/global-crystal-template-manager-review.md",
+    "api": "documentation/modules/reporting/features/global-crystal-template-manager/global-crystal-template-manager-api.md",
+    "web": "documentation/modules/reporting/features/global-crystal-template-manager/global-crystal-template-manager-web.md",
+    "mobile": "documentation/modules/reporting/features/global-crystal-template-manager/global-crystal-template-manager-mobile.md"
+  },
+  "remainingWork": [],
+  "unavailableHistoricalEvidence": [
+    {
       "id": "runtime-key-hub-repair-10",
       "layer": "documentation",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/logs/angular-script-format.log",
@@ -3349,30 +3598,6 @@
       "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
     },
     {
-      "id": "runtime-key-hub-repair-19",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/private-package-manifest.json",
-      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
-    },
-    {
-      "id": "runtime-key-hub-repair-20",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/publish-pipeline.json",
-      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
-    },
-    {
-      "id": "runtime-key-hub-repair-21",
-      "layer": "documentation",
-      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/verification.json",
-      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
-    },
-    {
-      "id": "runtime-key-hub-repair-22",
-      "layer": "web",
-      "path": "web-angular/scripts/verify-super-admin-hosted-read.mjs",
-      "purpose": "Verified corrective source or sanitized runtime/hosting acceptance"
-    },
-    {
       "id": "runtime-key-final-proof-1",
       "layer": "documentation",
       "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/runtime-key-repair-2026-11-07/logs/documentation-check.log",
@@ -3397,34 +3622,12 @@
       "purpose": "Executed final x64 runtime/documentation acceptance"
     }
   ],
-  "finalizationChecklist": [
-    "Replace every placeholder in the review artifact.",
-    "Complete the Existing-System Relationship Review and every decision in global-crystal-template-manager-request.md before implementation.",
-    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
-    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
-    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
-    "Remove every remaining placeholder from global-crystal-template-manager-request.md before runtime implementation.",
-    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
-    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
-    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
-    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
-    "Add source collections with evidence-based minimum file counts.",
-    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
-    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
-    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
-    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
-    "Write generated packets under documentation/modules/reporting/features/global-crystal-template-manager/generated/.",
-    "Run generation and then Generate-Documentation.ps1 -Check.",
-    "Complete phase 06 with an explicit verification decision.",
-    "Do not start customer-facing education until phase 06 records Verified.",
-    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
-    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
-  ],
-  "canonicalBooks": {
-    "master": "documentation/modules/reporting/features/global-crystal-template-manager/global-crystal-template-manager-review.md",
-    "api": "documentation/modules/reporting/features/global-crystal-template-manager/global-crystal-template-manager-api.md",
-    "web": "documentation/modules/reporting/features/global-crystal-template-manager/global-crystal-template-manager-web.md",
-    "mobile": "documentation/modules/reporting/features/global-crystal-template-manager/global-crystal-template-manager-mobile.md"
-  },
-  "remainingWork": []
+  "evidenceRepair20261109": {
+    "date": "2026-11-09",
+    "missingHistoricalLogs": 13,
+    "inventory": "documentation/modules/reporting/verification/MISSING_HISTORICAL_LOGS_2026-11-09.json",
+    "policy": "documentation/modules/reporting/CURRENT_EVIDENCE_REPAIR_2026-11-09.md",
+    "historicalRawEvidenceRecovered": false,
+    "nativeOrHostedRerunClaimed": false
+  }
 }

@@ -2,6 +2,7 @@ import * as z from 'zod/mini';
 import { auditColumnFilterJson } from './audit-column-filters';
 
 export const auditActions = ['Created', 'Modified', 'Deleted', 'Restored'] as const;
+export const auditPageSize = 25;
 const action = z.enum(auditActions);
 const identifier = z.string().check(
   z.minLength(1),
@@ -24,7 +25,13 @@ const item = z.object({
   correlationId: z.nullable(z.string()),
   changeCount: z.int().check(z.minimum(0)),
 });
-const page = z.object({ items: z.array(item), nextCursor: z.nullable(cursor) });
+const page = z.object({
+  items: z.array(item),
+  nextCursor: z.nullable(cursor),
+  totalCount: z.optional(
+    z.nullable(z.int().check(z.minimum(0), z.maximum(Number.MAX_SAFE_INTEGER))),
+  ),
+});
 const detail = z.object({
   entry: item,
   changes: z.array(
@@ -66,7 +73,10 @@ export function auditKey(entry: AuditIdentity): string {
 }
 export function parseAuditPage(value: unknown): AuditPage {
   const result = page.parse(value);
-  if (result.items.length > 50 || new Set(result.items.map(auditKey)).size !== result.items.length)
+  if (
+    result.items.length > auditPageSize ||
+    new Set(result.items.map(auditKey)).size !== result.items.length
+  )
     throw Error('Invalid audit collection identities or page size');
   return result;
 }
@@ -90,7 +100,7 @@ export function auditParameters(input: AuditCriteria, next: string | null): Reco
   auditColumnFilterJson(query.columnFilters);
   if (query.fromUtc && query.toUtc && Date.parse(query.fromUtc) > Date.parse(query.toUtc))
     throw Error('Invalid audit date range');
-  const params: Record<string, string> = { pageSize: '50' };
+  const params: Record<string, string> = { pageSize: String(auditPageSize) };
   for (const [key, value] of Object.entries(query)) if (value !== undefined) params[key] = value;
   if (next !== null) params['cursor'] = cursor.parse(next);
   return params;

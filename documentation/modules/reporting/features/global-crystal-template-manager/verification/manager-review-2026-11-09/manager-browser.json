@@ -1,0 +1,1806 @@
+[
+  {
+    "scenario": {
+      "language": "en",
+      "mode": "light",
+      "palette": "green",
+      "width": 1440,
+      "height": 900
+    },
+    "geometry": {
+      "footer": {
+        "x": 105,
+        "y": 802,
+        "width": 1294,
+        "height": 57,
+        "top": 802,
+        "right": 1399,
+        "bottom": 859,
+        "left": 105
+      },
+      "height": 900,
+      "visibleRows": 10,
+      "tableScrollHeight": 573,
+      "tableClientHeight": 537,
+      "footerWithinViewport": true,
+      "outerScrollers": [
+        {
+          "tag": "DIV",
+          "cls": "p-datatable-table-container erp-native-scrollbar",
+          "height": 537,
+          "scroll": 573
+        }
+      ]
+    },
+    "navigationGeometry": [
+      {
+        "expanded": true,
+        "footer": {
+          "x": 321,
+          "y": 802,
+          "width": 1078,
+          "height": 57,
+          "top": 802,
+          "right": 1399,
+          "bottom": 859,
+          "left": 321
+        },
+        "height": 900,
+        "visibleRows": 10,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 537,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 537,
+            "scroll": 573
+          }
+        ]
+      },
+      {
+        "expanded": false,
+        "footer": {
+          "x": 105,
+          "y": 802,
+          "width": 1294,
+          "height": 57,
+          "top": 802,
+          "right": 1399,
+          "bottom": 859,
+          "left": 105
+        },
+        "height": 900,
+        "visibleRows": 10,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 537,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 537,
+            "scroll": 573
+          }
+        ]
+      }
+    ],
+    "footerButtons": [
+      {
+        "text": "«Go to first record ",
+        "label": "Go to first record",
+        "disabled": true
+      },
+      {
+        "text": "‹Go to previous record ",
+        "label": "Go to previous record",
+        "disabled": true
+      },
+      {
+        "text": "›Go to next record ",
+        "label": "Go to next record",
+        "disabled": false
+      },
+      {
+        "text": "»Go to last record ",
+        "label": "Go to last record",
+        "disabled": false
+      }
+    ],
+    "failureEvidence": {
+      "visibleInDialog": true,
+      "presentBehindDialog": true
+    },
+    "errors": []
+  },
+  {
+    "scenario": {
+      "language": "en",
+      "mode": "light",
+      "palette": "green",
+      "width": 1152,
+      "height": 720
+    },
+    "geometry": {
+      "footer": {
+        "x": 105,
+        "y": 622,
+        "width": 1006,
+        "height": 57,
+        "top": 622,
+        "right": 1111,
+        "bottom": 679,
+        "left": 105
+      },
+      "height": 720,
+      "visibleRows": 7,
+      "tableScrollHeight": 573,
+      "tableClientHeight": 357,
+      "footerWithinViewport": true,
+      "outerScrollers": [
+        {
+          "tag": "DIV",
+          "cls": "p-datatable-table-container erp-native-scrollbar",
+          "height": 357,
+          "scroll": 573
+        }
+      ]
+    },
+    "navigationGeometry": [
+      {
+        "expanded": true,
+        "footer": {
+          "x": 321,
+          "y": 622,
+          "width": 790,
+          "height": 57,
+          "top": 622,
+          "right": 1111,
+          "bottom": 679,
+          "left": 321
+        },
+        "height": 720,
+        "visibleRows": 7,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 357,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 357,
+            "scroll": 573
+          }
+        ]
+      },
+      {
+        "expanded": false,
+        "footer": {
+          "x": 105,
+          "y": 622,
+          "width": 1006,
+          "height": 57,
+          "top": 622,
+          "right": 1111,
+          "bottom": 679,
+          "left": 105
+        },
+        "height": 720,
+        "visibleRows": 7,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 357,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 357,
+            "scroll": 573
+          }
+        ]
+      }
+    ],
+    "footerButtons": [
+      {
+        "text": "«Go to first record ",
+        "label": "Go to first record",
+        "disabled": true
+      },
+      {
+        "text": "‹Go to previous record ",
+        "label": "Go to previous record",
+        "disabled": true
+      },
+      {
+        "text": "›Go to next record ",
+        "label": "Go to next record",
+        "disabled": false
+      },
+      {
+        "text": "»Go to last record ",
+        "label": "Go to last record",
+        "disabled": false
+      }
+    ],
+    "errors": []
+  },
+  {
+    "scenario": {
+      "language": "en",
+      "mode": "light",
+      "palette": "green",
+      "width": 844,
+      "height": 390
+    },
+    "geometry": {
+      "footer": {
+        "x": 33,
+        "y": 308,
+        "width": 778,
+        "height": 57,
+        "top": 308,
+        "right": 811,
+        "bottom": 365,
+        "left": 33
+      },
+      "height": 390,
+      "visibleRows": 2,
+      "tableScrollHeight": 573,
+      "tableClientHeight": 110,
+      "footerWithinViewport": true,
+      "outerScrollers": [
+        {
+          "tag": "DIV",
+          "cls": "p-datatable-table-container erp-native-scrollbar",
+          "height": 110,
+          "scroll": 573
+        }
+      ]
+    },
+    "navigationGeometry": [
+      {
+        "expanded": true,
+        "footer": {
+          "x": 33,
+          "y": 308,
+          "width": 778,
+          "height": 57,
+          "top": 308,
+          "right": 811,
+          "bottom": 365,
+          "left": 33
+        },
+        "height": 390,
+        "visibleRows": 2,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 110,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 110,
+            "scroll": 573
+          },
+          {
+            "tag": "P-SCROLLAREA-VIEWPORT",
+            "cls": "scroll-viewport p-scrollarea-viewport",
+            "height": 324,
+            "scroll": 330
+          }
+        ]
+      },
+      {
+        "expanded": false,
+        "footer": {
+          "x": 33,
+          "y": 308,
+          "width": 778,
+          "height": 57,
+          "top": 308,
+          "right": 811,
+          "bottom": 365,
+          "left": 33
+        },
+        "height": 390,
+        "visibleRows": 2,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 110,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 110,
+            "scroll": 573
+          }
+        ]
+      }
+    ],
+    "footerButtons": [
+      {
+        "text": "«Go to first record ",
+        "label": "Go to first record",
+        "disabled": true
+      },
+      {
+        "text": "‹Go to previous record ",
+        "label": "Go to previous record",
+        "disabled": true
+      },
+      {
+        "text": "›Go to next record ",
+        "label": "Go to next record",
+        "disabled": false
+      },
+      {
+        "text": "»Go to last record ",
+        "label": "Go to last record",
+        "disabled": false
+      }
+    ],
+    "errors": []
+  },
+  {
+    "scenario": {
+      "language": "en",
+      "mode": "light",
+      "palette": "green",
+      "width": 390,
+      "height": 844
+    },
+    "geometry": {
+      "footer": {
+        "x": 25,
+        "y": 778,
+        "width": 340,
+        "height": 41,
+        "top": 778,
+        "right": 365,
+        "bottom": 819,
+        "left": 25
+      },
+      "height": 844,
+      "visibleRows": 10,
+      "tableScrollHeight": 573,
+      "tableClientHeight": 559,
+      "footerWithinViewport": true,
+      "outerScrollers": [
+        {
+          "tag": "DIV",
+          "cls": "p-datatable-table-container erp-native-scrollbar",
+          "height": 559,
+          "scroll": 573
+        }
+      ]
+    },
+    "navigationGeometry": [
+      {
+        "expanded": true,
+        "footer": {
+          "x": 25,
+          "y": 778,
+          "width": 340,
+          "height": 41,
+          "top": 778,
+          "right": 365,
+          "bottom": 819,
+          "left": 25
+        },
+        "height": 844,
+        "visibleRows": 10,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 559,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 559,
+            "scroll": 573
+          }
+        ]
+      },
+      {
+        "expanded": false,
+        "footer": {
+          "x": 25,
+          "y": 778,
+          "width": 340,
+          "height": 41,
+          "top": 778,
+          "right": 365,
+          "bottom": 819,
+          "left": 25
+        },
+        "height": 844,
+        "visibleRows": 10,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 559,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 559,
+            "scroll": 573
+          }
+        ]
+      }
+    ],
+    "footerButtons": [
+      {
+        "text": "«Go to first record ",
+        "label": "Go to first record",
+        "disabled": true
+      },
+      {
+        "text": "‹Go to previous record ",
+        "label": "Go to previous record",
+        "disabled": true
+      },
+      {
+        "text": "›Go to next record ",
+        "label": "Go to next record",
+        "disabled": false
+      },
+      {
+        "text": "»Go to last record ",
+        "label": "Go to last record",
+        "disabled": false
+      }
+    ],
+    "errors": []
+  },
+  {
+    "scenario": {
+      "language": "en",
+      "mode": "dark",
+      "palette": "green",
+      "width": 1440,
+      "height": 900
+    },
+    "geometry": {
+      "footer": {
+        "x": 105,
+        "y": 802,
+        "width": 1294,
+        "height": 57,
+        "top": 802,
+        "right": 1399,
+        "bottom": 859,
+        "left": 105
+      },
+      "height": 900,
+      "visibleRows": 10,
+      "tableScrollHeight": 573,
+      "tableClientHeight": 537,
+      "footerWithinViewport": true,
+      "outerScrollers": [
+        {
+          "tag": "DIV",
+          "cls": "p-datatable-table-container erp-native-scrollbar",
+          "height": 537,
+          "scroll": 573
+        }
+      ]
+    },
+    "navigationGeometry": [
+      {
+        "expanded": true,
+        "footer": {
+          "x": 321,
+          "y": 802,
+          "width": 1078,
+          "height": 57,
+          "top": 802,
+          "right": 1399,
+          "bottom": 859,
+          "left": 321
+        },
+        "height": 900,
+        "visibleRows": 10,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 537,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 537,
+            "scroll": 573
+          }
+        ]
+      },
+      {
+        "expanded": false,
+        "footer": {
+          "x": 105,
+          "y": 802,
+          "width": 1294,
+          "height": 57,
+          "top": 802,
+          "right": 1399,
+          "bottom": 859,
+          "left": 105
+        },
+        "height": 900,
+        "visibleRows": 10,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 537,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 537,
+            "scroll": 573
+          }
+        ]
+      }
+    ],
+    "footerButtons": [
+      {
+        "text": "«Go to first record ",
+        "label": "Go to first record",
+        "disabled": true
+      },
+      {
+        "text": "‹Go to previous record ",
+        "label": "Go to previous record",
+        "disabled": true
+      },
+      {
+        "text": "›Go to next record ",
+        "label": "Go to next record",
+        "disabled": false
+      },
+      {
+        "text": "»Go to last record ",
+        "label": "Go to last record",
+        "disabled": false
+      }
+    ],
+    "errors": []
+  },
+  {
+    "scenario": {
+      "language": "en",
+      "mode": "dark",
+      "palette": "green",
+      "width": 1152,
+      "height": 720
+    },
+    "geometry": {
+      "footer": {
+        "x": 105,
+        "y": 622,
+        "width": 1006,
+        "height": 57,
+        "top": 622,
+        "right": 1111,
+        "bottom": 679,
+        "left": 105
+      },
+      "height": 720,
+      "visibleRows": 7,
+      "tableScrollHeight": 573,
+      "tableClientHeight": 357,
+      "footerWithinViewport": true,
+      "outerScrollers": [
+        {
+          "tag": "DIV",
+          "cls": "p-datatable-table-container erp-native-scrollbar",
+          "height": 357,
+          "scroll": 573
+        }
+      ]
+    },
+    "navigationGeometry": [
+      {
+        "expanded": true,
+        "footer": {
+          "x": 321,
+          "y": 622,
+          "width": 790,
+          "height": 57,
+          "top": 622,
+          "right": 1111,
+          "bottom": 679,
+          "left": 321
+        },
+        "height": 720,
+        "visibleRows": 7,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 357,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 357,
+            "scroll": 573
+          }
+        ]
+      },
+      {
+        "expanded": false,
+        "footer": {
+          "x": 105,
+          "y": 622,
+          "width": 1006,
+          "height": 57,
+          "top": 622,
+          "right": 1111,
+          "bottom": 679,
+          "left": 105
+        },
+        "height": 720,
+        "visibleRows": 7,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 357,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 357,
+            "scroll": 573
+          }
+        ]
+      }
+    ],
+    "footerButtons": [
+      {
+        "text": "«Go to first record ",
+        "label": "Go to first record",
+        "disabled": true
+      },
+      {
+        "text": "‹Go to previous record ",
+        "label": "Go to previous record",
+        "disabled": true
+      },
+      {
+        "text": "›Go to next record ",
+        "label": "Go to next record",
+        "disabled": false
+      },
+      {
+        "text": "»Go to last record ",
+        "label": "Go to last record",
+        "disabled": false
+      }
+    ],
+    "errors": []
+  },
+  {
+    "scenario": {
+      "language": "en",
+      "mode": "dark",
+      "palette": "green",
+      "width": 844,
+      "height": 390
+    },
+    "geometry": {
+      "footer": {
+        "x": 33,
+        "y": 308,
+        "width": 778,
+        "height": 57,
+        "top": 308,
+        "right": 811,
+        "bottom": 365,
+        "left": 33
+      },
+      "height": 390,
+      "visibleRows": 2,
+      "tableScrollHeight": 573,
+      "tableClientHeight": 110,
+      "footerWithinViewport": true,
+      "outerScrollers": [
+        {
+          "tag": "DIV",
+          "cls": "p-datatable-table-container erp-native-scrollbar",
+          "height": 110,
+          "scroll": 573
+        }
+      ]
+    },
+    "navigationGeometry": [
+      {
+        "expanded": true,
+        "footer": {
+          "x": 33,
+          "y": 308,
+          "width": 778,
+          "height": 57,
+          "top": 308,
+          "right": 811,
+          "bottom": 365,
+          "left": 33
+        },
+        "height": 390,
+        "visibleRows": 2,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 110,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 110,
+            "scroll": 573
+          },
+          {
+            "tag": "P-SCROLLAREA-VIEWPORT",
+            "cls": "scroll-viewport p-scrollarea-viewport",
+            "height": 324,
+            "scroll": 330
+          }
+        ]
+      },
+      {
+        "expanded": false,
+        "footer": {
+          "x": 33,
+          "y": 308,
+          "width": 778,
+          "height": 57,
+          "top": 308,
+          "right": 811,
+          "bottom": 365,
+          "left": 33
+        },
+        "height": 390,
+        "visibleRows": 2,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 110,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 110,
+            "scroll": 573
+          }
+        ]
+      }
+    ],
+    "footerButtons": [
+      {
+        "text": "«Go to first record ",
+        "label": "Go to first record",
+        "disabled": true
+      },
+      {
+        "text": "‹Go to previous record ",
+        "label": "Go to previous record",
+        "disabled": true
+      },
+      {
+        "text": "›Go to next record ",
+        "label": "Go to next record",
+        "disabled": false
+      },
+      {
+        "text": "»Go to last record ",
+        "label": "Go to last record",
+        "disabled": false
+      }
+    ],
+    "errors": []
+  },
+  {
+    "scenario": {
+      "language": "en",
+      "mode": "dark",
+      "palette": "green",
+      "width": 390,
+      "height": 844
+    },
+    "geometry": {
+      "footer": {
+        "x": 25,
+        "y": 778,
+        "width": 340,
+        "height": 41,
+        "top": 778,
+        "right": 365,
+        "bottom": 819,
+        "left": 25
+      },
+      "height": 844,
+      "visibleRows": 10,
+      "tableScrollHeight": 573,
+      "tableClientHeight": 559,
+      "footerWithinViewport": true,
+      "outerScrollers": [
+        {
+          "tag": "DIV",
+          "cls": "p-datatable-table-container erp-native-scrollbar",
+          "height": 559,
+          "scroll": 573
+        }
+      ]
+    },
+    "navigationGeometry": [
+      {
+        "expanded": true,
+        "footer": {
+          "x": 25,
+          "y": 778,
+          "width": 340,
+          "height": 41,
+          "top": 778,
+          "right": 365,
+          "bottom": 819,
+          "left": 25
+        },
+        "height": 844,
+        "visibleRows": 10,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 559,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 559,
+            "scroll": 573
+          }
+        ]
+      },
+      {
+        "expanded": false,
+        "footer": {
+          "x": 25,
+          "y": 778,
+          "width": 340,
+          "height": 41,
+          "top": 778,
+          "right": 365,
+          "bottom": 819,
+          "left": 25
+        },
+        "height": 844,
+        "visibleRows": 10,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 559,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 559,
+            "scroll": 573
+          }
+        ]
+      }
+    ],
+    "footerButtons": [
+      {
+        "text": "«Go to first record ",
+        "label": "Go to first record",
+        "disabled": true
+      },
+      {
+        "text": "‹Go to previous record ",
+        "label": "Go to previous record",
+        "disabled": true
+      },
+      {
+        "text": "›Go to next record ",
+        "label": "Go to next record",
+        "disabled": false
+      },
+      {
+        "text": "»Go to last record ",
+        "label": "Go to last record",
+        "disabled": false
+      }
+    ],
+    "errors": []
+  },
+  {
+    "scenario": {
+      "language": "ar",
+      "mode": "light",
+      "palette": "green",
+      "width": 1440,
+      "height": 900
+    },
+    "geometry": {
+      "footer": {
+        "x": 41,
+        "y": 802,
+        "width": 1294,
+        "height": 57,
+        "top": 802,
+        "right": 1335,
+        "bottom": 859,
+        "left": 41
+      },
+      "height": 900,
+      "visibleRows": 10,
+      "tableScrollHeight": 573,
+      "tableClientHeight": 537,
+      "footerWithinViewport": true,
+      "outerScrollers": [
+        {
+          "tag": "DIV",
+          "cls": "p-datatable-table-container erp-native-scrollbar",
+          "height": 537,
+          "scroll": 573
+        }
+      ]
+    },
+    "navigationGeometry": [
+      {
+        "expanded": true,
+        "footer": {
+          "x": 41,
+          "y": 802,
+          "width": 1078,
+          "height": 57,
+          "top": 802,
+          "right": 1119,
+          "bottom": 859,
+          "left": 41
+        },
+        "height": 900,
+        "visibleRows": 10,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 537,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 537,
+            "scroll": 573
+          }
+        ]
+      },
+      {
+        "expanded": false,
+        "footer": {
+          "x": 41,
+          "y": 802,
+          "width": 1294,
+          "height": 57,
+          "top": 802,
+          "right": 1335,
+          "bottom": 859,
+          "left": 41
+        },
+        "height": 900,
+        "visibleRows": 10,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 537,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 537,
+            "scroll": 573
+          }
+        ]
+      }
+    ],
+    "footerButtons": [
+      {
+        "text": "«الذهاب للسجل الاول ",
+        "label": "الذهاب للسجل الاول",
+        "disabled": true
+      },
+      {
+        "text": "‹الذهاب للسجل السابق ",
+        "label": "الذهاب للسجل السابق",
+        "disabled": true
+      },
+      {
+        "text": "›الذهاب للسجل التالى ",
+        "label": "الذهاب للسجل التالى",
+        "disabled": false
+      },
+      {
+        "text": "»الذهاب للسجل الاخير ",
+        "label": "الذهاب للسجل الاخير",
+        "disabled": false
+      }
+    ],
+    "errors": []
+  },
+  {
+    "scenario": {
+      "language": "ar",
+      "mode": "light",
+      "palette": "green",
+      "width": 1152,
+      "height": 720
+    },
+    "geometry": {
+      "footer": {
+        "x": 41,
+        "y": 622,
+        "width": 1006,
+        "height": 57,
+        "top": 622,
+        "right": 1047,
+        "bottom": 679,
+        "left": 41
+      },
+      "height": 720,
+      "visibleRows": 7,
+      "tableScrollHeight": 573,
+      "tableClientHeight": 357,
+      "footerWithinViewport": true,
+      "outerScrollers": [
+        {
+          "tag": "DIV",
+          "cls": "p-datatable-table-container erp-native-scrollbar",
+          "height": 357,
+          "scroll": 573
+        }
+      ]
+    },
+    "navigationGeometry": [
+      {
+        "expanded": true,
+        "footer": {
+          "x": 41,
+          "y": 622,
+          "width": 790,
+          "height": 57,
+          "top": 622,
+          "right": 831,
+          "bottom": 679,
+          "left": 41
+        },
+        "height": 720,
+        "visibleRows": 7,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 357,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 357,
+            "scroll": 573
+          }
+        ]
+      },
+      {
+        "expanded": false,
+        "footer": {
+          "x": 41,
+          "y": 622,
+          "width": 1006,
+          "height": 57,
+          "top": 622,
+          "right": 1047,
+          "bottom": 679,
+          "left": 41
+        },
+        "height": 720,
+        "visibleRows": 7,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 357,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 357,
+            "scroll": 573
+          }
+        ]
+      }
+    ],
+    "footerButtons": [
+      {
+        "text": "«الذهاب للسجل الاول ",
+        "label": "الذهاب للسجل الاول",
+        "disabled": true
+      },
+      {
+        "text": "‹الذهاب للسجل السابق ",
+        "label": "الذهاب للسجل السابق",
+        "disabled": true
+      },
+      {
+        "text": "›الذهاب للسجل التالى ",
+        "label": "الذهاب للسجل التالى",
+        "disabled": false
+      },
+      {
+        "text": "»الذهاب للسجل الاخير ",
+        "label": "الذهاب للسجل الاخير",
+        "disabled": false
+      }
+    ],
+    "errors": []
+  },
+  {
+    "scenario": {
+      "language": "ar",
+      "mode": "light",
+      "palette": "green",
+      "width": 844,
+      "height": 390
+    },
+    "geometry": {
+      "footer": {
+        "x": 33,
+        "y": 308,
+        "width": 778,
+        "height": 57,
+        "top": 308,
+        "right": 811,
+        "bottom": 365,
+        "left": 33
+      },
+      "height": 390,
+      "visibleRows": 2,
+      "tableScrollHeight": 573,
+      "tableClientHeight": 110,
+      "footerWithinViewport": true,
+      "outerScrollers": [
+        {
+          "tag": "DIV",
+          "cls": "p-datatable-table-container erp-native-scrollbar",
+          "height": 110,
+          "scroll": 573
+        }
+      ]
+    },
+    "navigationGeometry": [
+      {
+        "expanded": true,
+        "footer": {
+          "x": 33,
+          "y": 308,
+          "width": 778,
+          "height": 57,
+          "top": 308,
+          "right": 811,
+          "bottom": 365,
+          "left": 33
+        },
+        "height": 390,
+        "visibleRows": 2,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 110,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 110,
+            "scroll": 573
+          },
+          {
+            "tag": "P-SCROLLAREA-VIEWPORT",
+            "cls": "scroll-viewport p-scrollarea-viewport",
+            "height": 324,
+            "scroll": 330
+          }
+        ]
+      },
+      {
+        "expanded": false,
+        "footer": {
+          "x": 33,
+          "y": 308,
+          "width": 778,
+          "height": 57,
+          "top": 308,
+          "right": 811,
+          "bottom": 365,
+          "left": 33
+        },
+        "height": 390,
+        "visibleRows": 2,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 110,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 110,
+            "scroll": 573
+          }
+        ]
+      }
+    ],
+    "footerButtons": [
+      {
+        "text": "«الذهاب للسجل الاول ",
+        "label": "الذهاب للسجل الاول",
+        "disabled": true
+      },
+      {
+        "text": "‹الذهاب للسجل السابق ",
+        "label": "الذهاب للسجل السابق",
+        "disabled": true
+      },
+      {
+        "text": "›الذهاب للسجل التالى ",
+        "label": "الذهاب للسجل التالى",
+        "disabled": false
+      },
+      {
+        "text": "»الذهاب للسجل الاخير ",
+        "label": "الذهاب للسجل الاخير",
+        "disabled": false
+      }
+    ],
+    "errors": []
+  },
+  {
+    "scenario": {
+      "language": "ar",
+      "mode": "light",
+      "palette": "green",
+      "width": 390,
+      "height": 844
+    },
+    "geometry": {
+      "footer": {
+        "x": 25,
+        "y": 778,
+        "width": 340,
+        "height": 41,
+        "top": 778,
+        "right": 365,
+        "bottom": 819,
+        "left": 25
+      },
+      "height": 844,
+      "visibleRows": 10,
+      "tableScrollHeight": 573,
+      "tableClientHeight": 559,
+      "footerWithinViewport": true,
+      "outerScrollers": [
+        {
+          "tag": "DIV",
+          "cls": "p-datatable-table-container erp-native-scrollbar",
+          "height": 559,
+          "scroll": 573
+        }
+      ]
+    },
+    "navigationGeometry": [
+      {
+        "expanded": true,
+        "footer": {
+          "x": 25,
+          "y": 778,
+          "width": 340,
+          "height": 41,
+          "top": 778,
+          "right": 365,
+          "bottom": 819,
+          "left": 25
+        },
+        "height": 844,
+        "visibleRows": 10,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 559,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 559,
+            "scroll": 573
+          }
+        ]
+      },
+      {
+        "expanded": false,
+        "footer": {
+          "x": 25,
+          "y": 778,
+          "width": 340,
+          "height": 41,
+          "top": 778,
+          "right": 365,
+          "bottom": 819,
+          "left": 25
+        },
+        "height": 844,
+        "visibleRows": 10,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 559,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 559,
+            "scroll": 573
+          }
+        ]
+      }
+    ],
+    "footerButtons": [
+      {
+        "text": "«الذهاب للسجل الاول ",
+        "label": "الذهاب للسجل الاول",
+        "disabled": true
+      },
+      {
+        "text": "‹الذهاب للسجل السابق ",
+        "label": "الذهاب للسجل السابق",
+        "disabled": true
+      },
+      {
+        "text": "›الذهاب للسجل التالى ",
+        "label": "الذهاب للسجل التالى",
+        "disabled": false
+      },
+      {
+        "text": "»الذهاب للسجل الاخير ",
+        "label": "الذهاب للسجل الاخير",
+        "disabled": false
+      }
+    ],
+    "errors": []
+  },
+  {
+    "scenario": {
+      "language": "ar",
+      "mode": "dark",
+      "palette": "green",
+      "width": 1440,
+      "height": 900
+    },
+    "geometry": {
+      "footer": {
+        "x": 41,
+        "y": 802,
+        "width": 1294,
+        "height": 57,
+        "top": 802,
+        "right": 1335,
+        "bottom": 859,
+        "left": 41
+      },
+      "height": 900,
+      "visibleRows": 10,
+      "tableScrollHeight": 573,
+      "tableClientHeight": 537,
+      "footerWithinViewport": true,
+      "outerScrollers": [
+        {
+          "tag": "DIV",
+          "cls": "p-datatable-table-container erp-native-scrollbar",
+          "height": 537,
+          "scroll": 573
+        }
+      ]
+    },
+    "navigationGeometry": [
+      {
+        "expanded": true,
+        "footer": {
+          "x": 41,
+          "y": 802,
+          "width": 1078,
+          "height": 57,
+          "top": 802,
+          "right": 1119,
+          "bottom": 859,
+          "left": 41
+        },
+        "height": 900,
+        "visibleRows": 10,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 537,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 537,
+            "scroll": 573
+          }
+        ]
+      },
+      {
+        "expanded": false,
+        "footer": {
+          "x": 41,
+          "y": 802,
+          "width": 1294,
+          "height": 57,
+          "top": 802,
+          "right": 1335,
+          "bottom": 859,
+          "left": 41
+        },
+        "height": 900,
+        "visibleRows": 10,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 537,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 537,
+            "scroll": 573
+          }
+        ]
+      }
+    ],
+    "footerButtons": [
+      {
+        "text": "«الذهاب للسجل الاول ",
+        "label": "الذهاب للسجل الاول",
+        "disabled": true
+      },
+      {
+        "text": "‹الذهاب للسجل السابق ",
+        "label": "الذهاب للسجل السابق",
+        "disabled": true
+      },
+      {
+        "text": "›الذهاب للسجل التالى ",
+        "label": "الذهاب للسجل التالى",
+        "disabled": false
+      },
+      {
+        "text": "»الذهاب للسجل الاخير ",
+        "label": "الذهاب للسجل الاخير",
+        "disabled": false
+      }
+    ],
+    "errors": []
+  },
+  {
+    "scenario": {
+      "language": "ar",
+      "mode": "dark",
+      "palette": "green",
+      "width": 1152,
+      "height": 720
+    },
+    "geometry": {
+      "footer": {
+        "x": 41,
+        "y": 622,
+        "width": 1006,
+        "height": 57,
+        "top": 622,
+        "right": 1047,
+        "bottom": 679,
+        "left": 41
+      },
+      "height": 720,
+      "visibleRows": 7,
+      "tableScrollHeight": 573,
+      "tableClientHeight": 357,
+      "footerWithinViewport": true,
+      "outerScrollers": [
+        {
+          "tag": "DIV",
+          "cls": "p-datatable-table-container erp-native-scrollbar",
+          "height": 357,
+          "scroll": 573
+        }
+      ]
+    },
+    "navigationGeometry": [
+      {
+        "expanded": true,
+        "footer": {
+          "x": 41,
+          "y": 622,
+          "width": 790,
+          "height": 57,
+          "top": 622,
+          "right": 831,
+          "bottom": 679,
+          "left": 41
+        },
+        "height": 720,
+        "visibleRows": 7,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 357,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 357,
+            "scroll": 573
+          }
+        ]
+      },
+      {
+        "expanded": false,
+        "footer": {
+          "x": 41,
+          "y": 622,
+          "width": 1006,
+          "height": 57,
+          "top": 622,
+          "right": 1047,
+          "bottom": 679,
+          "left": 41
+        },
+        "height": 720,
+        "visibleRows": 7,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 357,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 357,
+            "scroll": 573
+          }
+        ]
+      }
+    ],
+    "footerButtons": [
+      {
+        "text": "«الذهاب للسجل الاول ",
+        "label": "الذهاب للسجل الاول",
+        "disabled": true
+      },
+      {
+        "text": "‹الذهاب للسجل السابق ",
+        "label": "الذهاب للسجل السابق",
+        "disabled": true
+      },
+      {
+        "text": "›الذهاب للسجل التالى ",
+        "label": "الذهاب للسجل التالى",
+        "disabled": false
+      },
+      {
+        "text": "»الذهاب للسجل الاخير ",
+        "label": "الذهاب للسجل الاخير",
+        "disabled": false
+      }
+    ],
+    "errors": []
+  },
+  {
+    "scenario": {
+      "language": "ar",
+      "mode": "dark",
+      "palette": "green",
+      "width": 844,
+      "height": 390
+    },
+    "geometry": {
+      "footer": {
+        "x": 33,
+        "y": 308,
+        "width": 778,
+        "height": 57,
+        "top": 308,
+        "right": 811,
+        "bottom": 365,
+        "left": 33
+      },
+      "height": 390,
+      "visibleRows": 2,
+      "tableScrollHeight": 573,
+      "tableClientHeight": 110,
+      "footerWithinViewport": true,
+      "outerScrollers": [
+        {
+          "tag": "DIV",
+          "cls": "p-datatable-table-container erp-native-scrollbar",
+          "height": 110,
+          "scroll": 573
+        }
+      ]
+    },
+    "navigationGeometry": [
+      {
+        "expanded": true,
+        "footer": {
+          "x": 33,
+          "y": 308,
+          "width": 778,
+          "height": 57,
+          "top": 308,
+          "right": 811,
+          "bottom": 365,
+          "left": 33
+        },
+        "height": 390,
+        "visibleRows": 2,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 110,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 110,
+            "scroll": 573
+          },
+          {
+            "tag": "P-SCROLLAREA-VIEWPORT",
+            "cls": "scroll-viewport p-scrollarea-viewport",
+            "height": 324,
+            "scroll": 330
+          }
+        ]
+      },
+      {
+        "expanded": false,
+        "footer": {
+          "x": 33,
+          "y": 308,
+          "width": 778,
+          "height": 57,
+          "top": 308,
+          "right": 811,
+          "bottom": 365,
+          "left": 33
+        },
+        "height": 390,
+        "visibleRows": 2,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 110,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 110,
+            "scroll": 573
+          }
+        ]
+      }
+    ],
+    "footerButtons": [
+      {
+        "text": "«الذهاب للسجل الاول ",
+        "label": "الذهاب للسجل الاول",
+        "disabled": true
+      },
+      {
+        "text": "‹الذهاب للسجل السابق ",
+        "label": "الذهاب للسجل السابق",
+        "disabled": true
+      },
+      {
+        "text": "›الذهاب للسجل التالى ",
+        "label": "الذهاب للسجل التالى",
+        "disabled": false
+      },
+      {
+        "text": "»الذهاب للسجل الاخير ",
+        "label": "الذهاب للسجل الاخير",
+        "disabled": false
+      }
+    ],
+    "errors": []
+  },
+  {
+    "scenario": {
+      "language": "ar",
+      "mode": "dark",
+      "palette": "green",
+      "width": 390,
+      "height": 844
+    },
+    "geometry": {
+      "footer": {
+        "x": 25,
+        "y": 778,
+        "width": 340,
+        "height": 41,
+        "top": 778,
+        "right": 365,
+        "bottom": 819,
+        "left": 25
+      },
+      "height": 844,
+      "visibleRows": 10,
+      "tableScrollHeight": 573,
+      "tableClientHeight": 559,
+      "footerWithinViewport": true,
+      "outerScrollers": [
+        {
+          "tag": "DIV",
+          "cls": "p-datatable-table-container erp-native-scrollbar",
+          "height": 559,
+          "scroll": 573
+        }
+      ]
+    },
+    "navigationGeometry": [
+      {
+        "expanded": true,
+        "footer": {
+          "x": 25,
+          "y": 778,
+          "width": 340,
+          "height": 41,
+          "top": 778,
+          "right": 365,
+          "bottom": 819,
+          "left": 25
+        },
+        "height": 844,
+        "visibleRows": 10,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 559,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 559,
+            "scroll": 573
+          }
+        ]
+      },
+      {
+        "expanded": false,
+        "footer": {
+          "x": 25,
+          "y": 778,
+          "width": 340,
+          "height": 41,
+          "top": 778,
+          "right": 365,
+          "bottom": 819,
+          "left": 25
+        },
+        "height": 844,
+        "visibleRows": 10,
+        "tableScrollHeight": 573,
+        "tableClientHeight": 559,
+        "footerWithinViewport": true,
+        "outerScrollers": [
+          {
+            "tag": "DIV",
+            "cls": "p-datatable-table-container erp-native-scrollbar",
+            "height": 559,
+            "scroll": 573
+          }
+        ]
+      }
+    ],
+    "footerButtons": [
+      {
+        "text": "«الذهاب للسجل الاول ",
+        "label": "الذهاب للسجل الاول",
+        "disabled": true
+      },
+      {
+        "text": "‹الذهاب للسجل السابق ",
+        "label": "الذهاب للسجل السابق",
+        "disabled": true
+      },
+      {
+        "text": "›الذهاب للسجل التالى ",
+        "label": "الذهاب للسجل التالى",
+        "disabled": false
+      },
+      {
+        "text": "»الذهاب للسجل الاخير ",
+        "label": "الذهاب للسجل الاخير",
+        "disabled": false
+      }
+    ],
+    "errors": []
+  }
+]

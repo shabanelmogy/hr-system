@@ -149,3 +149,12 @@ Canonical automated receipts belong to managed-crystal-contract-registry/verific
 Coordinated API/Crystal/Angular publication and real hosted AR/EN RPT/PDF remain
 PROD-028/FOLLOW-024. Source verification does not claim deployment, native Verify
 Database or a rendered production report.
+
+## Historical evidence availability — 2026-11-09
+
+The current registry repair explicitly inventories unavailable historical raw logs.
+See [the central dated assessment](../../CURRENT_EVIDENCE_REPAIR_2026-11-09.md).
+Original claims retain their original dates; unavailable raw output cannot prove a
+current pass. New manager verification is independently dated. FOLLOW-025 retains
+historical availability; native/hosted release checks stay with their existing
+owners. Current documentation completeness does not close runtime acceptance.

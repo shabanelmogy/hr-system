@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MyDataGrid } from '../../../../shared/ui/public-api';
+import { LocalizationRuntime } from '../../../localization/public-api';
 import { auditTestSetup } from '../../audit.spec-setup';
 import { auditDetailFixture } from '../../audit.fixture';
 import { AuditChanges } from './audit-changes';
@@ -52,9 +53,7 @@ describe('Audit field snapshot table', () => {
     grid.sortChange.emit({ field: 'field', direction: 'asc' });
     await fixture.whenStable();
     expect(owner.source().query.pageIndex).toBe(0);
-    expect(owner.source().result?.rows[0]).toMatchObject({ id: 1, field: 'Field1' });
-    owner.changePage({ pageIndex: 2, pageSize: 10 });
-    expect(owner.source().result?.rows.at(-1)).toMatchObject({ id: 0, field: 'NameEn' });
+    expect(owner.source().result?.rows[0]).toMatchObject({ id: 0, field: 'NameEn' });
     grid.sortChange.emit({ field: 'oldValue', direction: 'asc' });
     await fixture.whenStable();
     expect(owner.source().result?.rows[0]).toMatchObject({ id: 0, oldValue: null });
@@ -75,4 +74,25 @@ describe('Audit field snapshot table', () => {
     const root = fixture.nativeElement as HTMLElement;
     expect(root.querySelector('erp-collection-text-filter')).not.toBeNull();
   });
+  it.each(['en', 'ar'] as const)(
+    'filters the complete snapshot by the displayed %s field label',
+    async (language) => {
+      await auditTestSetup();
+      TestBed.inject(LocalizationRuntime).setLanguage(language);
+      const fixture = TestBed.createComponent(AuditChanges);
+      fixture.componentRef.setInput('details', auditDetailFixture);
+      await fixture.whenStable();
+      const owner = fixture.componentInstance;
+      const displayedLabel = language === 'ar' ? 'الاسم بالإنجليزي' : 'English name';
+      owner.changePage({ pageIndex: 2, pageSize: 10 });
+      owner.collection.changeFilter({
+        field: 'field',
+        operator: 'equals',
+        values: [displayedLabel],
+      });
+      expect(owner.source().query.pageIndex).toBe(0);
+      expect(owner.source().result?.total).toBe(1);
+      expect(owner.source().result?.rows[0]).toMatchObject({ id: 0, field: 'NameEn' });
+    },
+  );
 });

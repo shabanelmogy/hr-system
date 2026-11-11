@@ -234,7 +234,13 @@ export function createPrimePreset(palette: ThemePalette): Preset {
           fontWeight: light.text.bodySmall.fontWeight,
           lineHeight: '1.5',
         },
-        formField: { borderRadius: rem(light.radius.md) },
+        formField: {
+          borderRadius: rem(light.radius.md),
+          paddingX: '12px',
+          paddingY: '8px',
+          fontSize: '1rem',
+          fontWeight: '400',
+        },
         overlay: {
           modal: {
             borderRadius: rem(light.radius.md),
@@ -248,6 +254,31 @@ export function createPrimePreset(palette: ThemePalette): Preset {
       },
       components: {
         button,
+        multiselect: {
+          root: {
+            paddingX: '12px',
+            paddingY: '8px',
+            fontSize: '1rem',
+            fontWeight: '400',
+            shadow: 'none',
+          },
+          overlay: { borderRadius: '12px', shadow: light.elevation.lg.css },
+          list: { padding: '6px', gap: '4px', header: { padding: '10px' } },
+          option: {
+            padding: '10px 12px',
+            gap: '10px',
+            fontSize: '0.875rem',
+            fontWeight: '400',
+            borderRadius: '8px',
+            selectedFontWeight: '600',
+            focusBackground: '{content.hover.background}',
+            selectedBackground: '{highlight.background}',
+            selectedFocusBackground: '{highlight.focus.background}',
+          },
+          chip: { borderRadius: '999px' },
+          emptyMessage: { padding: '10px 12px' },
+        },
+        checkbox: { root: { borderRadius: '4px' } },
         listbox: {
           list: { padding: '0 10px 10px', gap: '4px', header: { padding: '10px' } },
           option: {

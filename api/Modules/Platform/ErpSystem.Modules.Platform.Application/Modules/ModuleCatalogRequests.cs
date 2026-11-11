@@ -35,10 +35,17 @@ public sealed class GetAccessibleModulesQueryHandler(
         GetAccessibleModulesQuery request,
         CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(executionContext.UserId) ||
-            string.IsNullOrWhiteSpace(executionContext.TenantId))
+        if (string.IsNullOrWhiteSpace(executionContext.UserId))
         {
             return null;
+        }
+
+        if (string.IsNullOrWhiteSpace(executionContext.TenantId))
+        {
+            return await catalog.IsSuperAdminAsync(executionContext.UserId, cancellationToken)
+                .ConfigureAwait(false)
+                ? catalog.GetInstalled()
+                : null;
         }
 
         return await catalog.GetAccessibleAsync(

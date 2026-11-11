@@ -9,6 +9,12 @@
   height: 100%;
   width: 100%;
 }
+:host(.bounded-content) {
+  height: auto;
+}
+:host(.bounded-content) .scroll-content {
+  min-height: 0;
+}
 .hide-native-scrollbar {
   scrollbar-width: none;
 

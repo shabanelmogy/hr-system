@@ -968,3 +968,24 @@ Canonical reproduction, repair, rollout and portable evidence:
 documentation/modules/reporting/features/global-crystal-template-manager/RUNTIME_KEY_REPAIR_2026-11-07.md.
 Publish Crystal site38634-WebDeploy (Release/x64) then ERP site84639-WebDeploy.
 PROD-028/029 and PROD-003 retain real deployed/runtime acceptance requirements.
+
+## Manager corrective review — 2026-11-09
+
+The six authorized corrections and title/header formatting are defined in
+[the current corrective contract](MANAGER_REVIEW_CORRECTIONS_2026-11-09.md).
+Verify Database now requires the report RowVersion and rejects competing writes;
+readonly global ACL grants preserve structured role scope. Shared PageHeader,
+collection layout and in-dialog feedback remain the Angular presentation owners.
+Next/mobile runtime is unchanged; native manager remains Excluded. No persistence
+model changes or migration are required. Current proof is separately dated under
+verification/manager-review-2026-11-09; historical missing logs are not recreated.
+Hosted/native acceptance remains FOLLOW-024/PROD-028, with overall Phase06 Not Verified.
+
+## Historical evidence availability — 2026-11-09
+
+The current registry repair explicitly inventories unavailable historical raw logs.
+See [the central dated assessment](../../CURRENT_EVIDENCE_REPAIR_2026-11-09.md).
+Original claims retain their original dates; unavailable raw output cannot prove a
+current pass. New manager verification is independently dated. FOLLOW-025 retains
+historical availability; native/hosted release checks stay with their existing
+owners. Current documentation completeness does not close runtime acceptance.

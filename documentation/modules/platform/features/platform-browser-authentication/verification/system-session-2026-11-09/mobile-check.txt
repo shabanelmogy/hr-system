@@ -1,0 +1,343 @@
+
+> erp-system-mobile@1.0.0 check
+> npm run typecheck && npm run lint && npm run check:architecture && npm run check:contracts && npm run check:i18n && npm run check:foundation && npm run check:release && npm run test:coverage
+
+
+> erp-system-mobile@1.0.0 typecheck
+> tsc --noEmit
+
+
+> erp-system-mobile@1.0.0 lint
+> eslint app src
+
+
+G:\test\ERPSYSTEM\ERPSYSTEM\mobile-react\src\platform\reporting\presentation\useManagedReportAvailability.test.tsx
+  28:1  warning  Import in body of module; reorder to top  import/first
+
+✖ 1 problem (0 errors, 1 warning)
+  0 errors and 1 warning potentially fixable with the `--fix` option.
+
+
+> erp-system-mobile@1.0.0 check:architecture
+> node scripts/check-architecture.mjs
+
+Mobile architecture boundaries passed.
+
+> erp-system-mobile@1.0.0 check:contracts
+> node scripts/check-contract-matrix.mjs
+
+Contract matrix passed: 90 routes, 35 endpoint files, and 253 endpoint members are covered.
+
+> erp-system-mobile@1.0.0 check:i18n
+> node scripts/check-i18n.mjs && npm run check:company-catalog
+
+Mobile localization and EN/AR catalog checks passed.
+
+> erp-system-mobile@1.0.0 check:company-catalog
+> node --test ../scripts/company-ui-scope-policy.test.mjs ../scripts/system-ui-access-policy.test.mjs && node ../scripts/export-company-ui-catalog.mjs --check
+
+✔ system-only sources and mixed navigation keys cannot be customized by companies (1.8477ms)
+✔ company and shared text retain their verified owners (0.6025ms)
+✔ new namespaces and mobile roots require an explicit ownership decision (1.9925ms)
+✔ every embedded entry is classified and ownership participates in each client fingerprint (195.3278ms)
+✔ message history namespace is company-owned (0.2474ms)
+✔ global catalog authority is explicit, screen-specific and fail closed (4.1919ms)
+✔ embedded server metadata is generated from the same reviewed client policy (173.2927ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 392.0724
+Company UI catalog checked: 21 sources, 7525 keys.
+
+> erp-system-mobile@1.0.0 check:foundation
+> node scripts/check-foundation-readiness.mjs
+
+Mobile foundation readiness source gates passed; device/EAS evidence remains a release-time gate.
+
+> erp-system-mobile@1.0.0 check:release
+> node scripts/check-release-readiness.mjs
+
+Mobile release readiness source gate passed (EAS metadata, deep links, routes, and source maps).
+
+> erp-system-mobile@1.0.0 test:coverage
+> jest --runInBand --coverage --coverageReporters=text-summary --coverageReporters=json-summary
+
+PASS src/platform/auth/data/remote/auth/auth-remote-data-source.test.ts (28.415 s)
+FAIL src/platform/auth/presentation/rbac/permissions-parity.test.ts
+  ● permission constants › stays in exact parity with every current backend permission catalog
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 0
+
+    @@ -148,11 +148,10 @@
+        "GlobalCrystalReports:Create",
+        "GlobalCrystalReports:Download",
+        "GlobalCrystalReports:Publish",
+        "GlobalCrystalReports:Upload",
+        "GlobalCrystalReports:View",
+    -   "GlobalDataExports:Export",
+        "Hangfire:View",
+        "Interviews:Cancel",
+        "Interviews:Complete",
+        "Interviews:Evaluate",
+        "Interviews:Schedule",
+
+      82 |     expect(new Set(backendPermissions).size).toBe(backendPermissions.length);
+      83 |     expect(new Set(frontendPermissions).size).toBe(frontendPermissions.length);
+    > 84 |     expect([...frontendPermissions].sort()).toEqual([...backendPermissions].sort());
+         |                                             ^
+      85 |   });
+      86 | });
+      87 |
+
+      at Object.toEqual (src/platform/auth/presentation/rbac/permissions-parity.test.ts:84:45)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+PASS src/shared/components/feedback/AppErrorBoundary.test.tsx (53.195 s)
+PASS src/platform/tenant-administration/company-localizations/presentation/runtime/CompanyLocalizationBridge.test.tsx (5.098 s)
+PASS src/platform/auth/presentation/context/AuthProvider.test.tsx
+PASS src/platform/notifications/data/remote/notification-remote-data-source.test.ts
+PASS src/modules/hr/basic-data/organizational-structure/presentation/screens/OrganizationalStructureManagementScreen.test.tsx (8.503 s)
+PASS src/platform/auth/data/local/offline-session-lease.test.ts
+PASS src/core/query/query-client.test.ts
+PASS src/platform/reporting/presentation/useManagedReportAvailability.test.tsx
+PASS src/shared/components/tree-view/AppHierarchicalTree.test.tsx
+PASS src/platform/tenant-administration/company-localizations/presentation/queries/use-company-localization.test.tsx
+PASS src/shared/components/forms/layouts/AppFormTabs.test.tsx
+PASS src/shared/components/layout/AppContextBadge.test.tsx
+PASS src/shared/importing/native-spreadsheet.test.ts
+PASS src/modules/reference-data/geography/countries/presentation/screens/CountriesScreen.test.tsx
+PASS src/modules/hr/recruitment/presentation/queries/use-recruitment.test.ts
+PASS src/modules/hr/recruitment/data/remote/recruitment-remote-data-source.test.ts
+PASS src/platform/tenant-administration/company-localizations/presentation/components/CompanyLocalizationTextForm.test.tsx
+PASS src/modules/reference-data/geography/states/presentation/screens/StatesScreen.test.tsx
+PASS src/platform/tools/error-logs/presentation/screens/ErrorLogSettingsScreen.test.tsx
+PASS src/platform/auth/data/remote/auth/auth-response-schema.test.ts
+PASS src/platform/administration/presentation/users/components/UserPermissionsForm.test.tsx
+PASS src/shared/components/charts/AppInteractiveEntityChart.test.tsx
+PASS src/platform/offline-operations/data/default-offline-operations-policy-repository.test.ts
+PASS src/platform/tenant-administration/company-localizations/presentation/components/CompanyLocalizationDefaultForm.test.tsx
+PASS src/core/providers/BootstrapErrorBoundary.test.tsx
+PASS src/modules/reference-data/geography/countries/presentation/components/import-data/country-import.test.ts
+PASS src/modules/reference-data/geography/districts/presentation/components/import-data/district-import.test.ts
+PASS src/modules/reference-data/geography/districts/presentation/screens/DistrictsScreen.test.tsx
+PASS src/modules/hr/workforce-planning/composition/workforce-plan-draft-pilot.test.tsx
+PASS src/modules/reference-data/geography/states/presentation/components/import-data/state-import.test.ts
+PASS src/modules/accounting/currencies/presentation/screens/CurrenciesScreen.test.tsx
+PASS src/modules/reference-data/addresses/address-types/presentation/components/import-data/address-type-import.test.ts
+PASS src/modules/hr/workforce-planning/data/repositories/default-workforce-planning-repositories.test.ts
+PASS src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/__tests__/coa-hierarchy-remote-boundary.test.ts
+PASS src/modules/reference-data/geography/districts/data/remote/__tests__/district-remote-boundary.test.ts
+PASS src/platform/tools/platform-tools-online-authority.test.ts
+PASS src/modules/hr/recruitment/presentation/components/InterviewEvaluationModal.test.tsx
+PASS src/core/localization/company-ui-resources.test.ts
+PASS src/platform/tenant-administration/company-localizations/presentation/queries/use-system-localization.test.tsx
+PASS src/platform/modules/data/remote/module-remote-data-source.test.ts
+PASS src/shared/components/controls/AppSegmentedControl.test.tsx
+PASS src/platform/administration/data/remote/administration-remote-data-source.test.ts
+PASS src/platform/tools/error-logs/data/remote/error-log-boundary.test.ts
+PASS src/modules/accounting/fiscal-years/data/remote/__tests__/fiscal-year-remote-boundary.test.ts
+PASS src/modules/hr/workforce-planning/data/remote/__tests__/workforce-trace-remote-boundary.test.ts
+PASS src/core/localization/translations/__tests__/translation-usage.test.ts
+PASS src/modules/reference-data/geography/states/data/remote/__tests__/state-remote-boundary.test.ts
+PASS src/modules/hr/basic-data/organizational-structure/data/remote/__tests__/organizational-structure-remote-boundary.test.ts
+PASS src/platform/tenants/data/remote/tenant-remote-data-source.test.ts
+PASS src/modules/reference-data/geography/countries/data/remote/__tests__/country-remote-boundary.test.ts
+PASS src/modules/accounting/ledger-setup/data/remote/__tests__/ledger-setup-remote-boundary.test.ts
+PASS src/modules/reference-data/geography/countries/data/remote/__tests__/country-bulk-remote.test.ts
+PASS src/modules/accounting/currencies/data/remote/__tests__/currency-remote-boundary.test.ts
+PASS src/modules/hr/workforce-planning/composition/workforce-plan-draft-pilot.sync.test.ts
+PASS src/platform/tenant-admins/data/remote/tenant-admin-remote-data-source.test.ts
+PASS src/modules/crm/appointments/data/repositories/default-appointment-repository.test.ts
+PASS src/modules/reference-data/addresses/address-types/data/remote/__tests__/address-type-remote-boundary.test.ts
+PASS src/platform/notifications/data/remote/notification-schemas.test.ts
+PASS src/platform/offline-operations/presentation/screens/OfflineOperationsPolicyScreen.test.tsx
+PASS src/platform/tenant-administration/company-geographic-scope/data/remote/company-geographic-scope-remote-data-source.test.ts
+PASS src/platform/realtime/application/realtime-query-registry.test.ts
+PASS src/modules/hr/workforce-planning/data/remote/__tests__/workforce-budget-remote-boundary.test.ts
+PASS src/core/offline/outbox.test.ts
+PASS src/modules/reference-data/geography/states/data/remote/__tests__/state-bulk-remote.test.ts
+PASS src/core/validation/useZodForm.test.ts
+PASS src/modules/reference-data/geography/districts/data/remote/__tests__/district-bulk-remote.test.ts
+PASS src/modules/hr/workforce-planning/data/remote/__tests__/workforce-plan-remote-boundary.test.ts
+PASS src/platform/navigation/SettingsTabs.test.tsx
+PASS src/modules/hr/workforce-planning/data/remote/__tests__/staffing-remote-boundary.test.ts
+PASS src/platform/offline-operations/application/offline-operations-policy-use-cases.test.ts
+PASS src/core/api/axios-client.test.ts
+PASS src/platform/navigation/AdministrationLinks.test.tsx
+PASS src/platform/tools/error-logs/presentation/screens/ErrorLogsScreen.test.tsx
+PASS src/platform/company-email-templates/presentation/screens/EmailTemplatesScreen.test.tsx
+PASS src/platform/tenants/presentation/components/TenantFormModal.test.tsx
+PASS src/platform/tenants/data/repositories/default-tenant-repository.test.ts
+PASS src/modules/hr/recruitment/presentation/components/CandidatePipelineCard.test.tsx
+PASS src/modules/reference-data/geography/countries/presentation/components/chart-view/country-chart-data.test.ts
+PASS src/shared/components/charts/chart-shapes.test.tsx
+PASS src/modules/hr/recruitment/presentation/components/ApplicationInterviewPickerModal.test.tsx
+PASS src/platform/administration/presentation/roles/permissions/components/PermissionModuleCard.test.tsx
+PASS src/modules/reference-data/geography/countries/presentation/queries/use-countries.test.ts
+PASS src/platform/tools/error-logs/presentation/components/ErrorLogDetailModal.test.tsx
+PASS src/platform/tools/error-logs/data/remote/error-log-export.test.ts
+PASS src/shared/components/controls/AppDateTimeField.test.tsx
+PASS src/modules/reference-data/geography/states/presentation/queries/use-states.test.ts
+PASS src/platform/administration/data/repositories/default-administration-repository.test.ts
+PASS src/shared/components/preview/AppHtmlPreview.test.tsx
+PASS src/core/config/env.test.ts
+PASS src/core/preferences/OfflineReadPreferencesProvider.test.tsx
+PASS src/core/preferences/MockDataPreferencesProvider.test.tsx
+PASS src/modules/reference-data/addresses/address-types/presentation/queries/use-address-types.test.ts
+PASS src/platform/tools/error-logs/presentation/runtime/ErrorLogCaptureBridge.test.tsx
+PASS src/shell/module-registration.test.ts
+PASS src/modules/reference-data/geography/districts/data/repositories/default-district-repository.test.ts
+PASS src/platform/auth/presentation/profile/useProfile.test.ts
+PASS src/modules/accounting/ledger-setup/coa-hierarchy/application/coa-hierarchy-use-cases.test.ts
+PASS src/shared/listing/__tests__/useServerListState.test.ts
+PASS src/core/api/api-error.test.ts
+PASS src/platform/reporting/data/remote/crystal-report-remote-data-source.test.ts
+PASS src/modules/hr/basic-data/organizational-structure/application/organizational-structure-use-cases.test.ts
+PASS src/core/erp/erp-contracts.test.ts
+PASS src/modules/reference-data/addresses/address-types/data/repositories/default-address-type-repository.test.ts
+PASS src/modules/reference-data/geography/countries/data/repositories/default-country-repository.test.ts
+PASS src/modules/reference-data/geography/districts/application/district-use-cases.test.ts
+PASS src/modules/accounting/ledger-setup/coa-hierarchy/data/repositories/default-coa-hierarchy-repository.test.ts
+PASS src/platform/tenant-administration/company-localizations/data/remote/system-localization-boundary.test.ts
+PASS src/core/localization/translations/__tests__/translation-parity.test.ts
+PASS src/platform/auth/presentation/rbac/__tests__/route-access.test.ts
+PASS src/modules/reference-data/addresses/address-types/application/address-type-use-cases.test.ts
+PASS src/modules/hr/workforce-planning/data/local/workforce-plan-draft-store.test.ts
+PASS src/modules/hr/workforce-planning/application/workforce-planning-use-cases.test.ts
+PASS src/platform/tenant-administration/company-localizations/presentation/validation/company-localization-validation.test.ts
+PASS src/modules/hr/workforce-planning/presentation/validation/workforce-budget-schema.test.ts
+PASS src/platform/modules/data/repositories/default-module-repository.test.ts
+PASS src/core/offline/database.test.ts
+PASS src/platform/tools/audit-trail/data/remote/audit-trail-boundary.test.ts
+PASS src/platform/tenant-administration/company-localizations/data/remote/company-localization-remote-data-source.test.ts
+PASS src/modules/reference-data/validation/geographical-name.test.ts
+PASS src/modules/accounting/fiscal-years/domain/policies/fiscal-year-mock-data.test.ts
+PASS src/modules/accounting/fiscal-years/application/fiscal-year-use-cases.test.ts
+PASS src/modules/accounting/fiscal-years/domain/policies/fiscal-year-request-policy.test.ts
+PASS src/platform/company-email-templates/data/remote/email-template-remote.test.ts
+PASS src/platform/tenants/application/tenant-use-cases.test.ts
+PASS src/platform/modules/registry/mobile-module-registry.test.ts
+PASS src/modules/reference-data/addresses/address-types/domain/policies/address-type-request-policy.test.ts
+PASS src/modules/hr/recruitment/data/repositories/default-recruitment-repository.test.ts
+PASS src/modules/accounting/fiscal-years/presentation/validation/fiscal-year-schema.test.ts
+PASS src/modules/accounting/fiscal-years/domain/policies/fiscal-year-calendar.test.ts
+PASS src/modules/reference-data/geography/states/application/state-use-cases.test.ts
+PASS src/modules/reference-data/geography/countries/application/country-use-cases.test.ts
+PASS src/modules/accounting/ledger-setup/presentation/utils/ledger-setup-mock-data.test.ts
+PASS src/modules/accounting/ledger-setup/application/ledger-setup-use-cases.test.ts
+PASS src/platform/tenant-administration/company-localizations/data/repositories/default-company-localization-repository.test.ts
+PASS src/platform/tenant-administration/company-geographic-scope/data/repositories/default-company-geographic-scope-repository.test.ts
+PASS src/modules/crm/appointments/data/remote/appointment-boundary.test.ts
+PASS src/modules/accounting/ledger-setup/presentation/validation/ledger-setup-schema.test.ts
+PASS src/modules/hr/workforce-planning/presentation/validation/workforce-plan-schema.test.ts
+PASS src/modules/hr/recruitment/presentation/utils/application-pipeline-stage.test.ts
+PASS src/platform/company-email-templates/data/repositories/online-email-template-reader.test.ts
+PASS src/modules/accounting/currencies/application/currency-use-cases.test.ts
+PASS src/modules/accounting/ledger-setup/coa-hierarchy/presentation/validation/coa-hierarchy-schema.test.ts
+PASS src/modules/hr/basic-data/organizational-structure/data/repositories/default-organizational-structure-repository.test.ts
+PASS src/platform/modules/registry/administration-launcher.test.ts
+PASS src/platform/modules/application/module-use-cases.test.ts
+PASS src/modules/reference-data/geography/states/data/repositories/default-state-repository.test.ts
+PASS src/modules/accounting/ledger-setup/coa-hierarchy/presentation/utils/mockData.test.ts
+PASS src/modules/accounting/ledger-setup/coa-hierarchy/presentation/queries/coa-hierarchy-keys.test.ts
+PASS src/modules/hr/basic-data/organizational-structure/presentation/utils/organizational-structure-mock-data.test.ts
+PASS src/platform/tools/localization/data/remote/localization-boundary.test.ts
+PASS src/platform/reporting/data/repositories/default-crystal-report-repository.test.ts
+PASS src/platform/notifications/data/repositories/default-notification-repository.test.ts
+PASS src/core/storage/secure-storage.test.ts
+PASS src/core/observability/telemetry-redaction.test.ts
+PASS src/core/offline/sync-coordinator.test.ts
+PASS src/platform/tenant-administration/company-geographic-scope/domain/policies/company-geographic-scope-grid.test.ts
+PASS src/modules/accounting/fiscal-years/domain/policies/fiscal-year-views.test.ts
+PASS src/modules/accounting/fiscal-years/data/repositories/default-fiscal-year-repository.test.ts
+PASS src/platform/tenant-admins/data/repositories/default-tenant-admin-repository.test.ts
+PASS src/platform/tenant-administration/company-geographic-scope/application/company-geographic-scope-use-cases.test.ts
+PASS src/platform/offline-operations/presentation/providers/offline-policy-request-guard.test.ts
+PASS src/modules/hr/recruitment/application/recruitment-use-cases.test.ts
+PASS src/platform/auth/application/auth-use-cases.test.ts
+PASS src/platform/administration/application/administration-use-cases.test.ts
+PASS src/shared/contexts/unsaved-changes-registry.test.ts
+PASS src/platform/tenant-administration/company-geographic-scope/domain/policies/company-geographic-scope-request-policy.test.ts
+PASS src/modules/hr/workforce-planning/domain/policies/workforce-plan-draft-reconciliation.test.ts
+PASS src/platform/tenants/domain/policies/tenant-entitlements.test.ts
+PASS src/platform/realtime/data/remote/realtime-event-parser.test.ts
+PASS src/platform/notifications/presentation/utils/notification-presentation.test.ts
+PASS src/platform/notifications/application/notification-use-cases.test.ts
+PASS src/core/offline/offline-read-policy.test.ts
+PASS src/modules/reference-data/geography/states/presentation/components/chart-view/state-chart-data.test.ts
+PASS src/modules/reference-data/geography/districts/domain/policies/district-request-policy.test.ts
+PASS src/platform/tools/operations/data/remote/operations-schemas.test.ts
+PASS src/platform/tools/file-manager/data/remote/file-manager-boundary.test.ts
+PASS src/platform/auth/data/remote/profile/profile-schemas.test.ts
+PASS src/shared/components/preview/safe-html-preview.test.ts
+PASS src/platform/tenant-admins/application/tenant-admin-use-cases.test.ts
+PASS src/platform/offline-operations/data/core-offline-capability-policy.test.ts
+PASS src/core/offline/scope.test.ts
+PASS src/modules/reference-data/geography/countries/domain/policies/country-request-policy.test.ts
+PASS src/platform/administration/presentation/roles/permissions/permission-groups.test.ts
+PASS src/shared/listing/__tests__/server-list-state.test.ts
+PASS src/shared/components/data-table/rowSelection.test.ts
+PASS src/shared/utils/mockData.test.ts
+PASS src/core/observability/error-log-reporter.test.ts
+PASS src/platform/tools/error-logs/data/remote/client-error-log-remote.test.ts
+PASS src/platform/reporting/application/crystal-report-use-cases.test.ts
+PASS src/core/offline-policy/offline-policy.test.ts
+PASS src/shared/components/multi-view/viewSelectorLayout.test.ts
+PASS src/modules/reference-data/geography/states/domain/policies/state-request-policy.test.ts
+PASS src/modules/hr/basic-data/organizational-structure/domain/policies/organizational-structure-request-policy.test.ts
+
+=============================== Coverage summary ===============================
+Statements   : 25.76% ( 4196/16283 )
+Branches     : 18.24% ( 2479/13590 )
+Functions    : 21.43% ( 1293/6031 )
+Lines        : 28.38% ( 3658/12886 )
+================================================================================
+
+Summary of all failing tests
+FAIL src/platform/auth/presentation/rbac/permissions-parity.test.ts
+  ● permission constants › stays in exact parity with every current backend permission catalog
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 0
+
+    @@ -148,11 +148,10 @@
+        "GlobalCrystalReports:Create",
+        "GlobalCrystalReports:Download",
+        "GlobalCrystalReports:Publish",
+        "GlobalCrystalReports:Upload",
+        "GlobalCrystalReports:View",
+    -   "GlobalDataExports:Export",
+        "Hangfire:View",
+        "Interviews:Cancel",
+        "Interviews:Complete",
+        "Interviews:Evaluate",
+        "Interviews:Schedule",
+
+      82 |     expect(new Set(backendPermissions).size).toBe(backendPermissions.length);
+      83 |     expect(new Set(frontendPermissions).size).toBe(frontendPermissions.length);
+    > 84 |     expect([...frontendPermissions].sort()).toEqual([...backendPermissions].sort());
+         |                                             ^
+      85 |   });
+      86 | });
+      87 |
+
+      at Object.toEqual (src/platform/auth/presentation/rbac/permissions-parity.test.ts:84:45)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+
+Test Suites: 1 failed, 194 passed, 195 total
+Tests:       1 failed, 602 passed, 603 total
+Snapshots:   0 total
+Time:        214.992 s
+Ran all test suites.

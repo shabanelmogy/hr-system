@@ -27,7 +27,7 @@ describe('global manager HTTP boundary', () => {
   it('verifies the stored version through the protected management route and consumes the published result', async () => {
     const id = 'c6518e27-5e26-4790-932c-80d572099a32';
     const versionId = '104c0411-c988-449d-9a36-e27d2d7532f5';
-    const result = firstValueFrom(service.verifyDatabase(id, versionId));
+    const result = firstValueFrom(service.verifyDatabase(id, versionId, 'AAAAAAAAAAA='));
     http.expectOne(origin + '/api/v1/browser-auth/csrf').flush({ requestToken: 'fixture-csrf' });
     const request = await vi.waitFor(() =>
       http.expectOne(
@@ -42,7 +42,7 @@ describe('global manager HTTP boundary', () => {
     expect(request.request.method).toBe('POST');
     expect(request.request.withCredentials).toBe(true);
     expect(request.request.headers.get('X-ERP-XSRF')).toBe('fixture-csrf');
-    expect(request.request.body).toEqual({});
+    expect(request.request.body).toEqual({ rowVersion: 'AAAAAAAAAAA=' });
     request.flush({
       id,
       entityKey: 'countries',

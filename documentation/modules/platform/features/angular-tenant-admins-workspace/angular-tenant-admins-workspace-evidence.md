@@ -19,3 +19,10 @@ Tenant/States/Districts1each and hosted read-only collection/detail/lookup/logou
 Source review and follow-up: no unresolved P1/P2. Manifest registers only existing
 sources, tests, docs, results and representative fixture captures. No hosted business
 mutations or native/device/report acceptance; parent Super Admin work remains Active.
+
+
+Shared Tenant selection correction 2026-11-09: badge wrapping and open-list
+search/option geometry are implemented centrally. Focused8unit and16EN/AR,
+Light/Dark,390x844/900x640/1440x900/844x390browser cases pass with no business
+writes. Current gate results and fixture boundaries are recorded in
+[MULTISELECT_PRESENTATION_2026-11-09.md](MULTISELECT_PRESENTATION_2026-11-09.md).

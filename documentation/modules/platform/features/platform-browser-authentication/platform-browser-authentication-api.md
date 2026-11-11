@@ -12,6 +12,9 @@ Session adapter now preserves refresh SessionId/absolute expiry, maps grace/save
 Existing bearer clients retained; no new UI/native Cookies.
 ## 6. Contracts
 BrowserAuthController exposes the nine versioned browser routes; typed sanitized SessionContext response and CSRF request token. Existing bearer DTOs/routes retained.
+
+2026-11-09 corrective system-session increment (FOLLOW-032): eligible Super Admin authenticates without any Tenant or company. Canonical current contract and verification boundary: [system-session execution](SUPER_ADMIN_SYSTEM_SESSION_2026-11-09.md). This supersedes earlier company-only descriptions for this actor. Hosted rollout remains PROD-034; repository documentation baseline remains FOLLOW-033.
+
 ## 7. UI composition
 N/A — no API-owned screen/metadata form engine.
 ## 8. States
@@ -34,8 +37,14 @@ Development settings are excluded from publish.19 existing Cookie tests and loca
 configuration/publish-selection checks pass. This is configuration maintenance;
 no runtime/source/schema migration. Effective remote settings were not read or
 changed; PROD-019 remains open until hosted configuration/restart/browser proof.
+
+System JWTs carry session_scope=system and omit tenant/company claims. Live validation requires a non-deleted system Super Admin role and active confirmed account, owned refresh session, matching stamp and expiry. Company scope and legacy positive coordinates retain existing isolation. Accessible modules resolve live system authority before requiring a Tenant; TenantMember and company-owned endpoints remain scoped.
+
 ## 10. Persistence and side effects
 PlatformDbContext owns state. Real adapter SQL tests prove one winner/one rollback for competing refresh/logout/switch/reuse saves. Current migrations apply to disposable databases; no new model/migration.
+
+Existing refresh CompanyId=0 exclusively represents absent system scope. No model, schema, dummy Tenant/company or migration is added. Actual SQL tests migrate disposable databases on the configured local SQL Server and clean them up.
+
 ## 11. Verification
 R1 eleven SQL scenarios and R2 actual password/selection/transport Chromium+SQL scenario passed; 17 Cookie unit cases passed. See verification/BROWSER_IMPLEMENTATION_REPORT.md and current final gate result.
 ## 12. Reuse
@@ -46,6 +55,8 @@ Existing localized errors; no credentials in descriptions/logs.
 R1/R2 API Verified: final full Release 1157 tests passed, zero failed/skipped; actual Cookie controller/JWT/SQL/Chromium route proof and 17 Cookie cases. Angular consumer/provider/deployment acceptance remains separate; see verification/BROWSER_IMPLEMENTATION_REPORT.md.
 ## 15. Evidence and closure
 Manifest contains current sources only; extend with actual paths as implementation creates them.
+
+System-session source, regression tests and current portable verification are registered in required-files.json. Historical R1/R2 receipts do not prove this correction; see SUPER_ADMIN_SYSTEM_SESSION_2026-11-09.md for its actual gate results.
 
 ## Current hosted runtime/key and Hub query correction — 2026-11-07
 

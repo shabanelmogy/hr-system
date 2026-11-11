@@ -29,6 +29,29 @@ Rules:
 - Installation provenance, usage, and update instructions are in
   [Angular agent skills](documentation/guides/web/ANGULAR_AGENT_SKILLS.md).
 
+## UI review acceptance (mandatory)
+
+- Apply [UI review acceptance](documentation/guides/web/architecture/UI_REVIEW_ACCEPTANCE.md)
+  before closing a UI review or presentation correction. Inventory the actual
+  rendered structures and record functional, visual and accessibility results
+  separately. Untested surfaces remain explicitly Not verified.
+- Pagination requires independent rendered acceptance for known/cursor totals,
+  EN/AR, compact/short windows, selection states, uncut text, non-overlapping
+  controls and keyboard access. Successful navigation or zero outer overflow
+  cannot substitute for this check. Inspect clipping ancestors and screenshots.
+- Reuse is a blocking acceptance gate, not a preference. Before UI edits, record
+  the exact existing shared component and reviewed consumer source for each
+  recurring structure. A parallel control, custom presentation or new option
+  fails review when the existing public API covers the need. Do not introduce
+  it without a concrete domain gap and explicit authorization for the difference.
+- Do not expose duplicate record/page arrow groups or add a Page action menu to
+  replace the established Countries footer. Reuse CollectionFooter record
+  navigation and page-size controls, verify cross-page movement/disabled states,
+  and exercise actual row actions in dialog grids.
+- Shared/reference reuse does not certify appearance: report visible inherited
+  defects and fix reusable presentation in its shared owner. Verify another
+  applicable consumer when changing shared collection behavior.
+
 ## Economical subagent policy
 
 - Do not spawn subagents for small or single-file tasks.

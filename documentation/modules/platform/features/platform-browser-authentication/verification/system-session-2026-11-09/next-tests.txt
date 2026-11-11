@@ -1,0 +1,9 @@
+
+ RUN  v4.1.12 G:/test/ERPSYSTEM/ERPSYSTEM/web-next
+
+
+ Test Files  2 passed (2)
+      Tests  24 passed (24)
+   Start at  12:44:48
+   Duration  17.54s (transform 3.01s, setup 0ms, import 3.51s, tests 116ms, environment 0ms)
+

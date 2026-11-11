@@ -1,16 +1,14 @@
 <main>
   <erp-page-header
+    variant="collection"
+    actionsLayout="inline"
+    [total]="total()"
+    [totalLabel]="'pagination.items' | uiText"
+    [filterable]="false"
     [exportSource]="exportSource()"
     [title]="'globalTemplates.title' | uiText: 'reporting'"
-    [subtitle]="'crystalReports.subTitle' | uiText: 'reporting'"
-  >
-    <erp-button
-      [label]="'actions.refresh' | uiText"
-      [disabled]="state.pending()"
-      (activated)="state.reload()"
-      ><erp-icon buttonIcon name="refresh"
-    /></erp-button>
-  </erp-page-header>
+    (refresh)="state.reload()"
+  />
   @if (!state.allowed()) {
     <erp-feedback-state kind="forbidden" [title]="'authorization.forbidden.title' | uiText" />
   } @else if (state.entities().kind === 'loading') {
@@ -26,6 +24,7 @@
     @if (state.feedback(); as feedback) {
       <erp-feedback-state
         kind="error"
+        layout="inline"
         [title]="
           feedback.message ||
           locale.translate(

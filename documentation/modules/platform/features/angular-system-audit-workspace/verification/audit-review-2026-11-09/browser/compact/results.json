@@ -1,0 +1,130 @@
+[
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "height": 740,
+    "geometry": {
+      "bodyHeight": 220.078125,
+      "headerHeight": 53,
+      "controlsHeight": 220,
+      "controlsScrollHeight": 379
+    },
+    "passed": true,
+    "listRequests": 15,
+    "detailRequests": 2,
+    "businessWrites": 0
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "height": 740,
+    "geometry": {
+      "bodyHeight": 298,
+      "headerHeight": 53,
+      "controlsHeight": 139,
+      "controlsScrollHeight": 139
+    },
+    "passed": true,
+    "listRequests": 15,
+    "detailRequests": 2,
+    "businessWrites": 0
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "height": 740,
+    "geometry": {
+      "bodyHeight": 220.078125,
+      "headerHeight": 53,
+      "controlsHeight": 220,
+      "controlsScrollHeight": 379
+    },
+    "passed": true,
+    "listRequests": 15,
+    "detailRequests": 2,
+    "businessWrites": 0
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "height": 740,
+    "geometry": {
+      "bodyHeight": 298,
+      "headerHeight": 53,
+      "controlsHeight": 139,
+      "controlsScrollHeight": 139
+    },
+    "passed": true,
+    "listRequests": 15,
+    "detailRequests": 2,
+    "businessWrites": 0
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "height": 740,
+    "geometry": {
+      "bodyHeight": 220.078125,
+      "headerHeight": 53,
+      "controlsHeight": 220,
+      "controlsScrollHeight": 379
+    },
+    "passed": true,
+    "listRequests": 15,
+    "detailRequests": 2,
+    "businessWrites": 0
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "height": 740,
+    "geometry": {
+      "bodyHeight": 298,
+      "headerHeight": 53,
+      "controlsHeight": 139,
+      "controlsScrollHeight": 139
+    },
+    "passed": true,
+    "listRequests": 15,
+    "detailRequests": 2,
+    "businessWrites": 0
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "height": 740,
+    "geometry": {
+      "bodyHeight": 220.078125,
+      "headerHeight": 53,
+      "controlsHeight": 220,
+      "controlsScrollHeight": 379
+    },
+    "passed": true,
+    "listRequests": 15,
+    "detailRequests": 2,
+    "businessWrites": 0
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "height": 740,
+    "geometry": {
+      "bodyHeight": 298,
+      "headerHeight": 53,
+      "controlsHeight": 139,
+      "controlsScrollHeight": 139
+    },
+    "passed": true,
+    "listRequests": 15,
+    "detailRequests": 2,
+    "businessWrites": 0
+  }
+]

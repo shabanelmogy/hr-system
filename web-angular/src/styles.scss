@@ -1,5 +1,6 @@
 @use '@app/tokens/css';
 @use './theme/fonts';
+@use './app/shared/ui/forms/fields/multi-reference-field/multi-reference-vendor';
 @use './app/shared/ui/layout/scrollbar' as scrolling;
 
 html {

@@ -653,6 +653,66 @@
       "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-layout-2026-11-08/angular-check.txt",
       "layer": "verification",
       "purpose": "Final shared header and Tenant layout acceptance; runtime scope and earlier evidence remain explicit"
+    },
+    {
+      "id": "multi-select-presentation-2026-11-09",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/MULTISELECT_PRESENTATION_2026-11-09.md",
+      "purpose": "Shared multi-selection correction and executed verification boundaries"
+    },
+    {
+      "id": "multi-select-vendor-sass",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/multi-reference-field/_multi-reference-vendor.scss",
+      "purpose": "PT-scoped shared badge and overlay presentation"
+    },
+    {
+      "id": "multi-select-browser-regression",
+      "layer": "verification",
+      "path": "web-angular/scripts/verify-multi-reference-browser.mjs",
+      "purpose": "Production-build fixture coverage for shared badge and popup behavior"
+    },
+    {
+      "id": "multi-select-proof-browser-results-json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/multiselect-2026-11-09/browser-results.json",
+      "purpose": "Executed shared multi-selection correction verification"
+    },
+    {
+      "id": "multi-select-proof-browser-txt",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/multiselect-2026-11-09/browser.txt",
+      "purpose": "Executed shared multi-selection correction verification"
+    },
+    {
+      "id": "multi-select-proof-unit-txt",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/multiselect-2026-11-09/unit.txt",
+      "purpose": "Executed shared multi-selection correction verification"
+    },
+    {
+      "id": "multi-select-proof-build-txt",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/multiselect-2026-11-09/build.txt",
+      "purpose": "Executed shared multi-selection correction verification"
+    },
+    {
+      "id": "multi-select-proof-en-light-1440-png",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/multiselect-2026-11-09/en-light-1440.png",
+      "purpose": "Executed shared multi-selection correction verification"
+    },
+    {
+      "id": "multi-select-proof-ar-dark-390-png",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/multiselect-2026-11-09/ar-dark-390.png",
+      "purpose": "Executed shared multi-selection correction verification"
+    },
+    {
+      "id": "multi-select-proof-angular-check-txt",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-tenant-admins-workspace/verification/multiselect-2026-11-09/angular-check.txt",
+      "purpose": "Final complete Angular quality gate, 1046 passing tests and production build"
     }
   ],
   "finalizationChecklist": [

@@ -8,6 +8,33 @@ namespace ErpSystem.Modules.Platform.Tests;
 
 public sealed class PlatformSessionValidationOwnershipTests
 {
+    [Fact]
+    public async Task SystemScope_RequiresLiveRoleAndUnscopedSession_WithoutTenantEligibility()
+    {
+        var source = new RecordingSessionValidationSource
+        {
+            Snapshot = ValidSnapshot() with
+            {
+                IsSuperAdmin = true, HasTenantMembership = false, IsTenantActive = false,
+                HasCompanyAccess = false, IsCompanyActive = false,
+                RefreshSessions = [new("session-1", 0, Now.AddMinutes(1).UtcDateTime, null)]
+            }
+        };
+        var services = new ServiceCollection();
+        services.AddSingleton<ISessionValidationSource>(source);
+        services.AddSingleton<TimeProvider>(new FixedTimeProvider(Now));
+        services.AddPlatformApplication();
+        using var provider = services.BuildServiceProvider();
+        var service = provider.GetRequiredService<ISessionValidationService>();
+        var request = ValidRequest() with { TenantId = "", CompanyId = 0, SessionScope = "system" };
+        Assert.True((await service.ValidateAsync(request)).IsValid);
+        Assert.False((await service.ValidateAsync(request with { TenantId = "tenant-1" })).IsValid);
+        Assert.False((await service.ValidateAsync(request with { CompanyId = 7 })).IsValid);
+        Assert.False((await service.ValidateAsync(request with { SessionScope = "unknown" })).IsValid);
+        source.Snapshot = source.Snapshot with { IsSuperAdmin = false };
+        Assert.False((await service.ValidateAsync(request)).IsValid);
+    }
+
     private static readonly DateTimeOffset Now =
         new(2026, 9, 10, 12, 0, 0, TimeSpan.Zero);
 

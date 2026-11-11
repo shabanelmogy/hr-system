@@ -71,8 +71,8 @@ existing-system review, implementation order, and Definition of Done.
 
 ## Approved references
 
-- **Angular shared collection foundation cross-platform master review:** `../modules/platform/features/angular-collection-foundation/angular-collection-foundation-review.md` sections 3, 4, 6
-- **Angular shared collection foundation API implementation profile:** `../modules/platform/features/angular-collection-foundation/angular-collection-foundation-api.md` sections 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+- **Angular shared collection foundation cross-platform master review:** `../modules/platform/features/angular-collection-foundation/angular-collection-foundation-review.md` sections 3, 4, 6, 16, 17
+- **Angular shared collection foundation API implementation profile:** `../modules/platform/features/angular-collection-foundation/angular-collection-foundation-api.md` sections 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 16, 17
 
 ## Source fingerprints
 
@@ -81,6 +81,8 @@ existing-system review, implementation order, and Definition of Done.
 | angular-collection-foundation-master | 3 | `bdac0a1efba83f9b9d2427afe0d8495ba77c34ff3774897c9e6c43ed082a5dfa` |
 | angular-collection-foundation-master | 4 | `3846922f56bb2f0dd5bc8f55b5c64f733b425d1ea2943bd56ea4c708751fc849` |
 | angular-collection-foundation-master | 6 | `983ed69fcd0a2160a70725c73120734deec395f8025415ca5e46661d4fec6f25` |
+| angular-collection-foundation-master | 16 | `fcb6649a75c6a69ee67dc2e6a4508edae519b87a9ee9de90b55153c92e55370f` |
+| angular-collection-foundation-master | 17 | `f16ffc8284c366335cec993fb5929aeac83c4f22d9af53fe4e1b8e1f423e21e1` |
 | angular-collection-foundation-api | 1 | `e5d4158fa0b743f44607f6ad114aee30ed335901d3cdb68b473326dd808a0d70` |
 | angular-collection-foundation-api | 2 | `ab50d090b58609d2bd08a52ba5b40d1e7769f63398e9370d31c02347f9a60078` |
 | angular-collection-foundation-api | 3 | `bdac0a1efba83f9b9d2427afe0d8495ba77c34ff3774897c9e6c43ed082a5dfa` |
@@ -91,3 +93,5 @@ existing-system review, implementation order, and Definition of Done.
 | angular-collection-foundation-api | 8 | `c5930c59d67c5efccc1bda1aba04bdacb2ce11cb936ddfb4306e541ee2a782af` |
 | angular-collection-foundation-api | 9 | `72b4e325040d35ad3426bf2fc0686fa85b299e5f2e349735a570c0cd93a88e25` |
 | angular-collection-foundation-api | 10 | `7653f373d77818eab834faf40a1877d9492456d68d7394c81de97df13dc9c17b` |
+| angular-collection-foundation-api | 16 | `fcb6649a75c6a69ee67dc2e6a4508edae519b87a9ee9de90b55153c92e55370f` |
+| angular-collection-foundation-api | 17 | `f16ffc8284c366335cec993fb5929aeac83c4f22d9af53fe4e1b8e1f423e21e1` |

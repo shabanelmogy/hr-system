@@ -22,7 +22,7 @@ describe('global template role drafts', () => {
     rowVersion: 'AAAAAAAAAAA=',
     versions: [],
   };
-  function setup() {
+  function setup(initialGrants: GlobalTemplateGrant[] = [], archived = false) {
     const identity = signal({
       ...sessionFixture,
       roles: ['super_admin'],
@@ -33,7 +33,7 @@ describe('global template role drafts', () => {
         'GlobalCrystalReportAccess:Edit',
       ],
     });
-    let grants: GlobalTemplateGrant[] = [];
+    let grants = initialGrants;
     const service = {
       access: vi.fn(() =>
         of({
@@ -68,7 +68,7 @@ describe('global template role drafts', () => {
     });
     const state = TestBed.inject(GlobalTemplateAccessState);
     TestBed.tick();
-    state.select(report);
+    state.select({ ...report, isArchived: archived });
     TestBed.tick();
     return { state, service, identity };
   }
@@ -92,6 +92,54 @@ describe('global template role drafts', () => {
     ]);
     expect(state.dirty()).toBe(false);
     expect(state.draft()).toHaveLength(2);
+  });
+  it('preserves tenant and platform scope for archived readonly grants and marks legacy scope unknown', () => {
+    const { state, service } = setup(
+      [
+        {
+          roleId: 'tenant-role',
+          roleName: 'Accountant',
+          rights: ['Run'],
+          tenantId: 'tenant-a',
+          tenantName: 'Tenant A',
+          scopeKnown: true,
+        },
+        {
+          roleId: 'platform-role',
+          roleName: 'Reader',
+          rights: ['Run'],
+          tenantId: null,
+          tenantName: null,
+          scopeKnown: true,
+        },
+        { roleId: 'legacy-role', roleName: 'Legacy', rights: ['Run'] },
+        {
+          roleId: 'removed-role',
+          roleName: 'Removed',
+          rights: ['Run'],
+          tenantId: null,
+          tenantName: null,
+          scopeKnown: false,
+        },
+      ],
+      true,
+    );
+    const source = state.source();
+    expect(state.canEdit()).toBe(false);
+    expect(service.roles).not.toHaveBeenCalled();
+    if (source.kind !== 'ready') throw new Error('Expected readonly grants');
+    expect(source.result?.rows).toEqual([
+      {
+        id: 'tenant-role',
+        name: 'Accountant',
+        tenantId: 'tenant-a',
+        tenantName: 'Tenant A',
+        scopeKnown: true,
+      },
+      { id: 'platform-role', name: 'Reader', tenantId: null, tenantName: null, scopeKnown: true },
+      { id: 'legacy-role', name: 'Legacy', tenantId: null, tenantName: null, scopeKnown: false },
+      { id: 'removed-role', name: 'Removed', tenantId: null, tenantName: null, scopeKnown: false },
+    ]);
   });
   it('discards a stale draft on a reported conflict and reloads server grants', () => {
     const { state, service } = setup();

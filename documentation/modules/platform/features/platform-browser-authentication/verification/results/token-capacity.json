@@ -4,27 +4,27 @@
     {
       "roles": 1,
       "permissionCount": 266,
-      "jwtBytes": 10797,
+      "jwtBytes": 10832,
       "accessCookieParts": 5,
-      "cookieHeaderBytes": 11355,
+      "cookieHeaderBytes": 11390,
       "fits16KiBTotalBeforeOtherHeaders": true,
       "fits32KiBTotalBeforeOtherHeaders": true
     },
     {
       "roles": 10,
       "permissionCount": 266,
-      "jwtBytes": 12123,
+      "jwtBytes": 12157,
       "accessCookieParts": 6,
-      "cookieHeaderBytes": 12711,
+      "cookieHeaderBytes": 12745,
       "fits16KiBTotalBeforeOtherHeaders": true,
       "fits32KiBTotalBeforeOtherHeaders": true
     },
     {
       "roles": 25,
       "permissionCount": 266,
-      "jwtBytes": 14323,
+      "jwtBytes": 14357,
       "accessCookieParts": 6,
-      "cookieHeaderBytes": 14911,
+      "cookieHeaderBytes": 14945,
       "fits16KiBTotalBeforeOtherHeaders": true,
       "fits32KiBTotalBeforeOtherHeaders": true
     }

@@ -70,6 +70,11 @@ public interface IAuditTrailSource
         AuditTrailFilter filter,
         CancellationToken cancellationToken = default);
 
+    /// <summary>Counts all scoped/filter matches, ignoring the cursor and row limit.</summary>
+    Task<long> CountAsync(
+        AuditTrailFilter filter,
+        CancellationToken cancellationToken = default);
+
     Task<AuditTrailRecordDetails?> GetAsync(
         long id,
         string? tenantId,

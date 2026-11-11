@@ -1,0 +1,12 @@
+  Determining projects to restore...
+  Restored G:\test\ERPSYSTEM\ERPSYSTEM\api\Tests\ErpSystem.ArchitectureTests\ErpSystem.ArchitectureTests.csproj (in 489 ms).
+  Restored G:\test\ERPSYSTEM\ERPSYSTEM\api\Tests\ErpSystem.BuildingBlocks.Tests\ErpSystem.BuildingBlocks.Tests.csproj (in 498 ms).
+  Restored G:\test\ERPSYSTEM\ERPSYSTEM\api\Modules\PointOfSale\ErpSystem.Modules.PointOfSale.Tests\ErpSystem.Modules.PointOfSale.Tests.csproj (in 489 ms).
+  Restored G:\test\ERPSYSTEM\ERPSYSTEM\api\Modules\CRM\ErpSystem.Modules.CRM.Tests\ErpSystem.Modules.CRM.Tests.csproj (in 521 ms).
+  Restored G:\test\ERPSYSTEM\ERPSYSTEM\api\Modules\ReferenceData\ErpSystem.Modules.ReferenceData.Tests\ErpSystem.Modules.ReferenceData.Tests.csproj (in 599 ms).
+  Restored G:\test\ERPSYSTEM\ERPSYSTEM\api\Modules\Accounting\ErpSystem.Modules.Accounting.Tests\ErpSystem.Modules.Accounting.Tests.csproj (in 429 ms).
+  Restored G:\test\ERPSYSTEM\ERPSYSTEM\api\Modules\Reporting\ErpSystem.Modules.Reporting.Tests\ErpSystem.Modules.Reporting.Tests.csproj (in 447 ms).
+  Restored G:\test\ERPSYSTEM\ERPSYSTEM\api\Modules\HR\ErpSystem.Modules.HR.Tests\ErpSystem.Modules.HR.Tests.csproj (in 753 ms).
+  Restored G:\test\ERPSYSTEM\ERPSYSTEM\api\Modules\Contacts\ErpSystem.Modules.Contacts.Tests\ErpSystem.Modules.Contacts.Tests.csproj (in 72 ms).
+  Restored G:\test\ERPSYSTEM\ERPSYSTEM\api\Modules\Inventory\ErpSystem.Modules.Inventory.Tests\ErpSystem.Modules.Inventory.Tests.csproj (in 41 ms).
+  65 of 75 projects are up-to-date for restore.

@@ -9,6 +9,22 @@ const source: CollectionSource<{ id: number }> = {
 };
 const id = (row: { id: number }) => row.id;
 describe('Shared collection controlled source', () => {
+  it('keeps known totals separate from sequential cursor availability', () => {
+    const sequentialQuery = { ...query, pageAccess: 'sequential' as const };
+    const view = inspectCollection(
+      {
+        query: sequentialQuery,
+        kind: 'ready',
+        result: { query: sequentialQuery, rows, total: 12, hasNextPage: false },
+      },
+      id,
+    );
+    expect(view.total).toBe(12);
+    expect(view.hasNextPage).toBe(false);
+    expect(recordTarget(view, id, 5, 'next')).toBeNull();
+    expect(recordTarget(view, id, 1, 'last')).toBeNull();
+    expect(recordTarget({ ...view, hasNextPage: true }, id, 5, 'next')).toBe(5);
+  });
   it('handles partial unknown pages without targeting a missing same-page row', () => {
     const partial = inspectCollection(
       {

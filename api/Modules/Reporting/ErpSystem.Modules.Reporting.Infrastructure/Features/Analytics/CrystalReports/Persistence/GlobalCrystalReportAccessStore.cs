@@ -15,15 +15,20 @@ public sealed class GlobalCrystalReportAccessStore(ReportingDbContext context, I
     public async Task<bool> RolesValidAsync(IReadOnlyCollection<string> roleIds, CancellationToken token) =>
         (await roles.GetRoleScopesAsync(roleIds, token)).Count == roleIds.Distinct(StringComparer.Ordinal).Count();
 
-    public async Task<IReadOnlyList<CrystalReportRoleGrantResponse>> GrantsAsync(Guid reportId, CancellationToken token)
+    public async Task<IReadOnlyList<GlobalCrystalReportRoleGrantResponse>> GrantsAsync(Guid reportId, CancellationToken token)
     {
         var grants = await context.GlobalCrystalReportRoleGrants.AsNoTracking()
             .Where(grant => grant.GlobalCrystalReportId == reportId && !grant.IsDeleted)
             .OrderBy(grant => grant.RoleId).ToArrayAsync(token);
-        var names = (await roles.GetRoleScopesAsync(grants.Select(grant => grant.RoleId).ToArray(), token))
-            .ToDictionary(role => role.Id, role => role.TenantName == null ? role.Name : role.TenantName + " / " + role.Name);
-        return grants.Select(grant => new CrystalReportRoleGrantResponse(grant.RoleId,
-            names.GetValueOrDefault(grant.RoleId, grant.RoleId), RightNames(grant.Rights))).ToArray();
+        var scopes = (await roles.GetRoleScopesAsync(grants.Select(grant => grant.RoleId).ToArray(), token))
+            .ToDictionary(role => role.Id);
+        return grants.Select(grant =>
+        {
+            var scope = scopes.GetValueOrDefault(grant.RoleId);
+            return new GlobalCrystalReportRoleGrantResponse(grant.RoleId,
+                scope?.Name ?? grant.RoleId, RightNames(grant.Rights),
+                scope?.TenantId, scope?.TenantName, scope is not null);
+        }).ToArray();
     }
 
     public async Task<bool> HasRightAsync(Guid reportId, CrystalReportRight right, CancellationToken token)

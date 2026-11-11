@@ -73,6 +73,23 @@ the [Angular style guide](https://angular.dev/style-guide).
   values or pure owner utilities. Comments explain reasons and constraints, rather
   than narrating obvious code.
 
+## Shared field focus perimeter
+
+Compound fields draw their visible focus perimeter through the shared
+`fields/_field-focus.scss` mixin. Keep the complete perimeter inside the control's
+border box so clipping/scroll viewports cannot crop it. TextField, its NumericField
+and DateField consumers, ReferenceField and BooleanField inherit this policy.
+Validation errors retain the destructive focus color. Keep the border width and
+layout dimensions stable; do not hide focus or loosen scroll containment to mask
+a cropped outline. Feature pages must not add local focus-border fixes.
+
+Changes to compound field chrome require the maintained
+`node scripts/verify-field-focus-browser.mjs` check against built assets, including
+EN/AR, light/dark, narrow/wide layouts, keyboard clear and invalid-field focus.
+Use `--controls` with `ANGULAR_FIXTURE_BUILD` pointing to a development build for
+the existing shared-control harnesses. A textarea taller than its scrollport
+retains legitimate content scrolling; the regression checks its inline perimeter.
+
 ## Formatting and enforcement
 
 `web-angular/.prettierrc` is the formatting authority for hand-authored source and

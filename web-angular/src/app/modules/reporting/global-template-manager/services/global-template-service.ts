@@ -159,10 +159,10 @@ export class GlobalTemplateService {
       {},
     ).pipe(map((body) => globalTemplateDetailSchema.parse(body)));
   }
-  verifyDatabase(id: string, versionId: string) {
+  verifyDatabase(id: string, versionId: string, rowVersion: string) {
     return this.mutate(
       `/${encodeURIComponent(id)}/versions/${encodeURIComponent(versionId)}/verify-database`,
-      {},
+      { rowVersion },
       'POST',
       180000,
     ).pipe(map((body) => globalTemplateDetailSchema.parse(body)));

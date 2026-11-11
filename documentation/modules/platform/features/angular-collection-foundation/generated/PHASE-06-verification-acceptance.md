@@ -66,10 +66,10 @@ on the original plan alone.
 
 ## Approved references
 
-- **Angular shared collection foundation cross-platform master review:** `../modules/platform/features/angular-collection-foundation/angular-collection-foundation-review.md` sections 8, 9, 10
-- **Angular shared collection foundation API implementation profile:** `../modules/platform/features/angular-collection-foundation/angular-collection-foundation-api.md` sections 10, 11
-- **Angular shared collection foundation Angular web implementation profile:** `../modules/platform/features/angular-collection-foundation/angular-collection-foundation-web.md` sections 12, 13, 14
-- **Angular shared collection foundation Expo implementation profile:** `../modules/platform/features/angular-collection-foundation/angular-collection-foundation-mobile.md` sections 14, 15
+- **Angular shared collection foundation cross-platform master review:** `../modules/platform/features/angular-collection-foundation/angular-collection-foundation-review.md` sections 8, 9, 10, 16, 17
+- **Angular shared collection foundation API implementation profile:** `../modules/platform/features/angular-collection-foundation/angular-collection-foundation-api.md` sections 10, 11, 16, 17
+- **Angular shared collection foundation Angular web implementation profile:** `../modules/platform/features/angular-collection-foundation/angular-collection-foundation-web.md` sections 12, 13, 14, 16, 17
+- **Angular shared collection foundation Expo implementation profile:** `../modules/platform/features/angular-collection-foundation/angular-collection-foundation-mobile.md` sections 14, 15, 16, 17
 
 ## Source fingerprints
 
@@ -78,10 +78,18 @@ on the original plan alone.
 | angular-collection-foundation-master | 8 | `c5930c59d67c5efccc1bda1aba04bdacb2ce11cb936ddfb4306e541ee2a782af` |
 | angular-collection-foundation-master | 9 | `72b4e325040d35ad3426bf2fc0686fa85b299e5f2e349735a570c0cd93a88e25` |
 | angular-collection-foundation-master | 10 | `7653f373d77818eab834faf40a1877d9492456d68d7394c81de97df13dc9c17b` |
+| angular-collection-foundation-master | 16 | `fcb6649a75c6a69ee67dc2e6a4508edae519b87a9ee9de90b55153c92e55370f` |
+| angular-collection-foundation-master | 17 | `f16ffc8284c366335cec993fb5929aeac83c4f22d9af53fe4e1b8e1f423e21e1` |
 | angular-collection-foundation-api | 10 | `7653f373d77818eab834faf40a1877d9492456d68d7394c81de97df13dc9c17b` |
 | angular-collection-foundation-api | 11 | `900f3d8706f3bbad21a81d915d3c5e875b5862f8c4f8df0f37d9834504346239` |
+| angular-collection-foundation-api | 16 | `fcb6649a75c6a69ee67dc2e6a4508edae519b87a9ee9de90b55153c92e55370f` |
+| angular-collection-foundation-api | 17 | `f16ffc8284c366335cec993fb5929aeac83c4f22d9af53fe4e1b8e1f423e21e1` |
 | angular-collection-foundation-web | 12 | `01f711480bf46a59884a1c0ef5ecf9efadacc73f531d0c69236f14d5b91e43e9` |
 | angular-collection-foundation-web | 13 | `22c80fdb52fd1cf880f807ef351f9851f394bfa956c756b6ec4e84e9e22128a1` |
 | angular-collection-foundation-web | 14 | `2495418f57ef4e931d5971a7f5cf495934d28d1da4b34398894c657e7853a3fc` |
+| angular-collection-foundation-web | 16 | `fcb6649a75c6a69ee67dc2e6a4508edae519b87a9ee9de90b55153c92e55370f` |
+| angular-collection-foundation-web | 17 | `f16ffc8284c366335cec993fb5929aeac83c4f22d9af53fe4e1b8e1f423e21e1` |
 | angular-collection-foundation-mobile | 14 | `2495418f57ef4e931d5971a7f5cf495934d28d1da4b34398894c657e7853a3fc` |
 | angular-collection-foundation-mobile | 15 | `9088a7ed9203940469f0bda4a96bae95ef7ff7144ef4d527d137fe7d1ce09932` |
+| angular-collection-foundation-mobile | 16 | `fcb6649a75c6a69ee67dc2e6a4508edae519b87a9ee9de90b55153c92e55370f` |
+| angular-collection-foundation-mobile | 17 | `f16ffc8284c366335cec993fb5929aeac83c4f22d9af53fe4e1b8e1f423e21e1` |

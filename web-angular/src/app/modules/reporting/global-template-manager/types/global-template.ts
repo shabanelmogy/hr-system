@@ -221,6 +221,10 @@ export interface GlobalTemplateDraftRequest {
 }
 export type GlobalTemplateCandidate = z.infer<typeof globalTemplateCandidateSchema>;
 export const globalTemplateGrantSchema = z.object({
+  // Older servers omit scope. Omission is unknown, never a platform role.
+  tenantId: z.string().nullable().optional(),
+  tenantName: z.string().nullable().optional(),
+  scopeKnown: z.boolean().optional(),
   roleId: z.string().min(1).max(450),
   roleName: z.string(),
   rights: z.array(z.enum(globalTemplateRights)),
@@ -244,7 +248,9 @@ export const globalTemplateRolePageSchema = z.object({
   totalCount: z.number().int().nonnegative(),
 });
 export type GlobalTemplateGrant = z.infer<typeof globalTemplateGrantSchema>;
-export type GlobalTemplateRole = z.infer<typeof globalTemplateRolePageSchema>['items'][number];
+export type GlobalTemplateRole = z.infer<typeof globalTemplateRolePageSchema>['items'][number] & {
+  readonly scopeKnown?: boolean;
+};
 
 export function globalTemplateFileError(value: unknown): 'required' | 'invalidFile' | null {
   if (!(value instanceof File)) return 'required';

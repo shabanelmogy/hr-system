@@ -48,6 +48,21 @@ describe('System audit read contracts', () => {
     expect(() => parseAuditPage({ items: [entry], nextCursor: 'x'.repeat(401) })).toThrow();
   });
 
+  it('accepts the requested 25-row page and rejects a larger server payload', () => {
+    const items = Array.from({ length: 26 }, (_, index) => ({ ...entry, id: index + 1 }));
+    expect(parseAuditPage({ items: items.slice(0, 25), nextCursor: 'next' }).items).toHaveLength(
+      25,
+    );
+    expect(() => parseAuditPage({ items, nextCursor: null })).toThrow();
+  });
+
+  it.each([-1, 1.5, Number.MAX_SAFE_INTEGER + 1, '28'])(
+    'rejects an invalid total %s',
+    (totalCount) => {
+      expect(() => parseAuditPage({ items: [], nextCursor: null, totalCount })).toThrow();
+    },
+  );
+
   it('validates nullable textual field snapshots and exact requested detail identity', () => {
     const value = {
       entry,

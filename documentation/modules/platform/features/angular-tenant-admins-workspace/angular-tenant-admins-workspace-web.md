@@ -43,6 +43,14 @@ remain unchanged.
 
 Reuse CardList/PageHeader/SurfaceCard/StatusBadge/RowActions/DialogPanel/FormContainer and shared fields/confirmation/dirty guards/scoped reads. CardList.showFooter=false supports the actual unpaged source. MultiReferenceField uses installed PrimeNG MultiSelect, FormFieldControl and bounded Reactive Forms compatibility; no engine. MCP usage metadata validation passes; browser separately proves actual combobox help/error/invalid/required/readOnly/focus. The sparse central preset registers MultiSelect/Chip/IconField themes. Removing the local display:block rule restores native vendor chip/dropdown alignment with observed geometry red/green proof. Body-attached panels wait for exit before scripted reopen. Shared Angular headers/fields/cards/actions and contained scrolling follow requester-approved reuse/layout rules; no duplicate MUI shell is introduced. Domain components own no HTTP.
 
+
+Shared multi-selection correction 2026-11-09: the Tenant membership field uses
+all selected values as wrapping, removable badges. Central preset tokens correct
+filter-icon placement and option spacing; shared PT-scoped Sass owns wrapping
+and touch geometry. API/domain/default-membership rules are unchanged; new
+Next/Mobile work is Excluded. Current proof and limits: [multi-selection
+presentation](MULTISELECT_PRESENTATION_2026-11-09.md).
+
 ## 8. States and lifetime
 
 Separate actor-scoped list/detail/Tenant choices; mask/cancel on authority change. Initial/background/empty/error/retry/403, dirty/pending and uncertain distinct. No automatic dispatched replay. Invalid submit remains enabled with under-field errors and first-invalid focus. Unavailable saved membership is never silently deleted.

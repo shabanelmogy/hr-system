@@ -1,0 +1,262 @@
+[
+  {
+    "sha256": "9aa7df503343253a2d21e6db0d0985d787d078a1c84c653ab3d1b04b940f343f",
+    "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Abstractions/AuditTrail/AuditTrailContracts.cs"
+  },
+  {
+    "sha256": "af2f586173e1a6a0f8ed3a9e929f5b75aeacfcbe434694fa5946a9b06f4bed64",
+    "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Persistence/AuditTrail/AuditTrailSource.cs"
+  },
+  {
+    "sha256": "b8fd9dc3c3168dfb916a290d8b6219dbf8ef41ecfecf7f33c839ab1053cd5f36",
+    "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/Platform/AuditTrail/AuditTrailQueries.cs"
+  },
+  {
+    "sha256": "f8820a9c219cfa178f592aec80eb732aef7148b2177172a77701bd3da23034c5",
+    "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/AuditTrailQueryTests.cs"
+  },
+  {
+    "sha256": "e857a9f2d042910ece7799735f1ba878ac2fb2cd77e1d583472734f8a94315f7",
+    "path": "api/Tests/ErpSystem.BuildingBlocks.Tests/AuditTrailTests.cs"
+  },
+  {
+    "sha256": "74946b059be5b8a3807af40dd650e0096b72bbc4819adf51cffb5cedc565c716",
+    "path": "web-angular/scripts/angular-build-browser-fixture.mjs"
+  },
+  {
+    "sha256": "6b8106369d9d884a2432684ff5f3b743be201fef376d8db8c302f981cf89c775",
+    "path": "web-angular/scripts/verify-report-manager-review-browser.mjs"
+  },
+  {
+    "sha256": "bb8d8d3b030c9305ecc722c78534bb3980d821bc214371cde5c9df8d9796c619",
+    "path": "web-angular/scripts/verify-system-audit-browser.mjs"
+  },
+  {
+    "sha256": "418acb9a8ed46171581197eb1bb528b3dd8fe95532a83ea11b54c5b61f485ce0",
+    "path": "web-angular/scripts/verify-system-audit-failures-browser.mjs"
+  },
+  {
+    "sha256": "8ed5ff1685227da79774e823c9a67b8030a06ee617aeee5824d11d14b4d69d7f",
+    "path": "web-angular/scripts/verify-system-audit-layout-browser.mjs"
+  },
+  {
+    "sha256": "9b97c1d6916685916915858b921504396d21596fa3bdfdf8975376bd50455318",
+    "path": "web-angular/src/app/platform/system-audit/audit.fixture.ts"
+  },
+  {
+    "sha256": "fa53376a5ca85d421d73afd7b722d1bff4d85a91f00499213c4dffcb82b62a04",
+    "path": "web-angular/src/app/platform/system-audit/audit.spec-setup.ts"
+  },
+  {
+    "sha256": "bdc61885e9b5127392b6cc2017c148e8fb073dbf5ea5abafe905f7f4007c1b65",
+    "path": "web-angular/src/app/platform/system-audit/components/audit-changes/audit-changes.html"
+  },
+  {
+    "sha256": "5d0b83f04e1a7574c96c625a697ee880a88010853d12a6844f6e4005c3f31365",
+    "path": "web-angular/src/app/platform/system-audit/components/audit-changes/audit-changes.scss"
+  },
+  {
+    "sha256": "a4c0a77426c50a1d6361a9b8981eb23b81a8f6cb8a10f77c10bb7693c7a1e084",
+    "path": "web-angular/src/app/platform/system-audit/components/audit-changes/audit-changes.spec.ts"
+  },
+  {
+    "sha256": "9e1b768def42481b5995b5e78af03737f111ea60d47a22a5da3030ebd6b08f7d",
+    "path": "web-angular/src/app/platform/system-audit/components/audit-changes/audit-changes.ts"
+  },
+  {
+    "sha256": "49a26ed0c5c23d5f5fce1d94092c970d62970b2072f9e01ef8842f1555001db8",
+    "path": "web-angular/src/app/platform/system-audit/components/audit-collection/audit-collection.html"
+  },
+  {
+    "sha256": "6209226e901e2fa31a1a92d7e7ba1ce07dac8d52f5b10c2773a3d134065f255d",
+    "path": "web-angular/src/app/platform/system-audit/components/audit-collection/audit-collection.scss"
+  },
+  {
+    "sha256": "2f1353254c3f65f0a739c456835047dc76519282f5d9fc4512193629a5ce731d",
+    "path": "web-angular/src/app/platform/system-audit/components/audit-collection/audit-collection.spec.ts"
+  },
+  {
+    "sha256": "a6b3c3d0b695c781d309c838a27d3b7e8a1673bfdba2ab5a33ce95dacda2568f",
+    "path": "web-angular/src/app/platform/system-audit/components/audit-collection/audit-collection.ts"
+  },
+  {
+    "sha256": "93d33340ddd2027aa44d3b51e2f4ffc67ad2428ab325c73051122946d894ae5a",
+    "path": "web-angular/src/app/platform/system-audit/components/audit-criteria/audit-criteria.html"
+  },
+  {
+    "sha256": "dd88fe014a8dc3d57da8fd9f1d4f522b81c0a44b279f17bb190440651a8d7dfe",
+    "path": "web-angular/src/app/platform/system-audit/components/audit-criteria/audit-criteria.scss"
+  },
+  {
+    "sha256": "cb3fe63223e8cba81a68daf63f4b2ddac86f4133c4cb8198e9d51d1b0209754a",
+    "path": "web-angular/src/app/platform/system-audit/components/audit-criteria/audit-criteria.spec.ts"
+  },
+  {
+    "sha256": "1b61866f0f28a532a8ab38735b1d0161c2d462b8be352dccf156de68700e47af",
+    "path": "web-angular/src/app/platform/system-audit/components/audit-criteria/audit-criteria.ts"
+  },
+  {
+    "sha256": "80afe319836ff9a1c3ec22679bf4bc1c3144c178eccc4c14f2821a55d2f4d149",
+    "path": "web-angular/src/app/platform/system-audit/components/audit-details/audit-details.html"
+  },
+  {
+    "sha256": "fed21752990220d8152214ae2e59bfaf89feb95e05afb69094de73f6d258daa3",
+    "path": "web-angular/src/app/platform/system-audit/components/audit-details/audit-details.spec.ts"
+  },
+  {
+    "sha256": "b8a2831150f7f8e01b587b52905c119c8d278e0a5128f100f91e1218440c2048",
+    "path": "web-angular/src/app/platform/system-audit/components/audit-details/audit-details.ts"
+  },
+  {
+    "sha256": "2efb04598876a6a22d4d940618a1c9a4d5fa98422f5a9b1dc817dedc14e6e069",
+    "path": "web-angular/src/app/platform/system-audit/pages/system-audit-page/system-audit-page.html"
+  },
+  {
+    "sha256": "3b1cb3f76edc90f0550054b46e7171808482a4d58deb2db359bee1c5c0453f03",
+    "path": "web-angular/src/app/platform/system-audit/pages/system-audit-page/system-audit-page.scss"
+  },
+  {
+    "sha256": "9f4fd28540fb5218ac0fd302317478a76446c7195ed6efbaf6d96ee256f8c407",
+    "path": "web-angular/src/app/platform/system-audit/pages/system-audit-page/system-audit-page.spec.ts"
+  },
+  {
+    "sha256": "a161d80fe85312d7f23176622e243d3f9fca90166094f143a07692043f65a003",
+    "path": "web-angular/src/app/platform/system-audit/pages/system-audit-page/system-audit-page.ts"
+  },
+  {
+    "sha256": "2073b7d28890a632a9f02e9b1d2b6162e896408c7cff3a741589a174f953c584",
+    "path": "web-angular/src/app/platform/system-audit/policy.public-api.ts"
+  },
+  {
+    "sha256": "af7fbb3e96608efedae437cb7728453e060f5279297525462209edd1c3a1a6ae",
+    "path": "web-angular/src/app/platform/system-audit/presentation/audit-presentation.ts"
+  },
+  {
+    "sha256": "3fd62776d6be36f73c138f36c0bb17e7525793f468742f60c164fae8b96f5558",
+    "path": "web-angular/src/app/platform/system-audit/public-api.ts"
+  },
+  {
+    "sha256": "41270b515cc565ccc540e0ea680adc78e5df28b061104850860ef303518de50c",
+    "path": "web-angular/src/app/platform/system-audit/services/system-audit-service.spec.ts"
+  },
+  {
+    "sha256": "6d79724b4d85185d06e752b2aefa8ed02f46aabaacef363840229f5e60c89fb7",
+    "path": "web-angular/src/app/platform/system-audit/services/system-audit-service.ts"
+  },
+  {
+    "sha256": "1aed333a99e22c26d56e5536c967574dd502545e2a9ceb9d8f9e7c0d1a5e2044",
+    "path": "web-angular/src/app/platform/system-audit/state/audit-detail-state.spec.ts"
+  },
+  {
+    "sha256": "b9beffc2597671b81a1d2734fd0fd41713b8ad028060ece545bcd4ff51a78de2",
+    "path": "web-angular/src/app/platform/system-audit/state/audit-detail-state.ts"
+  },
+  {
+    "sha256": "ec1e717678a0e121153fe7325b03cbfacde683df6b9b384d7a5f617eb44fb844",
+    "path": "web-angular/src/app/platform/system-audit/state/audit-filter-state.ts"
+  },
+  {
+    "sha256": "81a162e8daa3a0946be458a8c7637f475d08c886cdb786eb92ce503850b8711e",
+    "path": "web-angular/src/app/platform/system-audit/state/audit-read-state.spec.ts"
+  },
+  {
+    "sha256": "51ebccbf78dfa8d7e7e4388ad0639242344776707dd470d5e52ec1159eeb4783",
+    "path": "web-angular/src/app/platform/system-audit/state/audit-read-state.ts"
+  },
+  {
+    "sha256": "56a47c48e67a3a63ce860639751b2b2e18afe37fa49c73605fd2327470ade878",
+    "path": "web-angular/src/app/platform/system-audit/system-audit-access.ts"
+  },
+  {
+    "sha256": "adc7500a19ce8439d6c70ac0bbcdfed364dd2b4731843166ad9a69313d5f9e10",
+    "path": "web-angular/src/app/platform/system-audit/system-audit-guard.ts"
+  },
+  {
+    "sha256": "1d5eeda17ff67966a6991f56bedf059bce0ff882f9950c906c380c3a211b03fe",
+    "path": "web-angular/src/app/platform/system-audit/types/audit-column-filters.ts"
+  },
+  {
+    "sha256": "52fb50d9fcbf81a699508b2dc489baa1393403fcb37efb70e48a93c1d2f7a5bf",
+    "path": "web-angular/src/app/platform/system-audit/types/audit-criteria.spec.ts"
+  },
+  {
+    "sha256": "465316e446cea8492a5b6eae9e6a9b5ad25483feb5f80594498b0d2155815303",
+    "path": "web-angular/src/app/platform/system-audit/types/audit-criteria.ts"
+  },
+  {
+    "sha256": "129ed651754c9318ec55b18bd28ee137e0c62a6f1fcbf1aaf9a0d58f9985739c",
+    "path": "web-angular/src/app/platform/system-audit/types/audit-trail.spec.ts"
+  },
+  {
+    "sha256": "72753f2dad236798c47e1e2e123580bb43d9dbfb6dd7542a0aded1ceaf66f473",
+    "path": "web-angular/src/app/platform/system-audit/types/audit-trail.ts"
+  },
+  {
+    "sha256": "383d80db394a3d42c511e2b7eb9f23593734f7999321cccca18d5f16613343aa",
+    "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.scss"
+  },
+  {
+    "sha256": "e13eb65533fc813165411a4ec296a27811daea11435e823c0626de542a2f822c",
+    "path": "web-angular/src/app/shared/ui/collections/collection-controller.ts"
+  },
+  {
+    "sha256": "3c91319c31a9cc1b180cf759b5a27d5b8e54f185d7ed3721f5844ec821e7b65c",
+    "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.html"
+  },
+  {
+    "sha256": "6265dae0cdf34acaef28ac5e6952a5ea86965266ee27f8592e5340dd932ce322",
+    "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.scss"
+  },
+  {
+    "sha256": "59b8b1a457abfdb78b7743594a6dda0d9a07c34a5cd81851242dfdbe0bcaf9be",
+    "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.spec.ts"
+  },
+  {
+    "sha256": "794f017b53c8b271bafd7fd9712f5ba7d0dfa2432f6ce06b8beaf588bb8fb2db",
+    "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.ts"
+  },
+  {
+    "sha256": "de499e6c53ecdccc1ccb5723ec713a95621312eb57f0064a4a2019fb04e6c7da",
+    "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.component.scss"
+  },
+  {
+    "sha256": "c93f87098e8c17ab7d9d34b9188c817160b3bacaefd3efbaa35c32dadb4c2e14",
+    "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.html"
+  },
+  {
+    "sha256": "6243587a7c86ab6347a7a43ff14f030ba0bb7f6e06396f5fa3217f2f9ef11754",
+    "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.scss"
+  },
+  {
+    "sha256": "b68de1dae12cb345aecc498c11bd11254c9e29ced019319032b6013f9d9480f4",
+    "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.ts"
+  },
+  {
+    "sha256": "5674f44ec9bd5f331d0e7cb23202fa1888c17ac9da4645d517cea63e4443202a",
+    "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-search.scss"
+  },
+  {
+    "sha256": "a607d47ffb24660817b802e44b3bcb9af56be0de8953cf944557099063709ca4",
+    "path": "web-angular/src/app/shared/ui/collections/collection-logic.spec.ts"
+  },
+  {
+    "sha256": "63a3b307ba0e5fb9f354d28b9b458b5ed82ab1980593aee97af4ac409831541f",
+    "path": "web-angular/src/app/shared/ui/collections/collection-logic.ts"
+  },
+  {
+    "sha256": "d491cf1ecad62c751b02f1171984b4220cb551f2b7b8cf3a90157069cad54056",
+    "path": "web-angular/src/app/shared/ui/collections/collection.types.ts"
+  },
+  {
+    "sha256": "dc9eef3f57dce52e2c3a0411631da645dcf5392b4ff08f486dff482e452858e6",
+    "path": "web-angular/src/app/shared/ui/layout/scroll-viewport/scroll-viewport.html"
+  },
+  {
+    "sha256": "99582b9f306d15d9a6e5095e2ac4ca572b9bea4f5728fe8a4f3add045ad95626",
+    "path": "web-angular/src/app/shared/ui/layout/scroll-viewport/scroll-viewport.scss"
+  },
+  {
+    "sha256": "0743d8922568bfe175aa5366e1ec81e6c74a9ef07aa0de1aca3cf111faccae79",
+    "path": "web-angular/src/app/shared/ui/layout/scroll-viewport/scroll-viewport.ts"
+  }
+]

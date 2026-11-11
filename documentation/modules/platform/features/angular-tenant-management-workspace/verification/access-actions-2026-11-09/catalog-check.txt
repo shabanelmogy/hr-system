@@ -1,0 +1,16 @@
+✔ system-only sources and mixed navigation keys cannot be customized by companies (1.9349ms)
+✔ company and shared text retain their verified owners (0.7714ms)
+✔ new namespaces and mobile roots require an explicit ownership decision (1.774ms)
+✔ every embedded entry is classified and ownership participates in each client fingerprint (167.9992ms)
+✔ message history namespace is company-owned (0.3863ms)
+✔ global catalog authority is explicit, screen-specific and fail closed (2.6214ms)
+✔ embedded server metadata is generated from the same reviewed client policy (150.9081ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 451.8109
+Company UI catalog checked: 21 sources, 7533 keys.

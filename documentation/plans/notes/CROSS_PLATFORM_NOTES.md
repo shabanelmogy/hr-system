@@ -1,7 +1,18 @@
 # Cross-Platform Notes Index
 
+Audit matching-total rollout: [PROD-035](PRODUCTION_NOTES.md#prod-035--audit-matching-total-rollout)
+owns the hosted API/Angular publication and count/scope verification boundary.
+
+Native permission catalog parity: FOLLOW-034 in [FOLLOW_UPS.md](FOLLOW_UPS.md).
+
+Independent Super Admin system-session rollout: PROD-034 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).
+
 Use this index for notes whose resolution requires coordinated API + Web + Mobile
 decisions.
+
+Independent Super Admin system sessions: FOLLOW-032 in [FOLLOW_UPS.md](FOLLOW_UPS.md).
+
+Missing Reporting evidence blocking complete documentation checks: FOLLOW-033 in [FOLLOW_UPS.md](FOLLOW_UPS.md).
 
 Shared all-filtered collection export rollout: PROD-032 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).
 

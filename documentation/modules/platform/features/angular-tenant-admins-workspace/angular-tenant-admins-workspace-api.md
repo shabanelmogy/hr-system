@@ -20,6 +20,11 @@ API role super_admin only; readOnly bars commands. Unique email/username, select
 
 Web Cards/create/edit/delete Required; Grid/Table/search/paging/standalone Detail/Chart/Tree/Report/Import/Export/restore/includeArchived/mock generator Excluded by current source. Native existing behavior retained; new native work Excluded.
 
+
+2026-11-09: shared Angular multi-selection presentation is corrected in
+[MULTISELECT_PRESENTATION_2026-11-09.md](MULTISELECT_PRESENTATION_2026-11-09.md).
+API/schema/native runtime changes are Excluded for this client-only correction.
+
 ## 6. Transport
 
 GET tenantAdmins/getAll/get/id, POST create201+DTO, PUT update/id200+DTO, DELETE delete/id204. Assignment lookup uses tenants/getAll through the owning Tenant service/public lookup contract; no first-page truncation. Exact HTTPS+credentials+CSRF for writes, finite timeout and unknown-response validation.

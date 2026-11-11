@@ -53,7 +53,8 @@ public sealed class PlatformAccessTokenClaimMaterialOwnershipTests
                 StringComparison.Ordinal))
             .ToArray();
 
-        Assert.Equal([typeof(AuthenticationTokenClaimNames)], publicTokenContractTypes);
+        Assert.Equal(new[] { typeof(AuthenticationTokenClaimNames), typeof(AuthenticationSessionScope) }.OrderBy(type => type.Name),
+            publicTokenContractTypes.OrderBy(type => type.Name));
     }
 
     [Fact]
@@ -167,8 +168,48 @@ public sealed class PlatformAccessTokenClaimMaterialOwnershipTests
         Assert.Equal("Free", result.TenantPlanName);
     }
 
-    private sealed class RecordingSource : IAccessTokenClaimMaterialSource
+    [Fact]
+    public async Task SystemClaims_ExcludeCompanyGrantsTenantRolesAndReservedRoleClaimInjection()
     {
+        var source = new RecordingSource
+        {
+            Snapshot = new AccessTokenClaimMaterialSourceSnapshot(null,
+                [new("system", "super_admin", null, true, false),
+                 new("tenant", "Planner", "tenant-a", false, false),
+                 new("deleted", "Deleted", null, true, true)],
+                [new("system", "Permissions", "Tenants:View"),
+                 new("tenant", "Permissions", "Company:Edit"),
+                 new("deleted", "Permissions", "Deleted:View"),
+                 new("system", AuthenticationTokenClaimNames.TenantId, "injected"),
+                 new("system", AuthenticationTokenClaimNames.SessionScope, "company"),
+                 new("system", ClaimTypes.Role, "injected")])
+        };
+        var services = new ServiceCollection();
+        services.AddSingleton<IAccessTokenClaimMaterialSource>(source);
+        services.AddPlatformApplication();
+        using var provider = services.BuildServiceProvider();
+        var result = await provider.GetRequiredService<IAccessTokenClaimMaterialService>().BuildAsync(
+            new(new("u", "name", "mail", "first", "last", "stamp"), "sid", "jti", 0, ""));
+
+        Assert.Empty(result.TenantName);
+        Assert.Empty(result.TenantPlanName);
+        Assert.Equal("system", Assert.Single(result.Claims, c => c.Type == AuthenticationTokenClaimNames.SessionScope).Value);
+        Assert.Equal("super_admin", Assert.Single(result.Claims, c => c.Type == ClaimTypes.Role).Value);
+        Assert.Equal("Tenants:View", Assert.Single(result.Claims, c => c.Type == "Permissions").Value);
+        Assert.DoesNotContain(result.Claims, c => c.Type is "tenant_id" or "company_id" or "tenant_role_id");
+        Assert.Equal(0, source.DirectPermissionReads);
+    }
+
+    private sealed class RecordingSource : IAccessTokenClaimMaterialSource, ICompanyPermissionClaimMaterialSource
+    {
+        public int DirectPermissionReads { get; private set; }
+
+        public Task<IReadOnlySet<string>> GetDirectPermissionsAsync(
+            string userId, string tenantId, int companyId, CancellationToken cancellationToken = default)
+        {
+            DirectPermissionReads++;
+            return Task.FromResult<IReadOnlySet<string>>(new HashSet<string>());
+        }
         public required AccessTokenClaimMaterialSourceSnapshot Snapshot { get; init; }
         public (string UserId, string TenantId)? LastScope { get; private set; }
 

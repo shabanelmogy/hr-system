@@ -7,7 +7,7 @@
   "featureName": "System log collection consistency",
   "referenceFeature": "N/A",
   "planId": "web-angular-migration",
-  "sliceId": "S4-A4b \u2014 System log collection consistency",
+  "sliceId": "S4-A4b — System log collection consistency",
   "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
   "featureDecompositionDecision": "Single feature",
   "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-system-log-collection-consistency.md",
@@ -261,66 +261,6 @@
       "id": "log-consistency-accepted-16",
       "layer": "documentation",
       "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/en-light-390-cards.png",
-      "purpose": "Accepted implementation, test or portable verification evidence"
-    },
-    {
-      "id": "log-consistency-accepted-17",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-angular-accepted.log",
-      "purpose": "Accepted implementation, test or portable verification evidence"
-    },
-    {
-      "id": "log-consistency-accepted-18",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-audit-browser.log",
-      "purpose": "Accepted implementation, test or portable verification evidence"
-    },
-    {
-      "id": "log-consistency-accepted-19",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-consistency-browser-final.log",
-      "purpose": "Accepted implementation, test or portable verification evidence"
-    },
-    {
-      "id": "log-consistency-accepted-20",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-countries-regression.log",
-      "purpose": "Accepted implementation, test or portable verification evidence"
-    },
-    {
-      "id": "log-consistency-accepted-21",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-districts-regression.log",
-      "purpose": "Accepted implementation, test or portable verification evidence"
-    },
-    {
-      "id": "log-consistency-accepted-22",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-error-browser.log",
-      "purpose": "Accepted implementation, test or portable verification evidence"
-    },
-    {
-      "id": "log-consistency-accepted-23",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-solution-build-final.log",
-      "purpose": "Accepted implementation, test or portable verification evidence"
-    },
-    {
-      "id": "log-consistency-accepted-24",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-solution-test-final.log",
-      "purpose": "Accepted implementation, test or portable verification evidence"
-    },
-    {
-      "id": "log-consistency-accepted-25",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-states-regression.log",
-      "purpose": "Accepted implementation, test or portable verification evidence"
-    },
-    {
-      "id": "log-consistency-accepted-26",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-tenants-regression.log",
       "purpose": "Accepted implementation, test or portable verification evidence"
     },
     {
@@ -952,6 +892,18 @@
       "layer": "implementation",
       "path": "web-angular/tooling/system-log-proof/SystemLogProof.csproj",
       "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "current-evidence-repair-20261109",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/CURRENT_EVIDENCE_REPAIR_2026-11-09.md",
+      "purpose": "Explicit historical raw-log loss and current proof/acceptance boundaries; no historical rerun is claimed"
+    },
+    {
+      "id": "historical-log-inventory-20261109",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/verification/MISSING_HISTORICAL_LOGS_2026-11-09.json",
+      "purpose": "Original unavailable required-file records retained verbatim with owner and date"
     }
   ],
   "finalizationChecklist": [
@@ -976,5 +928,75 @@
     "Do not start customer-facing education until phase 06 records Verified.",
     "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
     "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
-  ]
+  ],
+  "unavailableHistoricalEvidence": [
+    {
+      "id": "log-consistency-accepted-17",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-angular-accepted.log",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-18",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-audit-browser.log",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-19",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-consistency-browser-final.log",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-20",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-countries-regression.log",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-21",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-districts-regression.log",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-22",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-error-browser.log",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-23",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-solution-build-final.log",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-24",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-solution-test-final.log",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-25",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-states-regression.log",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    },
+    {
+      "id": "log-consistency-accepted-26",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-log-collection-consistency/verification/log-tenants-regression.log",
+      "purpose": "Accepted implementation, test or portable verification evidence"
+    }
+  ],
+  "evidenceRepair20261109": {
+    "date": "2026-11-09",
+    "missingHistoricalLogs": 10,
+    "inventory": "documentation/modules/reporting/verification/MISSING_HISTORICAL_LOGS_2026-11-09.json",
+    "policy": "documentation/modules/reporting/CURRENT_EVIDENCE_REPAIR_2026-11-09.md",
+    "historicalRawEvidenceRecovered": false,
+    "nativeOrHostedRerunClaimed": false
+  }
 }

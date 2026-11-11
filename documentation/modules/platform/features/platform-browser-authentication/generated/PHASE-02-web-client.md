@@ -108,14 +108,14 @@ failure into partial success.
 | --- | ---: | --- |
 | platform-browser-authentication-master | 3 | `345220b1eaa0e529ed3d55776cd852c9a5c82af7c4d7972601479aca3f55dc9f` |
 | platform-browser-authentication-master | 4 | `0505f838bd9f13d3144554c0ec84c5ede68b9a4c88979c80f6692106e100f94f` |
-| platform-browser-authentication-master | 6 | `3f6972c09887aa9b387d77f91d23c2f2e48de37583bdb9cc0506f94dd1d5a8c4` |
+| platform-browser-authentication-master | 6 | `16f0d91ce6c1102f0369758b3987e54f305d9014de3bdc00bada7fddb55da5bb` |
 | platform-browser-authentication-master | 7 | `6390b0bf66b6037b53e9c024f398ba2c920c21acf87513c7525a99a3815032c9` |
 | platform-browser-authentication-web | 1 | `9e6c23fbd4c467e8da42449b3c36fe12367ad493ac99d7605dc39987334dae0b` |
 | platform-browser-authentication-web | 2 | `11c48756ab1c34db8854d3ce5bd16ec445574bbb18fe20133a749b246fb70f1b` |
 | platform-browser-authentication-web | 3 | `722df655f509a9502fce1586abedeea827a4114862a9cf103691a025e50a5918` |
 | platform-browser-authentication-web | 4 | `7fd7dca6804526bd194554e0c5ada1fe009368bd1b08c1e94da65f9478b7edbd` |
-| platform-browser-authentication-web | 5 | `f0165aa2c664c74782c689fa8bf471802b693aa1ac0c88b1b199957dbb6cb880` |
-| platform-browser-authentication-web | 6 | `0cb8d282665eab10947f26d8e7f8b61da88e4b155927725acaa99ecfadb65506` |
+| platform-browser-authentication-web | 5 | `f76ea1db4b0cd86fe1a46a57f9d2cb5aa9b7cbba0e547fea8046eece016895c5` |
+| platform-browser-authentication-web | 6 | `822dd8997a784f0b7f344c50140074bc5ec7e84f03cd233ef162af494d3f7e11` |
 | platform-browser-authentication-web | 7 | `63b256feb8056824a70b3d6140fa09878174c6a4b109f18fbbc1546166185502` |
 | platform-browser-authentication-web | 8 | `3b480eab32b081a85dd0a739f8911bf49c01ab5032ce617f1d0330e32e9d0df6` |
 | platform-browser-authentication-web | 9 | `780e5ec310e9d4dd24dcffb501fd38b6fc98afa4bc795dc300b8e56832e62237` |

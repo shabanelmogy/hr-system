@@ -1,0 +1,70 @@
+{
+  "date": "2026-11-09",
+  "scope": "Angular Tenant Grid/Cards access action and generated UI catalog",
+  "decision": "Verified",
+  "angular": {
+    "passed": 1038,
+    "files": 198,
+    "fullCheck": "passed"
+  },
+  "browser": {
+    "pageAndSearchPreserved": true,
+    "passed": 20,
+    "gridAndCards": true,
+    "hostedWrites": false
+  },
+  "api": {
+    "passed": 1363,
+    "existingBuildWarnings": 78,
+    "failed": 0,
+    "buildErrors": 0,
+    "skippedOptInBrowser": 3
+  },
+  "catalog": {
+    "policyTests": 7,
+    "webVersion": "9ba843bffcbdaaa377e79d2aa188917be8fb54daed780b8abf76bbe7689531d3"
+  },
+  "inherited": [
+    "FOLLOW-019",
+    "FOLLOW-033",
+    "PROD-019"
+  ],
+  "sourceHashes": [
+    {
+      "path": "web-angular/src/app/platform/tenants/management/state/tenant-access-state.ts",
+      "sha256": "bc32b27b3ccd90215ded0566e962a3e3318f32162f96626d6f3ab8f8330d5e8c"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenants/management/state/tenant-access-state.spec.ts",
+      "sha256": "7903bc1a72fe2040eab7c6adc44719a7d8f222769433cbbe329db1758db5465c"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenants/management/pages/tenant-management-page/tenant-management-page.ts",
+      "sha256": "4291842f0544b6c3fd4aafb340a44d6dfca1658b9f0444ed5ec41d55ad099e30"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenants/management/pages/tenant-management-page/tenant-management-page.html",
+      "sha256": "a892000ae02b094d409836d6b2c3bf2cedd8bc68a0a13750e67c2be8277678f3"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenants/management/components/tenant-collection-view/tenant-collection-view.ts",
+      "sha256": "8bf5b0fa222d96b32749c3efc92018f6b5746bb0922a08e47a9fc66f31e0741c"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenants/management/presentation/tenant-list-presentation.ts",
+      "sha256": "6d7cab37340ea585d83dff971bad6feb012673a467824cc99aced1ef51b71baa"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenants/management/validation/tenant-mutation.ts",
+      "sha256": "fa4a36998d21bdbb14ce11f8c37204bc475d40cdeb1f9e7530232371a0adf3de"
+    },
+    {
+      "path": "web-angular/scripts/verify-tenant-management-browser.mjs",
+      "sha256": "a5b0c0d8718d39775742b92cd25dacd712f68495ae90ad1fe6102100c03daaa6"
+    },
+    {
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyLocalization/company-ui-catalog.json",
+      "sha256": "4d6c637c3b677c732f01c9641c3ada335aaa092f335ee572cc9d35d10065d024"
+    }
+  ]
+}

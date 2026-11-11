@@ -1,5 +1,10 @@
 # API Notes Index
 
+Audit matching-total rollout: [PROD-035](PRODUCTION_NOTES.md#prod-035--audit-matching-total-rollout)
+owns the hosted publication, scope and SQL-volume verification boundary.
+
+Independent Super Admin system-session rollout: PROD-034 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).
+
 This is the API-focused index into the central note registries.
 
 Geography ID sorting rollout: PROD-033 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).

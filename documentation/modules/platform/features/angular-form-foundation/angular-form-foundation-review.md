@@ -51,3 +51,14 @@ S1-A10 shared-source evolution2026-10-30: TextField now supports an optional pla
 
 
 Maintenance 2026-11-04 — D07/D39: Native Signal Forms models/schemas/submission now compose shared FormContainer and FormValueControl fields. Native focus reaches nested components; summary includes root errors; no Form Engine. New helpers map API errors with late-draft/array-order protection and preserve exact numeric/date-only values. Legacy CVA fixtures remain explicit compatibility coverage. API/Next/Mobile runtime and persistence are unchanged; migrations and cross-platform domain UI audit are N/A for this client-only maintenance. Current verification and limits: `documentation/modules/platform/features/angular-form-foundation/SIGNAL_FORMS_IMPLEMENTATION_REPORT.md`. Historical verification in section 11 refers to its dated increment.
+
+## Shared focus perimeter maintenance — 2026-11-09
+
+The requester-reported clipped Tenant Contact name border is corrected in the
+shared field chrome, using the single `fields/_field-focus.scss` rule. Text,
+multiline/floating, Numeric/Date, Reference and Boolean compound wrappers keep
+visible focus inside their border boxes and preserve destructive error color.
+No field-state, domain, schema, API, Next or Mobile runtime contract changed;
+migration is N/A. Angular-only presentation is Required. The canonical correction,
+regression commands and dated proof are in
+[FIELD_FOCUS_CORRECTION_2026-11-09.md](FIELD_FOCUS_CORRECTION_2026-11-09.md).

@@ -1,4 +1,5 @@
 @use '../field-chrome';
+@use '../field-focus';
 input::placeholder,
 textarea::placeholder {
   font-size: var(--field-placeholder-font-size, inherit);
@@ -15,16 +16,14 @@ textarea::placeholder {
   border: 0;
 }
 .input-row {
+  @include field-focus.control;
+
   display: flex;
   align-items: center;
   gap: 0;
   border: 1px solid var(--input);
   border-radius: var(--radius);
   background: var(--surface);
-}
-.input-row:focus-within {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
 }
 .input-row.invalid {
   border-color: var(--destructive);
@@ -169,14 +168,8 @@ svg {
 :host(.floating) .input-row.invalid {
   border-color: var(--destructive);
 }
-:host(.floating) .input-row.invalid:focus-within {
-  outline-color: var(--destructive);
-}
 :host(.floating) .floating-label.invalid {
   color: var(--destructive);
-}
-:host(.floating) .input-row:focus-within {
-  outline-offset: -2px;
 }
 .counter {
   margin-inline: 0.5rem 1.25rem;

@@ -48,6 +48,45 @@ describe('MultiReferenceField', () => {
       root: fixture.nativeElement as HTMLElement,
     };
   }
+  it('renders every selected label as a badge beyond the vendor three-label default', async () => {
+    const { fixture, owner, root } = await setup();
+    const options = ['one', 'two', 'three', 'four'].map((value) => ({
+      value,
+      label: `Tenant ${value}`,
+    }));
+    owner.options.set(options);
+    owner.model.set({ ids: options.map((option) => option.value) });
+    await fixture.whenStable();
+    const badges = root.querySelectorAll('.p-multiselect-chip');
+    expect([...badges].map((badge) => badge.textContent?.trim())).toEqual(
+      options.map((option) => option.label),
+    );
+    expect(root.querySelectorAll('.p-chip-remove-icon')).toHaveLength(4);
+  });
+  it('removes only the activated badge from the signal form and keeps readonly badges visible', async () => {
+    const { fixture, owner, root } = await setup();
+    owner.options.set([
+      { value: 'one', label: 'Tenant one' },
+      { value: 'two', label: 'Tenant two' },
+    ]);
+    owner.model.set({ ids: ['one', 'two'] });
+    await fixture.whenStable();
+    const activation = new KeyboardEvent('keydown', {
+      key: 'Enter',
+      bubbles: true,
+      cancelable: true,
+    });
+    root.querySelector('.p-chip-remove-icon')?.dispatchEvent(activation);
+    await fixture.whenStable();
+    expect(activation.defaultPrevented).toBe(true);
+    expect(owner.model().ids).toEqual(['two']);
+    expect(root.querySelector('.p-multiselect-chip')?.textContent?.trim()).toBe('Tenant two');
+    expect(root.querySelector('[role=combobox]')?.getAttribute('aria-expanded')).toBe('false');
+    owner.readonly.set(true);
+    await fixture.whenStable();
+    expect(root.querySelectorAll('.p-chip-remove-icon')).toHaveLength(0);
+    expect(root.querySelector('.p-multiselect-chip')?.textContent?.trim()).toBe('Tenant two');
+  });
   it('retains an unavailable selected identifier as a disabled option', () => {
     const fixture = TestBed.createComponent(MultiReferenceField);
     const field = fixture.componentInstance;

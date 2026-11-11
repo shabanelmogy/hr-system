@@ -34,6 +34,7 @@ public sealed class PlatformContractsArchitectureTests
     {
         "ErpSystem.Modules.Platform.Contracts.AssemblyReference",
         "ErpSystem.Modules.Platform.Contracts.Authentication.Tokens.AuthenticationTokenClaimNames",
+        "ErpSystem.Modules.Platform.Contracts.Authentication.Tokens.AuthenticationSessionScope",
         // R2 transport constants/metadata are shared by JWT Infrastructure and
         // Presentation only; no runtime port or framework dependency enters Contracts.
         "ErpSystem.Modules.Platform.Contracts.Authentication.Browser.BrowserAuthenticationDefaults",

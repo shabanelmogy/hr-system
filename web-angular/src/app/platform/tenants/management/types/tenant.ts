@@ -17,6 +17,13 @@ const entitlement = z.object({
 
 export const tenantLifecycleStatuses = ['active', 'archived', 'purgeScheduled'] as const;
 export const tenantSortColumns = ['name', 'identifier', 'createdOn'] as const;
+export const tenantSectionIds = [
+  'identity',
+  'subscription',
+  'entitlements',
+  'administrators',
+] as const;
+export type TenantSection = (typeof tenantSectionIds)[number];
 export const tenantQuerySchema = z.strictObject({
   pageNumber: int32,
   pageSize: z.int().check(z.minimum(1), z.maximum(200)),

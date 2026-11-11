@@ -2,13 +2,13 @@
   display: inline-block;
 }
 @mixin compact-label {
-  .compact-on-small {
+  button.compact-on-small {
     inline-size: var(--action-icon-size, 2.5rem);
     min-inline-size: var(--action-icon-size, 2.5rem);
     padding-inline: 0;
     justify-content: center;
   }
-  .compact-on-small span[pButtonLabel] {
+  button.compact-on-small span[pButtonLabel] {
     display: none;
   }
 }

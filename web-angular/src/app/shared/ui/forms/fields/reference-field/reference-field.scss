@@ -1,15 +1,14 @@
 @use '../field-chrome';
+@use '../field-focus';
 .reference-control {
+  @include field-focus.control;
+
   display: flex;
   align-items: center;
   min-width: 0;
   border: 1px solid var(--input);
   border-radius: var(--radius);
   background: var(--surface);
-}
-.reference-control:focus-within {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
 }
 .reference-control.invalid {
   border-color: var(--destructive);

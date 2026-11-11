@@ -282,36 +282,6 @@
       "purpose": "Current implementation or executed bounded acceptance evidence"
     },
     {
-      "id": "collection-export-final-20",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-browser-final.log",
-      "purpose": "Current implementation or executed bounded acceptance evidence"
-    },
-    {
-      "id": "collection-export-final-21",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-development-build.log",
-      "purpose": "Current implementation or executed bounded acceptance evidence"
-    },
-    {
-      "id": "collection-export-final-22",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-final-check.log",
-      "purpose": "Current implementation or executed bounded acceptance evidence"
-    },
-    {
-      "id": "collection-export-final-23",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-formatter-browser.log",
-      "purpose": "Current implementation or executed bounded acceptance evidence"
-    },
-    {
-      "id": "collection-export-final-24",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-reporting-tests.log",
-      "purpose": "Current implementation or executed bounded acceptance evidence"
-    },
-    {
       "id": "collection-export-final-25",
       "layer": "documentation",
       "path": "documentation/modules/platform/features/angular-collection-export/verification/results.json",
@@ -528,16 +498,16 @@
       "purpose": "Arabic Phase07 guide after bounded Phase06 verification"
     },
     {
-      "id": "collection-export-export-closure-check",
+      "id": "current-evidence-repair-20261109",
       "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-closure-check.log",
-      "purpose": "Executed documentation or planning closure check"
+      "path": "documentation/modules/reporting/CURRENT_EVIDENCE_REPAIR_2026-11-09.md",
+      "purpose": "Explicit historical raw-log loss and current proof/acceptance boundaries; no historical rerun is claimed"
     },
     {
-      "id": "collection-export-export-closure-planning",
+      "id": "historical-log-inventory-20261109",
       "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-closure-planning.log",
-      "purpose": "Executed documentation or planning closure check"
+      "path": "documentation/modules/reporting/verification/MISSING_HISTORICAL_LOGS_2026-11-09.json",
+      "purpose": "Original unavailable required-file records retained verbatim with owner and date"
     }
   ],
   "finalizationChecklist": [
@@ -562,5 +532,57 @@
     "Do not start customer-facing education until phase 06 records Verified.",
     "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
     "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
-  ]
+  ],
+  "unavailableHistoricalEvidence": [
+    {
+      "id": "collection-export-final-20",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-browser-final.log",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-21",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-development-build.log",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-22",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-final-check.log",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-23",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-formatter-browser.log",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-final-24",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-reporting-tests.log",
+      "purpose": "Current implementation or executed bounded acceptance evidence"
+    },
+    {
+      "id": "collection-export-export-closure-check",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-closure-check.log",
+      "purpose": "Executed documentation or planning closure check"
+    },
+    {
+      "id": "collection-export-export-closure-planning",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-collection-export/verification/logs/export-closure-planning.log",
+      "purpose": "Executed documentation or planning closure check"
+    }
+  ],
+  "evidenceRepair20261109": {
+    "date": "2026-11-09",
+    "missingHistoricalLogs": 7,
+    "inventory": "documentation/modules/reporting/verification/MISSING_HISTORICAL_LOGS_2026-11-09.json",
+    "policy": "documentation/modules/reporting/CURRENT_EVIDENCE_REPAIR_2026-11-09.md",
+    "historicalRawEvidenceRecovered": false,
+    "nativeOrHostedRerunClaimed": false
+  }
 }

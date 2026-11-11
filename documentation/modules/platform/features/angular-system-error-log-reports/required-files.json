@@ -198,36 +198,6 @@
       "purpose": "Actual safe source increment and owning architecture approval/test evidence"
     },
     {
-      "id": "report-source-verification-0",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-source-build-final.log",
-      "purpose": "Portable completed source-adapter gate evidence; not complete report acceptance"
-    },
-    {
-      "id": "report-source-verification-1",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-source-green.log",
-      "purpose": "Portable completed source-adapter gate evidence; not complete report acceptance"
-    },
-    {
-      "id": "report-source-verification-2",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-source-red.log",
-      "purpose": "Portable completed source-adapter gate evidence; not complete report acceptance"
-    },
-    {
-      "id": "report-source-verification-3",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-source-restore.log",
-      "purpose": "Portable completed source-adapter gate evidence; not complete report acceptance"
-    },
-    {
-      "id": "report-source-verification-4",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-source-test-final.log",
-      "purpose": "Portable completed source-adapter gate evidence; not complete report acceptance"
-    },
-    {
       "id": "report-source-verification-5",
       "layer": "documentation",
       "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/source-adapter-2026-11-06.json",
@@ -267,60 +237,6 @@
       "id": "managed-report-accepted-5",
       "layer": "documentation",
       "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
-      "purpose": "Actual implementation, tests, education or portable verification evidence"
-    },
-    {
-      "id": "managed-report-accepted-6",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-error-report-browser.log",
-      "purpose": "Actual implementation, tests, education or portable verification evidence"
-    },
-    {
-      "id": "managed-report-accepted-7",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-error-report-migration-apply.log",
-      "purpose": "Actual implementation, tests, education or portable verification evidence"
-    },
-    {
-      "id": "managed-report-accepted-8",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-error-report-migration.log",
-      "purpose": "Actual implementation, tests, education or portable verification evidence"
-    },
-    {
-      "id": "managed-report-accepted-9",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-error-report-production-browser.log",
-      "purpose": "Actual implementation, tests, education or portable verification evidence"
-    },
-    {
-      "id": "managed-report-accepted-10",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-grid-viewport-browser-final.log",
-      "purpose": "Actual implementation, tests, education or portable verification evidence"
-    },
-    {
-      "id": "managed-report-accepted-11",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-managed-report-api-build.log",
-      "purpose": "Actual implementation, tests, education or portable verification evidence"
-    },
-    {
-      "id": "managed-report-accepted-12",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-managed-report-api-test.log",
-      "purpose": "Actual implementation, tests, education or portable verification evidence"
-    },
-    {
-      "id": "managed-report-accepted-13",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-live-schema-proof.log",
-      "purpose": "Actual implementation, tests, education or portable verification evidence"
-    },
-    {
-      "id": "managed-report-accepted-19",
-      "layer": "documentation",
-      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-viewport-final-angular.log",
       "purpose": "Actual implementation, tests, education or portable verification evidence"
     },
     {
@@ -916,6 +832,18 @@
       "layer": "implementation",
       "path": "web-angular/src/app/shell/layout/main-shell/main-shell.ts",
       "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "current-evidence-repair-20261109",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/CURRENT_EVIDENCE_REPAIR_2026-11-09.md",
+      "purpose": "Explicit historical raw-log loss and current proof/acceptance boundaries; no historical rerun is claimed"
+    },
+    {
+      "id": "historical-log-inventory-20261109",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/verification/MISSING_HISTORICAL_LOGS_2026-11-09.json",
+      "purpose": "Original unavailable required-file records retained verbatim with owner and date"
     }
   ],
   "finalizationChecklist": [
@@ -940,5 +868,99 @@
     "Do not start customer-facing education until phase 06 records Verified.",
     "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
     "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
-  ]
+  ],
+  "unavailableHistoricalEvidence": [
+    {
+      "id": "report-source-verification-0",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-source-build-final.log",
+      "purpose": "Portable completed source-adapter gate evidence; not complete report acceptance"
+    },
+    {
+      "id": "report-source-verification-1",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-source-green.log",
+      "purpose": "Portable completed source-adapter gate evidence; not complete report acceptance"
+    },
+    {
+      "id": "report-source-verification-2",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-source-red.log",
+      "purpose": "Portable completed source-adapter gate evidence; not complete report acceptance"
+    },
+    {
+      "id": "report-source-verification-3",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-source-restore.log",
+      "purpose": "Portable completed source-adapter gate evidence; not complete report acceptance"
+    },
+    {
+      "id": "report-source-verification-4",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-source-test-final.log",
+      "purpose": "Portable completed source-adapter gate evidence; not complete report acceptance"
+    },
+    {
+      "id": "managed-report-accepted-6",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-error-report-browser.log",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-7",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-error-report-migration-apply.log",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-8",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-error-report-migration.log",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-9",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-error-report-production-browser.log",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-10",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-grid-viewport-browser-final.log",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-11",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-managed-report-api-build.log",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-12",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-managed-report-api-test.log",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-13",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-live-schema-proof.log",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    },
+    {
+      "id": "managed-report-accepted-19",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-error-log-reports/verification/log-report-viewport-final-angular.log",
+      "purpose": "Actual implementation, tests, education or portable verification evidence"
+    }
+  ],
+  "evidenceRepair20261109": {
+    "date": "2026-11-09",
+    "missingHistoricalLogs": 14,
+    "inventory": "documentation/modules/reporting/verification/MISSING_HISTORICAL_LOGS_2026-11-09.json",
+    "policy": "documentation/modules/reporting/CURRENT_EVIDENCE_REPAIR_2026-11-09.md",
+    "historicalRawEvidenceRecovered": false,
+    "nativeOrHostedRerunClaimed": false
+  }
 }

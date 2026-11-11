@@ -159,9 +159,11 @@ public static class PlatformIdentityServiceCollectionExtensions
         if (string.IsNullOrWhiteSpace(userId) ||
             string.IsNullOrWhiteSpace(sessionId) ||
             string.IsNullOrWhiteSpace(securityStamp) ||
-            string.IsNullOrWhiteSpace(tenantId) ||
-            !int.TryParse(companyValue, out var companyId) ||
-            companyId <= 0)
+            !AuthenticationSessionScope.TryResolve(principal?.FindFirstValue(AuthenticationTokenClaimNames.SessionScope),
+                tenantId, companyValue, out var sessionScope, out var companyId) ||
+            principal!.FindAll(AuthenticationTokenClaimNames.SessionScope).Skip(1).Any() ||
+            principal.FindAll(AuthenticationTokenClaimNames.CompanyId).Skip(1).Any() ||
+            principal.FindAll(AuthenticationTokenClaimNames.TenantId).Skip(1).Any())
         {
             context.Fail("The token is missing required SaaS scope claims.");
             return;
@@ -173,8 +175,8 @@ public static class PlatformIdentityServiceCollectionExtensions
                 userId,
                 sessionId,
                 securityStamp,
-                tenantId,
-                companyId), context.HttpContext.RequestAborted);
+                tenantId ?? string.Empty,
+                companyId) { SessionScope = sessionScope }, context.HttpContext.RequestAborted);
         if (!validation.IsValid)
             context.Fail("The session or SaaS scope is no longer active.");
         else if (context.HttpContext.Items.ContainsKey(BrowserAuthenticationDefaults.CookieAuthenticationItem))

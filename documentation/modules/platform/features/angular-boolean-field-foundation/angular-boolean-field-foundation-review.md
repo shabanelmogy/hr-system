@@ -64,3 +64,10 @@ Canonical closure2026-10-30:341 recipe/planning gates passed; S1-A9 Phase06 Veri
 
 
 Maintenance 2026-11-04 — D07/D39: BooleanField supports native Signal Forms with a boolean model, native touched/errors/focus and shared readonly protection. The native dev harness retains false-as-data and explicit consent validation. Internal vendor FormControl does not own feature validation. API/Next/Mobile runtime and persistence are unchanged; migrations and cross-platform domain UI audit are N/A for this client-only maintenance. Current verification and limits: `documentation/modules/platform/features/angular-form-foundation/SIGNAL_FORMS_IMPLEMENTATION_REPORT.md`. Historical verification in section 11 refers to its dated increment.
+
+## Shared focus perimeter maintenance — 2026-11-09
+
+The compound wrapper inherits the shared form foundation focus rule, keeping its
+perimeter inside clipping viewports and retaining destructive error color. No
+selection/value/readonly/domain contract changed. Current regression evidence is
+owned by [the form foundation correction](../angular-form-foundation/FIELD_FOCUS_CORRECTION_2026-11-09.md).

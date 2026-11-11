@@ -1,0 +1,197 @@
+
+> erp-angular@0.0.0 check
+> npm run check:format && npm run lint && npm run test:config && npm run check:tokens && npm run check:fonts && npm run check:catalog && npm run check:architecture && npm run type-check && npm test && npm run build
+
+
+> erp-angular@0.0.0 check:format
+> prettier --check "src/**/*.{ts,html,scss}" "scripts/**/*.{mjs,cjs,ts}" "tooling/**/*.{mjs,cjs,ts}" eslint.config.mjs
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> erp-angular@0.0.0 lint
+> eslint "src/**/*.{ts,html}" --max-warnings 0
+
+
+> erp-angular@0.0.0 test:config
+> node --test scripts/configure-api.test.mjs
+
+API target: host (https://example.com)
+API target: host (https://example.com)
+✔ selects the configured host, normalizes its trailing slash and accepts a local override (3.4906ms)
+✔ rejects unknown or missing targets and missing URLs rather than silently falling back (0.7003ms)
+✔ enforces the existing HTTPS-origin-only browser authentication contract (0.4373ms)
+✔ loads .env then .env.local then process overrides; emits only the public origin (7.8169ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 196.1894
+
+> erp-angular@0.0.0 check:tokens
+> node scripts/check-tokens.mjs
+
+Angular consumes the current compiled shared token package.
+
+> erp-angular@0.0.0 check:fonts
+> node scripts/sync-fonts.mjs --check
+
+Self-hosted font assets and OFL: 14 files verified.
+
+> erp-angular@0.0.0 check:catalog
+> node scripts/export-ui-resources.mjs --check
+
+Angular consumes existing web catalog 9ba843bffcbdaaa377e79d2aa188917be8fb54daed780b8abf76bbe7689531d3: 20 namespaces; no API/catalog identity change.
+
+> erp-angular@0.0.0 check:architecture
+> node --test scripts/architecture-rules.test.mjs scripts/dependency-rules.test.mjs && node scripts/check-architecture.mjs
+
+✔ feature grids inherit responsive row actions instead of forcing inline presentation (11.0365ms)
+✔ barrel cycles are rejected, while type-only and lazy edges are independent (121.7507ms)
+✔ configured aliases cannot bypass ownership rules (29.0079ms)
+✔ owner dependencies cannot enter another owner internals or reverse layers (5.1918ms)
+✔ external feature forms obey the same shared field policy as inline forms (0.4065ms)
+✔ direct browser requests cannot bypass the service owner (32.8832ms)
+✔ projected collection columns use stable shared identity rather than numeric positions (0.3822ms)
+✔ aliased and constructor HTTP access stays in services (7.286ms)
+✔ Angular components require external templates and styles, including test hosts (25.699ms)
+✔ external component resources preserve supported Angular metadata (8.7357ms)
+✔ resource policy recognizes Angular import aliases and namespace imports (5.2675ms)
+✔ resource policy does not misidentify ordinary data or TestBed overrides as components (0.9288ms)
+✔ application components require matching folders while test fixtures stay with their owner (1.9634ms)
+✔ application components do not share an implementation file; related test hosts can (1.5514ms)
+✔ external feature templates retain shared form boundaries while test hosts can exercise native fixtures (0.3987ms)
+✔ shared PrimeNG import and template are allowed (2.7813ms)
+✔ collection shells and external templates stay behind the shared public API (2.9966ms)
+✔ aliased, dynamic and re-exported feature bypasses are rejected (1.0096ms)
+✔ only the theme owner can configure PrimeNG and templates cannot bypass shared adapters (0.5876ms)
+✔ AST distinguishes forbidden types and storage from innocent text and comments (2.4074ms)
+✔ presentation persistence is restricted to its declared shared owner (3.1631ms)
+✔ feature templates must compose shared form and fields (1.2462ms)
+✔ features cannot depend on shared folder internals (1.2301ms)
+✔ chart capability uses its lazy public entry and keeps native engines inside Shared (0.9621ms)
+✔ composition can use the lightweight feedback public entry without importing native hosts (0.6788ms)
+✔ bootstrap can import preview state through its narrow public contract while internals stay private (3.7407ms)
+✔ only application composition can inject a business context into generic Shell (1.1459ms)
+✔ module header and page must share the authenticated catalog provider (1.1283ms)
+✔ shared controls must enhance interactive widgets with PrimeNG (2.9435ms)
+✔ dependency analysis distinguishes value, explicit type, import type and lazy edges (52.4456ms)
+✔ cross-owner internal paths are rejected for resolved aliases and type edges too (1.5628ms)
+✔ shared dependencies allow the reviewed localization adapter but reject business/session state (0.4291ms)
+✔ only static value cycles fail; intentional type/lazy feedback is distinct (0.7924ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1041.6684
+Angular foundation boundaries checked.
+
+> erp-angular@0.0.0 pretype-check
+> npm run configure:license && npm run configure:api
+
+
+> erp-angular@0.0.0 configure:license
+> node --env-file-if-exists=.env.local scripts/configure-license.mjs
+
+PrimeUI local license configured (value omitted).
+
+> erp-angular@0.0.0 configure:api
+> node scripts/configure-api.mjs
+
+API target: host (https://shabanhrms.runasp.net)
+
+> erp-angular@0.0.0 type-check
+> tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.spec.json
+
+
+> erp-angular@0.0.0 pretest
+> npm run configure:license
+
+
+> erp-angular@0.0.0 configure:license
+> node --env-file-if-exists=.env.local scripts/configure-license.mjs
+
+PrimeUI local license configured (value omitted).
+
+> erp-angular@0.0.0 test
+> node scripts/run-angular.mjs test --watch=false
+
+API target: host (https://shabanhrms.runasp.net)
+> Building...
+√ Building...
+Application bundle generation complete. [42.732 seconds] - 2026-11-09T13:41:05.672Z
+
+
+ RUN  v5.0.5 G:/test/ERPSYSTEM/ERPSYSTEM/web-angular
+
+
+ Test Files  198 passed (198)
+      Tests  1039 passed (1039)
+   Start at  15:41:07
+   Duration  43.45s (environment 81%, tests 15%, import 2%, transform 2%, setup 1%)
+
+
+> erp-angular@0.0.0 prebuild
+> npm run configure:license
+
+
+> erp-angular@0.0.0 configure:license
+> node --env-file-if-exists=.env.local scripts/configure-license.mjs
+
+PrimeUI local license configured (value omitted).
+
+> erp-angular@0.0.0 build
+> node scripts/run-angular.mjs build
+
+API target: host (https://shabanhrms.runasp.net)
+> Building...
+√ Building...
+Initial chunk files | Names                |  Raw size | Estimated transfer size
+main-C4GHJHDI.js    | main                 | 242.08 kB |                59.84 kB
+chunk-Bk6kA5SI.js   | -                    | 232.47 kB |                66.20 kB
+chunk-CG97OsSv.js   | -                    |  87.50 kB |                21.86 kB
+styles-QHX7O25R.css | styles               |  22.14 kB |                 2.43 kB
+chunk-C7rukAVN.js   | -                    |   1.42 kB |               567 bytes
+
+                    | Initial total        | 585.62 kB |               150.89 kB
+
+Lazy chunk files    | Names                |  Raw size | Estimated transfer size
+chunk-EXoidT7L.js   | -                    |   1.61 MB |               264.74 kB
+chunk-BwAlQTPE.js   | xlsx                 | 494.25 kB |               134.12 kB
+chunk-D1vbEp8h.js   | -                    | 393.45 kB |                71.79 kB
+chunk-CM0H0_15.js   | chart-renderer       | 212.10 kB |                63.71 kB
+chunk-8SdJZ5aT.js   | authenticated-routes | 150.02 kB |                32.14 kB
+chunk-D5UhkdX-.js   | core-json            | 124.64 kB |                25.53 kB
+chunk-CZZNXJcX.js   | platform-auth-json   |  76.75 kB |                14.51 kB
+chunk-DlAyqVsi.js   | public-api           |  69.79 kB |                17.10 kB
+chunk-CPQB6Qy6.js   | public-api           |  69.47 kB |                16.39 kB
+chunk-CZUFOf4F.js   | public-api           |  69.11 kB |                16.40 kB
+chunk-DBeNiUaD.js   | public-api           |  69.04 kB |                15.79 kB
+chunk-C_sV42Y7.js   | hr-recruitment-json  |  57.72 kB |                10.86 kB
+chunk-D6qYk7QE.js   | -                    |  56.73 kB |                13.35 kB
+chunk-5qxD2YIU.js   | index                |  56.12 kB |                12.72 kB
+chunk-CopPBigm.js   | hr-workforce-json    |  49.46 kB |                 7.65 kB
+...and 54 more lazy chunks files. Use "--verbose" to show all the files.
+
+Application bundle generation complete. [40.358 seconds] - 2026-11-09T13:42:34.109Z
+
+▲ [WARNING] bundle initial exceeded maximum budget. Budget 500.00 kB was not met by 85.62 kB with a total of 585.62 kB.
+
+
+▲ [WARNING] src/app/shared/ui/collections/collection-frame/collection-frame.scss exceeded maximum budget. Budget 4.00 kB was not met by 2.19 kB with a total of 6.19 kB.
+
+
+▲ [WARNING] src/app/shared/ui/layout/page-header/page-header.scss exceeded maximum budget. Budget 4.00 kB was not met by 3.92 kB with a total of 7.92 kB.
+
+
+▲ [WARNING] src/app/shared/ui/collections/collection-frame/collection-search.scss exceeded maximum budget. Budget 4.00 kB was not met by 1.72 kB with a total of 5.72 kB.
+
+
+Output location: G:\test\ERPSYSTEM\ERPSYSTEM\web-angular\dist\erp-angular
+

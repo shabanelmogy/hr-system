@@ -3,6 +3,78 @@
 Non-blocking improvements that should be revisited, but are not yet formal Deferred
 business scope.
 
+## FOLLOW-034 — Native permission catalog baseline mismatch
+
+- Source/context: full native check on2026-11-09 reaches the existing
+  `permissions-parity.test.ts` and fails because native `permissions.ts` lacks
+  Reporting's existing `GlobalDataExports:Export` constant. Both permission
+  catalogs are unchanged by the system-session correction. Owner: Reporting
+  + Mobile shared permission catalog. Surface: Mobile/API. Priority: Medium.
+  Status: Open.
+- Impact: full Mobile gate cannot pass; focused authentication parser/offline
+  verification is separate evidence, not a replacement for that gate.
+- Resolution/trigger: synchronize the canonical native permission catalog with
+  the owned Reporting contract and rerun native parity/full checks before
+  declaring complete native repository acceptance. No export screen, authority
+  or permission behavior is introduced by this corrective auth change.
+- Canonical measured receipt:
+  `platform-browser-authentication/SUPER_ADMIN_SYSTEM_SESSION_2026-11-09.md`.
+
+## FOLLOW-033 — Missing Reporting evidence blocks complete documentation checks
+
+- Source/context: complete documentation check on 2026-11-09 stops on missing
+  `managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-angular-check.log`.
+  Owner: Reporting documentation + QA. Surface: Cross-platform. Priority: Medium.
+  Status: Closed 2026-11-09 for current documentation completeness.
+- Impact: unrelated feature documentation cannot receive a complete repository
+  documentation pass. Scoped generation/check does not satisfy that full gate.
+- Resolution: recover the original verified artifact or rerun its exact Reporting
+  verification and update its owning receipt/manifest honestly; never fabricate
+  a historical pass or silently remove the required evidence.
+- Trigger/target: before claiming complete repository documentation acceptance.
+- Current evidence and scoped Tenant boundary:
+  [create-to-administrators receipt](../../modules/platform/features/angular-tenant-management-workspace/TENANT_CREATE_ADMINISTRATORS_2026-11-09.md).
+
+- Resolution 2026-11-09: requester-authorized manager corrective work executed
+  fresh API/Angular/browser checks and applied the existing current-evidence
+  baseline policy explicitly. Full inventory retains60original missing raw-log
+  records across5owners; absent historical requirements are retained in each
+  manifest's unavailableHistoricalEvidence, with the inventory/assessment required.
+  No original log was recovered or recreated, and historical/native acceptance
+  is not inferred. FOLLOW-025 retains historical availability. The unchanged
+  generator's complete check passed540recipes after regeneration.
+- Canonical current assessment: [Reporting evidence repair](../../modules/reporting/CURRENT_EVIDENCE_REPAIR_2026-11-09.md).
+- Current manager execution: [corrective contract](../../modules/reporting/features/global-crystal-template-manager/MANAGER_REVIEW_CORRECTIONS_2026-11-09.md).
+
+## FOLLOW-032 — Super Admin login incorrectly depends on an active Tenant
+
+- Source/context: hosted login401 investigation and explicit requester correction
+  on2026-11-09: Super Admin must be independent of a Tenant. Owner: Platform
+  API/Security with Angular and retained Next/Mobile owners. Surface:
+  Cross-platform. Priority: High. Status: Open.
+- Historical incident impact: original login, JWT/session validation, refresh and SessionContext required
+  Tenant/company scope. Disabling `demo` locks out its Super Admin as well as normal
+  accounts. Removing a single login condition is insufficient.
+- Immediate recovery: requester-approved reactivation of exactly one `demo` row;
+  actual hosted Chrome login/session/logout pass for all three demo roles. This
+  does not satisfy independent system-session acceptance.
+- Reason not implemented during incident recovery: shared session contract and
+  cross-client scope/persistence impact require reopening ERP planning/execution
+  gates. This is an open required correction, not an accepted deferral.
+- Original trigger (resolved locally): reconcile system-session specification and execution contract before
+  changing authentication runtime. Target: next Platform auth correction; blocks
+  declaring Tenant-independent Super Admin complete.
+- Closure: actual no-membership/all-Tenants-inactive system login/session/refresh/
+  logout/live-role-revocation, ordinary-user isolation, retained-client regressions,
+  required API/Angular gates and hosted acceptance.
+- Canonical scope, source audit, recovery and pending acceptance:
+  [system-session specification](../business/web-angular-migration/SUPER_ADMIN_SYSTEM_SESSION_SPEC_2026-11-09.md).
+
+- Corrective execution update2026-11-09: local system-session runtime and client
+parsers are implemented; current measured gates live in the owning execution
+document. Earlier constraints above describe the incident baseline. Hosted
+acceptance remains Open under PROD-034; no hosted implementation is claimed.
+
 ## FOLLOW-031 — Intermittent Angular composition-test timeouts
 
 - Source/context: recurring 5000ms Countries-remount/report-manager composition
@@ -20,6 +92,25 @@ business scope.
 - Resolution/closure evidence: identify setup/compilation or runtime-wait cause,
   instrument it and prove full-gate stability without hiding assertions. Pending.
 - Canonical receipt: [shared search](../../modules/platform/features/angular-states-workspace/SHARED_COLLECTION_SEARCH_2026-11-08.md).
+
+- Manager correction2026-11-09: initial full gate again hit5000ms timeouts in
+  `creates a fixed provider draft without querying or requiring a database View`
+  and `restores the permitted view across remounts without retaining collection data`.
+  No assertion or timeout was changed. Focused Reporting102passed. Final full-gate
+  status is separately recorded in the manager corrective receipt; a later pass
+  does not establish the root cause or close this reliability follow-up.
+
+- A subsequent default run observed7Vitest worker-startup errors/abnormal exit
+  after963tests passed. Official parallelism guidance and the installed runner
+  support bounding worker count. The current execution uses VITEST_MAX_WORKERS=2
+  without changing timeouts, assertions, isolation or test inclusion. This is
+  execution control, not a demonstrated root-cause correction; status stays Open.
+
+- Final manager run2026-11-09: the unchanged full `npm run check` exited0 with
+  `VITEST_MAX_WORKERS=2`, passing1039tests/198files plus all static/build gates.
+  The final production manager browser rerun passed16scenarios. Both default
+  failures remain retained in the corrective receipt. This successful bounded
+  execution does not close the root-cause/stability investigation.
 
 ## FOLLOW-028 — Header count scope outside list views
 

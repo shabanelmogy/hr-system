@@ -1,0 +1,6 @@
+
+> erp-angular@0.0.0 check:format
+> prettier --check "src/**/*.{ts,html,scss}" "scripts/**/*.{mjs,cjs,ts}" "tooling/**/*.{mjs,cjs,ts}" eslint.config.mjs
+
+Checking formatting...
+All matched files use Prettier code style!

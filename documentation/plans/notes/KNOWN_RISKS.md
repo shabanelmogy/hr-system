@@ -178,3 +178,11 @@ Requester reports the current ready-made report displayed data. A positive candi
 now exists in the user journey; no exact approved fixture/PDF/hash, cache/empty/filter
 or independent native proof was captured in this turn. Preserve the distinction in
 FIRST_REPORT_DISPLAY_2026-11-03.md; this does not close RISK-008 or RISK-019.
+
+RISK-020 measurement 2026-11-10: the Audit corrective full gate passes with
+588.69kB initial /151.21kB estimated transfer and the unchanged 500kB warning
+budget. Component-style warnings remain visible for collection-search (5.33kB),
+PageHeader (7.92kB) and CollectionFrame (6.57kB); all remain below error budgets.
+No warning threshold was relaxed. Review shared style/startup cost before release;
+no production latency claim. Current receipt:
+`documentation/modules/platform/features/angular-system-audit-workspace/verification/audit-review-2026-11-09/acceptance-2026-11-10.json`.

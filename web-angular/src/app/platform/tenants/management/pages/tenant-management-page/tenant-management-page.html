@@ -34,3 +34,36 @@
     <erp-tenant-collection-view [kind]="view()" [toolbarVisible]="toolbar()" />
   </div>
 </main>
+@if (access.active()) {
+  @if (access.blocked() || !access.canWrite()) {
+    <erp-dialog-panel
+      [open]="true"
+      [title]="text('accessChange')"
+      [closeLabel]="'actions.close' | uiText"
+      (closeRequested)="access.close()"
+    >
+      <erp-feedback-state kind="error" [title]="accessFeedback()" />
+      <erp-button dialogActions [label]="'actions.close' | uiText" (activated)="access.close()" />
+    </erp-dialog-panel>
+  } @else {
+    <erp-confirmation-dialog
+      [open]="true"
+      [title]="text(access.enabling() ? 'activate' : 'deactivate')"
+      [description]="
+        text(access.enabling() ? 'activateHint' : 'deactivateHint') +
+        ' ' +
+        (access.record()?.name ?? '')
+      "
+      [confirmLabel]="text(access.enabling() ? 'activate' : 'deactivate')"
+      [cancelLabel]="'actions.cancel' | uiText"
+      [severity]="access.enabling() ? 'success' : 'warn'"
+      [pending]="access.pending()"
+      (confirmed)="access.confirm()"
+      (cancelled)="access.close()"
+    >
+      @if (access.feedback()) {
+        <erp-feedback-state kind="error" layout="inline" [title]="accessFeedback()" />
+      }
+    </erp-confirmation-dialog>
+  }
+}

@@ -349,7 +349,9 @@ try {
       const layout = await footer.evaluate((element) => {
         const bounds = element.getBoundingClientRect();
         const nodes = Array.from(
-          element.querySelectorAll('.p-paginator-current, .p-paginator button, erp-option-select'),
+          element.querySelectorAll(
+            '.record-controls button, .record-count, .size-settings .page-count, erp-option-select',
+          ),
         );
         const rects = nodes.map((node) => node.getBoundingClientRect());
         return {
@@ -376,27 +378,28 @@ try {
           scenario.language + '-' + scenario.mode + '-' + scenario.width + '.png',
         ),
       });
-      const next = footer.locator('.p-paginator-next');
+      const captions = core[scenario.language];
+      const record = (key) => footer.getByRole('button', { name: captions[key], exact: true });
+      const next = record('pagination.goToNextRecord');
+      const previous = record('pagination.goToPreviousRecord');
       const initialRequests = requests.length;
       await next.click();
-      await page.waitForFunction(
-        () => document.querySelector('.p-paginator-prev')?.disabled === false,
+      await expect(previous).toBeEnabled();
+      assert.equal(
+        requests.length,
+        initialRequests,
+        'Moving within the loaded page must not refetch.',
       );
-      assert.equal(requests.length, initialRequests);
-      assert.equal(await footer.locator('.p-paginator-page').count(), 0);
-      await footer.locator('.p-paginator-last').click();
-      await page.waitForFunction(
-        () => document.querySelector('.p-paginator-next')?.disabled === true,
-      );
+      assert.equal(await footer.locator('p-paginator').count(), 0);
+      await record('pagination.goToLastRecord').click();
+      await expect(next).toBeDisabled();
       assert.equal(String(requests.at(-1).page), '13');
       assert.equal(String(requests.at(-1).pageSize), '10');
       const combo = footer.getByRole('combobox');
       await combo.click();
       await page.getByRole('option', { name: /^(25|٢٥)$/ }).click();
-      await page.waitForFunction(
-        () => document.querySelector('.p-paginator-prev')?.disabled === true,
-      );
-      assert.equal(String(requests.at(-1).page), '1');
+      await expect.poll(() => String(requests.at(-1).page)).toBe('1');
+      await expect(previous).toBeDisabled();
       assert.equal(String(requests.at(-1).pageSize), '25');
       if (filtersMode) {
         const captions = core[scenario.language];

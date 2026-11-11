@@ -1129,6 +1129,150 @@
       "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/tenant-layout-2026-11-08/tenants-results.json",
       "layer": "verification",
       "purpose": "Final shared header and Tenant layout acceptance; runtime scope and earlier evidence remain explicit"
+    },
+    {
+      "id": "tenant-create-administrators-2026-11-09",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/TENANT_CREATE_ADMINISTRATORS_2026-11-09.md",
+      "purpose": "Current create-to-administrators routing rule and verification boundaries"
+    },
+    {
+      "id": "tenant-create-administrators-browser-2026-11-09",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/create-administrators-2026-11-09/results.json",
+      "purpose": "Executed twenty browser workflows for create-to-administrators and existing edit behavior"
+    },
+    {
+      "id": "tenant-create-administrators-angular-check-log",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/create-administrators-2026-11-09/angular-check.txt",
+      "purpose": "Executed November 9 create-to-administrators maintenance verification"
+    },
+    {
+      "id": "tenant-create-administrators-tenant-tests-log",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/create-administrators-2026-11-09/tenant-tests.txt",
+      "purpose": "Executed November 9 create-to-administrators maintenance verification"
+    },
+    {
+      "id": "tenant-create-administrators-tenant-browser-log",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/create-administrators-2026-11-09/tenant-browser.txt",
+      "purpose": "Executed November 9 create-to-administrators maintenance verification"
+    },
+    {
+      "id": "tenant-create-administrators-tenant-documentation-check-log",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/create-administrators-2026-11-09/tenant-documentation-check.txt",
+      "purpose": "Executed November 9 create-to-administrators maintenance verification"
+    },
+    {
+      "id": "tenant-create-administrators-planning-check-log",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/create-administrators-2026-11-09/planning-check.txt",
+      "purpose": "Executed November 9 create-to-administrators maintenance verification"
+    },
+    {
+      "id": "tenant-access-state",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/tenants/management/state/tenant-access-state.ts",
+      "purpose": "Actor-bound confirmed access target using existing fresh-detail/rowVersion update"
+    },
+    {
+      "id": "tenant-access-state-tests",
+      "layer": "verification",
+      "path": "web-angular/src/app/platform/tenants/management/state/tenant-access-state.spec.ts",
+      "purpose": "Access target, preservation, cancellation, authority and failure acceptance"
+    },
+    {
+      "id": "tenant-access-maintenance-2026-11-09",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/TENANT_ACCESS_ACTIONS_2026-11-09.md",
+      "purpose": "Canonical access-row-action maintenance and verification boundaries"
+    },
+    {
+      "layer": "api",
+      "purpose": "Generated embedded Web catalog containing access-action EN/AR entries",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyLocalization/company-ui-catalog.json",
+      "id": "tenant-access-embedded-catalog"
+    },
+    {
+      "layer": "configuration",
+      "purpose": "Canonical source-to-embedded catalog generator",
+      "path": "scripts/export-company-ui-catalog.mjs",
+      "id": "tenant-access-canonical-catalog-generator"
+    },
+    {
+      "layer": "web",
+      "purpose": "Existing embedded catalog-to-Angular generation pipeline",
+      "path": "web-angular/scripts/export-ui-resources.mjs",
+      "id": "tenant-access-angular-catalog-exporter"
+    },
+    {
+      "id": "tenant-access-proof-angular-check-txt",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/access-actions-2026-11-09/angular-check.txt",
+      "purpose": "Executed Tenant access action maintenance verification and explicit inherited gate limits"
+    },
+    {
+      "id": "tenant-access-proof-api-restore-txt",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/access-actions-2026-11-09/api-restore.txt",
+      "purpose": "Executed Tenant access action maintenance verification and explicit inherited gate limits"
+    },
+    {
+      "id": "tenant-access-proof-api-build-txt",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/access-actions-2026-11-09/api-build.txt",
+      "purpose": "Executed Tenant access action maintenance verification and explicit inherited gate limits"
+    },
+    {
+      "id": "tenant-access-proof-catalog-check-txt",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/access-actions-2026-11-09/catalog-check.txt",
+      "purpose": "Executed Tenant access action maintenance verification and explicit inherited gate limits"
+    },
+    {
+      "id": "tenant-access-proof-documentation-full-check-txt",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/access-actions-2026-11-09/documentation-full-check.txt",
+      "purpose": "Executed Tenant access action maintenance verification and explicit inherited gate limits"
+    },
+    {
+      "id": "tenant-access-proof-browser-txt",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/access-actions-2026-11-09/browser.txt",
+      "purpose": "Executed Tenant access action maintenance verification and explicit inherited gate limits"
+    },
+    {
+      "id": "tenant-access-proof-browser-results-json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/access-actions-2026-11-09/browser-results.json",
+      "purpose": "Executed Tenant access action maintenance verification and explicit inherited gate limits"
+    },
+    {
+      "id": "tenant-access-final-api-tests-txt",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/access-actions-2026-11-09/api-tests.txt",
+      "purpose": "Final executed maintenance verification and source hashes"
+    },
+    {
+      "id": "tenant-access-final-summary-json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/access-actions-2026-11-09/summary.json",
+      "purpose": "Final executed maintenance verification and source hashes"
+    },
+    {
+      "id": "tenant-access-final-documentation-check-txt",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/access-actions-2026-11-09/documentation-check.txt",
+      "purpose": "Final owning documentation and planning gate results"
+    },
+    {
+      "id": "tenant-access-final-planning-check-txt",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-tenant-management-workspace/verification/access-actions-2026-11-09/planning-check.txt",
+      "purpose": "Final owning documentation and planning gate results"
     }
   ],
   "finalizationChecklist": [

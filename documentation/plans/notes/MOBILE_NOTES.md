@@ -1,5 +1,9 @@
 # Mobile Notes Index
 
+Native permission catalog parity: FOLLOW-034 in [FOLLOW_UPS.md](FOLLOW_UPS.md).
+
+Independent Super Admin system-session rollout: PROD-034 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).
+
 This is the Mobile-focused index into the central note registries.
 
 Do not duplicate full note details here. Add the canonical note to one of:

@@ -39,3 +39,7 @@ Manager remains policy-filtered. Navigation24browser cases pass.
 Final current-only runtime/evidence manifest; canonical books synchronized. Phase07
 Arabic customer guide is complete from verified behavior; education is registered and generated documentation484recipes/planning checks pass. The next sibling still requires its own resolved preflight before runtime. Parent Super Admin goal
 remains Active and later workflows/final comprehensive review remain Required.
+
+## Create-to-administrators follow-up — 2026-11-09
+
+Confirmed creation now opens the saved Tenant Administrators tab and retains it on reload. The existing scoped administrator workflow preselects that Tenant. Edit-save and failed/uncertain-create behavior remain intact. Focused tests40/8 and browser20 pass; current execution and gate boundaries are recorded in [the maintenance receipt](TENANT_CREATE_ADMINISTRATORS_2026-11-09.md). This is Angular-only maintenance, with no hosted writes or API/schema change.

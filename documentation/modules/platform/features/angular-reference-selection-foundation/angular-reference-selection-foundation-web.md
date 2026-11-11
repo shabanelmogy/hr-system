@@ -73,3 +73,10 @@ own implementation/differences/limits; ROADMAP/RESUME own next single Active ste
 
 
 Maintenance 2026-11-04 — D07/D39: ReferenceField supports native nullable reference models/state/touch/focus/reset while preserving scoped lookup and retained-selection rules. A native composition test verifies required validation, vendor updates, clear and focus. Internal vendor/search FormControls remain shared implementation details. API/Next/Mobile runtime and persistence are unchanged; migrations and cross-platform domain UI audit are N/A for this client-only maintenance. Current verification and limits: `documentation/modules/platform/features/angular-form-foundation/SIGNAL_FORMS_IMPLEMENTATION_REPORT.md`. Historical verification in section 11 refers to its dated increment.
+
+## Shared focus perimeter maintenance — 2026-11-09
+
+The compound wrapper inherits the shared form foundation focus rule, keeping its
+perimeter inside clipping viewports and retaining destructive error color. No
+selection/value/readonly/domain contract changed. Current regression evidence is
+owned by [the form foundation correction](../angular-form-foundation/FIELD_FOCUS_CORRECTION_2026-11-09.md).

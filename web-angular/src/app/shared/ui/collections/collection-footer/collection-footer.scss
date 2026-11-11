@@ -26,6 +26,7 @@ footer {
   justify-content: center;
 }
 .record-count {
+  flex-shrink: 0;
   font-variant-numeric: tabular-nums;
   direction: ltr;
   white-space: nowrap;
@@ -34,15 +35,12 @@ footer {
   background: var(--muted);
   border-radius: 6px;
   padding: 6px 8px;
-  overflow: hidden;
-  text-overflow: ellipsis;
   order: 2;
 }
 .record-controls erp-button:nth-of-type(n + 3) {
   order: 3;
 }
-.record-controls span[buttonIcon],
-.cursor-page-controls span[buttonIcon] {
+.record-controls span[buttonIcon] {
   font-size: 1.125rem;
   line-height: 1;
 }
@@ -92,17 +90,11 @@ p-paginator {
 }
 .record-navigation-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 12px;
   inline-size: 100%;
   min-inline-size: 0;
-}
-.cursor-page-controls {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 4px;
 }
 .page-count {
   color: var(--muted-foreground);
@@ -111,26 +103,25 @@ p-paginator {
   white-space: nowrap;
 }
 @container collection-paging (max-width: 38rem) {
-  .record-controls erp-button,
-  .cursor-page-controls erp-button {
+  .record-controls erp-button {
     --action-icon-size: 32px;
   }
 }
-@container collection-paging (max-width: 32rem) {
+@container collection-paging (max-width: 26rem) {
   .record-navigation-layout {
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 8px 12px;
   }
   .record-navigation-layout .record-controls {
-    grid-column: 1;
+    grid-column: 1 / -1;
     grid-row: 1;
   }
   .record-navigation-layout .size-settings {
     grid-column: 2;
-    grid-row: 1;
+    grid-row: 2;
   }
   .page-context {
-    grid-column: 1 / -1;
+    grid-column: 1;
     grid-row: 2;
   }
   .page-context:empty {
@@ -142,21 +133,13 @@ p-paginator {
   .record-controls {
     gap: 2px;
   }
-  .record-controls erp-button,
-  .cursor-page-controls erp-button {
-    --action-icon-size: 24px;
+  .record-controls erp-button {
+    --action-icon-size: 32px;
   }
   .record-count {
     min-width: 40px;
     padding: 4px;
-    font-size: 11px;
-  }
-  .page-count {
-    position: absolute;
-    inline-size: 1px;
-    block-size: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
+    font-size: 12px;
   }
   erp-option-select {
     min-inline-size: 56px;

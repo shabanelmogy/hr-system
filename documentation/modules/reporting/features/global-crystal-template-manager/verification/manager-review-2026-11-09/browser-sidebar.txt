@@ -1,0 +1,17 @@
+(node:39828) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///G:/test/ERPSYSTEM/ERPSYSTEM/web-angular/src/app/platform/auth/auth.fixture.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\G:\test\ERPSYSTEM\ERPSYSTEM\web-angular\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Report template sidebar passed en/light/390/admin
+Report template sidebar passed en/light/1440/admin
+Report template sidebar passed en/dark/390/admin
+Report template sidebar passed en/dark/1440/admin
+Report template sidebar passed ar/light/390/admin
+Report template sidebar passed ar/light/1440/admin
+Report template sidebar passed ar/dark/390/admin
+Report template sidebar passed ar/dark/1440/admin
+Report template sidebar passed en/light/1440/reader
+Report template sidebar passed en/light/1440/denied-acl
+Report template sidebar passed en/light/1440/stale
+Report template sidebar passed en/light/1440/different-id
+{"passed":12,"output":"G:\\test\\ERPSYSTEM\\ERPSYSTEM\\.codex-tmp\\report-template-sidebar"}

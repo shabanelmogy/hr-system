@@ -12,6 +12,19 @@ const company = {
 };
 
 describe('authentication response contracts', () => {
+  it('accepts system sessions and rejects borrowed company scope', () => {
+    const system = { sessionScope: 'system', userId: 'super', userName: 'super',
+      email: 'super@example.test', firstName: '', lastName: '',
+      tenantId: '', tenantName: '', tenantPlanName: '', companyId: 0, companyCode: '',
+      companyNameAr: '', companyNameEn: '', companies: [], roles: ['super_admin'], permissions: [],
+      tenantSubscriptionStatus: '', tenantSubscriptionEndsOn: null, tenantReadOnly: false,
+      expiresAt: Date.now() + 60_000 };
+    expect(parseSessionResponse(system).sessionScope).toBe('system');
+    for (const change of [{ tenantId: 'borrowed' }, { companyId: 1 }, { roles: ['admin'] }, { sessionScope: 'unknown' }])
+      expect(() => parseSessionResponse({ ...system, ...change })).toThrow();
+    expect(parseAuthResponse({ ...system, id: 'super', token: 'test', refreshToken: 'test',
+      tokenExpiration: '2026-11-10T00:00:00Z', refreshTokenExpiration: '2026-11-20T00:00:00Z' }).companyId).toBe(0);
+  });
   it('parses company identity from an authenticated response', () => {
     expect(parseAuthResponse({
       id: 'user-id',

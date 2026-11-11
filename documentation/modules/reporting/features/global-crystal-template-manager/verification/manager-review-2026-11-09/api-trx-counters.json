@@ -1,0 +1,291 @@
+[
+  {
+    "report": "api/Tests/ErpSystem.ArchitectureTests/TestResults/report-manager-full-release-local-sql.trx",
+    "counters": {
+      "total": "70",
+      "executed": "70",
+      "passed": "70",
+      "failed": "0",
+      "error": "0",
+      "timeout": "0",
+      "aborted": "0",
+      "inconclusive": "0",
+      "passedButRunAborted": "0",
+      "notRunnable": "0",
+      "notExecuted": "0",
+      "disconnected": "0",
+      "warning": "0",
+      "completed": "0",
+      "inProgress": "0",
+      "pending": "0"
+    },
+    "outcomes": {
+      "Passed": 70
+    }
+  },
+  {
+    "report": "api/Tests/ErpSystem.BuildingBlocks.Tests/TestResults/report-manager-full-release-local-sql.trx",
+    "counters": {
+      "total": "42",
+      "executed": "42",
+      "passed": "42",
+      "failed": "0",
+      "error": "0",
+      "timeout": "0",
+      "aborted": "0",
+      "inconclusive": "0",
+      "passedButRunAborted": "0",
+      "notRunnable": "0",
+      "notExecuted": "0",
+      "disconnected": "0",
+      "warning": "0",
+      "completed": "0",
+      "inProgress": "0",
+      "pending": "0"
+    },
+    "outcomes": {
+      "Passed": 42
+    }
+  },
+  {
+    "report": "api/Tests/ErpSystem.IntegrationTests/TestResults/report-manager-full-release-local-sql.trx",
+    "counters": {
+      "total": "198",
+      "executed": "195",
+      "passed": "195",
+      "failed": "0",
+      "error": "0",
+      "timeout": "0",
+      "aborted": "0",
+      "inconclusive": "0",
+      "passedButRunAborted": "0",
+      "notRunnable": "0",
+      "notExecuted": "0",
+      "disconnected": "0",
+      "warning": "0",
+      "completed": "0",
+      "inProgress": "0",
+      "pending": "0"
+    },
+    "outcomes": {
+      "Passed": 195,
+      "NotExecuted": 3
+    }
+  },
+  {
+    "report": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Tests/TestResults/report-manager-full-release-local-sql.trx",
+    "counters": {
+      "total": "73",
+      "executed": "73",
+      "passed": "73",
+      "failed": "0",
+      "error": "0",
+      "timeout": "0",
+      "aborted": "0",
+      "inconclusive": "0",
+      "passedButRunAborted": "0",
+      "notRunnable": "0",
+      "notExecuted": "0",
+      "disconnected": "0",
+      "warning": "0",
+      "completed": "0",
+      "inProgress": "0",
+      "pending": "0"
+    },
+    "outcomes": {
+      "Passed": 73
+    }
+  },
+  {
+    "report": "api/Modules/Contacts/ErpSystem.Modules.Contacts.Tests/TestResults/report-manager-full-release-local-sql.trx",
+    "counters": {
+      "total": "12",
+      "executed": "12",
+      "passed": "12",
+      "failed": "0",
+      "error": "0",
+      "timeout": "0",
+      "aborted": "0",
+      "inconclusive": "0",
+      "passedButRunAborted": "0",
+      "notRunnable": "0",
+      "notExecuted": "0",
+      "disconnected": "0",
+      "warning": "0",
+      "completed": "0",
+      "inProgress": "0",
+      "pending": "0"
+    },
+    "outcomes": {
+      "Passed": 12
+    }
+  },
+  {
+    "report": "api/Modules/CRM/ErpSystem.Modules.CRM.Tests/TestResults/report-manager-full-release-local-sql.trx",
+    "counters": {
+      "total": "10",
+      "executed": "10",
+      "passed": "10",
+      "failed": "0",
+      "error": "0",
+      "timeout": "0",
+      "aborted": "0",
+      "inconclusive": "0",
+      "passedButRunAborted": "0",
+      "notRunnable": "0",
+      "notExecuted": "0",
+      "disconnected": "0",
+      "warning": "0",
+      "completed": "0",
+      "inProgress": "0",
+      "pending": "0"
+    },
+    "outcomes": {
+      "Passed": 10
+    }
+  },
+  {
+    "report": "api/Modules/HR/ErpSystem.Modules.HR.Tests/TestResults/report-manager-full-release-local-sql.trx",
+    "counters": {
+      "total": "150",
+      "executed": "150",
+      "passed": "150",
+      "failed": "0",
+      "error": "0",
+      "timeout": "0",
+      "aborted": "0",
+      "inconclusive": "0",
+      "passedButRunAborted": "0",
+      "notRunnable": "0",
+      "notExecuted": "0",
+      "disconnected": "0",
+      "warning": "0",
+      "completed": "0",
+      "inProgress": "0",
+      "pending": "0"
+    },
+    "outcomes": {
+      "Passed": 150
+    }
+  },
+  {
+    "report": "api/Modules/Inventory/ErpSystem.Modules.Inventory.Tests/TestResults/report-manager-full-release-local-sql.trx",
+    "counters": {
+      "total": "10",
+      "executed": "10",
+      "passed": "10",
+      "failed": "0",
+      "error": "0",
+      "timeout": "0",
+      "aborted": "0",
+      "inconclusive": "0",
+      "passedButRunAborted": "0",
+      "notRunnable": "0",
+      "notExecuted": "0",
+      "disconnected": "0",
+      "warning": "0",
+      "completed": "0",
+      "inProgress": "0",
+      "pending": "0"
+    },
+    "outcomes": {
+      "Passed": 10
+    }
+  },
+  {
+    "report": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/TestResults/report-manager-full-release-local-sql.trx",
+    "counters": {
+      "total": "398",
+      "executed": "398",
+      "passed": "398",
+      "failed": "0",
+      "error": "0",
+      "timeout": "0",
+      "aborted": "0",
+      "inconclusive": "0",
+      "passedButRunAborted": "0",
+      "notRunnable": "0",
+      "notExecuted": "0",
+      "disconnected": "0",
+      "warning": "0",
+      "completed": "0",
+      "inProgress": "0",
+      "pending": "0"
+    },
+    "outcomes": {
+      "Passed": 398
+    }
+  },
+  {
+    "report": "api/Modules/PointOfSale/ErpSystem.Modules.PointOfSale.Tests/TestResults/report-manager-full-release-local-sql.trx",
+    "counters": {
+      "total": "1",
+      "executed": "1",
+      "passed": "1",
+      "failed": "0",
+      "error": "0",
+      "timeout": "0",
+      "aborted": "0",
+      "inconclusive": "0",
+      "passedButRunAborted": "0",
+      "notRunnable": "0",
+      "notExecuted": "0",
+      "disconnected": "0",
+      "warning": "0",
+      "completed": "0",
+      "inProgress": "0",
+      "pending": "0"
+    },
+    "outcomes": {
+      "Passed": 1
+    }
+  },
+  {
+    "report": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/TestResults/report-manager-full-release-local-sql.trx",
+    "counters": {
+      "total": "140",
+      "executed": "140",
+      "passed": "140",
+      "failed": "0",
+      "error": "0",
+      "timeout": "0",
+      "aborted": "0",
+      "inconclusive": "0",
+      "passedButRunAborted": "0",
+      "notRunnable": "0",
+      "notExecuted": "0",
+      "disconnected": "0",
+      "warning": "0",
+      "completed": "0",
+      "inProgress": "0",
+      "pending": "0"
+    },
+    "outcomes": {
+      "Passed": 140
+    }
+  },
+  {
+    "report": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/TestResults/report-manager-full-release-local-sql.trx",
+    "counters": {
+      "total": "267",
+      "executed": "267",
+      "passed": "267",
+      "failed": "0",
+      "error": "0",
+      "timeout": "0",
+      "aborted": "0",
+      "inconclusive": "0",
+      "passedButRunAborted": "0",
+      "notRunnable": "0",
+      "notExecuted": "0",
+      "disconnected": "0",
+      "warning": "0",
+      "completed": "0",
+      "inProgress": "0",
+      "pending": "0"
+    },
+    "outcomes": {
+      "Passed": 267
+    }
+  }
+]

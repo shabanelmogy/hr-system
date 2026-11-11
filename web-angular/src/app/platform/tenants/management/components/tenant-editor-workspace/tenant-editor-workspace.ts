@@ -15,6 +15,7 @@ import { TenantEditorState } from '../../state/tenant-editor-state';
 import { TenantEntitlementsState } from '../../state/tenant-entitlements-state';
 import { TenantForm } from '../../components/tenant-form/tenant-form';
 import { TenantDraftSummary } from '../../components/tenant-draft-summary/tenant-draft-summary';
+import type { TenantSection } from '../../types/tenant';
 
 @Component({
   imports: [
@@ -34,6 +35,7 @@ import { TenantDraftSummary } from '../../components/tenant-draft-summary/tenant
 })
 export class TenantEditorWorkspace {
   readonly tenantId = input<string | null>(null);
+  readonly initialSection = input<TenantSection>('identity');
   readonly editor = inject(TenantEditorState);
   readonly catalog = inject(TenantEntitlementsState);
   readonly locale = inject(LocalizationRuntime);
@@ -66,7 +68,12 @@ export class TenantEditorWorkspace {
         event.mode === 'edit' ? 'tenantManagement.updated' : 'tenantManagement.created',
         'platform-tenants',
       );
-      this.back(event.mode === 'edit' ? event.tenant.id : null);
+      if (event.mode === 'create') {
+        void this.router.navigate(['/super-admin/tenants', event.tenant.id, 'edit'], {
+          queryParams: { tab: 'administrators' },
+          replaceUrl: true,
+        });
+      } else this.back(event.tenant.id);
     });
   }
   back(editedTenantId: string | null = null): void {

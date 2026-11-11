@@ -55,6 +55,26 @@ configuration was introduced.
 
 All secrets that previously existed in repository history must be rotated. Removing them from the current files does not invalidate exposed historical values.
 
+## System and company session scopes
+
+The2026-11-09 correction issues eligible Super Admin password logins with
+`session_scope=system`, without Tenant/company claims or membership selection.
+The account must remain active, confirmed and unlocked, with its live non-deleted
+system Super Admin role. Session validation and refresh also verify the owned
+refresh session, security stamp and original expiry. Ordinary accounts retain
+their active Tenant/company eligibility and receive `session_scope=company`.
+Legacy JWTs without the discriminator require complete positive company scope;
+unknown, duplicate or mixed scope is rejected.
+
+Wire responses add `sessionScope`; absent system context is represented by empty
+Tenant/company metadata, `companyId=0`, no companies and no subscription. The
+existing refresh row reserves CompanyId0 for this system scope; no dummy company,
+Tenant or schema migration is added. Deploy the API with client parser updates
+and authenticate again to obtain the new scope. System sessions do not grant
+company access or company switching. Hosted acceptance is PROD-034; current local
+evidence is in the owning
+[system-session execution record](../../modules/platform/features/platform-browser-authentication/SUPER_ADMIN_SYSTEM_SESSION_2026-11-09.md).
+
 ## Refresh-token rotation
 
 The application intentionally uses a simple rotation model rather than token-family lineage. Each successful refresh revokes the presented token, creates a replacement with the same `SessionId` and original absolute refresh expiry, and returns the new access and refresh tokens. Refresh does not restart the 14-day lifetime.
@@ -143,7 +163,8 @@ No Angular UI or Google-provider enablement is implied by this API transport.
 Browser SignalR transports place the bearer token in the `access_token` query
 parameter. The dedicated realtime JWT must therefore remain bounded and contains
 only identity and session context: user name/identifier, session identifier,
-security stamp, tenant identifier, and company identifier. It must not copy role,
+security stamp and session scope, plus tenant/company identifiers only for company
+sessions. System scope omits those coordinates. It must not copy role,
 permission, tenant-role, email, or tenant display-name claims from the normal
 access token.
 

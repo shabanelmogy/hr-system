@@ -61,3 +61,7 @@ Phase07 completed after Phase06 Verified. Arabic education: documentation/plans/
 S4-A4b Verified/Closed within its bounded local acceptance; PROD-030 remains a release check. Export implementation stays preserved/Queued and not accepted. Managed Error RPT/PDF is the next exact contract, followed by Settings and separate Language/Translation under Administration. Health/docs/jobs and final comprehensive Super Admin review remain Required.
 
 Implementation ownership: ColumnFilterSet is the neutral bounded parser; AuditColumnFilterProjection stays in BuildingBlocks Persistence; AuditTrailUserDirectory resolves display-name matches. ErrorLogFilterProjection stays in Platform Infrastructure. Filters precede count/Take/export. Deleted/orphan audit users do not match user-name filters, while listing display fallback remains unchanged. No schema/migration is introduced.
+
+## Historical evidence availability — 2026-11-09
+
+The [dated registry repair](../../../reporting/CURRENT_EVIDENCE_REPAIR_2026-11-09.md) retains the original missing raw-log entries in a central inventory. No runtime behavior changes in this feature. Historical claims keep their original dates and are not new execution proof. Current documentary completeness does not close hosted/native or other feature-owned acceptance; FOLLOW-025 retains historical availability.

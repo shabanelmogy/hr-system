@@ -17,6 +17,9 @@ const output = path.join(
     (existingDevAssets ? 'designer-dev-browser' : 'designer-browser'),
 );
 await fs.mkdir(output, { recursive: true });
+const core = JSON.parse(
+  await fs.readFile(path.join(root, 'src/locales/generated/core.json'), 'utf8'),
+);
 const text = JSON.parse(
   await fs.readFile(path.join(root, 'src/locales/generated/reporting.json'), 'utf8'),
 );
@@ -189,7 +192,11 @@ try {
           });
           await page.goto(origin + '/administration/global-crystal-reports');
           await page
-            .getByRole('button', { name: t('globalTemplates.design.title'), exact: true })
+            .locator('erp-global-template-manager erp-action-menu-button')
+            .getByRole('button', { name: core[language]['actions.buttons'], exact: true })
+            .click();
+          await page
+            .getByRole('menuitem', { name: t('globalTemplates.design.title'), exact: true })
             .click();
           const dialog = page.getByRole('dialog');
           const save = dialog.getByRole('button', {

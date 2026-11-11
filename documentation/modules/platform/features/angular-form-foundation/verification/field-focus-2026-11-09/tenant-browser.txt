@@ -1,0 +1,13 @@
+(node:4572) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///G:/test/ERPSYSTEM/ERPSYSTEM/web-angular/src/app/platform/auth/auth.fixture.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\G:\test\ERPSYSTEM\ERPSYSTEM\web-angular\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Field focus perimeter and keyboard clear passed en/light/390
+Field focus perimeter and keyboard clear passed en/light/1440
+Field focus perimeter and keyboard clear passed en/dark/390
+Field focus perimeter and keyboard clear passed en/dark/1440
+Field focus perimeter and keyboard clear passed ar/light/390
+Field focus perimeter and keyboard clear passed ar/light/1440
+Field focus perimeter and keyboard clear passed ar/dark/390
+Field focus perimeter and keyboard clear passed ar/dark/1440
+{"cases":8,"failures":[]}

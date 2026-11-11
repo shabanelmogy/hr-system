@@ -35,6 +35,10 @@ export async function saveOfflineSessionLease(
   database: SQLiteDatabase | null,
   session: SessionResponse,
 ): Promise<string | null> {
+  if (session.sessionScope === 'system') {
+    await invalidateOfflineSessionLease();
+    return null;
+  }
   if (!database) return null;
   try {
     const scope = scopeFromSession(session);

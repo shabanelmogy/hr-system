@@ -37,7 +37,11 @@
             [fill]="true"
             [compact]="true"
           >
-            <erp-tenant-form [tenantId]="tenantId()" (cancelled)="back()" />
+            <erp-tenant-form
+              [tenantId]="tenantId()"
+              [initialSection]="initialSection()"
+              (cancelled)="back()"
+            />
           </erp-surface-card>
           <aside [attr.aria-label]="text('summaryTitle')">
             <erp-tenant-draft-summary fill />

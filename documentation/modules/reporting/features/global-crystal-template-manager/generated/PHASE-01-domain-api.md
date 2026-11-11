@@ -100,7 +100,7 @@ existing-system review, implementation order, and Definition of Done.
 | global-crystal-template-manager-master | 36 | `8796d3e9f52ea1ca5aabf0a8dffd4e65e53673153ec4fcf6ac98a462813bbd87` |
 | global-crystal-template-manager-master | 37 | `a79c36efe60ac284e27acfb5c9a980a61479b5d2a9449629c0e97d11236d4e2f` |
 | global-crystal-template-manager-master | 38 | `d02b2b160aff790881be2aead2faed3e8103596027f40fc5d4e59b0c0cc2321e` |
-| global-crystal-template-manager-master | 39 | `704229906967a82264c6a1d057466df6626e9e541eb0d56e38232cb0b79062b0` |
+| global-crystal-template-manager-master | 39 | `09a10f35d328a87e607b8edcd725f3573c021b362b8fda62a378df35389d2c47` |
 | global-crystal-template-manager-api | 1 | `63b64f1c04c4d64fcd8c0948e5ba126ea382892c8d5125d9916354a72b012d37` |
 | global-crystal-template-manager-api | 2 | `f68735ee9eb09dd9812031f6fe2aac12dad41343cdb9a545d36c14eb4a1ba7ef` |
 | global-crystal-template-manager-api | 3 | `f939972d29805461ac9d62b07e23530a02c42edb990ac47f0d677d6ee9b94bcf` |
@@ -129,4 +129,4 @@ existing-system review, implementation order, and Definition of Done.
 | global-crystal-template-manager-api | 36 | `8796d3e9f52ea1ca5aabf0a8dffd4e65e53673153ec4fcf6ac98a462813bbd87` |
 | global-crystal-template-manager-api | 37 | `49f902cc782b8a5c3124233b07bf12a82b4ff1a174a5d1a2bee8519747ed861b` |
 | global-crystal-template-manager-api | 38 | `b78bd8ddfc6fcbe593dc815ac4c3849fafeb0eae896199ce52568de6c8b9ab46` |
-| global-crystal-template-manager-api | 39 | `1c087cf497f3e17f211d282ab56939b1437c3668325754a9cd446e1ab75f05b6` |
+| global-crystal-template-manager-api | 39 | `7208dc30c79c8acce588290bc4b23c386fa091a4969f0e9bb4f2f20accd27b57` |

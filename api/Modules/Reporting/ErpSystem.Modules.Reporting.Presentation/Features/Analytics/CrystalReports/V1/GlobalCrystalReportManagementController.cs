@@ -175,9 +175,9 @@ public sealed class GlobalCrystalReportManagementController(ISender sender) : Co
     [HttpPost("{id:guid}/versions/{versionId:guid}/verify-database")]
     [HasPermission(ReportingPermissions.UploadGlobalCrystalReports)]
     [HasPermission(ReportingPermissions.PublishGlobalCrystalReports)]
-    public async Task<IActionResult> VerifyDatabase(Guid id, Guid versionId, CancellationToken token)
+    public async Task<IActionResult> VerifyDatabase(Guid id, Guid versionId, [FromBody] CrystalReportConcurrencyRequest request, CancellationToken token)
     {
-        var result = await sender.Send(new VerifyDatabaseGlobalCrystalReportVersionCommand(id, versionId), token);
+        var result = await sender.Send(new VerifyDatabaseGlobalCrystalReportVersionCommand(id, versionId, request.RowVersion), token);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 

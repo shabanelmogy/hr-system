@@ -69,7 +69,10 @@ public sealed record AuthenticationValidatedAccessToken(
     string SessionId,
     string SecurityStamp,
     string TenantId,
-    int CompanyId);
+    int CompanyId)
+{
+    public string SessionScope { get; init; } = AuthenticationTokenClaimNames.CompanySession;
+}
 
 public interface IAuthenticationTokenService
 {

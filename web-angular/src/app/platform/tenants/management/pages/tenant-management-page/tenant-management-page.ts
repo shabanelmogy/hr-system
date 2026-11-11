@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { createViewPreference, UnsavedChanges } from '../../../../../shared/data/public-api';
 import {
   CollectionRecordFeedback,
+  ActionButton,
+  ConfirmationDialog,
+  DialogPanel,
   FeedbackState,
   PageHeader,
   type PageViewOption,
@@ -12,6 +15,7 @@ import { LocalizationRuntime, UiTextPipe } from '../../../../localization/public
 import { TenantReadState } from '../../state/tenant-read-state';
 import { TenantEntitlementsState } from '../../state/tenant-entitlements-state';
 import { TenantEditorState } from '../../state/tenant-editor-state';
+import { TenantAccessState } from '../../state/tenant-access-state';
 import { TenantCollectionView } from '../../components/tenant-collection-view/tenant-collection-view';
 
 type TenantView = 'grid' | 'cards';
@@ -22,9 +26,18 @@ type TenantView = 'grid' | 'cards';
     TenantReadState,
     TenantEntitlementsState,
     TenantEditorState,
+    TenantAccessState,
     CollectionRecordFeedback,
   ],
-  imports: [PageHeader, FeedbackState, UiTextPipe, TenantCollectionView],
+  imports: [
+    PageHeader,
+    FeedbackState,
+    UiTextPipe,
+    TenantCollectionView,
+    ActionButton,
+    ConfirmationDialog,
+    DialogPanel,
+  ],
   templateUrl: './tenant-management-page.html',
   styleUrl: './tenant-management-page.scss',
 })
@@ -40,6 +53,7 @@ export class TenantManagementPage {
   readonly reads = inject(TenantReadState);
   readonly catalog = inject(TenantEntitlementsState);
   readonly editor = inject(TenantEditorState);
+  readonly access = inject(TenantAccessState);
   private readonly records = inject(CollectionRecordFeedback);
   private readonly returnedTenantId: unknown =
     this.router.currentNavigation()?.extras.state?.['editedTenantId'];
@@ -53,6 +67,7 @@ export class TenantManagementPage {
     canSynchronize: () =>
       !this.editor.active() &&
       !this.editor.pending() &&
+      !this.access.active() &&
       !this.drafts.busy() &&
       !this.drafts.dirty(),
   });
@@ -79,11 +94,21 @@ export class TenantManagementPage {
     });
   }
   choose(value: string): void {
-    if ((value === 'grid' || value === 'cards') && !this.editor.active() && !this.editor.pending())
+    if (
+      (value === 'grid' || value === 'cards') &&
+      !this.editor.active() &&
+      !this.editor.pending() &&
+      !this.access.active()
+    )
       this.preference.choose(value);
   }
   create(): void {
-    if (this.editor.canCreate() && !this.editor.active() && !this.editor.pending())
+    if (
+      this.editor.canCreate() &&
+      !this.editor.active() &&
+      !this.editor.pending() &&
+      !this.access.active()
+    )
       void this.router.navigateByUrl('/super-admin/tenants/new');
   }
   refresh(): void {
@@ -92,5 +117,12 @@ export class TenantManagementPage {
   }
   text(key: string): string {
     return this.locale.translate('tenantManagement.' + key, 'platform-tenants');
+  }
+  accessFeedback(): string {
+    const key = this.access.feedback();
+    return this.locale.translate(
+      key,
+      key.startsWith('tenantManagement.') ? 'platform-tenants' : 'core',
+    );
   }
 }

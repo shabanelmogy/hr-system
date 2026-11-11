@@ -58,12 +58,12 @@ public sealed class PlatformIdentityLoginAdapter(
             return Failure<AuthenticationLoginResult>(code, "Authentication failed.");
         }
 
+        if (await entitlements.IsSuperAdminAsync(user.Id, cancellationToken))
+            return await IssueSuperAdminSessionAsync(user, cancellationToken);
+
         var memberships = await tenantMemberships.GetAvailableTenantsAsync(user.Id, cancellationToken);
         if (memberships.Count == 0)
             return Failure<AuthenticationLoginResult>("Authentication.NoTenantAccess", "The user has no active tenant membership.");
-
-        if (await entitlements.IsSuperAdminAsync(user!.Id, cancellationToken))
-            return await IssueSuperAdminSessionAsync(user, memberships, cancellationToken);
 
         if (memberships.Count == 1)
             return await ResolveTenantScopeAsync(user, memberships[0], cancellationToken);
@@ -74,24 +74,9 @@ public sealed class PlatformIdentityLoginAdapter(
 
     private async Task<AuthenticationOperationResult<AuthenticationLoginResult>> IssueSuperAdminSessionAsync(
         PlatformApplicationUser user,
-        IReadOnlyList<TenantMembershipOption> memberships,
         CancellationToken cancellationToken)
     {
-        if (memberships.Count == 0)
-            return Failure<AuthenticationLoginResult>(
-                "Authentication.NoTenantAccess",
-                "The user has no active tenant membership.");
-
-        foreach (var tenant in memberships)
-        {
-            var companies = await companyAccess.GetAvailableCompaniesAsync(user.Id, tenant.Id, cancellationToken);
-            if (companies.Count > 0)
-                return ToLoginResult(await sessions.IssueAsync(user, tenant.Id, companies[0].Id, cancellationToken));
-        }
-
-        return Failure<AuthenticationLoginResult>(
-            "Authentication.NoCompanyAccess",
-            "The user has no active company access.");
+        return ToLoginResult(await sessions.IssueAsync(user, string.Empty, 0, cancellationToken));
     }
 
     private async Task<AuthenticationOperationResult<AuthenticationLoginResult>> ResolveTenantScopeAsync(
@@ -168,7 +153,7 @@ public sealed class PlatformIdentityLoginAdapter(
         var memberships = await tenantMemberships.GetAvailableTenantsAsync(user!.Id, cancellationToken);
         if (await entitlements.IsSuperAdminAsync(user.Id, cancellationToken))
         {
-            return await IssueSuperAdminSessionAsync(user, memberships, cancellationToken);
+            return await IssueSuperAdminSessionAsync(user, cancellationToken);
         }
 
         var tenant = memberships
@@ -201,8 +186,7 @@ public sealed class PlatformIdentityLoginAdapter(
 
         if (await entitlements.IsSuperAdminAsync(user!.Id, cancellationToken))
         {
-            var memberships = await tenantMemberships.GetAvailableTenantsAsync(user.Id, cancellationToken);
-            var resolved = await IssueSuperAdminSessionAsync(user, memberships, cancellationToken);
+            var resolved = await IssueSuperAdminSessionAsync(user, cancellationToken);
             return resolved.IsSuccess
                 ? AuthenticationOperationResult.Success<AuthenticationSessionResponse>(
                     ((AuthenticationAuthenticatedLoginResult)resolved.Value).Response)
@@ -276,7 +260,8 @@ public sealed class PlatformIdentitySessionAdapter(
     ICurrentExecutionContext current,
     IHttpContextAccessor httpContext,
     TimeProvider timeProvider,
-    IAuthenticationSessionIssuanceGuard? issuanceGuard = null) : IAuthenticationSessionAdapter
+    IAuthenticationSessionIssuanceGuard? issuanceGuard = null,
+    ITenantModuleEntitlementSource? systemRoles = null) : IAuthenticationSessionAdapter
 {
     public Task<AuthenticationOperationResult<AuthenticationSessionResponse>> IssueAsync(
         PlatformApplicationUser user,
@@ -295,7 +280,10 @@ public sealed class PlatformIdentitySessionAdapter(
         PlatformRefreshToken? rotatedToken = null)
     {
         var now = timeProvider.GetUtcNow().UtcDateTime;
-        if (user.IsDisabled || user.LockoutEnd > timeProvider.GetUtcNow() ||
+        var system = tenantId.Length == 0 && companyId == 0;
+        if (user.IsDisabled || (system && !user.EmailConfirmed) ||
+            user.LifecycleStatus != (int)PlatformUserLifecycleStatus.Active ||
+            user.LockoutEnd > timeProvider.GetUtcNow() ||
             (!string.IsNullOrWhiteSpace(replacedSessionId) && !user.RefreshTokens.Any(item =>
                 item.IsActiveAt(now) && item.CompanyId == current.CompanyId &&
                 string.Equals(item.SessionId, replacedSessionId, StringComparison.Ordinal))))
@@ -303,8 +291,11 @@ public sealed class PlatformIdentitySessionAdapter(
             return Failure<AuthenticationSessionResponse>("Authentication.InvalidSession", "The active session scope is invalid.");
         }
 
-        var company = await companyAccess.GetAvailableCompanyAsync(user.Id, tenantId, companyId, cancellationToken);
-        if (company is null)
+        if (system && !await HasSystemRoleAsync(user, cancellationToken))
+            return Failure<AuthenticationSessionResponse>("Authentication.InvalidSession", "System administrator access is no longer active.");
+
+        var company = system ? null : await companyAccess.GetAvailableCompanyAsync(user.Id, tenantId, companyId, cancellationToken);
+        if (!system && (string.IsNullOrWhiteSpace(tenantId) || companyId <= 0 || company is null))
             return Failure<AuthenticationSessionResponse>("Authentication.NoCompanyAccess", "The company is outside the user's active scope.");
 
         var sessionId = rotatedToken?.SessionId ?? Guid.NewGuid().ToString("N");
@@ -366,14 +357,17 @@ public sealed class PlatformIdentitySessionAdapter(
             tenantId,
             accessToken.TenantName,
             accessToken.TenantPlanName,
-            company.Id,
-            company.CompanyCode,
-            company.NameAr,
-            company.NameEn,
+            company?.Id ?? 0,
+            company?.CompanyCode ?? string.Empty,
+            company?.NameAr ?? string.Empty,
+            company?.NameEn ?? string.Empty,
             accessToken.Token,
             accessToken.ExpiresAt,
             rawRefreshToken,
-            refresh.ExpiresOn));
+            refresh.ExpiresOn)
+        {
+            SessionScope = system ? AuthenticationTokenClaimNames.SystemSession : AuthenticationTokenClaimNames.CompanySession
+        });
     }
 
     public async Task<AuthenticationOperationResult> LogOutAsync(
@@ -413,7 +407,9 @@ public sealed class PlatformIdentitySessionAdapter(
 
         var user = await users.Users.Include(item => item.RefreshTokens)
             .SingleOrDefaultAsync(item => item.Id == access.UserId, cancellationToken);
-        if (user is null || user.IsDisabled || user.LockoutEnd > timeProvider.GetUtcNow() ||
+        if (user is null || user.IsDisabled ||
+            (access.SessionScope == AuthenticationTokenClaimNames.SystemSession && !user.EmailConfirmed) ||
+            user.LifecycleStatus != (int)PlatformUserLifecycleStatus.Active || user.LockoutEnd > timeProvider.GetUtcNow() ||
             !string.Equals(user.SecurityStamp, access.SecurityStamp, StringComparison.Ordinal))
         {
             return Failure<AuthenticationSessionResponse>("Authentication.InvalidRefreshToken", "The refresh token is invalid.");
@@ -422,6 +418,8 @@ public sealed class PlatformIdentitySessionAdapter(
         var now = timeProvider.GetUtcNow().UtcDateTime;
         var refresh = user.RefreshTokens.SingleOrDefault(item => item.TokenHash == Hash(request.RefreshToken));
         if (refresh is null ||
+            (access.SessionScope == AuthenticationTokenClaimNames.SystemSession &&
+             (access.TenantId.Length != 0 || access.CompanyId != 0 || !await HasSystemRoleAsync(user, cancellationToken))) ||
             !string.Equals(refresh.SessionId, access.SessionId, StringComparison.Ordinal) ||
             !string.Equals(refresh.JwtId, access.JwtId, StringComparison.Ordinal) ||
             refresh.CompanyId != access.CompanyId)
@@ -490,6 +488,9 @@ public sealed class PlatformIdentitySessionAdapter(
 
     internal static string Hash(string token) =>
         Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(token))).ToLowerInvariant();
+
+    private Task<bool> HasSystemRoleAsync(PlatformApplicationUser user, CancellationToken cancellationToken) =>
+        systemRoles?.IsSuperAdminAsync(user.Id, cancellationToken) ?? Task.FromResult(false);
 
     private static AuthenticationOperationResult Failure(
         string code,

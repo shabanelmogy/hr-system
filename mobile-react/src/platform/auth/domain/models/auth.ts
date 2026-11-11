@@ -30,6 +30,7 @@ export interface AcceptInvitationRequest {
 }
 
 export interface AuthResponse {
+  sessionScope?: 'company' | 'system';
   id: string;
   userName: string;
   firstName: string;
@@ -77,6 +78,7 @@ export interface CompanySelectionResponse {
 }
 
 export interface SessionResponse {
+  sessionScope?: 'company' | 'system';
   userId: string;
   tenantId: string;
   tenantName: string;

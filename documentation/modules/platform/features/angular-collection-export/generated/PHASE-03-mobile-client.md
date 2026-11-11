@@ -83,4 +83,4 @@ profile and do not leave an unreachable route, component, or translation surface
 | angular-collection-export-mobile | 12 | `ba0b2122f3a968f88a94c47f3a7c139acec2450c3fff68b282c846bf5e4e9201` |
 | angular-collection-export-mobile | 13 | `55b050a45687faf98ffdae6c1e861adedf4af7806a6984385063f1574191dd04` |
 | angular-collection-export-mobile | 14 | `ceb7eed7e891ef5e995670ebd004160eaf1bdb2f13844b26e9409dfdeda6d173` |
-| angular-collection-export-mobile | 15 | `c6f23a863122898d678aee894212a77e203a6b299b7e7d345794c47d1265cfc6` |
+| angular-collection-export-mobile | 15 | `83d879e9ab7872435646db453eac0de0f0d0e57c04107249e9e8ebd6145164ce` |

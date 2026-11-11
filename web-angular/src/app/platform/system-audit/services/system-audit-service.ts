@@ -5,6 +5,7 @@ import { BrowserMutationSecurity } from '../../auth/session.public-api';
 import { ERP_API_ORIGIN } from '../../../config/api-origin';
 import {
   auditParameters,
+  auditPageSize,
   parseAuditDetails,
   parseAuditFilters,
   parseAuditIdentity,
@@ -24,15 +25,21 @@ export class SystemAuditService {
     if (url.protocol !== 'https:' || url.origin !== this.origin)
       throw Error('An exact HTTPS API origin is required');
   }
-  page(criteria: AuditCriteria = {}, cursor: string | null = null) {
+  page(criteria: AuditCriteria = {}, cursor: string | null = null, includeTotalCount = false) {
     return defer(() => {
       const params = auditParameters(criteria, cursor);
+      if (includeTotalCount) params['includeTotalCount'] = 'true';
       if (!criteria.columnFilters) return this.read(this.endpoint, params);
       return from(this.security.csrf()).pipe(
         switchMap((token) =>
           this.http.post<unknown>(
             this.endpoint + '/query',
-            { ...criteria, ...(cursor === null ? {} : { cursor }), pageSize: 50 },
+            {
+              ...criteria,
+              ...(cursor === null ? {} : { cursor }),
+              pageSize: auditPageSize,
+              ...(includeTotalCount ? { includeTotalCount: true } : {}),
+            },
             {
               withCredentials: true,
               headers: { 'X-ERP-XSRF': token },

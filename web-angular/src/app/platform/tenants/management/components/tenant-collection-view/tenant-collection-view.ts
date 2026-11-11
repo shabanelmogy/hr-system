@@ -19,6 +19,7 @@ import {
 import { LocalizationRuntime, UiTextPipe } from '../../../../localization/public-api';
 import { TenantReadState } from '../../state/tenant-read-state';
 import { TenantEditorState } from '../../state/tenant-editor-state';
+import { TenantAccessState } from '../../state/tenant-access-state';
 import { statusAccent } from '../../../presentation/dashboard-utils';
 import type { TenantRecord } from '../../types/tenant';
 import { tenantColumns, tenantRowActions } from '../../presentation/tenant-list-presentation';
@@ -55,6 +56,7 @@ export class TenantCollectionView {
   readonly toolbarVisible = input(true);
   readonly reads = inject(TenantReadState);
   readonly editor = inject(TenantEditorState);
+  readonly access = inject(TenantAccessState);
   readonly records = inject(CollectionRecordFeedback);
   readonly locale = inject(LocalizationRuntime);
   readonly id = (row: TenantRecord) => row.id;
@@ -75,9 +77,19 @@ export class TenantCollectionView {
   readonly actions = (row: TenantRecord) =>
     tenantRowActions(
       this.editor.canCreate() && row.lifecycleStatus === 'active',
-      this.locale.translate('actions.edit'),
+      row.isActive,
+      (key) => this.text(key),
+      this.access.canWrite() && row.lifecycleStatus === 'active',
+      this.access.active(),
     );
   act(event: { row: TenantRecord; action: string }): void {
+    if (
+      (event.action === 'activate' && !event.row.isActive) ||
+      (event.action === 'deactivate' && event.row.isActive)
+    ) {
+      this.access.request(event.row);
+      return;
+    }
     const source = this.reads.source();
     if (
       event.action === 'edit' &&
@@ -85,7 +97,8 @@ export class TenantCollectionView {
       source.result?.rows.some(
         (row) => row.id === event.row.id && row.lifecycleStatus === 'active',
       ) &&
-      this.editor.canCreate()
+      this.editor.canCreate() &&
+      !this.access.active()
     )
       void this.router.navigate(['/super-admin/tenants', event.row.id, 'edit']);
   }

@@ -1,18 +1,64 @@
 import { computed, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { NEVER } from 'rxjs';
+import { NEVER, Subject } from 'rxjs';
 import { AuthSession, type Session } from '../../../../auth/session.public-api';
 import { sessionFixture } from '../../../../auth/auth.fixture';
 import { LocalizationRuntime } from '../../../../localization/public-api';
 import { FeedbackNotifications } from '../../../../../shared/ui/public-api';
 import { TenantManagementService } from '../../services/tenant-management-service';
-import { TenantEditorState } from '../../state/tenant-editor-state';
+import { TenantEditorState, type TenantSaved } from '../../state/tenant-editor-state';
 import { TenantEntitlementsState } from '../../state/tenant-entitlements-state';
 import { TenantEditorWorkspace } from './tenant-editor-workspace';
+import { tenantFixture } from '../../tenant.fixture';
 
 describe('Routed Tenant editor lifetime', () => {
   afterEach(() => TestBed.resetTestingModule());
+  it.each(['create', 'edit'] as const)(
+    'continues a successful %s through its owning route',
+    (mode) => {
+      const saved = new Subject<TenantSaved>();
+      const router = {
+        navigate: vi.fn().mockResolvedValue(true),
+        navigateByUrl: vi.fn().mockResolvedValue(true),
+      };
+      const success = vi.fn();
+      TestBed.configureTestingModule({
+        providers: [
+          TenantEditorWorkspace,
+          { provide: TenantEditorState, useValue: { saved: saved.asObservable() } },
+          { provide: TenantEntitlementsState, useValue: { ready: () => false } },
+          { provide: AuthSession, useValue: { readIdentity: () => null } },
+          { provide: Router, useValue: router },
+          { provide: FeedbackNotifications, useValue: { success } },
+          {
+            provide: LocalizationRuntime,
+            useValue: { loadNamespace: () => Promise.resolve() },
+          },
+        ],
+      });
+      TestBed.inject(TenantEditorWorkspace);
+      saved.next({ mode, tenant: tenantFixture });
+
+      expect(success).toHaveBeenCalledWith(
+        mode === 'create' ? 'tenantManagement.created' : 'tenantManagement.updated',
+        'platform-tenants',
+      );
+      if (mode === 'create') {
+        expect(router.navigate).toHaveBeenCalledExactlyOnceWith(
+          ['/super-admin/tenants', tenantFixture.id, 'edit'],
+          { queryParams: { tab: 'administrators' }, replaceUrl: true },
+        );
+        expect(router.navigateByUrl).not.toHaveBeenCalled();
+      } else {
+        expect(router.navigateByUrl).toHaveBeenCalledExactlyOnceWith('/super-admin/tenants', {
+          state: { editedTenantId: tenantFixture.id },
+        });
+        expect(router.navigate).not.toHaveBeenCalled();
+      }
+    },
+  );
+
   it('starts a fresh draft for a new authorized actor only after its catalog is ready', () => {
     const actor: Session = { ...sessionFixture, roles: ['super_admin'], permissions: [] };
     const identity = signal<Session | null>(actor);

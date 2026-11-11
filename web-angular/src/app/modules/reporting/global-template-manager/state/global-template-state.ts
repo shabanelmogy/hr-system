@@ -759,7 +759,7 @@ export class GlobalTemplateState {
       this.access.has('Upload') &&
       this.access.has('Publish')
     )
-      this.run(this.service.verifyDatabase(detail.id, version.id), () => {
+      this.run(this.service.verifyDatabase(detail.id, version.id, detail.rowVersion), () => {
         this.refresh.update((value) => value + 1);
         this.notices.success('globalTemplates.databaseVerifiedAndPublished', 'reporting');
       });

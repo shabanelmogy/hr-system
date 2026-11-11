@@ -1,0 +1,81 @@
+{
+  "date": "2026-11-09",
+  "scope": "Shared compound-field focus perimeter correction",
+  "angular": {
+    "files": 198,
+    "command": "npm run check",
+    "passed": 1039,
+    "exitCode": 0,
+    "log": "angular-check.txt",
+    "initialKilobytes": 585.62,
+    "environment": {
+      "VITEST_MAX_WORKERS": "2"
+    },
+    "inheritedBudgetWarnings": 4
+  },
+  "browser": {
+    "APIs": "intercepted synthetic fixtures",
+    "modes": [
+      "light",
+      "dark"
+    ],
+    "tenantProductionCases": 8,
+    "failures": 0,
+    "sharedControlChecks": 48,
+    "sharedDevelopmentCases": 8,
+    "locales": [
+      "en",
+      "ar"
+    ],
+    "widths": [
+      390,
+      1440
+    ],
+    "script": "web-angular/scripts/verify-field-focus-browser.mjs",
+    "nativeBrowserAutofillNotControlled": true
+  },
+  "baseline": {
+    "problem": "Contact name focus paint cropped by ScrollViewport inline clip",
+    "reproduced": true,
+    "log": "baseline-browser.txt"
+  },
+  "platform": {
+    "serverStarted": false,
+    "mobileChanged": false,
+    "apiChanged": false,
+    "nextChanged": false,
+    "schemaChanged": false,
+    "deploymentPerformed": false
+  },
+  "sourceHashes": [
+    {
+      "sha256": "6f5108a7a74d619c0b833b1a523dadb64d3c9245534afe9d5189e848a4216cb7",
+      "path": "web-angular/src/app/shared/ui/forms/fields/_field-focus.scss"
+    },
+    {
+      "sha256": "b087454a16dd249cdce4f06883a5846d6c4e5c0ae7f42a0514af0b67d0b72198",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.scss"
+    },
+    {
+      "sha256": "fc3acd245b54a5afad59cf0863416142aef30f21725666085ac14a1d97308848",
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field/reference-field.scss"
+    },
+    {
+      "sha256": "9fa395c4153c1a0073b3785596f7d89485d96adb6fe6587f302d49e7b056b4e8",
+      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.scss"
+    },
+    {
+      "sha256": "aa90cde65219e675fa79dbf9a22f36bb9a34a04f8977ded82ccdc274ef882b47",
+      "path": "web-angular/scripts/verify-field-focus-browser.mjs"
+    }
+  ],
+  "documentation": {
+    "checkedRecipes": 540,
+    "checkExitCode": 0,
+    "inheritedPlanningWarnings": [
+      "education-module version2 contract migration",
+      "erp-platform-template version2 contract migration"
+    ],
+    "planningPassed": true
+  }
+}

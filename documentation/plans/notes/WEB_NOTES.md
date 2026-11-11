@@ -1,5 +1,7 @@
 # Web Notes Index
 
+Independent Super Admin system-session rollout: PROD-034 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).
+
 Geography ID sorting rollout: PROD-033 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md).
 
 Angular composition-test timeout reliability: FOLLOW-031 in [FOLLOW_UPS.md](FOLLOW_UPS.md).

@@ -73,3 +73,11 @@ Crystal نجح باستخدام MSBuild الخاص بـVisual Studio المثب�
 بناء ERP Release مجددًا (0 أخطاء، 78 تحذير تحليل)، ومرّت اختبارات الحل الـ1331
 مع 3 اختبارات متصفح اختيارية متخطاة. إيصال التحقق النهائي المشترك متاح في
 [نتائج 2026-11-07](../../../platform/features/angular-super-admin-settings/verification/language-translation/verification-2026-11-07.json).
+
+## Concurrency correction — 2026-11-09
+
+The management POST now requires JSON `{ "rowVersion": "<current token>" }`.
+The report token is checked before native work and again under the final report
+lock, then applied as the persistence concurrency token. A late verification
+cannot replace another administrator's publication; its staged source is removed.
+See MANAGER_REVIEW_CORRECTIONS_2026-11-09.md and the current regression receipt.

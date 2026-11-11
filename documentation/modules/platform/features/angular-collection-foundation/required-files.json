@@ -885,6 +885,138 @@
       "layer": "documentation",
       "path": "documentation/modules/platform/features/angular-collection-foundation/verification/HEADER_SELECTION_2026-11-05.json",
       "purpose": "Final source hashes and executed Angular/browser acceptance for shared header selection"
+    },
+    {
+      "id": "audit-review-20261109-1",
+      "layer": "documentation",
+      "path": "documentation/guides/web/architecture/UI_REVIEW_ACCEPTANCE.md",
+      "purpose": "Mandatory rendered acceptance and blocking shared/reference reuse gate"
+    },
+    {
+      "id": "audit-review-20261109-2",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/AUDIT_REVIEW_CORRECTIONS_2026-11-09.md",
+      "purpose": "Authorized Audit/collection maintenance, final user corrections and verification boundaries"
+    },
+    {
+      "id": "audit-review-20261109-3",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-system-audit-layout-browser.mjs",
+      "purpose": "Rendered footer/criteria bounds, EN/AR light/dark compact/landscape/navigation/zoom and selection acceptance"
+    },
+    {
+      "id": "audit-review-20261109-4",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.spec.ts",
+      "purpose": "One reference footer arrow group, cursor boundary movement and known/unknown counter contract"
+    },
+    {
+      "id": "audit-totals-20261110-1",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/AUDIT_TOTALS_2026-11-10.md",
+      "layer": "documentation",
+      "purpose": "Current Audit totals, shared compact presentation and executable regression evidence"
+    },
+    {
+      "id": "audit-totals-20261110-2",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Abstractions/AuditTrail/AuditTrailContracts.cs",
+      "layer": "api",
+      "purpose": "Current Audit totals, shared compact presentation and executable regression evidence"
+    },
+    {
+      "id": "audit-totals-20261110-3",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Persistence/AuditTrail/AuditTrailSource.cs",
+      "layer": "api",
+      "purpose": "Current Audit totals, shared compact presentation and executable regression evidence"
+    },
+    {
+      "id": "audit-totals-20261110-4",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/Platform/AuditTrail/AuditTrailQueries.cs",
+      "layer": "api",
+      "purpose": "Current Audit totals, shared compact presentation and executable regression evidence"
+    },
+    {
+      "id": "audit-totals-20261110-5",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/AuditTrailQueryTests.cs",
+      "layer": "api",
+      "purpose": "Current Audit totals, shared compact presentation and executable regression evidence"
+    },
+    {
+      "id": "audit-totals-20261110-6",
+      "path": "api/Tests/ErpSystem.BuildingBlocks.Tests/AuditTrailTests.cs",
+      "layer": "api",
+      "purpose": "Current Audit totals, shared compact presentation and executable regression evidence"
+    },
+    {
+      "id": "audit-totals-20261110-9",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.scss",
+      "layer": "web",
+      "purpose": "Current Audit totals, shared compact presentation and executable regression evidence"
+    },
+    {
+      "id": "audit-totals-20261110-10",
+      "path": "web-angular/scripts/verify-report-manager-review-browser.mjs",
+      "layer": "web",
+      "purpose": "Current Audit totals, shared compact presentation and executable regression evidence"
+    },
+    {
+      "id": "audit-acceptance-20261110-1",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/audit-review-2026-11-09/README.md",
+      "layer": "documentation",
+      "purpose": "Executed corrective API/SQL, shared UI and browser acceptance; current hashes and release limits"
+    },
+    {
+      "id": "audit-acceptance-20261110-2",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/audit-review-2026-11-09/acceptance-2026-11-10.json",
+      "layer": "documentation",
+      "purpose": "Executed corrective API/SQL, shared UI and browser acceptance; current hashes and release limits"
+    },
+    {
+      "id": "audit-acceptance-20261110-3",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/audit-review-2026-11-09/source-sha256.json",
+      "layer": "documentation",
+      "purpose": "Executed corrective API/SQL, shared UI and browser acceptance; current hashes and release limits"
+    },
+    {
+      "id": "audit-acceptance-20261110-4",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/audit-review-2026-11-09/production-build-sha256.json",
+      "layer": "documentation",
+      "purpose": "Executed corrective API/SQL, shared UI and browser acceptance; current hashes and release limits"
+    },
+    {
+      "id": "audit-acceptance-20261110-5",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/audit-review-2026-11-09/development-build-sha256.json",
+      "layer": "documentation",
+      "purpose": "Executed corrective API/SQL, shared UI and browser acceptance; current hashes and release limits"
+    },
+    {
+      "id": "audit-acceptance-20261110-6",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/audit-review-2026-11-09/browser/layout/results.json",
+      "layer": "documentation",
+      "purpose": "Executed corrective API/SQL, shared UI and browser acceptance; current hashes and release limits"
+    },
+    {
+      "id": "audit-acceptance-20261110-7",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/audit-review-2026-11-09/browser/normal/results.json",
+      "layer": "documentation",
+      "purpose": "Executed corrective API/SQL, shared UI and browser acceptance; current hashes and release limits"
+    },
+    {
+      "id": "audit-acceptance-20261110-8",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/audit-review-2026-11-09/browser/compact/results.json",
+      "layer": "documentation",
+      "purpose": "Executed corrective API/SQL, shared UI and browser acceptance; current hashes and release limits"
+    },
+    {
+      "id": "audit-acceptance-20261110-9",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/audit-review-2026-11-09/browser/negative/negative-results.json",
+      "layer": "documentation",
+      "purpose": "Executed corrective API/SQL, shared UI and browser acceptance; current hashes and release limits"
+    },
+    {
+      "id": "audit-acceptance-20261110-10",
+      "path": "documentation/modules/platform/features/angular-system-audit-workspace/verification/audit-review-2026-11-09/browser/report-manager/results.json",
+      "layer": "documentation",
+      "purpose": "Executed corrective API/SQL, shared UI and browser acceptance; current hashes and release limits"
     }
   ],
   "finalizationChecklist": [

@@ -10,8 +10,14 @@ Session/company truth remains Platform; native cannot grant authority locally.
 Preserve selection/refresh/switch/logout wire and secure-storage policy.
 ## 5. Client decisions
 Every new visual view Excluded; no native conversion/Cookie fallback.
+
+Required: retained native bearer response/session parser compatibility for explicit system scope. Excluded: new native system administration screens and offline system access. Saving a system session clears the old offline pointer and never writes a company-scoped offline lease. Existing company offline behavior remains covered.
+
 ## 6. Contracts
 auth-endpoints.ts/auth-remote-data-source.ts remain current evidence; JSON bearer retained.
+
+2026-11-09 corrective system-session increment (FOLLOW-032): eligible Super Admin authenticates without any Tenant or company. Canonical current contract and verification boundary: [system-session execution](SUPER_ADMIN_SYSTEM_SESSION_2026-11-09.md). This supersedes earlier company-only descriptions for this actor. Hosted rollout remains PROD-034; repository documentation baseline remains FOLLOW-033.
+
 ## 7. UI composition
 No new form/screen/navigation; existing shared native shell unchanged.
 ## 8. States
@@ -34,6 +40,8 @@ No new native strings/layout/RTL/style edits.
 Mobile stage Queued after Web Verified; focused retained auth regression passed for the current API increment, device acceptance pending.
 ## 15. Evidence and closure
 Existing native source/tests in manifest; no native runtime or Phase 06 closure claim.
+
+System-session source, regression tests and current portable verification are registered in required-files.json. Historical R1/R2 receipts do not prove this correction; see SUPER_ADMIN_SYSTEM_SESSION_2026-11-09.md for its actual gate results.
 
 ## Current hosted runtime/key and Hub query correction — 2026-11-07
 

@@ -80,6 +80,27 @@ export function tenantColumns(
   ];
 }
 
-export function tenantRowActions(allowed: boolean, label: string): readonly GridRowAction[] {
-  return allowed ? [{ id: 'edit', label, icon: 'edit' }] : [];
+export function tenantRowActions(
+  allowed: boolean,
+  enabled: boolean,
+  text: (key: string) => string,
+  accessAllowed: boolean,
+  disabled: boolean,
+): readonly GridRowAction[] {
+  return [
+    ...(allowed
+      ? [{ id: 'edit', label: text('actions.edit'), icon: 'edit' as const, disabled }]
+      : []),
+    ...(accessAllowed
+      ? [
+          {
+            id: enabled ? 'deactivate' : 'activate',
+            label: text('tenantManagement.' + (enabled ? 'deactivate' : 'activate')),
+            icon: enabled ? ('lock' as const) : ('check' as const),
+            tone: enabled ? ('warning' as const) : ('success' as const),
+            disabled,
+          },
+        ]
+      : []),
+  ];
 }

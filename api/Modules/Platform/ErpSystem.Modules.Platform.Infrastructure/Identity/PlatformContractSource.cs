@@ -66,6 +66,13 @@ public sealed class PlatformContractSource(PlatformDbContext db) :
                 user.IsDisabled,
                 user.LockoutEnd,
                 user.SecurityStamp,
+                user.LifecycleStatus,
+                user.EmailConfirmed,
+                IsSuperAdmin = (from assignment in db.UserRoles
+                                join role in db.Roles on assignment.RoleId equals role.Id
+                                where assignment.UserId == userId && role.IsSystem && !role.IsDeleted &&
+                                      role.Name == PlatformRoleNames.SuperAdmin
+                                select role.Id).Any(),
                 HasTenantMembership = db.UserTenantAccesses
                     .IgnoreQueryFilters()
                     .Any(access => access.UserId == userId && access.TenantId == tenantId),
@@ -101,7 +108,12 @@ public sealed class PlatformContractSource(PlatformDbContext db) :
         return new SessionValidationSnapshot(scope.IsDisabled, scope.LockoutEnd, scope.SecurityStamp,
             scope.HasTenantMembership, scope.Tenant?.IsActive == true,
             scope.Tenant is null ? null : (TenantSubscriptionStatus)scope.Tenant.SubscriptionStatus,
-            scope.Company is not null, scope.Company?.IsActive == true, sessions);
+            scope.Company is not null, scope.Company?.IsActive == true, sessions)
+        {
+            IsSuperAdmin = scope.IsSuperAdmin,
+            IsArchived = scope.LifecycleStatus != (int)PlatformUserLifecycleStatus.Active,
+            EmailConfirmed = scope.EmailConfirmed
+        };
     }
 
     async Task<AccessTokenClaimMaterialSourceSnapshot> IAccessTokenClaimMaterialSource.GetAsync(string userId, string tenantId, CancellationToken token)
@@ -220,5 +232,5 @@ public sealed class PlatformContractSource(PlatformDbContext db) :
             .ToArrayAsync(cancellationToken)).ToHashSet(StringComparer.Ordinal);
 
     public Task<bool> IsSuperAdminAsync(string userId, CancellationToken token = default) =>
-        (from assignment in db.UserRoles join role in db.Roles on assignment.RoleId equals role.Id where assignment.UserId == userId && role.IsSystem && role.NormalizedName == "SUPER_ADMIN" select role.Id).AnyAsync(token);
+        (from assignment in db.UserRoles join role in db.Roles on assignment.RoleId equals role.Id where assignment.UserId == userId && role.IsSystem && !role.IsDeleted && role.NormalizedName == "SUPER_ADMIN" select role.Id).AnyAsync(token);
 }

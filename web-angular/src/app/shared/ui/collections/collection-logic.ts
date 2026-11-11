@@ -56,7 +56,9 @@ export function inspectCollection<T>(
     kind: 'ready',
     rows: result.rows,
     hasNextPage:
-      total === null ? result.hasNextPage : (query.pageIndex + 1) * query.pageSize < total,
+      total === null || query.pageAccess === 'sequential'
+        ? result.hasNextPage
+        : (query.pageIndex + 1) * query.pageSize < total,
   };
 }
 export function recordTarget<T>(
@@ -71,7 +73,15 @@ export function recordTarget<T>(
   const local = active === null ? -1 : view.rows.findIndex((row) => rowId(row) === active);
   const current = start + Math.max(0, local),
     bound = view.total ?? (view.hasNextPage ? start + pageSize + 1 : start + view.rows.length);
-  if (action === 'last' && view.total === null) return null;
+  if (action === 'last' && (view.total === null || view.query.pageAccess === 'sequential'))
+    return null;
+  if (
+    action === 'next' &&
+    view.query.pageAccess === 'sequential' &&
+    local === view.rows.length - 1 &&
+    !view.hasNextPage
+  )
+    return null;
   const target =
     action === 'last'
       ? bound - 1

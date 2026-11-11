@@ -1,4 +1,15 @@
-import { Component, computed, effect, inject, input, output, signal } from '@angular/core';
+import {
+  afterRenderEffect,
+  Component,
+  computed,
+  effect,
+  type ElementRef,
+  inject,
+  input,
+  output,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -6,6 +17,7 @@ import { Checkbox } from 'primeng/checkbox';
 import { UI_LOCALIZATION, UiTextPipe } from '../../../localization/public-api';
 import { ActionButton } from '../../buttons/public-api';
 import { AppIcon } from '../../icons/app-icon/app-icon';
+import { ScrollViewport } from '../../layout/scroll-viewport/scroll-viewport';
 import { TextField } from '../../forms/public-api';
 import { OptionSelect } from '../../controls/option-select/option-select';
 import { CollectionOptionsDialog } from '../collection-options-dialog/collection-options-dialog';
@@ -28,6 +40,7 @@ import {
     Checkbox,
     ActionButton,
     AppIcon,
+    ScrollViewport,
     TextField,
     OptionSelect,
     CollectionOptionsDialog,
@@ -38,6 +51,8 @@ import {
   styleUrls: ['./collection-frame.scss', './collection-search.scss'],
 })
 export class CollectionFrame<T> {
+  private readonly shell = viewChild<ElementRef<HTMLElement>>('shell');
+  readonly controlsMaxBlockSize = signal('50svh');
   readonly label = input.required<string>();
   readonly controller = input.required<CollectionController<T>>();
   readonly search = input<CollectionSearch>();
@@ -83,6 +98,19 @@ export class CollectionFrame<T> {
     ),
   }));
   constructor() {
+    // Observe the available height without size containment: content-sized
+    // collections inside dialogs must still contribute their natural height.
+    afterRenderEffect((cleanup) => {
+      const shell = this.shell()?.nativeElement;
+      if (!shell || typeof ResizeObserver === 'undefined') return;
+      const measure = () => {
+        if (shell.clientHeight > 0) this.controlsMaxBlockSize.set(shell.clientHeight * 0.4 + 'px');
+      };
+      const observer = new ResizeObserver(measure);
+      observer.observe(shell);
+      measure();
+      cleanup(() => observer.disconnect());
+    });
     effect(() => {
       const value = this.search()?.value ?? '',
         limit = this.searchLimit();

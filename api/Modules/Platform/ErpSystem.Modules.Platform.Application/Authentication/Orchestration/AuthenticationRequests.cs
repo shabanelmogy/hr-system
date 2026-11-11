@@ -224,6 +224,17 @@ public sealed class GetAuthenticationSessionContextQueryHandler(
         CancellationToken cancellationToken)
     {
         var request = query.Request;
+        if (request.SessionScope == AuthenticationTokenClaimNames.SystemSession)
+            return request.TenantId.Length == 0 && request.CompanyId == 0 &&
+                   request.Roles.Contains(PlatformRoleNames.SuperAdmin, StringComparer.Ordinal)
+                ? new AuthenticationSessionContextResponse(request.UserId,
+                    string.Empty, string.Empty, string.Empty, 0, string.Empty, string.Empty, string.Empty,
+                    [], request.UserName, request.Email, request.FirstName, request.LastName,
+                    request.Roles, request.Permissions, string.Empty, null, false, request.ExpiresAt)
+                    { SessionScope = AuthenticationTokenClaimNames.SystemSession }
+                : null;
+        if (request.SessionScope != AuthenticationTokenClaimNames.CompanySession)
+            return null;
         var tenant = await tenantAccess.GetAsync(request.TenantId, cancellationToken).ConfigureAwait(false);
         var availableCompanies = await companyAccess.GetAvailableCompaniesAsync(
             request.UserId,

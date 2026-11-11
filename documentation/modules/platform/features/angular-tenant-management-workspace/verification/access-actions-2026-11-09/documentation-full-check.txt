@@ -1,0 +1,6 @@
+Exception: G:\test\ERPSYSTEM\ERPSYSTEM\documentation\system\Generate-Documentation.ps1:136
+Line |
+ 136 |  …             throw "Required source is missing [$($entry.layer)/$($ent …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Required source is missing [documentation/entity-fingerprint-repair-45]:
+     | documentation/modules/reporting/features/managed-crystal-contract-registry/verification/entity-fingerprint/logs/fingerprint-angular-check.log

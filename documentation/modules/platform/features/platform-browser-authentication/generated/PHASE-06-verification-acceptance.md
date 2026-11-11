@@ -78,10 +78,10 @@ on the original plan alone.
 | platform-browser-authentication-master | 8 | `337efcf914ffbb3bf125b9eaebfeee31f1e1f3fddd41b636684f13739eb950c2` |
 | platform-browser-authentication-master | 9 | `6380c391d4768abe9f2714a668aa17effe11206e1943367c6bf15950e6263a0f` |
 | platform-browser-authentication-master | 10 | `5be12b02e73ee6a572ff4f2c44087284120720f5bd7427decae80b91c5923000` |
-| platform-browser-authentication-api | 10 | `0e4108d4382344db7c74d76883a2e1b7804947764162e3298fbd32e9cf365e67` |
+| platform-browser-authentication-api | 10 | `bed616e0d4d7750014076214acdc4c4a827b963b336f4f3b4ef52eb6dd6e69e8` |
 | platform-browser-authentication-api | 11 | `bd5f4185028ebf42e040f53b76f7240ec8b113147c3c47f1d58f1a2552220195` |
 | platform-browser-authentication-web | 12 | `7575dd3727ecb36dc30f9d167594024d153a27123c5b3dc803d15cf0a1c6bc81` |
 | platform-browser-authentication-web | 13 | `1cfcfab5d3d3a982db267aaca6a4e6496779a4db82205c9bf95516df07040f0d` |
 | platform-browser-authentication-web | 14 | `52054271e7bba7e5aead9ec819e72dd70c20029dd4bf9fb490f4408a59ab53c4` |
 | platform-browser-authentication-mobile | 14 | `85d161dbab052e01a1f442c1a697e2ade09ba3b4db08264aa940953cd598fd45` |
-| platform-browser-authentication-mobile | 15 | `3190c8de20efd23944f3a57fc437066bbf485bf26bc2868c35271da32d5469d7` |
+| platform-browser-authentication-mobile | 15 | `9b8b57a30992aac7a6795b6a8440e333730508b008553635a9a15d1a7238728f` |

@@ -144,6 +144,12 @@ export function createCollectionController<T>(
       request.pageSize === snapshot.query.pageSize
     )
       return;
+    if (
+      snapshot.query.pageAccess === 'sequential' &&
+      request.pageIndex !== 0 &&
+      Math.abs(request.pageIndex - snapshot.query.pageIndex) > 1
+    )
+      return;
     pending = null;
     callbacks.page(request);
   };
@@ -156,6 +162,12 @@ export function createCollectionController<T>(
     if (snapshot.kind !== 'ready' || !Number.isSafeInteger(target) || target < 0 || target >= bound)
       return;
     const targetPage = Math.floor(target / snapshot.query.pageSize);
+    if (
+      snapshot.query.pageAccess === 'sequential' &&
+      targetPage !== 0 &&
+      Math.abs(targetPage - snapshot.query.pageIndex) > 1
+    )
+      return;
     if (targetPage === snapshot.query.pageIndex) {
       const row = snapshot.rows[target % snapshot.query.pageSize];
       if (row !== undefined) setActive(rowId()(row), true);

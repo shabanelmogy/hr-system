@@ -172,3 +172,14 @@ deliverables, not fabricated application source.
 - [ ] DEC-027 binding proof and RISK-018 affected findings reconciled.
 - [ ] Canonical documentation/manifests/recipes verified; no nonexistent evidence.
 - [ ] Roadmap records Verified/Closed before activating a sibling.
+
+## 14. Authorized corrective system session — 2026-11-09
+
+2026-11-09 corrective system-session increment (FOLLOW-032): eligible Super Admin authenticates without any Tenant or company. Canonical current contract and verification boundary: [system-session execution](../../../../modules/platform/features/platform-browser-authentication/SUPER_ADMIN_SYSTEM_SESSION_2026-11-09.md). This supersedes earlier company-only descriptions for this actor. Hosted rollout remains PROD-034; repository documentation baseline remains FOLLOW-033.
+
+User authorization: implement independent Super Admin login. Existing Platform owner;
+no new business screen, aggregate, permission, impersonation or offline authority.
+Required surfaces: API lifecycle plus Angular/retained Next/native parser compatibility.
+The approved representation, relationships, rules, edge cases, impact and readiness
+are frozen in the canonical execution document. This correction does not close
+historical external-provider, integrated live or parent-plan acceptance.

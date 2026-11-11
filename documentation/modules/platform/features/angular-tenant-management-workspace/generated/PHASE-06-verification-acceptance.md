@@ -80,7 +80,7 @@ on the original plan alone.
 | angular-tenant-management-workspace-master | 10 | `02c4d5b980a26d07c1d41aa0235b40c3775f2e3a1295ee3e632106610d4545c2` |
 | angular-tenant-management-workspace-api | 10 | `02c4d5b980a26d07c1d41aa0235b40c3775f2e3a1295ee3e632106610d4545c2` |
 | angular-tenant-management-workspace-api | 11 | `53250fa797569e411e501724b0610d4ed1e4597f93355b69546d6d962b58cd76` |
-| angular-tenant-management-workspace-web | 12 | `f8dea0b4b8b8eb17213011dba17e5ca41bad1a14640514f71e3bd29587c9bf3c` |
+| angular-tenant-management-workspace-web | 12 | `2e1e2d90aaa2c7b24c8034ad930f0e2d3e1b1364de2f1a6d34e19c7eed2abaa0` |
 | angular-tenant-management-workspace-web | 13 | `fbf279b1c25c631dc60900c20f12a63d5e2a0d213572f799133bb8c371f74260` |
 | angular-tenant-management-workspace-web | 14 | `7059d89c8935afdd4cf459290b7ad6d106828553a6e7fbbd720bd588ad3c5556` |
 | angular-tenant-management-workspace-mobile | 14 | `7059d89c8935afdd4cf459290b7ad6d106828553a6e7fbbd720bd588ad3c5556` |
